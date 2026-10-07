@@ -1,5 +1,5 @@
-"""The /lab dashboard shell is public and data-free; the cost analyzer behind it is operator-only, streams OpenRouter's
-answer, holds one slot at a time and never lets the key out."""
+"""The cost analyzer (the competition pages' "Cost analyzer" view) is operator-only, streams OpenRouter's answer, holds
+one slot at a time and never lets the key out. The old /lab address redirects to the competition page."""
 from __future__ import annotations
 
 import json
@@ -46,40 +46,28 @@ def app(tmp_path, monkeypatch):
     return create_app(settings_factory(data_dir=str(tmp_path / "d")))
 
 
-def test_shell_is_public_on_every_client_route(app):
+def test_old_lab_addresses_redirect_to_the_competition_page(app):
     c = TestClient(app)
-    for path in ("/lab", "/lab/", "/lab/bots", "/lab/bots/v6--V6.6-XRP-1H", "/lab/programs", "/lab/analyze"):
-        r = c.get(path)
-        assert r.status_code in (200, 404), path            # 404 only when lab_ui has not been built
-        assert r.headers["content-type"].startswith("text/html")
+    for path, target in (("/lab", "/public/competition"), ("/lab/bots/v6--V6.6-XRP-1H", "/public/competition/bots"),
+                         ("/lab/programs", "/public/competition/programs"), ("/lab/analyze", "/public/competition/analyzer")):
+        r = c.get(path, follow_redirects=False)
+        assert r.status_code == 307 and r.headers["location"] == target, path
         assert "www-authenticate" not in r.headers
-
-
-def test_built_shell_loads_its_assets_without_a_password(app):
-    import re
-    from app.core.api_lab import LAB_DIR
-    if not (LAB_DIR / "index.html").exists():
-        pytest.skip("lab_ui not built")
-    c = TestClient(app)
-    html = c.get("/lab/bots").text
-    assets = re.findall(r'(?:src|href)="(/static/lab/[^"]+)"', html)
-    assert assets and any(a.endswith(".js") for a in assets)
-    for a in assets:
-        r = c.get(a)
-        assert r.status_code == 200 and "www-authenticate" not in r.headers, a
+    for path in ("/public/competition/programs", "/public/competition/analyzer"):     # client-side views of one shell
+        assert c.get(path).status_code == 200
 
 
 def test_analyzer_routes_need_the_password_and_the_csrf_header(app):
     c = TestClient(app)
-    assert c.get("/api/lab/analyze/status").status_code == 401
-    assert c.post("/api/lab/analyze", json=BODY, headers=POST).status_code == 401
-    assert c.post("/api/lab/analyze", json=BODY, auth=AUTH).status_code == 403          # no X-PaperLab
+    assert c.get("/api/analyzer/status").status_code == 401
+    assert c.post("/api/analyzer", json=BODY, headers=POST).status_code == 401
+    assert c.post("/api/analyzer", json=BODY, auth=AUTH).status_code == 403          # no X-PaperLab
 
 
 def test_not_configured_without_the_key(app):
     c = TestClient(app)
-    assert c.get("/api/lab/analyze/status", auth=AUTH).json()["configured"] is False
-    r = c.post("/api/lab/analyze", json=BODY, headers=POST, auth=AUTH)
+    assert c.get("/api/analyzer/status", auth=AUTH).json()["configured"] is False
+    r = c.post("/api/analyzer", json=BODY, headers=POST, auth=AUTH)
     assert r.status_code == 503 and "OPENROUTER_API_KEY" in r.json()["error"]
 
 
@@ -88,7 +76,7 @@ def test_streams_the_answer_and_sends_the_prompt_server_side(app, caplog):
     app.state.analyzer = Analyzer(KEY, model="anthropic/claude-opus-5.5", stream=rec)
     c = TestClient(app)
     with caplog.at_level(logging.DEBUG):
-        r = c.post("/api/lab/analyze", json={**BODY, "botContext": "name=Vector net=+3%"}, headers=POST, auth=AUTH)
+        r = c.post("/api/analyzer", json={**BODY, "botContext": "name=Vector net=+3%"}, headers=POST, auth=AUTH)
     assert r.status_code == 200 and r.text == "## Summary\n- 1 trade"
     assert r.headers["x-analyzer-model"] == "anthropic/claude-opus-5.5"
     url, body, headers = rec.calls[0]
@@ -99,7 +87,7 @@ def test_streams_the_answer_and_sends_the_prompt_server_side(app, caplog):
     assert "name=Vector" in user and "Operator notes: taker entries" in user and "1,long,0.5,0.02" in user
     assert headers["Authorization"] == "Bearer " + KEY                 # only on the server-to-OpenRouter request
     assert KEY not in r.text and KEY not in caplog.text and "1,long,0.5" not in caplog.text
-    assert c.get("/api/lab/analyze/status", auth=AUTH).json()["busy"] is False      # slot released
+    assert c.get("/api/analyzer/status", auth=AUTH).json()["busy"] is False      # slot released
 
 
 @pytest.mark.parametrize("status,needle", [(402, "credits"), (429, "busy"), (404, "ANALYZER_MODEL"), (500, "500")])
@@ -107,20 +95,20 @@ def test_upstream_errors_become_a_sanitized_error_line(app, caplog, status, need
     leak = json.dumps({"error": {"message": f"bad key Bearer {KEY}"}}).encode()
     app.state.analyzer = Analyzer(KEY, stream=Recorder(status=status, lines=[leak]))
     with caplog.at_level(logging.WARNING):
-        r = TestClient(app).post("/api/lab/analyze", json=BODY, headers=POST, auth=AUTH)
+        r = TestClient(app).post("/api/analyzer", json=BODY, headers=POST, auth=AUTH)
     assert r.status_code == 200 and r.text.strip().startswith(ERROR_MARK) and needle in r.text
     assert KEY not in r.text and KEY not in caplog.text
 
 
 def test_mid_stream_error_and_network_failure(app):
     app.state.analyzer = Analyzer(KEY, stream=Recorder(lines=sse(delta("part"), {"error": {"message": "overloaded"}})))
-    r = TestClient(app).post("/api/lab/analyze", json=BODY, headers=POST, auth=AUTH)
+    r = TestClient(app).post("/api/analyzer", json=BODY, headers=POST, auth=AUTH)
     assert r.text.startswith("part") and ERROR_MARK in r.text
     app.state.analyzer = Analyzer(KEY, stream=Recorder(exc=OSError(f"connect failed {KEY}")))
-    r = TestClient(app).post("/api/lab/analyze", json=BODY, headers=POST, auth=AUTH)
+    r = TestClient(app).post("/api/analyzer", json=BODY, headers=POST, auth=AUTH)
     assert ERROR_MARK in r.text and KEY not in r.text
     app.state.analyzer = Analyzer(KEY, stream=Recorder(lines=sse()))
-    assert "no answer" in TestClient(app).post("/api/lab/analyze", json=BODY, headers=POST, auth=AUTH).text
+    assert "no answer" in TestClient(app).post("/api/analyzer", json=BODY, headers=POST, auth=AUTH).text
 
 
 def test_bad_input_is_rejected_before_any_upstream_call(app):
@@ -128,8 +116,8 @@ def test_bad_input_is_rejected_before_any_upstream_call(app):
     app.state.analyzer = Analyzer(KEY, stream=rec)
     c = TestClient(app)
     for bad in ({**BODY, "content": ""}, {**BODY, "content": "x" * 250_001}, {"content": "x"}, {**BODY, "notes": 5}):
-        assert c.post("/api/lab/analyze", json=bad, headers=POST, auth=AUTH).status_code == 400
-    assert c.post("/api/lab/analyze", content=b"not json", headers=POST, auth=AUTH).status_code == 400
+        assert c.post("/api/analyzer", json=bad, headers=POST, auth=AUTH).status_code == 400
+    assert c.post("/api/analyzer", content=b"not json", headers=POST, auth=AUTH).status_code == 400
     assert rec.calls == []
     with pytest.raises(AnalyzeInputError):
         AnalyzeRequest.parse([1, 2])
@@ -148,7 +136,7 @@ def test_busy_slot_answers_429(app):
     a = Analyzer(KEY, stream=Recorder(lines=sse(delta("ok"))))
     app.state.analyzer = a
     assert a.acquire()
-    r = TestClient(app).post("/api/lab/analyze", json=BODY, headers=POST, auth=AUTH)
+    r = TestClient(app).post("/api/analyzer", json=BODY, headers=POST, auth=AUTH)
     assert r.status_code == 429
 
 

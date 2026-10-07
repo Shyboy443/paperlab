@@ -15,24 +15,32 @@
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/static/styles.css">
 </head>
-<body class="public">
+<body class="public lab-theme">
 
 <!-- Read-only inspection shell. No login, no Basic auth, no CSRF header: every request it makes is a GET against
-     /api/public/..., which is GET-only and rebuilt from allow-lists. Nothing on this page can change anything. -->
+     /api/public/..., which is GET-only and rebuilt from allow-lists. Nothing on this page can change anything. The one
+     exception is the Cost analyzer view: it asks for the dashboard password and posts to the private /api/analyzer
+     (an AI read of an uploaded file; it changes nothing either). -->
+<aside id="side">
+  <a class="brand" href="/public/competition"><span class="brand-mark"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v7.31M14 9.3V2M8.5 2h7M14 9.3a6.5 6.5 0 1 1-4 0M5.52 16h12.96"/></svg></span>PaperLab</a>
+  <nav id="nav" class="mainnav" role="tablist" aria-label="sections"></nav>
+  <div class="side-foot">
+    <span id="status-light" class="pill ghost" title="paper execution · stream · live market data">PAPER ● CONNECTING</span>
+    <p>Paper trading on live prices. Read-only. Not financial advice.</p>
+  </div>
+</aside>
+
+<div id="shell">
 <header id="top">
   <div class="top-row">
-    <div class="brand"><span class="brand-mark"></span>PaperLab</div>
-    <span class="pill ghost">READ-ONLY INSPECTION</span>
-    <span id="status-light" class="pill ghost" title="paper execution · stream · live market data">PAPER ● CONNECTING</span>
+    <span class="pill ghost">Read-only inspection</span>
     <span class="spacer"></span>
     <span id="pub-updated" class="sub">loading&hellip;</span>
     <a class="btn ghost" href="/public/competition/bots?p=video&bot=BTC-4H-BREAKOUT">Bitcoin breakout</a>
-    <a class="btn ghost" href="/lab" title="Overview, bots and programs in the newer layout">Lab dashboard</a>
   </div>
-  <nav id="nav" class="mainnav" role="tablist" aria-label="sections"></nav>
 </header>
 
 <main id="main">
@@ -42,6 +50,12 @@
   <section data-panel="scout" class="panel" hidden>
     <div id="scout-grid" class="grid"><div class="card"><p class="sub">loading the scout&hellip;</p></div></div>
   </section>
+  <section data-panel="programs" class="panel" hidden>
+    <div id="programs-grid" class="grid"><div class="card"><p class="sub">loading the programs&hellip;</p></div></div>
+  </section>
+  <section data-panel="analyzer" class="panel" hidden>
+    <div id="analyzer-grid" class="grid"></div>
+  </section>
   <section data-panel="system" class="panel" hidden>
     <div id="system-grid" class="grid"><div class="card"><p class="sub">loading the system status&hellip;</p></div></div>
     <div class="grid"><div class="card"><h2>research history</h2>
@@ -49,6 +63,7 @@
         <a href="/public/competition/report">server-rendered report</a> and in <a href="/public/inspection.json">inspection.json</a>.</p></div></div>
   </section>
 </main>
+</div>
 
 <div id="toasts"></div>
 
@@ -61,6 +76,7 @@
 <script src="/static/roster.js"></script>
 <script src="/static/breakout-competition.js"></script>
 <script src="/static/scout.js"></script>
+<script src="/static/lab.js"></script>
 <script src="/static/public.js"></script>
 </body>
 </html>

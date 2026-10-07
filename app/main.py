@@ -46,9 +46,8 @@ class BasicAuthMiddleware:
         # password once and sends it as Basic auth on every /api call (no native browser prompt).
         #
         # `/public/` and `/api/public/` are the read-only inspection surface: no password, so an
-        # outside reviewer can look at the real Competition UI. `/lab` is the shell of the newer dashboard (lab_ui/):
-        # like the inspection page it holds no data and reads only /api/public/*; its analyzer calls /api/lab/*,
-        # which is NOT exempt. They are safe to exempt because
+        # outside reviewer can look at the real Competition UI. `/lab` only redirects there now (it briefly held a
+        # separate dashboard). They are safe to exempt because
         # api_public defines GET routes only and rebuilds every payload from an allow-list. The
         # POST rule below still applies to them, and every mutating route lives elsewhere and stays
         # behind this check.
@@ -421,7 +420,7 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
     app.include_router(api_stock_trend.router)
     from app.core import api_video_breakout
     app.include_router(api_video_breakout.router)
-    from app.core import api_lab                    # /lab dashboard shell + the private cost analyzer
+    from app.core import api_lab                    # the private cost analyzer (+ /lab -> /public/competition)
     from app.ai.analyzer import Analyzer
     app.state.analyzer = Analyzer.from_env()
     app.include_router(api_lab.router)

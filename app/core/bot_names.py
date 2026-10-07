@@ -1,26 +1,35 @@
 """Display names for the paper bots: a name and a personality instead of "V8.3-ENA-5M". Display only -- nothing in a
 trading path reads this, so renaming never touches a frozen experiment.
 
-Every CONTROL bot gets a first name from NAMES, picked by a hash of (program, control key) and probed past collisions in
-a fixed order, so a bot keeps its name across restarts and deploys. Its twins share it: "+JEV" is "<name> AI" (Jev may
-veto its trades) and "+LADDER" is "<name> Ladder" (takes profit in three steps). The personality comes from the strategy
-family; the coin and timeframe stay visible next to the name.
+Every bot is named after a League of Legends champion (the naming the user picked in the Lovable dashboard). A CONTROL
+bot's champion is picked exactly as that dashboard did: an FNV-1a hash of "<program>--<control key>" into NAMES, probed
+past collisions with the controls taken in sorted order, so a bot keeps its champion across restarts and deploys and
+matches what the Lovable app showed. Its twins share it: "+JEV" is "<name> AI" (Jev may veto its trades) and "+LADDER"
+is "<name> Ladder" (takes profit in three steps); a V14 copy is "<the original's name> HTF". The personality comes
+from the strategy family; the coin and timeframe stay visible next to the name.
 """
 from __future__ import annotations
 
 import hashlib
 from typing import Iterable, Mapping
 
-NAMES = (
-    "Atlas", "Nova", "Pixel", "Rocket", "Ziggy", "Maverick", "Echo", "Blaze", "Comet", "Orbit", "Sparky", "Nimbus",
-    "Vector", "Jolt", "Zephyr", "Ember", "Quasar", "Dash", "Rogue", "Cosmo", "Bolt", "Nyx", "Juno", "Onyx", "Ripley",
-    "Rex", "Luna", "Sable", "Titan", "Vega", "Kilo", "Mako", "Pulse", "Radar", "Sonic", "Tango", "Volt", "Wren", "Zola",
-    "Axel", "Blip", "Circuit", "Dex", "Flux", "Glitch", "Hex", "Ion", "Jinx", "Kit", "Lumen", "Mox", "Neon", "Opal",
-    "Pip", "Quill", "Rune", "Sprocket", "Trix", "Unit", "Viper", "Widget", "Xeno", "Yeti", "Zap", "Aria", "Bishop",
-    "Cypher", "Delta", "Enzo", "Fable", "Gizmo", "Halo", "Iris", "Jett", "Kodiak", "Lark", "Mica", "Nero", "Oscar",
-    "Pluto", "Quinn", "Rusty", "Scout", "Tesla", "Uma", "Vandal", "Whisky", "Xyla", "Yoshi", "Zara", "Apex", "Brick",
-    "Cobalt", "Dune", "Fizz", "Gamma", "Hopper", "Indigo", "Jazz", "Karma", "Loki", "Monty", "Nugget", "Otto", "Pepper",
-    "Quartz", "Riot", "Sly", "Turbo", "Umbra", "Vortex", "Wizz", "Xander", "Yuki", "Zest", "Boomer", "Crash", "Diesel")
+NAMES = (  # League of Legends champions, in the Lovable dashboard's order (the order decides the hash slots)
+    "Aatrox", "Ahri", "Akali", "Akshan", "Alistar", "Ambessa", "Amumu", "Anivia", "Annie", "Aphelios", "Ashe",
+    "Aurelion Sol", "Aurora", "Azir", "Bard", "Bel'Veth", "Blitzcrank", "Brand", "Braum", "Briar", "Caitlyn",
+    "Camille", "Cassiopeia", "Cho'Gath", "Corki", "Darius", "Diana", "Dr. Mundo", "Draven", "Ekko", "Elise",
+    "Evelynn", "Ezreal", "Fiddlesticks", "Fiora", "Fizz", "Galio", "Gangplank", "Garen", "Gnar", "Gragas", "Graves",
+    "Gwen", "Hecarim", "Heimerdinger", "Hwei", "Illaoi", "Irelia", "Ivern", "Janna", "Jarvan IV", "Jax", "Jayce",
+    "Jhin", "Jinx", "K'Sante", "Kai'Sa", "Kalista", "Karma", "Karthus", "Kassadin", "Katarina", "Kayle", "Kayn",
+    "Kennen", "Kha'Zix", "Kindred", "Kled", "Kog'Maw", "LeBlanc", "Lee Sin", "Leona", "Lillia", "Lissandra",
+    "Lucian", "Lulu", "Lux", "Malphite", "Malzahar", "Maokai", "Master Yi", "Mel", "Milio", "Miss Fortune",
+    "Mordekaiser", "Morgana", "Naafiri", "Nami", "Nasus", "Nautilus", "Neeko", "Nidalee", "Nilah", "Nocturne",
+    "Nunu", "Olaf", "Orianna", "Ornn", "Pantheon", "Poppy", "Pyke", "Qiyana", "Quinn", "Rakan", "Rammus", "Rek'Sai",
+    "Rell", "Renata", "Renekton", "Rengar", "Riven", "Rumble", "Ryze", "Samira", "Sejuani", "Senna", "Seraphine",
+    "Sett", "Shaco", "Shen", "Shyvana", "Singed", "Sion", "Sivir", "Skarner", "Smolder", "Sona", "Soraka", "Swain",
+    "Sylas", "Syndra", "Tahm Kench", "Taliyah", "Talon", "Taric", "Teemo", "Thresh", "Tristana", "Trundle",
+    "Tryndamere", "Twisted Fate", "Twitch", "Udyr", "Urgot", "Varus", "Vayne", "Veigar", "Vel'Koz", "Vex", "Vi",
+    "Viego", "Viktor", "Vladimir", "Volibear", "Warwick", "Wukong", "Xayah", "Xerath", "Xin Zhao", "Yasuo", "Yone",
+    "Yorick", "Yuumi", "Zac", "Zed", "Zeri", "Ziggs", "Zilean", "Zoe", "Zyra")
 
 # strategy id -> (personality, what it does)
 PERSONA: dict[str, tuple[str, str]] = {
@@ -52,9 +61,6 @@ PERSONA: dict[str, tuple[str, str]] = {
 TWIN = {"JEV": (" AI", "Jev can veto or size up its trades"), "LADDER": (" Ladder", "takes profit in three steps")}
 TWIN_BY_PROGRAM = {("v11", "JEV"): (" AI", "Jev can skip its trades, and its confidence sets how far the TPs reach"),
                    ("v12", "JEV"): (" AI", "Jev decides whether each breakout is real (GO) or not yet (WAIT), as in beebots")}
-# bots that keep the name they came with (not hashed from NAMES): beebots' Bizzy Bee
-FIXED: dict[tuple[str, str], str] = {("v12", "V12.1-DAY"): "Bizzy", ("v13", "V13.1-SNAP"): "Bounce"}
-PROGRAM_ORDER = ("v6", "v7", "v8", "v9", "v11", "v12", "v13", "v14")
 
 
 def control_of(key: str) -> tuple[str, str]:
@@ -65,27 +71,33 @@ def control_of(key: str) -> tuple[str, str]:
     return key, "CONTROL"
 
 
+def _fnv1a(text: str) -> int:
+    """32-bit FNV-1a over UTF-16 code units: the same number the Lovable dashboard's JavaScript hash gives."""
+    h = 2166136261
+    data = text.encode("utf-16-le")
+    for i in range(0, len(data), 2):
+        h = ((h ^ (data[i] | data[i + 1] << 8)) * 16777619) & 0xFFFFFFFF
+    return h
+
+
 def assign(controls: Iterable[tuple[str, str]]) -> dict[tuple[str, str], str]:
-    """(program, control key) -> a unique first name, stable for a given field."""
-    taken: set[str] = set(FIXED.values())
+    """(program, control key) -> a unique champion name, stable for a given field.
+
+    Controls claim names in sorted "<program>--<key>" order, each at its hash slot or the next free one. V14 copies
+    take part in the claiming (as the Lovable app's did), but are shown as "<the original's name> HTF"."""
+    taken: set[str] = set()
     out: dict[tuple[str, str], str] = {}
-    order = sorted(set(controls), key=lambda pk: (PROGRAM_ORDER.index(pk[0]) if pk[0] in PROGRAM_ORDER else 99, pk[1]))
-    htf = [pk for pk in order if pk[0] == "v14"]                  # named after their originals, below
-    order = [pk for pk in order if pk[0] != "v14"]
-    for prog, key in order:
-        if (prog, key) in FIXED:
-            out[(prog, key)] = FIXED[(prog, key)]
-            continue
-        i = int(hashlib.sha1(f"{prog}|{key}".encode()).hexdigest(), 16) % len(NAMES)
+    for prog, key in sorted(set(controls), key=lambda pk: f"{pk[0]}--{pk[1]}"):
+        i = _fnv1a(f"{prog}--{key}") % len(NAMES)
         for step in range(len(NAMES)):
             name = NAMES[(i + step) % len(NAMES)]
             if name not in taken:
                 break
-        else:                                         # more bots than names: number them
+        else:                                         # more bots than champions: number them
             name = f"{NAMES[i]} {len(taken) + 1}"
         taken.add(name)
         out[(prog, key)] = name
-    for prog, key in htf:                                        # V14: "<the original's name> HTF"
+    for prog, key in [pk for pk in out if pk[0] == "v14"]:       # V14: "<the original's name> HTF"
         src = htf_original(key)
         out[(prog, key)] = (out.get(src) or ("Copy " + key.split("-")[0])) + " HTF" if src else key
     return out

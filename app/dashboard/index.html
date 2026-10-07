@@ -8,10 +8,10 @@
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/static/styles.css">
 </head>
-<body>
+<body class="lab-theme">
 
 <!-- login overlay: the shell is served openly, every /api call carries Basic auth from sessionStorage -->
 <div id="login" class="overlay" hidden>
@@ -26,10 +26,19 @@
   </form>
 </div>
 
+<aside id="side">
+  <a class="brand" href="/"><span class="brand-mark"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v7.31M14 9.3V2M8.5 2h7M14 9.3a6.5 6.5 0 1 1-4 0M5.52 16h12.96"/></svg></span>PaperLab</a>
+  <nav id="nav" class="mainnav" role="tablist" aria-label="sections"></nav>
+  <div class="side-foot">
+    <p>Operator console. Paper trading by default; live mirrors only when you arm them.</p>
+    <a href="/public/competition">Public read-only view</a>
+  </div>
+</aside>
+
+<div id="shell">
 <header id="top">
   <div id="stale" class="banner" role="alert" hidden>STALE</div>
   <div class="top-row">
-    <div class="brand"><span class="brand-mark"></span>PaperLab</div>
     <span id="mode-badge" class="badge mode other">&hellip;</span>
     <span id="dry-pill" class="pill dry" hidden>DRY RUN</span>
     <span id="conn" class="conn" title="market feed"><i class="dot"></i><span id="conn-txt">feed</span></span>
@@ -51,11 +60,9 @@
     <button id="sys-btn" class="btn ghost" type="button" title="controls, settings and health">&#9881; System</button>
     <a class="btn ghost" href="/public/stock-trend" title="Five-stock small-account trend strategy">Stock portfolio</a>
     <a class="btn ghost" href="/?p=video&bot=BTC-4H-BREAKOUT#bots/bots" title="Bitcoin breakout in Competition">Bitcoin breakout</a>
-    <a class="btn ghost" href="/lab" title="Overview, bots, programs and the AI cost analyzer (read-only)">Lab dashboard</a>
     <a id="logout" href="#" class="link">log out</a>
   </div>
   <div id="safety-strip" class="top-row safety-strip" aria-label="stream, data and Jev health"></div>
-  <nav id="nav" class="mainnav" role="tablist" aria-label="sections"></nav>
   <nav id="subnav" class="subnav" role="tablist" aria-label="views"></nav>
 </header>
 <div id="alive" class="alive" aria-live="polite"></div>
@@ -75,6 +82,12 @@
   </section>
   <section data-panel="v4" class="panel" hidden>
     <div id="v4-grid" class="grid"><div class="card"><p class="sub">loading the V4 specialists&hellip;</p></div></div>
+  </section>
+  <section data-panel="programs" class="panel" hidden>
+    <div id="programs-grid" class="grid"><div class="card"><p class="sub">loading the programs&hellip;</p></div></div>
+  </section>
+  <section data-panel="analyzer" class="panel" hidden>
+    <div id="analyzer-grid" class="grid"></div>
   </section>
   <section data-panel="system" class="panel" hidden>
     <div id="system-grid" class="grid"><div class="card"><p class="sub">loading the system status&hellip;</p></div></div>
@@ -291,6 +304,7 @@
     </div>
   </section>
 </main>
+</div>
 
 <div id="drawer-backdrop" hidden></div>
 <aside id="drawer" hidden aria-label="strategy detail">
@@ -336,6 +350,7 @@
 <script src="/static/breakout-competition.js"></script>
 <script src="/static/mirror.js"></script>
 <script src="/static/scout.js"></script>
+<script src="/static/lab.js"></script>
 <script src="/static/app.js"></script>
 </body>
 </html>

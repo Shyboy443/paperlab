@@ -26,9 +26,13 @@ def _row(key, net, trades, status="ACTIVE", start=20.0, coin="ENA", sid=None):
 
 
 def _build(payloads):
+    saved = rv.program_payloads                       # restored: later test files build the real roster
     rv.program_payloads = lambda state: {p: ({"experiment": {"experiment_id": p + "x"}, "leaderboard": rows}, NoStore())
                                          for p, rows in payloads.items()}
-    return rv.build(None, now_ms=1)
+    try:
+        return rv.build(None, now_ms=1)
+    finally:
+        rv.program_payloads = saved
 
 
 def test_names_are_unique_stable_and_shared_by_twins():
@@ -42,6 +46,15 @@ def test_names_are_unique_stable_and_shared_by_twins():
     assert d["name"] == base + " Ladder" and d["persona"] == "the snapper" and "three steps" in d["job"]
     assert describe("v11", {"key": "V11.4-SCAN", "strategy_id": "V11.4", "coin": "ALL"},
                     assign([("v11", "V11.4-SCAN")]))["where"] == "30 coins"
+
+
+def test_champion_names_match_the_lovable_dashboard():
+    # the same FNV-1a slot the Lovable app's JavaScript picked, so a bot keeps the champion the user saw there
+    from app.core.bot_names import _fnv1a
+    assert _fnv1a("") == 2166136261 and _fnv1a("a") == 0xE40C292C          # FNV-1a 32-bit reference values
+    names = assign([("v6", "V6.6-XRP-1H"), ("v8", "V8.3-ETH-5M"), ("v14", "V14.1-ETH-5M")])
+    assert names[("v6", "V6.6-XRP-1H")] == "Lux" and names[("v8", "V8.3-ETH-5M")] == "Lulu"
+    assert names[("v14", "V14.1-ETH-5M")] == "Lulu HTF"                    # a V14 copy carries its original's name
 
 
 def test_the_stage_takes_winners_with_enough_trades_best_first():

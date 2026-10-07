@@ -126,6 +126,8 @@ const NAV = {
   dashboard: { label: 'Dashboard', items: [{ id: 'home', label: 'Dashboard', panel: 'home', view: 'dashboard' }] },
   bots: { label: 'Bots', items: [{ id: 'bots', label: 'Bots', panel: 'home', view: 'bots' }] },
   markets: { label: 'Markets', items: [{ id: 'markets', label: 'Markets', panel: 'home', view: 'markets' }] },
+  programs: { label: 'Programs', items: [{ id: 'programs', label: 'Programs', panel: 'programs' }] },
+  analyzer: { label: 'Cost analyzer', items: [{ id: 'analyzer', label: 'Cost analyzer', panel: 'analyzer' }] },
   scout: { label: 'Scout', items: [{ id: 'scout', label: 'Scout', panel: 'scout' }] },
   system: { label: 'System', items: [
     { id: 'system', label: 'System', panel: 'system' },
@@ -148,7 +150,7 @@ const Nav = {
     const bar = $('#nav');
     for (const [id, grp] of Object.entries(NAV)) {
       if (grp.hidden) continue;
-      bar.append(h('button', { role: 'tab', type: 'button', 'data-nav': id, text: grp.label.toUpperCase(), onclick: () => this.go(id) }));
+      bar.append(navButton(id, grp.label, () => this.go(id)));
     }
     $('#sys-btn').addEventListener('click', () => this.go('system'));
     window.addEventListener('hashchange', () => this.fromHash());
@@ -187,6 +189,8 @@ const Nav = {
     if (item.panel === 'v4') V4View.load();
     if (item.panel === 'v5') V5View.load();
     if (item.panel === 'system') SystemView.load();
+    if (item.panel === 'programs') ProgramsView.load();
+    if (item.panel === 'analyzer') AnalyzerView.load();
     if (item.panel === 'live') Shadow.load();
     if (item.panel === 'activity') { if (!Activity.loaded) Activity.load(); else Activity.render(); }
     if (item.panel === 'health') Health.render();

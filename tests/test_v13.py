@@ -222,9 +222,10 @@ class TestFieldAndWiring:
         svc = V6ForwardService(str(tmp_path / "v13.db"), env={"V13_FORWARD_ENABLED": "true"}, program="V13")
         assert svc.enabled and svc.cfg["jev"] is False
         names = bot_names.assign([("v13", "V13.1-SNAP"), ("v11", "V11.1-SCAN")])
-        assert names[("v13", "V13.1-SNAP")] == "Bounce"
+        bounce = names[("v13", "V13.1-SNAP")]                   # a champion, like every bot
+        assert bounce in bot_names.NAMES
         d = bot_names.describe("v13", {"key": "V13.1-SNAP", "strategy_id": "V13.1", "coin": "ALL"}, names)
-        assert d["name"] == "Bounce" and d["where"] == "29 coins"
+        assert d["name"] == bounce and d["where"] == "29 coins"
         assert "v13" in roster_view.PINNED and roster_view.PROGRAMS["v13"] == "V13 Snapback"
         methods = {m for r in router.routes if getattr(r, "path", "").endswith("/v13") for m in r.methods}
         assert methods and methods <= {"GET", "HEAD"}

@@ -196,9 +196,10 @@ class TestWiring:
         svc = V6ForwardService(str(tmp_path / "v12.db"), env={"V12_FORWARD_ENABLED": "true"}, program="V12")
         assert svc.enabled and svc.cfg["jev"] is True
         names = bot_names.assign([("v12", "V12.1-DAY"), ("v11", "V11.1-SCAN")])
-        assert names[("v12", "V12.1-DAY")] == "Bizzy"
+        bizzy = names[("v12", "V12.1-DAY")]                     # a champion, like every bot
+        assert bizzy in bot_names.NAMES
         d = bot_names.describe("v12", {"key": "V12.1-DAY+JEV", "strategy_id": "V12.1", "coin": "DAY"}, names)
-        assert d["name"] == "Bizzy AI" and d["where"] == "ETH · SOL · HYPE"
+        assert d["name"] == bizzy + " AI" and d["where"] == "ETH · SOL · HYPE"
         assert "v12" in roster_view.PINNED and roster_view.PROGRAMS["v12"] == "V12 Bizzy"
 
     def test_the_v12_route_is_get_only(self):

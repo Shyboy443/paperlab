@@ -8,6 +8,8 @@
      /public/competition            Dashboard (?p=v8|v7|v6 picks the program)
      /public/competition/bots       Bots
      /public/competition/markets    Markets
+     /public/competition/programs   Programs (lab.js)
+     /public/competition/analyzer   Cost analyzer (lab.js; asks for the dashboard password)
      /public/competition/system     System (research history links to the server-rendered report)
    Older paths from the research-era page land on the Dashboard. */
 'use strict';
@@ -49,6 +51,8 @@ const NAV = [
   { id: 'dashboard', path: '', label: 'Dashboard', panel: 'home', view: 'dashboard' },
   { id: 'bots', path: 'bots', label: 'Bots', panel: 'home', view: 'bots' },
   { id: 'markets', path: 'markets', label: 'Markets', panel: 'home', view: 'markets' },
+  { id: 'programs', path: 'programs', label: 'Programs', panel: 'programs' },
+  { id: 'analyzer', path: 'analyzer', label: 'Cost analyzer', panel: 'analyzer' },
   { id: 'scout', path: 'scout', label: 'Scout', panel: 'scout' },
   { id: 'system', path: 'system', label: 'System', panel: 'system' },
 ];
@@ -62,7 +66,7 @@ const Nav = {
   panel: 'home',
   init() {
     const bar = $('#nav');
-    for (const n of NAV) bar.append(h('button', { role: 'tab', type: 'button', 'data-nav': n.id, text: n.label.toUpperCase(), onclick: () => this.go(n.id) }));
+    for (const n of NAV) bar.append(navButton(n.id, n.label, () => this.go(n.id)));
   },
   go(id) {
     const n = NAV.find((x) => x.id === id) || NAV[0];
@@ -77,6 +81,9 @@ const Nav = {
     $$('main [data-panel]').forEach((el) => { el.hidden = el.dataset.panel !== n.panel; });
     if (n.panel === 'home') { Arena.view = n.view; Arena.load(); } else Arena.deactivate();
     if (n.panel === 'system') SystemView.load();
+    if (n.panel === 'programs') ProgramsView.load();
+    if (n.panel === 'analyzer') AnalyzerView.load();
+    window.scrollTo(0, 0);
     if (n.panel === 'scout') Scout.load(); else Scout.deactivate();
   },
 };

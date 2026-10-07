@@ -167,8 +167,11 @@ def trade_ideas(events: list[dict[str, Any]], limit: int = 14) -> list[dict[str,
 def build(state: Any, now_ms: int | None = None) -> dict[str, Any]:
     now_ms = now_ms or int(time.time() * 1000)
     payloads = program_payloads(state)
-    names = assign((prog, control_of(str(r.get("key") or ""))[0]) for prog, (p, _) in payloads.items()
-                   for r in p.get("leaderboard") or [])
+    from app.video_breakout.competition import roster_row
+    breakout = roster_row(getattr(state, "video_breakout", None))
+    names = assign([*((prog, control_of(str(r.get("key") or ""))[0]) for prog, (p, _) in payloads.items()
+                      for r in p.get("leaderboard") or []),
+                    *([("video", str(breakout["key"]))] if breakout else [])])      # sorts last: shifts no other name
     rows: list[dict[str, Any]] = []
     for prog, (p, st) in payloads.items():
         eid = p["experiment"]["experiment_id"]
@@ -184,9 +187,8 @@ def build(state: Any, now_ms: int | None = None) -> dict[str, Any]:
                          "funding": r.get("funding_net"), "risk_state": r.get("risk_state"),
                          "positions": [{k: q.get(k) for k in POSITION_KEYS} for q in r.get("open_positions") or []],
                          "curve": r.get("curve") or [], "_st": st})
-    from app.video_breakout.competition import roster_row
-    breakout = roster_row(getattr(state, "video_breakout", None))
     if breakout:
+        breakout = {**breakout, "name": names.get(("video", str(breakout["key"]))) or breakout.get("name")}
         rows.append(breakout)
     by_key = {(x["program"], x["key"]): x for x in rows}
 
@@ -256,12 +258,12 @@ def build(state: Any, now_ms: int | None = None) -> dict[str, Any]:
             from app.video_breakout.competition import payload as breakout_payload
             book = breakout_payload(getattr(state, "video_breakout", None))
             for t in book["trades"]:
-                stream.append({"program": prog, "name": "Bitcoin breakout", "bot_key": breakout["key"],
+                stream.append({"program": prog, "name": breakout["name"], "bot_key": breakout["key"],
                                "kind": "closed", "ts": t["exit_ts"], "price": t["entry_price"],
                                "exit_price": t["exit_price"], "exit_kind": t["exit_kind"], **t})
             for f in book["fills"]:
                 if f["side"] == "BUY":
-                    stream.append({"program": prog, "name": "Bitcoin breakout", "bot_key": breakout["key"],
+                    stream.append({"program": prog, "name": breakout["name"], "bot_key": breakout["key"],
                                    "kind": "open", "ts": f["fill_time"], "open_ts": f["fill_time"],
                                    "symbol": "BTCUSDT", "side": "long", "price": f["price"]})
             continue

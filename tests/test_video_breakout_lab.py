@@ -234,7 +234,8 @@ async def test_competition_preserves_forward_wallet_and_costs(svc):
     assert row['open_positions'][0]['stop'] is None
     out = build(SimpleNamespace(video_breakout=s))
     assert len(out['scanners']) == 1 and out['kpis']['bots_total'] == 1
-    assert out['names']['video|' + KEY]['name'] == 'Bitcoin breakout'
+    from app.core.bot_names import NAMES
+    assert out['names']['video|' + KEY]['name'] in NAMES          # every bot carries a champion name
     assert out['scanners'][0]['live'] and '_st' not in out['scanners'][0]
     assert out['stream'][0]['kind'] == 'open'
     assert len(candles(s)['candles']) == 42

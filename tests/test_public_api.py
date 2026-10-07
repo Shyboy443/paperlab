@@ -119,7 +119,7 @@ class TestPublicReads:
     def test_public_page_loads_without_a_login(self, anon):
         r = anon.get("/public/competition")
         assert r.status_code == 200
-        assert "READ-ONLY INSPECTION" in r.text
+        assert "read-only inspection" in r.text.lower()
         assert 'id="login"' not in r.text, "the public page must not carry the login overlay"
 
     def test_deep_links_serve_the_same_shell(self, anon):

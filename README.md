@@ -49,8 +49,9 @@ any code a freeze pins starts a new experiment. Old results are never silently m
 | **Video breakout** | A Bitcoin 4-hour breakout taken from a YouTube video, rules frozen before evaluation | BTC | [VIDEO_BREAKOUT](docs/VIDEO_BREAKOUT.md) |
 | V1-V5 | The original Binance testnet bake-off and four research arenas. Now frozen history | | [LEGACY_V1_BAKEOFF](docs/LEGACY_V1_BAKEOFF.md), `docs/V2..V5_*` |
 
-Each bot gets a human name and persona (`app/core/bot_names.py`). The home screen shows the six best bots in profit
-plus pinned groups; every other bot keeps running out of view.
+Each bot is named after a League of Legends champion and has a persona (`app/core/bot_names.py`). Twins share the
+name ("Lux AI", "Lux Ladder"), and V14 copies carry their original's ("Lulu HTF"). The home screen shows the six best
+bots in profit plus pinned groups; every other bot keeps running out of view.
 
 ## Results so far
 
@@ -84,8 +85,7 @@ Earlier findings are summarized in [SYSTEM_REVIEW](docs/SYSTEM_REVIEW.md) and th
    +--------------------------+---------------------------+
    | FastAPI app (app/main.py)                             |
    |  - SQLite per program on the /data volume             |
-   |  - dashboards: / (private), /public/competition and  |
-   |    /lab (read-only; /lab's cost analyzer is private) |
+   |  - dashboards: / (private), /public/competition (r/o) |
    |  - realtime WebSocket / SSE stream                    |
    |  - Telegram notifier, watchdog, /public/health/deep   |
    |  - live mirror (operator-armed real orders)           |
@@ -106,9 +106,9 @@ Key modules:
 | `app/live/watchdog.py` | Health checks, SAFE MODE for live mirrors, deep health endpoint |
 | `app/live/v6_golive.py` | Which V6 bots may go live (a profitable two-year backtest) |
 | `app/core/` | API routes, views, storage, auth, realtime stream |
-| `app/dashboard/` | Front end: the operator console and public arena (plain JavaScript, no build step) |
-| `lab_ui/` → `app/dashboard/lab/` | The /lab dashboard (React, ported from the Lovable export), built to static files |
-| `app/core/api_lab.py`, `app/ai/analyzer.py` | Serves /lab; the private AI cost analyzer (OpenRouter, key stays server-side) |
+| `app/dashboard/` | Front end: the operator console and public arena (plain JavaScript, no build step), in the Lovable dashboard's design (sidebar, `styles.css` "LAB THEME") |
+| `app/dashboard/lab.js` | The Programs and Cost analyzer views, ported from the Lovable dashboard |
+| `app/core/api_lab.py`, `app/ai/analyzer.py` | The private AI cost analyzer (OpenRouter; the key stays server-side) |
 
 ## Safety model
 
@@ -142,8 +142,8 @@ uvicorn app.main:app --port 8540
 
 - Private dashboard: http://localhost:8540/ (user `admin`, password from `.env`).
 - Public read-only arena: http://localhost:8540/public/competition.
-- Lab dashboard: http://localhost:8540/lab (overview, bots, programs; the cost analyzer asks for the dashboard
-  password).
+- Both have Dashboard, Bots, Markets, Programs, Cost analyzer, Scout and System. The cost analyzer asks for the
+  dashboard password on the public page.
 
 The forward programs start only when their switches are on (see [Configuration](#configuration)).
 
@@ -154,15 +154,6 @@ python -m pytest -q
 ```
 
 That is about 1,500 tests, including freeze checks, mirror guards against a fake exchange, and engine timing.
-
-The /lab front end is a separate Vite project. Its build output is committed, so the server needs no Node:
-
-```bash
-cd lab_ui
-npm install
-npm run dev      # http://localhost:5174/lab, public API proxied to Railway
-npm run build    # typecheck + build into app/dashboard/lab/ (commit the result)
-```
 
 ## Deploying (Railway)
 
@@ -192,7 +183,7 @@ re-run.
 | `DASHBOARD_PASSWORD` | Private dashboard and API login (Basic auth) |
 | `V6_FORWARD_ENABLED`, `V8_FORWARD_ENABLED`, ... `V14_FORWARD_ENABLED` | Start each forward paper program at boot |
 | `JEV_ENABLED`, `OPENROUTER_API_KEY` | The Jev AI twins (decision model via OpenRouter) |
-| `ANALYZER_MODEL`, `ANALYZER_MAX_TOKENS` | The /lab cost analyzer's OpenRouter model (default `anthropic/claude-opus-5.5`) and answer length (16000) |
+| `ANALYZER_MODEL`, `ANALYZER_MAX_TOKENS` | The cost analyzer's OpenRouter model (default `anthropic/claude-opus-5.5`) and answer length (16000) |
 | `SCOUT_ENABLED`, `AUTORESEARCH_ENABLED` | The research-only programs |
 | `TELEGRAM_FILTER` | Which programs send Telegram trade signals (for example `v11,v12,v13,v14,v8:CONTROL`) |
 | `LIVE_MIRROR_MAINNET_ENABLED` | Allows real-money live mirrors (off by default) |
@@ -221,7 +212,6 @@ Data sources:
 
 ```
 app/            the application (see Architecture)
-lab_ui/         source of the /lab dashboard (Vite + React); builds into app/dashboard/lab/
 scripts/        studies, freezes, backtests, data fetchers
 docs/           protocols, freezes, study results, audits
 tests/          pytest suite
