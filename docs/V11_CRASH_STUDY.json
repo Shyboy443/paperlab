@@ -1,0 +1,387 @@
+{
+ "built": "2026-10-06 22:05 UTC",
+ "rules": " (2026-10-06, before any variant was run):\n\nData\n- The two-year Bybit 1m archive of scripts/backtest_2y.py, 30 coins.\n- Window: 2024-10-01 .. 2026-10-01, with 46 days of warm-up.\n- Year 1 (to 2025-10-01) and year 2 are the two halves.\n\nBook\n- 20 USDT, reset every day, so every day starts equal and every trade counts.\n- Halts off. Live fees, funding, sizing, 60 s latency, the 25/50/25 take-profit ladder and maker take-profits.\n\nEach variant changes ONE thing in the live V11.3:\n- BASE      the live bot, unchanged.\n- MAKER0    enter with a post-only LIMIT at the signal bar's close (maker fee, no spread), expires after 15 minutes.\n            A post-only order that would cross is a missed trade, never a market buy.\n- MAKER1    the same limit 0.3 ATR(5m) beyond the close (a little lower for a long).\n- CALM_BTC  skip a long when BTC itself fell >= 2 ATR in the same hour (a market-wide crash, not one coin's flush);\n            the mirror for shorts.\n- CAP3      at most 3 open positions in the same direction (the live cap is 8 of anything; crashes are correlated).\n- CONFIRM   the reversal bar must also close beyond the previous bar's high (long) / low (short).\n- DEEP5     the flush must be >= 5 ATR instead of 4.\n\nVerdict\n- A variant IMPROVES only if both its net USDT and its net R per trade beat BASE in BOTH years.\n- Also reported: trades per day (the operator wants it to stay aggressive), win rate, profit factor and fees.\n- The best improving variants may then be combined ONCE, and that combination must pass the same test.\n\nCOMBINATION (registered 2026-10-07 after the single changes, before it was run). MAKER0, MAKER1 and CONFIRM improved;\nMAKER0 and MAKER1 are alternatives, and MAKER1 had the better net R in both years.\n- COMBO     MAKER1 + CONFIRM.\n",
+ "results": {
+  "CALM_BTC": {
+   "opts": {
+    "btc_calm_atr": 2.0
+   },
+   "elapsed_s": 3139,
+   "rejects": {
+    "already_in_symbol": 3970,
+    "min_notional_needs_attack": 148,
+    "min_notional_above_max_risk": 474,
+    "fill_insufficient_capacity": 1070,
+    "min_notional_needs_strong_setup": 406,
+    "fill_max_positions": 27,
+    "max_positions": 218,
+    "fill_fee_gt_r": 2,
+    "gap_past_tp1": 41,
+    "gap_past_stop": 2,
+    "fill_stop_too_tight": 2
+   },
+   "signals": 16796,
+   "all": {
+    "trades": 10406,
+    "per_day": 14.25,
+    "net_usdt": -125.663,
+    "net_r": -0.0675,
+    "win": 0.577,
+    "pf": 0.744,
+    "fees": 94.141
+   },
+   "year1": {
+    "trades": 4410,
+    "per_day": 12.08,
+    "net_usdt": -42.583,
+    "net_r": -0.0553,
+    "win": 0.59,
+    "pf": 0.785,
+    "fees": 39.034
+   },
+   "year2": {
+    "trades": 5996,
+    "per_day": 16.43,
+    "net_usdt": -83.08,
+    "net_r": -0.0764,
+    "win": 0.568,
+    "pf": 0.716,
+    "fees": 55.107
+   }
+  },
+  "DEEP5": {
+   "opts": {
+    "fall_atr": 5.0
+   },
+   "elapsed_s": 3365,
+   "rejects": {
+    "already_in_symbol": 8750,
+    "min_notional_needs_attack": 934,
+    "min_notional_above_max_risk": 4484,
+    "max_positions": 4886,
+    "fill_insufficient_capacity": 2451,
+    "min_notional_needs_strong_setup": 1092,
+    "gap_past_tp1": 70,
+    "fill_max_positions": 1116,
+    "fill_fee_gt_r": 5,
+    "gap_past_stop": 3,
+    "insufficient_virtual_margin": 7,
+    "fill_stop_too_tight": 1
+   },
+   "signals": 45577,
+   "all": {
+    "trades": 21734,
+    "per_day": 29.77,
+    "net_usdt": -276.408,
+    "net_r": -0.0714,
+    "win": 0.57,
+    "pf": 0.727,
+    "fees": 197.743
+   },
+   "year1": {
+    "trades": 9638,
+    "per_day": 26.41,
+    "net_usdt": -114.087,
+    "net_r": -0.0676,
+    "win": 0.585,
+    "pf": 0.744,
+    "fees": 85.968
+   },
+   "year2": {
+    "trades": 12096,
+    "per_day": 33.14,
+    "net_usdt": -162.321,
+    "net_r": -0.0743,
+    "win": 0.557,
+    "pf": 0.714,
+    "fees": 111.775
+   }
+  },
+  "CONFIRM": {
+   "opts": {
+    "confirm": true
+   },
+   "elapsed_s": 3440,
+   "rejects": {
+    "already_in_symbol": 5687,
+    "min_notional_above_max_risk": 4494,
+    "min_notional_needs_attack": 976,
+    "max_positions": 3418,
+    "fill_insufficient_capacity": 2627,
+    "min_notional_needs_strong_setup": 1245,
+    "gap_past_tp1": 33,
+    "fill_max_positions": 1137,
+    "fill_fee_gt_r": 2,
+    "gap_past_stop": 2
+   },
+   "signals": 44703,
+   "all": {
+    "trades": 25029,
+    "per_day": 34.29,
+    "net_usdt": -299.26,
+    "net_r": -0.0663,
+    "win": 0.56,
+    "pf": 0.739,
+    "fees": 228.448
+   },
+   "year1": {
+    "trades": 11194,
+    "per_day": 30.67,
+    "net_usdt": -117.951,
+    "net_r": -0.0601,
+    "win": 0.579,
+    "pf": 0.767,
+    "fees": 99.973
+   },
+   "year2": {
+    "trades": 13835,
+    "per_day": 37.9,
+    "net_usdt": -181.31,
+    "net_r": -0.0713,
+    "win": 0.546,
+    "pf": 0.717,
+    "fees": 128.475
+   }
+  },
+  "CAP3": {
+   "opts": {
+    "side_cap": 3
+   },
+   "elapsed_s": 3466,
+   "rejects": {
+    "already_in_symbol": 8781,
+    "min_notional_above_max_risk": 4372,
+    "fill_insufficient_capacity": 3088,
+    "min_notional_needs_attack": 803,
+    "min_notional_needs_strong_setup": 1305,
+    "gap_past_tp1": 99,
+    "fill_fee_gt_r": 9,
+    "gap_past_stop": 4,
+    "fill_stop_too_tight": 3
+   },
+   "signals": 45223,
+   "all": {
+    "trades": 26695,
+    "per_day": 36.57,
+    "net_usdt": -335.427,
+    "net_r": -0.0704,
+    "win": 0.57,
+    "pf": 0.73,
+    "fees": 241.695
+   },
+   "year1": {
+    "trades": 12009,
+    "per_day": 32.9,
+    "net_usdt": -149.731,
+    "net_r": -0.071,
+    "win": 0.578,
+    "pf": 0.731,
+    "fees": 106.585
+   },
+   "year2": {
+    "trades": 14686,
+    "per_day": 40.24,
+    "net_usdt": -185.695,
+    "net_r": -0.0699,
+    "win": 0.562,
+    "pf": 0.73,
+    "fees": 135.11
+   }
+  },
+  "MAKER0": {
+   "opts": {
+    "limit_offset_atr": 0.0
+   },
+   "elapsed_s": 3514,
+   "rejects": {
+    "post_only_would_cross": 37724,
+    "limit_expired": 7308,
+    "already_in_symbol": 13889,
+    "min_notional_needs_attack": 2310,
+    "min_notional_above_max_risk": 10560,
+    "max_positions": 5510,
+    "limit_slot_taken": 1217,
+    "min_notional_needs_strong_setup": 2835,
+    "insufficient_virtual_margin": 33,
+    "fill_insufficient_capacity": 14
+   },
+   "signals": 106276,
+   "all": {
+    "trades": 24671,
+    "per_day": 33.8,
+    "net_usdt": -247.434,
+    "net_r": -0.0534,
+    "win": 0.549,
+    "pf": 0.799,
+    "fees": 154.524
+   },
+   "year1": {
+    "trades": 10779,
+    "per_day": 29.53,
+    "net_usdt": -107.858,
+    "net_r": -0.0537,
+    "win": 0.56,
+    "pf": 0.806,
+    "fees": 67.069
+   },
+   "year2": {
+    "trades": 13892,
+    "per_day": 38.06,
+    "net_usdt": -139.575,
+    "net_r": -0.0532,
+    "win": 0.54,
+    "pf": 0.794,
+    "fees": 87.455
+   }
+  },
+  "MAKER1": {
+   "opts": {
+    "limit_offset_atr": 0.3
+   },
+   "elapsed_s": 3624,
+   "rejects": {
+    "already_in_symbol": 17121,
+    "post_only_would_cross": 10842,
+    "limit_expired": 16010,
+    "min_notional_needs_attack": 2331,
+    "min_notional_above_max_risk": 10554,
+    "limit_slot_taken": 3847,
+    "max_positions": 10880,
+    "min_notional_needs_strong_setup": 2842,
+    "fill_insufficient_capacity": 48,
+    "insufficient_virtual_margin": 25,
+    "below_min_notional": 1
+   },
+   "signals": 106889,
+   "all": {
+    "trades": 32098,
+    "per_day": 43.97,
+    "net_usdt": -295.07,
+    "net_r": -0.049,
+    "win": 0.556,
+    "pf": 0.814,
+    "fees": 200.737
+   },
+   "year1": {
+    "trades": 13988,
+    "per_day": 38.32,
+    "net_usdt": -116.08,
+    "net_r": -0.0445,
+    "win": 0.568,
+    "pf": 0.835,
+    "fees": 86.725
+   },
+   "year2": {
+    "trades": 18110,
+    "per_day": 49.62,
+    "net_usdt": -178.991,
+    "net_r": -0.0525,
+    "win": 0.547,
+    "pf": 0.796,
+    "fees": 114.012
+   }
+  },
+  "BASE": {
+   "opts": {},
+   "elapsed_s": 3718,
+   "rejects": {
+    "already_in_symbol": 21018,
+    "min_notional_needs_attack": 2324,
+    "max_positions": 19201,
+    "min_notional_above_max_risk": 10630,
+    "fill_max_positions": 4197,
+    "fill_insufficient_capacity": 4691,
+    "min_notional_needs_strong_setup": 2940,
+    "gap_past_tp1": 135,
+    "fill_fee_gt_r": 8,
+    "insufficient_virtual_margin": 7,
+    "gap_past_stop": 5,
+    "bot_halted": 17,
+    "fill_stop_too_tight": 3
+   },
+   "signals": 106276,
+   "all": {
+    "trades": 41011,
+    "per_day": 56.18,
+    "net_usdt": -513.354,
+    "net_r": -0.0706,
+    "win": 0.568,
+    "pf": 0.728,
+    "fees": 369.799
+   },
+   "year1": {
+    "trades": 18603,
+    "per_day": 50.97,
+    "net_usdt": -223.248,
+    "net_r": -0.0687,
+    "win": 0.584,
+    "pf": 0.74,
+    "fees": 164.153
+   },
+   "year2": {
+    "trades": 22408,
+    "per_day": 61.39,
+    "net_usdt": -290.106,
+    "net_r": -0.0722,
+    "win": 0.554,
+    "pf": 0.719,
+    "fees": 205.645
+   }
+  },
+  "COMBO": {
+   "opts": {
+    "limit_offset_atr": 0.3,
+    "confirm": true
+   },
+   "elapsed_s": 3576,
+   "rejects": {
+    "limit_expired": 8488,
+    "post_only_would_cross": 5794,
+    "already_in_symbol": 3590,
+    "min_notional_above_max_risk": 4477,
+    "min_notional_needs_attack": 977,
+    "limit_slot_taken": 1025,
+    "max_positions": 1254,
+    "min_notional_needs_strong_setup": 1220,
+    "fill_insufficient_capacity": 9
+   },
+   "signals": 45151,
+   "all": {
+    "trades": 18137,
+    "per_day": 24.85,
+    "net_usdt": -160.615,
+    "net_r": -0.0462,
+    "win": 0.55,
+    "pf": 0.818,
+    "fees": 114.046
+   },
+   "year1": {
+    "trades": 7860,
+    "per_day": 21.53,
+    "net_usdt": -48.916,
+    "net_r": -0.0321,
+    "win": 0.572,
+    "pf": 0.871,
+    "fees": 48.987
+   },
+   "year2": {
+    "trades": 10277,
+    "per_day": 28.16,
+    "net_usdt": -111.699,
+    "net_r": -0.057,
+    "win": 0.534,
+    "pf": 0.777,
+    "fees": 65.059
+   }
+  }
+ },
+ "verdict": {
+  "CALM_BTC": "DOES NOT IMPROVE",
+  "DEEP5": "DOES NOT IMPROVE",
+  "CONFIRM": "IMPROVES",
+  "CAP3": "DOES NOT IMPROVE",
+  "MAKER0": "IMPROVES",
+  "MAKER1": "IMPROVES",
+  "COMBO": "IMPROVES"
+ }
+}

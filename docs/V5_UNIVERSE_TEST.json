@@ -1,0 +1,1700 @@
+{
+ "window": {
+  "from": "2023-09-01",
+  "to": "2025-02-28",
+  "warmup_from": "2023-06-01"
+ },
+ "scoring_period": {
+  "from": "2023-08-02",
+  "to": "2023-08-31"
+ },
+ "sources": {
+  "liquidity_volatility": "Bybit v5 kline D and 240",
+  "filters": "Bybit v5 instruments-info",
+  "data_probes": "Bybit v5 kline 1m, funding/history, open-interest 1h at the warm-up start"
+ },
+ "fetched_at": "2026-09-24T12:25:30Z",
+ "limits": [
+  "candidates are today's Bybit instruments (a contract delisted before today cannot be one)",
+  "today's tick / step / minimum filters are applied to the scoring-period price"
+ ],
+ "rule": {
+  "pool_size": 40,
+  "min_listing_days": 90,
+  "min_turnover_usdt": 20000000.0,
+  "max_half_spread_bps": 2.0,
+  "min_range_4h_bps": 100.0,
+  "max_cost_ratio": 0.15,
+  "taker_fee_bps": 5.5,
+  "balance": 20.0,
+  "take_risk_pct": 0.01,
+  "stop_range_mult": 1.5,
+  "min_stop_pct": 0.01,
+  "max_stop_pct": 0.06,
+  "max_step_share": 0.25,
+  "max_leverage": 20,
+  "universe_size": 10
+ },
+ "rule_fingerprint": "c01f7c75cc3b",
+ "ranked": [
+  "YGGUSDT",
+  "XRPUSDT",
+  "LPTUSDT",
+  "SHIB1000USDT",
+  "OPUSDT",
+  "RUNEUSDT",
+  "DOGEUSDT",
+  "APTUSDT",
+  "APEUSDT",
+  "ARBUSDT",
+  "LINKUSDT",
+  "INJUSDT",
+  "ADAUSDT"
+ ],
+ "universe": [
+  "YGGUSDT",
+  "XRPUSDT",
+  "LPTUSDT",
+  "SHIB1000USDT",
+  "OPUSDT",
+  "RUNEUSDT",
+  "DOGEUSDT",
+  "APTUSDT",
+  "APEUSDT",
+  "ARBUSDT"
+ ],
+ "coins": {
+  "BTCUSDT": {
+   "turnover_usdt": 2512477892.81675,
+   "close": 28215.199999999997,
+   "range_4h_bps": 62.72136927077423,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.0354,
+   "half_spread_bps": 0.0177,
+   "round_trip_cost_bps": 11.035,
+   "cost_ratio": 0.1759,
+   "typical_stop_pct": 0.01,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 20.0,
+   "typical_stop_legal_at_20": false,
+   "min_order_usdt": 28.2152,
+   "step_share": 1.41076,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.10",
+    "step": "0.001",
+    "min_qty": "0.001",
+    "min_notional": "5",
+    "max_leverage": "150.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1584230400000,
+    "status": "Trading"
+   },
+   "fail": [
+    "TOO_QUIET",
+    "COSTS_EAT_THE_MOVE",
+    "BELOW_EXCHANGE_MINIMUM_AT_20_USDT",
+    "QUANTITY_STEP_TOO_COARSE"
+   ]
+  },
+  "ETHUSDT": {
+   "turnover_usdt": 642221839.6211,
+   "close": 1768.0,
+   "range_4h_bps": 60.007921742079674,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.0566,
+   "half_spread_bps": 0.0283,
+   "round_trip_cost_bps": 11.057,
+   "cost_ratio": 0.1843,
+   "typical_stop_pct": 0.01,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 20.0,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 17.68,
+   "step_share": 0.884,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.01",
+    "step": "0.01",
+    "min_qty": "0.01",
+    "min_notional": "5",
+    "max_leverage": "150.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1615766400000,
+    "status": "Trading"
+   },
+   "fail": [
+    "TOO_QUIET",
+    "COSTS_EAT_THE_MOVE",
+    "QUANTITY_STEP_TOO_COARSE"
+   ]
+  },
+  "XRPUSDT": {
+   "turnover_usdt": 262864868.2079,
+   "close": 0.5640499999999999,
+   "range_4h_bps": 147.99251321197798,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 1.7729,
+   "half_spread_bps": 0.8864,
+   "round_trip_cost_bps": 12.773,
+   "cost_ratio": 0.0863,
+   "typical_stop_pct": 0.0222,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 9.009,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00282,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.0001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "100.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1620898440000,
+    "status": "Trading"
+   },
+   "fail": [],
+   "components": {
+    "liquidity": 1.0,
+    "cost": 0.3333,
+    "granularity": 0.9167
+   },
+   "score": 0.75
+  },
+  "SOLUSDT": {
+   "turnover_usdt": 207172378.43055,
+   "close": 22.253999999999998,
+   "range_4h_bps": 162.1271616149084,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 4.4936,
+   "half_spread_bps": 2.2468,
+   "round_trip_cost_bps": 15.494,
+   "cost_ratio": 0.0956,
+   "typical_stop_pct": 0.02432,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 8.224,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.11127,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.010",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "100.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1634256000000,
+    "status": "Trading"
+   },
+   "fail": [
+    "WIDE_SPREAD"
+   ]
+  },
+  "1000PEPEUSDT": {
+   "turnover_usdt": 179149458.97257,
+   "close": 0.0011259,
+   "range_4h_bps": 288.4360621761329,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 8.8818,
+   "half_spread_bps": 4.4409,
+   "round_trip_cost_bps": 19.882,
+   "cost_ratio": 0.0689,
+   "typical_stop_pct": 0.04327,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 4.623,
+   "typical_stop_legal_at_20": false,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00563,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.0000010",
+    "step": "100",
+    "min_qty": "100",
+    "min_notional": "5",
+    "max_leverage": "50.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1683108271000,
+    "status": "Trading"
+   },
+   "fail": [
+    "WIDE_SPREAD"
+   ]
+  },
+  "DOGEUSDT": {
+   "turnover_usdt": 88306438.69264,
+   "close": 0.06677,
+   "range_4h_bps": 134.6174235029555,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 1.4977,
+   "half_spread_bps": 0.7488,
+   "round_trip_cost_bps": 12.498,
+   "cost_ratio": 0.0928,
+   "typical_stop_pct": 0.02019,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 9.905,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00334,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.00001",
+    "step": "1",
+    "min_qty": "1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1622630640000,
+    "status": "Trading"
+   },
+   "fail": [],
+   "components": {
+    "liquidity": 0.9167,
+    "cost": 0.1667,
+    "granularity": 0.75
+   },
+   "score": 0.6111
+  },
+  "LPTUSDT": {
+   "turnover_usdt": 81733689.54699999,
+   "close": 6.361000000000001,
+   "range_4h_bps": 431.544747976581,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.1572,
+   "half_spread_bps": 0.0786,
+   "round_trip_cost_bps": 11.157,
+   "cost_ratio": 0.0259,
+   "typical_stop_pct": 0.06,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 3.333,
+   "typical_stop_legal_at_20": false,
+   "min_order_usdt": 5.0,
+   "step_share": 0.03181,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.0001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "25.00",
+    "funding_interval_min": 240,
+    "launch_ts": 1639357959000,
+    "status": "Trading"
+   },
+   "fail": [],
+   "components": {
+    "liquidity": 0.8333,
+    "cost": 1.0,
+    "granularity": 0.1667
+   },
+   "score": 0.6667
+  },
+  "OPUSDT": {
+   "turnover_usdt": 79786258.89193499,
+   "close": 1.5345,
+   "range_4h_bps": 211.6253351593739,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.0652,
+   "half_spread_bps": 0.0326,
+   "round_trip_cost_bps": 11.065,
+   "cost_ratio": 0.0523,
+   "typical_stop_pct": 0.03174,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 6.3,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00767,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.00001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1654059063000,
+    "status": "Trading"
+   },
+   "fail": [],
+   "components": {
+    "liquidity": 0.75,
+    "cost": 0.75,
+    "granularity": 0.4167
+   },
+   "score": 0.6389
+  },
+  "SHIB1000USDT": {
+   "turnover_usdt": 52062863.094624996,
+   "close": 0.008399,
+   "range_4h_bps": 230.62344269601982,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 1.1906,
+   "half_spread_bps": 0.5953,
+   "round_trip_cost_bps": 12.191,
+   "cost_ratio": 0.0529,
+   "typical_stop_pct": 0.03459,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 5.781,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.0042,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.000001",
+    "step": "10",
+    "min_qty": "10",
+    "min_notional": "5",
+    "max_leverage": "50.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1634688000000,
+    "status": "Trading"
+   },
+   "fail": [],
+   "components": {
+    "liquidity": 0.6667,
+    "cost": 0.6667,
+    "granularity": 0.6667
+   },
+   "score": 0.6667
+  },
+  "BCHUSDT": {
+   "turnover_usdt": 49279611.051249996,
+   "close": 219.35,
+   "range_4h_bps": 165.8341811278849,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 4.5589,
+   "half_spread_bps": 2.2795,
+   "round_trip_cost_bps": 15.559,
+   "cost_ratio": 0.0938,
+   "typical_stop_pct": 0.02488,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 8.04,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.10967,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.10",
+    "step": "0.01",
+    "min_qty": "0.01",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1514764800000,
+    "status": "Trading"
+   },
+   "fail": [
+    "WIDE_SPREAD"
+   ]
+  },
+  "SUIUSDT": {
+   "turnover_usdt": 46947429.305250004,
+   "close": 0.58302,
+   "range_4h_bps": 211.3328235618418,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 1.7152,
+   "half_spread_bps": 0.8576,
+   "round_trip_cost_bps": 12.715,
+   "cost_ratio": 0.0602,
+   "typical_stop_pct": 0.0317,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 6.309,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.8302,
+   "step_share": 0.29151,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.00010",
+    "step": "10",
+    "min_qty": "10",
+    "min_notional": "5",
+    "max_leverage": "50.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1683029724000,
+    "status": "Trading"
+   },
+   "fail": [
+    "QUANTITY_STEP_TOO_COARSE"
+   ]
+  },
+  "RUNEUSDT": {
+   "turnover_usdt": 44965710.2414,
+   "close": 1.4595,
+   "range_4h_bps": 281.6387029454552,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.6852,
+   "half_spread_bps": 0.3426,
+   "round_trip_cost_bps": 11.685,
+   "cost_ratio": 0.0415,
+   "typical_stop_pct": 0.04225,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 4.734,
+   "typical_stop_legal_at_20": false,
+   "min_order_usdt": 5.0,
+   "step_share": 0.0073,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.0001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1638144000000,
+    "status": "Trading"
+   },
+   "fail": [],
+   "components": {
+    "liquidity": 0.5833,
+    "cost": 0.8333,
+    "granularity": 0.5
+   },
+   "score": 0.6389
+  },
+  "YGGUSDT": {
+   "turnover_usdt": 44506194.16317999,
+   "close": 0.25270000000000004,
+   "range_4h_bps": 376.28230812894657,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.3957,
+   "half_spread_bps": 0.1979,
+   "round_trip_cost_bps": 11.396,
+   "cost_ratio": 0.0303,
+   "typical_stop_pct": 0.05644,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 3.543,
+   "typical_stop_legal_at_20": false,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00126,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.00001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "25.00",
+    "funding_interval_min": 240,
+    "launch_ts": 1637625600000,
+    "status": "Trading"
+   },
+   "fail": [],
+   "components": {
+    "liquidity": 0.5,
+    "cost": 0.9167,
+    "granularity": 1.0
+   },
+   "score": 0.8056
+  },
+  "LTCUSDT": {
+   "turnover_usdt": 41737973.170499995,
+   "close": 71.655,
+   "range_4h_bps": 115.18091608501419,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 1.3956,
+   "half_spread_bps": 0.6978,
+   "round_trip_cost_bps": 12.396,
+   "cost_ratio": 0.1076,
+   "typical_stop_pct": 0.01728,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 11.576,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 7.1655,
+   "step_share": 0.35828,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.01",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1514764800000,
+    "status": "Trading"
+   },
+   "fail": [
+    "QUANTITY_STEP_TOO_COARSE"
+   ]
+  },
+  "LINKUSDT": {
+   "turnover_usdt": 39826459.341,
+   "close": 6.5535,
+   "range_4h_bps": 131.60379145810884,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 1.5259,
+   "half_spread_bps": 0.763,
+   "round_trip_cost_bps": 12.526,
+   "cost_ratio": 0.0952,
+   "typical_stop_pct": 0.01974,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 10.131,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.03277,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1514764800000,
+    "status": "Trading"
+   },
+   "fail": [],
+   "components": {
+    "liquidity": 0.4167,
+    "cost": 0.0833,
+    "granularity": 0.0833
+   },
+   "score": 0.1944
+  },
+  "BNBUSDT": {
+   "turnover_usdt": 28307177.5585,
+   "close": 229.27499999999998,
+   "range_4h_bps": 78.06702233865744,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 4.3616,
+   "half_spread_bps": 2.1808,
+   "round_trip_cost_bps": 15.362,
+   "cost_ratio": 0.1968,
+   "typical_stop_pct": 0.01171,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 17.079,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.11464,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.10",
+    "step": "0.01",
+    "min_qty": "0.01",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1624951080000,
+    "status": "Trading"
+   },
+   "fail": [
+    "WIDE_SPREAD",
+    "TOO_QUIET",
+    "COSTS_EAT_THE_MOVE"
+   ]
+  },
+  "APEUSDT": {
+   "turnover_usdt": 28111949.606399998,
+   "close": 1.666,
+   "range_4h_bps": 198.8313938912609,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.06,
+   "half_spread_bps": 0.03,
+   "round_trip_cost_bps": 11.06,
+   "cost_ratio": 0.0556,
+   "typical_stop_pct": 0.02982,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 6.706,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00833,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.00001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "50.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1647571477000,
+    "status": "Trading"
+   },
+   "fail": [],
+   "components": {
+    "liquidity": 0.3333,
+    "cost": 0.5833,
+    "granularity": 0.3333
+   },
+   "score": 0.4166
+  },
+  "ARBUSDT": {
+   "turnover_usdt": 26364250.003125,
+   "close": 1.03845,
+   "range_4h_bps": 123.9080071097581,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.0963,
+   "half_spread_bps": 0.0481,
+   "round_trip_cost_bps": 11.096,
+   "cost_ratio": 0.0896,
+   "typical_stop_pct": 0.01859,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 10.761,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00519,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.00001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "50.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1679563660000,
+    "status": "Trading"
+   },
+   "fail": [],
+   "components": {
+    "liquidity": 0.25,
+    "cost": 0.25,
+    "granularity": 0.5833
+   },
+   "score": 0.3611
+  },
+  "ADAUSDT": {
+   "turnover_usdt": 25003471.90005,
+   "close": 0.2735,
+   "range_4h_bps": 113.93927854323923,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 3.6563,
+   "half_spread_bps": 1.8282,
+   "round_trip_cost_bps": 14.656,
+   "cost_ratio": 0.1286,
+   "typical_stop_pct": 0.01709,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 11.702,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.01368,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.0001",
+    "step": "1",
+    "min_qty": "1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1610668800000,
+    "status": "Trading"
+   },
+   "fail": [],
+   "components": {
+    "liquidity": 0.1667,
+    "cost": 0.0,
+    "granularity": 0.25
+   },
+   "score": 0.1389
+  },
+  "INJUSDT": {
+   "turnover_usdt": 23702525.314125,
+   "close": 7.65,
+   "range_4h_bps": 179.7529962194089,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 1.3072,
+   "half_spread_bps": 0.6536,
+   "round_trip_cost_bps": 12.307,
+   "cost_ratio": 0.0685,
+   "typical_stop_pct": 0.02696,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 7.418,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.03825,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.0010",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "50.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1660694400000,
+    "status": "Trading"
+   },
+   "fail": [],
+   "components": {
+    "liquidity": 0.0833,
+    "cost": 0.5,
+    "granularity": 0.0
+   },
+   "score": 0.1944
+  },
+  "APTUSDT": {
+   "turnover_usdt": 20198057.3414075,
+   "close": 6.12225,
+   "range_4h_bps": 134.60108786186782,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.1633,
+   "half_spread_bps": 0.0817,
+   "round_trip_cost_bps": 11.163,
+   "cost_ratio": 0.0829,
+   "typical_stop_pct": 0.02019,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 9.906,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00306,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.0001",
+    "step": "0.01",
+    "min_qty": "0.01",
+    "min_notional": "5",
+    "max_leverage": "50.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1666107272000,
+    "status": "Trading"
+   },
+   "fail": [],
+   "components": {
+    "liquidity": 0.0,
+    "cost": 0.4167,
+    "granularity": 0.8333
+   },
+   "score": 0.4167
+  },
+  "GALAUSDT": {
+   "turnover_usdt": 19392868.60026,
+   "close": 0.02053,
+   "range_4h_bps": 156.58411302261416,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.4871,
+   "half_spread_bps": 0.2435,
+   "round_trip_cost_bps": 11.487,
+   "cost_ratio": 0.0734,
+   "typical_stop_pct": 0.02349,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 8.515,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00103,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.000001",
+    "step": "1",
+    "min_qty": "1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1636416000000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY"
+   ]
+  },
+  "HBARUSDT": {
+   "turnover_usdt": 19032753.890145,
+   "close": 0.05779,
+   "range_4h_bps": 236.9361586007605,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 1.7304,
+   "half_spread_bps": 0.8652,
+   "round_trip_cost_bps": 12.73,
+   "cost_ratio": 0.0537,
+   "typical_stop_pct": 0.03554,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 5.627,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00289,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.00001",
+    "step": "1",
+    "min_qty": "1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1635120000000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY"
+   ]
+  },
+  "AVAXUSDT": {
+   "turnover_usdt": 16958974.83975,
+   "close": 11.114999999999998,
+   "range_4h_bps": 113.1977880837436,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.8997,
+   "half_spread_bps": 0.4498,
+   "round_trip_cost_bps": 11.9,
+   "cost_ratio": 0.1051,
+   "typical_stop_pct": 0.01698,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 11.779,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.05557,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1631664000000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY"
+   ]
+  },
+  "XLMUSDT": {
+   "turnover_usdt": 15651648.376875,
+   "close": 0.128425,
+   "range_4h_bps": 162.34045115618233,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 7.7866,
+   "half_spread_bps": 3.8933,
+   "round_trip_cost_bps": 18.787,
+   "cost_ratio": 0.1157,
+   "typical_stop_pct": 0.02435,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 8.213,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00642,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.00010",
+    "step": "1",
+    "min_qty": "1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1628726400000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY",
+    "WIDE_SPREAD"
+   ]
+  },
+  "CRVUSDT": {
+   "turnover_usdt": 14456061.46115,
+   "close": 0.5215000000000001,
+   "range_4h_bps": 194.3321112177623,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 1.9175,
+   "half_spread_bps": 0.9588,
+   "round_trip_cost_bps": 12.918,
+   "cost_ratio": 0.0665,
+   "typical_stop_pct": 0.02915,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 6.861,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00261,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.0001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1635120000000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY"
+   ]
+  },
+  "COMPUSDT": {
+   "turnover_usdt": 13031102.726,
+   "close": 45.275,
+   "range_4h_bps": 202.74883296209958,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 2.2087,
+   "half_spread_bps": 1.1044,
+   "round_trip_cost_bps": 13.209,
+   "cost_ratio": 0.0651,
+   "typical_stop_pct": 0.03041,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 6.576,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.02264,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.010",
+    "step": "0.01",
+    "min_qty": "0.01",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1628726400000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY"
+   ]
+  },
+  "ATOMUSDT": {
+   "turnover_usdt": 12825388.86065,
+   "close": 7.8305,
+   "range_4h_bps": 118.27544046837463,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 1.2771,
+   "half_spread_bps": 0.6385,
+   "round_trip_cost_bps": 12.277,
+   "cost_ratio": 0.1038,
+   "typical_stop_pct": 0.01774,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 11.273,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.03915,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.0010",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1633910400000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY"
+   ]
+  },
+  "DYDXUSDT": {
+   "turnover_usdt": 10113976.199000001,
+   "close": 2.107,
+   "range_4h_bps": 172.1150523769798,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.0475,
+   "half_spread_bps": 0.0237,
+   "round_trip_cost_bps": 11.047,
+   "cost_ratio": 0.0642,
+   "typical_stop_pct": 0.02582,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 7.747,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.01054,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.00001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1633910400000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY"
+   ]
+  },
+  "CFXUSDT": {
+   "turnover_usdt": 9331113.69724,
+   "close": 0.145455,
+   "range_4h_bps": 186.0077347324424,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.6875,
+   "half_spread_bps": 0.3437,
+   "round_trip_cost_bps": 11.687,
+   "cost_ratio": 0.0628,
+   "typical_stop_pct": 0.0279,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 7.168,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00727,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.00001",
+    "step": "1",
+    "min_qty": "1",
+    "min_notional": "5",
+    "max_leverage": "25.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1676883925000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY"
+   ]
+  },
+  "DOTUSDT": {
+   "turnover_usdt": 8934103.3294,
+   "close": 4.6685,
+   "range_4h_bps": 101.01438404558172,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.2142,
+   "half_spread_bps": 0.1071,
+   "round_trip_cost_bps": 11.214,
+   "cost_ratio": 0.111,
+   "typical_stop_pct": 0.01515,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 13.199,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.02334,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.0001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1616060040000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY"
+   ]
+  },
+  "SNXUSDT": {
+   "turnover_usdt": 8663770.632,
+   "close": 2.2750000000000004,
+   "range_4h_bps": 178.77582572353276,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.4396,
+   "half_spread_bps": 0.2198,
+   "round_trip_cost_bps": 11.44,
+   "cost_ratio": 0.064,
+   "typical_stop_pct": 0.02682,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 7.458,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.01138,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.0001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1639357278000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY"
+   ]
+  },
+  "ETCUSDT": {
+   "turnover_usdt": 8494170.182,
+   "close": 16.4675,
+   "range_4h_bps": 99.31034881686344,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.6073,
+   "half_spread_bps": 0.3036,
+   "round_trip_cost_bps": 11.607,
+   "cost_ratio": 0.1169,
+   "typical_stop_pct": 0.0149,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 13.426,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.08234,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1624950240000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY",
+    "TOO_QUIET"
+   ]
+  },
+  "SANDUSDT": {
+   "turnover_usdt": 8402545.8849,
+   "close": 0.34609999999999996,
+   "range_4h_bps": 127.1892445189971,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.2889,
+   "half_spread_bps": 0.1445,
+   "round_trip_cost_bps": 11.289,
+   "cost_ratio": 0.0888,
+   "typical_stop_pct": 0.01908,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 10.483,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.0173,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.00001",
+    "step": "1",
+    "min_qty": "1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1635724800000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY"
+   ]
+  },
+  "AAVEUSDT": {
+   "turnover_usdt": 8324551.9736,
+   "close": 59.955,
+   "range_4h_bps": 137.84009911089902,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 1.6679,
+   "half_spread_bps": 0.834,
+   "round_trip_cost_bps": 12.668,
+   "cost_ratio": 0.0919,
+   "typical_stop_pct": 0.02068,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 9.673,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.02998,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.01",
+    "step": "0.01",
+    "min_qty": "0.01",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1620897660000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY"
+   ]
+  },
+  "LDOUSDT": {
+   "turnover_usdt": 8124114.429375,
+   "close": 1.69275,
+   "range_4h_bps": 147.7939494677505,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.5908,
+   "half_spread_bps": 0.2954,
+   "round_trip_cost_bps": 11.591,
+   "cost_ratio": 0.0784,
+   "typical_stop_pct": 0.02217,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 9.022,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00846,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.0001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "50.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1658300019000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY"
+   ]
+  },
+  "NEARUSDT": {
+   "turnover_usdt": 7863156.23025,
+   "close": 1.217,
+   "range_4h_bps": 136.06094536677944,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 8.2169,
+   "half_spread_bps": 4.1085,
+   "round_trip_cost_bps": 19.217,
+   "cost_ratio": 0.1412,
+   "typical_stop_pct": 0.02041,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 9.8,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00609,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.0010",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1633910400000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY",
+    "WIDE_SPREAD"
+   ]
+  },
+  "KNCUSDT": {
+   "turnover_usdt": 7803433.868294999,
+   "close": 0.5847,
+   "range_4h_bps": 192.0167719334525,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.171,
+   "half_spread_bps": 0.0855,
+   "round_trip_cost_bps": 11.171,
+   "cost_ratio": 0.0582,
+   "typical_stop_pct": 0.0288,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 6.944,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00292,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.00001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "25.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1641800434000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY"
+   ]
+  },
+  "UNIUSDT": {
+   "turnover_usdt": 6932621.6677,
+   "close": 5.218999999999999,
+   "range_4h_bps": 137.11814762773255,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 1.9161,
+   "half_spread_bps": 0.958,
+   "round_trip_cost_bps": 12.916,
+   "cost_ratio": 0.0942,
+   "typical_stop_pct": 0.02057,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 9.724,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.02609,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.001",
+    "step": "0.1",
+    "min_qty": "0.1",
+    "min_notional": "5",
+    "max_leverage": "75.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1638230400000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY"
+   ]
+  },
+  "GMTUSDT": {
+   "turnover_usdt": 6848241.5733,
+   "close": 0.17515,
+   "range_4h_bps": 130.74536252829665,
+   "days": 30,
+   "bars_4h": 180,
+   "measurable": true,
+   "tick_bps": 0.0571,
+   "half_spread_bps": 0.0285,
+   "round_trip_cost_bps": 11.057,
+   "cost_ratio": 0.0846,
+   "typical_stop_pct": 0.01961,
+   "take_notional_usdt": 20.0,
+   "typical_take_notional_usdt": 10.198,
+   "typical_stop_legal_at_20": true,
+   "min_order_usdt": 5.0,
+   "step_share": 0.00876,
+   "leverage_needed": 1.0,
+   "leverage_cap": 20,
+   "listed_long_enough": true,
+   "data": {
+    "tape": true,
+    "funding": true,
+    "open_interest": true
+   },
+   "filters": {
+    "tick": "0.000001",
+    "step": "1",
+    "min_qty": "1",
+    "min_notional": "5",
+    "max_leverage": "50.00",
+    "funding_interval_min": 480,
+    "launch_ts": 1647667511000,
+    "status": "Trading"
+   },
+   "fail": [
+    "LOW_LIQUIDITY"
+   ]
+  }
+ },
+ "eligible": 13,
+ "candidates": 40,
+ "failures": {
+  "BELOW_EXCHANGE_MINIMUM_AT_20_USDT": 1,
+  "COSTS_EAT_THE_MOVE": 3,
+  "LOW_LIQUIDITY": 19,
+  "QUANTITY_STEP_TOO_COARSE": 4,
+  "TOO_QUIET": 4,
+  "WIDE_SPREAD": 6
+ }
+}

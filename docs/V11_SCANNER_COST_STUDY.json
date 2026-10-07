@@ -1,0 +1,452 @@
+{
+ "runs": [
+  {
+   "family": "V11.1",
+   "variant": "MAKER_TP",
+   "half1": {
+    "trades": 404,
+    "per_day": 9.0,
+    "win": 0.542,
+    "net_r": -0.0887,
+    "fees_r": 0.0635,
+    "avg_win_r": 0.501,
+    "avg_loss_r": -0.786,
+    "pf": 0.754,
+    "net_usdt": -6.86,
+    "exits": {
+     "be": 129,
+     "time": 137,
+     "stop": 100,
+     "tp": 38
+    }
+   },
+   "half2": {
+    "trades": 214,
+    "per_day": 4.8,
+    "win": 0.598,
+    "net_r": -0.0435,
+    "fees_r": 0.055,
+    "avg_win_r": 0.525,
+    "avg_loss_r": -0.89,
+    "pf": 0.878,
+    "net_usdt": -1.46,
+    "exits": {
+     "be": 66,
+     "tp": 39,
+     "stop": 62,
+     "time": 47
+    }
+   },
+   "all": {
+    "trades": 618,
+    "per_day": 6.9,
+    "win": 0.561,
+    "net_r": -0.073,
+    "fees_r": 0.0605,
+    "avg_win_r": 0.51,
+    "avg_loss_r": -0.819,
+    "pf": 0.797,
+    "net_usdt": -8.32,
+    "exits": {
+     "be": 195,
+     "time": 184,
+     "stop": 162,
+     "tp": 77
+    }
+   }
+  },
+  {
+   "family": "V11.1",
+   "variant": "MAKER_TP+MINSTOP12",
+   "half1": {
+    "trades": 401,
+    "per_day": 8.9,
+    "win": 0.534,
+    "net_r": -0.0717,
+    "fees_r": 0.0587,
+    "avg_win_r": 0.519,
+    "avg_loss_r": -0.748,
+    "pf": 0.795,
+    "net_usdt": -5.44,
+    "exits": {
+     "be": 112,
+     "time": 155,
+     "stop": 92,
+     "tp": 42
+    }
+   },
+   "half2": {
+    "trades": 213,
+    "per_day": 4.7,
+    "win": 0.61,
+    "net_r": -0.0313,
+    "fees_r": 0.0525,
+    "avg_win_r": 0.513,
+    "avg_loss_r": -0.883,
+    "pf": 0.909,
+    "net_usdt": -0.83,
+    "exits": {
+     "be": 65,
+     "tp": 40,
+     "stop": 60,
+     "time": 48
+    }
+   },
+   "all": {
+    "trades": 614,
+    "per_day": 6.8,
+    "win": 0.56,
+    "net_r": -0.0577,
+    "fees_r": 0.0565,
+    "avg_win_r": 0.517,
+    "avg_loss_r": -0.79,
+    "pf": 0.834,
+    "net_usdt": -6.27,
+    "exits": {
+     "be": 177,
+     "time": 203,
+     "stop": 152,
+     "tp": 82
+    }
+   }
+  },
+  {
+   "family": "V11.1",
+   "variant": "MAKER_TP+MINSTOP15",
+   "half1": {
+    "trades": 398,
+    "per_day": 8.8,
+    "win": 0.52,
+    "net_r": -0.0829,
+    "fees_r": 0.0548,
+    "avg_win_r": 0.502,
+    "avg_loss_r": -0.717,
+    "pf": 0.759,
+    "net_usdt": -6.2,
+    "exits": {
+     "be": 103,
+     "time": 167,
+     "stop": 89,
+     "tp": 39
+    }
+   },
+   "half2": {
+    "trades": 213,
+    "per_day": 4.7,
+    "win": 0.606,
+    "net_r": -0.0174,
+    "fees_r": 0.05,
+    "avg_win_r": 0.512,
+    "avg_loss_r": -0.831,
+    "pf": 0.947,
+    "net_usdt": -0.44,
+    "exits": {
+     "tp": 40,
+     "stop": 55,
+     "be": 63,
+     "time": 55
+    }
+   },
+   "all": {
+    "trades": 611,
+    "per_day": 6.8,
+    "win": 0.55,
+    "net_r": -0.0601,
+    "fees_r": 0.0531,
+    "avg_win_r": 0.506,
+    "avg_loss_r": -0.752,
+    "pf": 0.822,
+    "net_usdt": -6.64,
+    "exits": {
+     "be": 166,
+     "time": 222,
+     "stop": 144,
+     "tp": 79
+    }
+   }
+  },
+  {
+   "family": "V11.1",
+   "variant": "MAKER_TP+TOP2",
+   "half1": {
+    "trades": 398,
+    "per_day": 8.8,
+    "win": 0.538,
+    "net_r": -0.0959,
+    "fees_r": 0.0637,
+    "avg_win_r": 0.504,
+    "avg_loss_r": -0.793,
+    "pf": 0.738,
+    "net_usdt": -7.32,
+    "exits": {
+     "be": 125,
+     "time": 134,
+     "stop": 101,
+     "tp": 38
+    }
+   },
+   "half2": {
+    "trades": 210,
+    "per_day": 4.7,
+    "win": 0.6,
+    "net_r": -0.0408,
+    "fees_r": 0.0553,
+    "avg_win_r": 0.522,
+    "avg_loss_r": -0.885,
+    "pf": 0.885,
+    "net_usdt": -1.34,
+    "exits": {
+     "be": 65,
+     "tp": 39,
+     "time": 46,
+     "stop": 60
+    }
+   },
+   "all": {
+    "trades": 608,
+    "per_day": 6.8,
+    "win": 0.559,
+    "net_r": -0.0769,
+    "fees_r": 0.0608,
+    "avg_win_r": 0.511,
+    "avg_loss_r": -0.822,
+    "pf": 0.788,
+    "net_usdt": -8.65,
+    "exits": {
+     "be": 190,
+     "time": 180,
+     "stop": 161,
+     "tp": 77
+    }
+   }
+  },
+  {
+   "family": "V11.2",
+   "variant": "MAKER_TP",
+   "half1": {
+    "trades": 582,
+    "per_day": 12.9,
+    "win": 0.625,
+    "net_r": -0.1445,
+    "fees_r": 0.0852,
+    "avg_win_r": 0.368,
+    "avg_loss_r": -1.001,
+    "pf": 0.615,
+    "net_usdt": -15.93,
+    "exits": {
+     "stop": 183,
+     "be": 302,
+     "tp": 67,
+     "time": 30
+    }
+   },
+   "half2": {
+    "trades": 495,
+    "per_day": 11.0,
+    "win": 0.717,
+    "net_r": -0.0116,
+    "fees_r": 0.0718,
+    "avg_win_r": 0.384,
+    "avg_loss_r": -1.016,
+    "pf": 0.96,
+    "net_usdt": -1.23,
+    "exits": {
+     "be": 286,
+     "stop": 124,
+     "tp": 68,
+     "time": 17
+    }
+   },
+   "all": {
+    "trades": 1077,
+    "per_day": 12.0,
+    "win": 0.668,
+    "net_r": -0.0834,
+    "fees_r": 0.079,
+    "avg_win_r": 0.376,
+    "avg_loss_r": -1.007,
+    "pf": 0.751,
+    "net_usdt": -17.16,
+    "exits": {
+     "stop": 307,
+     "be": 588,
+     "tp": 135,
+     "time": 47
+    }
+   }
+  },
+  {
+   "family": "V11.2",
+   "variant": "MAKER_TP+MINSTOP12",
+   "half1": {
+    "trades": 562,
+    "per_day": 12.5,
+    "win": 0.612,
+    "net_r": -0.1345,
+    "fees_r": 0.0706,
+    "avg_win_r": 0.363,
+    "avg_loss_r": -0.919,
+    "pf": 0.623,
+    "net_usdt": -14.39,
+    "exits": {
+     "stop": 161,
+     "be": 281,
+     "tp": 58,
+     "time": 62
+    }
+   },
+   "half2": {
+    "trades": 486,
+    "per_day": 10.8,
+    "win": 0.716,
+    "net_r": 0.0031,
+    "fees_r": 0.0626,
+    "avg_win_r": 0.386,
+    "avg_loss_r": -0.962,
+    "pf": 1.011,
+    "net_usdt": -0.11,
+    "exits": {
+     "stop": 116,
+     "time": 27,
+     "be": 276,
+     "tp": 67
+    }
+   },
+   "all": {
+    "trades": 1048,
+    "per_day": 11.6,
+    "win": 0.66,
+    "net_r": -0.0707,
+    "fees_r": 0.0669,
+    "avg_win_r": 0.374,
+    "avg_loss_r": -0.936,
+    "pf": 0.778,
+    "net_usdt": -14.5,
+    "exits": {
+     "stop": 277,
+     "be": 557,
+     "tp": 125,
+     "time": 89
+    }
+   }
+  },
+  {
+   "family": "V11.2",
+   "variant": "MAKER_TP+MINSTOP15",
+   "half1": {
+    "trades": 550,
+    "per_day": 12.2,
+    "win": 0.585,
+    "net_r": -0.1266,
+    "fees_r": 0.0613,
+    "avg_win_r": 0.377,
+    "avg_loss_r": -0.838,
+    "pf": 0.635,
+    "net_usdt": -13.08,
+    "exits": {
+     "stop": 145,
+     "be": 247,
+     "time": 101,
+     "tp": 57
+    }
+   },
+   "half2": {
+    "trades": 477,
+    "per_day": 10.6,
+    "win": 0.711,
+    "net_r": 0.0132,
+    "fees_r": 0.0558,
+    "avg_win_r": 0.393,
+    "avg_loss_r": -0.919,
+    "pf": 1.05,
+    "net_usdt": 0.77,
+    "exits": {
+     "stop": 109,
+     "time": 37,
+     "be": 254,
+     "tp": 77
+    }
+   },
+   "all": {
+    "trades": 1027,
+    "per_day": 11.4,
+    "win": 0.644,
+    "net_r": -0.0617,
+    "fees_r": 0.0587,
+    "avg_win_r": 0.385,
+    "avg_loss_r": -0.869,
+    "pf": 0.801,
+    "net_usdt": -12.31,
+    "exits": {
+     "stop": 254,
+     "be": 501,
+     "time": 138,
+     "tp": 134
+    }
+   }
+  },
+  {
+   "family": "V11.2",
+   "variant": "MAKER_TP+TOP2",
+   "half1": {
+    "trades": 581,
+    "per_day": 12.9,
+    "win": 0.625,
+    "net_r": -0.1458,
+    "fees_r": 0.0852,
+    "avg_win_r": 0.368,
+    "avg_loss_r": -1.001,
+    "pf": 0.612,
+    "net_usdt": -16.04,
+    "exits": {
+     "stop": 183,
+     "be": 302,
+     "tp": 66,
+     "time": 30
+    }
+   },
+   "half2": {
+    "trades": 487,
+    "per_day": 10.8,
+    "win": 0.717,
+    "net_r": -0.0131,
+    "fees_r": 0.0719,
+    "avg_win_r": 0.383,
+    "avg_loss_r": -1.014,
+    "pf": 0.954,
+    "net_usdt": -1.31,
+    "exits": {
+     "be": 282,
+     "stop": 122,
+     "tp": 66,
+     "time": 17
+    }
+   },
+   "all": {
+    "trades": 1068,
+    "per_day": 11.9,
+    "win": 0.667,
+    "net_r": -0.0853,
+    "fees_r": 0.0792,
+    "avg_win_r": 0.375,
+    "avg_loss_r": -1.006,
+    "pf": 0.746,
+    "net_usdt": -17.35,
+    "exits": {
+     "stop": 305,
+     "be": 584,
+     "tp": 132,
+     "time": 47
+    }
+   }
+  }
+ ],
+ "passing": {
+  "V11.1": [
+   "MAKER_TP+MINSTOP12"
+  ],
+  "V11.2": [
+   "MAKER_TP+MINSTOP15"
+  ]
+ }
+}

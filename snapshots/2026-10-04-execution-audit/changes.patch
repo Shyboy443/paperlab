@@ -1,0 +1,437 @@
+--- before/app/backtest/replay.py
++++ after/app/backtest/replay.py
+@@ -75,6 +75,7 @@
+     starting_equity: float = 0.0
+     halted: bool = False
+     halt_ts: int | None = None
++    daily_halts: list[dict[str, Any]] = field(default_factory=list)
+     # Leverage actually USED, sampled once per bar. `max_leverage` is only a ceiling: the
+     # RiskManager sizes from risk-per-trade and stop distance, so a 20x book routinely runs at 2x.
+     bars_seen: int = 0
+@@ -92,6 +93,7 @@
+     gate_events: list[dict[str, Any]] = field(default_factory=list)
+     shadow_trades: list[ClosedTrade] = field(default_factory=list)
+     shadow_links: dict[str, str] = field(default_factory=dict)       # shadow position id -> decision id
++    shadow_rejects: dict[str, int] = field(default_factory=dict)
+     cost_gate_events: list[dict[str, Any]] = field(default_factory=list)
+     entry_links: dict[str, str] = field(default_factory=dict)        # real position id -> decision id
+ 
+@@ -307,7 +309,9 @@
+                 self._reset_book(sid, balance, res, resets[next_reset])
+                 next_reset += 1
+             self._roll_day(bar.close_time)
+-            self._push_bars(bar, tfs, agg)
++            self._now = bar.open_time
++            self.ctx.set_price(bar.symbol, bar.open, bar.open_time)
++            self._check_halts(sid, res)
+             # 1. execute orders whose latency has elapsed, settle any funding instants this bar
+             #    crossed, then walk the bar's price path against every open position
+             self._execute_pending(bar, meta, res)
+@@ -316,12 +320,18 @@
+             self._walk(bar)
+             self._shadow_walk(bar)
+             self.ctx.set_price(bar.symbol, bar.close, bar.close_time)
++            self._now = bar.close_time
++            self._check_halts(sid, res)
++            # Entries execute before this bar becomes indicator history. At its open,
++            # its high, low, close and final volume are still unknown.
++            self._push_bars(bar, tfs, agg)
+             # 2. let the strategy manage what it holds, then emit, on the bars it subscribes to
+             for tf in tfs:
+                 closed = self.ctx.latest(bar.symbol, tf, bar.close_time)
+                 if closed is None:
+                     continue
+                 self._manage(strat, closed, bar)
++                self._check_halts(sid, res)
+                 if bar.close_time < since_ms:
+                     continue
+                 # A specialist only decides on its own timeframe; the others are context.
+@@ -329,17 +339,17 @@
+                     continue
+                 self._signals(strat, closed, meta, res, cooldown_ms)
+             # 3. mark the book, and sample how much leverage is actually in use
++            self._check_halts(sid, res)
+             eq = self.portfolio.wallet_equity(sid, self.ctx.prices)
+             self._peak = max(self._peak, eq)
+             res.equity.append((bar.close_time, eq))
+             self._sample_leverage(res, sid, eq)
+             self._prev_bar[bar.symbol] = bar
+-            if not res.halted and self.risk.check_strategy_halt(sid, eq):
+-                res.halted, res.halt_ts = True, bar.close_time
+-                meta.halted = True
+ 
+         self._flatten(sid)
+         self._shadow_flatten()
++        if res.equity:
++            res.equity[-1] = (res.equity[-1][0], self.portfolio.wallet_equity(sid, self.ctx.prices))
+         res.trades = [t for t in self.portfolio.closed_trades if t.strategy_id == sid]
+         if self.shadow is not None:
+             res.shadow_trades = list(self.shadow.closed_trades)
+@@ -385,12 +395,31 @@
+                 still.append((order, sig, decision))
+                 continue
+             ts = max(bar.open_time, order.execute_at)
++            expires = order.execute_at + max(1, sig.valid_bars) * tf_ms(sig.tf or "1m")
++            if bar.open_time >= expires:
++                self._reject_pending(order, res, "fill_signal_expired")
++                continue
++            self._now = ts
++            self.ctx.set_price(bar.symbol, bar.open, ts)
++            if not self._entry_at_fill(order, sig, decision, meta, res, bar.open):
++                continue
+             state = self._market_state(bar, bar.open, ts, sig.tf or "1m")
+             result = self.execution.execute(order, state)
+             if not result.fills or result.rejected:
+                 res.rejects["execution_" + (result.rejected or "no_fill")] =                     res.rejects.get("execution_" + (result.rejected or "no_fill"), 0) + 1
+                 order.reject(result.rejected or "no_fill")
+                 continue
++            # Include the achieved spread/slippage in stop risk. If sizing shrinks,
++            # price the smaller submitted order again before recording any fills.
++            submitted_qty = order.qty
++            if not self._entry_at_fill(order, sig, decision, meta, res, result.avg_price,
++                                       maker=result.role == "MAKER"):
++                continue
++            if order.qty < submitted_qty:
++                result = self.execution.execute(order, state)
++                if not result.fills or result.rejected:
++                    self._reject_pending(order, res, "execution_" + (result.rejected or "no_fill"))
++                    continue
+             for f in result.fills:
+                 order.add_fill(f)
+             if result.remainder == "EXPIRED" and not order.is_terminal:
+@@ -419,6 +448,78 @@
+                 res.entry_links[_pos.id] = did
+         self._pending = still
+ 
++    @staticmethod
++    def _reject_pending(order: Order, res: ReplayResult, reason: str) -> bool:
++        res.rejects[reason] = res.rejects.get(reason, 0) + 1
++        order.reject(reason)
++        return False
++
++    def _entry_at_fill(self, order: Order, sig: Signal, decision: Any, meta: StrategyMeta,
++                       res: ReplayResult, price: float, *, maker: bool = False,
++                       counterfactual: bool = False) -> bool:
++        """Recheck a queued entry against current capital and its executable price.
++
++        Keep the approved risk budget and leverage; never enlarge an order or rerun
++        an LLM/sizing policy. A signal's cooldown does not cancel its own order.
++        """
++        reject = lambda why: self._reject_pending(order, res, why)
++        st = self.risk.state
++        if not counterfactual and st.daily_halted:
++            return reject("fill_daily_halt")
++        if not counterfactual and (st.killed or not st.engine_running or not meta.enabled
++                                   or meta.halted or meta.id in st.halted_strategies):
++            return reject("fill_halted")
++        held = self.portfolio.positions_of(meta.id)
++        if not counterfactual and len(held) >= max(1, meta.max_positions):
++            return reject("fill_max_positions")
++        if not counterfactual and any(p.symbol == sig.symbol and p.leg == sig.leg for p in held):
++            return reject("fill_already_in_symbol")
++        if not math.isfinite(price) or price <= 0:
++            return reject("fill_no_price")
++        long = sig.side == "long"
++        if (long and price <= sig.stop) or (not long and price >= sig.stop):
++            return reject("gap_past_stop")
++        if sig.take_profits:
++            tp1 = sig.take_profits[0].price
++            if (long and price >= tp1) or (not long and price <= tp1):
++                return reject("gap_past_tp1")
++        prices = {**self.ctx.prices, sig.symbol: price}
++        equity = self.portfolio.wallet_equity(meta.id, prices)
++        available = self.portfolio.available(meta.id, prices)
++        total = self.portfolio.total_equity(prices)
++        dist = abs(price - sig.stop)
++        if dist / price < self.settings.min_stop_bps / 1e4:
++            return reject("fill_stop_too_tight")
++        if 2.0 * self.settings.taker_fee * price > self.settings.max_fee_share_of_r * dist + 1e-12:
++            return reject("fill_fee_gt_r")
++        if meta.min_rr > 0:
++            rr = dataclasses.replace(sig, entry_price=price).rr()
++            if rr is None or rr < meta.min_rr - 1e-9:
++                return reject("fill_rr_below_min")
++        budget = order.meta.setdefault("approved_risk_usd", decision.risk_usd)
++        if self.max_risk_pct is not None:
++            budget = min(budget, self.max_risk_pct * max(0.0, equity))
++        rate = self.settings.maker_fee if maker else self.settings.taker_fee
++        lev = max(1, decision.leverage)
++        gross_room = self.settings.max_total_notional_mult * total - self.portfolio.gross_notional(prices)
++        sign = 1 if long else -1
++        net_room = self.settings.max_net_notional_mult * total / price - sign * self.portfolio.net_qty(sig.symbol)
++        qty = min(order.qty, budget / dist, max(0.0, available) / (price * (1.0 / lev + rate)),
++                  max(0.0, gross_room) / price, max(0.0, net_room))
++        rules = self.rules[sig.symbol]
++        qty = rules.round_qty_down(qty) if rules.step else qty
++        minimum = rules.min_notional * max(1.0, self.settings.min_notional_safety_multiplier)
++        if qty <= 0 or qty < rules.min_qty - 1e-12 or qty * price < minimum - 1e-9:
++            return reject("fill_insufficient_capacity")
++        order.qty = decision.qty = qty
++        decision.notional = qty * price
++        decision.margin = decision.notional / lev
++        decision.risk_usd = qty * dist
++        if order.meta.get("sizing"):
++            order.meta["sizing"].update(risk_usd=decision.risk_usd,
++                                       risk_pct=decision.risk_usd / equity if equity > 0 else None)
++        return True
++
+     def _reset_book(self, sid: str, balance: float, res: ReplayResult, ts: int) -> None:
+         """Flatten and rebase to the starting balance, clearing any halt.
+ 
+@@ -427,7 +528,7 @@
+         """
+         for pos in list(self.portfolio.positions_of(sid)):
+             price = self.ctx.prices.get(pos.symbol)
+-            bar = getattr(self, "_bar", None)
++            bar = self._own_bar(pos.symbol)
+             if price and bar is not None:
+                 self._fills.append(self._close(pos, pos.id, 1.0, price, "reset",
+                                                "walk-forward window reset", bar, ts))
+@@ -444,6 +545,7 @@
+             meta.halted = False
+             meta.cooldown_until.clear()
+         self.risk.state.daily_halted = False
++        self.risk.state.start_of_day_equity = balance
+         self.risk.set_halt_floor(sid, balance)
+         self._pending = []
+         self._peak = balance
+@@ -495,8 +597,31 @@
+     def _roll_day(self, ts: int) -> None:
+         day = dt.datetime.fromtimestamp(ts / 1000, dt.timezone.utc).date().isoformat()
+         if day != self._day:
++            # Forward paper guards specify a halt for the remainder of the UTC day.
++            self.risk.state.daily_halted = False
+             self.risk.roll_day(self.portfolio.total_equity(self.ctx.prices), day)
+             self._day = day
++
++    def _check_halts(self, sid: str, res: ReplayResult | None = None) -> None:
++        res = res or getattr(self, "_res", None)
++        if res is None:
++            return  # no running book (e.g. an isolated exit-model inspection)
++        equity = self.portfolio.wallet_equity(sid, self.ctx.prices)
++        if self.risk.check_daily_halt(self.portfolio.total_equity(self.ctx.prices)):
++            res.daily_halts.append({"ts": self._now, "equity": equity,
++                                    "start_equity": self.risk.state.start_of_day_equity})
++            for order, _, _ in self._pending:
++                self._reject_pending(order, res, "fill_daily_halt")
++            self._pending = []
++            self._flatten_positions(sid, "halt", "daily loss limit", self._now)
++        equity = self.portfolio.wallet_equity(sid, self.ctx.prices)
++        if not res.halted and self.risk.check_strategy_halt(sid, equity):
++            res.halted, res.halt_ts = True, self._now
++            self._meta.halted = True
++            for order, _, _ in self._pending:
++                self._reject_pending(order, res, "fill_halted")
++            self._pending = []
++            self._flatten_positions(sid, "halt", "strategy loss limit", self._now)
+ 
+     def _push_bars(self, bar: Candle, tfs: Sequence[str], agg: dict) -> None:
+         for tf in tfs:
+@@ -541,6 +666,7 @@
+                     self._fills.append(self._close(pos, intent.position_id, intent.fraction,
+                                                    intent.ref_price, intent.kind, intent.reason,
+                                                    bar, ts))
++                self._check_halts(pos.strategy_id)
+         self._now = bar.close_time
+ 
+     def _manage(self, strat: Any, closed: Candle, bar: Candle) -> None:
+@@ -727,9 +853,27 @@
+                 still.append((order, sig, decision, did))
+                 continue
+             ts = max(bar.open_time, order.execute_at)
+-            result = self.execution.execute(order, self._market_state(bar, bar.open, ts, sig.tf or "1m"))
++            shadow_res = ReplayResult(sig.strategy_id, rejects=self._res.shadow_rejects)
++            expires = order.execute_at + max(1, sig.valid_bars) * tf_ms(sig.tf or "1m")
++            if bar.open_time >= expires:
++                self._reject_pending(order, shadow_res, "fill_signal_expired")
++                continue
++            self._now = ts
++            self.ctx.set_price(bar.symbol, bar.open, ts)
++            if not self._entry_at_fill(order, sig, decision, self._meta, shadow_res, bar.open, counterfactual=True):
++                continue
++            state = self._market_state(bar, bar.open, ts, sig.tf or "1m")
++            result = self.execution.execute(order, state)
+             if not result.fills or result.rejected:
+                 continue
++            submitted_qty = order.qty
++            if not self._entry_at_fill(order, sig, decision, self._meta, shadow_res, result.avg_price,
++                                       maker=result.role == "MAKER", counterfactual=True):
++                continue
++            if order.qty < submitted_qty:
++                result = self.execution.execute(order, state)
++                if not result.fills or result.rejected:
++                    continue
+             pos, _ = self.shadow.open_position(sig, decision, result.decision_price, True, ts=ts,
+                                                fill_price=result.avg_price,
+                                                maker=(result.role == "MAKER"),
+@@ -766,9 +910,9 @@
+     def _shadow_flatten(self) -> None:
+         if self.shadow is None:
+             return
+-        bar = getattr(self, "_bar", None)
+         for pos in list(self.shadow.positions.values()):
+             price = self.ctx.prices.get(pos.symbol)
++            bar = self._own_bar(pos.symbol)
+             if price and bar is not None:
+                 self._shadow_close(pos, pos.id, 1.0, price, "time", "end of replay", bar, self._now)
+         self._shadow_pending = []
+@@ -841,7 +985,7 @@
+ 
+     def _close_matching(self, sig: Signal, ts: int) -> None:
+         price = self.ctx.prices.get(sig.symbol)
+-        bar = getattr(self, "_bar", None)
++        bar = self._own_bar(sig.symbol)
+         if price is None or bar is None:
+             return
+         for pos in self.portfolio.positions_of(sig.strategy_id):
+@@ -851,9 +995,15 @@
+ 
+     def _flatten(self, sid: str) -> None:
+         """Close anything still open at the end of the tape so it shows up in the results."""
++        self._flatten_positions(sid, "time", "end of replay", self._now)
++
++    def _own_bar(self, symbol: str) -> Candle | None:
+         bar = getattr(self, "_bar", None)
++        return bar if bar is not None and bar.symbol == symbol else self._prev_bar.get(symbol)
++
++    def _flatten_positions(self, sid: str, kind: str, reason: str, ts: int) -> None:
+         for pos in list(self.portfolio.positions_of(sid)):
+             price = self.ctx.prices.get(pos.symbol)
++            bar = self._own_bar(pos.symbol)
+             if price and bar is not None:
+-                self._fills.append(self._close(pos, pos.id, 1.0, price, "time", "end of replay",
+-                                               bar, self._now))
++                self._fills.append(self._close(pos, pos.id, 1.0, price, kind, reason, bar, ts))
+--- before/app/competition/v11_config.py
++++ after/app/competition/v11_config.py
+@@ -188,7 +188,7 @@
+     ok = (checks["days"] >= q["min_days"] and checks["trades"] >= q["min_trades"]
+           and (checks["net"] or 0.0) > q["min_net"] and (checks["profit_factor"] or 0.0) >= q["min_profit_factor"]
+           and (checks["max_dd"] if checks["max_dd"] is not None else 1.0) <= q["max_drawdown"]
+-          and row.get("risk_state") not in ("HALTED", "FLOOR_HALT"))
++          and row.get("risk_state") not in ("HALTED", "FLOOR_HALT", "DAILY_HALT"))
+     return ("QUALIFIED" if ok else "ACTIVE"), checks
+ 
+ 
+--- before/app/competition/v12_config.py
++++ after/app/competition/v12_config.py
+@@ -176,7 +176,7 @@
+     ok = (checks["days"] >= q["min_days"] and checks["trades"] >= q["min_trades"]
+           and (checks["net"] or 0.0) > q["min_net"] and (checks["profit_factor"] or 0.0) >= q["min_profit_factor"]
+           and (checks["max_dd"] if checks["max_dd"] is not None else 1.0) <= q["max_drawdown"]
+-          and row.get("risk_state") not in ("HALTED", "FLOOR_HALT"))
++          and row.get("risk_state") not in ("HALTED", "FLOOR_HALT", "DAILY_HALT"))
+     return ("QUALIFIED" if ok else "ACTIVE"), checks
+ 
+ 
+--- before/app/competition/v13_config.py
++++ after/app/competition/v13_config.py
+@@ -165,7 +165,7 @@
+     ok = (checks["days"] >= q["min_days"] and checks["trades"] >= q["min_trades"]
+           and (checks["net"] or 0.0) > q["min_net"] and (checks["profit_factor"] or 0.0) >= q["min_profit_factor"]
+           and (checks["max_dd"] if checks["max_dd"] is not None else 1.0) <= q["max_drawdown"]
+-          and row.get("risk_state") not in ("HALTED", "FLOOR_HALT"))
++          and row.get("risk_state") not in ("HALTED", "FLOOR_HALT", "DAILY_HALT"))
+     return ("QUALIFIED" if ok else "ACTIVE"), checks
+ 
+ 
+--- before/app/competition/v14_config.py
++++ after/app/competition/v14_config.py
+@@ -181,7 +181,7 @@
+     ok = (checks["days"] >= q["min_days"] and checks["trades"] >= q["min_trades"]
+           and (checks["net"] or 0.0) > q["min_net"] and (checks["profit_factor"] or 0.0) >= q["min_profit_factor"]
+           and (checks["max_dd"] if checks["max_dd"] is not None else 1.0) <= q["max_drawdown"]
+-          and row.get("risk_state") not in ("HALTED", "FLOOR_HALT"))
++          and row.get("risk_state") not in ("HALTED", "FLOOR_HALT", "DAILY_HALT"))
+     return ("QUALIFIED" if ok else "ACTIVE"), checks
+ 
+ 
+--- before/app/competition/v8_config.py
++++ after/app/competition/v8_config.py
+@@ -186,7 +186,7 @@
+     ok = (checks["days"] >= q["min_days"] and checks["trades"] >= q["min_trades"]
+           and (checks["net"] or 0.0) > q["min_net"] and (checks["profit_factor"] or 0.0) >= q["min_profit_factor"]
+           and (checks["max_dd"] if checks["max_dd"] is not None else 1.0) <= q["max_drawdown"]
+-          and row.get("risk_state") not in ("HALTED", "FLOOR_HALT"))
++          and row.get("risk_state") not in ("HALTED", "FLOOR_HALT", "DAILY_HALT"))
+     return ("QUALIFIED" if ok else "ACTIVE"), checks
+ 
+ 
+--- before/app/competition/v9_config.py
++++ after/app/competition/v9_config.py
+@@ -165,7 +165,7 @@
+     ok = (checks["sessions"] >= q["min_sessions"] and checks["trades"] >= q["min_trades"]
+           and (checks["net"] or 0.0) > q["min_net"] and (checks["profit_factor"] or 0.0) >= q["min_profit_factor"]
+           and (checks["max_dd"] if checks["max_dd"] is not None else 1.0) <= q["max_drawdown"]
+-          and row.get("risk_state") not in ("HALTED", "FLOOR_HALT"))
++          and row.get("risk_state") not in ("HALTED", "FLOOR_HALT", "DAILY_HALT"))
+     return ("QUALIFIED" if ok else "ACTIVE"), checks
+ 
+ 
+--- before/app/live/scan_engine.py
++++ after/app/live/scan_engine.py
+@@ -153,6 +153,7 @@
+             self._fills.append(self._close(pos, intent.position_id, intent.fraction, intent.ref_price, intent.kind,
+                                            intent.reason, bar, ts))
+         self._ladder_lock(pos)
++        self._check_halts(pos.strategy_id)
+ 
+     @staticmethod
+     def _level_between(pos: Any, a: float, b: float) -> float | None:
+--- before/app/live/v13_engine.py
++++ after/app/live/v13_engine.py
+@@ -66,6 +66,9 @@
+                 if any(p.symbol == sig.symbol for p in held) or len(held) >= meta.max_positions:
+                     self._reject(order, res, "limit_slot_taken")
+                     continue
++                self._now = max(bar.open_time, order.execute_at)
++                if not self._entry_at_fill(order, sig, decision, meta, res, limit, maker=True):
++                    continue
+                 self._fill_limit(order, sig, decision, bar, limit, res)
+         self._pending = market                           # resting limits never reach the market-order path
+         super()._execute_pending(bar, meta, res)
+@@ -102,9 +105,7 @@
+     # studies do. Here each position is closed against its own coin's last bar, and the end of a replay is labelled
+     # end_of_run (not "time") so a study can leave it out.
+     def _own_bar(self, symbol: str) -> Any:
+-        prev = getattr(self, "_prev_bar", {}) or {}
+-        bar = getattr(self, "_bar", None)
+-        return bar if bar is not None and bar.symbol == symbol else prev.get(symbol, bar)
++        return super()._own_bar(symbol)
+ 
+     def _flatten(self, sid: str) -> None:
+         for pos in list(self.portfolio.positions_of(sid)):
+--- before/app/live/v6_runner.py
++++ after/app/live/v6_runner.py
+@@ -301,6 +301,8 @@
+         try:
+             if sid in self.eng.risk.state.halted_strategies or getattr(getattr(self.eng, "_meta", None), "halted", False):
+                 return "FLOOR_HALT"
++            if self.eng.risk.state.daily_halted:
++                return "DAILY_HALT"
+             state, _ = health_state(self.eng._health(sid), AGGRESSIVE_V6)
+             return state
+         except Exception:
+--- before/app/live/v8_engine.py
++++ after/app/live/v8_engine.py
+@@ -18,7 +18,7 @@
+ class LevelMakerEngineV8(ScanReplayEngine):
+     def _execute_pending(self, bar: Any, meta: Any, res: Any) -> None:
+         before = len(res.fills)
+-        ReplayEngine._execute_pending(self, bar, meta, res)             # no pre-trade gap check in V8
++        ReplayEngine._execute_pending(self, bar, meta, res)  # shared fill-time risk and invalidated-level checks
+         for f in res.fills[before:]:
+             pos = self.portfolio.positions.get(f.position_id) if f.kind == "entry" else None
+             if pos is None or not pos.take_profits or "tp1" in pos.meta:
+--- before/app/live/watchdog.py
++++ after/app/live/watchdog.py
+@@ -32,7 +32,8 @@
+ WS_REQUIRED = {"v6", "v7", "v8"}  # Bybit-websocket programs; V9 trades on Alpaca's REST fallback, V11/V12 poll REST
+ OK_STATUSES = {"LIVE", "MARKET_CLOSED"}
+ WARMING = {"STARTING", "WARMING_UP", "STARTING_BOTS"}
+-WATCHED_BOT_STATES = {"ELIMINATED": "❌ eliminated", "QUALIFIED": "✅ QUALIFIED", "FLOOR_HALT": "🧯 hit its drawdown floor"}
++WATCHED_BOT_STATES = {"ELIMINATED": "❌ eliminated", "QUALIFIED": "✅ QUALIFIED", "FLOOR_HALT": "🧯 hit its drawdown floor",
++                      "DAILY_HALT": "🧯 hit its daily loss limit"}
+ 
+ 
+ def problem_of(h: Mapping[str, Any], up_s: float, ws_required: bool = True) -> str | None:

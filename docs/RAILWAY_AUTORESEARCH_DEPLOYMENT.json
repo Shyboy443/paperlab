@@ -1,0 +1,156 @@
+{
+  "verified_at_utc": "2026-10-06T19:18:09.991574+00:00",
+  "deployment_id": "fe0118e2-8fa1-4c82-acbd-bfe912e78502",
+  "deployment_status": "SUCCESS",
+  "restart_policy": "ALWAYS",
+  "sleep_application": false,
+  "healthcheck_path": "/api/health",
+  "persistent_volume": "/data",
+  "health": {
+    "spot": {
+      "status": "OK",
+      "last_scan_ms": 1791314063279,
+      "markets": 502,
+      "liquid": 140,
+      "error": null
+    },
+    "perp": {
+      "status": "OK",
+      "last_scan_ms": 1791314065536,
+      "markets": 525,
+      "liquid": 326,
+      "error": null
+    },
+    "last_study_ms": 1791314288485,
+    "last_result": {
+      "market": "perp:USUSDT",
+      "state": "REJECTED"
+    },
+    "heartbeat_ms": 1791314290488,
+    "status": "RUNNING",
+    "working_on": "perp:ONDOUSDT",
+    "enabled": true,
+    "restarts": 0,
+    "heartbeat_age_s": 0.9
+  },
+  "coverage": [
+    {
+      "venue": "perp",
+      "markets": 525,
+      "liquid": 326,
+      "studied": 28,
+      "latest_study": 1791314285158
+    },
+    {
+      "venue": "spot",
+      "markets": 502,
+      "liquid": 140,
+      "studied": 7,
+      "latest_study": 1791314278073
+    }
+  ],
+  "paper_books": [
+    {
+      "id": "perp:AAVEUSDT:AR1-breakout-20-2.5:1791314254036",
+      "market": "perp:AAVEUSDT",
+      "created": 1791314254036,
+      "state": "PAPER_PROBATION",
+      "rule": {
+        "family": "breakout",
+        "lookback": 20,
+        "stop_atr": 2.5,
+        "max_hold": 24
+      },
+      "evidence": {
+        "state": "HISTORICALLY_QUALIFIED",
+        "reasons": [],
+        "rule": {
+          "family": "breakout",
+          "lookback": 20,
+          "stop_atr": 2.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-breakout-20-2.5",
+        "train": {
+          "trades": 23,
+          "execution_rejects": 0,
+          "net": 11.087015,
+          "profit_factor": 1.207,
+          "drawdown": 0.028877,
+          "expectancy": 0.482044,
+          "winner_concentration": 0.14482340360514825
+        },
+        "validation": {
+          "trades": 10,
+          "execution_rejects": 0,
+          "net": 8.263151,
+          "profit_factor": 1.4463,
+          "drawdown": 0.010185,
+          "expectancy": 0.826315,
+          "winner_concentration": 0.33653208371437926
+        },
+        "holdout": {
+          "trades": 11,
+          "execution_rejects": 0,
+          "net": 9.58534,
+          "profit_factor": 1.4586,
+          "drawdown": 0.011773,
+          "expectancy": 0.871395,
+          "winner_concentration": 0.31408709451419037
+        },
+        "stress": {
+          "trades": 11,
+          "execution_rejects": 0,
+          "net": 5.529577,
+          "profit_factor": 1.2428,
+          "drawdown": 0.012012,
+          "expectancy": 0.502689,
+          "winner_concentration": 0.3263784193545274
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.1,
+          "min_qty": 0.1,
+          "max_qty": 9000.0,
+          "min_notional": 5.0,
+          "tick": 0.01
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      },
+      "equity": 1000.0,
+      "position": null,
+      "last_bar": 1791309600000,
+      "last_quote": 0,
+      "trades": 0,
+      "net": 0.0,
+      "peak": 1000.0,
+      "drawdown": 0.0,
+      "error": null
+    }
+  ],
+  "execution": "PAPER_ONLY",
+  "full_regression": {
+    "passed": 1516,
+    "skipped": 4
+  },
+  "latest_focused_tests": {
+    "passed": 14
+  },
+  "worker_recovery_smoke": "passed",
+  "oversight_automation_id": "paperlab-continuous-research-oversight"
+}

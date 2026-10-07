@@ -1,0 +1,319 @@
+{
+ "built": "2026-10-02 19:29 UTC",
+ "items": 2175,
+ "events": 1969,
+ "rules": " (2026-10-03): events tagged with one of our 30 coins (macro and regulatory events without a coin:\nBTC). Entry 60 s after the FIRST article, returns market-adjusted (minus the 30-coin mean), horizons 15m / 1h / 4h,\nstatistics averaged per day, halves of the window. Per event type with >= 15 events:\n  RISK FILTER   mean |adjusted 1h move| after the event >= 1.25 x the same coin's baseline |adjusted 1h move| in EACH half\n                -> the risk engine may cut size / avoid entries around such events\n  SIGNAL        tone-signed adjusted 1h return (|tone| >= 0.3) net of taker costs > 0 in EACH half, day t >= 2, >= 20 events\n",
+ "by_type": {
+  "etf": {
+   "events": 155,
+   "vol_ratio_1h": {
+    "h1": 0.967,
+    "h2": 1.444
+   },
+   "mean_abs_adj_1h_bp": 38.2,
+   "toned_events": 130,
+   "tone_net_bp": -14.0,
+   "tone_t": -2.21,
+   "tone_halves": [
+    -14.1,
+    -13.8
+   ],
+   "verdict": "NO EFFECT"
+  },
+  "hack": {
+   "events": 16,
+   "vol_ratio_1h": {
+    "h1": 0.459,
+    "h2": 0.726
+   },
+   "mean_abs_adj_1h_bp": 16.9,
+   "toned_events": 9,
+   "tone_net_bp": -19.5,
+   "tone_t": -6.7,
+   "tone_halves": [
+    -20.2,
+    -14.2
+   ],
+   "verdict": "NO EFFECT"
+  },
+  "macro": {
+   "events": 258,
+   "vol_ratio_1h": {
+    "h1": 0.642,
+    "h2": 1.442
+   },
+   "mean_abs_adj_1h_bp": 33.0,
+   "toned_events": 109,
+   "tone_net_bp": -16.3,
+   "tone_t": -2.17,
+   "tone_halves": [
+    -14.3,
+    -18.0
+   ],
+   "verdict": "NO EFFECT"
+  },
+  "other": {
+   "events": 1617,
+   "vol_ratio_1h": {
+    "h1": 0.777,
+    "h2": 1.38
+   },
+   "mean_abs_adj_1h_bp": 32.8,
+   "toned_events": 454,
+   "tone_net_bp": -17.7,
+   "tone_t": -5.15,
+   "tone_halves": [
+    -11.5,
+    -24.1
+   ],
+   "verdict": "NO EFFECT"
+  },
+  "partnership": {
+   "events": 32,
+   "vol_ratio_1h": {
+    "h1": 0.853,
+    "h2": 0.604
+   },
+   "mean_abs_adj_1h_bp": 22.6,
+   "toned_events": 16,
+   "tone_net_bp": -31.1,
+   "tone_t": -4.45,
+   "tone_halves": [
+    -28.8,
+    -34.9
+   ],
+   "verdict": "NO EFFECT"
+  },
+  "price_action": {
+   "events": 519,
+   "vol_ratio_1h": {
+    "h1": 0.879,
+    "h2": 1.402
+   },
+   "mean_abs_adj_1h_bp": 36.4,
+   "toned_events": 327,
+   "tone_net_bp": -8.5,
+   "tone_t": -2.03,
+   "tone_halves": [
+    -14.5,
+    -2.6
+   ],
+   "verdict": "NO EFFECT"
+  },
+  "regulatory": {
+   "events": 124,
+   "vol_ratio_1h": {
+    "h1": 0.76,
+    "h2": 1.528
+   },
+   "mean_abs_adj_1h_bp": 35.3,
+   "toned_events": 49,
+   "tone_net_bp": -20.9,
+   "tone_t": -2.76,
+   "tone_halves": [
+    -9.5,
+    -28.9
+   ],
+   "verdict": "NO EFFECT"
+  },
+  "unlock": {
+   "events": 16,
+   "vol_ratio_1h": {
+    "h1": 0.84,
+    "h2": 1.34
+   },
+   "mean_abs_adj_1h_bp": 38.7,
+   "toned_events": 5,
+   "tone_net_bp": NaN,
+   "tone_t": NaN,
+   "tone_halves": [
+    17.2,
+    7.6
+   ],
+   "verdict": "NO EFFECT"
+  },
+  "whale": {
+   "events": 55,
+   "vol_ratio_1h": {
+    "h1": 0.66,
+    "h2": 1.578
+   },
+   "mean_abs_adj_1h_bp": 36.0,
+   "toned_events": 29,
+   "tone_net_bp": -8.7,
+   "tone_t": -0.92,
+   "tone_halves": [
+    -8.0,
+    -9.1
+   ],
+   "verdict": "NO EFFECT"
+  }
+ },
+ "examples": [
+  {
+   "coins": "",
+   "event_type": "listing",
+   "title": "New listing: CXMTUSDT Perpetual Contract, with up to 10x leverage",
+   "n_items": 6,
+   "n_sources": 1,
+   "news_sentiment": 0.0,
+   "news_importance": 1.0,
+   "btc_relevance": 0.3,
+   "source_reliability": "high"
+  },
+  {
+   "coins": "",
+   "event_type": "listing",
+   "title": "New listing: MINIMAXUSDT Perpetual Contract, with up to 25x leverage",
+   "n_items": 5,
+   "n_sources": 1,
+   "news_sentiment": 0.0,
+   "news_importance": 1.0,
+   "btc_relevance": 0.3,
+   "source_reliability": "high"
+  },
+  {
+   "coins": "",
+   "event_type": "listing",
+   "title": "New listing: BNCUSDT Perpetual Contract, with up to 20x leverage",
+   "n_items": 9,
+   "n_sources": 1,
+   "news_sentiment": 0.0,
+   "news_importance": 1.0,
+   "btc_relevance": 0.3,
+   "source_reliability": "high"
+  },
+  {
+   "coins": "",
+   "event_type": "listing",
+   "title": "New listing: BXUSDT Perpetual Contract, with up to 20x leverage",
+   "n_items": 6,
+   "n_sources": 1,
+   "news_sentiment": 0.0,
+   "news_importance": 1.0,
+   "btc_relevance": 0.3,
+   "source_reliability": "high"
+  },
+  {
+   "coins": "",
+   "event_type": "delisting",
+   "title": "Delisting of BOBBOBUSDT Perpetual Contract",
+   "n_items": 5,
+   "n_sources": 1,
+   "news_sentiment": 0.0,
+   "news_importance": 1.0,
+   "btc_relevance": 0.3,
+   "source_reliability": "high"
+  },
+  {
+   "coins": "",
+   "event_type": "listing",
+   "title": "New listing: Listing of OKLOUSDT on Bybit TradFi Perpetual on Sep 22, 2026, 1:00PM UTC",
+   "n_items": 4,
+   "n_sources": 1,
+   "news_sentiment": 0.0,
+   "news_importance": 1.0,
+   "btc_relevance": 0.3,
+   "source_reliability": "high"
+  },
+  {
+   "coins": "",
+   "event_type": "listing",
+   "title": "New listing: CAPUSDT Perpetual Contract in Innovation Zone, with up to 10x leverage",
+   "n_items": 4,
+   "n_sources": 1,
+   "news_sentiment": 0.0,
+   "news_importance": 1.0,
+   "btc_relevance": 0.3,
+   "source_reliability": "high"
+  },
+  {
+   "coins": "",
+   "event_type": "listing",
+   "title": "New listing: NVDLUSDT Perpetual Contract, with up to 20x leverage",
+   "n_items": 6,
+   "n_sources": 1,
+   "news_sentiment": 0.0,
+   "news_importance": 1.0,
+   "btc_relevance": 0.3,
+   "source_reliability": "high"
+  },
+  {
+   "coins": "",
+   "event_type": "listing",
+   "title": "New listing: WENSTOCKUSDT Perpetual Contract, with up to 20x leverage",
+   "n_items": 6,
+   "n_sources": 1,
+   "news_sentiment": 0.0,
+   "news_importance": 1.0,
+   "btc_relevance": 0.3,
+   "source_reliability": "high"
+  },
+  {
+   "coins": "",
+   "event_type": "listing",
+   "title": "New listing: BRKBUSDT Perpetual Contract, with up to 25x leverage",
+   "n_items": 6,
+   "n_sources": 1,
+   "news_sentiment": 0.0,
+   "news_importance": 1.0,
+   "btc_relevance": 0.3,
+   "source_reliability": "high"
+  },
+  {
+   "coins": "",
+   "event_type": "listing",
+   "title": "New listing: CASHCATUSDT Perpetual Contract in Innovation Zone, with up to 10x leverage",
+   "n_items": 4,
+   "n_sources": 1,
+   "news_sentiment": 0.0,
+   "news_importance": 1.0,
+   "btc_relevance": 0.3,
+   "source_reliability": "high"
+  },
+  {
+   "coins": "",
+   "event_type": "listing",
+   "title": "New listing: SMHUSDT Perpetual Contract, with up to 20x leverage",
+   "n_items": 4,
+   "n_sources": 1,
+   "news_sentiment": 0.0,
+   "news_importance": 1.0,
+   "btc_relevance": 0.3,
+   "source_reliability": "high"
+  },
+  {
+   "coins": "",
+   "event_type": "listing",
+   "title": "New listing: UNHUSDT Perpetual Contract, with up to 25x leverage",
+   "n_items": 7,
+   "n_sources": 1,
+   "news_sentiment": 0.0,
+   "news_importance": 1.0,
+   "btc_relevance": 0.3,
+   "source_reliability": "high"
+  },
+  {
+   "coins": "",
+   "event_type": "listing",
+   "title": "New listing: PURRUSDT Perpetual Contract, with up to 20x leverage",
+   "n_items": 4,
+   "n_sources": 1,
+   "news_sentiment": 0.0,
+   "news_importance": 1.0,
+   "btc_relevance": 0.3,
+   "source_reliability": "high"
+  },
+  {
+   "coins": "",
+   "event_type": "listing",
+   "title": "New listing: STONKUSDT Perpetual Contract in Innovation Zone, with up to 5x leverage",
+   "n_items": 7,
+   "n_sources": 1,
+   "news_sentiment": 0.0,
+   "news_importance": 1.0,
+   "btc_relevance": 0.3,
+   "source_reliability": "high"
+  }
+ ]
+}

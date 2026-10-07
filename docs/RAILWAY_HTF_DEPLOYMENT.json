@@ -1,0 +1,273 @@
+{
+  "verified_at_utc": "2026-10-05T04:37:50.925714+00:00",
+  "project": "paperlab",
+  "environment": "production",
+  "service": "paperlab",
+  "deployment_id": "5c3b1bdd-cc50-4b4a-ba84-3f117095b34a",
+  "deployment_status": "SUCCESS",
+  "previous_deployment_id": "e2bfc791-f676-45d9-8f89-9d1f8c74b506",
+  "previous_v14_experiment": "v14x-a05d9d5678f0",
+  "url": "https://paperlab-production-919c.up.railway.app/public/competition",
+  "page_http_status": 200,
+  "health": {
+    "ok": true,
+    "mode": "LIVE_OVERRIDE_I_UNDERSTAND",
+    "venue": "LIVE BYBIT",
+    "dry_run": true,
+    "engine_state": "running",
+    "uptime_s": 274,
+    "feed_connected": true,
+    "strategies": 27,
+    "boot_error": null
+  },
+  "programs": [
+    {
+      "program": "V6",
+      "status": "LIVE",
+      "bots": 56,
+      "live_bots": 56,
+      "error": null,
+      "diffs": null,
+      "manifest_matches": true,
+      "experiment_id": "v6x-dcb7cbf3a418",
+      "identity": {
+        "protocol": "V6_FORWARD_PROTOCOL_V1",
+        "manifest": "93f9c48b67163c69",
+        "jev_model": "typesafe/jev-1.13",
+        "venue": "BYBIT_LINEAR"
+      },
+      "stream": {
+        "ws": {
+          "connected": true,
+          "reconnects": 0,
+          "detail": "connected",
+          "age_s": 0.0
+        },
+        "klines_age_s": 0.1,
+        "bars_live": 16,
+        "gaps_repaired": 0,
+        "rest_errors": 0,
+        "barrier_last": null,
+        "barrier_timeouts": 0,
+        "positioning_ready": true
+      }
+    },
+    {
+      "program": "V7",
+      "status": "LIVE",
+      "bots": 8,
+      "live_bots": 8,
+      "error": null,
+      "diffs": null,
+      "manifest_matches": true,
+      "experiment_id": "v7x-68f5f5c29c2c",
+      "identity": {
+        "protocol": "V7_ACTIVE_PAPER_V1",
+        "manifest": "e3d2f218aeea90b3",
+        "venue": "BYBIT_LINEAR",
+        "jev": false
+      },
+      "stream": {
+        "ws": {
+          "connected": true,
+          "reconnects": 0,
+          "detail": "connected",
+          "age_s": 0.0
+        },
+        "klines_age_s": 0.5,
+        "bars_live": 16,
+        "gaps_repaired": 0,
+        "rest_errors": 0,
+        "barrier_last": null,
+        "barrier_timeouts": 0,
+        "positioning_ready": true
+      }
+    },
+    {
+      "program": "V8",
+      "status": "LIVE",
+      "bots": 18,
+      "live_bots": 18,
+      "error": null,
+      "diffs": null,
+      "manifest_matches": true,
+      "experiment_id": "v8x-972151dbad84",
+      "identity": {
+        "protocol": "V8_SCALP_PAPER_V1",
+        "manifest": "deea5ae2ad5fb2d2",
+        "venue": "BYBIT_LINEAR",
+        "jev_model": "typesafe/jev-1.13"
+      },
+      "stream": {
+        "ws": {
+          "connected": true,
+          "reconnects": 0,
+          "detail": "connected",
+          "age_s": 0.0
+        },
+        "klines_age_s": 0.0,
+        "bars_live": 24,
+        "gaps_repaired": 0,
+        "rest_errors": 0,
+        "barrier_last": null,
+        "barrier_timeouts": 0,
+        "positioning_ready": true
+      }
+    },
+    {
+      "program": "V9",
+      "status": "MARKET_CLOSED",
+      "bots": 60,
+      "live_bots": 60,
+      "error": null,
+      "diffs": null,
+      "manifest_matches": true,
+      "experiment_id": "v9x-ce9ac48d79e0",
+      "identity": {
+        "protocol": "V9_STOCKS_PAPER_V1",
+        "manifest": "c2e0ee97f86996a2",
+        "venue": "ALPACA_IEX_US_EQUITY",
+        "jev_model": "typesafe/jev-1.13"
+      },
+      "stream": {
+        "ws": {
+          "connected": false,
+          "reconnects": 9,
+          "detail": "RuntimeError: auth refused (406: connection limit exceeded)",
+          "age_s": null
+        },
+        "klines_age_s": null,
+        "bars_live": 0,
+        "gaps_repaired": 0,
+        "rest_errors": 0,
+        "barrier_last": null,
+        "barrier_timeouts": null,
+        "positioning_ready": null
+      }
+    },
+    {
+      "program": "V11",
+      "status": "LIVE",
+      "bots": 8,
+      "live_bots": 8,
+      "error": null,
+      "diffs": null,
+      "manifest_matches": true,
+      "experiment_id": "v11x-f3af75981c6f",
+      "identity": {
+        "protocol": "V11_SCAN_PAPER_V1",
+        "manifest": "a1362b00b8c8c078",
+        "venue": "BYBIT_LINEAR",
+        "jev_model": "typesafe/jev-1.13"
+      },
+      "stream": {
+        "ws": {
+          "connected": true,
+          "reconnects": 0,
+          "detail": "REST poll (live)",
+          "age_s": 45.0
+        },
+        "klines_age_s": 48.3,
+        "bars_live": 120,
+        "gaps_repaired": null,
+        "rest_errors": 0,
+        "barrier_last": null,
+        "barrier_timeouts": null,
+        "positioning_ready": null
+      }
+    },
+    {
+      "program": "V12",
+      "status": "LIVE",
+      "bots": 2,
+      "live_bots": 2,
+      "error": null,
+      "diffs": null,
+      "manifest_matches": true,
+      "experiment_id": "v12x-50c654e13e8c",
+      "identity": {
+        "protocol": "V12_BIZZY_PAPER_V1",
+        "manifest": "695c8d4f572ae95a",
+        "venue": "BYBIT_LINEAR",
+        "jev_model": "typesafe/jev-1.13"
+      },
+      "stream": {
+        "ws": {
+          "connected": true,
+          "reconnects": 0,
+          "detail": "REST poll (live)",
+          "age_s": 45.5
+        },
+        "klines_age_s": 48.5,
+        "bars_live": 16,
+        "gaps_repaired": null,
+        "rest_errors": 0,
+        "barrier_last": null,
+        "barrier_timeouts": null,
+        "positioning_ready": null
+      }
+    },
+    {
+      "program": "V13",
+      "status": "LIVE",
+      "bots": 1,
+      "live_bots": 1,
+      "error": null,
+      "diffs": null,
+      "manifest_matches": true,
+      "experiment_id": "v13x-8cb0dd6e7ec1",
+      "identity": {
+        "protocol": "V13_SNAPBACK_PAPER_V1",
+        "manifest": "6dc438c148c61e7d",
+        "venue": "BYBIT_LINEAR"
+      },
+      "stream": {
+        "ws": {
+          "connected": true,
+          "reconnects": 0,
+          "detail": "REST poll (live)",
+          "age_s": 45.0
+        },
+        "klines_age_s": 49.1,
+        "bars_live": 120,
+        "gaps_repaired": null,
+        "rest_errors": 0,
+        "barrier_last": null,
+        "barrier_timeouts": null,
+        "positioning_ready": null
+      }
+    },
+    {
+      "program": "V14",
+      "status": "LIVE",
+      "bots": 9,
+      "live_bots": 9,
+      "error": null,
+      "diffs": null,
+      "manifest_matches": true,
+      "experiment_id": "v14x-227dd5f1e221",
+      "identity": {
+        "protocol": "V14_HTF_PAPER_V2",
+        "manifest": "b41ffaa73039f33a",
+        "venue": "BYBIT_LINEAR"
+      },
+      "stream": {
+        "ws": {
+          "connected": true,
+          "reconnects": 0,
+          "detail": "REST poll (live)",
+          "age_s": 44.1
+        },
+        "klines_age_s": 47.1,
+        "bars_live": 30,
+        "gaps_repaired": null,
+        "rest_errors": 0,
+        "barrier_last": null,
+        "barrier_timeouts": null,
+        "positioning_ready": null
+      }
+    }
+  ],
+  "volume_mount": "/data",
+  "note": "Deployment retained mounted volume and configured paper execution. V9 stock feed separately reports an Alpaca connection-limit warning; its current market status is recorded above."
+}

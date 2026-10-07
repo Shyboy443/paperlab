@@ -1,0 +1,566 @@
+{
+ "protocol": "V11_SCAN_PAPER_V1",
+ "baseline_fingerprint": "83732facca579d52",
+ "code": {
+  "app.strategies.v11.scan": "ca8211449c68",
+  "app.strategies.v11.ladder": "228bb8cd17e8",
+  "app.competition.v11_config": "1ae3dafc8661",
+  "app.live.v11_worker": "ef775e3a37fc",
+  "app.live.scan_market": "b65877fff012",
+  "app.live.scan_engine": "4dc242689a74",
+  "app.ai.jev.v11": "911a569a80c0"
+ },
+ "params": {
+  "V11.1": {
+   "target_r": 2.0,
+   "min_stop_pct": 0.012,
+   "max_stop_pct": 0.03,
+   "stop_buffer_atr": 0.25,
+   "max_hold_min": 240.0,
+   "cooldown_bars": 1,
+   "min_score": 0.6743,
+   "max_signals": 8
+  },
+  "V11.2": {
+   "target_r": 2.0,
+   "min_stop_pct": 0.015,
+   "max_stop_pct": 0.03,
+   "stop_buffer_atr": 0.25,
+   "max_hold_min": 240.0,
+   "cooldown_bars": 1,
+   "min_score": 0.6111,
+   "max_signals": 8
+  },
+  "V11.3": {
+   "target_r": 2.0,
+   "min_stop_pct": 0.02,
+   "max_stop_pct": 0.03,
+   "stop_buffer_atr": 0.2,
+   "max_hold_min": 120.0,
+   "cooldown_bars": 1,
+   "min_score": 0.0,
+   "max_signals": 8
+  },
+  "V11.4": {
+   "target_r": 3.0,
+   "min_stop_pct": 0.015,
+   "max_stop_pct": 0.08,
+   "stop_buffer_atr": 2.0,
+   "max_hold_min": 58.0,
+   "cooldown_bars": 0,
+   "min_score": 0.0,
+   "max_signals": 4,
+   "per_side": 2
+  }
+ },
+ "profile": {
+  "signal": {
+   "V11.1": "15m",
+   "V11.2": "15m",
+   "V11.3": "5m",
+   "V11.4": "1h"
+  },
+  "slots": {
+   "V11.1": 8,
+   "V11.2": 8,
+   "V11.3": 8,
+   "V11.4": 4
+  },
+  "decision_window_ms": 60000,
+  "late_after_ms": 55000,
+  "execution": {
+   "level": 2,
+   "base_slippage_bps": 0.1,
+   "vol_component": 0.02,
+   "size_component": 0.0,
+   "slippage_mult": 1.0,
+   "force_taker": false,
+   "signal_latency_ms": 59601,
+   "order_latency_ms": 400
+  },
+  "warmup_days": 5,
+  "universe": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "SOLUSDT",
+   "ZECUSDT",
+   "XRPUSDT",
+   "HYPEUSDT",
+   "NEARUSDT",
+   "DOGEUSDT",
+   "ENAUSDT",
+   "SUIUSDT",
+   "ADAUSDT",
+   "ARBUSDT",
+   "UNIUSDT",
+   "1000PEPEUSDT",
+   "PUMPFUNUSDT",
+   "TAOUSDT",
+   "LINKUSDT",
+   "AKEUSDT",
+   "WLDUSDT",
+   "BNBUSDT",
+   "USELESSUSDT",
+   "ONDOUSDT",
+   "AAVEUSDT",
+   "LITUSDT",
+   "TRUMPUSDT",
+   "AVAXUSDT",
+   "XMRUSDT",
+   "FARTCOINUSDT",
+   "LTCUSDT",
+   "XPLUSDT"
+  ],
+  "anchor": "BTCUSDT",
+  "starting_balance": 20.0,
+  "leverage_ceiling": 20,
+  "risk": {
+   "base": 0.01,
+   "cap": 0.02,
+   "sizing": "AGGRESSIVE_V6 legal tiers"
+  },
+  "elimination": {
+   "after_h": 24,
+   "min_trades_24h": 3,
+   "drawdown": 0.25
+  },
+  "qualify": {
+   "min_days": 2.0,
+   "min_trades": 40,
+   "min_net": 0.0,
+   "min_profit_factor": 1.2,
+   "max_drawdown": 0.15
+  },
+  "storage": "v11-forward.db",
+  "families": [
+   "V11.1",
+   "V11.2",
+   "V11.3",
+   "V11.4"
+  ],
+  "market_data": "Bybit linear public REST: 1m klines + tickers polled every minute, one ordered batch",
+  "ladder": {
+   "shares": {
+    "V11.1": [
+     0.25,
+     0.5,
+     0.25
+    ],
+    "V11.2": [
+     0.25,
+     0.5,
+     0.25
+    ],
+    "V11.3": [
+     0.25,
+     0.5,
+     0.25
+    ],
+    "V11.4": [
+     0.25,
+     0.5,
+     0.25
+    ]
+   },
+   "lock_after_tp1": {
+    "V11.1": 0.0,
+    "V11.2": 0.5,
+    "V11.3": 0.3333333333333333,
+    "V11.4": 0.5
+   },
+   "rungs_r": {
+    "V11.1": [
+     0.6666666666666666,
+     1.3333333333333333,
+     2.0
+    ],
+    "V11.2": [
+     0.5,
+     1.0,
+     1.5
+    ],
+    "V11.3": [
+     0.5,
+     1.0,
+     1.5
+    ],
+    "V11.4": [
+     0.5,
+     1.0,
+     1.5
+    ]
+   },
+   "stops": "TP1 -> entry + fees or LOCK_AFTER_TP1, TP2 -> TP1 (both the moment the TP fills)",
+   "source": "docs/V11_EQUAL_LADDER.json, docs/V11_TP1_STUDY.json"
+  },
+  "pre_trade_check": "skip an order whose fill price has already run past TP1 or through the stop",
+  "break_even": "after TP1 the stop moves to entry + 0.15% (pays the round-trip fees), not plain entry",
+  "after_tp1": "stop locked LOCK_AFTER_TP1 of the way to TP1 (never less than the fees) the moment TP1 fills; after TP2 onto TP1",
+  "exit_fills": "a stop or take-profit passed inside a 1m bar fills at its level (+ spread / slippage); a gap through it fills at the open",
+  "take_profit_orders": "resting LIMIT orders: filled at the TP price at the maker fee once price trades 0.5 bp through it; stops and time exits are market orders (docs/V11_ZAP_STUDY.json)",
+  "jev": {
+   "twins": true,
+   "timeout_ms": 10000,
+   "retries": 0,
+   "deadline_margin_ms": 5000,
+   "prompt": "512ef99fc7877d7a",
+   "prompt_version": "JEV_PROMPT_V11_SCAN",
+   "state_version": "JEV_STATE_V11",
+   "state_builder": "6aa5cf5ad7a3",
+   "tp_scale": "0.5 + confidence, clamped to [0.75, 1.5]"
+  }
+ },
+ "frozen_at": "2026-10-03T07:48:49Z",
+ "rules": {
+  "BTCUSDT": {
+   "symbol": "BTCUSDT",
+   "tick": 0.1,
+   "step": 0.001,
+   "min_qty": 0.001,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 3,
+   "qty_precision": 5
+  },
+  "ETHUSDT": {
+   "symbol": "ETHUSDT",
+   "tick": 0.01,
+   "step": 0.01,
+   "min_qty": 0.01,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 4,
+   "qty_precision": 4
+  },
+  "SOLUSDT": {
+   "symbol": "SOLUSDT",
+   "tick": 0.01,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 4,
+   "qty_precision": 3
+  },
+  "ZECUSDT": {
+   "symbol": "ZECUSDT",
+   "tick": 0.01,
+   "step": 0.01,
+   "min_qty": 0.01,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 4,
+   "qty_precision": 4
+  },
+  "XRPUSDT": {
+   "symbol": "XRPUSDT",
+   "tick": 0.0001,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 6,
+   "qty_precision": 3
+  },
+  "HYPEUSDT": {
+   "symbol": "HYPEUSDT",
+   "tick": 0.01,
+   "step": 0.01,
+   "min_qty": 0.01,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 4,
+   "qty_precision": 4
+  },
+  "NEARUSDT": {
+   "symbol": "NEARUSDT",
+   "tick": 0.001,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 5,
+   "qty_precision": 3
+  },
+  "DOGEUSDT": {
+   "symbol": "DOGEUSDT",
+   "tick": 1e-05,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 7,
+   "qty_precision": 2
+  },
+  "ENAUSDT": {
+   "symbol": "ENAUSDT",
+   "tick": 1e-05,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 7,
+   "qty_precision": 2
+  },
+  "SUIUSDT": {
+   "symbol": "SUIUSDT",
+   "tick": 0.0001,
+   "step": 10.0,
+   "min_qty": 10.0,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 6,
+   "qty_precision": 2
+  },
+  "ADAUSDT": {
+   "symbol": "ADAUSDT",
+   "tick": 0.0001,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 6,
+   "qty_precision": 2
+  },
+  "ARBUSDT": {
+   "symbol": "ARBUSDT",
+   "tick": 1e-05,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 7,
+   "qty_precision": 3
+  },
+  "UNIUSDT": {
+   "symbol": "UNIUSDT",
+   "tick": 0.001,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 5,
+   "qty_precision": 3
+  },
+  "1000PEPEUSDT": {
+   "symbol": "1000PEPEUSDT",
+   "tick": 1e-06,
+   "step": 100.0,
+   "min_qty": 100.0,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 8,
+   "qty_precision": 2
+  },
+  "PUMPFUNUSDT": {
+   "symbol": "PUMPFUNUSDT",
+   "tick": 1e-06,
+   "step": 100.0,
+   "min_qty": 100.0,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 8,
+   "qty_precision": 2
+  },
+  "TAOUSDT": {
+   "symbol": "TAOUSDT",
+   "tick": 0.01,
+   "step": 0.001,
+   "min_qty": 0.001,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 4,
+   "qty_precision": 5
+  },
+  "LINKUSDT": {
+   "symbol": "LINKUSDT",
+   "tick": 0.001,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 5,
+   "qty_precision": 3
+  },
+  "AKEUSDT": {
+   "symbol": "AKEUSDT",
+   "tick": 1e-06,
+   "step": 100.0,
+   "min_qty": 100.0,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 8,
+   "qty_precision": 2
+  },
+  "WLDUSDT": {
+   "symbol": "WLDUSDT",
+   "tick": 0.0001,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 6,
+   "qty_precision": 3
+  },
+  "BNBUSDT": {
+   "symbol": "BNBUSDT",
+   "tick": 0.1,
+   "step": 0.01,
+   "min_qty": 0.01,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 3,
+   "qty_precision": 4
+  },
+  "USELESSUSDT": {
+   "symbol": "USELESSUSDT",
+   "tick": 1e-05,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 7,
+   "qty_precision": 2
+  },
+  "ONDOUSDT": {
+   "symbol": "ONDOUSDT",
+   "tick": 0.0001,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 6,
+   "qty_precision": 2
+  },
+  "AAVEUSDT": {
+   "symbol": "AAVEUSDT",
+   "tick": 0.01,
+   "step": 0.01,
+   "min_qty": 0.01,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 4,
+   "qty_precision": 4
+  },
+  "LITUSDT": {
+   "symbol": "LITUSDT",
+   "tick": 0.001,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 5,
+   "qty_precision": 3
+  },
+  "TRUMPUSDT": {
+   "symbol": "TRUMPUSDT",
+   "tick": 0.001,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 5,
+   "qty_precision": 3
+  },
+  "AVAXUSDT": {
+   "symbol": "AVAXUSDT",
+   "tick": 0.001,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 5,
+   "qty_precision": 3
+  },
+  "XMRUSDT": {
+   "symbol": "XMRUSDT",
+   "tick": 0.01,
+   "step": 0.01,
+   "min_qty": 0.01,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 4,
+   "qty_precision": 4
+  },
+  "FARTCOINUSDT": {
+   "symbol": "FARTCOINUSDT",
+   "tick": 1e-05,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 7,
+   "qty_precision": 2
+  },
+  "LTCUSDT": {
+   "symbol": "LTCUSDT",
+   "tick": 0.01,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 4,
+   "qty_precision": 3
+  },
+  "XPLUSDT": {
+   "symbol": "XPLUSDT",
+   "tick": 1e-05,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 7,
+   "qty_precision": 2
+  }
+ },
+ "funding_interval_min": {
+  "1000PEPEUSDT": 480,
+  "AAVEUSDT": 480,
+  "ADAUSDT": 480,
+  "AKEUSDT": 240,
+  "ARBUSDT": 480,
+  "AVAXUSDT": 480,
+  "BNBUSDT": 480,
+  "BTCUSDT": 480,
+  "DOGEUSDT": 480,
+  "ENAUSDT": 240,
+  "ETHUSDT": 480,
+  "FARTCOINUSDT": 240,
+  "HYPEUSDT": 480,
+  "LINKUSDT": 480,
+  "LITUSDT": 240,
+  "LTCUSDT": 480,
+  "NEARUSDT": 480,
+  "ONDOUSDT": 240,
+  "PUMPFUNUSDT": 240,
+  "SOLUSDT": 480,
+  "SUIUSDT": 480,
+  "TAOUSDT": 240,
+  "TRUMPUSDT": 240,
+  "UNIUSDT": 480,
+  "USELESSUSDT": 240,
+  "WLDUSDT": 480,
+  "XMRUSDT": 480,
+  "XPLUSDT": 240,
+  "XRPUSDT": 480,
+  "ZECUSDT": 480
+ },
+ "field": [
+  "V11.1-SCAN",
+  "V11.1-SCAN+JEV",
+  "V11.2-SCAN",
+  "V11.2-SCAN+JEV",
+  "V11.3-SCAN",
+  "V11.3-SCAN+JEV",
+  "V11.4-SCAN",
+  "V11.4-SCAN+JEV"
+ ],
+ "studies": [
+  "docs/V11_SCAN_STUDY.json",
+  "docs/V11_FEATURE_STUDY.json",
+  "docs/V11_REVERSAL_STUDY.json",
+  "docs/V11_ACTIVITY_CHECK.json"
+ ],
+ "note": "V11 is judged on LIVE forward paper data only; the pre-launch study found no scanner rule that beats costs, so no edge is claimed",
+ "fingerprint": "bd8aec0dfc357140"
+}

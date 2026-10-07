@@ -1,0 +1,170 @@
+{
+ "protocol": "V12_BIZZY_PAPER_V1",
+ "baseline_fingerprint": "93f9c48b67163c69",
+ "code": {
+  "app.strategies.v12.bizzy": "8ea2ae8a0d5b",
+  "app.competition.v12_config": "844fca459521",
+  "app.live.v12_worker": "0ceda9d0f1ce",
+  "app.ai.jev.v12": "d0215ecc0cd8",
+  "app.live.scan_market": "b65877fff012",
+  "app.live.scan_engine": "9ce04396befb",
+  "app.strategies.v11.scan.ScanV11": "fe5e71b200f4",
+  "app.strategies.v11.scan.Params": "7fb788101b4c",
+  "app.strategies.v11.scan.Cand": "f21e389ba46e",
+  "app.strategies.v11.scan.rank_pct": "45c89df068ca",
+  "app.live.v11_worker.ScanGateV11": "a55e7b546bb2",
+  "app.live.v11_worker.JevGateV11": "fcb4700fc9f1",
+  "app.live.v11_worker.load_recorded_v11": "393f872c85ed",
+  "app.live.v11_worker.recorded_for": "0e8176068550",
+  "app.live.v11_worker.load_eliminated": "723f7542141d",
+  "app.live.v11_worker.live_marks": "309770e97fc4",
+  "app.live.v11_worker.prices": "a45afedf578a",
+  "app.strategies.v11.scan.ANCHOR": "BTCUSDT"
+ },
+ "params": {
+  "V12.1": {
+   "target_r": 2.0,
+   "min_stop_pct": 0.008,
+   "max_stop_pct": 0.5,
+   "stop_buffer_atr": 0.25,
+   "max_hold_min": 1440.0,
+   "cooldown_bars": 1,
+   "min_score": 0.0,
+   "max_signals": 8,
+   "k": 0.5,
+   "margin_frac": 1.0,
+   "last_entry_min": 1435,
+   "retry_min": 5,
+   "exit_before_close_ms": 60000
+  }
+ },
+ "profile": {
+  "signal": {
+   "V12.1": "1m"
+  },
+  "slots": {
+   "V12.1": 1
+  },
+  "decision_window_ms": 60000,
+  "late_after_ms": 55000,
+  "execution": {
+   "level": 2,
+   "base_slippage_bps": 0.1,
+   "vol_component": 0.02,
+   "size_component": 0.0,
+   "slippage_mult": 1.0,
+   "force_taker": false,
+   "signal_latency_ms": 59601,
+   "order_latency_ms": 400
+  },
+  "warmup_days": 3,
+  "universe": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "SOLUSDT",
+   "HYPEUSDT"
+  ],
+  "trade_coins": [
+   "ETHUSDT",
+   "SOLUSDT",
+   "HYPEUSDT"
+  ],
+  "anchor": "BTCUSDT",
+  "starting_balance": 20.0,
+  "leverage_ceiling": 2,
+  "sizing": "full size: the whole book as margin at 2x (no risk tiers; the engine's fee pre-check applies)",
+  "rule": "Larry Williams k = 0.5 day breakout, long only, one trade per UTC day, stop = the day's open, exit 1 minute before the UTC close",
+  "source": "github.com/imikerussell/beebots src/bees/bizzy.ts (live rules since 2026-09-24)",
+  "elimination": "none",
+  "qualify": {
+   "min_days": 14.0,
+   "min_trades": 10,
+   "min_net": 0.0,
+   "min_profit_factor": 1.2,
+   "max_drawdown": 0.3
+  },
+  "storage": "v12-forward.db",
+  "families": [
+   "V12.1"
+  ],
+  "market_data": "Bybit linear public REST: 1m klines + tickers polled every minute, one ordered batch",
+  "exit_fills": "the stop fills at its level (+ spread / slippage); a gap through it fills at the open",
+  "jev": {
+   "twins": true,
+   "question": "CONTRADICT = WAIT (re-proposed after 5 min), SUPPORT / STRONGLY = take",
+   "timeout_ms": 10000,
+   "retries": 0,
+   "deadline_margin_ms": 5000,
+   "prompt": "8540e402db5f55d4",
+   "prompt_version": "JEV_PROMPT_V12_BIZZY",
+   "state_version": "JEV_STATE_V12",
+   "state_builder": "d224dec77a2d"
+  }
+ },
+ "frozen_at": "2026-10-02T11:11:43Z",
+ "rules": {
+  "BTCUSDT": {
+   "symbol": "BTCUSDT",
+   "tick": 0.1,
+   "step": 0.001,
+   "min_qty": 0.001,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 3,
+   "qty_precision": 5
+  },
+  "ETHUSDT": {
+   "symbol": "ETHUSDT",
+   "tick": 0.01,
+   "step": 0.01,
+   "min_qty": 0.01,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 4,
+   "qty_precision": 4
+  },
+  "SOLUSDT": {
+   "symbol": "SOLUSDT",
+   "tick": 0.01,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 4,
+   "qty_precision": 3
+  },
+  "HYPEUSDT": {
+   "symbol": "HYPEUSDT",
+   "tick": 0.01,
+   "step": 0.01,
+   "min_qty": 0.01,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 4,
+   "qty_precision": 4
+  }
+ },
+ "funding_interval_min": {
+  "BTCUSDT": 480,
+  "ETHUSDT": 480,
+  "HYPEUSDT": 480,
+  "SOLUSDT": 480
+ },
+ "field": [
+  "V12.1-DAY",
+  "V12.1-DAY+JEV"
+ ],
+ "studies": [
+  "docs/V12_BIZZY_STUDY.json"
+ ],
+ "note": "Bizzy Bee ported from github.com/imikerussell/beebots; judged on LIVE forward paper data only. The pre-launch study found the rule LOST after Bybit costs (95 days 1m, ~2.5 years 1h): no edge claimed",
+ "fingerprint": "695c8d4f572ae95a",
+ "execution_revision": {
+  "supersedes": "6b2ed84b509ec5f4",
+  "baseline": "93f9c48b67163c69",
+  "updated_at": "2026-10-04T18:24:16.405286+00:00",
+  "reason": "execution and loss-limit correction; historical study verdicts retained",
+  "archive": "snapshots/2026-10-04-execution-audit/docs/V12_FREEZE.json",
+  "rules": "existing instrument rules retained; no universe reselection"
+ }
+}

@@ -1,0 +1,108 @@
+{
+ "built": "2026-10-03 06:22 UTC",
+ "rules": " (2026-10-03, before the first run):\n  Data: the research store's Bybit 1m bars (data/research/market.duckdb, 2026-06-26 .. 2026-10-02) for V8's six coins\n  (ARB DOGE ENA ETH SOL XRP), the first 3 days warm-up; first / second half of the rest.\n  Bot: V8.3 exactly as it runs live (app/strategies/v8/arena.py: VwapSnapV8 with SnapParams; the live engine\n  app/live/v8_engine.LevelMakerEngineV8 with resting take-profits; SizingV6 1% risk; 20 USDT book reset daily).\n  Variants (only the hold changes): BASE 45 min | H90 | H180 | H360 | DAYCLOSE (no time limit, out at the stop, the\n  target or 1 minute before the UTC midnight -- what V8.1 / V8.2 use since 2026-10-02).\n  ADOPT a variant only if its net R per trade beats BASE in BOTH halves; of several, the best whole-window net R per\n  trade. Otherwise V8.3 keeps 45 minutes. Reported too (no selection): net USDT, trades per coin-day, win rate, exits.\n",
+ "window": [
+  1782777600000,
+  1790899200000
+ ],
+ "days": 94.0,
+ "coins": [
+  "ARBUSDT",
+  "DOGEUSDT",
+  "ENAUSDT",
+  "ETHUSDT",
+  "SOLUSDT",
+  "XRPUSDT"
+ ],
+ "summary": {
+  "BASE": {
+   "trades": 7341,
+   "per_coin_day": 13.02,
+   "win": 0.389,
+   "net_r": -0.1025,
+   "net_r_half1": -0.1029,
+   "net_r_half2": -0.102,
+   "pf": 0.583,
+   "net_usdt": -147.92,
+   "fees_usdt": 129.51,
+   "median_hold_min": 45.0,
+   "exits": {
+    "stop": 748,
+    "time": 6375,
+    "tp": 218
+   }
+  },
+  "H90": {
+   "trades": 5316,
+   "per_coin_day": 9.43,
+   "win": 0.413,
+   "net_r": -0.1098,
+   "net_r_half1": -0.1036,
+   "net_r_half2": -0.1162,
+   "pf": 0.663,
+   "net_usdt": -118.67,
+   "fees_usdt": 92.9,
+   "median_hold_min": 90.0,
+   "exits": {
+    "stop": 1016,
+    "time": 3913,
+    "tp": 387
+   }
+  },
+  "H180": {
+   "trades": 3842,
+   "per_coin_day": 6.81,
+   "win": 0.434,
+   "net_r": -0.0995,
+   "net_r_half1": -0.0981,
+   "net_r_half2": -0.1007,
+   "pf": 0.766,
+   "net_usdt": -80.9,
+   "fees_usdt": 65.84,
+   "median_hold_min": 180.0,
+   "exits": {
+    "stop": 1199,
+    "time": 2056,
+    "tp": 587
+   }
+  },
+  "H360": {
+   "trades": 2918,
+   "per_coin_day": 5.17,
+   "win": 0.405,
+   "net_r": -0.1287,
+   "net_r_half1": -0.1287,
+   "net_r_half2": -0.1286,
+   "pf": 0.766,
+   "net_usdt": -78.71,
+   "fees_usdt": 48.52,
+   "median_hold_min": 137.6,
+   "exits": {
+    "stop": 1340,
+    "time": 848,
+    "tp": 730
+   }
+  },
+  "DAYCLOSE": {
+   "trades": 2719,
+   "per_coin_day": 4.82,
+   "win": 0.402,
+   "net_r": -0.1248,
+   "net_r_half1": -0.1172,
+   "net_r_half2": -0.1297,
+   "pf": 0.792,
+   "net_usdt": -72.43,
+   "fees_usdt": 44.47,
+   "median_hold_min": 115.6,
+   "exits": {
+    "stop": 1426,
+    "tp": 819,
+    "time": 474
+   }
+  }
+ },
+ "passing": [
+  "H180"
+ ],
+ "adopt": "H180"
+}

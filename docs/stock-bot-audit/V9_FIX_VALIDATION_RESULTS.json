@@ -1,0 +1,5483 @@
+{
+  "protocol": "Bounded stock repair experiment: frozen four-way comparison, no live-book changes.\n\nRun through the bootstrap payload on Railway's existing /data/bt2y archive.\nLEGACY is the saved stock logic. MECHANICS changes only execution/data mechanics.\nSESSION adds session VWAP/target, genuine EMA-band contact and session-local setup\nwindows. SESSION_WIDE additionally raises only the minimum stop to 0.5%.\n\nTraining: 2024-10-01..2025-10-01. Validation: 2025-10-01..2026-04-01.\nFinal historical check: 2026-04-01..2026-10-01. One continuous $1,000 book\ninside EACH split, no daily resets; 30% peak sizing stop retained. Rules are\nranked on training only. These dates were inspected in earlier studies and are\nnot an independent unseen test. Future paper evidence is still required.\n",
+  "source_payload_sha256": "1d9ca8daa6d6f5be6fe76dbd092d149cda28a6e4564e5526d7206bc83a9e70f9",
+  "comparisons": 120,
+  "aggregate": {
+    "LEGACY|V9.1": {
+      "train": {
+        "net": -2169.998094,
+        "trades": 4755,
+        "profit_factor": 0.8305945486884325,
+        "worst_drawdown": 0.303756
+      },
+      "validation": {
+        "net": -1485.523313,
+        "trades": 2965,
+        "profit_factor": 0.8185726576840443,
+        "worst_drawdown": 0.301438
+      },
+      "historical_check": {
+        "net": -991.086992,
+        "trades": 2862,
+        "profit_factor": 0.872058806690527,
+        "worst_drawdown": 0.257289
+      }
+    },
+    "LEGACY|V9.2": {
+      "train": {
+        "net": -1412.503521,
+        "trades": 5415,
+        "profit_factor": 0.8984273161379902,
+        "worst_drawdown": 0.300701
+      },
+      "validation": {
+        "net": -1220.428848,
+        "trades": 2765,
+        "profit_factor": 0.8262884505900734,
+        "worst_drawdown": 0.301566
+      },
+      "historical_check": {
+        "net": -893.822257,
+        "trades": 2766,
+        "profit_factor": 0.8747784406225811,
+        "worst_drawdown": 0.23586
+      }
+    },
+    "LEGACY|V9.3": {
+      "train": {
+        "net": -2458.927772,
+        "trades": 5248,
+        "profit_factor": 0.8210598355391059,
+        "worst_drawdown": 0.308261
+      },
+      "validation": {
+        "net": -2600.510567,
+        "trades": 4169,
+        "profit_factor": 0.783512180333124,
+        "worst_drawdown": 0.302502
+      },
+      "historical_check": {
+        "net": -1441.365957,
+        "trades": 4079,
+        "profit_factor": 0.8780028383121257,
+        "worst_drawdown": 0.305852
+      }
+    },
+    "MECHANICS|V9.1": {
+      "train": {
+        "net": -1856.482335,
+        "trades": 5448,
+        "profit_factor": 0.864710803229707,
+        "worst_drawdown": 0.300318
+      },
+      "validation": {
+        "net": -1194.811054,
+        "trades": 2972,
+        "profit_factor": 0.844307020788045,
+        "worst_drawdown": 0.30072
+      },
+      "historical_check": {
+        "net": -643.085579,
+        "trades": 2865,
+        "profit_factor": 0.9117155099114116,
+        "worst_drawdown": 0.215074
+      }
+    },
+    "MECHANICS|V9.2": {
+      "train": {
+        "net": -1197.323493,
+        "trades": 5532,
+        "profit_factor": 0.9122152060241129,
+        "worst_drawdown": 0.299483
+      },
+      "validation": {
+        "net": -1063.357127,
+        "trades": 2795,
+        "profit_factor": 0.8432754737489419,
+        "worst_drawdown": 0.302635
+      },
+      "historical_check": {
+        "net": -720.80106,
+        "trades": 2762,
+        "profit_factor": 0.8934960882425941,
+        "worst_drawdown": 0.215975
+      }
+    },
+    "MECHANICS|V9.3": {
+      "train": {
+        "net": -2304.304437,
+        "trades": 5857,
+        "profit_factor": 0.8425475169228112,
+        "worst_drawdown": 0.302822
+      },
+      "validation": {
+        "net": -2371.265915,
+        "trades": 4409,
+        "profit_factor": 0.8029045863511668,
+        "worst_drawdown": 0.303618
+      },
+      "historical_check": {
+        "net": -1043.865941,
+        "trades": 4528,
+        "profit_factor": 0.9138457509058616,
+        "worst_drawdown": 0.301377
+      }
+    },
+    "SESSION|V9.1": {
+      "train": {
+        "net": -1577.765965,
+        "trades": 5057,
+        "profit_factor": 0.8781831561207832,
+        "worst_drawdown": 0.302302
+      },
+      "validation": {
+        "net": -1045.223676,
+        "trades": 2789,
+        "profit_factor": 0.855789828367784,
+        "worst_drawdown": 0.282981
+      },
+      "historical_check": {
+        "net": -528.929213,
+        "trades": 2679,
+        "profit_factor": 0.922151555100877,
+        "worst_drawdown": 0.235273
+      }
+    },
+    "SESSION|V9.2": {
+      "train": {
+        "net": -1239.332199,
+        "trades": 5480,
+        "profit_factor": 0.9083148955208731,
+        "worst_drawdown": 0.300777
+      },
+      "validation": {
+        "net": -1088.195224,
+        "trades": 2742,
+        "profit_factor": 0.8369863312101884,
+        "worst_drawdown": 0.301022
+      },
+      "historical_check": {
+        "net": -712.937767,
+        "trades": 2738,
+        "profit_factor": 0.8938307727118522,
+        "worst_drawdown": 0.215975
+      }
+    },
+    "SESSION|V9.3": {
+      "train": {
+        "net": -1964.435578,
+        "trades": 5473,
+        "profit_factor": 0.874847458592794,
+        "worst_drawdown": 0.304898
+      },
+      "validation": {
+        "net": -1790.285812,
+        "trades": 3650,
+        "profit_factor": 0.8286005584218906,
+        "worst_drawdown": 0.282572
+      },
+      "historical_check": {
+        "net": -935.319822,
+        "trades": 3694,
+        "profit_factor": 0.9101147336980784,
+        "worst_drawdown": 0.254687
+      }
+    },
+    "SESSION_WIDE|V9.1": {
+      "train": {
+        "net": -1275.671532,
+        "trades": 5032,
+        "profit_factor": 0.8775096283819924,
+        "worst_drawdown": 0.302312
+      },
+      "validation": {
+        "net": -906.145598,
+        "trades": 2688,
+        "profit_factor": 0.8350976723070852,
+        "worst_drawdown": 0.284599
+      },
+      "historical_check": {
+        "net": -190.665246,
+        "trades": 2604,
+        "profit_factor": 0.9628148598314751,
+        "worst_drawdown": 0.156462
+      }
+    },
+    "SESSION_WIDE|V9.2": {
+      "train": {
+        "net": -809.089586,
+        "trades": 5418,
+        "profit_factor": 0.9254625414870506,
+        "worst_drawdown": 0.26689
+      },
+      "validation": {
+        "net": -844.86168,
+        "trades": 2656,
+        "profit_factor": 0.8391519865903947,
+        "worst_drawdown": 0.301027
+      },
+      "historical_check": {
+        "net": -613.534435,
+        "trades": 2648,
+        "profit_factor": 0.8836507557719622,
+        "worst_drawdown": 0.229863
+      }
+    },
+    "SESSION_WIDE|V9.3": {
+      "train": {
+        "net": -1023.531956,
+        "trades": 4043,
+        "profit_factor": 0.9068294962748873,
+        "worst_drawdown": 0.297714
+      },
+      "validation": {
+        "net": -972.981128,
+        "trades": 2408,
+        "profit_factor": 0.8476459391431508,
+        "worst_drawdown": 0.217858
+      },
+      "historical_check": {
+        "net": -709.7849,
+        "trades": 2456,
+        "profit_factor": 0.8860626304147724,
+        "worst_drawdown": 0.234129
+      }
+    }
+  },
+  "selected": {
+    "V9.1": {
+      "selected_on_training_only": "SESSION_WIDE",
+      "passed_historical_checks": false,
+      "results": {
+        "train": {
+          "net": -1275.671532,
+          "trades": 5032,
+          "profit_factor": 0.8775096283819924,
+          "worst_drawdown": 0.302312
+        },
+        "validation": {
+          "net": -906.145598,
+          "trades": 2688,
+          "profit_factor": 0.8350976723070852,
+          "worst_drawdown": 0.284599
+        },
+        "historical_check": {
+          "net": -190.665246,
+          "trades": 2604,
+          "profit_factor": 0.9628148598314751,
+          "worst_drawdown": 0.156462
+        }
+      }
+    },
+    "V9.2": {
+      "selected_on_training_only": "SESSION_WIDE",
+      "passed_historical_checks": false,
+      "results": {
+        "train": {
+          "net": -809.089586,
+          "trades": 5418,
+          "profit_factor": 0.9254625414870506,
+          "worst_drawdown": 0.26689
+        },
+        "validation": {
+          "net": -844.86168,
+          "trades": 2656,
+          "profit_factor": 0.8391519865903947,
+          "worst_drawdown": 0.301027
+        },
+        "historical_check": {
+          "net": -613.534435,
+          "trades": 2648,
+          "profit_factor": 0.8836507557719622,
+          "worst_drawdown": 0.229863
+        }
+      }
+    },
+    "V9.3": {
+      "selected_on_training_only": "SESSION_WIDE",
+      "passed_historical_checks": false,
+      "results": {
+        "train": {
+          "net": -1023.531956,
+          "trades": 4043,
+          "profit_factor": 0.9068294962748873,
+          "worst_drawdown": 0.297714
+        },
+        "validation": {
+          "net": -972.981128,
+          "trades": 2408,
+          "profit_factor": 0.8476459391431508,
+          "worst_drawdown": 0.217858
+        },
+        "historical_check": {
+          "net": -709.7849,
+          "trades": 2456,
+          "profit_factor": 0.8860626304147724,
+          "worst_drawdown": 0.234129
+        }
+      }
+    }
+  },
+  "bots": [
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.1",
+      "symbol": "SPY",
+      "splits": {
+        "train": {
+          "trades": 541,
+          "net": -86.526251,
+          "profit_factor": 0.903274,
+          "gross_profit": 808.027838,
+          "gross_loss": 894.554089,
+          "fees": 46.335391,
+          "max_drawdown": 0.089075,
+          "halted": false,
+          "stop_count": 85,
+          "stop_average_r": -1.1347612818498114
+        },
+        "validation": {
+          "trades": 307,
+          "net": -106.283642,
+          "profit_factor": 0.808343,
+          "gross_profit": 448.268051,
+          "gross_loss": 554.551693,
+          "fees": 27.152638,
+          "max_drawdown": 0.131236,
+          "halted": false,
+          "stop_count": 51,
+          "stop_average_r": -1.1725373626692723
+        },
+        "historical_check": {
+          "trades": 273,
+          "net": 1.685875,
+          "profit_factor": 1.004301,
+          "gross_profit": 393.625455,
+          "gross_loss": 391.939581,
+          "fees": 24.625862,
+          "max_drawdown": 0.062506,
+          "halted": false,
+          "stop_count": 27,
+          "stop_average_r": -1.2087228857559258
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.1",
+      "symbol": "SPY",
+      "splits": {
+        "train": {
+          "trades": 541,
+          "net": -53.622213,
+          "profit_factor": 0.937247,
+          "gross_profit": 800.878573,
+          "gross_loss": 854.500786,
+          "fees": 46.783153,
+          "max_drawdown": 0.069721,
+          "halted": false,
+          "stop_count": 85,
+          "stop_average_r": -1.035261103195294
+        },
+        "validation": {
+          "trades": 307,
+          "net": -72.65057,
+          "profit_factor": 0.858596,
+          "gross_profit": 441.128856,
+          "gross_loss": 513.779426,
+          "fees": 27.206059,
+          "max_drawdown": 0.104822,
+          "halted": false,
+          "stop_count": 51,
+          "stop_average_r": -1.0293785245095088
+        },
+        "historical_check": {
+          "trades": 273,
+          "net": 18.787397,
+          "profit_factor": 1.048908,
+          "gross_profit": 402.926714,
+          "gross_loss": 384.139318,
+          "fees": 26.065772,
+          "max_drawdown": 0.056179,
+          "halted": false,
+          "stop_count": 27,
+          "stop_average_r": -1.0299058144096198
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.1",
+      "symbol": "SPY",
+      "splits": {
+        "train": {
+          "trades": 497,
+          "net": 9.243534,
+          "profit_factor": 1.012016,
+          "gross_profit": 778.526733,
+          "gross_loss": 769.283199,
+          "fees": 44.602265,
+          "max_drawdown": 0.059727,
+          "halted": false,
+          "stop_count": 69,
+          "stop_average_r": -1.035082430983136
+        },
+        "validation": {
+          "trades": 278,
+          "net": -26.625704,
+          "profit_factor": 0.941586,
+          "gross_profit": 429.181188,
+          "gross_loss": 455.806892,
+          "fees": 24.898492,
+          "max_drawdown": 0.090924,
+          "halted": false,
+          "stop_count": 46,
+          "stop_average_r": -1.0296884041417116
+        },
+        "historical_check": {
+          "trades": 259,
+          "net": 53.521351,
+          "profit_factor": 1.151214,
+          "gross_profit": 407.46499,
+          "gross_loss": 353.943639,
+          "fees": 25.075175,
+          "max_drawdown": 0.03907,
+          "halted": false,
+          "stop_count": 27,
+          "stop_average_r": -1.0304620145522994
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.1",
+      "symbol": "SPY",
+      "splits": {
+        "train": {
+          "trades": 487,
+          "net": 37.855183,
+          "profit_factor": 1.075553,
+          "gross_profit": 538.895416,
+          "gross_loss": 501.040233,
+          "fees": 28.950831,
+          "max_drawdown": 0.049948,
+          "halted": false,
+          "stop_count": 19,
+          "stop_average_r": -1.0184717666379512
+        },
+        "validation": {
+          "trades": 270,
+          "net": -28.744768,
+          "profit_factor": 0.866122,
+          "gross_profit": 185.963596,
+          "gross_loss": 214.708364,
+          "fees": 10.934909,
+          "max_drawdown": 0.041016,
+          "halted": false,
+          "stop_count": 10,
+          "stop_average_r": -1.0180495513226206
+        },
+        "historical_check": {
+          "trades": 254,
+          "net": 36.015739,
+          "profit_factor": 1.230617,
+          "gross_profit": 192.186982,
+          "gross_loss": 156.171243,
+          "fees": 11.099169,
+          "max_drawdown": 0.018911,
+          "halted": false,
+          "stop_count": 4,
+          "stop_average_r": -1.0150394300338128
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.2",
+      "symbol": "SPY",
+      "splits": {
+        "train": {
+          "trades": 634,
+          "net": -158.799253,
+          "profit_factor": 0.832895,
+          "gross_profit": 791.495578,
+          "gross_loss": 950.294831,
+          "fees": 48.089877,
+          "max_drawdown": 0.177293,
+          "halted": false,
+          "stop_count": 89,
+          "stop_average_r": -1.1241243260272322
+        },
+        "validation": {
+          "trades": 318,
+          "net": -34.679664,
+          "profit_factor": 0.934239,
+          "gross_profit": 492.676141,
+          "gross_loss": 527.355806,
+          "fees": 27.943027,
+          "max_drawdown": 0.111655,
+          "halted": false,
+          "stop_count": 42,
+          "stop_average_r": -1.1115049828332448
+        },
+        "historical_check": {
+          "trades": 298,
+          "net": -124.538701,
+          "profit_factor": 0.695427,
+          "gross_profit": 284.357409,
+          "gross_loss": 408.89611,
+          "fees": 22.086948,
+          "max_drawdown": 0.135145,
+          "halted": false,
+          "stop_count": 32,
+          "stop_average_r": -1.164550536027231
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.2",
+      "symbol": "SPY",
+      "splits": {
+        "train": {
+          "trades": 633,
+          "net": -128.055689,
+          "profit_factor": 0.861798,
+          "gross_profit": 798.530949,
+          "gross_loss": 926.586637,
+          "fees": 49.551287,
+          "max_drawdown": 0.151733,
+          "halted": false,
+          "stop_count": 89,
+          "stop_average_r": -1.0361354362301567
+        },
+        "validation": {
+          "trades": 317,
+          "net": -13.551779,
+          "profit_factor": 0.973033,
+          "gross_profit": 488.973203,
+          "gross_loss": 502.524983,
+          "fees": 27.914498,
+          "max_drawdown": 0.092629,
+          "halted": false,
+          "stop_count": 42,
+          "stop_average_r": -1.0284136806746513
+        },
+        "historical_check": {
+          "trades": 298,
+          "net": -104.894701,
+          "profit_factor": 0.72803,
+          "gross_profit": 280.790315,
+          "gross_loss": 385.685016,
+          "fees": 22.145036,
+          "max_drawdown": 0.114817,
+          "halted": false,
+          "stop_count": 32,
+          "stop_average_r": -1.0271596687567306
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.2",
+      "symbol": "SPY",
+      "splits": {
+        "train": {
+          "trades": 620,
+          "net": -131.065017,
+          "profit_factor": 0.852896,
+          "gross_profit": 759.905435,
+          "gross_loss": 890.970452,
+          "fees": 48.482314,
+          "max_drawdown": 0.156908,
+          "halted": false,
+          "stop_count": 85,
+          "stop_average_r": -1.0368576289723546
+        },
+        "validation": {
+          "trades": 310,
+          "net": -38.189318,
+          "profit_factor": 0.923831,
+          "gross_profit": 463.184691,
+          "gross_loss": 501.374009,
+          "fees": 27.294103,
+          "max_drawdown": 0.101679,
+          "halted": false,
+          "stop_count": 43,
+          "stop_average_r": -1.0286521715747425
+        },
+        "historical_check": {
+          "trades": 291,
+          "net": -92.279422,
+          "profit_factor": 0.752107,
+          "gross_profit": 279.97561,
+          "gross_loss": 372.255032,
+          "fees": 21.798013,
+          "max_drawdown": 0.10972,
+          "halted": false,
+          "stop_count": 30,
+          "stop_average_r": -1.026759551237938
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.2",
+      "symbol": "SPY",
+      "splits": {
+        "train": {
+          "trades": 605,
+          "net": -91.742623,
+          "profit_factor": 0.851533,
+          "gross_profit": 526.191681,
+          "gross_loss": 617.934305,
+          "fees": 30.341543,
+          "max_drawdown": 0.104718,
+          "halted": false,
+          "stop_count": 27,
+          "stop_average_r": -1.0211442410231226
+        },
+        "validation": {
+          "trades": 297,
+          "net": -19.67949,
+          "profit_factor": 0.92519,
+          "gross_profit": 243.378631,
+          "gross_loss": 263.058121,
+          "fees": 12.501855,
+          "max_drawdown": 0.052754,
+          "halted": false,
+          "stop_count": 11,
+          "stop_average_r": -1.016371042267176
+        },
+        "historical_check": {
+          "trades": 285,
+          "net": -57.065347,
+          "profit_factor": 0.734717,
+          "gross_profit": 158.046232,
+          "gross_loss": 215.111578,
+          "fees": 11.995531,
+          "max_drawdown": 0.073418,
+          "halted": false,
+          "stop_count": 5,
+          "stop_average_r": -1.0171916027917802
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.3",
+      "symbol": "SPY",
+      "splits": {
+        "train": {
+          "trades": 891,
+          "net": -279.970155,
+          "profit_factor": 0.805492,
+          "gross_profit": 1159.406372,
+          "gross_loss": 1439.376527,
+          "fees": 65.559608,
+          "max_drawdown": 0.293143,
+          "halted": false,
+          "stop_count": 154,
+          "stop_average_r": -1.1249902241540453
+        },
+        "validation": {
+          "trades": 422,
+          "net": -295.243153,
+          "profit_factor": 0.648455,
+          "gross_profit": 544.601153,
+          "gross_loss": 839.844306,
+          "fees": 31.299182,
+          "max_drawdown": 0.299293,
+          "halted": false,
+          "stop_count": 97,
+          "stop_average_r": -1.1453655144653607
+        },
+        "historical_check": {
+          "trades": 449,
+          "net": -133.68225,
+          "profit_factor": 0.797199,
+          "gross_profit": 525.497046,
+          "gross_loss": 659.179296,
+          "fees": 34.880121,
+          "max_drawdown": 0.152747,
+          "halted": false,
+          "stop_count": 61,
+          "stop_average_r": -1.1481790256171334
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.3",
+      "symbol": "SPY",
+      "splits": {
+        "train": {
+          "trades": 890,
+          "net": -261.245953,
+          "profit_factor": 0.811685,
+          "gross_profit": 1126.032927,
+          "gross_loss": 1387.278881,
+          "fees": 66.319054,
+          "max_drawdown": 0.275448,
+          "halted": false,
+          "stop_count": 154,
+          "stop_average_r": -1.0385031465796277
+        },
+        "validation": {
+          "trades": 422,
+          "net": -271.214983,
+          "profit_factor": 0.66366,
+          "gross_profit": 535.157209,
+          "gross_loss": 806.372192,
+          "fees": 31.843213,
+          "max_drawdown": 0.276939,
+          "halted": false,
+          "stop_count": 97,
+          "stop_average_r": -1.0324277139097195
+        },
+        "historical_check": {
+          "trades": 449,
+          "net": -118.730085,
+          "profit_factor": 0.811186,
+          "gross_profit": 510.09178,
+          "gross_loss": 628.821865,
+          "fees": 34.939278,
+          "max_drawdown": 0.138558,
+          "halted": false,
+          "stop_count": 61,
+          "stop_average_r": -1.0329866832299566
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.3",
+      "symbol": "SPY",
+      "splits": {
+        "train": {
+          "trades": 112,
+          "net": -24.276914,
+          "profit_factor": 0.897183,
+          "gross_profit": 211.841845,
+          "gross_loss": 236.118759,
+          "fees": 6.102273,
+          "max_drawdown": 0.05077,
+          "halted": false,
+          "stop_count": 21,
+          "stop_average_r": -1.0340275443330447
+        },
+        "validation": {
+          "trades": 56,
+          "net": -50.37837,
+          "profit_factor": 0.399192,
+          "gross_profit": 33.472666,
+          "gross_loss": 83.851036,
+          "fees": 2.109384,
+          "max_drawdown": 0.050378,
+          "halted": false,
+          "stop_count": 5,
+          "stop_average_r": -1.019119517306843
+        },
+        "historical_check": {
+          "trades": 27,
+          "net": 12.661853,
+          "profit_factor": 1.392531,
+          "gross_profit": 44.918775,
+          "gross_loss": 32.256923,
+          "fees": 1.193089,
+          "max_drawdown": 0.0169,
+          "halted": false,
+          "stop_count": 2,
+          "stop_average_r": -1.016726097571973
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.3",
+      "symbol": "SPY",
+      "splits": {
+        "train": {
+          "trades": 395,
+          "net": -80.395292,
+          "profit_factor": 0.905919,
+          "gross_profit": 774.139526,
+          "gross_loss": 854.534818,
+          "fees": 36.797641,
+          "max_drawdown": 0.169144,
+          "halted": false,
+          "stop_count": 103,
+          "stop_average_r": -1.0420567745713063
+        },
+        "validation": {
+          "trades": 230,
+          "net": -156.396149,
+          "profit_factor": 0.679076,
+          "gross_profit": 330.934479,
+          "gross_loss": 487.330627,
+          "fees": 19.501496,
+          "max_drawdown": 0.159129,
+          "halted": false,
+          "stop_count": 56,
+          "stop_average_r": -1.0357745302208454
+        },
+        "historical_check": {
+          "trades": 183,
+          "net": -61.523308,
+          "profit_factor": 0.789493,
+          "gross_profit": 230.739575,
+          "gross_loss": 292.262883,
+          "fees": 14.012224,
+          "max_drawdown": 0.087502,
+          "halted": false,
+          "stop_count": 32,
+          "stop_average_r": -1.031098563619179
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.1",
+      "symbol": "QQQ",
+      "splits": {
+        "train": {
+          "trades": 565,
+          "net": -127.191296,
+          "profit_factor": 0.87066,
+          "gross_profit": 856.19664,
+          "gross_loss": 983.387936,
+          "fees": 45.058519,
+          "max_drawdown": 0.139112,
+          "halted": false,
+          "stop_count": 102,
+          "stop_average_r": -1.128867922737564
+        },
+        "validation": {
+          "trades": 314,
+          "net": -162.940416,
+          "profit_factor": 0.748353,
+          "gross_profit": 484.556469,
+          "gross_loss": 647.496885,
+          "fees": 24.946465,
+          "max_drawdown": 0.210559,
+          "halted": false,
+          "stop_count": 65,
+          "stop_average_r": -1.1983072235038361
+        },
+        "historical_check": {
+          "trades": 289,
+          "net": 60.522912,
+          "profit_factor": 1.114638,
+          "gross_profit": 588.471971,
+          "gross_loss": 527.949059,
+          "fees": 24.878122,
+          "max_drawdown": 0.063144,
+          "halted": false,
+          "stop_count": 47,
+          "stop_average_r": -1.1659099136290338
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.1",
+      "symbol": "QQQ",
+      "splits": {
+        "train": {
+          "trades": 565,
+          "net": -103.199886,
+          "profit_factor": 0.892459,
+          "gross_profit": 856.432841,
+          "gross_loss": 959.632727,
+          "fees": 45.902881,
+          "max_drawdown": 0.123802,
+          "halted": false,
+          "stop_count": 102,
+          "stop_average_r": -1.0574591987511373
+        },
+        "validation": {
+          "trades": 314,
+          "net": -104.056729,
+          "profit_factor": 0.822755,
+          "gross_profit": 483.022657,
+          "gross_loss": 587.079386,
+          "fees": 25.041807,
+          "max_drawdown": 0.153513,
+          "halted": false,
+          "stop_count": 65,
+          "stop_average_r": -1.0305009043046225
+        },
+        "historical_check": {
+          "trades": 289,
+          "net": 91.929762,
+          "profit_factor": 1.187269,
+          "gross_profit": 582.82665,
+          "gross_loss": 490.896888,
+          "fees": 25.32024,
+          "max_drawdown": 0.0554,
+          "halted": false,
+          "stop_count": 46,
+          "stop_average_r": -1.0363350262821984
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.1",
+      "symbol": "QQQ",
+      "splits": {
+        "train": {
+          "trades": 526,
+          "net": -97.825069,
+          "profit_factor": 0.891111,
+          "gross_profit": 800.564089,
+          "gross_loss": 898.389158,
+          "fees": 43.32791,
+          "max_drawdown": 0.11311,
+          "halted": false,
+          "stop_count": 92,
+          "stop_average_r": -1.0573758003356581
+        },
+        "validation": {
+          "trades": 290,
+          "net": -126.048137,
+          "profit_factor": 0.772763,
+          "gross_profit": 428.650715,
+          "gross_loss": 554.698853,
+          "fees": 23.144746,
+          "max_drawdown": 0.160122,
+          "halted": false,
+          "stop_count": 62,
+          "stop_average_r": -1.0306493544246742
+        },
+        "historical_check": {
+          "trades": 267,
+          "net": 76.528294,
+          "profit_factor": 1.167395,
+          "gross_profit": 533.701262,
+          "gross_loss": 457.172968,
+          "fees": 23.822485,
+          "max_drawdown": 0.046507,
+          "halted": false,
+          "stop_count": 42,
+          "stop_average_r": -1.0369609067138568
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.1",
+      "symbol": "QQQ",
+      "splits": {
+        "train": {
+          "trades": 519,
+          "net": -47.25953,
+          "profit_factor": 0.924626,
+          "gross_profit": 579.739185,
+          "gross_loss": 626.998715,
+          "fees": 27.875285,
+          "max_drawdown": 0.094949,
+          "halted": false,
+          "stop_count": 28,
+          "stop_average_r": -1.02774610837313
+        },
+        "validation": {
+          "trades": 279,
+          "net": -104.984612,
+          "profit_factor": 0.738716,
+          "gross_profit": 296.818399,
+          "gross_loss": 401.803011,
+          "fees": 15.865568,
+          "max_drawdown": 0.122552,
+          "halted": false,
+          "stop_count": 22,
+          "stop_average_r": -1.0189395104352978
+        },
+        "historical_check": {
+          "trades": 261,
+          "net": 35.361917,
+          "profit_factor": 1.143638,
+          "gross_profit": 281.549798,
+          "gross_loss": 246.18788,
+          "fees": 12.00549,
+          "max_drawdown": 0.023173,
+          "halted": false,
+          "stop_count": 15,
+          "stop_average_r": -1.0237831469410767
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.2",
+      "symbol": "QQQ",
+      "splits": {
+        "train": {
+          "trades": 526,
+          "net": -294.276696,
+          "profit_factor": 0.708688,
+          "gross_profit": 715.898987,
+          "gross_loss": 1010.175683,
+          "fees": 36.40683,
+          "max_drawdown": 0.299381,
+          "halted": true,
+          "stop_count": 119,
+          "stop_average_r": -1.136247543237712
+        },
+        "validation": {
+          "trades": 330,
+          "net": -102.305459,
+          "profit_factor": 0.832646,
+          "gross_profit": 509.006196,
+          "gross_loss": 611.311655,
+          "fees": 26.050894,
+          "max_drawdown": 0.176344,
+          "halted": false,
+          "stop_count": 59,
+          "stop_average_r": -1.1096092687079087
+        },
+        "historical_check": {
+          "trades": 342,
+          "net": -98.229415,
+          "profit_factor": 0.853451,
+          "gross_profit": 572.054966,
+          "gross_loss": 670.284381,
+          "fees": 28.040615,
+          "max_drawdown": 0.148955,
+          "halted": false,
+          "stop_count": 61,
+          "stop_average_r": -1.1731900472500967
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.2",
+      "symbol": "QQQ",
+      "splits": {
+        "train": {
+          "trades": 550,
+          "net": -293.099761,
+          "profit_factor": 0.707324,
+          "gross_profit": 708.346926,
+          "gross_loss": 1001.446687,
+          "fees": 38.109066,
+          "max_drawdown": 0.298739,
+          "halted": true,
+          "stop_count": 122,
+          "stop_average_r": -1.0572863026227488
+        },
+        "validation": {
+          "trades": 331,
+          "net": -86.207709,
+          "profit_factor": 0.852699,
+          "gross_profit": 499.040976,
+          "gross_loss": 585.248685,
+          "fees": 26.171748,
+          "max_drawdown": 0.162641,
+          "halted": false,
+          "stop_count": 59,
+          "stop_average_r": -1.0324040711480404
+        },
+        "historical_check": {
+          "trades": 341,
+          "net": -65.95276,
+          "profit_factor": 0.896859,
+          "gross_profit": 573.491201,
+          "gross_loss": 639.443961,
+          "fees": 28.958585,
+          "max_drawdown": 0.132491,
+          "halted": false,
+          "stop_count": 60,
+          "stop_average_r": -1.0318554546431067
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.2",
+      "symbol": "QQQ",
+      "splits": {
+        "train": {
+          "trades": 557,
+          "net": -295.153706,
+          "profit_factor": 0.707061,
+          "gross_profit": 712.406465,
+          "gross_loss": 1007.560171,
+          "fees": 39.115336,
+          "max_drawdown": 0.300777,
+          "halted": true,
+          "stop_count": 119,
+          "stop_average_r": -1.0583457762344888
+        },
+        "validation": {
+          "trades": 323,
+          "net": -117.92663,
+          "profit_factor": 0.799897,
+          "gross_profit": 471.403289,
+          "gross_loss": 589.32992,
+          "fees": 25.492519,
+          "max_drawdown": 0.181366,
+          "halted": false,
+          "stop_count": 60,
+          "stop_average_r": -1.0324222416932178
+        },
+        "historical_check": {
+          "trades": 333,
+          "net": -71.80638,
+          "profit_factor": 0.883495,
+          "gross_profit": 544.531412,
+          "gross_loss": 616.337792,
+          "fees": 28.504627,
+          "max_drawdown": 0.124811,
+          "halted": false,
+          "stop_count": 57,
+          "stop_average_r": -1.0325240146565804
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.2",
+      "symbol": "QQQ",
+      "splits": {
+        "train": {
+          "trades": 643,
+          "net": -194.828604,
+          "profit_factor": 0.755557,
+          "gross_profit": 602.202171,
+          "gross_loss": 797.030775,
+          "fees": 29.63461,
+          "max_drawdown": 0.200665,
+          "halted": false,
+          "stop_count": 46,
+          "stop_average_r": -1.0481423043456497
+        },
+        "validation": {
+          "trades": 308,
+          "net": -56.910222,
+          "profit_factor": 0.857849,
+          "gross_profit": 343.440925,
+          "gross_loss": 400.351147,
+          "fees": 17.73229,
+          "max_drawdown": 0.099009,
+          "halted": false,
+          "stop_count": 18,
+          "stop_average_r": -1.0202916628559229
+        },
+        "historical_check": {
+          "trades": 325,
+          "net": -60.648158,
+          "profit_factor": 0.821198,
+          "gross_profit": 278.542723,
+          "gross_loss": 339.19088,
+          "fees": 14.41914,
+          "max_drawdown": 0.084418,
+          "halted": false,
+          "stop_count": 18,
+          "stop_average_r": -1.0213349869995705
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.3",
+      "symbol": "QQQ",
+      "splits": {
+        "train": {
+          "trades": 908,
+          "net": -36.239106,
+          "profit_factor": 0.98264,
+          "gross_profit": 2051.27955,
+          "gross_loss": 2087.518657,
+          "fees": 83.859266,
+          "max_drawdown": 0.18227,
+          "halted": false,
+          "stop_count": 204,
+          "stop_average_r": -1.1494999787500928
+        },
+        "validation": {
+          "trades": 435,
+          "net": -273.344123,
+          "profit_factor": 0.726211,
+          "gross_profit": 725.031184,
+          "gross_loss": 998.375307,
+          "fees": 32.357416,
+          "max_drawdown": 0.287989,
+          "halted": false,
+          "stop_count": 121,
+          "stop_average_r": -1.1724060766432127
+        },
+        "historical_check": {
+          "trades": 483,
+          "net": -121.429583,
+          "profit_factor": 0.874124,
+          "gross_profit": 843.250166,
+          "gross_loss": 964.679749,
+          "fees": 35.122429,
+          "max_drawdown": 0.259113,
+          "halted": false,
+          "stop_count": 124,
+          "stop_average_r": -1.1655346800369086
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.3",
+      "symbol": "QQQ",
+      "splits": {
+        "train": {
+          "trades": 904,
+          "net": -9.868286,
+          "profit_factor": 0.995063,
+          "gross_profit": 1989.058632,
+          "gross_loss": 1998.926919,
+          "fees": 84.879839,
+          "max_drawdown": 0.144609,
+          "halted": false,
+          "stop_count": 203,
+          "stop_average_r": -1.049664154134464
+        },
+        "validation": {
+          "trades": 433,
+          "net": -233.429864,
+          "profit_factor": 0.754946,
+          "gross_profit": 719.136725,
+          "gross_loss": 952.566589,
+          "fees": 33.570079,
+          "max_drawdown": 0.257313,
+          "halted": false,
+          "stop_count": 121,
+          "stop_average_r": -1.0341588149584313
+        },
+        "historical_check": {
+          "trades": 483,
+          "net": -72.935821,
+          "profit_factor": 0.919487,
+          "gross_profit": 832.953324,
+          "gross_loss": 905.889145,
+          "fees": 35.384066,
+          "max_drawdown": 0.225321,
+          "halted": false,
+          "stop_count": 125,
+          "stop_average_r": -1.0429691954833786
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.3",
+      "symbol": "QQQ",
+      "splits": {
+        "train": {
+          "trades": 523,
+          "net": -199.672579,
+          "profit_factor": 0.829226,
+          "gross_profit": 969.54519,
+          "gross_loss": 1169.217769,
+          "fees": 42.88599,
+          "max_drawdown": 0.24078,
+          "halted": false,
+          "stop_count": 156,
+          "stop_average_r": -1.0533654749054038
+        },
+        "validation": {
+          "trades": 299,
+          "net": -212.632617,
+          "profit_factor": 0.66927,
+          "gross_profit": 430.287323,
+          "gross_loss": 642.91994,
+          "fees": 24.088099,
+          "max_drawdown": 0.212633,
+          "halted": false,
+          "stop_count": 92,
+          "stop_average_r": -1.0367981380702043
+        },
+        "historical_check": {
+          "trades": 326,
+          "net": -51.385784,
+          "profit_factor": 0.919057,
+          "gross_profit": 583.454036,
+          "gross_loss": 634.83982,
+          "fees": 25.166266,
+          "max_drawdown": 0.118296,
+          "halted": false,
+          "stop_count": 84,
+          "stop_average_r": -1.044664225147653
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.3",
+      "symbol": "QQQ",
+      "splits": {
+        "train": {
+          "trades": 191,
+          "net": -71.473627,
+          "profit_factor": 0.83124,
+          "gross_profit": 352.047726,
+          "gross_loss": 423.521354,
+          "fees": 10.743476,
+          "max_drawdown": 0.12001,
+          "halted": false,
+          "stop_count": 39,
+          "stop_average_r": -1.0309732166574017
+        },
+        "validation": {
+          "trades": 125,
+          "net": -131.553318,
+          "profit_factor": 0.509102,
+          "gross_profit": 136.431604,
+          "gross_loss": 267.984922,
+          "fees": 6.732486,
+          "max_drawdown": 0.131553,
+          "halted": false,
+          "stop_count": 17,
+          "stop_average_r": -1.0211767036568227
+        },
+        "historical_check": {
+          "trades": 113,
+          "net": -6.567765,
+          "profit_factor": 0.958566,
+          "gross_profit": 151.945172,
+          "gross_loss": 158.512937,
+          "fees": 4.649891,
+          "max_drawdown": 0.040255,
+          "halted": false,
+          "stop_count": 16,
+          "stop_average_r": -1.0258714574226784
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.1",
+      "symbol": "AAPL",
+      "splits": {
+        "train": {
+          "trades": 490,
+          "net": -281.499568,
+          "profit_factor": 0.794825,
+          "gross_profit": 1090.49759,
+          "gross_loss": 1371.997157,
+          "fees": 39.443333,
+          "max_drawdown": 0.301352,
+          "halted": true,
+          "stop_count": 141,
+          "stop_average_r": -1.1458978753843672
+        },
+        "validation": {
+          "trades": 299,
+          "net": -103.752637,
+          "profit_factor": 0.88072,
+          "gross_profit": 766.074206,
+          "gross_loss": 869.826842,
+          "fees": 27.058922,
+          "max_drawdown": 0.133087,
+          "halted": false,
+          "stop_count": 70,
+          "stop_average_r": -1.2077140960902915
+        },
+        "historical_check": {
+          "trades": 281,
+          "net": -117.085621,
+          "profit_factor": 0.843863,
+          "gross_profit": 632.80629,
+          "gross_loss": 749.891911,
+          "fees": 23.652218,
+          "max_drawdown": 0.18939,
+          "halted": false,
+          "stop_count": 81,
+          "stop_average_r": -1.1470393144194235
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.1",
+      "symbol": "AAPL",
+      "splits": {
+        "train": {
+          "trades": 623,
+          "net": -257.081954,
+          "profit_factor": 0.837652,
+          "gross_profit": 1326.444198,
+          "gross_loss": 1583.526153,
+          "fees": 50.895194,
+          "max_drawdown": 0.285154,
+          "halted": false,
+          "stop_count": 171,
+          "stop_average_r": -1.0384545769001043
+        },
+        "validation": {
+          "trades": 299,
+          "net": -62.623229,
+          "profit_factor": 0.921839,
+          "gross_profit": 738.584463,
+          "gross_loss": 801.207692,
+          "fees": 27.267183,
+          "max_drawdown": 0.0998,
+          "halted": false,
+          "stop_count": 70,
+          "stop_average_r": -1.0399498695768858
+        },
+        "historical_check": {
+          "trades": 281,
+          "net": -101.816933,
+          "profit_factor": 0.856098,
+          "gross_profit": 605.726623,
+          "gross_loss": 707.543556,
+          "fees": 23.89305,
+          "max_drawdown": 0.170206,
+          "halted": false,
+          "stop_count": 81,
+          "stop_average_r": -1.038869776228161
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.1",
+      "symbol": "AAPL",
+      "splits": {
+        "train": {
+          "trades": 574,
+          "net": -247.761894,
+          "profit_factor": 0.83418,
+          "gross_profit": 1246.397329,
+          "gross_loss": 1494.159224,
+          "fees": 48.873021,
+          "max_drawdown": 0.277163,
+          "halted": false,
+          "stop_count": 154,
+          "stop_average_r": -1.0380741015813812
+        },
+        "validation": {
+          "trades": 275,
+          "net": 9.043932,
+          "profit_factor": 1.01265,
+          "gross_profit": 723.978941,
+          "gross_loss": 714.935009,
+          "fees": 25.693854,
+          "max_drawdown": 0.080235,
+          "halted": false,
+          "stop_count": 62,
+          "stop_average_r": -1.0401816129347279
+        },
+        "historical_check": {
+          "trades": 260,
+          "net": -71.620695,
+          "profit_factor": 0.889432,
+          "gross_profit": 576.13327,
+          "gross_loss": 647.753965,
+          "fees": 22.641564,
+          "max_drawdown": 0.13889,
+          "halted": false,
+          "stop_count": 72,
+          "stop_average_r": -1.0392549030104452
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.1",
+      "symbol": "AAPL",
+      "splits": {
+        "train": {
+          "trades": 563,
+          "net": -175.410951,
+          "profit_factor": 0.848118,
+          "gross_profit": 979.501961,
+          "gross_loss": 1154.912911,
+          "fees": 35.488853,
+          "max_drawdown": 0.203425,
+          "halted": false,
+          "stop_count": 63,
+          "stop_average_r": -1.0254577699154392
+        },
+        "validation": {
+          "trades": 271,
+          "net": -44.54065,
+          "profit_factor": 0.917129,
+          "gross_profit": 492.929469,
+          "gross_loss": 537.470118,
+          "fees": 17.630648,
+          "max_drawdown": 0.07828,
+          "halted": false,
+          "stop_count": 24,
+          "stop_average_r": -1.0214430312032534
+        },
+        "historical_check": {
+          "trades": 254,
+          "net": -25.991789,
+          "profit_factor": 0.94497,
+          "gross_profit": 446.328396,
+          "gross_loss": 472.320185,
+          "fees": 15.470707,
+          "max_drawdown": 0.109752,
+          "halted": false,
+          "stop_count": 24,
+          "stop_average_r": -1.0202450112248356
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.2",
+      "symbol": "AAPL",
+      "splits": {
+        "train": {
+          "trades": 590,
+          "net": 7.545586,
+          "profit_factor": 1.004378,
+          "gross_profit": 1731.17843,
+          "gross_loss": 1723.632843,
+          "fees": 53.252423,
+          "max_drawdown": 0.171669,
+          "halted": false,
+          "stop_count": 119,
+          "stop_average_r": -1.148063346684314
+        },
+        "validation": {
+          "trades": 266,
+          "net": -69.852506,
+          "profit_factor": 0.898789,
+          "gross_profit": 620.311598,
+          "gross_loss": 690.164104,
+          "fees": 21.954616,
+          "max_drawdown": 0.151582,
+          "halted": false,
+          "stop_count": 61,
+          "stop_average_r": -1.2128738456384072
+        },
+        "historical_check": {
+          "trades": 284,
+          "net": 53.255878,
+          "profit_factor": 1.070774,
+          "gross_profit": 805.73407,
+          "gross_loss": 752.478192,
+          "fees": 25.334955,
+          "max_drawdown": 0.11338,
+          "halted": false,
+          "stop_count": 56,
+          "stop_average_r": -1.1307010981567405
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.2",
+      "symbol": "AAPL",
+      "splits": {
+        "train": {
+          "trades": 590,
+          "net": 13.003809,
+          "profit_factor": 1.007951,
+          "gross_profit": 1648.420928,
+          "gross_loss": 1635.417119,
+          "fees": 53.811318,
+          "max_drawdown": 0.165194,
+          "halted": false,
+          "stop_count": 119,
+          "stop_average_r": -1.0351051402204294
+        },
+        "validation": {
+          "trades": 265,
+          "net": -30.518423,
+          "profit_factor": 0.952912,
+          "gross_profit": 617.598141,
+          "gross_loss": 648.116564,
+          "fees": 22.293987,
+          "max_drawdown": 0.122376,
+          "halted": false,
+          "stop_count": 61,
+          "stop_average_r": -1.0432432886639307
+        },
+        "historical_check": {
+          "trades": 284,
+          "net": 61.635634,
+          "profit_factor": 1.087283,
+          "gross_profit": 767.791004,
+          "gross_loss": 706.15537,
+          "fees": 25.276379,
+          "max_drawdown": 0.103766,
+          "halted": false,
+          "stop_count": 56,
+          "stop_average_r": -1.0336801537510059
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.2",
+      "symbol": "AAPL",
+      "splits": {
+        "train": {
+          "trades": 585,
+          "net": 28.45301,
+          "profit_factor": 1.017459,
+          "gross_profit": 1658.176722,
+          "gross_loss": 1629.723712,
+          "fees": 53.840203,
+          "max_drawdown": 0.170422,
+          "halted": false,
+          "stop_count": 120,
+          "stop_average_r": -1.035170664785712
+        },
+        "validation": {
+          "trades": 263,
+          "net": -24.119052,
+          "profit_factor": 0.96215,
+          "gross_profit": 613.114434,
+          "gross_loss": 637.233486,
+          "fees": 22.204942,
+          "max_drawdown": 0.122376,
+          "halted": false,
+          "stop_count": 59,
+          "stop_average_r": -1.0431839504262221
+        },
+        "historical_check": {
+          "trades": 279,
+          "net": 52.425344,
+          "profit_factor": 1.074897,
+          "gross_profit": 752.386793,
+          "gross_loss": 699.961449,
+          "fees": 25.108936,
+          "max_drawdown": 0.106425,
+          "halted": false,
+          "stop_count": 56,
+          "stop_average_r": -1.0336801537510059
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.2",
+      "symbol": "AAPL",
+      "splits": {
+        "train": {
+          "trades": 555,
+          "net": 116.250661,
+          "profit_factor": 1.095897,
+          "gross_profit": 1328.49363,
+          "gross_loss": 1212.242968,
+          "fees": 38.924761,
+          "max_drawdown": 0.105622,
+          "halted": false,
+          "stop_count": 53,
+          "stop_average_r": -1.0218068740565887
+        },
+        "validation": {
+          "trades": 250,
+          "net": 45.537691,
+          "profit_factor": 1.092868,
+          "gross_profit": 535.887489,
+          "gross_loss": 490.349798,
+          "fees": 16.579241,
+          "max_drawdown": 0.063068,
+          "halted": false,
+          "stop_count": 20,
+          "stop_average_r": -1.0232809045840345
+        },
+        "historical_check": {
+          "trades": 269,
+          "net": 64.163757,
+          "profit_factor": 1.124456,
+          "gross_profit": 579.719252,
+          "gross_loss": 515.555495,
+          "fees": 17.377228,
+          "max_drawdown": 0.069395,
+          "halted": false,
+          "stop_count": 26,
+          "stop_average_r": -1.0203203630662299
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.3",
+      "symbol": "AAPL",
+      "splits": {
+        "train": {
+          "trades": 283,
+          "net": -291.82835,
+          "profit_factor": 0.608436,
+          "gross_profit": 453.459929,
+          "gross_loss": 745.288279,
+          "fees": 22.67392,
+          "max_drawdown": 0.300866,
+          "halted": true,
+          "stop_count": 87,
+          "stop_average_r": -1.166024806865654
+        },
+        "validation": {
+          "trades": 504,
+          "net": -94.543729,
+          "profit_factor": 0.936738,
+          "gross_profit": 1399.928336,
+          "gross_loss": 1494.472065,
+          "fees": 47.150873,
+          "max_drawdown": 0.164656,
+          "halted": false,
+          "stop_count": 152,
+          "stop_average_r": -1.154541153617856
+        },
+        "historical_check": {
+          "trades": 508,
+          "net": 4.061397,
+          "profit_factor": 1.002777,
+          "gross_profit": 1466.744036,
+          "gross_loss": 1462.682639,
+          "fees": 46.199235,
+          "max_drawdown": 0.19481,
+          "halted": false,
+          "stop_count": 152,
+          "stop_average_r": -1.1516517898963847
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.3",
+      "symbol": "AAPL",
+      "splits": {
+        "train": {
+          "trades": 393,
+          "net": -289.52305,
+          "profit_factor": 0.708088,
+          "gross_profit": 702.293005,
+          "gross_loss": 991.816055,
+          "fees": 31.05542,
+          "max_drawdown": 0.298788,
+          "halted": true,
+          "stop_count": 131,
+          "stop_average_r": -1.0389315547157405
+        },
+        "validation": {
+          "trades": 504,
+          "net": -77.323734,
+          "profit_factor": 0.94507,
+          "gross_profit": 1330.363317,
+          "gross_loss": 1407.687051,
+          "fees": 47.778263,
+          "max_drawdown": 0.157015,
+          "halted": false,
+          "stop_count": 153,
+          "stop_average_r": -1.0445694454040322
+        },
+        "historical_check": {
+          "trades": 506,
+          "net": 77.143113,
+          "profit_factor": 1.05559,
+          "gross_profit": 1464.846791,
+          "gross_loss": 1387.703678,
+          "fees": 48.115999,
+          "max_drawdown": 0.146789,
+          "halted": false,
+          "stop_count": 150,
+          "stop_average_r": -1.0396349690337396
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.3",
+      "symbol": "AAPL",
+      "splits": {
+        "train": {
+          "trades": 368,
+          "net": -296.564534,
+          "profit_factor": 0.717886,
+          "gross_profit": 754.659463,
+          "gross_loss": 1051.223997,
+          "fees": 31.025513,
+          "max_drawdown": 0.29873,
+          "halted": true,
+          "stop_count": 154,
+          "stop_average_r": -1.045858240276704
+        },
+        "validation": {
+          "trades": 352,
+          "net": -147.363662,
+          "profit_factor": 0.851048,
+          "gross_profit": 841.969911,
+          "gross_loss": 989.333573,
+          "fees": 32.459354,
+          "max_drawdown": 0.166936,
+          "halted": false,
+          "stop_count": 131,
+          "stop_average_r": -1.0456434736763232
+        },
+        "historical_check": {
+          "trades": 418,
+          "net": -2.98138,
+          "profit_factor": 0.997343,
+          "gross_profit": 1119.213315,
+          "gross_loss": 1122.194694,
+          "fees": 38.954918,
+          "max_drawdown": 0.164855,
+          "halted": false,
+          "stop_count": 148,
+          "stop_average_r": -1.0451001208542532
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.3",
+      "symbol": "AAPL",
+      "splits": {
+        "train": {
+          "trades": 382,
+          "net": -180.539059,
+          "profit_factor": 0.811432,
+          "gross_profit": 776.882822,
+          "gross_loss": 957.421881,
+          "fees": 22.197033,
+          "max_drawdown": 0.210575,
+          "halted": false,
+          "stop_count": 81,
+          "stop_average_r": -1.0269643950231353
+        },
+        "validation": {
+          "trades": 185,
+          "net": -67.307303,
+          "profit_factor": 0.852116,
+          "gross_profit": 387.828008,
+          "gross_loss": 455.135311,
+          "fees": 12.177936,
+          "max_drawdown": 0.073111,
+          "halted": false,
+          "stop_count": 30,
+          "stop_average_r": -1.0261674248755597
+        },
+        "historical_check": {
+          "trades": 232,
+          "net": -96.348516,
+          "profit_factor": 0.827806,
+          "gross_profit": 463.186945,
+          "gross_loss": 559.535462,
+          "fees": 14.270901,
+          "max_drawdown": 0.123103,
+          "halted": false,
+          "stop_count": 51,
+          "stop_average_r": -1.0236991566973077
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.1",
+      "symbol": "NVDA",
+      "splits": {
+        "train": {
+          "trades": 306,
+          "net": -291.942682,
+          "profit_factor": 0.733835,
+          "gross_profit": 804.904286,
+          "gross_loss": 1096.846968,
+          "fees": 20.095362,
+          "max_drawdown": 0.298005,
+          "halted": true,
+          "stop_count": 104,
+          "stop_average_r": -1.1590434793044544
+        },
+        "validation": {
+          "trades": 298,
+          "net": -183.53819,
+          "profit_factor": 0.812284,
+          "gross_profit": 794.208168,
+          "gross_loss": 977.746358,
+          "fees": 21.915711,
+          "max_drawdown": 0.236377,
+          "halted": false,
+          "stop_count": 93,
+          "stop_average_r": -1.1420285455560357
+        },
+        "historical_check": {
+          "trades": 300,
+          "net": -82.651347,
+          "profit_factor": 0.918932,
+          "gross_profit": 936.87784,
+          "gross_loss": 1019.529187,
+          "fees": 25.070613,
+          "max_drawdown": 0.136072,
+          "halted": false,
+          "stop_count": 85,
+          "stop_average_r": -1.1875753342498396
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.1",
+      "symbol": "NVDA",
+      "splits": {
+        "train": {
+          "trades": 404,
+          "net": -285.063266,
+          "profit_factor": 0.778932,
+          "gross_profit": 1004.41792,
+          "gross_loss": 1289.481186,
+          "fees": 26.936454,
+          "max_drawdown": 0.300318,
+          "halted": true,
+          "stop_count": 135,
+          "stop_average_r": -1.0372619589414822
+        },
+        "validation": {
+          "trades": 298,
+          "net": -153.944034,
+          "profit_factor": 0.832728,
+          "gross_profit": 766.375954,
+          "gross_loss": 920.319988,
+          "fees": 22.213447,
+          "max_drawdown": 0.209933,
+          "halted": false,
+          "stop_count": 93,
+          "stop_average_r": -1.0346243086064864
+        },
+        "historical_check": {
+          "trades": 300,
+          "net": -12.70135,
+          "profit_factor": 0.986674,
+          "gross_profit": 940.431323,
+          "gross_loss": 953.132674,
+          "fees": 26.102489,
+          "max_drawdown": 0.117307,
+          "halted": false,
+          "stop_count": 85,
+          "stop_average_r": -1.0343867958247674
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.1",
+      "symbol": "NVDA",
+      "splits": {
+        "train": {
+          "trades": 386,
+          "net": -274.73559,
+          "profit_factor": 0.779383,
+          "gross_profit": 970.570151,
+          "gross_loss": 1245.305741,
+          "fees": 25.990832,
+          "max_drawdown": 0.297431,
+          "halted": true,
+          "stop_count": 128,
+          "stop_average_r": -1.0370519414598418
+        },
+        "validation": {
+          "trades": 284,
+          "net": -163.455595,
+          "profit_factor": 0.817238,
+          "gross_profit": 730.906822,
+          "gross_loss": 894.362416,
+          "fees": 21.535579,
+          "max_drawdown": 0.194653,
+          "halted": false,
+          "stop_count": 89,
+          "stop_average_r": -1.0345570462809222
+        },
+        "historical_check": {
+          "trades": 281,
+          "net": -16.026119,
+          "profit_factor": 0.981413,
+          "gross_profit": 846.21451,
+          "gross_loss": 862.240629,
+          "fees": 24.396535,
+          "max_drawdown": 0.106292,
+          "halted": false,
+          "stop_count": 77,
+          "stop_average_r": -1.0355224883952265
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.1",
+      "symbol": "NVDA",
+      "splits": {
+        "train": {
+          "trades": 437,
+          "net": -265.826951,
+          "profit_factor": 0.780163,
+          "gross_profit": 943.371716,
+          "gross_loss": 1209.198667,
+          "fees": 25.246313,
+          "max_drawdown": 0.302312,
+          "halted": true,
+          "stop_count": 96,
+          "stop_average_r": -1.027864240719229
+        },
+        "validation": {
+          "trades": 276,
+          "net": -153.263731,
+          "profit_factor": 0.800173,
+          "gross_profit": 613.717701,
+          "gross_loss": 766.981433,
+          "fees": 16.850945,
+          "max_drawdown": 0.201998,
+          "halted": false,
+          "stop_count": 57,
+          "stop_average_r": -1.0258521620205543
+        },
+        "historical_check": {
+          "trades": 271,
+          "net": 15.299348,
+          "profit_factor": 1.021857,
+          "gross_profit": 715.273229,
+          "gross_loss": 699.973881,
+          "fees": 18.11735,
+          "max_drawdown": 0.07305,
+          "halted": false,
+          "stop_count": 43,
+          "stop_average_r": -1.022799772205867
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.2",
+      "symbol": "NVDA",
+      "splits": {
+        "train": {
+          "trades": 505,
+          "net": -32.877131,
+          "profit_factor": 0.981383,
+          "gross_profit": 1733.066816,
+          "gross_loss": 1765.943947,
+          "fees": 41.641561,
+          "max_drawdown": 0.19729,
+          "halted": false,
+          "stop_count": 127,
+          "stop_average_r": -1.1305966279038364
+        },
+        "validation": {
+          "trades": 199,
+          "net": -291.558895,
+          "profit_factor": 0.559853,
+          "gross_profit": 370.853223,
+          "gross_loss": 662.412118,
+          "fees": 12.611484,
+          "max_drawdown": 0.298263,
+          "halted": true,
+          "stop_count": 62,
+          "stop_average_r": -1.134636919359083
+        },
+        "historical_check": {
+          "trades": 241,
+          "net": -90.184927,
+          "profit_factor": 0.88675,
+          "gross_profit": 706.15253,
+          "gross_loss": 796.337457,
+          "fees": 18.150759,
+          "max_drawdown": 0.17716,
+          "halted": false,
+          "stop_count": 57,
+          "stop_average_r": -1.1742129361155222
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.2",
+      "symbol": "NVDA",
+      "splits": {
+        "train": {
+          "trades": 505,
+          "net": 20.304363,
+          "profit_factor": 1.011914,
+          "gross_profit": 1724.529208,
+          "gross_loss": 1704.224845,
+          "fees": 43.01112,
+          "max_drawdown": 0.193384,
+          "halted": false,
+          "stop_count": 127,
+          "stop_average_r": -1.034425261607924
+        },
+        "validation": {
+          "trades": 222,
+          "net": -296.084573,
+          "profit_factor": 0.574042,
+          "gross_profit": 399.017648,
+          "gross_loss": 695.102221,
+          "fees": 13.853223,
+          "max_drawdown": 0.302635,
+          "halted": true,
+          "stop_count": 70,
+          "stop_average_r": -1.032123195625587
+        },
+        "historical_check": {
+          "trades": 241,
+          "net": -54.705517,
+          "profit_factor": 0.926724,
+          "gross_profit": 691.859398,
+          "gross_loss": 746.564915,
+          "fees": 18.475378,
+          "max_drawdown": 0.142744,
+          "halted": false,
+          "stop_count": 57,
+          "stop_average_r": -1.0302174155897723
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.2",
+      "symbol": "NVDA",
+      "splits": {
+        "train": {
+          "trades": 501,
+          "net": 15.041741,
+          "profit_factor": 1.008915,
+          "gross_profit": 1702.246132,
+          "gross_loss": 1687.204391,
+          "fees": 42.75854,
+          "max_drawdown": 0.199223,
+          "halted": false,
+          "stop_count": 126,
+          "stop_average_r": -1.0346488045968825
+        },
+        "validation": {
+          "trades": 202,
+          "net": -294.456401,
+          "profit_factor": 0.54357,
+          "gross_profit": 350.672417,
+          "gross_loss": 645.128819,
+          "fees": 12.798375,
+          "max_drawdown": 0.301022,
+          "halted": true,
+          "stop_count": 65,
+          "stop_average_r": -1.0321624543896188
+        },
+        "historical_check": {
+          "trades": 240,
+          "net": -50.30405,
+          "profit_factor": 0.932555,
+          "gross_profit": 695.552165,
+          "gross_loss": 745.856215,
+          "fees": 18.521864,
+          "max_drawdown": 0.141051,
+          "halted": false,
+          "stop_count": 57,
+          "stop_average_r": -1.0302174155897723
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.2",
+      "symbol": "NVDA",
+      "splits": {
+        "train": {
+          "trades": 487,
+          "net": 31.413769,
+          "profit_factor": 1.021931,
+          "gross_profit": 1463.814224,
+          "gross_loss": 1432.400455,
+          "fees": 33.810801,
+          "max_drawdown": 0.152886,
+          "halted": false,
+          "stop_count": 89,
+          "stop_average_r": -1.0265748505734202
+        },
+        "validation": {
+          "trades": 216,
+          "net": -294.460833,
+          "profit_factor": 0.51824,
+          "gross_profit": 316.758564,
+          "gross_loss": 611.219397,
+          "fees": 11.031564,
+          "max_drawdown": 0.301027,
+          "halted": true,
+          "stop_count": 54,
+          "stop_average_r": -1.0241126005706294
+        },
+        "historical_check": {
+          "trades": 232,
+          "net": 15.709952,
+          "profit_factor": 1.025626,
+          "gross_profit": 628.747188,
+          "gross_loss": 613.037236,
+          "fees": 15.286358,
+          "max_drawdown": 0.105696,
+          "halted": false,
+          "stop_count": 33,
+          "stop_average_r": -1.0231101466959198
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.3",
+      "symbol": "NVDA",
+      "splits": {
+        "train": {
+          "trades": 276,
+          "net": -269.397769,
+          "profit_factor": 0.756779,
+          "gross_profit": 838.227061,
+          "gross_loss": 1107.624831,
+          "fees": 19.945149,
+          "max_drawdown": 0.308261,
+          "halted": true,
+          "stop_count": 120,
+          "stop_average_r": -1.2348745758980162
+        },
+        "validation": {
+          "trades": 516,
+          "net": -178.716763,
+          "profit_factor": 0.913075,
+          "gross_profit": 1877.273066,
+          "gross_loss": 2055.989829,
+          "fees": 44.527168,
+          "max_drawdown": 0.298805,
+          "halted": true,
+          "stop_count": 185,
+          "stop_average_r": -1.1937677746850948
+        },
+        "historical_check": {
+          "trades": 206,
+          "net": -296.382708,
+          "profit_factor": 0.614935,
+          "gross_profit": 473.311813,
+          "gross_loss": 769.694521,
+          "fees": 14.224877,
+          "max_drawdown": 0.301767,
+          "halted": true,
+          "stop_count": 92,
+          "stop_average_r": -1.1673039436214387
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.3",
+      "symbol": "NVDA",
+      "splits": {
+        "train": {
+          "trades": 348,
+          "net": -266.913877,
+          "profit_factor": 0.784059,
+          "gross_profit": 969.136593,
+          "gross_loss": 1236.050471,
+          "fees": 24.467461,
+          "max_drawdown": 0.302067,
+          "halted": true,
+          "stop_count": 152,
+          "stop_average_r": -1.0665071189255653
+        },
+        "validation": {
+          "trades": 524,
+          "net": -99.874244,
+          "profit_factor": 0.948307,
+          "gross_profit": 1832.180893,
+          "gross_loss": 1932.055137,
+          "fees": 47.000537,
+          "max_drawdown": 0.244895,
+          "halted": false,
+          "stop_count": 189,
+          "stop_average_r": -1.0392215770998978
+        },
+        "historical_check": {
+          "trades": 277,
+          "net": -295.195626,
+          "profit_factor": 0.677876,
+          "gross_profit": 621.208216,
+          "gross_loss": 916.403842,
+          "fees": 18.769288,
+          "max_drawdown": 0.301361,
+          "halted": true,
+          "stop_count": 123,
+          "stop_average_r": -1.0390037448635614
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.3",
+      "symbol": "NVDA",
+      "splits": {
+        "train": {
+          "trades": 499,
+          "net": -262.415151,
+          "profit_factor": 0.857963,
+          "gross_profit": 1585.093251,
+          "gross_loss": 1847.508402,
+          "fees": 38.694421,
+          "max_drawdown": 0.295516,
+          "halted": true,
+          "stop_count": 229,
+          "stop_average_r": -1.0468373772598023
+        },
+        "validation": {
+          "trades": 407,
+          "net": -267.570522,
+          "profit_factor": 0.795632,
+          "gross_profit": 1041.690768,
+          "gross_loss": 1309.26129,
+          "fees": 31.100513,
+          "max_drawdown": 0.282572,
+          "halted": false,
+          "stop_count": 176,
+          "stop_average_r": -1.0418593868634187
+        },
+        "historical_check": {
+          "trades": 401,
+          "net": -191.053254,
+          "profit_factor": 0.847544,
+          "gross_profit": 1062.114575,
+          "gross_loss": 1253.167828,
+          "fees": 31.173682,
+          "max_drawdown": 0.235696,
+          "halted": false,
+          "stop_count": 177,
+          "stop_average_r": -1.0432181319851497
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.3",
+      "symbol": "NVDA",
+      "splits": {
+        "train": {
+          "trades": 676,
+          "net": -157.611049,
+          "profit_factor": 0.922417,
+          "gross_profit": 1873.909976,
+          "gross_loss": 2031.521025,
+          "fees": 41.316467,
+          "max_drawdown": 0.252432,
+          "halted": false,
+          "stop_count": 201,
+          "stop_average_r": -1.0335013851244739
+        },
+        "validation": {
+          "trades": 325,
+          "net": -192.029314,
+          "profit_factor": 0.795049,
+          "gross_profit": 744.924198,
+          "gross_loss": 936.953512,
+          "fees": 19.297702,
+          "max_drawdown": 0.217858,
+          "halted": false,
+          "stop_count": 93,
+          "stop_average_r": -1.027107743253297
+        },
+        "historical_check": {
+          "trades": 325,
+          "net": -118.588055,
+          "profit_factor": 0.874515,
+          "gross_profit": 826.44734,
+          "gross_loss": 945.035394,
+          "fees": 19.389033,
+          "max_drawdown": 0.147367,
+          "halted": false,
+          "stop_count": 97,
+          "stop_average_r": -1.0290234508869471
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.1",
+      "symbol": "TSLA",
+      "splits": {
+        "train": {
+          "trades": 444,
+          "net": -209.348142,
+          "profit_factor": 0.873567,
+          "gross_profit": 1446.450291,
+          "gross_loss": 1655.798433,
+          "fees": 27.502664,
+          "max_drawdown": 0.301204,
+          "halted": true,
+          "stop_count": 171,
+          "stop_average_r": -1.1720269132051462
+        },
+        "validation": {
+          "trades": 246,
+          "net": -260.2361,
+          "profit_factor": 0.682657,
+          "gross_profit": 559.811813,
+          "gross_loss": 820.047913,
+          "fees": 14.406502,
+          "max_drawdown": 0.301438,
+          "halted": true,
+          "stop_count": 97,
+          "stop_average_r": -1.1724842781033022
+        },
+        "historical_check": {
+          "trades": 281,
+          "net": -99.954445,
+          "profit_factor": 0.879516,
+          "gross_profit": 729.655488,
+          "gross_loss": 829.609933,
+          "fees": 16.63258,
+          "max_drawdown": 0.207268,
+          "halted": false,
+          "stop_count": 93,
+          "stop_average_r": -1.155087980043672
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.1",
+      "symbol": "TSLA",
+      "splits": {
+        "train": {
+          "trades": 492,
+          "net": -199.190332,
+          "profit_factor": 0.882326,
+          "gross_profit": 1493.545971,
+          "gross_loss": 1692.736302,
+          "fees": 31.031406,
+          "max_drawdown": 0.295685,
+          "halted": true,
+          "stop_count": 192,
+          "stop_average_r": -1.0460376724549987
+        },
+        "validation": {
+          "trades": 256,
+          "net": -262.5637,
+          "profit_factor": 0.667839,
+          "gross_profit": 527.906354,
+          "gross_loss": 790.470053,
+          "fees": 15.232309,
+          "max_drawdown": 0.30072,
+          "halted": true,
+          "stop_count": 102,
+          "stop_average_r": -1.036785206220744
+        },
+        "historical_check": {
+          "trades": 281,
+          "net": -81.364985,
+          "profit_factor": 0.895867,
+          "gross_profit": 699.987875,
+          "gross_loss": 781.35286,
+          "fees": 17.144259,
+          "max_drawdown": 0.177489,
+          "halted": false,
+          "stop_count": 93,
+          "stop_average_r": -1.0371166690938356
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.1",
+      "symbol": "TSLA",
+      "splits": {
+        "train": {
+          "trades": 461,
+          "net": -239.349283,
+          "profit_factor": 0.844174,
+          "gross_profit": 1296.652354,
+          "gross_loss": 1536.001637,
+          "fees": 28.058065,
+          "max_drawdown": 0.302302,
+          "halted": true,
+          "stop_count": 178,
+          "stop_average_r": -1.04689068124717
+        },
+        "validation": {
+          "trades": 267,
+          "net": -251.826026,
+          "profit_factor": 0.674539,
+          "gross_profit": 521.926859,
+          "gross_loss": 773.752885,
+          "fees": 15.084289,
+          "max_drawdown": 0.282981,
+          "halted": false,
+          "stop_count": 103,
+          "stop_average_r": -1.0368037496838522
+        },
+        "historical_check": {
+          "trades": 268,
+          "net": -50.225985,
+          "profit_factor": 0.934088,
+          "gross_profit": 711.786547,
+          "gross_loss": 762.012532,
+          "fees": 17.022955,
+          "max_drawdown": 0.152695,
+          "halted": false,
+          "stop_count": 88,
+          "stop_average_r": -1.0367204553022165
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.1",
+      "symbol": "TSLA",
+      "splits": {
+        "train": {
+          "trades": 480,
+          "net": -191.29988,
+          "profit_factor": 0.866826,
+          "gross_profit": 1245.164391,
+          "gross_loss": 1436.464271,
+          "fees": 24.332801,
+          "max_drawdown": 0.28584,
+          "halted": false,
+          "stop_count": 149,
+          "stop_average_r": -1.0366551851437045
+        },
+        "validation": {
+          "trades": 259,
+          "net": -258.35909,
+          "profit_factor": 0.604128,
+          "gross_profit": 394.273549,
+          "gross_loss": 652.632638,
+          "fees": 11.038047,
+          "max_drawdown": 0.284599,
+          "halted": false,
+          "stop_count": 87,
+          "stop_average_r": -1.0292921658089633
+        },
+        "historical_check": {
+          "trades": 262,
+          "net": -8.993086,
+          "profit_factor": 0.986512,
+          "gross_profit": 657.742527,
+          "gross_loss": 666.735614,
+          "fees": 14.084581,
+          "max_drawdown": 0.117239,
+          "halted": false,
+          "stop_count": 61,
+          "stop_average_r": -1.0263860806868301
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.2",
+      "symbol": "TSLA",
+      "splits": {
+        "train": {
+          "trades": 475,
+          "net": -194.644723,
+          "profit_factor": 0.851468,
+          "gross_profit": 1115.815195,
+          "gross_loss": 1310.459918,
+          "fees": 23.096295,
+          "max_drawdown": 0.261928,
+          "halted": false,
+          "stop_count": 136,
+          "stop_average_r": -1.1301376348099008
+        },
+        "validation": {
+          "trades": 281,
+          "net": -37.170982,
+          "profit_factor": 0.953393,
+          "gross_profit": 760.362198,
+          "gross_loss": 797.533179,
+          "fees": 16.878496,
+          "max_drawdown": 0.161279,
+          "halted": false,
+          "stop_count": 72,
+          "stop_average_r": -1.1227976526815158
+        },
+        "historical_check": {
+          "trades": 278,
+          "net": -171.932168,
+          "profit_factor": 0.797967,
+          "gross_profit": 679.077795,
+          "gross_loss": 851.009964,
+          "fees": 15.505136,
+          "max_drawdown": 0.219152,
+          "halted": false,
+          "stop_count": 91,
+          "stop_average_r": -1.1449611117167056
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.2",
+      "symbol": "TSLA",
+      "splits": {
+        "train": {
+          "trades": 475,
+          "net": -177.842611,
+          "profit_factor": 0.858464,
+          "gross_profit": 1078.672514,
+          "gross_loss": 1256.515125,
+          "fees": 23.546839,
+          "max_drawdown": 0.243049,
+          "halted": false,
+          "stop_count": 136,
+          "stop_average_r": -1.0391122785537732
+        },
+        "validation": {
+          "trades": 281,
+          "net": 17.080349,
+          "profit_factor": 1.022369,
+          "gross_profit": 780.636599,
+          "gross_loss": 763.55625,
+          "fees": 17.454957,
+          "max_drawdown": 0.120026,
+          "halted": false,
+          "stop_count": 72,
+          "stop_average_r": -1.0348514037761476
+        },
+        "historical_check": {
+          "trades": 277,
+          "net": -167.425588,
+          "profit_factor": 0.791801,
+          "gross_profit": 636.735904,
+          "gross_loss": 804.161492,
+          "fees": 15.746759,
+          "max_drawdown": 0.215975,
+          "halted": false,
+          "stop_count": 91,
+          "stop_average_r": -1.0305014887640684
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.2",
+      "symbol": "TSLA",
+      "splits": {
+        "train": {
+          "trades": 474,
+          "net": -177.423118,
+          "profit_factor": 0.85875,
+          "gross_profit": 1078.672514,
+          "gross_loss": 1256.095632,
+          "fees": 23.529745,
+          "max_drawdown": 0.242647,
+          "halted": false,
+          "stop_count": 136,
+          "stop_average_r": -1.0391122785537732
+        },
+        "validation": {
+          "trades": 280,
+          "net": 22.240355,
+          "profit_factor": 1.029326,
+          "gross_profit": 780.636599,
+          "gross_loss": 758.396244,
+          "fees": 17.437147,
+          "max_drawdown": 0.118025,
+          "halted": false,
+          "stop_count": 71,
+          "stop_average_r": -1.035179593237254
+        },
+        "historical_check": {
+          "trades": 277,
+          "net": -167.425588,
+          "profit_factor": 0.791801,
+          "gross_profit": 636.735904,
+          "gross_loss": 804.161492,
+          "fees": 15.746759,
+          "max_drawdown": 0.215975,
+          "halted": false,
+          "stop_count": 91,
+          "stop_average_r": -1.0305014887640684
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.2",
+      "symbol": "TSLA",
+      "splits": {
+        "train": {
+          "trades": 469,
+          "net": -174.537833,
+          "profit_factor": 0.847379,
+          "gross_profit": 969.064599,
+          "gross_loss": 1143.602432,
+          "fees": 20.684807,
+          "max_drawdown": 0.231396,
+          "halted": false,
+          "stop_count": 114,
+          "stop_average_r": -1.0303929788681596
+        },
+        "validation": {
+          "trades": 272,
+          "net": 18.097476,
+          "profit_factor": 1.027646,
+          "gross_profit": 672.701978,
+          "gross_loss": 654.604502,
+          "fees": 13.983261,
+          "max_drawdown": 0.121296,
+          "halted": false,
+          "stop_count": 55,
+          "stop_average_r": -1.0270647171151797
+        },
+        "historical_check": {
+          "trades": 271,
+          "net": -193.996316,
+          "profit_factor": 0.734733,
+          "gross_profit": 537.329657,
+          "gross_loss": 731.325973,
+          "fees": 12.956773,
+          "max_drawdown": 0.229863,
+          "halted": false,
+          "stop_count": 74,
+          "stop_average_r": -1.0241620170645669
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.3",
+      "symbol": "TSLA",
+      "splits": {
+        "train": {
+          "trades": 155,
+          "net": -288.553044,
+          "profit_factor": 0.527374,
+          "gross_profit": 321.978374,
+          "gross_loss": 610.531418,
+          "fees": 9.441278,
+          "max_drawdown": 0.300602,
+          "halted": true,
+          "stop_count": 76,
+          "stop_average_r": -1.202781924898792
+        },
+        "validation": {
+          "trades": 230,
+          "net": -298.564017,
+          "profit_factor": 0.589695,
+          "gross_profit": 429.09994,
+          "gross_loss": 727.663957,
+          "fees": 11.157298,
+          "max_drawdown": 0.300613,
+          "halted": true,
+          "stop_count": 110,
+          "stop_average_r": -1.2388940589805186
+        },
+        "historical_check": {
+          "trades": 297,
+          "net": -268.114772,
+          "profit_factor": 0.751809,
+          "gross_profit": 812.162989,
+          "gross_loss": 1080.277761,
+          "fees": 18.519045,
+          "max_drawdown": 0.295972,
+          "halted": true,
+          "stop_count": 139,
+          "stop_average_r": -1.2084325880308684
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.3",
+      "symbol": "TSLA",
+      "splits": {
+        "train": {
+          "trades": 213,
+          "net": -291.380538,
+          "profit_factor": 0.597356,
+          "gross_profit": 432.28759,
+          "gross_loss": 723.668128,
+          "fees": 12.65412,
+          "max_drawdown": 0.302822,
+          "halted": true,
+          "stop_count": 105,
+          "stop_average_r": -1.051379156758739
+        },
+        "validation": {
+          "trades": 278,
+          "net": -299.563152,
+          "profit_factor": 0.614809,
+          "gross_profit": 478.136835,
+          "gross_loss": 777.699987,
+          "fees": 14.192153,
+          "max_drawdown": 0.301609,
+          "halted": true,
+          "stop_count": 134,
+          "stop_average_r": -1.0435222317532886
+        },
+        "historical_check": {
+          "trades": 526,
+          "net": -163.474099,
+          "profit_factor": 0.89501,
+          "gross_profit": 1393.566182,
+          "gross_loss": 1557.040281,
+          "fees": 33.74788,
+          "max_drawdown": 0.281898,
+          "halted": false,
+          "stop_count": 228,
+          "stop_average_r": -1.0459303548512142
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.3",
+      "symbol": "TSLA",
+      "splits": {
+        "train": {
+          "trades": 257,
+          "net": -241.088477,
+          "profit_factor": 0.725832,
+          "gross_profit": 638.258283,
+          "gross_loss": 879.34676,
+          "fees": 16.183906,
+          "max_drawdown": 0.297663,
+          "halted": true,
+          "stop_count": 130,
+          "stop_average_r": -1.0554013462041545
+        },
+        "validation": {
+          "trades": 404,
+          "net": -161.908309,
+          "profit_factor": 0.865525,
+          "gross_profit": 1042.096433,
+          "gross_loss": 1204.004743,
+          "fees": 26.625415,
+          "max_drawdown": 0.179259,
+          "halted": false,
+          "stop_count": 184,
+          "stop_average_r": -1.0393043078396456
+        },
+        "historical_check": {
+          "trades": 444,
+          "net": -161.811136,
+          "profit_factor": 0.88222,
+          "gross_profit": 1212.028796,
+          "gross_loss": 1373.839932,
+          "fees": 30.94052,
+          "max_drawdown": 0.254687,
+          "halted": false,
+          "stop_count": 199,
+          "stop_average_r": -1.0448497342001237
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.3",
+      "symbol": "TSLA",
+      "splits": {
+        "train": {
+          "trades": 370,
+          "net": -244.110982,
+          "profit_factor": 0.794621,
+          "gross_profit": 944.478657,
+          "gross_loss": 1188.589639,
+          "fees": 17.433741,
+          "max_drawdown": 0.297714,
+          "halted": true,
+          "stop_count": 162,
+          "stop_average_r": -1.0397666537383372
+        },
+        "validation": {
+          "trades": 348,
+          "net": -145.218258,
+          "profit_factor": 0.846527,
+          "gross_profit": 800.996537,
+          "gross_loss": 946.214795,
+          "fees": 16.783062,
+          "max_drawdown": 0.181,
+          "halted": false,
+          "stop_count": 125,
+          "stop_average_r": -1.0295267440428248
+        },
+        "historical_check": {
+          "trades": 387,
+          "net": -165.066597,
+          "profit_factor": 0.844039,
+          "gross_profit": 893.317679,
+          "gross_loss": 1058.384276,
+          "fees": 20.064337,
+          "max_drawdown": 0.234129,
+          "halted": false,
+          "stop_count": 131,
+          "stop_average_r": -1.0310392756247424
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.1",
+      "symbol": "AMD",
+      "splits": {
+        "train": {
+          "trades": 556,
+          "net": -172.259926,
+          "profit_factor": 0.914432,
+          "gross_profit": 1840.872515,
+          "gross_loss": 2013.132441,
+          "fees": 45.107692,
+          "max_drawdown": 0.303756,
+          "halted": true,
+          "stop_count": 177,
+          "stop_average_r": -1.1575284003094968
+        },
+        "validation": {
+          "trades": 251,
+          "net": -139.617956,
+          "profit_factor": 0.827661,
+          "gross_profit": 670.515767,
+          "gross_loss": 810.133723,
+          "fees": 14.774272,
+          "max_drawdown": 0.231067,
+          "halted": false,
+          "stop_count": 85,
+          "stop_average_r": -1.179772815648337
+        },
+        "historical_check": {
+          "trades": 278,
+          "net": -53.168704,
+          "profit_factor": 0.943524,
+          "gross_profit": 888.273358,
+          "gross_loss": 941.442062,
+          "fees": 17.386521,
+          "max_drawdown": 0.149555,
+          "halted": false,
+          "stop_count": 96,
+          "stop_average_r": -1.1624560728011721
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.1",
+      "symbol": "AMD",
+      "splits": {
+        "train": {
+          "trades": 570,
+          "net": -142.382319,
+          "profit_factor": 0.927726,
+          "gross_profit": 1827.648937,
+          "gross_loss": 1970.031256,
+          "fees": 46.804412,
+          "max_drawdown": 0.272942,
+          "halted": false,
+          "stop_count": 185,
+          "stop_average_r": -1.0564159449741448
+        },
+        "validation": {
+          "trades": 250,
+          "net": -90.615402,
+          "profit_factor": 0.8812,
+          "gross_profit": 672.141623,
+          "gross_loss": 762.757025,
+          "fees": 15.312941,
+          "max_drawdown": 0.195424,
+          "halted": false,
+          "stop_count": 85,
+          "stop_average_r": -1.053676792387237
+        },
+        "historical_check": {
+          "trades": 278,
+          "net": -23.337096,
+          "profit_factor": 0.973374,
+          "gross_profit": 853.125572,
+          "gross_loss": 876.462669,
+          "fees": 17.488096,
+          "max_drawdown": 0.132652,
+          "halted": false,
+          "stop_count": 96,
+          "stop_average_r": -1.0640006088360703
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.1",
+      "symbol": "AMD",
+      "splits": {
+        "train": {
+          "trades": 531,
+          "net": -27.861885,
+          "profit_factor": 0.985158,
+          "gross_profit": 1849.312496,
+          "gross_loss": 1877.174381,
+          "fees": 46.288547,
+          "max_drawdown": 0.180139,
+          "halted": false,
+          "stop_count": 164,
+          "stop_average_r": -1.0559826337486686
+        },
+        "validation": {
+          "trades": 232,
+          "net": -126.495612,
+          "profit_factor": 0.824127,
+          "gross_profit": 592.749037,
+          "gross_loss": 719.244649,
+          "fees": 13.885199,
+          "max_drawdown": 0.190731,
+          "halted": false,
+          "stop_count": 81,
+          "stop_average_r": -1.053591328714264
+        },
+        "historical_check": {
+          "trades": 260,
+          "net": 5.130521,
+          "profit_factor": 1.006148,
+          "gross_profit": 839.601567,
+          "gross_loss": 834.471046,
+          "fees": 16.538243,
+          "max_drawdown": 0.112493,
+          "halted": false,
+          "stop_count": 89,
+          "stop_average_r": -1.0675235821856242
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.1",
+      "symbol": "AMD",
+      "splits": {
+        "train": {
+          "trades": 516,
+          "net": -26.989567,
+          "profit_factor": 0.983213,
+          "gross_profit": 1580.779586,
+          "gross_loss": 1607.769153,
+          "fees": 36.365774,
+          "max_drawdown": 0.160694,
+          "halted": false,
+          "stop_count": 115,
+          "stop_average_r": -1.0351613800035007
+        },
+        "validation": {
+          "trades": 225,
+          "net": -113.178439,
+          "profit_factor": 0.827667,
+          "gross_profit": 543.564539,
+          "gross_loss": 656.742979,
+          "fees": 11.690123,
+          "max_drawdown": 0.174326,
+          "halted": false,
+          "stop_count": 66,
+          "stop_average_r": -1.038574415817285
+        },
+        "historical_check": {
+          "trades": 252,
+          "net": 53.137019,
+          "profit_factor": 1.072699,
+          "gross_profit": 784.05029,
+          "gross_loss": 730.913271,
+          "fees": 13.464298,
+          "max_drawdown": 0.064657,
+          "halted": false,
+          "stop_count": 70,
+          "stop_average_r": -1.0493593421003302
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.2",
+      "symbol": "AMD",
+      "splits": {
+        "train": {
+          "trades": 474,
+          "net": -274.969446,
+          "profit_factor": 0.818532,
+          "gross_profit": 1240.278321,
+          "gross_loss": 1515.247767,
+          "fees": 30.407775,
+          "max_drawdown": 0.300701,
+          "halted": true,
+          "stop_count": 129,
+          "stop_average_r": -1.1214912080011643
+        },
+        "validation": {
+          "trades": 221,
+          "net": -80.409616,
+          "profit_factor": 0.884946,
+          "gross_profit": 618.474439,
+          "gross_loss": 698.884055,
+          "fees": 13.319514,
+          "max_drawdown": 0.125873,
+          "halted": false,
+          "stop_count": 65,
+          "stop_average_r": -1.097543682128452
+        },
+        "historical_check": {
+          "trades": 239,
+          "net": -104.122735,
+          "profit_factor": 0.859178,
+          "gross_profit": 635.271848,
+          "gross_loss": 739.394583,
+          "fees": 12.213207,
+          "max_drawdown": 0.188908,
+          "halted": false,
+          "stop_count": 83,
+          "stop_average_r": -1.1402898711493457
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.2",
+      "symbol": "AMD",
+      "splits": {
+        "train": {
+          "trades": 500,
+          "net": -270.039546,
+          "profit_factor": 0.825089,
+          "gross_profit": 1273.829234,
+          "gross_loss": 1543.868779,
+          "fees": 32.516989,
+          "max_drawdown": 0.299483,
+          "halted": true,
+          "stop_count": 136,
+          "stop_average_r": -1.0409149485876643
+        },
+        "validation": {
+          "trades": 221,
+          "net": -82.911866,
+          "profit_factor": 0.876704,
+          "gross_profit": 589.549166,
+          "gross_loss": 672.461032,
+          "fees": 13.30924,
+          "max_drawdown": 0.122053,
+          "halted": false,
+          "stop_count": 65,
+          "stop_average_r": -1.0404259624175831
+        },
+        "historical_check": {
+          "trades": 240,
+          "net": -99.615936,
+          "profit_factor": 0.860093,
+          "gross_profit": 612.399444,
+          "gross_loss": 712.01538,
+          "fees": 12.27724,
+          "max_drawdown": 0.182144,
+          "halted": false,
+          "stop_count": 84,
+          "stop_average_r": -1.069434167165615
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.2",
+      "symbol": "AMD",
+      "splits": {
+        "train": {
+          "trades": 499,
+          "net": -268.87248,
+          "profit_factor": 0.825713,
+          "gross_profit": 1273.829234,
+          "gross_loss": 1542.701714,
+          "fees": 32.479635,
+          "max_drawdown": 0.298363,
+          "halted": true,
+          "stop_count": 136,
+          "stop_average_r": -1.0409149485876643
+        },
+        "validation": {
+          "trades": 221,
+          "net": -96.428338,
+          "profit_factor": 0.857081,
+          "gross_profit": 578.277238,
+          "gross_loss": 674.705576,
+          "fees": 13.202125,
+          "max_drawdown": 0.131031,
+          "halted": false,
+          "stop_count": 66,
+          "stop_average_r": -1.040017513789547
+        },
+        "historical_check": {
+          "trades": 240,
+          "net": -99.615936,
+          "profit_factor": 0.860093,
+          "gross_profit": 612.399444,
+          "gross_loss": 712.01538,
+          "fees": 12.27724,
+          "max_drawdown": 0.182144,
+          "halted": false,
+          "stop_count": 84,
+          "stop_average_r": -1.069434167165615
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.2",
+      "symbol": "AMD",
+      "splits": {
+        "train": {
+          "trades": 501,
+          "net": -241.839949,
+          "profit_factor": 0.830141,
+          "gross_profit": 1181.927162,
+          "gross_loss": 1423.767111,
+          "fees": 28.004539,
+          "max_drawdown": 0.26689,
+          "halted": false,
+          "stop_count": 106,
+          "stop_average_r": -1.0300128165430873
+        },
+        "validation": {
+          "trades": 217,
+          "net": -95.198676,
+          "profit_factor": 0.848045,
+          "gross_profit": 531.295156,
+          "gross_loss": 626.493832,
+          "fees": 11.770507,
+          "max_drawdown": 0.15742,
+          "halted": false,
+          "stop_count": 59,
+          "stop_average_r": -1.036312616516248
+        },
+        "historical_check": {
+          "trades": 232,
+          "net": -76.292808,
+          "profit_factor": 0.880302,
+          "gross_profit": 561.083937,
+          "gross_loss": 637.376745,
+          "fees": 10.400356,
+          "max_drawdown": 0.165885,
+          "halted": false,
+          "stop_count": 71,
+          "stop_average_r": -1.0701142811335667
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.3",
+      "symbol": "AMD",
+      "splits": {
+        "train": {
+          "trades": 214,
+          "net": -288.664211,
+          "profit_factor": 0.656608,
+          "gross_profit": 551.962111,
+          "gross_loss": 840.626322,
+          "fees": 17.082051,
+          "max_drawdown": 0.296564,
+          "halted": true,
+          "stop_count": 101,
+          "stop_average_r": -1.2426190226679206
+        },
+        "validation": {
+          "trades": 357,
+          "net": -302.501948,
+          "profit_factor": 0.764875,
+          "gross_profit": 984.057242,
+          "gross_loss": 1286.55919,
+          "fees": 21.594554,
+          "max_drawdown": 0.302502,
+          "halted": true,
+          "stop_count": 155,
+          "stop_average_r": -1.2294474446124213
+        },
+        "historical_check": {
+          "trades": 191,
+          "net": -272.334329,
+          "profit_factor": 0.644528,
+          "gross_profit": 493.785921,
+          "gross_loss": 766.12025,
+          "fees": 10.615903,
+          "max_drawdown": 0.305852,
+          "halted": true,
+          "stop_count": 97,
+          "stop_average_r": -1.1833473897123672
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.3",
+      "symbol": "AMD",
+      "splits": {
+        "train": {
+          "trades": 252,
+          "net": -272.59166,
+          "profit_factor": 0.697065,
+          "gross_profit": 627.243668,
+          "gross_loss": 899.835327,
+          "fees": 20.251876,
+          "max_drawdown": 0.296044,
+          "halted": true,
+          "stop_count": 117,
+          "stop_average_r": -1.0710081137800356
+        },
+        "validation": {
+          "trades": 425,
+          "net": -303.617838,
+          "profit_factor": 0.788788,
+          "gross_profit": 1133.884597,
+          "gross_loss": 1437.502435,
+          "fees": 26.904541,
+          "max_drawdown": 0.303618,
+          "halted": true,
+          "stop_count": 191,
+          "stop_average_r": -1.0532357750077566
+        },
+        "historical_check": {
+          "trades": 238,
+          "net": -264.979463,
+          "profit_factor": 0.673907,
+          "gross_profit": 547.609038,
+          "gross_loss": 812.588501,
+          "fees": 12.458686,
+          "max_drawdown": 0.301377,
+          "halted": true,
+          "stop_count": 119,
+          "stop_average_r": -1.0743559100930649
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.3",
+      "symbol": "AMD",
+      "splits": {
+        "train": {
+          "trades": 831,
+          "net": -147.08809,
+          "profit_factor": 0.946957,
+          "gross_profit": 2625.914169,
+          "gross_loss": 2773.002258,
+          "fees": 63.189986,
+          "max_drawdown": 0.230842,
+          "halted": false,
+          "stop_count": 360,
+          "stop_average_r": -1.061601942731413
+        },
+        "validation": {
+          "trades": 407,
+          "net": -104.085412,
+          "profit_factor": 0.933106,
+          "gross_profit": 1451.883604,
+          "gross_loss": 1555.969016,
+          "fees": 30.113457,
+          "max_drawdown": 0.217095,
+          "halted": false,
+          "stop_count": 184,
+          "stop_average_r": -1.0556249961008564
+        },
+        "historical_check": {
+          "trades": 386,
+          "net": -92.888939,
+          "profit_factor": 0.92056,
+          "gross_profit": 1076.40472,
+          "gross_loss": 1169.29366,
+          "fees": 21.85629,
+          "max_drawdown": 0.216804,
+          "halted": false,
+          "stop_count": 170,
+          "stop_average_r": -1.0762304769663469
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.3",
+      "symbol": "AMD",
+      "splits": {
+        "train": {
+          "trades": 698,
+          "net": -97.829842,
+          "profit_factor": 0.954633,
+          "gross_profit": 2058.587708,
+          "gross_loss": 2156.41755,
+          "fees": 41.768161,
+          "max_drawdown": 0.210341,
+          "halted": false,
+          "stop_count": 215,
+          "stop_average_r": -1.039431587471372
+        },
+        "validation": {
+          "trades": 372,
+          "net": -93.186707,
+          "profit_factor": 0.93014,
+          "gross_profit": 1240.717264,
+          "gross_loss": 1333.90397,
+          "fees": 22.33526,
+          "max_drawdown": 0.181148,
+          "halted": false,
+          "stop_count": 138,
+          "stop_average_r": -1.044112572724494
+        },
+        "historical_check": {
+          "trades": 349,
+          "net": -33.68911,
+          "profit_factor": 0.96588,
+          "gross_profit": 953.6722,
+          "gross_loss": 987.361309,
+          "fees": 16.11514,
+          "max_drawdown": 0.178184,
+          "halted": false,
+          "stop_count": 132,
+          "stop_average_r": -1.0570938941334431
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.1",
+      "symbol": "MSFT",
+      "splits": {
+        "train": {
+          "trades": 562,
+          "net": -190.148899,
+          "profit_factor": 0.832815,
+          "gross_profit": 947.20673,
+          "gross_loss": 1137.355629,
+          "fees": 42.086686,
+          "max_drawdown": 0.232074,
+          "halted": false,
+          "stop_count": 124,
+          "stop_average_r": -1.1616898222216099
+        },
+        "validation": {
+          "trades": 340,
+          "net": -186.511198,
+          "profit_factor": 0.778591,
+          "gross_profit": 655.872367,
+          "gross_loss": 842.383565,
+          "fees": 25.524985,
+          "max_drawdown": 0.23693,
+          "halted": false,
+          "stop_count": 96,
+          "stop_average_r": -1.1059150932418533
+        },
+        "historical_check": {
+          "trades": 273,
+          "net": -82.544124,
+          "profit_factor": 0.889762,
+          "gross_profit": 666.237849,
+          "gross_loss": 748.781973,
+          "fees": 22.584467,
+          "max_drawdown": 0.118728,
+          "halted": false,
+          "stop_count": 69,
+          "stop_average_r": -1.1559548342597832
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.1",
+      "symbol": "MSFT",
+      "splits": {
+        "train": {
+          "trades": 562,
+          "net": -156.94427,
+          "profit_factor": 0.859318,
+          "gross_profit": 958.650979,
+          "gross_loss": 1115.595249,
+          "fees": 44.141273,
+          "max_drawdown": 0.198807,
+          "halted": false,
+          "stop_count": 124,
+          "stop_average_r": -1.0502539338902
+        },
+        "validation": {
+          "trades": 340,
+          "net": -178.761692,
+          "profit_factor": 0.780626,
+          "gross_profit": 636.108327,
+          "gross_loss": 814.870019,
+          "fees": 25.657828,
+          "max_drawdown": 0.229207,
+          "halted": false,
+          "stop_count": 96,
+          "stop_average_r": -1.041207194636993
+        },
+        "historical_check": {
+          "trades": 273,
+          "net": -38.020472,
+          "profit_factor": 0.946355,
+          "gross_profit": 670.724766,
+          "gross_loss": 708.745238,
+          "fees": 23.302412,
+          "max_drawdown": 0.098532,
+          "halted": false,
+          "stop_count": 69,
+          "stop_average_r": -1.031922494787875
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.1",
+      "symbol": "MSFT",
+      "splits": {
+        "train": {
+          "trades": 518,
+          "net": -143.782293,
+          "profit_factor": 0.867104,
+          "gross_profit": 938.131139,
+          "gross_loss": 1081.913433,
+          "fees": 42.034464,
+          "max_drawdown": 0.175079,
+          "halted": false,
+          "stop_count": 118,
+          "stop_average_r": -1.0495038663886302
+        },
+        "validation": {
+          "trades": 309,
+          "net": -156.99903,
+          "profit_factor": 0.792949,
+          "gross_profit": 601.26426,
+          "gross_loss": 758.26329,
+          "fees": 23.539391,
+          "max_drawdown": 0.22552,
+          "halted": false,
+          "stop_count": 88,
+          "stop_average_r": -1.0415937681720193
+        },
+        "historical_check": {
+          "trades": 253,
+          "net": -66.254078,
+          "profit_factor": 0.897462,
+          "gross_profit": 579.88471,
+          "gross_loss": 646.138789,
+          "fees": 21.12899,
+          "max_drawdown": 0.118507,
+          "halted": false,
+          "stop_count": 64,
+          "stop_average_r": -1.0315619296224081
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.1",
+      "symbol": "MSFT",
+      "splits": {
+        "train": {
+          "trades": 515,
+          "net": -92.742489,
+          "profit_factor": 0.87893,
+          "gross_profit": 673.278419,
+          "gross_loss": 766.020908,
+          "fees": 27.596916,
+          "max_drawdown": 0.131541,
+          "halted": false,
+          "stop_count": 43,
+          "stop_average_r": -1.0247805886971133
+        },
+        "validation": {
+          "trades": 297,
+          "net": -131.082376,
+          "profit_factor": 0.754883,
+          "gross_profit": 403.692424,
+          "gross_loss": 534.7748,
+          "fees": 15.088506,
+          "max_drawdown": 0.196617,
+          "halted": false,
+          "stop_count": 35,
+          "stop_average_r": -1.0270431886020956
+        },
+        "historical_check": {
+          "trades": 248,
+          "net": -43.576217,
+          "profit_factor": 0.908367,
+          "gross_profit": 431.977403,
+          "gross_loss": 475.55362,
+          "fees": 14.232085,
+          "max_drawdown": 0.0894,
+          "halted": false,
+          "stop_count": 27,
+          "stop_average_r": -1.0232671258270818
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.2",
+      "symbol": "MSFT",
+      "splits": {
+        "train": {
+          "trades": 570,
+          "net": 93.324658,
+          "profit_factor": 1.06743,
+          "gross_profit": 1477.338557,
+          "gross_loss": 1384.013899,
+          "fees": 53.25497,
+          "max_drawdown": 0.093836,
+          "halted": false,
+          "stop_count": 108,
+          "stop_average_r": -1.1646025121538766
+        },
+        "validation": {
+          "trades": 309,
+          "net": -168.654109,
+          "profit_factor": 0.781063,
+          "gross_profit": 601.678112,
+          "gross_loss": 770.33222,
+          "fees": 22.874733,
+          "max_drawdown": 0.225811,
+          "halted": false,
+          "stop_count": 85,
+          "stop_average_r": -1.1118896419732234
+        },
+        "historical_check": {
+          "trades": 272,
+          "net": 69.186664,
+          "profit_factor": 1.101504,
+          "gross_profit": 750.804223,
+          "gross_loss": 681.617558,
+          "fees": 22.543531,
+          "max_drawdown": 0.07339,
+          "halted": false,
+          "stop_count": 58,
+          "stop_average_r": -1.1405040196938732
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.2",
+      "symbol": "MSFT",
+      "splits": {
+        "train": {
+          "trades": 569,
+          "net": 122.31416,
+          "profit_factor": 1.091423,
+          "gross_profit": 1460.204061,
+          "gross_loss": 1337.889901,
+          "fees": 54.701965,
+          "max_drawdown": 0.094885,
+          "halted": false,
+          "stop_count": 107,
+          "stop_average_r": -1.05715555921689
+        },
+        "validation": {
+          "trades": 308,
+          "net": -136.527413,
+          "profit_factor": 0.813518,
+          "gross_profit": 595.595309,
+          "gross_loss": 732.122722,
+          "fees": 23.195526,
+          "max_drawdown": 0.201514,
+          "halted": false,
+          "stop_count": 84,
+          "stop_average_r": -1.0310158700837433
+        },
+        "historical_check": {
+          "trades": 272,
+          "net": 85.881704,
+          "profit_factor": 1.129988,
+          "gross_profit": 746.572403,
+          "gross_loss": 660.690699,
+          "fees": 22.904384,
+          "max_drawdown": 0.060957,
+          "halted": false,
+          "stop_count": 59,
+          "stop_average_r": -1.0313265758259982
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.2",
+      "symbol": "MSFT",
+      "splits": {
+        "train": {
+          "trades": 558,
+          "net": 111.375812,
+          "profit_factor": 1.08405,
+          "gross_profit": 1436.496459,
+          "gross_loss": 1325.120648,
+          "fees": 54.231877,
+          "max_drawdown": 0.084775,
+          "halted": false,
+          "stop_count": 108,
+          "stop_average_r": -1.0569197828454178
+        },
+        "validation": {
+          "trades": 302,
+          "net": -143.259873,
+          "profit_factor": 0.799913,
+          "gross_profit": 572.728135,
+          "gross_loss": 715.988008,
+          "fees": 22.891383,
+          "max_drawdown": 0.204669,
+          "halted": false,
+          "stop_count": 82,
+          "stop_average_r": -1.0313189143391719
+        },
+        "historical_check": {
+          "trades": 271,
+          "net": 93.686509,
+          "profit_factor": 1.143776,
+          "gross_profit": 745.299882,
+          "gross_loss": 651.613373,
+          "fees": 22.868564,
+          "max_drawdown": 0.060738,
+          "halted": false,
+          "stop_count": 58,
+          "stop_average_r": -1.0315497321592269
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.2",
+      "symbol": "MSFT",
+      "splits": {
+        "train": {
+          "trades": 534,
+          "net": 51.473242,
+          "profit_factor": 1.058046,
+          "gross_profit": 938.240873,
+          "gross_loss": 886.767631,
+          "fees": 33.471107,
+          "max_drawdown": 0.065901,
+          "halted": false,
+          "stop_count": 42,
+          "stop_average_r": -1.026988060376011
+        },
+        "validation": {
+          "trades": 287,
+          "net": -100.812977,
+          "profit_factor": 0.802672,
+          "gross_profit": 410.076271,
+          "gross_loss": 510.889248,
+          "fees": 14.624315,
+          "max_drawdown": 0.148702,
+          "halted": false,
+          "stop_count": 40,
+          "stop_average_r": -1.0246000708508907
+        },
+        "historical_check": {
+          "trades": 260,
+          "net": 33.867185,
+          "profit_factor": 1.067997,
+          "gross_profit": 531.937981,
+          "gross_loss": 498.070797,
+          "fees": 15.446117,
+          "max_drawdown": 0.056076,
+          "halted": false,
+          "stop_count": 34,
+          "stop_average_r": -1.025001934187573
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.3",
+      "symbol": "MSFT",
+      "splits": {
+        "train": {
+          "trades": 705,
+          "net": -247.876597,
+          "profit_factor": 0.865817,
+          "gross_profit": 1599.427622,
+          "gross_loss": 1847.304219,
+          "fees": 59.820196,
+          "max_drawdown": 0.301456,
+          "halted": true,
+          "stop_count": 214,
+          "stop_average_r": -1.1662189635613547
+        },
+        "validation": {
+          "trades": 507,
+          "net": -286.322427,
+          "profit_factor": 0.773766,
+          "gross_profit": 979.279006,
+          "gross_loss": 1265.601432,
+          "fees": 37.031465,
+          "max_drawdown": 0.298361,
+          "halted": true,
+          "stop_count": 168,
+          "stop_average_r": -1.1734724961696614
+        },
+        "historical_check": {
+          "trades": 517,
+          "net": -40.063643,
+          "profit_factor": 0.973698,
+          "gross_profit": 1483.150469,
+          "gross_loss": 1523.214112,
+          "fees": 42.06722,
+          "max_drawdown": 0.141454,
+          "halted": false,
+          "stop_count": 180,
+          "stop_average_r": -1.173759330889013
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.3",
+      "symbol": "MSFT",
+      "splits": {
+        "train": {
+          "trades": 770,
+          "net": -226.025204,
+          "profit_factor": 0.878916,
+          "gross_profit": 1640.660895,
+          "gross_loss": 1866.686099,
+          "fees": 65.884847,
+          "max_drawdown": 0.301598,
+          "halted": true,
+          "stop_count": 227,
+          "stop_average_r": -1.0544464102383193
+        },
+        "validation": {
+          "trades": 512,
+          "net": -242.015559,
+          "profit_factor": 0.802691,
+          "gross_profit": 984.567459,
+          "gross_loss": 1226.583019,
+          "fees": 38.820646,
+          "max_drawdown": 0.257544,
+          "halted": false,
+          "stop_count": 170,
+          "stop_average_r": -1.0463075966601432
+        },
+        "historical_check": {
+          "trades": 517,
+          "net": 2.145827,
+          "profit_factor": 1.00152,
+          "gross_profit": 1413.640752,
+          "gross_loss": 1411.494925,
+          "fees": 43.244254,
+          "max_drawdown": 0.102492,
+          "halted": false,
+          "stop_count": 180,
+          "stop_average_r": -1.0394215695810278
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.3",
+      "symbol": "MSFT",
+      "splits": {
+        "train": {
+          "trades": 661,
+          "net": -178.135894,
+          "profit_factor": 0.887712,
+          "gross_profit": 1408.282779,
+          "gross_loss": 1586.418673,
+          "fees": 60.590736,
+          "max_drawdown": 0.263382,
+          "halted": false,
+          "stop_count": 200,
+          "stop_average_r": -1.0600603000956985
+        },
+        "validation": {
+          "trades": 368,
+          "net": -167.546626,
+          "profit_factor": 0.823553,
+          "gross_profit": 782.011336,
+          "gross_loss": 949.557962,
+          "fees": 30.834707,
+          "max_drawdown": 0.194331,
+          "halted": false,
+          "stop_count": 133,
+          "stop_average_r": -1.0487458512132188
+        },
+        "historical_check": {
+          "trades": 394,
+          "net": -84.148993,
+          "profit_factor": 0.921545,
+          "gross_profit": 988.429879,
+          "gross_loss": 1072.578871,
+          "fees": 32.580831,
+          "max_drawdown": 0.183057,
+          "halted": false,
+          "stop_count": 149,
+          "stop_average_r": -1.0425054756997987
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.3",
+      "symbol": "MSFT",
+      "splits": {
+        "train": {
+          "trades": 242,
+          "net": -25.818949,
+          "profit_factor": 0.946955,
+          "gross_profit": 460.913806,
+          "gross_loss": 486.732755,
+          "fees": 14.506684,
+          "max_drawdown": 0.103535,
+          "halted": false,
+          "stop_count": 38,
+          "stop_average_r": -1.0334336957504573
+        },
+        "validation": {
+          "trades": 208,
+          "net": -72.77504,
+          "profit_factor": 0.840023,
+          "gross_profit": 382.135583,
+          "gross_loss": 454.910624,
+          "fees": 11.971934,
+          "max_drawdown": 0.125125,
+          "halted": false,
+          "stop_count": 38,
+          "stop_average_r": -1.0266768078892854
+        },
+        "historical_check": {
+          "trades": 256,
+          "net": -90.25257,
+          "profit_factor": 0.843362,
+          "gross_profit": 485.932288,
+          "gross_loss": 576.184858,
+          "fees": 13.889131,
+          "max_drawdown": 0.158501,
+          "halted": false,
+          "stop_count": 54,
+          "stop_average_r": -1.0282703027321456
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.1",
+      "symbol": "META",
+      "splits": {
+        "train": {
+          "trades": 523,
+          "net": -232.580546,
+          "profit_factor": 0.84173,
+          "gross_profit": 1236.94094,
+          "gross_loss": 1469.521486,
+          "fees": 37.188687,
+          "max_drawdown": 0.297603,
+          "halted": true,
+          "stop_count": 178,
+          "stop_average_r": -1.1740434441094518
+        },
+        "validation": {
+          "trades": 300,
+          "net": -163.992408,
+          "profit_factor": 0.776646,
+          "gross_profit": 570.235424,
+          "gross_loss": 734.227832,
+          "fees": 20.422204,
+          "max_drawdown": 0.196173,
+          "halted": false,
+          "stop_count": 95,
+          "stop_average_r": -1.1604078119621561
+        },
+        "historical_check": {
+          "trades": 287,
+          "net": -257.288846,
+          "profit_factor": 0.679019,
+          "gross_profit": 544.281576,
+          "gross_loss": 801.570422,
+          "fees": 16.985682,
+          "max_drawdown": 0.257289,
+          "halted": false,
+          "stop_count": 104,
+          "stop_average_r": -1.1744380188752688
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.1",
+      "symbol": "META",
+      "splits": {
+        "train": {
+          "trades": 538,
+          "net": -228.305179,
+          "profit_factor": 0.841909,
+          "gross_profit": 1215.836125,
+          "gross_loss": 1444.141304,
+          "fees": 38.52774,
+          "max_drawdown": 0.29769,
+          "halted": false,
+          "stop_count": 185,
+          "stop_average_r": -1.1131737553402568
+        },
+        "validation": {
+          "trades": 300,
+          "net": -147.112184,
+          "profit_factor": 0.791017,
+          "gross_profit": 556.829817,
+          "gross_loss": 703.942001,
+          "fees": 20.843005,
+          "max_drawdown": 0.181651,
+          "halted": false,
+          "stop_count": 96,
+          "stop_average_r": -1.0595675237307234
+        },
+        "historical_check": {
+          "trades": 290,
+          "net": -204.990671,
+          "profit_factor": 0.725723,
+          "gross_profit": 542.39625,
+          "gross_loss": 747.386921,
+          "fees": 17.64639,
+          "max_drawdown": 0.215074,
+          "halted": false,
+          "stop_count": 104,
+          "stop_average_r": -1.0417744818505439
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.1",
+      "symbol": "META",
+      "splits": {
+        "train": {
+          "trades": 499,
+          "net": -204.124848,
+          "profit_factor": 0.852487,
+          "gross_profit": 1179.652029,
+          "gross_loss": 1383.776877,
+          "fees": 36.748501,
+          "max_drawdown": 0.292945,
+          "halted": false,
+          "stop_count": 173,
+          "stop_average_r": -1.1129399086061904
+        },
+        "validation": {
+          "trades": 277,
+          "net": -71.907408,
+          "profit_factor": 0.890092,
+          "gross_profit": 582.340716,
+          "gross_loss": 654.248124,
+          "fees": 20.303163,
+          "max_drawdown": 0.131116,
+          "halted": false,
+          "stop_count": 82,
+          "stop_average_r": -1.0617627965734324
+        },
+        "historical_check": {
+          "trades": 265,
+          "net": -228.198757,
+          "profit_factor": 0.673086,
+          "gross_profit": 469.839641,
+          "gross_loss": 698.038398,
+          "fees": 15.755301,
+          "max_drawdown": 0.235273,
+          "halted": false,
+          "stop_count": 97,
+          "stop_average_r": -1.0435592064756345
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.1",
+      "symbol": "META",
+      "splits": {
+        "train": {
+          "trades": 484,
+          "net": -245.909525,
+          "profit_factor": 0.749353,
+          "gross_profit": 735.190435,
+          "gross_loss": 981.09996,
+          "fees": 22.67049,
+          "max_drawdown": 0.273,
+          "halted": false,
+          "stop_count": 101,
+          "stop_average_r": -1.080579199321562
+        },
+        "validation": {
+          "trades": 264,
+          "net": -31.040468,
+          "profit_factor": 0.925671,
+          "gross_profit": 386.567733,
+          "gross_loss": 417.608201,
+          "fees": 12.040104,
+          "max_drawdown": 0.085085,
+          "halted": false,
+          "stop_count": 42,
+          "stop_average_r": -1.0512710578262578
+        },
+        "historical_check": {
+          "trades": 255,
+          "net": -124.746446,
+          "profit_factor": 0.767028,
+          "gross_profit": 410.709497,
+          "gross_loss": 535.455943,
+          "fees": 11.415666,
+          "max_drawdown": 0.13317,
+          "halted": false,
+          "stop_count": 56,
+          "stop_average_r": -1.0262475390055683
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.2",
+      "symbol": "META",
+      "splits": {
+        "train": {
+          "trades": 584,
+          "net": -235.697259,
+          "profit_factor": 0.822655,
+          "gross_profit": 1093.335939,
+          "gross_loss": 1329.033198,
+          "fees": 37.074951,
+          "max_drawdown": 0.252618,
+          "halted": false,
+          "stop_count": 157,
+          "stop_average_r": -1.1650788047603766
+        },
+        "validation": {
+          "trades": 302,
+          "net": -34.221346,
+          "profit_factor": 0.951141,
+          "gross_profit": 666.195056,
+          "gross_loss": 700.416403,
+          "fees": 20.700245,
+          "max_drawdown": 0.119437,
+          "halted": false,
+          "stop_count": 76,
+          "stop_average_r": -1.1147790733484697
+        },
+        "historical_check": {
+          "trades": 273,
+          "net": -166.947229,
+          "profit_factor": 0.766201,
+          "gross_profit": 547.116878,
+          "gross_loss": 714.064108,
+          "fees": 16.574977,
+          "max_drawdown": 0.188008,
+          "halted": false,
+          "stop_count": 82,
+          "stop_average_r": -1.1448499789243884
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.2",
+      "symbol": "META",
+      "splits": {
+        "train": {
+          "trades": 587,
+          "net": -204.125262,
+          "profit_factor": 0.84333,
+          "gross_profit": 1098.771263,
+          "gross_loss": 1302.896525,
+          "fees": 37.809645,
+          "max_drawdown": 0.22109,
+          "halted": false,
+          "stop_count": 158,
+          "stop_average_r": -1.1142585736510158
+        },
+        "validation": {
+          "trades": 301,
+          "net": -59.392873,
+          "profit_factor": 0.912808,
+          "gross_profit": 621.780131,
+          "gross_loss": 681.173005,
+          "fees": 20.492453,
+          "max_drawdown": 0.125765,
+          "halted": false,
+          "stop_count": 76,
+          "stop_average_r": -1.063292951863245
+        },
+        "historical_check": {
+          "trades": 271,
+          "net": -154.38059,
+          "profit_factor": 0.767748,
+          "gross_profit": 510.332349,
+          "gross_loss": 664.712939,
+          "fees": 16.534745,
+          "max_drawdown": 0.174704,
+          "halted": false,
+          "stop_count": 82,
+          "stop_average_r": -1.040186204872896
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.2",
+      "symbol": "META",
+      "splits": {
+        "train": {
+          "trades": 580,
+          "net": -212.45186,
+          "profit_factor": 0.835929,
+          "gross_profit": 1082.423777,
+          "gross_loss": 1294.875637,
+          "fees": 37.309049,
+          "max_drawdown": 0.229288,
+          "halted": false,
+          "stop_count": 157,
+          "stop_average_r": -1.1153121830955885
+        },
+        "validation": {
+          "trades": 298,
+          "net": -45.332061,
+          "profit_factor": 0.932692,
+          "gross_profit": 628.174184,
+          "gross_loss": 673.506244,
+          "fees": 20.434863,
+          "max_drawdown": 0.116986,
+          "halted": false,
+          "stop_count": 75,
+          "stop_average_r": -1.0638160294360381
+        },
+        "historical_check": {
+          "trades": 271,
+          "net": -154.38059,
+          "profit_factor": 0.767748,
+          "gross_profit": 510.332349,
+          "gross_loss": 664.712939,
+          "fees": 16.534745,
+          "max_drawdown": 0.174704,
+          "halted": false,
+          "stop_count": 82,
+          "stop_average_r": -1.040186204872896
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.3",
+      "symbol": "META",
+      "splits": {
+        "train": {
+          "trades": 869,
+          "net": -264.937453,
+          "profit_factor": 0.872174,
+          "gross_profit": 1807.707798,
+          "gross_loss": 2072.64525,
+          "fees": 54.505825,
+          "max_drawdown": 0.297389,
+          "halted": true,
+          "stop_count": 322,
+          "stop_average_r": -1.1922108126551003
+        },
+        "validation": {
+          "trades": 381,
+          "net": -287.323394,
+          "profit_factor": 0.723714,
+          "gross_profit": 752.625922,
+          "gross_loss": 1039.949315,
+          "fees": 26.77477,
+          "max_drawdown": 0.297111,
+          "halted": true,
+          "stop_count": 153,
+          "stop_average_r": -1.1616644855533813
+        },
+        "historical_check": {
+          "trades": 517,
+          "net": 194.152199,
+          "profit_factor": 1.116095,
+          "gross_profit": 1866.512662,
+          "gross_loss": 1672.360463,
+          "fees": 43.825082,
+          "max_drawdown": 0.166208,
+          "halted": false,
+          "stop_count": 174,
+          "stop_average_r": -1.1633976541439173
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.2",
+      "symbol": "META",
+      "splits": {
+        "train": {
+          "trades": 562,
+          "net": -106.744479,
+          "profit_factor": 0.889417,
+          "gross_profit": 858.543909,
+          "gross_loss": 965.288388,
+          "fees": 26.603129,
+          "max_drawdown": 0.128903,
+          "halted": false,
+          "stop_count": 73,
+          "stop_average_r": -1.0508617574751817
+        },
+        "validation": {
+          "trades": 282,
+          "net": -60.217447,
+          "profit_factor": 0.873007,
+          "gross_profit": 413.963404,
+          "gross_loss": 474.180851,
+          "fees": 12.822122,
+          "max_drawdown": 0.101033,
+          "halted": false,
+          "stop_count": 41,
+          "stop_average_r": -1.0534138197116998
+        },
+        "historical_check": {
+          "trades": 258,
+          "net": -157.148089,
+          "profit_factor": 0.71603,
+          "gross_profit": 396.248335,
+          "gross_loss": 553.396424,
+          "fees": 12.083887,
+          "max_drawdown": 0.17648,
+          "halted": false,
+          "stop_count": 54,
+          "stop_average_r": -1.0256685437652098
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.3",
+      "symbol": "META",
+      "splits": {
+        "train": {
+          "trades": 990,
+          "net": -181.355096,
+          "profit_factor": 0.918788,
+          "gross_profit": 2051.739877,
+          "gross_loss": 2233.094973,
+          "fees": 64.917011,
+          "max_drawdown": 0.275497,
+          "halted": false,
+          "stop_count": 351,
+          "stop_average_r": -1.102040753157044
+        },
+        "validation": {
+          "trades": 445,
+          "net": -283.198998,
+          "profit_factor": 0.747036,
+          "gross_profit": 836.325499,
+          "gross_loss": 1119.524496,
+          "fees": 30.385509,
+          "max_drawdown": 0.29453,
+          "halted": true,
+          "stop_count": 182,
+          "stop_average_r": -1.0625894800454025
+        },
+        "historical_check": {
+          "trades": 517,
+          "net": 216.810322,
+          "profit_factor": 1.141612,
+          "gross_profit": 1747.831259,
+          "gross_loss": 1531.020937,
+          "fees": 43.736672,
+          "max_drawdown": 0.159894,
+          "halted": false,
+          "stop_count": 174,
+          "stop_average_r": -1.0437972464155112
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.3",
+      "symbol": "META",
+      "splits": {
+        "train": {
+          "trades": 746,
+          "net": -62.512003,
+          "profit_factor": 0.96942,
+          "gross_profit": 1981.694947,
+          "gross_loss": 2044.20695,
+          "fees": 58.45086,
+          "max_drawdown": 0.154605,
+          "halted": false,
+          "stop_count": 289,
+          "stop_average_r": -1.0899998117425813
+        },
+        "validation": {
+          "trades": 418,
+          "net": -222.199154,
+          "profit_factor": 0.789474,
+          "gross_profit": 833.249926,
+          "gross_loss": 1055.44908,
+          "fees": 29.952399,
+          "max_drawdown": 0.235923,
+          "halted": false,
+          "stop_count": 171,
+          "stop_average_r": -1.0624263073406541
+        },
+        "historical_check": {
+          "trades": 401,
+          "net": -77.834187,
+          "profit_factor": 0.938689,
+          "gross_profit": 1191.667122,
+          "gross_loss": 1269.501309,
+          "fees": 33.586094,
+          "max_drawdown": 0.221601,
+          "halted": false,
+          "stop_count": 166,
+          "stop_average_r": -1.0452343099978298
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.3",
+      "symbol": "META",
+      "splits": {
+        "train": {
+          "trades": 461,
+          "net": 54.24484,
+          "profit_factor": 1.050164,
+          "gross_profit": 1135.604242,
+          "gross_loss": 1081.359402,
+          "fees": 25.075616,
+          "max_drawdown": 0.120383,
+          "halted": false,
+          "stop_count": 107,
+          "stop_average_r": -1.0530319065418696
+        },
+        "validation": {
+          "trades": 277,
+          "net": 10.518513,
+          "profit_factor": 1.019261,
+          "gross_profit": 556.617242,
+          "gross_loss": 546.098728,
+          "fees": 15.757651,
+          "max_drawdown": 0.089674,
+          "halted": false,
+          "stop_count": 50,
+          "stop_average_r": -1.0346095528267645
+        },
+        "historical_check": {
+          "trades": 295,
+          "net": -31.632981,
+          "profit_factor": 0.955435,
+          "gross_profit": 678.18271,
+          "gross_loss": 709.815691,
+          "fees": 15.728474,
+          "max_drawdown": 0.155408,
+          "halted": false,
+          "stop_count": 68,
+          "stop_average_r": -1.0275809586876488
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.1",
+      "symbol": "AMZN",
+      "splits": {
+        "train": {
+          "trades": 369,
+          "net": -283.13403,
+          "profit_factor": 0.726284,
+          "gross_profit": 751.275049,
+          "gross_loss": 1034.409079,
+          "fees": 28.551256,
+          "max_drawdown": 0.300104,
+          "halted": true,
+          "stop_count": 112,
+          "stop_average_r": -1.184624502926685
+        },
+        "validation": {
+          "trades": 301,
+          "net": -8.307234,
+          "profit_factor": 0.991251,
+          "gross_profit": 941.180757,
+          "gross_loss": 949.487991,
+          "fees": 27.375866,
+          "max_drawdown": 0.107706,
+          "halted": false,
+          "stop_count": 81,
+          "stop_average_r": -1.1591777182451612
+        },
+        "historical_check": {
+          "trades": 293,
+          "net": -158.70968,
+          "profit_factor": 0.817018,
+          "gross_profit": 708.642524,
+          "gross_loss": 867.352205,
+          "fees": 23.615898,
+          "max_drawdown": 0.169073,
+          "halted": false,
+          "stop_count": 88,
+          "stop_average_r": -1.1511493487699087
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.1",
+      "symbol": "AMZN",
+      "splits": {
+        "train": {
+          "trades": 584,
+          "net": -197.946631,
+          "profit_factor": 0.856767,
+          "gross_profit": 1184.047988,
+          "gross_loss": 1381.994619,
+          "fees": 45.100503,
+          "max_drawdown": 0.271346,
+          "halted": false,
+          "stop_count": 164,
+          "stop_average_r": -1.0547419348055298
+        },
+        "validation": {
+          "trades": 299,
+          "net": 9.463227,
+          "profit_factor": 1.010874,
+          "gross_profit": 879.731137,
+          "gross_loss": 870.26791,
+          "fees": 27.240012,
+          "max_drawdown": 0.08114,
+          "halted": false,
+          "stop_count": 81,
+          "stop_average_r": -1.0368455429541792
+        },
+        "historical_check": {
+          "trades": 293,
+          "net": -122.316183,
+          "profit_factor": 0.850001,
+          "gross_profit": 693.132007,
+          "gross_loss": 815.44819,
+          "fees": 24.072423,
+          "max_drawdown": 0.13515,
+          "halted": false,
+          "stop_count": 88,
+          "stop_average_r": -1.0363807145435124
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.1",
+      "symbol": "AMZN",
+      "splits": {
+        "train": {
+          "trades": 538,
+          "net": -178.692103,
+          "profit_factor": 0.860643,
+          "gross_profit": 1103.572972,
+          "gross_loss": 1282.265074,
+          "fees": 42.389823,
+          "max_drawdown": 0.249829,
+          "halted": false,
+          "stop_count": 144,
+          "stop_average_r": -1.0616717532628437
+        },
+        "validation": {
+          "trades": 287,
+          "net": -19.771548,
+          "profit_factor": 0.977118,
+          "gross_profit": 844.290296,
+          "gross_loss": 864.061845,
+          "fees": 26.152388,
+          "max_drawdown": 0.087183,
+          "halted": false,
+          "stop_count": 84,
+          "stop_average_r": -1.036963423769026
+        },
+        "historical_check": {
+          "trades": 276,
+          "net": -92.991243,
+          "profit_factor": 0.877106,
+          "gross_profit": 663.688802,
+          "gross_loss": 756.680045,
+          "fees": 23.037525,
+          "max_drawdown": 0.113248,
+          "halted": false,
+          "stop_count": 80,
+          "stop_average_r": -1.036489045402054
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.1",
+      "symbol": "AMZN",
+      "splits": {
+        "train": {
+          "trades": 521,
+          "net": -153.997357,
+          "profit_factor": 0.850169,
+          "gross_profit": 873.810348,
+          "gross_loss": 1027.807706,
+          "fees": 30.886942,
+          "max_drawdown": 0.189955,
+          "halted": false,
+          "stop_count": 66,
+          "stop_average_r": -1.054466911536044
+        },
+        "validation": {
+          "trades": 272,
+          "net": 38.846417,
+          "profit_factor": 1.058453,
+          "gross_profit": 703.424605,
+          "gross_loss": 664.578187,
+          "fees": 18.842763,
+          "max_drawdown": 0.064066,
+          "halted": false,
+          "stop_count": 40,
+          "stop_average_r": -1.0247963560291966
+        },
+        "historical_check": {
+          "trades": 267,
+          "net": -31.585529,
+          "profit_factor": 0.944048,
+          "gross_profit": 532.923345,
+          "gross_loss": 564.508874,
+          "fees": 17.029246,
+          "max_drawdown": 0.087538,
+          "halted": false,
+          "stop_count": 33,
+          "stop_average_r": -1.0224086797371543
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.2",
+      "symbol": "AMZN",
+      "splits": {
+        "train": {
+          "trades": 497,
+          "net": -292.648076,
+          "profit_factor": 0.785227,
+          "gross_profit": 1069.941481,
+          "gross_loss": 1362.589557,
+          "fees": 35.879859,
+          "max_drawdown": 0.298287,
+          "halted": true,
+          "stop_count": 125,
+          "stop_average_r": -1.1480109588033252
+        },
+        "validation": {
+          "trades": 279,
+          "net": -266.573862,
+          "profit_factor": 0.677461,
+          "gross_profit": 559.912864,
+          "gross_loss": 826.486726,
+          "fees": 20.736106,
+          "max_drawdown": 0.301566,
+          "halted": true,
+          "stop_count": 80,
+          "stop_average_r": -1.129035660192479
+        },
+        "historical_check": {
+          "trades": 275,
+          "net": -66.174885,
+          "profit_factor": 0.917951,
+          "gross_profit": 740.352497,
+          "gross_loss": 806.527382,
+          "fees": 23.015123,
+          "max_drawdown": 0.146869,
+          "halted": false,
+          "stop_count": 66,
+          "stop_average_r": -1.1401182909104726
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.2",
+      "symbol": "AMZN",
+      "splits": {
+        "train": {
+          "trades": 564,
+          "net": -259.521014,
+          "profit_factor": 0.820045,
+          "gross_profit": 1182.620416,
+          "gross_loss": 1442.14143,
+          "fees": 41.868663,
+          "max_drawdown": 0.268519,
+          "halted": false,
+          "stop_count": 139,
+          "stop_average_r": -1.0372501291490368
+        },
+        "validation": {
+          "trades": 289,
+          "net": -235.043478,
+          "profit_factor": 0.705108,
+          "gross_profit": 562.005011,
+          "gross_loss": 797.048489,
+          "fees": 21.449076,
+          "max_drawdown": 0.27786,
+          "halted": false,
+          "stop_count": 81,
+          "stop_average_r": -1.0379936632276765
+        },
+        "historical_check": {
+          "trades": 274,
+          "net": -48.638948,
+          "profit_factor": 0.936829,
+          "gross_profit": 721.315073,
+          "gross_loss": 769.954021,
+          "fees": 23.232998,
+          "max_drawdown": 0.13187,
+          "halted": false,
+          "stop_count": 66,
+          "stop_average_r": -1.0385413951989177
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.2",
+      "symbol": "AMZN",
+      "splits": {
+        "train": {
+          "trades": 553,
+          "net": -276.094079,
+          "profit_factor": 0.802898,
+          "gross_profit": 1124.675851,
+          "gross_loss": 1400.76993,
+          "fees": 40.627503,
+          "max_drawdown": 0.285207,
+          "halted": false,
+          "stop_count": 136,
+          "stop_average_r": -1.0376940603178348
+        },
+        "validation": {
+          "trades": 286,
+          "net": -230.8627,
+          "profit_factor": 0.708611,
+          "gross_profit": 561.420157,
+          "gross_loss": 792.282857,
+          "fees": 21.373564,
+          "max_drawdown": 0.273319,
+          "halted": false,
+          "stop_count": 81,
+          "stop_average_r": -1.0379936632276772
+        },
+        "historical_check": {
+          "trades": 274,
+          "net": -48.638948,
+          "profit_factor": 0.936829,
+          "gross_profit": 721.315073,
+          "gross_loss": 769.954021,
+          "fees": 23.232998,
+          "max_drawdown": 0.13187,
+          "halted": false,
+          "stop_count": 66,
+          "stop_average_r": -1.0385413951989177
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.2",
+      "symbol": "AMZN",
+      "splits": {
+        "train": {
+          "trades": 533,
+          "net": -177.803622,
+          "profit_factor": 0.849315,
+          "gross_profit": 1002.167701,
+          "gross_loss": 1179.971323,
+          "fees": 32.692006,
+          "max_drawdown": 0.218467,
+          "halted": false,
+          "stop_count": 66,
+          "stop_average_r": -1.0272062998235671
+        },
+        "validation": {
+          "trades": 277,
+          "net": -202.673474,
+          "profit_factor": 0.68419,
+          "gross_profit": 439.084634,
+          "gross_loss": 641.758108,
+          "fees": 16.227728,
+          "max_drawdown": 0.236748,
+          "halted": false,
+          "stop_count": 45,
+          "stop_average_r": -1.026641102828693
+        },
+        "historical_check": {
+          "trades": 262,
+          "net": -40.02104,
+          "profit_factor": 0.934435,
+          "gross_profit": 570.379258,
+          "gross_loss": 610.400298,
+          "fees": 16.937324,
+          "max_drawdown": 0.110011,
+          "halted": false,
+          "stop_count": 35,
+          "stop_average_r": -1.0227282214053857
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.3",
+      "symbol": "AMZN",
+      "splits": {
+        "train": {
+          "trades": 467,
+          "net": -258.658541,
+          "profit_factor": 0.81598,
+          "gross_profit": 1146.940089,
+          "gross_loss": 1405.59863,
+          "fees": 37.960215,
+          "max_drawdown": 0.298748,
+          "halted": true,
+          "stop_count": 164,
+          "stop_average_r": -1.1779554591798715
+        },
+        "validation": {
+          "trades": 330,
+          "net": -285.969375,
+          "profit_factor": 0.710429,
+          "gross_profit": 701.593076,
+          "gross_loss": 987.562451,
+          "fees": 25.656637,
+          "max_drawdown": 0.299902,
+          "halted": true,
+          "stop_count": 115,
+          "stop_average_r": -1.1756912327916917
+        },
+        "historical_check": {
+          "trades": 461,
+          "net": -259.2038,
+          "profit_factor": 0.82718,
+          "gross_profit": 1240.646454,
+          "gross_loss": 1499.850254,
+          "fees": 37.899697,
+          "max_drawdown": 0.297578,
+          "halted": true,
+          "stop_count": 164,
+          "stop_average_r": -1.1562802405038741
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.3",
+      "symbol": "AMZN",
+      "splits": {
+        "train": {
+          "trades": 585,
+          "net": -261.008463,
+          "profit_factor": 0.846538,
+          "gross_profit": 1439.798232,
+          "gross_loss": 1700.806695,
+          "fees": 46.818628,
+          "max_drawdown": 0.297741,
+          "halted": true,
+          "stop_count": 221,
+          "stop_average_r": -1.0459372203704385
+        },
+        "validation": {
+          "trades": 347,
+          "net": -288.350794,
+          "profit_factor": 0.711811,
+          "gross_profit": 712.209656,
+          "gross_loss": 1000.56045,
+          "fees": 27.401056,
+          "max_drawdown": 0.300111,
+          "halted": true,
+          "stop_count": 126,
+          "stop_average_r": -1.0429113845608342
+        },
+        "historical_check": {
+          "trades": 511,
+          "net": -221.710041,
+          "profit_factor": 0.855054,
+          "gross_profit": 1307.892828,
+          "gross_loss": 1529.602869,
+          "fees": 42.356624,
+          "max_drawdown": 0.281041,
+          "halted": false,
+          "stop_count": 181,
+          "stop_average_r": -1.0425920972396834
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.3",
+      "symbol": "AMZN",
+      "splits": {
+        "train": {
+          "trades": 724,
+          "net": -293.367868,
+          "profit_factor": 0.850029,
+          "gross_profit": 1662.800038,
+          "gross_loss": 1956.167905,
+          "fees": 58.003701,
+          "max_drawdown": 0.304898,
+          "halted": true,
+          "stop_count": 287,
+          "stop_average_r": -1.0517812947326683
+        },
+        "validation": {
+          "trades": 378,
+          "net": -199.626723,
+          "profit_factor": 0.82496,
+          "gross_profit": 940.835374,
+          "gross_loss": 1140.462098,
+          "fees": 32.166976,
+          "max_drawdown": 0.207423,
+          "halted": false,
+          "stop_count": 149,
+          "stop_average_r": -1.047454320619361
+        },
+        "historical_check": {
+          "trades": 387,
+          "net": -19.155886,
+          "profit_factor": 0.984018,
+          "gross_profit": 1179.446381,
+          "gross_loss": 1198.602267,
+          "fees": 35.299377,
+          "max_drawdown": 0.203058,
+          "halted": false,
+          "stop_count": 150,
+          "stop_average_r": -1.0455373401326946
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.3",
+      "symbol": "AMZN",
+      "splits": {
+        "train": {
+          "trades": 449,
+          "net": -139.606075,
+          "profit_factor": 0.885905,
+          "gross_profit": 1083.985303,
+          "gross_loss": 1223.591378,
+          "fees": 28.968451,
+          "max_drawdown": 0.199421,
+          "halted": false,
+          "stop_count": 105,
+          "stop_average_r": -1.0300885579249468
+        },
+        "validation": {
+          "trades": 241,
+          "net": -167.327,
+          "profit_factor": 0.742677,
+          "gross_profit": 482.933092,
+          "gross_loss": 650.260092,
+          "fees": 14.522264,
+          "max_drawdown": 0.174423,
+          "halted": false,
+          "stop_count": 54,
+          "stop_average_r": -1.0249432873734077
+        },
+        "historical_check": {
+          "trades": 251,
+          "net": -33.099966,
+          "profit_factor": 0.949332,
+          "gross_profit": 620.166866,
+          "gross_loss": 653.266832,
+          "fees": 15.591323,
+          "max_drawdown": 0.156747,
+          "halted": false,
+          "stop_count": 56,
+          "stop_average_r": -1.0247551228475402
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.1",
+      "symbol": "GOOGL",
+      "splits": {
+        "train": {
+          "trades": 399,
+          "net": -295.366754,
+          "profit_factor": 0.743714,
+          "gross_profit": 857.123915,
+          "gross_loss": 1152.490669,
+          "fees": 30.19732,
+          "max_drawdown": 0.296763,
+          "halted": true,
+          "stop_count": 125,
+          "stop_average_r": -1.164362414652697
+        },
+        "validation": {
+          "trades": 309,
+          "net": -170.343532,
+          "profit_factor": 0.826548,
+          "gross_profit": 811.732899,
+          "gross_loss": 982.07643,
+          "fees": 26.273071,
+          "max_drawdown": 0.243735,
+          "halted": false,
+          "stop_count": 91,
+          "stop_average_r": -1.1761407330023124
+        },
+        "historical_check": {
+          "trades": 307,
+          "net": -201.893012,
+          "profit_factor": 0.767501,
+          "gross_profit": 666.466715,
+          "gross_loss": 868.359727,
+          "fees": 23.938802,
+          "max_drawdown": 0.24232,
+          "halted": false,
+          "stop_count": 89,
+          "stop_average_r": -1.1509406281442631
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.1",
+      "symbol": "GOOGL",
+      "splits": {
+        "train": {
+          "trades": 569,
+          "net": -232.746285,
+          "profit_factor": 0.837318,
+          "gross_profit": 1197.939198,
+          "gross_loss": 1430.685484,
+          "fees": 42.977844,
+          "max_drawdown": 0.267098,
+          "halted": false,
+          "stop_count": 169,
+          "stop_average_r": -1.0443914197253008
+        },
+        "validation": {
+          "trades": 309,
+          "net": -131.946741,
+          "profit_factor": 0.854917,
+          "gross_profit": 777.508324,
+          "gross_loss": 909.455065,
+          "fees": 26.358201,
+          "max_drawdown": 0.203897,
+          "halted": false,
+          "stop_count": 91,
+          "stop_average_r": -1.0537916901334248
+        },
+        "historical_check": {
+          "trades": 307,
+          "net": -169.255048,
+          "profit_factor": 0.793373,
+          "gross_profit": 649.87854,
+          "gross_loss": 819.133588,
+          "fees": 24.373824,
+          "max_drawdown": 0.211991,
+          "halted": false,
+          "stop_count": 89,
+          "stop_average_r": -1.0322948043623492
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.1",
+      "symbol": "GOOGL",
+      "splits": {
+        "train": {
+          "trades": 527,
+          "net": -172.876534,
+          "profit_factor": 0.875061,
+          "gross_profit": 1210.807163,
+          "gross_loss": 1383.683697,
+          "fees": 42.743859,
+          "max_drawdown": 0.200679,
+          "halted": false,
+          "stop_count": 153,
+          "stop_average_r": -1.044962526635223
+        },
+        "validation": {
+          "trades": 290,
+          "net": -111.138548,
+          "profit_factor": 0.87055,
+          "gross_profit": 747.406725,
+          "gross_loss": 858.545273,
+          "fees": 25.130505,
+          "max_drawdown": 0.18911,
+          "halted": false,
+          "stop_count": 84,
+          "stop_average_r": -1.0571730487363924
+        },
+        "historical_check": {
+          "trades": 290,
+          "net": -138.792502,
+          "profit_factor": 0.821119,
+          "gross_profit": 637.100765,
+          "gross_loss": 775.893267,
+          "fees": 24.015359,
+          "max_drawdown": 0.202038,
+          "halted": false,
+          "stop_count": 78,
+          "stop_average_r": -1.0319244370371716
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.1",
+      "symbol": "GOOGL",
+      "splits": {
+        "train": {
+          "trades": 510,
+          "net": -114.090465,
+          "profit_factor": 0.896578,
+          "gross_profit": 989.060737,
+          "gross_loss": 1103.151202,
+          "fees": 31.638461,
+          "max_drawdown": 0.144057,
+          "halted": false,
+          "stop_count": 75,
+          "stop_average_r": -1.029405112249127
+        },
+        "validation": {
+          "trades": 275,
+          "net": -79.797881,
+          "profit_factor": 0.876807,
+          "gross_profit": 567.946695,
+          "gross_loss": 647.744576,
+          "fees": 17.325259,
+          "max_drawdown": 0.162137,
+          "halted": false,
+          "stop_count": 41,
+          "stop_average_r": -1.0255344493134884
+        },
+        "historical_check": {
+          "trades": 280,
+          "net": -95.586202,
+          "profit_factor": 0.835093,
+          "gross_profit": 484.051329,
+          "gross_loss": 579.637531,
+          "fees": 16.724936,
+          "max_drawdown": 0.156462,
+          "halted": false,
+          "stop_count": 36,
+          "stop_average_r": -1.023638795839733
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.2",
+      "symbol": "GOOGL",
+      "splits": {
+        "train": {
+          "trades": 560,
+          "net": -29.461181,
+          "profit_factor": 0.981053,
+          "gross_profit": 1525.479737,
+          "gross_loss": 1554.940919,
+          "fees": 46.256524,
+          "max_drawdown": 0.148693,
+          "halted": false,
+          "stop_count": 129,
+          "stop_average_r": -1.149778489661467
+        },
+        "validation": {
+          "trades": 260,
+          "net": -135.002409,
+          "profit_factor": 0.817739,
+          "gross_profit": 605.706999,
+          "gross_loss": 740.709407,
+          "fees": 19.568573,
+          "max_drawdown": 0.212082,
+          "halted": false,
+          "stop_count": 63,
+          "stop_average_r": -1.120854850659618
+        },
+        "historical_check": {
+          "trades": 264,
+          "net": -194.134739,
+          "profit_factor": 0.72936,
+          "gross_profit": 523.181794,
+          "gross_loss": 717.316533,
+          "fees": 18.981321,
+          "max_drawdown": 0.23586,
+          "halted": false,
+          "stop_count": 68,
+          "stop_average_r": -1.1347638840977377
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.2",
+      "symbol": "GOOGL",
+      "splits": {
+        "train": {
+          "trades": 559,
+          "net": -20.261942,
+          "profit_factor": 0.986386,
+          "gross_profit": 1468.055003,
+          "gross_loss": 1488.316945,
+          "fees": 47.334296,
+          "max_drawdown": 0.12234,
+          "halted": false,
+          "stop_count": 129,
+          "stop_average_r": -1.0441973364573047
+        },
+        "validation": {
+          "trades": 260,
+          "net": -140.199362,
+          "profit_factor": 0.801846,
+          "gross_profit": 567.326854,
+          "gross_loss": 707.526217,
+          "fees": 19.569892,
+          "max_drawdown": 0.200307,
+          "halted": false,
+          "stop_count": 63,
+          "stop_average_r": -1.0399947071421831
+        },
+        "historical_check": {
+          "trades": 264,
+          "net": -172.704358,
+          "profit_factor": 0.745444,
+          "gross_profit": 505.748336,
+          "gross_loss": 678.452694,
+          "fees": 19.135736,
+          "max_drawdown": 0.213093,
+          "halted": false,
+          "stop_count": 68,
+          "stop_average_r": -1.0306223446645106
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.2",
+      "symbol": "GOOGL",
+      "splits": {
+        "train": {
+          "trades": 553,
+          "net": -33.142502,
+          "profit_factor": 0.97764,
+          "gross_profit": 1449.103987,
+          "gross_loss": 1482.246489,
+          "fees": 47.278553,
+          "max_drawdown": 0.133194,
+          "halted": false,
+          "stop_count": 128,
+          "stop_average_r": -1.0444183386207775
+        },
+        "validation": {
+          "trades": 257,
+          "net": -119.861206,
+          "profit_factor": 0.825666,
+          "gross_profit": 567.678166,
+          "gross_loss": 687.539372,
+          "fees": 19.498748,
+          "max_drawdown": 0.180906,
+          "halted": false,
+          "stop_count": 60,
+          "stop_average_r": -1.04109147803015
+        },
+        "historical_check": {
+          "trades": 262,
+          "net": -174.598706,
+          "profit_factor": 0.742571,
+          "gross_profit": 503.641031,
+          "gross_loss": 678.239737,
+          "fees": 19.049682,
+          "max_drawdown": 0.211673,
+          "halted": false,
+          "stop_count": 68,
+          "stop_average_r": -1.0306223446645106
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.2",
+      "symbol": "GOOGL",
+      "splits": {
+        "train": {
+          "trades": 529,
+          "net": -20.730148,
+          "profit_factor": 0.982664,
+          "gross_profit": 1175.06958,
+          "gross_loss": 1195.799728,
+          "fees": 34.610483,
+          "max_drawdown": 0.123013,
+          "halted": false,
+          "stop_count": 72,
+          "stop_average_r": -1.0255304250583537
+        },
+        "validation": {
+          "trades": 250,
+          "net": -78.543728,
+          "profit_factor": 0.864496,
+          "gross_profit": 501.097831,
+          "gross_loss": 579.641559,
+          "fees": 14.981417,
+          "max_drawdown": 0.14286,
+          "halted": false,
+          "stop_count": 34,
+          "stop_average_r": -1.0373384743174014
+        },
+        "historical_check": {
+          "trades": 254,
+          "net": -142.103571,
+          "profit_factor": 0.74613,
+          "gross_profit": 417.644749,
+          "gross_loss": 559.74832,
+          "fees": 14.449654,
+          "max_drawdown": 0.170865,
+          "halted": false,
+          "stop_count": 35,
+          "stop_average_r": -1.020854110351005
+        }
+      }
+    },
+    {
+      "variant": "LEGACY",
+      "strategy_id": "V9.3",
+      "symbol": "GOOGL",
+      "splits": {
+        "train": {
+          "trades": 480,
+          "net": -232.802546,
+          "profit_factor": 0.853131,
+          "gross_profit": 1352.30349,
+          "gross_loss": 1585.106036,
+          "fees": 42.678554,
+          "max_drawdown": 0.297136,
+          "halted": true,
+          "stop_count": 176,
+          "stop_average_r": -1.1477217098111814
+        },
+        "validation": {
+          "trades": 487,
+          "net": -297.981638,
+          "profit_factor": 0.773614,
+          "gross_profit": 1018.272466,
+          "gross_loss": 1316.254104,
+          "fees": 32.273641,
+          "max_drawdown": 0.297982,
+          "halted": true,
+          "stop_count": 174,
+          "stop_average_r": -1.1830300574832944
+        },
+        "historical_check": {
+          "trades": 450,
+          "net": -248.368468,
+          "profit_factor": 0.824684,
+          "gross_profit": 1168.32242,
+          "gross_loss": 1416.690889,
+          "fees": 36.917295,
+          "max_drawdown": 0.302327,
+          "halted": true,
+          "stop_count": 163,
+          "stop_average_r": -1.1760395458494224
+        }
+      }
+    },
+    {
+      "variant": "MECHANICS",
+      "strategy_id": "V9.3",
+      "symbol": "GOOGL",
+      "splits": {
+        "train": {
+          "trades": 512,
+          "net": -244.39231,
+          "profit_factor": 0.846944,
+          "gross_profit": 1352.363795,
+          "gross_loss": 1596.756105,
+          "fees": 44.533603,
+          "max_drawdown": 0.300479,
+          "halted": true,
+          "stop_count": 192,
+          "stop_average_r": -1.0517162871479664
+        },
+        "validation": {
+          "trades": 519,
+          "net": -272.676749,
+          "profit_factor": 0.801039,
+          "gross_profit": 1097.827672,
+          "gross_loss": 1370.504421,
+          "fees": 36.428846,
+          "max_drawdown": 0.272677,
+          "halted": false,
+          "stop_count": 188,
+          "stop_average_r": -1.0485655981320803
+        },
+        "historical_check": {
+          "trades": 504,
+          "net": -202.940068,
+          "profit_factor": 0.858645,
+          "gross_profit": 1232.738333,
+          "gross_loss": 1435.678402,
+          "fees": 41.48377,
+          "max_drawdown": 0.268765,
+          "halted": false,
+          "stop_count": 184,
+          "stop_average_r": -1.0398700305166877
+        }
+      }
+    },
+    {
+      "variant": "SESSION",
+      "strategy_id": "V9.3",
+      "symbol": "GOOGL",
+      "splits": {
+        "train": {
+          "trades": 469,
+          "net": -203.19569,
+          "profit_factor": 0.867599,
+          "gross_profit": 1331.506671,
+          "gross_loss": 1534.702362,
+          "fees": 44.926509,
+          "max_drawdown": 0.301182,
+          "halted": true,
+          "stop_count": 182,
+          "stop_average_r": -1.0596220141291686
+        },
+        "validation": {
+          "trades": 387,
+          "net": -150.956638,
+          "profit_factor": 0.864103,
+          "gross_profit": 959.863823,
+          "gross_loss": 1110.820462,
+          "fees": 32.195672,
+          "max_drawdown": 0.156136,
+          "halted": false,
+          "stop_count": 136,
+          "stop_average_r": -1.0599986938640211
+        },
+        "historical_check": {
+          "trades": 354,
+          "net": -192.536955,
+          "profit_factor": 0.811132,
+          "gross_profit": 826.889608,
+          "gross_loss": 1019.426562,
+          "fees": 28.617878,
+          "max_drawdown": 0.206696,
+          "halted": false,
+          "stop_count": 150,
+          "stop_average_r": -1.045872120764681
+        }
+      }
+    },
+    {
+      "variant": "SESSION_WIDE",
+      "strategy_id": "V9.3",
+      "symbol": "GOOGL",
+      "splits": {
+        "train": {
+          "trades": 462,
+          "net": -136.510299,
+          "profit_factor": 0.88627,
+          "gross_profit": 1063.795257,
+          "gross_loss": 1200.305556,
+          "fees": 29.853176,
+          "max_drawdown": 0.224439,
+          "halted": false,
+          "stop_count": 85,
+          "stop_average_r": -1.0318705264403631
+        },
+        "validation": {
+          "trades": 271,
+          "net": -63.724331,
+          "profit_factor": 0.910374,
+          "gross_profit": 647.278354,
+          "gross_loss": 711.002685,
+          "fees": 16.83383,
+          "max_drawdown": 0.073006,
+          "halted": false,
+          "stop_count": 55,
+          "stop_average_r": -1.0335972584546131
+        },
+        "historical_check": {
+          "trades": 221,
+          "net": -147.201193,
+          "profit_factor": 0.731997,
+          "gross_profit": 402.050939,
+          "gross_loss": 549.252132,
+          "fees": 12.11232,
+          "max_drawdown": 0.157982,
+          "halted": false,
+          "stop_count": 46,
+          "stop_average_r": -1.031644004022675
+        }
+      }
+    }
+  ]
+}

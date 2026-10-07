@@ -1,0 +1,59 @@
+{
+ "runs": [
+  {
+   "variant": "LOW3",
+   "discovery": {
+    "trades": 404,
+    "per_day": 9.0,
+    "win": 0.542,
+    "net_r": -0.0972,
+    "net_usdt": -7.536,
+    "pf": 0.73
+   },
+   "confirmation": {
+    "trades": 214,
+    "per_day": 4.8,
+    "win": 0.598,
+    "net_r": -0.0482,
+    "net_usdt": -1.68,
+    "pf": 0.865
+   },
+   "all": {
+    "trades": 618,
+    "per_day": 6.9,
+    "win": 0.561,
+    "net_r": -0.0802,
+    "net_usdt": -9.215,
+    "pf": 0.777
+   }
+  },
+  {
+   "variant": "LEVEL",
+   "discovery": {
+    "trades": 650,
+    "per_day": 14.4,
+    "win": 0.591,
+    "net_r": -0.1662,
+    "net_usdt": -21.29,
+    "pf": 0.597
+   },
+   "confirmation": {
+    "trades": 607,
+    "per_day": 13.5,
+    "win": 0.586,
+    "net_r": -0.1207,
+    "net_usdt": -13.193,
+    "pf": 0.709
+   },
+   "all": {
+    "trades": 1257,
+    "per_day": 14.0,
+    "win": 0.589,
+    "net_r": -0.1443,
+    "net_usdt": -34.483,
+    "pf": 0.651
+   }
+  }
+ ],
+ "adopt_level": false
+}

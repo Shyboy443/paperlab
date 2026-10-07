@@ -1,0 +1,31 @@
+{
+  "checked_at_utc": "2026-09-25T06:43:08.0934525Z",
+  "deployment": "57a111cc-51e7-4969-95f4-f95facd2dab8",
+  "v6_experiment": "v6x-afbe0714a571",
+  "v6_forward_start": 1790262240000,
+  "v6_status": "LIVE",
+  "v6_bots": 56,
+  "v6_positions": 6,
+  "v6_net": -0.44,
+  "v6_continuity": {
+    "bots": 56,
+    "continuity_ok": 56,
+    "continuity_checks": 56
+  },
+  "v6_open_position_comparison": "6/6 identical entry, quantity, stop, target and timestamp against pre-deployment snapshot",
+  "v7_experiment": "v7x-e3eb68fde4f6",
+  "v7_manifest": "d549e017c9a13dc7",
+  "v7_forward_start": 1790318100000,
+  "v7_status": "LIVE",
+  "v7_bots": 8,
+  "v7_starting_usdt": 160.0,
+  "v7_positions": 0,
+  "v7_trades": 0,
+  "v7_errors": null,
+  "v7_rest_errors": 0,
+  "post_status": 403,
+  "real_orders_placed": 0,
+  "execution": "PAPER (simulated fills, no real orders)",
+  "tests": "1139 passed, 4 skipped",
+  "ui": "V7 card visible, 8/8 LIVE, no console errors"
+}

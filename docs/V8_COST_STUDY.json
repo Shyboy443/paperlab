@@ -1,0 +1,434 @@
+{
+ "summary": {
+  "V8.1": {
+   "BASE": {
+    "trades": 3571,
+    "win": 0.339,
+    "net_r": -0.2833,
+    "net_r_half1": -0.2408,
+    "net_r_half2": -0.3278,
+    "fees_r": 0.2378,
+    "net_usdt": -160.22,
+    "pf": 0.54,
+    "exits": {
+     "time": 2156,
+     "stop": 903,
+     "tp": 512
+    }
+   },
+   "LEVEL": {
+    "trades": 3571,
+    "win": 0.339,
+    "net_r": -0.2702,
+    "net_r_half1": -0.24,
+    "net_r_half2": -0.3019,
+    "fees_r": 0.2378,
+    "net_usdt": -155.7,
+    "pf": 0.51,
+    "exits": {
+     "time": 2156,
+     "stop": 903,
+     "tp": 512
+    }
+   },
+   "MAKER_TP": {
+    "trades": 3571,
+    "win": 0.339,
+    "net_r": -0.259,
+    "net_r_half1": -0.2299,
+    "net_r_half2": -0.2896,
+    "fees_r": 0.2291,
+    "net_usdt": -148.34,
+    "pf": 0.534,
+    "exits": {
+     "time": 2158,
+     "stop": 903,
+     "tp": 510
+    }
+   },
+   "MINSTOP60": {
+    "trades": 3509,
+    "win": 0.341,
+    "net_r": -0.2006,
+    "net_r_half1": -0.1787,
+    "net_r_half2": -0.2236,
+    "fees_r": 0.1728,
+    "net_usdt": -123.27,
+    "pf": 0.572,
+    "exits": {
+     "time": 2415,
+     "tp": 403,
+     "stop": 691
+    }
+   },
+   "MINSTOP80": {
+    "trades": 3426,
+    "win": 0.343,
+    "net_r": -0.1494,
+    "net_r_half1": -0.1291,
+    "net_r_half2": -0.1711,
+    "fees_r": 0.1354,
+    "net_usdt": -92.26,
+    "pf": 0.601,
+    "exits": {
+     "time": 2682,
+     "stop": 457,
+     "tp": 287
+    }
+   },
+   "NOHOLD": {
+    "trades": 1994,
+    "win": 0.398,
+    "net_r": -0.2634,
+    "net_r_half1": -0.201,
+    "net_r_half2": -0.3193,
+    "fees_r": 0.2044,
+    "net_usdt": -90.48,
+    "pf": 0.707,
+    "exits": {
+     "stop": 1200,
+     "tp": 793,
+     "time": 1
+    }
+   },
+   "_passing": [
+    "MAKER_TP",
+    "MINSTOP80",
+    "NOHOLD"
+   ],
+   "MAKER_TP+MINSTOP80+NOHOLD": {
+    "trades": 1383,
+    "win": 0.406,
+    "net_r": -0.1227,
+    "net_r_half1": -0.0595,
+    "net_r_half2": -0.1758,
+    "fees_r": 0.1167,
+    "net_usdt": -29.86,
+    "pf": 0.834,
+    "exits": {
+     "stop": 819,
+     "tp": 562,
+     "time": 2
+    }
+   },
+   "MAKER_TP+MINSTOP100+NOHOLD": {
+    "trades": 1129,
+    "win": 0.405,
+    "net_r": -0.1067,
+    "net_r_half1": -0.0507,
+    "net_r_half2": -0.1509,
+    "fees_r": 0.0983,
+    "net_usdt": -20.43,
+    "pf": 0.859,
+    "exits": {
+     "tp": 457,
+     "stop": 669,
+     "time": 3
+    }
+   },
+   "MAKER_TP+MINSTOP120+NOHOLD": {
+    "trades": 908,
+    "win": 0.395,
+    "net_r": -0.1098,
+    "net_r_half1": -0.0152,
+    "net_r_half2": -0.1795,
+    "fees_r": 0.0817,
+    "net_usdt": -17.49,
+    "pf": 0.852,
+    "exits": {
+     "tp": 359,
+     "stop": 547,
+     "time": 2
+    }
+   }
+  },
+  "V8.2": {
+   "BASE": {
+    "trades": 3509,
+    "win": 0.326,
+    "net_r": -0.2503,
+    "net_r_half1": -0.257,
+    "net_r_half2": -0.2429,
+    "fees_r": 0.2045,
+    "net_usdt": -153.48,
+    "pf": 0.534,
+    "exits": {
+     "time": 2224,
+     "stop": 811,
+     "tp": 474
+    }
+   },
+   "LEVEL": {
+    "trades": 3509,
+    "win": 0.326,
+    "net_r": -0.2474,
+    "net_r_half1": -0.2564,
+    "net_r_half2": -0.2376,
+    "fees_r": 0.2045,
+    "net_usdt": -153.72,
+    "pf": 0.498,
+    "exits": {
+     "time": 2224,
+     "stop": 811,
+     "tp": 474
+    }
+   },
+   "MAKER_TP": {
+    "trades": 3506,
+    "win": 0.325,
+    "net_r": -0.2382,
+    "net_r_half1": -0.2476,
+    "net_r_half2": -0.2278,
+    "fees_r": 0.1966,
+    "net_usdt": -147.54,
+    "pf": 0.518,
+    "exits": {
+     "time": 2226,
+     "stop": 810,
+     "tp": 470
+    }
+   },
+   "MINSTOP60": {
+    "trades": 3448,
+    "win": 0.325,
+    "net_r": -0.2077,
+    "net_r_half1": -0.2031,
+    "net_r_half2": -0.2128,
+    "fees_r": 0.1687,
+    "net_usdt": -125.97,
+    "pf": 0.55,
+    "exits": {
+     "time": 2457,
+     "stop": 623,
+     "tp": 368
+    }
+   },
+   "MINSTOP80": {
+    "trades": 3325,
+    "win": 0.32,
+    "net_r": -0.1691,
+    "net_r_half1": -0.1693,
+    "net_r_half2": -0.1688,
+    "fees_r": 0.1344,
+    "net_usdt": -103.38,
+    "pf": 0.552,
+    "exits": {
+     "time": 2616,
+     "stop": 442,
+     "tp": 267
+    }
+   },
+   "NOHOLD": {
+    "trades": 2157,
+    "win": 0.392,
+    "net_r": -0.2341,
+    "net_r_half1": -0.2289,
+    "net_r_half2": -0.239,
+    "fees_r": 0.1938,
+    "net_usdt": -85.51,
+    "pf": 0.733,
+    "exits": {
+     "stop": 1308,
+     "tp": 846,
+     "time": 3
+    }
+   },
+   "_passing": [
+    "MAKER_TP",
+    "MINSTOP80",
+    "NOHOLD"
+   ],
+   "MAKER_TP+MINSTOP80+NOHOLD": {
+    "trades": 1505,
+    "win": 0.398,
+    "net_r": -0.1349,
+    "net_r_half1": -0.0824,
+    "net_r_half2": -0.1813,
+    "fees_r": 0.1156,
+    "net_usdt": -35.76,
+    "pf": 0.817,
+    "exits": {
+     "stop": 902,
+     "tp": 599,
+     "time": 4
+    }
+   },
+   "MAKER_TP+MINSTOP100+NOHOLD": {
+    "trades": 1186,
+    "win": 0.403,
+    "net_r": -0.0925,
+    "net_r_half1": -0.0348,
+    "net_r_half2": -0.1409,
+    "fees_r": 0.0964,
+    "net_usdt": -18.6,
+    "pf": 0.876,
+    "exits": {
+     "stop": 704,
+     "tp": 478,
+     "time": 4
+    }
+   },
+   "MAKER_TP+MINSTOP120+NOHOLD": {
+    "trades": 957,
+    "win": 0.399,
+    "net_r": -0.0866,
+    "net_r_half1": -0.0531,
+    "net_r_half2": -0.1147,
+    "fees_r": 0.0813,
+    "net_usdt": -14.66,
+    "pf": 0.879,
+    "exits": {
+     "stop": 571,
+     "tp": 382,
+     "time": 4
+    }
+   }
+  },
+  "V8.3": {
+   "BASE": {
+    "trades": 5797,
+    "win": 0.366,
+    "net_r": -0.3076,
+    "net_r_half1": -0.3169,
+    "net_r_half2": -0.298,
+    "fees_r": 0.2178,
+    "net_usdt": -309.24,
+    "pf": 0.501,
+    "exits": {
+     "time": 3121,
+     "stop": 1802,
+     "tp": 874
+    }
+   },
+   "LEVEL": {
+    "trades": 5797,
+    "win": 0.366,
+    "net_r": -0.255,
+    "net_r_half1": -0.2699,
+    "net_r_half2": -0.2398,
+    "fees_r": 0.2178,
+    "net_usdt": -263.66,
+    "pf": 0.511,
+    "exits": {
+     "time": 3121,
+     "stop": 1802,
+     "tp": 874
+    }
+   },
+   "MAKER_TP": {
+    "trades": 5796,
+    "win": 0.365,
+    "net_r": -0.2435,
+    "net_r_half1": -0.2614,
+    "net_r_half2": -0.2254,
+    "fees_r": 0.2086,
+    "net_usdt": -250.77,
+    "pf": 0.536,
+    "exits": {
+     "time": 3126,
+     "stop": 1803,
+     "tp": 867
+    }
+   },
+   "MINSTOP60": {
+    "trades": 5529,
+    "win": 0.37,
+    "net_r": -0.2482,
+    "net_r_half1": -0.2432,
+    "net_r_half2": -0.2533,
+    "fees_r": 0.1817,
+    "net_usdt": -233.55,
+    "pf": 0.531,
+    "exits": {
+     "time": 3514,
+     "tp": 632,
+     "stop": 1383
+    }
+   },
+   "MINSTOP80": {
+    "trades": 5146,
+    "win": 0.376,
+    "net_r": -0.184,
+    "net_r_half1": -0.1878,
+    "net_r_half2": -0.1799,
+    "fees_r": 0.1353,
+    "net_usdt": -177.6,
+    "pf": 0.545,
+    "exits": {
+     "time": 3744,
+     "stop": 995,
+     "tp": 407
+    }
+   },
+   "NOHOLD": {
+    "trades": 3786,
+    "win": 0.397,
+    "net_r": -0.3414,
+    "net_r_half1": -0.4007,
+    "net_r_half2": -0.2957,
+    "fees_r": 0.2081,
+    "net_usdt": -219.65,
+    "pf": 0.639,
+    "exits": {
+     "stop": 2283,
+     "tp": 1501,
+     "time": 2
+    }
+   },
+   "_passing": [
+    "MAKER_TP",
+    "MINSTOP80"
+   ],
+   "MAKER_TP+MINSTOP80": {
+    "trades": 5148,
+    "win": 0.376,
+    "net_r": -0.1514,
+    "net_r_half1": -0.164,
+    "net_r_half2": -0.1377,
+    "fees_r": 0.1321,
+    "net_usdt": -147.32,
+    "pf": 0.578,
+    "exits": {
+     "time": 3748,
+     "stop": 996,
+     "tp": 404
+    }
+   },
+   "MAKER_TP+MINSTOP100": {
+    "trades": 4848,
+    "win": 0.378,
+    "net_r": -0.1259,
+    "net_r_half1": -0.1359,
+    "net_r_half2": -0.1145,
+    "fees_r": 0.1087,
+    "net_usdt": -114.71,
+    "pf": 0.582,
+    "exits": {
+     "time": 3874,
+     "stop": 719,
+     "tp": 255
+    }
+   },
+   "MAKER_TP+MINSTOP120": {
+    "trades": 4556,
+    "win": 0.386,
+    "net_r": -0.1047,
+    "net_r_half1": -0.113,
+    "net_r_half2": -0.0957,
+    "fees_r": 0.0906,
+    "net_usdt": -94.4,
+    "pf": 0.584,
+    "exits": {
+     "time": 3847,
+     "stop": 541,
+     "tp": 168
+    }
+   }
+  }
+ },
+ "chosen": {
+  "V8.1": "MAKER_TP+MINSTOP100+NOHOLD",
+  "V8.2": "MAKER_TP+MINSTOP120+NOHOLD",
+  "V8.3": "MAKER_TP+MINSTOP120"
+ }
+}

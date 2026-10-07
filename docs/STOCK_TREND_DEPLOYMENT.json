@@ -1,0 +1,40 @@
+{
+  "deployment_id": "5c114852-abf8-4fd7-bd7c-f8dafacaf9e9",
+  "deployment_status": "SUCCESS",
+  "url": "https://paperlab-production-919c.up.railway.app/public/stock-trend",
+  "rule": "TREND5-SMA200-MOM63-LOT1-v1",
+  "authorized_allocation_usd": 9.5,
+  "actual_funding": "clipped to available USD cash/equity",
+  "per_stock_at_usd9_50": 1.88,
+  "minimum_initial_allocation_usd": 5.06,
+  "current_selected_stocks": [
+    "PLTR",
+    "LITE",
+    "DELL",
+    "MSFT",
+    "META"
+  ],
+  "live_active": false,
+  "real_money_orders_sent": 0,
+  "live_cash_usd": 0.0,
+  "live_equity_usd": 9.49,
+  "existing_live_holding": "USDTUSD",
+  "paper_check": "PASSED",
+  "execution_tests_passed": 73,
+  "desktop_mobile_checks": "Five stocks displayed; no horizontal overflow; shared login works; live blocked before paper proof",
+  "quote_feed": "IEX explicitly; SIP latest denied by subscription",
+  "signal_feed": "SIP completed adjusted daily",
+  "crypto_research_health": "RUNNING; spot and perpetual feeds OK; saved histories retained",
+  "latest_verified_at_utc": "2026-10-07T13:56:01.810929+00:00",
+  "private_api_unauthenticated_http": 401,
+  "stock_page_http": 200,
+  "free_IEX_access": "All five symbols returned by both quote APIs; freshness checked before orders",
+  "paper_actual_filled_orders": 10,
+  "paper_account_flat_confirmed": true,
+  "quote_race_fix_deployed": true,
+  "source_sha256": {
+    "model.py": "3ae0d60ed95353bc833e99a511873b26919e462ebcd77b197b0136a20ea7fd38",
+    "service.py": "e62c7693981be927462c894d339927bb30fcaffe8e0977d67d7665d6250dbb9f",
+    "paper_check.py": "346a2d44dd167d53b2bfdf67948f8d406529393a4921e4a77a1e23479ed453c9"
+  }
+}

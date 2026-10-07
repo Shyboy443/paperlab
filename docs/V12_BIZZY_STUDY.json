@@ -1,0 +1,261 @@
+{
+ "rules": "Larry Williams k=0.5, long only, 1 trade/UTC day, 2x notional, stop = day open, exit 23:59",
+ "costs": {
+  "taker": 0.00055,
+  "half_spread": {
+   "BTC": 5e-05,
+   "ETH": 5e-05,
+   "SOL": 0.0001,
+   "HYPE": 0.00015
+  },
+  "funding_8h": 0.0001
+ },
+ "A_1m_95d": {
+  "ALL4": {
+   "trades": 59,
+   "win": 0.356,
+   "avg_ret_pct": -0.284,
+   "median_ret_pct": -1.466,
+   "total_ret_pct": -20.1,
+   "max_dd_pct": 29.6,
+   "stops": 25,
+   "avg_stop_pct": 1.84,
+   "by_year_total_pct": {
+    "2026": -20.1
+   },
+   "coins": {
+    "BTC": 17,
+    "ETH": 12,
+    "SOL": 14,
+    "HYPE": 16
+   }
+  },
+  "NOBTC": {
+   "trades": 56,
+   "win": 0.321,
+   "avg_ret_pct": -0.365,
+   "median_ret_pct": -1.868,
+   "total_ret_pct": -23.9,
+   "max_dd_pct": 36.5,
+   "stops": 24,
+   "avg_stop_pct": 1.98,
+   "by_year_total_pct": {
+    "2026": -23.9
+   },
+   "coins": {
+    "BTC": 0,
+    "ETH": 20,
+    "SOL": 19,
+    "HYPE": 17
+   }
+  },
+  "BTC": {
+   "trades": 44,
+   "win": 0.295,
+   "avg_ret_pct": 0.107,
+   "median_ret_pct": -0.895,
+   "total_ret_pct": 2.3,
+   "max_dd_pct": 13.9,
+   "stops": 17,
+   "avg_stop_pct": 1.26,
+   "by_year_total_pct": {
+    "2026": 2.3
+   },
+   "coins": {
+    "BTC": 44,
+    "ETH": 0,
+    "SOL": 0,
+    "HYPE": 0
+   }
+  },
+  "ETH": {
+   "trades": 38,
+   "win": 0.316,
+   "avg_ret_pct": 0.678,
+   "median_ret_pct": -1.246,
+   "total_ret_pct": 20.8,
+   "max_dd_pct": 15.4,
+   "stops": 17,
+   "avg_stop_pct": 1.57,
+   "by_year_total_pct": {
+    "2026": 20.8
+   },
+   "coins": {
+    "BTC": 0,
+    "ETH": 38,
+    "SOL": 0,
+    "HYPE": 0
+   }
+  },
+  "SOL": {
+   "trades": 39,
+   "win": 0.487,
+   "avg_ret_pct": 0.836,
+   "median_ret_pct": -0.274,
+   "total_ret_pct": 30.9,
+   "max_dd_pct": 16.7,
+   "stops": 13,
+   "avg_stop_pct": 2.0,
+   "by_year_total_pct": {
+    "2026": 30.9
+   },
+   "coins": {
+    "BTC": 0,
+    "ETH": 0,
+    "SOL": 39,
+    "HYPE": 0
+   }
+  },
+  "HYPE": {
+   "trades": 40,
+   "win": 0.475,
+   "avg_ret_pct": 0.717,
+   "median_ret_pct": -0.073,
+   "total_ret_pct": 21.3,
+   "max_dd_pct": 26.0,
+   "stops": 10,
+   "avg_stop_pct": 2.51,
+   "by_year_total_pct": {
+    "2026": 21.3
+   },
+   "coins": {
+    "BTC": 0,
+    "ETH": 0,
+    "SOL": 0,
+    "HYPE": 40
+   }
+  }
+ },
+ "B_1h_900d": {
+  "ALL4": {
+   "trades": 589,
+   "win": 0.35,
+   "avg_ret_pct": -0.586,
+   "median_ret_pct": -1.562,
+   "total_ret_pct": -98.8,
+   "max_dd_pct": 98.9,
+   "stops": 269,
+   "avg_stop_pct": 2.49,
+   "by_year_total_pct": {
+    "2024": -63.6,
+    "2025": -91.0,
+    "2026": -64.3
+   },
+   "coins": {
+    "BTC": 213,
+    "ETH": 110,
+    "SOL": 123,
+    "HYPE": 143
+   }
+  },
+  "NOBTC": {
+   "trades": 554,
+   "win": 0.332,
+   "avg_ret_pct": -0.586,
+   "median_ret_pct": -2.019,
+   "total_ret_pct": -98.7,
+   "max_dd_pct": 98.9,
+   "stops": 249,
+   "avg_stop_pct": 2.82,
+   "by_year_total_pct": {
+    "2024": -55.2,
+    "2025": -92.8,
+    "2026": -60.8
+   },
+   "coins": {
+    "BTC": 0,
+    "ETH": 234,
+    "SOL": 163,
+    "HYPE": 157
+   }
+  },
+  "BTC": {
+   "trades": 368,
+   "win": 0.367,
+   "avg_ret_pct": -0.075,
+   "median_ret_pct": -1.032,
+   "total_ret_pct": -39.1,
+   "max_dd_pct": 62.2,
+   "stops": 155,
+   "avg_stop_pct": 1.42,
+   "by_year_total_pct": {
+    "2024": 26.0,
+    "2025": -42.8,
+    "2026": -15.4
+   },
+   "coins": {
+    "BTC": 368,
+    "ETH": 0,
+    "SOL": 0,
+    "HYPE": 0
+   }
+  },
+  "ETH": {
+   "trades": 372,
+   "win": 0.325,
+   "avg_ret_pct": -0.272,
+   "median_ret_pct": -1.846,
+   "total_ret_pct": -77.9,
+   "max_dd_pct": 80.8,
+   "stops": 167,
+   "avg_stop_pct": 2.05,
+   "by_year_total_pct": {
+    "2024": -26.9,
+    "2025": -55.6,
+    "2026": -31.8
+   },
+   "coins": {
+    "BTC": 0,
+    "ETH": 372,
+    "SOL": 0,
+    "HYPE": 0
+   }
+  },
+  "SOL": {
+   "trades": 378,
+   "win": 0.376,
+   "avg_ret_pct": -0.394,
+   "median_ret_pct": -1.722,
+   "total_ret_pct": -87.8,
+   "max_dd_pct": 94.5,
+   "stops": 151,
+   "avg_stop_pct": 2.66,
+   "by_year_total_pct": {
+    "2024": -45.5,
+    "2025": -74.4,
+    "2026": -12.9
+   },
+   "coins": {
+    "BTC": 0,
+    "ETH": 0,
+    "SOL": 378,
+    "HYPE": 0
+   }
+  },
+  "HYPE": {
+   "trades": 292,
+   "win": 0.411,
+   "avg_ret_pct": -0.274,
+   "median_ret_pct": -1.394,
+   "total_ret_pct": -83.0,
+   "max_dd_pct": 95.5,
+   "stops": 105,
+   "avg_stop_pct": 3.87,
+   "by_year_total_pct": {
+    "2024": 1.5,
+    "2025": -86.0,
+    "2026": 19.8
+   },
+   "coins": {
+    "BTC": 0,
+    "ETH": 0,
+    "SOL": 0,
+    "HYPE": 292
+   }
+  }
+ },
+ "window_B": [
+  "2024-04-15",
+  "2026-10-02"
+ ]
+}

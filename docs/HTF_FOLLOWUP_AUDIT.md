@@ -1,0 +1,51 @@
+# V14 follow-up logic audit
+
+Completed 2026-10-05. Local paper bots; no service restart or deployment.
+
+## Reproduced defects and repairs
+
+1. **HTF state drift without an HTF close.** The rolling 600-hour buffer could discard part of the oldest UTC day/hour group. EMA calculations then used a different history length. Fixed 42-bar 4h and 20-bar daily calculation windows now make the same completed history produce the same state across buffer sizes. A new incomplete 4h/day candle cannot change that state.
+2. **Cache missed corrections.** Count and last-object identity did not detect in-place corruption or repairs to a middle hour. Cache keys now include known source-bar contents. Repairs invalidate a rejected view; corruption invalidates an accepted view. Future bars never enter the key. Returned dicts are defensive copies. Errors outside the required history no longer block a valid current window.
+3. **Invalid candidates consumed signal slots.** The scanners truncated to `max_signals` before checking whether signal construction succeeded. The ranking loop now counts viable signals and continues to the next candidate when stop/entry construction fails.
+4. **Held coins displaced eligible setups.** V14 scanners/snapback now exclude held and pending coins before ranking. Entry budgets respect remaining position capacity. When one slot remains, only the best viable setup is queued, so alphabetic coin tape order cannot award that slot to a lower-ranked candidate. Pending limits also reserve capacity.
+5. **Cancelled orders left stale reservations.** The engine publishes its actual pending symbols after each execution pass. Snapback reconciles reservations against that book, releasing cancelled, expired or rejected orders before their old signal expiry. Filled positions remain protected by the held-coin filter.
+6. **Invalid regime values could pass.** A missing/NaN slope or a direction outside -1/0/+1 now fails closed. The worker snapshots rejection dictionaries before iterating them, avoiding a concurrent dictionary-size change while bot threads add rejection categories.
+7. **Replay checkpoints could mix experiments.** Resume now verifies the full source, dataset, instrument rules and execution inputs for every arm, including BASE and OLD. Legacy/mismatched rows are discarded, duplicate checkpoint runs fail, each single-family study has its own checkpoint, and writes are atomic. Inputs changing during a replay prevent publication.
+
+No EMA, ATR deadband, target, stop or holding-time grid was searched. Trading thresholds remain unchanged. The fixed EMA windows use the first close as their seed; these are reproducible bounded calculations, not infinite-history EMAs. Entry risk checks and exits remain active.
+
+## Verification
+
+Full suite: **1492 passed, 4 skipped in 306.64s (0:05:06)**. Focused HTF/order checks: **71 passed**.
+
+The regressions cover rolling-buffer stability, equal histories with different extra bars, in-place corruption, middle-bar repair, defensive copies, expired old history, invalid candidate geometry, held/pending exclusions, cancelled reservations, actual engine pending publication, zero signal budgets, free-slot priority, invalid regimes and study input consistency. Previous cutoff, gap, UTC rollover, fill-risk and exit-preservation tests also pass.
+
+## Paired replay results
+
+BEFORE is the preceding completed-candle V14 implementation. Its archived rows were reused only after verifying dataset SHA256, common frozen dependencies, execution/sizing/parameter profiles and instrument rules. All nine AFTER bots were replayed with recorded funding and the same 72-day measurement window, 25-day warm-up, daily 20 USDT book resets and 60.001-second latency. Reset/final close costs are included. Figures are aggregate replay P/L across daily resets, not returns on a compounded live account.
+
+| Family | BEFORE trades | AFTER trades | BEFORE net USDT | AFTER net USDT | BEFORE / AFTER mean net R |
+|---|---:|---:|---:|---:|---:|
+| V14.1 VWAP (six coins) | 1410 | 1402 | -30.58 | -30.45 | -0.1136 / -0.1155 |
+| V14.2 RS breakout | 299 | 297 | -3.64 | -3.80 | -0.0733 / -0.0767 |
+| V14.3 RS pullback | 606 | 607 | -1.92 | -1.73 | -0.0202 / -0.0184 |
+| V14.4 Limit snapback | 146 | 159 | +0.88 | +1.00 | +0.0404 / +0.0386 |
+
+| Family | BEFORE halves (mean net R) | AFTER halves (mean net R) | Verdict |
+|---|---:|---:|---|
+| V14.1 | -0.1308 / -0.0982 | -0.1360 / -0.0970 | NO CONSISTENT IMPROVEMENT VS PRIOR V14 |
+| V14.2 | -0.0504 / -0.1225 | -0.0551 / -0.1225 | NO CONSISTENT IMPROVEMENT VS PRIOR V14 |
+| V14.3 | -0.0623 / +0.0291 | -0.0588 / +0.0291 | NO CONSISTENT IMPROVEMENT VS PRIOR V14 |
+| V14.4 | -0.0659 / +0.1804 | -0.1072 / +0.2104 | NO CONSISTENT IMPROVEMENT VS PRIOR V14 |
+
+BEFORE total net: -35.2563 USDT; 2461 trades.
+
+AFTER total net: -34.9807 USDT; 2465 trades.
+
+These are correctness and selection repairs. Fewer losses alone do not prove a better trade edge. The table reports trade counts, net R and both chronological halves to expose that distinction. This dataset was used in earlier studies and is not an unseen holdout; results do not establish future profitability. Bots remain paper-only and qualification still requires forward evidence.
+
+Raw rows, rejection counts, funding coverage and source hashes: `V14_HTF_FOLLOWUP_STUDY.json`. The incomplete first follow-up run was stopped after the free-slot priority defect was found. Its output was not published or reused as AFTER evidence; the final nine AFTER runs all share the completed implementation's input signature.
+
+The preceding implementation, freeze and comparison are preserved under `../snapshots/2026-10-05-htf-followup/`. The first HTF audit now identifies its results as historical. V14 gets a new experiment identity; other programs' source files and freeze identities are unchanged.
+
+Manifest `b41ffaa73039f33a`; experiment `v14x-227dd5f1e221`.

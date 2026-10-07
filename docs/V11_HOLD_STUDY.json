@@ -1,0 +1,785 @@
+{
+ "holds": {
+  "X1": 1.0,
+  "X2": 2.0,
+  "X4": 4.0,
+  "NONE": null
+ },
+ "runs": [
+  {
+   "family": "V11.3",
+   "hold": "X1",
+   "half1": {
+    "trades": 4532,
+    "per_day": 100.7,
+    "win": 0.628,
+    "net_r": -0.1998,
+    "pf": 0.438,
+    "exits": {
+     "be": 2394,
+     "stop": 1238,
+     "tp": 428,
+     "time": 385,
+     "reset": 87
+    },
+    "hold_min_median": 22.1
+   },
+   "half2": {
+    "trades": 4258,
+    "per_day": 94.6,
+    "win": 0.651,
+    "net_r": -0.1629,
+    "pf": 0.522,
+    "exits": {
+     "stop": 1167,
+     "be": 2197,
+     "time": 232,
+     "tp": 610,
+     "reset": 52
+    },
+    "hold_min_median": 14.2
+   },
+   "all": {
+    "trades": 8790,
+    "per_day": 97.7,
+    "win": 0.639,
+    "net_r": -0.1819,
+    "pf": 0.478,
+    "exits": {
+     "be": 4591,
+     "stop": 2405,
+     "tp": 1038,
+     "time": 617,
+     "reset": 139
+    },
+    "hold_min_median": 18.1
+   }
+  },
+  {
+   "family": "V11.3",
+   "hold": "X2",
+   "half1": {
+    "trades": 4454,
+    "per_day": 99.0,
+    "win": 0.65,
+    "net_r": -0.1963,
+    "pf": 0.453,
+    "exits": {
+     "be": 2496,
+     "stop": 1279,
+     "tp": 467,
+     "reset": 100,
+     "time": 112
+    },
+    "hold_min_median": 21.5
+   },
+   "half2": {
+    "trades": 4222,
+    "per_day": 93.8,
+    "win": 0.662,
+    "net_r": -0.1627,
+    "pf": 0.528,
+    "exits": {
+     "stop": 1205,
+     "be": 2263,
+     "tp": 631,
+     "time": 63,
+     "reset": 60
+    },
+    "hold_min_median": 14.2
+   },
+   "all": {
+    "trades": 8676,
+    "per_day": 96.4,
+    "win": 0.656,
+    "net_r": -0.18,
+    "pf": 0.489,
+    "exits": {
+     "be": 4759,
+     "stop": 2484,
+     "tp": 1098,
+     "reset": 160,
+     "time": 175
+    },
+    "hold_min_median": 17.8
+   }
+  },
+  {
+   "family": "V11.3",
+   "hold": "X4",
+   "half1": {
+    "trades": 4410,
+    "per_day": 98.0,
+    "win": 0.656,
+    "net_r": -0.1965,
+    "pf": 0.456,
+    "exits": {
+     "be": 2509,
+     "stop": 1293,
+     "tp": 477,
+     "reset": 113,
+     "time": 18
+    },
+    "hold_min_median": 21.3
+   },
+   "half2": {
+    "trades": 4194,
+    "per_day": 93.2,
+    "win": 0.665,
+    "net_r": -0.1636,
+    "pf": 0.528,
+    "exits": {
+     "stop": 1215,
+     "be": 2260,
+     "tp": 638,
+     "time": 17,
+     "reset": 64
+    },
+    "hold_min_median": 14.1
+   },
+   "all": {
+    "trades": 8604,
+    "per_day": 95.6,
+    "win": 0.66,
+    "net_r": -0.1805,
+    "pf": 0.491,
+    "exits": {
+     "be": 4769,
+     "stop": 2508,
+     "tp": 1115,
+     "reset": 177,
+     "time": 35
+    },
+    "hold_min_median": 17.6
+   }
+  },
+  {
+   "family": "V11.3",
+   "hold": "NONE",
+   "half1": {
+    "trades": 4398,
+    "per_day": 97.7,
+    "win": 0.657,
+    "net_r": -0.1967,
+    "pf": 0.456,
+    "exits": {
+     "be": 2508,
+     "stop": 1294,
+     "tp": 479,
+     "reset": 117
+    },
+    "hold_min_median": 21.3
+   },
+   "half2": {
+    "trades": 4195,
+    "per_day": 93.2,
+    "win": 0.668,
+    "net_r": -0.1613,
+    "pf": 0.533,
+    "exits": {
+     "stop": 1212,
+     "be": 2274,
+     "tp": 641,
+     "reset": 68
+    },
+    "hold_min_median": 14.1
+   },
+   "all": {
+    "trades": 8593,
+    "per_day": 95.5,
+    "win": 0.662,
+    "net_r": -0.1794,
+    "pf": 0.493,
+    "exits": {
+     "be": 4782,
+     "stop": 2506,
+     "tp": 1120,
+     "reset": 185
+    },
+    "hold_min_median": 17.6
+   }
+  },
+  {
+   "family": "V11.1",
+   "hold": "X1",
+   "half1": {
+    "trades": 433,
+    "per_day": 9.6,
+    "win": 0.533,
+    "net_r": -0.0905,
+    "pf": 0.742,
+    "exits": {
+     "be": 129,
+     "time": 136,
+     "stop": 100,
+     "tp": 39,
+     "reset": 29
+    },
+    "hold_min_median": 126.6
+   },
+   "half2": {
+    "trades": 236,
+    "per_day": 5.2,
+    "win": 0.597,
+    "net_r": -0.0409,
+    "pf": 0.88,
+    "exits": {
+     "be": 66,
+     "tp": 39,
+     "stop": 62,
+     "time": 47,
+     "reset": 22
+    },
+    "hold_min_median": 104.0
+   },
+   "all": {
+    "trades": 669,
+    "per_day": 7.4,
+    "win": 0.556,
+    "net_r": -0.073,
+    "pf": 0.79,
+    "exits": {
+     "be": 195,
+     "time": 183,
+     "stop": 162,
+     "tp": 78,
+     "reset": 51
+    },
+    "hold_min_median": 119.0
+   }
+  },
+  {
+   "family": "V11.1",
+   "hold": "X2",
+   "half1": {
+    "trades": 424,
+    "per_day": 9.4,
+    "win": 0.583,
+    "net_r": -0.0809,
+    "pf": 0.775,
+    "exits": {
+     "be": 158,
+     "time": 56,
+     "stop": 118,
+     "tp": 47,
+     "reset": 45
+    },
+    "hold_min_median": 127.1
+   },
+   "half2": {
+    "trades": 236,
+    "per_day": 5.2,
+    "win": 0.614,
+    "net_r": -0.0414,
+    "pf": 0.888,
+    "exits": {
+     "be": 82,
+     "tp": 43,
+     "stop": 74,
+     "reset": 26,
+     "time": 11
+    },
+    "hold_min_median": 104.0
+   },
+   "all": {
+    "trades": 660,
+    "per_day": 7.3,
+    "win": 0.594,
+    "net_r": -0.0668,
+    "pf": 0.816,
+    "exits": {
+     "be": 240,
+     "time": 67,
+     "stop": 192,
+     "tp": 90,
+     "reset": 71
+    },
+    "hold_min_median": 119.2
+   }
+  },
+  {
+   "family": "V11.1",
+   "hold": "X4",
+   "half1": {
+    "trades": 422,
+    "per_day": 9.4,
+    "win": 0.581,
+    "net_r": -0.0925,
+    "pf": 0.757,
+    "exits": {
+     "be": 169,
+     "stop": 132,
+     "tp": 49,
+     "reset": 68,
+     "time": 4
+    },
+    "hold_min_median": 127.1
+   },
+   "half2": {
+    "trades": 236,
+    "per_day": 5.2,
+    "win": 0.619,
+    "net_r": -0.0297,
+    "pf": 0.919,
+    "exits": {
+     "be": 84,
+     "tp": 48,
+     "stop": 75,
+     "reset": 29
+    },
+    "hold_min_median": 104.0
+   },
+   "all": {
+    "trades": 658,
+    "per_day": 7.3,
+    "win": 0.594,
+    "net_r": -0.07,
+    "pf": 0.814,
+    "exits": {
+     "be": 253,
+     "stop": 207,
+     "tp": 97,
+     "reset": 97,
+     "time": 4
+    },
+    "hold_min_median": 119.2
+   }
+  },
+  {
+   "family": "V11.1",
+   "hold": "NONE",
+   "half1": {
+    "trades": 422,
+    "per_day": 9.4,
+    "win": 0.581,
+    "net_r": -0.093,
+    "pf": 0.757,
+    "exits": {
+     "be": 169,
+     "stop": 132,
+     "tp": 49,
+     "reset": 72
+    },
+    "hold_min_median": 127.1
+   },
+   "half2": {
+    "trades": 236,
+    "per_day": 5.2,
+    "win": 0.619,
+    "net_r": -0.0297,
+    "pf": 0.919,
+    "exits": {
+     "be": 84,
+     "tp": 48,
+     "stop": 75,
+     "reset": 29
+    },
+    "hold_min_median": 104.0
+   },
+   "all": {
+    "trades": 658,
+    "per_day": 7.3,
+    "win": 0.594,
+    "net_r": -0.0703,
+    "pf": 0.814,
+    "exits": {
+     "be": 253,
+     "stop": 207,
+     "tp": 97,
+     "reset": 101
+    },
+    "hold_min_median": 119.2
+   }
+  },
+  {
+   "family": "V11.2",
+   "hold": "X1",
+   "half1": {
+    "trades": 617,
+    "per_day": 13.7,
+    "win": 0.605,
+    "net_r": -0.1623,
+    "pf": 0.558,
+    "exits": {
+     "stop": 182,
+     "be": 305,
+     "tp": 65,
+     "reset": 35,
+     "time": 30
+    },
+    "hold_min_median": 54.0
+   },
+   "half2": {
+    "trades": 513,
+    "per_day": 11.4,
+    "win": 0.71,
+    "net_r": -0.0198,
+    "pf": 0.93,
+    "exits": {
+     "be": 289,
+     "stop": 124,
+     "tp": 68,
+     "time": 14,
+     "reset": 18
+    },
+    "hold_min_median": 43.3
+   },
+   "all": {
+    "trades": 1130,
+    "per_day": 12.6,
+    "win": 0.652,
+    "net_r": -0.0976,
+    "pf": 0.703,
+    "exits": {
+     "stop": 306,
+     "be": 594,
+     "tp": 133,
+     "reset": 53,
+     "time": 44
+    },
+    "hold_min_median": 47.3
+   }
+  },
+  {
+   "family": "V11.2",
+   "hold": "X2",
+   "half1": {
+    "trades": 616,
+    "per_day": 13.7,
+    "win": 0.614,
+    "net_r": -0.162,
+    "pf": 0.562,
+    "exits": {
+     "stop": 190,
+     "be": 309,
+     "tp": 66,
+     "reset": 46,
+     "time": 5
+    },
+    "hold_min_median": 53.6
+   },
+   "half2": {
+    "trades": 513,
+    "per_day": 11.4,
+    "win": 0.715,
+    "net_r": -0.0184,
+    "pf": 0.935,
+    "exits": {
+     "be": 296,
+     "stop": 128,
+     "tp": 69,
+     "reset": 19,
+     "time": 1
+    },
+    "hold_min_median": 43.3
+   },
+   "all": {
+    "trades": 1129,
+    "per_day": 12.5,
+    "win": 0.66,
+    "net_r": -0.0967,
+    "pf": 0.707,
+    "exits": {
+     "stop": 318,
+     "be": 605,
+     "tp": 135,
+     "reset": 65,
+     "time": 6
+    },
+    "hold_min_median": 47.3
+   }
+  },
+  {
+   "family": "V11.2",
+   "hold": "X4",
+   "half1": {
+    "trades": 616,
+    "per_day": 13.7,
+    "win": 0.614,
+    "net_r": -0.1618,
+    "pf": 0.562,
+    "exits": {
+     "stop": 192,
+     "be": 311,
+     "tp": 66,
+     "reset": 47
+    },
+    "hold_min_median": 53.6
+   },
+   "half2": {
+    "trades": 513,
+    "per_day": 11.4,
+    "win": 0.715,
+    "net_r": -0.0188,
+    "pf": 0.933,
+    "exits": {
+     "be": 296,
+     "stop": 128,
+     "tp": 69,
+     "reset": 20
+    },
+    "hold_min_median": 43.3
+   },
+   "all": {
+    "trades": 1129,
+    "per_day": 12.5,
+    "win": 0.66,
+    "net_r": -0.0968,
+    "pf": 0.707,
+    "exits": {
+     "stop": 320,
+     "be": 607,
+     "tp": 135,
+     "reset": 67
+    },
+    "hold_min_median": 47.3
+   }
+  },
+  {
+   "family": "V11.2",
+   "hold": "NONE",
+   "half1": {
+    "trades": 616,
+    "per_day": 13.7,
+    "win": 0.614,
+    "net_r": -0.1618,
+    "pf": 0.562,
+    "exits": {
+     "stop": 192,
+     "be": 311,
+     "tp": 66,
+     "reset": 47
+    },
+    "hold_min_median": 53.6
+   },
+   "half2": {
+    "trades": 513,
+    "per_day": 11.4,
+    "win": 0.715,
+    "net_r": -0.0188,
+    "pf": 0.933,
+    "exits": {
+     "be": 296,
+     "stop": 128,
+     "tp": 69,
+     "reset": 20
+    },
+    "hold_min_median": 43.3
+   },
+   "all": {
+    "trades": 1129,
+    "per_day": 12.5,
+    "win": 0.66,
+    "net_r": -0.0968,
+    "pf": 0.707,
+    "exits": {
+     "stop": 320,
+     "be": 607,
+     "tp": 135,
+     "reset": 67
+    },
+    "hold_min_median": 47.3
+   }
+  },
+  {
+   "family": "V11.4",
+   "hold": "X1",
+   "half1": {
+    "trades": 3529,
+    "per_day": 78.4,
+    "win": 0.438,
+    "net_r": -0.0582,
+    "pf": 0.623,
+    "exits": {
+     "be": 142,
+     "time": 3243,
+     "stop": 96,
+     "tp": 48
+    },
+    "hold_min_median": 58.0
+   },
+   "half2": {
+    "trades": 2371,
+    "per_day": 52.7,
+    "win": 0.447,
+    "net_r": -0.0615,
+    "pf": 0.62,
+    "exits": {
+     "tp": 50,
+     "time": 2145,
+     "stop": 79,
+     "be": 97
+    },
+    "hold_min_median": 58.0
+   },
+   "all": {
+    "trades": 5900,
+    "per_day": 65.6,
+    "win": 0.442,
+    "net_r": -0.0595,
+    "pf": 0.622,
+    "exits": {
+     "be": 239,
+     "time": 5388,
+     "stop": 175,
+     "tp": 98
+    },
+    "hold_min_median": 58.0
+   }
+  },
+  {
+   "family": "V11.4",
+   "hold": "X2",
+   "half1": {
+    "trades": 2311,
+    "per_day": 51.4,
+    "win": 0.478,
+    "net_r": -0.0549,
+    "pf": 0.718,
+    "exits": {
+     "be": 260,
+     "time": 1730,
+     "stop": 151,
+     "tp": 79,
+     "reset": 91
+    },
+    "hold_min_median": 116.0
+   },
+   "half2": {
+    "trades": 1705,
+    "per_day": 37.9,
+    "win": 0.472,
+    "net_r": -0.0639,
+    "pf": 0.695,
+    "exits": {
+     "tp": 89,
+     "stop": 143,
+     "time": 1205,
+     "be": 203,
+     "reset": 65
+    },
+    "hold_min_median": 116.0
+   },
+   "all": {
+    "trades": 4016,
+    "per_day": 44.6,
+    "win": 0.476,
+    "net_r": -0.0587,
+    "pf": 0.708,
+    "exits": {
+     "be": 463,
+     "time": 2935,
+     "stop": 294,
+     "tp": 168,
+     "reset": 156
+    },
+    "hold_min_median": 116.0
+   }
+  },
+  {
+   "family": "V11.4",
+   "hold": "X4",
+   "half1": {
+    "trades": 1523,
+    "per_day": 33.8,
+    "win": 0.533,
+    "net_r": -0.0483,
+    "pf": 0.786,
+    "exits": {
+     "be": 366,
+     "stop": 167,
+     "time": 726,
+     "tp": 91,
+     "reset": 173
+    },
+    "hold_min_median": 211.6
+   },
+   "half2": {
+    "trades": 1242,
+    "per_day": 27.6,
+    "win": 0.513,
+    "net_r": -0.1311,
+    "pf": 0.587,
+    "exits": {
+     "tp": 103,
+     "stop": 178,
+     "be": 279,
+     "time": 563,
+     "reset": 117,
+     "liq": 2
+    },
+    "hold_min_median": 190.2
+   },
+   "all": {
+    "trades": 2765,
+    "per_day": 30.7,
+    "win": 0.524,
+    "net_r": -0.0855,
+    "pf": 0.68,
+    "exits": {
+     "be": 645,
+     "stop": 345,
+     "time": 1289,
+     "tp": 194,
+     "reset": 290,
+     "liq": 2
+    },
+    "hold_min_median": 204.3
+   }
+  },
+  {
+   "family": "V11.4",
+   "hold": "NONE",
+   "half1": {
+    "trades": 897,
+    "per_day": 19.9,
+    "win": 0.64,
+    "net_r": -0.0213,
+    "pf": 0.92,
+    "exits": {
+     "be": 393,
+     "stop": 192,
+     "tp": 118,
+     "reset": 194
+    },
+    "hold_min_median": 239.0
+   },
+   "half2": {
+    "trades": 821,
+    "per_day": 18.2,
+    "win": 0.607,
+    "net_r": -0.1595,
+    "pf": 0.597,
+    "exits": {
+     "tp": 104,
+     "stop": 212,
+     "be": 337,
+     "reset": 166,
+     "time": 2
+    },
+    "hold_min_median": 186.3
+   },
+   "all": {
+    "trades": 1718,
+    "per_day": 19.1,
+    "win": 0.624,
+    "net_r": -0.0873,
+    "pf": 0.735,
+    "exits": {
+     "be": 730,
+     "stop": 404,
+     "tp": 222,
+     "reset": 360,
+     "time": 2
+    },
+    "hold_min_median": 210.9
+   }
+  }
+ ],
+ "chosen": {
+  "V11.1": "X1",
+  "V11.2": "X2",
+  "V11.3": "NONE",
+  "V11.4": "X1"
+ }
+}

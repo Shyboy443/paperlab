@@ -1,0 +1,782 @@
+{
+ "built": "2026-10-02 19:27 UTC",
+ "rules": " (2026-10-03). The thresholds were fixed in research/queries/funding_oi_flush.sql BEFORE its first run\nand are NOT tuned here; this script only adds the checks a raw average lacks.\n  EVENT      z_funding <= -1.5 AND z_oi_chg_1h >= +1.5 AND z_r_1h <= -1.5 (per-coin trailing 7-day z-scores, all\n             known at the decision); one event per coin per HOLD window (no overlapping trades on a coin).\n  TRADE      LONG at the next minute's close (the paper engine's 60 s latency), exit after HOLD = 1h or 4h.\n  RETURNS    raw, and market-adjusted (minus the mean return of all 30 coins over the same window), net of TAKER\n             costs (2 x 5.5 bp + the coin's spread); a MAKER bound (2 x 2 bp) for information.\n  STATISTICS averaged per DAY first (events cluster on crash days), t across days; both halves of the window.\n  CANDIDATE only if, for a hold: (1) raw net > 0 AND market-adjusted net > 0 in EACH half; (2) day-clustered t >= 2.0 on\n             the whole window (raw net); (3) still net > 0 with every threshold moved by +-0.25 (8 variants);\n             (4) still net > 0 without its 3 best days. A CANDIDATE goes to a forward PAPER experiment, never live.\n  Diagnostics (no selection): the same event without the funding leg, without the OI leg, and by BTC regime.\n",
+ "results": {
+  "1h": {
+   "base": {
+    "events": 88,
+    "days": 53,
+    "coins": 26,
+    "raw_net_bp": {
+     "all": 9.9,
+     "t": 0.54,
+     "h1": 1.2,
+     "h2": 18.3
+    },
+    "adj_net_bp": {
+     "all": -1.6,
+     "t": -0.1,
+     "h1": -12.8,
+     "h2": 9.1
+    },
+    "raw_maker_bp": {
+     "all": 16.9,
+     "t": 0.92,
+     "h1": 8.2,
+     "h2": 25.3
+    },
+    "raw_net_bp_without_best3_days": -14.9,
+    "win_rate": 0.511
+   },
+   "variants": {
+    "fz-1.75 oz+1.25 pz-1.75": {
+     "events": 71,
+     "days": 44,
+     "coins": 25,
+     "raw_net_bp": {
+      "all": 12.3,
+      "t": 0.64,
+      "h1": 25.8,
+      "h2": -1.3
+     },
+     "adj_net_bp": {
+      "all": 2.0,
+      "t": 0.13,
+      "h1": 10.1,
+      "h2": -6.1
+     },
+     "raw_maker_bp": {
+      "all": 19.3,
+      "t": 1.01,
+      "h1": 32.8,
+      "h2": 5.7
+     },
+     "raw_net_bp_without_best3_days": -10.4,
+     "win_rate": 0.535
+    },
+    "fz-1.75 oz+1.25 pz-1.25": {
+     "events": 108,
+     "days": 52,
+     "coins": 28,
+     "raw_net_bp": {
+      "all": -3.9,
+      "t": -0.25,
+      "h1": -3.3,
+      "h2": -4.5
+     },
+     "adj_net_bp": {
+      "all": -11.1,
+      "t": -0.86,
+      "h1": -15.5,
+      "h2": -6.5
+     },
+     "raw_maker_bp": {
+      "all": 3.1,
+      "t": 0.2,
+      "h1": 3.7,
+      "h2": 2.5
+     },
+     "raw_net_bp_without_best3_days": -20.7,
+     "win_rate": 0.509
+    },
+    "fz-1.75 oz+1.75 pz-1.75": {
+     "events": 54,
+     "days": 37,
+     "coins": 22,
+     "raw_net_bp": {
+      "all": 36.3,
+      "t": 1.5,
+      "h1": 34.1,
+      "h2": 38.9
+     },
+     "adj_net_bp": {
+      "all": 20.8,
+      "t": 1.0,
+      "h1": 22.1,
+      "h2": 19.2
+     },
+     "raw_maker_bp": {
+      "all": 43.3,
+      "t": 1.79,
+      "h1": 41.1,
+      "h2": 45.9
+     },
+     "raw_net_bp_without_best3_days": 1.5,
+     "win_rate": 0.593
+    },
+    "fz-1.75 oz+1.75 pz-1.25": {
+     "events": 68,
+     "days": 40,
+     "coins": 26,
+     "raw_net_bp": {
+      "all": 20.2,
+      "t": 0.92,
+      "h1": 12.4,
+      "h2": 29.8
+     },
+     "adj_net_bp": {
+      "all": 8.7,
+      "t": 0.46,
+      "h1": 1.9,
+      "h2": 17.0
+     },
+     "raw_maker_bp": {
+      "all": 27.2,
+      "t": 1.24,
+      "h1": 19.4,
+      "h2": 36.8
+     },
+     "raw_net_bp_without_best3_days": -8.5,
+     "win_rate": 0.574
+    },
+    "fz-1.25 oz+1.25 pz-1.75": {
+     "events": 119,
+     "days": 61,
+     "coins": 27,
+     "raw_net_bp": {
+      "all": 7.8,
+      "t": 0.5,
+      "h1": -4.9,
+      "h2": 19.3
+     },
+     "adj_net_bp": {
+      "all": -6.0,
+      "t": -0.46,
+      "h1": -19.2,
+      "h2": 5.8
+     },
+     "raw_maker_bp": {
+      "all": 14.8,
+      "t": 0.96,
+      "h1": 2.1,
+      "h2": 26.3
+     },
+     "raw_net_bp_without_best3_days": -6.9,
+     "win_rate": 0.529
+    },
+    "fz-1.25 oz+1.25 pz-1.25": {
+     "events": 187,
+     "days": 72,
+     "coins": 28,
+     "raw_net_bp": {
+      "all": -2.0,
+      "t": -0.2,
+      "h1": -13.6,
+      "h2": 9.7
+     },
+     "adj_net_bp": {
+      "all": -15.9,
+      "t": -1.82,
+      "h1": -28.1,
+      "h2": -3.8
+     },
+     "raw_maker_bp": {
+      "all": 5.0,
+      "t": 0.52,
+      "h1": -6.6,
+      "h2": 16.7
+     },
+     "raw_net_bp_without_best3_days": -10.5,
+     "win_rate": 0.492
+    },
+    "fz-1.25 oz+1.75 pz-1.75": {
+     "events": 79,
+     "days": 50,
+     "coins": 25,
+     "raw_net_bp": {
+      "all": 22.2,
+      "t": 1.1,
+      "h1": 8.1,
+      "h2": 36.3
+     },
+     "adj_net_bp": {
+      "all": 8.4,
+      "t": 0.48,
+      "h1": 0.9,
+      "h2": 15.9
+     },
+     "raw_maker_bp": {
+      "all": 29.2,
+      "t": 1.44,
+      "h1": 15.1,
+      "h2": 43.3
+     },
+     "raw_net_bp_without_best3_days": -3.9,
+     "win_rate": 0.544
+    },
+    "fz-1.25 oz+1.75 pz-1.25": {
+     "events": 106,
+     "days": 58,
+     "coins": 27,
+     "raw_net_bp": {
+      "all": 12.1,
+      "t": 0.71,
+      "h1": -8.3,
+      "h2": 34.0
+     },
+     "adj_net_bp": {
+      "all": -1.8,
+      "t": -0.12,
+      "h1": -13.3,
+      "h2": 10.6
+     },
+     "raw_maker_bp": {
+      "all": 19.1,
+      "t": 1.12,
+      "h1": -1.3,
+      "h2": 41.0
+     },
+     "raw_net_bp_without_best3_days": -7.8,
+     "win_rate": 0.5
+    }
+   },
+   "diag_no_funding_leg": {
+    "events": 900,
+    "days": 95,
+    "coins": 30,
+    "raw_net_bp": {
+     "all": -1.0,
+     "t": -0.1,
+     "h1": -21.0,
+     "h2": 20.4
+    },
+    "adj_net_bp": {
+     "all": -14.3,
+     "t": -1.82,
+     "h1": -25.6,
+     "h2": -2.3
+    },
+    "raw_maker_bp": {
+     "all": 6.0,
+     "t": 0.65,
+     "h1": -14.0,
+     "h2": 27.4
+    },
+    "raw_net_bp_without_best3_days": -8.4,
+    "win_rate": 0.512
+   },
+   "diag_no_oi_leg": {
+    "events": 896,
+    "days": 96,
+    "coins": 28,
+    "raw_net_bp": {
+     "all": 1.9,
+     "t": 0.28,
+     "h1": 2.9,
+     "h2": 1.0
+    },
+    "adj_net_bp": {
+     "all": -12.4,
+     "t": -2.15,
+     "h1": -6.9,
+     "h2": -18.3
+    },
+    "raw_maker_bp": {
+     "all": 8.9,
+     "t": 1.3,
+     "h1": 9.9,
+     "h2": 8.0
+    },
+    "raw_net_bp_without_best3_days": -2.6,
+    "win_rate": 0.508
+   },
+   "diag_price_only": {
+    "events": 9144,
+    "days": 98,
+    "coins": 30,
+    "raw_net_bp": {
+     "all": 2.9,
+     "t": 0.91,
+     "h1": -1.7,
+     "h2": 7.5
+    },
+    "adj_net_bp": {
+     "all": -7.8,
+     "t": -4.16,
+     "h1": -6.7,
+     "h2": -8.8
+    },
+    "raw_maker_bp": {
+     "all": 9.9,
+     "t": 3.09,
+     "h1": 5.3,
+     "h2": 14.5
+    },
+    "raw_net_bp_without_best3_days": 0.5,
+    "win_rate": 0.503
+   },
+   "by_regime": {
+    "high": {
+     "events": 25,
+     "days": 17,
+     "coins": 14,
+     "raw_net_bp": {
+      "all": 65.5,
+      "t": 1.54,
+      "h1": 120.6,
+      "h2": 62.1
+     },
+     "adj_net_bp": {
+      "all": 35.7,
+      "t": 0.91,
+      "h1": 30.7,
+      "h2": 36.0
+     },
+     "raw_maker_bp": {
+      "all": 72.5,
+      "t": 1.71,
+      "h1": 127.6,
+      "h2": 69.1
+     },
+     "raw_net_bp_without_best3_days": -0.6,
+     "win_rate": 0.64
+    },
+    "low": {
+     "events": 28,
+     "days": 17,
+     "coins": 15,
+     "raw_net_bp": {
+      "all": -15.1,
+      "t": -0.49,
+      "h1": -9.9,
+      "h2": -39.0
+     },
+     "adj_net_bp": {
+      "all": -15.6,
+      "t": -0.54,
+      "h1": -8.8,
+      "h2": -47.7
+     },
+     "raw_maker_bp": {
+      "all": -8.1,
+      "t": -0.26,
+      "h1": -2.9,
+      "h2": -32.0
+     },
+     "raw_net_bp_without_best3_days": -45.4,
+     "win_rate": 0.429
+    },
+    "mid": {
+     "events": 35,
+     "days": 20,
+     "coins": 20,
+     "raw_net_bp": {
+      "all": -12.7,
+      "t": -0.52,
+      "h1": 10.7,
+      "h2": -47.8
+     },
+     "adj_net_bp": {
+      "all": -18.3,
+      "t": -0.94,
+      "h1": -14.9,
+      "h2": -23.3
+     },
+     "raw_maker_bp": {
+      "all": -5.7,
+      "t": -0.23,
+      "h1": 17.7,
+      "h2": -40.8
+     },
+     "raw_net_bp_without_best3_days": -39.4,
+     "win_rate": 0.486
+    }
+   },
+   "checks": {
+    "both_halves_raw_and_adjusted": false,
+    "day_t_ge_2": false,
+    "robust_to_thresholds": false,
+    "survives_without_best_3_days": false
+   },
+   "verdict": "NOT A CANDIDATE"
+  },
+  "4h": {
+   "base": {
+    "events": 85,
+    "days": 53,
+    "coins": 26,
+    "raw_net_bp": {
+     "all": 40.5,
+     "t": 1.2,
+     "h1": 37.3,
+     "h2": 43.7
+    },
+    "adj_net_bp": {
+     "all": 9.5,
+     "t": 0.31,
+     "h1": 14.2,
+     "h2": 4.9
+    },
+    "raw_maker_bp": {
+     "all": 47.5,
+     "t": 1.41,
+     "h1": 44.3,
+     "h2": 50.7
+    },
+    "raw_net_bp_without_best3_days": -1.9,
+    "win_rate": 0.529
+   },
+   "variants": {
+    "fz-1.75 oz+1.25 pz-1.75": {
+     "events": 69,
+     "days": 44,
+     "coins": 25,
+     "raw_net_bp": {
+      "all": 45.3,
+      "t": 1.14,
+      "h1": 74.5,
+      "h2": 16.1
+     },
+     "adj_net_bp": {
+      "all": 26.3,
+      "t": 0.78,
+      "h1": 54.3,
+      "h2": -1.6
+     },
+     "raw_maker_bp": {
+      "all": 52.3,
+      "t": 1.31,
+      "h1": 81.5,
+      "h2": 23.1
+     },
+     "raw_net_bp_without_best3_days": -7.2,
+     "win_rate": 0.58
+    },
+    "fz-1.75 oz+1.25 pz-1.25": {
+     "events": 101,
+     "days": 52,
+     "coins": 28,
+     "raw_net_bp": {
+      "all": 26.1,
+      "t": 0.78,
+      "h1": 29.8,
+      "h2": 22.2
+     },
+     "adj_net_bp": {
+      "all": 16.2,
+      "t": 0.57,
+      "h1": 25.3,
+      "h2": 6.4
+     },
+     "raw_maker_bp": {
+      "all": 33.1,
+      "t": 0.99,
+      "h1": 36.8,
+      "h2": 29.2
+     },
+     "raw_net_bp_without_best3_days": -17.8,
+     "win_rate": 0.525
+    },
+    "fz-1.75 oz+1.75 pz-1.75": {
+     "events": 52,
+     "days": 37,
+     "coins": 22,
+     "raw_net_bp": {
+      "all": 67.7,
+      "t": 1.47,
+      "h1": 78.7,
+      "h2": 54.8
+     },
+     "adj_net_bp": {
+      "all": 50.3,
+      "t": 1.27,
+      "h1": 63.4,
+      "h2": 34.9
+     },
+     "raw_maker_bp": {
+      "all": 74.7,
+      "t": 1.63,
+      "h1": 85.7,
+      "h2": 61.8
+     },
+     "raw_net_bp_without_best3_days": 7.0,
+     "win_rate": 0.558
+    },
+    "fz-1.75 oz+1.75 pz-1.25": {
+     "events": 64,
+     "days": 40,
+     "coins": 26,
+     "raw_net_bp": {
+      "all": 65.6,
+      "t": 1.55,
+      "h1": 54.0,
+      "h2": 79.7
+     },
+     "adj_net_bp": {
+      "all": 47.0,
+      "t": 1.21,
+      "h1": 45.2,
+      "h2": 49.3
+     },
+     "raw_maker_bp": {
+      "all": 72.6,
+      "t": 1.71,
+      "h1": 61.0,
+      "h2": 86.7
+     },
+     "raw_net_bp_without_best3_days": 11.1,
+     "win_rate": 0.547
+    },
+    "fz-1.25 oz+1.25 pz-1.75": {
+     "events": 111,
+     "days": 61,
+     "coins": 27,
+     "raw_net_bp": {
+      "all": 44.6,
+      "t": 1.5,
+      "h1": 41.3,
+      "h2": 47.6
+     },
+     "adj_net_bp": {
+      "all": 17.7,
+      "t": 0.66,
+      "h1": 10.7,
+      "h2": 24.0
+     },
+     "raw_maker_bp": {
+      "all": 51.6,
+      "t": 1.73,
+      "h1": 48.3,
+      "h2": 54.6
+     },
+     "raw_net_bp_without_best3_days": 9.3,
+     "win_rate": 0.559
+    },
+    "fz-1.25 oz+1.25 pz-1.25": {
+     "events": 171,
+     "days": 72,
+     "coins": 28,
+     "raw_net_bp": {
+      "all": 23.2,
+      "t": 1.13,
+      "h1": 12.5,
+      "h2": 33.9
+     },
+     "adj_net_bp": {
+      "all": -0.5,
+      "t": -0.03,
+      "h1": -5.8,
+      "h2": 4.8
+     },
+     "raw_maker_bp": {
+      "all": 30.2,
+      "t": 1.47,
+      "h1": 19.5,
+      "h2": 40.9
+     },
+     "raw_net_bp_without_best3_days": 0.3,
+     "win_rate": 0.509
+    },
+    "fz-1.25 oz+1.75 pz-1.75": {
+     "events": 76,
+     "days": 50,
+     "coins": 25,
+     "raw_net_bp": {
+      "all": 77.4,
+      "t": 2.16,
+      "h1": 55.7,
+      "h2": 99.1
+     },
+     "adj_net_bp": {
+      "all": 52.1,
+      "t": 1.65,
+      "h1": 44.4,
+      "h2": 59.8
+     },
+     "raw_maker_bp": {
+      "all": 84.4,
+      "t": 2.36,
+      "h1": 62.7,
+      "h2": 106.1
+     },
+     "raw_net_bp_without_best3_days": 34.1,
+     "win_rate": 0.592
+    },
+    "fz-1.25 oz+1.75 pz-1.25": {
+     "events": 100,
+     "days": 58,
+     "coins": 27,
+     "raw_net_bp": {
+      "all": 69.4,
+      "t": 2.24,
+      "h1": 36.9,
+      "h2": 104.2
+     },
+     "adj_net_bp": {
+      "all": 37.4,
+      "t": 1.35,
+      "h1": 29.3,
+      "h2": 46.0
+     },
+     "raw_maker_bp": {
+      "all": 76.4,
+      "t": 2.47,
+      "h1": 43.9,
+      "h2": 111.2
+     },
+     "raw_net_bp_without_best3_days": 33.8,
+     "win_rate": 0.58
+    }
+   },
+   "diag_no_funding_leg": {
+    "events": 823,
+    "days": 95,
+    "coins": 30,
+    "raw_net_bp": {
+     "all": 22.8,
+     "t": 1.48,
+     "h1": -2.8,
+     "h2": 50.1
+    },
+    "adj_net_bp": {
+     "all": -3.3,
+     "t": -0.25,
+     "h1": -18.8,
+     "h2": 13.3
+    },
+    "raw_maker_bp": {
+     "all": 29.8,
+     "t": 1.94,
+     "h1": 4.2,
+     "h2": 57.1
+    },
+    "raw_net_bp_without_best3_days": 8.9,
+    "win_rate": 0.525
+   },
+   "diag_no_oi_leg": {
+    "events": 662,
+    "days": 96,
+    "coins": 28,
+    "raw_net_bp": {
+     "all": 35.7,
+     "t": 2.82,
+     "h1": 23.2,
+     "h2": 48.8
+    },
+    "adj_net_bp": {
+     "all": 14.5,
+     "t": 1.33,
+     "h1": 0.4,
+     "h2": 29.2
+    },
+    "raw_maker_bp": {
+     "all": 42.7,
+     "t": 3.37,
+     "h1": 30.2,
+     "h2": 55.8
+    },
+    "raw_net_bp_without_best3_days": 23.6,
+    "win_rate": 0.542
+   },
+   "diag_price_only": {
+    "events": 6076,
+    "days": 98,
+    "coins": 30,
+    "raw_net_bp": {
+     "all": 12.3,
+     "t": 1.43,
+     "h1": 7.7,
+     "h2": 16.8
+    },
+    "adj_net_bp": {
+     "all": -9.1,
+     "t": -1.72,
+     "h1": -8.4,
+     "h2": -9.9
+    },
+    "raw_maker_bp": {
+     "all": 19.3,
+     "t": 2.25,
+     "h1": 14.7,
+     "h2": 23.8
+    },
+    "raw_net_bp_without_best3_days": 6.7,
+    "win_rate": 0.516
+   },
+   "by_regime": {
+    "high": {
+     "events": 25,
+     "days": 17,
+     "coins": 14,
+     "raw_net_bp": {
+      "all": 82.9,
+      "t": 1.05,
+      "h1": -24.7,
+      "h2": 89.6
+     },
+     "adj_net_bp": {
+      "all": 22.7,
+      "t": 0.3,
+      "h1": -141.4,
+      "h2": 33.0
+     },
+     "raw_maker_bp": {
+      "all": 89.9,
+      "t": 1.14,
+      "h1": -17.7,
+      "h2": 96.6
+     },
+     "raw_net_bp_without_best3_days": -31.6,
+     "win_rate": 0.64
+    },
+    "low": {
+     "events": 27,
+     "days": 17,
+     "coins": 15,
+     "raw_net_bp": {
+      "all": 45.0,
+      "t": 0.74,
+      "h1": 56.2,
+      "h2": -7.6
+     },
+     "adj_net_bp": {
+      "all": 32.6,
+      "t": 0.55,
+      "h1": 52.5,
+      "h2": -60.4
+     },
+     "raw_maker_bp": {
+      "all": 52.0,
+      "t": 0.86,
+      "h1": 63.2,
+      "h2": -0.6
+     },
+     "raw_net_bp_without_best3_days": -43.7,
+     "win_rate": 0.593
+    },
+    "mid": {
+     "events": 33,
+     "days": 20,
+     "coins": 20,
+     "raw_net_bp": {
+      "all": 35.0,
+      "t": 0.71,
+      "h1": 77.6,
+      "h2": -29.0
+     },
+     "adj_net_bp": {
+      "all": 15.0,
+      "t": 0.37,
+      "h1": 42.8,
+      "h2": -26.6
+     },
+     "raw_maker_bp": {
+      "all": 42.0,
+      "t": 0.86,
+      "h1": 84.6,
+      "h2": -22.0
+     },
+     "raw_net_bp_without_best3_days": -42.4,
+     "win_rate": 0.394
+    }
+   },
+   "checks": {
+    "both_halves_raw_and_adjusted": true,
+    "day_t_ge_2": false,
+    "robust_to_thresholds": true,
+    "survives_without_best_3_days": false
+   },
+   "verdict": "NOT A CANDIDATE"
+  }
+ }
+}

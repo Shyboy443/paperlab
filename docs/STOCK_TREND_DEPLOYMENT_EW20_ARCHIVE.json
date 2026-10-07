@@ -1,0 +1,19 @@
+{
+  "deployment_id": "e6cd3c17-52a7-47dc-b296-4bf46b7c9d71",
+  "deployment_status": "SUCCESS",
+  "url": "https://paperlab-production-919c.up.railway.app/public/stock-trend",
+  "authorized_allocation_usd": 9.5,
+  "active": false,
+  "current_status": "ALLOCATION_TOO_SMALL",
+  "last_completed_session": "2026-10-06",
+  "signal": "LONG",
+  "broker_orders_created": 0,
+  "positions": 0,
+  "live_credentials_configured": false,
+  "production_capacity_guard_http": 400,
+  "unauthenticated_private_status_http": 401,
+  "execution_tests_passed": 22,
+  "earlier_integrated_suite_passed": 59,
+  "desktop_mobile_checks": "20 stocks displayed; no horizontal overflow; start disabled for USD 9.50",
+  "crypto_research_health": "RUNNING; spot and perpetual sources OK; saved history retained"
+}

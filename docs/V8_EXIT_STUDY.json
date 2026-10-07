@@ -1,0 +1,456 @@
+{
+ "window": {
+  "from": "2026-07-30",
+  "to": "2026-09-28",
+  "days": 60
+ },
+ "variants": {
+  "BASE": {
+   "trades": 13181,
+   "win_rate": 0.346,
+   "net_R_total": -3738.74,
+   "avg_R": -0.2836,
+   "net_R_half1": -1873.36,
+   "net_R_half2": -1865.39,
+   "avg_win_R": 0.812,
+   "avg_loss_R": -0.863,
+   "net_usdt": -634.954,
+   "fees": 499.164,
+   "avg_win": 0.1489,
+   "avg_loss": -0.1523,
+   "profit_factor": 0.517,
+   "exits": {
+    "time": 7501,
+    "stop": 3516,
+    "tp": 1860,
+    "reset": 304
+   }
+  },
+  "BE75": {
+   "trades": 13552,
+   "win_rate": 0.327,
+   "net_R_total": -4055.97,
+   "avg_R": -0.2993,
+   "net_R_half1": -2027.82,
+   "net_R_half2": -2028.15,
+   "avg_win_R": 0.686,
+   "avg_loss_R": -0.777,
+   "net_usdt": -687.213,
+   "fees": 512.976,
+   "avg_win": 0.1291,
+   "avg_loss": -0.1379,
+   "profit_factor": 0.454,
+   "exits": {
+    "time": 6235,
+    "be": 2124,
+    "tp": 1647,
+    "stop": 3266,
+    "reset": 280
+   }
+  },
+  "LADDER3": {
+   "trades": 13702,
+   "win_rate": 0.395,
+   "net_R_total": -3974.26,
+   "avg_R": -0.29,
+   "net_R_half1": -1966.24,
+   "net_R_half2": -2008.02,
+   "avg_win_R": 0.526,
+   "avg_loss_R": -0.824,
+   "net_usdt": -674.594,
+   "fees": 518.791,
+   "avg_win": 0.0942,
+   "avg_loss": -0.143,
+   "profit_factor": 0.431,
+   "exits": {
+    "time": 6046,
+    "be": 3294,
+    "tp": 937,
+    "stop": 3141,
+    "reset": 284
+   }
+  },
+  "LADDER2": {
+   "trades": 13339,
+   "win_rate": 0.372,
+   "net_R_total": -3820.93,
+   "avg_R": -0.2864,
+   "net_R_half1": -1901.3,
+   "net_R_half2": -1919.63,
+   "avg_win_R": 0.662,
+   "avg_loss_R": -0.847,
+   "net_usdt": -647.677,
+   "fees": 505.539,
+   "avg_win": 0.1205,
+   "avg_loss": -0.1486,
+   "profit_factor": 0.48,
+   "exits": {
+    "time": 7009,
+    "stop": 3305,
+    "tp": 1168,
+    "reset": 296,
+    "be": 1561
+   }
+  },
+  "TIGHT3": {
+   "trades": 14741,
+   "win_rate": 0.409,
+   "net_R_total": -4182.95,
+   "avg_R": -0.2838,
+   "net_R_half1": -2018.6,
+   "net_R_half2": -2164.35,
+   "avg_win_R": 0.375,
+   "avg_loss_R": -0.74,
+   "net_usdt": -705.769,
+   "fees": 555.665,
+   "avg_win": 0.0663,
+   "avg_loss": -0.127,
+   "profit_factor": 0.362,
+   "exits": {
+    "time": 4060,
+    "be": 5719,
+    "stop": 2931,
+    "tp": 1798,
+    "reset": 233
+   }
+  }
+ },
+ "passing": [],
+ "decision": "BASE",
+ "per_family": {
+  "V8.1": {
+   "BASE": {
+    "trades": 3669,
+    "win_rate": 0.337,
+    "net_R_total": -1035.21,
+    "avg_R": -0.2821,
+    "net_R_half1": -453.41,
+    "net_R_half2": -581.8,
+    "avg_win_R": 0.827,
+    "avg_loss_R": -0.846,
+    "net_usdt": -164.715,
+    "fees": 140.12,
+    "avg_win": 0.1531,
+    "avg_loss": -0.1455,
+    "profit_factor": 0.535,
+    "exits": {
+     "time": 2156,
+     "stop": 903,
+     "tp": 512,
+     "reset": 98
+    }
+   },
+   "BE75": {
+    "trades": 3790,
+    "win_rate": 0.322,
+    "net_R_total": -1144.53,
+    "avg_R": -0.302,
+    "net_R_half1": -499.7,
+    "net_R_half2": -644.83,
+    "avg_win_R": 0.682,
+    "avg_loss_R": -0.77,
+    "net_usdt": -183.153,
+    "fees": 144.533,
+    "avg_win": 0.129,
+    "avg_loss": -0.1326,
+    "profit_factor": 0.462,
+    "exits": {
+     "time": 1769,
+     "be": 636,
+     "tp": 447,
+     "stop": 850,
+     "reset": 88
+    }
+   },
+   "LADDER3": {
+    "trades": 3841,
+    "win_rate": 0.397,
+    "net_R_total": -1099.25,
+    "avg_R": -0.2862,
+    "net_R_half1": -473.49,
+    "net_R_half2": -625.76,
+    "avg_win_R": 0.53,
+    "avg_loss_R": -0.823,
+    "net_usdt": -177.102,
+    "fees": 146.424,
+    "avg_win": 0.0957,
+    "avg_loss": -0.1394,
+    "profit_factor": 0.452,
+    "exits": {
+     "time": 1710,
+     "be": 934,
+     "tp": 293,
+     "stop": 813,
+     "reset": 91
+    }
+   },
+   "LADDER2": {
+    "trades": 3730,
+    "win_rate": 0.367,
+    "net_R_total": -1028.73,
+    "avg_R": -0.2758,
+    "net_R_half1": -464.23,
+    "net_R_half2": -564.5,
+    "avg_win_R": 0.686,
+    "avg_loss_R": -0.834,
+    "net_usdt": -164.45,
+    "fees": 142.376,
+    "avg_win": 0.1255,
+    "avg_loss": -0.1425,
+    "profit_factor": 0.511,
+    "exits": {
+     "time": 2007,
+     "stop": 848,
+     "tp": 354,
+     "reset": 98,
+     "be": 423
+    }
+   },
+   "TIGHT3": {
+    "trades": 4123,
+    "win_rate": 0.417,
+    "net_R_total": -1126.69,
+    "avg_R": -0.2733,
+    "net_R_half1": -484.97,
+    "net_R_half2": -641.71,
+    "avg_win_R": 0.376,
+    "avg_loss_R": -0.737,
+    "net_usdt": -179.622,
+    "fees": 156.853,
+    "avg_win": 0.0673,
+    "avg_loss": -0.1229,
+    "profit_factor": 0.392,
+    "exits": {
+     "time": 1157,
+     "be": 1638,
+     "stop": 750,
+     "tp": 503,
+     "reset": 75
+    }
+   }
+  },
+  "V8.2": {
+   "BASE": {
+    "trades": 3592,
+    "win_rate": 0.324,
+    "net_R_total": -899.21,
+    "avg_R": -0.2503,
+    "net_R_half1": -484.47,
+    "net_R_half2": -414.74,
+    "avg_win_R": 0.833,
+    "avg_loss_R": -0.769,
+    "net_usdt": -157.325,
+    "fees": 130.641,
+    "avg_win": 0.1519,
+    "avg_loss": -0.1375,
+    "profit_factor": 0.529,
+    "exits": {
+     "time": 2224,
+     "stop": 811,
+     "tp": 474,
+     "reset": 83
+    }
+   },
+   "BE75": {
+    "trades": 3627,
+    "win_rate": 0.312,
+    "net_R_total": -955.58,
+    "avg_R": -0.2635,
+    "net_R_half1": -513.43,
+    "net_R_half2": -442.15,
+    "avg_win_R": 0.716,
+    "avg_loss_R": -0.707,
+    "net_usdt": -166.808,
+    "fees": 131.921,
+    "avg_win": 0.133,
+    "avg_loss": -0.127,
+    "profit_factor": 0.474,
+    "exits": {
+     "be": 560,
+     "time": 1819,
+     "stop": 751,
+     "tp": 423,
+     "reset": 74
+    }
+   },
+   "LADDER3": {
+    "trades": 3634,
+    "win_rate": 0.387,
+    "net_R_total": -897.23,
+    "avg_R": -0.2469,
+    "net_R_half1": -488.08,
+    "net_R_half2": -409.15,
+    "avg_win_R": 0.553,
+    "avg_loss_R": -0.751,
+    "net_usdt": -155.992,
+    "fees": 132.398,
+    "avg_win": 0.0985,
+    "avg_loss": -0.1321,
+    "profit_factor": 0.47,
+    "exits": {
+     "be": 818,
+     "time": 1757,
+     "stop": 714,
+     "tp": 267,
+     "reset": 78
+    }
+   },
+   "LADDER2": {
+    "trades": 3571,
+    "win_rate": 0.351,
+    "net_R_total": -889.75,
+    "avg_R": -0.2492,
+    "net_R_half1": -461.04,
+    "net_R_half2": -428.7,
+    "avg_win_R": 0.698,
+    "avg_loss_R": -0.761,
+    "net_usdt": -155.039,
+    "fees": 130.17,
+    "avg_win": 0.1265,
+    "avg_loss": -0.1353,
+    "profit_factor": 0.506,
+    "exits": {
+     "be": 377,
+     "time": 2048,
+     "stop": 756,
+     "tp": 310,
+     "reset": 80
+    }
+   },
+   "TIGHT3": {
+    "trades": 3897,
+    "win_rate": 0.412,
+    "net_R_total": -922.89,
+    "avg_R": -0.2368,
+    "net_R_half1": -488.89,
+    "net_R_half2": -434.0,
+    "avg_win_R": 0.405,
+    "avg_loss_R": -0.686,
+    "net_usdt": -161.772,
+    "fees": 140.918,
+    "avg_win": 0.0712,
+    "avg_loss": -0.1204,
+    "profit_factor": 0.414,
+    "exits": {
+     "tp": 520,
+     "be": 1413,
+     "time": 1223,
+     "stop": 680,
+     "reset": 61
+    }
+   }
+  },
+  "V8.3": {
+   "BASE": {
+    "trades": 5920,
+    "win_rate": 0.365,
+    "net_R_total": -1804.32,
+    "avg_R": -0.3048,
+    "net_R_half1": -935.48,
+    "net_R_half2": -868.84,
+    "avg_win_R": 0.793,
+    "avg_loss_R": -0.934,
+    "net_usdt": -312.914,
+    "fees": 228.403,
+    "avg_win": 0.1448,
+    "avg_loss": -0.1662,
+    "profit_factor": 0.5,
+    "exits": {
+     "time": 3121,
+     "stop": 1802,
+     "tp": 874,
+     "reset": 123
+    }
+   },
+   "BE75": {
+    "trades": 6135,
+    "win_rate": 0.338,
+    "net_R_total": -1955.87,
+    "avg_R": -0.3188,
+    "net_R_half1": -1014.69,
+    "net_R_half2": -941.18,
+    "avg_win_R": 0.673,
+    "avg_loss_R": -0.826,
+    "net_usdt": -337.252,
+    "fees": 236.522,
+    "avg_win": 0.127,
+    "avg_loss": -0.148,
+    "profit_factor": 0.439,
+    "exits": {
+     "be": 928,
+     "stop": 1665,
+     "time": 2647,
+     "tp": 777,
+     "reset": 118
+    }
+   },
+   "LADDER3": {
+    "trades": 6227,
+    "win_rate": 0.4,
+    "net_R_total": -1977.78,
+    "avg_R": -0.3176,
+    "net_R_half1": -1004.67,
+    "net_R_half2": -973.11,
+    "avg_win_R": 0.509,
+    "avg_loss_R": -0.868,
+    "net_usdt": -341.5,
+    "fees": 239.968,
+    "avg_win": 0.0909,
+    "avg_loss": -0.1518,
+    "profit_factor": 0.398,
+    "exits": {
+     "be": 1542,
+     "stop": 1614,
+     "time": 2579,
+     "tp": 377,
+     "reset": 115
+    }
+   },
+   "LADDER2": {
+    "trades": 6038,
+    "win_rate": 0.387,
+    "net_R_total": -1902.45,
+    "avg_R": -0.3151,
+    "net_R_half1": -976.03,
+    "net_R_half2": -926.42,
+    "avg_win_R": 0.629,
+    "avg_loss_R": -0.91,
+    "net_usdt": -328.188,
+    "fees": 232.993,
+    "avg_win": 0.1144,
+    "avg_loss": -0.1607,
+    "profit_factor": 0.449,
+    "exits": {
+     "be": 761,
+     "stop": 1701,
+     "time": 2954,
+     "reset": 118,
+     "tp": 504
+    }
+   },
+   "TIGHT3": {
+    "trades": 6721,
+    "win_rate": 0.403,
+    "net_R_total": -2133.37,
+    "avg_R": -0.3174,
+    "net_R_half1": -1044.73,
+    "net_R_half2": -1088.64,
+    "avg_win_R": 0.357,
+    "avg_loss_R": -0.772,
+    "net_usdt": -364.375,
+    "fees": 257.894,
+    "avg_win": 0.0628,
+    "avg_loss": -0.1331,
+    "profit_factor": 0.318,
+    "exits": {
+     "tp": 775,
+     "stop": 1501,
+     "be": 2668,
+     "time": 1680,
+     "reset": 97
+    }
+   }
+  }
+ },
+ "note": "control bots only (no Jev); same entries in every variant; net after fees, spread and funding"
+}

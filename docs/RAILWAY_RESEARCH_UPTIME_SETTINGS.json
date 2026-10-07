@@ -1,0 +1,22 @@
+{
+  "before": {
+    "serviceName": "paperlab",
+    "restartPolicyType": "ON_FAILURE",
+    "sleepApplication": false,
+    "healthcheckPath": null,
+    "healthcheckTimeout": null
+  },
+  "after": {
+    "serviceName": "paperlab",
+    "restartPolicyType": "ALWAYS",
+    "sleepApplication": false,
+    "healthcheckPath": "/api/health",
+    "healthcheckTimeout": 120
+  },
+  "desired": {
+    "restartPolicyType": "ALWAYS",
+    "sleepApplication": false,
+    "healthcheckPath": "/api/health",
+    "healthcheckTimeout": 120
+  }
+}

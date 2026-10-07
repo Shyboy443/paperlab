@@ -1,0 +1,951 @@
+--- a/app/strategies/v14/htf.py
++++ b/app/strategies/v14/htf.py
+@@ -31,6 +31,9 @@
+             "strong_slope_atr_per_bar": STRONG_SLOPE_ATR,
+             "freshness": "latest completed UTC hour, 42 consecutive 4h and 20 consecutive daily bars",
+             "fill_recheck": True,
++            "indicator_windows": {"4h": MIN_H4, "1d": MIN_D1},
++            "cache": "completed-bar contents; defensive copies; detects corrected history",
++            "selection": "exclude held/pending coins before ranking; count only valid signals",
+             "policies": {"V14.1": "reversion", "V14.2": "breakout", "V14.3": "pullback", "V14.4": "reversion"}}
+ 
+ 
+@@ -91,16 +94,21 @@
+     if asof <= 0 or not math.isfinite(price) or price <= 0:
+         return None
+     raw = ctx.candles(symbol, "1h")
+-    if not raw:
+-        return None
+-    # Bounded to one cached result per coin. Refresh each hour and on a new bar.
+-    key = ((asof + 1) // HOUR, len(raw), id(raw[-1]))
++    # Keep exactly the history required for twenty completed daily bars plus the
++    # current partial day. Older errors cannot affect these indicator windows.
++    start = ((asof + 1) // DAY - MIN_D1) * DAY
++    known = [c for c in raw if c.open_time >= start and c.close_time <= asof]
++    # Candle objects are mutable and REST catch-up can repair a middle bar. An
++    # object-id/count key misses those changes. Future bars never enter this key.
++    key = ((asof + 1) // HOUR, tuple((c.symbol, c.tf, c.open_time, c.close_time, c.closed,
++                                    c.open, c.high, c.low, c.close) for c in known))
+     cache = getattr(ctx, "_v14_htf_cache", None)
+     if cache is None:
+         cache = ctx._v14_htf_cache = {}
+     if symbol in cache and cache[symbol][0] == key:
+-        return cache[symbol][1]
+-    cs = [c for c in raw if c.closed and c.close_time <= asof]
++        saved = cache[symbol][1]
++        return dict(saved) if saved is not None else None
++    cs = [c for c in known if c.closed]
+     view = None
+     valid = (len(cs) >= MIN_1H and _continuous(cs, MIN_1H, HOUR, asof)
+              and all(c.symbol == symbol and c.tf == "1h" and c.open_time % HOUR == 0
+@@ -111,18 +119,24 @@
+     if valid:
+         h4, d1 = completed_bars(cs, 4), completed_bars(cs, 24)
+         if _continuous(h4, MIN_H4, 4 * HOUR, asof) and _continuous(d1, MIN_D1, DAY, asof):
+-            mid, mid_slope = _trend(h4, EMA_MID, SLOPE_MID)
+-            slow, slow_slope = _trend(d1, EMA_SLOW, SLOPE_SLOW)
++            # Fixed windows make the state independent of buffer size/UTC hour.
++            # A partial new 4h/day candle cannot change an already closed trend.
++            mid, mid_slope = _trend(h4[-MIN_H4:], EMA_MID, SLOPE_MID)
++            slow, slow_slope = _trend(d1[-MIN_D1:], EMA_SLOW, SLOPE_SLOW)
+             view = {"h4": mid, "d1": slow, "bias": mid + slow,
+                     "h4_slope_atr": mid_slope, "d1_slope_atr": slow_slope,
+                     "h4_close_ms": h4[-1].close_time, "d1_close_ms": d1[-1].close_time,
+                     "source": "closed_utc_4h_1d"}
+     cache[symbol] = (key, view)
+-    return view
++    return dict(view) if view is not None else None
+ 
+ 
+ def allows(view: dict[str, Any] | None, side: str, policy: str = "breakout") -> bool:
+     if view is None or side not in ("long", "short"):
++        return False
++    if (view.get("h4") not in (-1, 0, 1) or view.get("d1") not in (-1, 0, 1)
++            or not isinstance(view.get("h4_slope_atr"), (int, float))
++            or not math.isfinite(view["h4_slope_atr"])):
+         return False
+     d = 1 if side == "long" else -1
+     h4, d1 = d * view["h4"], d * view["d1"]
+@@ -156,13 +170,26 @@
+     return float(cs[-1].close) if cs and cs[-1].closed and cs[-1].close_time == t else 0.0
+ 
+ 
++def _held_symbols(self, ctx):
++    positions = getattr(ctx, "positions_of", None)
++    return {p.symbol for p in positions(self.id)} if callable(positions) else set()
++
++
++def _entry_budget(self, occupied, max_signals):
++    capacity = getattr(self, "max_positions", None)
++    return max(0, max_signals if capacity is None else min(max_signals, capacity - len(occupied)))
++
++
+ def htf_scanner(base: type, sid: str, name: str) -> type:
+     """A V11 scanner (already built with ladder_class(...).for_universe(...)) that drops set-ups against the higher
+     timeframes BEFORE ranking them, so a filtered coin never takes the slot of one that passes."""
+ 
+     def scan(self, ctx, t, _base=base.scan):
+         out = []
++        held = _held_symbols(self, ctx) | set(getattr(ctx, "_v14_pending_symbols", ()))
+         for x in _base(self, ctx, t):
++            if x.symbol in held:
++                continue
+             policy = "pullback" if sid == "V14.3" else "breakout"
+             v = _check(self, ctx, x.symbol, _price(ctx, x.symbol, self.signal_tf, t), t, x.side, policy)
+             if v is not None:
+@@ -176,7 +203,25 @@
+         if sig is not None:
+             sig.meta["htf"] = x.htf
+         return sig
+-    return _make(base, sid, name, {"scan": scan, "_signal": _signal})
++
++    def on_candle(self, c, ctx):
++        if not self.bound(c) or c.symbol != self.anchor:
++            return []
++        occupied = _held_symbols(self, ctx) | set(getattr(ctx, "_v14_pending_symbols", ()))
++        budget = _entry_budget(self, occupied, self.params.max_signals)
++        if budget == 0:
++            return []
++        found = [x for x in self.scan(ctx, c.close_time) if x.score >= self.params.min_score]
++        found.sort(key=lambda x: (-x.score, x.symbol))
++        out = []
++        for x in found:
++            if len(out) >= budget:
++                break
++            sig = self._signal(ctx, x, c.close_time)
++            if sig is not None:
++                out.append(sig)
++        return out
++    return _make(base, sid, name, {"scan": scan, "_signal": _signal, "on_candle": on_candle})
+ 
+ 
+ def htf_single(base: type, sid: str, name: str) -> type:
+@@ -209,8 +254,18 @@
+         t = c.close_time
+         p = self.params
+         found = []
++        held = _held_symbols(self, ctx)
++        pending = getattr(ctx, "_v14_pending_symbols", None)
++        if pending is not None:
++            # The engine, rather than a stale signal expiry, owns reservations.
++            self.resting = {s: expiry for s, expiry in self.resting.items() if s in pending}
++        reserved = set(pending) if pending is not None else {s for s, expiry in self.resting.items() if expiry > t}
++        budget = _entry_budget(self, held | reserved, p.max_signals)
++        if budget == 0:
++            return []
+         for sym in self.universe:
+-            if sym == self.anchor or self.resting.get(sym, 0) > t:
++            occupied = sym in pending if pending is not None else self.resting.get(sym, 0) > t
++            if sym == self.anchor or sym in held or occupied:
+                 continue
+             cs = self.current(ctx, sym, "5m", t, DAY_BARS + 1)
+             m = stretch_atr(cs) if cs is not None else None
+@@ -222,7 +277,9 @@
+             found.append((abs(m[0]), sym, m, cs[-1], v))
+         found.sort(key=lambda x: (-x[0], x[1]))
+         out = []
+-        for _, sym, (st, atr, vwap), last, v in found[:p.max_signals]:
++        for _, sym, (st, atr, vwap), last, v in found:
++            if len(out) >= budget:
++                break
+             sig = self.limit_signal(ctx, last, st, atr, vwap, t)
+             if sig is not None:
+                 sig.meta["htf"] = v
+--- a/app/live/v14_engine.py
++++ b/app/live/v14_engine.py
+@@ -31,6 +31,7 @@
+             keep.append((order, sig, decision))
+         self._pending = keep
+         super()._execute_pending(bar, meta, res)
++        self.ctx._v14_pending_symbols = frozenset(order.symbol for order, _, _ in self._pending)
+ 
+ 
+ class HTFScalpEngine(HTFFillGuard, LevelMakerEngineV8):
+--- a/app/live/v14_worker.py
++++ b/app/live/v14_worker.py
+@@ -143,7 +143,7 @@
+             r["coins"] = 1 if r.get("symbol") else len(universe) - 1
+             r["htf_filter"] = {
+                 "entry_rejects": dict(getattr(b.eng.ctx, "_v14_htf_rejects", {})),
+-                "fill_rejects": {k: v for k, v in getattr(getattr(b.eng, "_res", None), "rejects", {}).items()
++                "fill_rejects": {k: v for k, v in dict(getattr(getattr(b.eng, "_res", None), "rejects", {})).items()
+                                  if k.startswith("htf_fill_")},
+                 "latest_context": {sym: value[1] for sym, value in
+                                    dict(getattr(b.eng.ctx, "_v14_htf_cache", {})).items()}}
+--- a/docs/V14_FREEZE.json
++++ b/docs/V14_FREEZE.json
+@@ -2,10 +2,10 @@
+   "protocol": "V14_HTF_PAPER_V2",
+   "baseline_fingerprint": "93f9c48b67163c69",
+   "code": {
+-    "app.strategies.v14.htf": "1c1c01e47552",
++    "app.strategies.v14.htf": "14694c50367d",
+     "app.competition.v14_config": "a591351f9e59",
+-    "app.live.v14_worker": "3f4233c8e916",
+-    "app.live.v14_engine": "184a80b4ce12",
++    "app.live.v14_worker": "929326d01982",
++    "app.live.v14_engine": "f4615385cdbe",
+     "app.live.scan_market": "b65877fff012",
+     "app.live.scan_engine": "9ce04396befb",
+     "app.live.v8_engine": "0f628fcecf5e",
+@@ -130,6 +130,12 @@
+       "strong_slope_atr_per_bar": 0.2,
+       "freshness": "latest completed UTC hour, 42 consecutive 4h and 20 consecutive daily bars",
+       "fill_recheck": true,
++      "indicator_windows": {
++        "4h": 42,
++        "1d": 20
++      },
++      "cache": "completed-bar contents; defensive copies; detects corrected history",
++      "selection": "exclude held/pending coins before ranking; count only valid signals",
+       "policies": {
+         "V14.1": "reversion",
+         "V14.2": "breakout",
+@@ -547,13 +553,13 @@
+     "docs/ALTDATA_STUDY.json"
+   ],
+   "study_verdicts": {
+-    "V14.1": "NO CONSISTENT IMPROVEMENT VS OLD",
+-    "V14.2": "NO CONSISTENT IMPROVEMENT VS OLD",
+-    "V14.3": "NO CONSISTENT IMPROVEMENT VS OLD",
+-    "V14.4": "NO CONSISTENT IMPROVEMENT VS OLD"
++    "V14.1": "NO CONSISTENT IMPROVEMENT VS PRIOR V14",
++    "V14.2": "NO CONSISTENT IMPROVEMENT VS PRIOR V14",
++    "V14.3": "NO CONSISTENT IMPROVEMENT VS PRIOR V14",
++    "V14.4": "NO CONSISTENT IMPROVEMENT VS PRIOR V14"
+   },
+   "note": "each bot = a copied strategy + the HTF rule; judged against its running original on LIVE paper data",
+-  "fingerprint": "4e7678149e0d3d7e",
++  "fingerprint": "b41ffaa73039f33a",
+   "execution_revision": {
+     "supersedes": "4e87586fd10a17c6",
+     "baseline": "93f9c48b67163c69",
+@@ -570,5 +576,15 @@
+     "study": "docs/V14_HTF_REVISION_STUDY.json",
+     "consistent_improvement": false,
+     "paper_only": true
++  },
++  "htf_followup": {
++    "date": "2026-10-05",
++    "supersedes": "4e7678149e0d3d7e",
++    "archive": "snapshots/2026-10-05-htf-followup",
++    "changes": "fixed indicator windows, correction-aware cache, usable signal slots, actual pending reservations",
++    "prior_study": "snapshots/2026-10-05-htf-followup/docs/V14_HTF_REVISION_STUDY.json",
++    "study": "docs/V14_HTF_FOLLOWUP_STUDY.json",
++    "paper_only": true,
++    "validation": "1492 passed, 4 skipped in 306.64s (0:05:06)"
+   }
+ }
+--- a/docs/V14_PROTOCOL.md
++++ b/docs/V14_PROTOCOL.md
+@@ -41,6 +41,13 @@
+ neutral, including transitions; neutral alone is not evidence of a tradable range. The entry price cannot rewrite
+ the HTF state. These small deadbands are engineering defaults, not parameters fitted to the historical results.
+ 
++Follow-up corrections use fixed calculation windows of the latest **42 completed 4h candles and 20 completed daily
++candles**, seeding each EMA at the first close in its window. This bounded calculation is independent of extra old
++history and stays unchanged between completed HTF candles, unless a source candle is corrected. Earlier V2 code
++recomputed its EMA from a varying number of bars as the 600-hour buffer rolled, so a daily state could change after
++one hour even when the daily close had not changed. Invalid history outside the required window no longer blocks
++valid current inputs. The calculation still requires consecutive complete windows and the latest completed hour.
++
+ | Family | Long rule (short is symmetric) |
+ |---|---|
+ | V14.2 breakout | 4h up; daily cannot be down |
+@@ -57,7 +64,14 @@
+ the fill bar opens. A changed regime or stale feed cancels the order. Signal and fill contexts are preserved in the
+ entry fill metadata. Existing exits remain active regardless of the entry filter.
+ 
+-The HTF view is cached per coin/hour and refreshed on a new hourly candle. Histories are bounded by the existing
++Held and pending coins are excluded before ranking. The number of queued signals is capped by the strategy's
++remaining position slots and `max_signals`. Invalid signal geometry does not consume that budget; the loop considers
++the next ranked eligible candidate. This prevents coin tape order from choosing a lower-ranked setup for the last
++free slot. Snapback reservations follow the engine's actual pending orders, so cancellations/rejections release
++coins before the old signal expiry. Risk, margin and fill-price checks still apply to every queued order.
++
++The HTF cache keys completed source-bar contents and the decision hour. It detects middle-bar repairs and in-place
++changes, ignores future inputs, and returns defensive copies. Histories are bounded by the existing
+ 600-hour context capacity. Warm-up increases to 25 days. A new freeze identity separates V2 paper results from V1.
+ Closed-candle handling matters because Bybit reports the last traded price as `closePrice` for an unclosed kline.
+ See [Bybit's official kline documentation](https://bybit-exchange.github.io/docs/v5/market/kline).
+@@ -102,6 +116,16 @@
+ `net_profit_factor` uses net USDT, while legacy `pf` uses R. Final results and source hashes are saved in
+ `docs/V14_HTF_REVISION_STUDY.json`; the audit explains the outcome in `docs/HTF_LOGIC_AUDIT.md`.
+ 
++That first V2 comparison evaluates the preceding implementation. The subsequent buffer/cache/selection corrections
++are compared with that archived V2 implementation in `scripts/v14_htf_followup_study.py`, with results in
++`docs/V14_HTF_FOLLOWUP_STUDY.json` and findings in `docs/HTF_FOLLOWUP_AUDIT.md`. Its BEFORE rows are reused only after
++checking the dataset hash, common frozen dependencies, execution/sizing/parameter profiles and instrument rules.
++All nine AFTER bots are replayed. No trading thresholds are optimized.
++
++The standard study's resume mode now checks **all arms** against a complete source/data/rules signature. Old or
++mismatched BASE/OLD checkpoints cannot be reused. Single-family runs have separate checkpoint files; checkpoint
++writes are atomic. Inputs changing during a replay cause the affected results to be discarded.
++
+ A consistent improvement requires better mean net R in both chronological halves. This criterion does not establish
+ profitability, a statistically proven edge, or future returns. The same historical sample was used in prior studies;
+ forward qualification remains necessary. Prior V1 verdicts are not inherited by the V2 freeze.
+--- a/docs/HTF_LOGIC_AUDIT.md
++++ b/docs/HTF_LOGIC_AUDIT.md
+@@ -1,4 +1,8 @@
+ # Higher-timeframe logic audit
++
++This report evaluates the preceding V14 revision. Subsequent buffer, cache and signal-selection fixes are documented
++in [the follow-up audit](HTF_FOLLOWUP_AUDIT.md). The original code, freeze and results for this report are preserved in
++`../snapshots/2026-10-05-htf-followup/`; its historical numbers do not evaluate the latest implementation.
+ 
+ Completed 2026-10-05. V14 only; local paper implementation.
+ 
+--- a/docs/HTF_FOLLOWUP_AUDIT.md
++++ b/docs/HTF_FOLLOWUP_AUDIT.md
+@@ -0,0 +1,51 @@
++# V14 follow-up logic audit
++
++Completed 2026-10-05. Local paper bots; no service restart or deployment.
++
++## Reproduced defects and repairs
++
++1. **HTF state drift without an HTF close.** The rolling 600-hour buffer could discard part of the oldest UTC day/hour group. EMA calculations then used a different history length. Fixed 42-bar 4h and 20-bar daily calculation windows now make the same completed history produce the same state across buffer sizes. A new incomplete 4h/day candle cannot change that state.
++2. **Cache missed corrections.** Count and last-object identity did not detect in-place corruption or repairs to a middle hour. Cache keys now include known source-bar contents. Repairs invalidate a rejected view; corruption invalidates an accepted view. Future bars never enter the key. Returned dicts are defensive copies. Errors outside the required history no longer block a valid current window.
++3. **Invalid candidates consumed signal slots.** The scanners truncated to `max_signals` before checking whether signal construction succeeded. The ranking loop now counts viable signals and continues to the next candidate when stop/entry construction fails.
++4. **Held coins displaced eligible setups.** V14 scanners/snapback now exclude held and pending coins before ranking. Entry budgets respect remaining position capacity. When one slot remains, only the best viable setup is queued, so alphabetic coin tape order cannot award that slot to a lower-ranked candidate. Pending limits also reserve capacity.
++5. **Cancelled orders left stale reservations.** The engine publishes its actual pending symbols after each execution pass. Snapback reconciles reservations against that book, releasing cancelled, expired or rejected orders before their old signal expiry. Filled positions remain protected by the held-coin filter.
++6. **Invalid regime values could pass.** A missing/NaN slope or a direction outside -1/0/+1 now fails closed. The worker snapshots rejection dictionaries before iterating them, avoiding a concurrent dictionary-size change while bot threads add rejection categories.
++7. **Replay checkpoints could mix experiments.** Resume now verifies the full source, dataset, instrument rules and execution inputs for every arm, including BASE and OLD. Legacy/mismatched rows are discarded, duplicate checkpoint runs fail, each single-family study has its own checkpoint, and writes are atomic. Inputs changing during a replay prevent publication.
++
++No EMA, ATR deadband, target, stop or holding-time grid was searched. Trading thresholds remain unchanged. The fixed EMA windows use the first close as their seed; these are reproducible bounded calculations, not infinite-history EMAs. Entry risk checks and exits remain active.
++
++## Verification
++
++Full suite: **1492 passed, 4 skipped in 306.64s (0:05:06)**. Focused HTF/order checks: **71 passed**.
++
++The regressions cover rolling-buffer stability, equal histories with different extra bars, in-place corruption, middle-bar repair, defensive copies, expired old history, invalid candidate geometry, held/pending exclusions, cancelled reservations, actual engine pending publication, zero signal budgets, free-slot priority, invalid regimes and study input consistency. Previous cutoff, gap, UTC rollover, fill-risk and exit-preservation tests also pass.
++
++## Paired replay results
++
++BEFORE is the preceding completed-candle V14 implementation. Its archived rows were reused only after verifying dataset SHA256, common frozen dependencies, execution/sizing/parameter profiles and instrument rules. All nine AFTER bots were replayed with recorded funding and the same 72-day measurement window, 25-day warm-up, daily 20 USDT book resets and 60.001-second latency. Reset/final close costs are included. Figures are aggregate replay P/L across daily resets, not returns on a compounded live account.
++
++| Family | BEFORE trades | AFTER trades | BEFORE net USDT | AFTER net USDT | BEFORE / AFTER mean net R |
++|---|---:|---:|---:|---:|---:|
++| V14.1 VWAP (six coins) | 1410 | 1402 | -30.58 | -30.45 | -0.1136 / -0.1155 |
++| V14.2 RS breakout | 299 | 297 | -3.64 | -3.80 | -0.0733 / -0.0767 |
++| V14.3 RS pullback | 606 | 607 | -1.92 | -1.73 | -0.0202 / -0.0184 |
++| V14.4 Limit snapback | 146 | 159 | +0.88 | +1.00 | +0.0404 / +0.0386 |
++
++| Family | BEFORE halves (mean net R) | AFTER halves (mean net R) | Verdict |
++|---|---:|---:|---|
++| V14.1 | -0.1308 / -0.0982 | -0.1360 / -0.0970 | NO CONSISTENT IMPROVEMENT VS PRIOR V14 |
++| V14.2 | -0.0504 / -0.1225 | -0.0551 / -0.1225 | NO CONSISTENT IMPROVEMENT VS PRIOR V14 |
++| V14.3 | -0.0623 / +0.0291 | -0.0588 / +0.0291 | NO CONSISTENT IMPROVEMENT VS PRIOR V14 |
++| V14.4 | -0.0659 / +0.1804 | -0.1072 / +0.2104 | NO CONSISTENT IMPROVEMENT VS PRIOR V14 |
++
++BEFORE total net: -35.2563 USDT; 2461 trades.
++
++AFTER total net: -34.9807 USDT; 2465 trades.
++
++These are correctness and selection repairs. Fewer losses alone do not prove a better trade edge. The table reports trade counts, net R and both chronological halves to expose that distinction. This dataset was used in earlier studies and is not an unseen holdout; results do not establish future profitability. Bots remain paper-only and qualification still requires forward evidence.
++
++Raw rows, rejection counts, funding coverage and source hashes: `V14_HTF_FOLLOWUP_STUDY.json`. The incomplete first follow-up run was stopped after the free-slot priority defect was found. Its output was not published or reused as AFTER evidence; the final nine AFTER runs all share the completed implementation's input signature.
++
++The preceding implementation, freeze and comparison are preserved under `../snapshots/2026-10-05-htf-followup/`. The first HTF audit now identifies its results as historical. V14 gets a new experiment identity; other programs' source files and freeze identities are unchanged.
++
++Manifest `b41ffaa73039f33a`; experiment `v14x-227dd5f1e221`.
+--- a/scripts/v14_htf_revision_study.py
++++ b/scripts/v14_htf_revision_study.py
+@@ -19,6 +19,7 @@
+ import json
+ import sys
+ import time
++from functools import lru_cache
+ from collections import deque
+ from concurrent.futures import ProcessPoolExecutor, as_completed
+ from pathlib import Path
+@@ -30,6 +31,43 @@
+ ARCHIVE = PROJECT / "snapshots/2026-10-05-htf-audit"
+ OUT = PROJECT / "docs/V14_HTF_REVISION_STUDY.json"
+ WARMUP_DAYS = 25
++
++
++@lru_cache(maxsize=2)
++def dataset_hash(path: str, size: int, modified_ns: int) -> str:
++    with Path(path).open("rb") as source:
++        return hashlib.file_digest(source, "sha256").hexdigest()
++
++
++def study_signature() -> str:
++    """Every arm depends on source, data, execution and instrument rules."""
++    sources = sorted((PROJECT / "app").rglob("*.py")) + [Path(__file__), PROJECT / "scripts/v14_htf_study.py",
++                                                         ARCHIVE / "app/strategies/v14/htf.py"]
++    manifest = json.loads((PROJECT / "docs/V14_FREEZE.json").read_text())
++    stat = DB.stat()
++    payload = {"sources": {str(p.relative_to(PROJECT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sources},
++               "dataset": dataset_hash(str(DB), stat.st_size, stat.st_mtime_ns),
++               "rules": manifest["rules"], "funding_interval_min": manifest.get("funding_interval_min"),
++               "warmup_days": WARMUP_DAYS, "seed": 7}
++    return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
++
++
++def reusable_rows(prior, jobs, signature):
++    """Reject legacy or mismatched checkpoints for BASE and OLD as well as NEW."""
++    out, seen = [], set()
++    for row in prior:
++        key = (row["sid"], row["mode"], row["coin"])
++        if key not in jobs or row.get("input_signature") != signature:
++            continue
++        if key in seen:
++            raise ValueError(f"Duplicate study checkpoint run: {key}")
++        seen.add(key)
++        out.append(row)
++    return out
++
++
++def output_path(sid=None):
++    return OUT if sid is None else OUT.with_name(f"V14_HTF_REVISION_STUDY_{sid}.json")
+ 
+ 
+ def revision():
+@@ -46,6 +84,9 @@
+ 
+ 
+ def run(args):
++    signature = study_signature()
++    if len(args) > 3 and signature != args[3]:
++        raise RuntimeError("Study inputs changed before replay started")
+     import duckdb
+     from app.backtest.funding import FundingSchedule
+     from app.competition import v14_config as cfg
+@@ -57,7 +98,7 @@
+     from app.live.v14_engine import HTFScalpEngine, HTFScanEngine, HTFLimitEngine
+     from app.strategies.v14 import htf
+ 
+-    sid, mode, coin = args
++    sid, mode, coin = args[:3]
+     universe = [coin] if sid == "V14.1" else list(cfg.UNIVERSE)
+     start, end = window(universe)
+     since = start + WARMUP_DAYS * DAY
+@@ -97,7 +138,10 @@
+             paid[f.position_id] = paid.get(f.position_id, 0.0) + f.realized_pnl
+         elif f.kind == "entry":
+             risk[f.position_id] = f.qty * abs(f.price - f.meta["stop"])
++    if study_signature() != signature:
++        raise RuntimeError("Study inputs changed during replay; results discarded")
+     return {"sid": sid, "mode": mode, "coin": coin, "since": since, "end": end, "revision": revision(),
++            "input_signature": signature,
+             "rejects": result.rejects, "htf_skips": getattr(instances[0], "htf_skips", 0),
+             "htf_rejects": getattr(instances[0], "htf_rejects", {}),
+             "funding_coverage": {s: {"events": len(v), "first": v[0][0] if v else None,
+@@ -143,25 +187,29 @@
+     parser = argparse.ArgumentParser()
+     parser.add_argument("--workers", type=int, default=4)
+     parser.add_argument("--sid", choices=("V14.1", "V14.2", "V14.3", "V14.4"))
+-    parser.add_argument("--resume", action="store_true", help="Reuse completed BASE/OLD runs and identical NEW revision")
++    parser.add_argument("--resume", action="store_true", help="Reuse only runs with identical source, data and execution inputs")
+     args = parser.parse_args()
+     jobs = [(sid, mode, coin) for sid in ("V14.1", "V14.2", "V14.3", "V14.4") if args.sid in (None, sid)
+             for coin in (V8_COINS if sid == "V14.1" else (None,)) for mode in ("BASE", "OLD", "NEW")]
+-    checkpoint = OUT.with_suffix(".partial.json")
++    target = output_path(args.sid)
++    checkpoint = target.with_suffix(".partial.json")
++    signature = study_signature()
+     prior = json.loads(checkpoint.read_text()) if args.resume and checkpoint.exists() else []
+-    rows = [r for r in prior if (r["sid"], r["mode"], r["coin"]) in jobs
+-            and (r["mode"] != "NEW" or r.get("revision") == revision())]
++    rows = reusable_rows(prior, jobs, signature)
+     done = {(r["sid"], r["mode"], r["coin"]) for r in rows}
+     todo = [job for job in jobs if job not in done]
+     started = time.time()
+     with ProcessPoolExecutor(max_workers=args.workers) as pool:
+-        pending = {pool.submit(run, job): job for job in todo}
++        pending = {pool.submit(run, (*job, signature)): job for job in todo}
+         for future in as_completed(pending):
+             rows.append(future.result())
+             print(f"{len(rows)}/{len(jobs)} {pending[future]} {len(rows[-1]['trades'])} trades; {time.time()-started:.0f}s", flush=True)
+-            OUT.with_suffix(".partial.json").write_text(json.dumps(rows))
++            temporary = checkpoint.with_suffix(".tmp")
++            temporary.write_text(json.dumps(rows))
++            temporary.replace(checkpoint)
++    if study_signature() != signature:
++        raise RuntimeError("Study inputs changed; report was not published")
+     out = report(rows)
+-    target = OUT if not args.sid else OUT.with_name(f"V14_HTF_REVISION_STUDY_{args.sid}.json")
+     target.write_text(json.dumps(out, indent=1))
+     print(json.dumps({"results": out["results"], "verdicts": out["verdicts"]}, indent=2), flush=True)
+     print(f"Wrote {target}; {time.time()-started:.0f}s", flush=True)
+--- a/scripts/v14_htf_followup_study.py
++++ b/scripts/v14_htf_followup_study.py
+@@ -0,0 +1,100 @@
++"""Paired follow-up: archived completed-candle V14 vs bug-fixed V14 (2026-10-05).
++
++No parameter search. Replay all nine revised bots on the same 72-day measured
++window, with the same fees, recorded funding, sizing, daily resets and execution
++as the preceding comparison. Reuse BEFORE rows only after verifying the dataset,
++common frozen dependencies, execution profile and instrument rules. The historical
++sample has already been studied and is not an independent holdout.
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import sys
++import time
++from concurrent.futures import ProcessPoolExecutor, as_completed
++from pathlib import Path
++
++PROJECT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(PROJECT))
++from app.competition import v14_config as cfg
++from scripts.v14_htf_revision_study import DB, DAY, V8_COINS, dataset_hash, run, study_signature
++from scripts.v14_htf_study import summarize
++
++ARCHIVE = PROJECT / "snapshots/2026-10-05-htf-followup"
++OUT = PROJECT / "docs/V14_HTF_FOLLOWUP_STUDY.json"
++
++
++def controls():
++    prior = json.loads((ARCHIVE / "docs/V14_HTF_REVISION_STUDY.json").read_text())
++    old = json.loads((ARCHIVE / "docs/V14_FREEZE.json").read_text())
++    current = cfg.load_freeze()
++    assert cfg.verify_freeze(current) == []
++    for key in ("rules", "funding_interval_min", "baseline_fingerprint"):
++        assert old[key] == current[key], key
++    changed = {"app.strategies.v14.htf", "app.competition.v14_config", "app.live.v14_worker", "app.live.v14_engine"}
++    code = cfg.code_fingerprints()
++    assert all(code[k] == v for k, v in old["code"].items() if k not in changed)
++    for key in ("execution", "params", "universe", "v8_coins", "warmup_days", "starting_balance", "leverage_ceiling", "sizing"):
++        assert old["profile"][key] == current["profile"][key], key
++    stat = DB.stat()
++    assert dataset_hash(str(DB), stat.st_size, stat.st_mtime_ns) == prior["dataset"]["sha256"]
++    for path, sha in prior["source_sha256"].items():
++        if path.startswith("app/") and path not in (
++                "app/strategies/v14/htf.py", "app/competition/v14_config.py", "app/live/v14_engine.py"):
++            assert hashlib.sha256((PROJECT / path).read_bytes()).hexdigest() == sha, path
++    for path in ("app/strategies/v14/htf.py", "app/competition/v14_config.py", "app/live/v14_engine.py"):
++        assert hashlib.sha256((ARCHIVE / path).read_bytes()).hexdigest() == prior["source_sha256"][path]
++    return prior
++
++
++def statistics(rows, sid, mode):
++    part = [r for r in rows if r["sid"] == sid]
++    since, end = min(r["since"] for r in part), max(r["end"] for r in part)
++    trades = [t for r in part if r["mode"] == mode for t in r["trades"]]
++    stats = summarize(trades, since + (end - since) // 2, (end - since) / DAY)
++    positive = sum(max(0, t["net"]) for t in trades)
++    negative = -sum(min(0, t["net"]) for t in trades)
++    stats.update(net_profit_factor=positive / negative if negative else None,
++                 fees_usdt=sum(t["fees"] for t in trades), funding_usdt=sum(t["funding"] for t in trades))
++    return stats
++
++
++def main():
++    prior = controls()
++    before = [{**r, "mode": "BEFORE"} for r in prior["runs"] if r["mode"] == "NEW"]
++    assert len(before) == 9
++    signature = study_signature()
++    jobs = [(sid, "NEW", coin, signature) for sid in cfg.SOURCES
++            for coin in (V8_COINS if sid == "V14.1" else (None,))]
++    rows = list(before)
++    started = time.time()
++    with ProcessPoolExecutor(max_workers=4) as pool:
++        futures = {pool.submit(run, job): job for job in jobs}
++        for future in as_completed(futures):
++            result = future.result()
++            rows.append({**result, "mode": "AFTER"})
++            print(f"{len(rows)-9}/9 {futures[future][:3]} {len(result['trades'])} trades; {time.time()-started:.0f}s", flush=True)
++            OUT.with_suffix(".partial.json").write_text(json.dumps(rows))
++    if study_signature() != signature:
++        raise RuntimeError("Sources or dataset changed; comparison was not published")
++    results = {sid: {mode: statistics(rows, sid, mode) for mode in ("BEFORE", "AFTER")} for sid in cfg.SOURCES}
++    verdicts = {}
++    for sid, arms in results.items():
++        a, b = arms["BEFORE"], arms["AFTER"]
++        better = all(a.get(k) is not None and b.get(k) is not None and b[k] > a[k]
++                     for k in ("net_r_half1", "net_r_half2"))
++        verdicts[sid] = "IMPROVES BOTH HALVES VS PRIOR V14" if better else "NO CONSISTENT IMPROVEMENT VS PRIOR V14"
++    paths = ("app/strategies/v14/htf.py", "app/live/v14_engine.py", "app/live/v14_worker.py", "app/competition/v14_config.py",
++             "scripts/v14_htf_revision_study.py", "scripts/v14_htf_followup_study.py", "scripts/v14_htf_study.py")
++    OUT.write_text(json.dumps({"built": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
++                               "method": __doc__, "input_signature": signature, "before_dataset": prior["dataset"],
++                               "before_source_sha256": prior["source_sha256"],
++                               "after_source_sha256": {p: hashlib.sha256((PROJECT / p).read_bytes()).hexdigest() for p in paths},
++                               "results": results, "verdicts": verdicts, "runs": rows}, indent=1) + "\n")
++    print(json.dumps({"results": results, "verdicts": verdicts}, indent=2), flush=True)
++    print(f"Wrote {OUT}; {time.time()-started:.0f}s", flush=True)
++
++
++if __name__ == "__main__":
++    main()
+--- a/scripts/write_v14_followup_audit.py
++++ b/scripts/write_v14_followup_audit.py
+@@ -0,0 +1,123 @@
++"""Verify the completed follow-up, record its verdicts, and write the audit artifact."""
++import difflib
++import hashlib
++import json
++import sys
++from pathlib import Path
++
++PROJECT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(PROJECT))
++from app.competition import v14_config as cfg
++from scripts.v14_htf_revision_study import study_signature
++
++ARCHIVE = PROJECT / "snapshots/2026-10-05-htf-followup"
++
++
++def main():
++    report = json.loads((PROJECT / "docs/V14_HTF_FOLLOWUP_STUDY.json").read_text())
++    assert report["input_signature"] == study_signature()
++    for path, sha in report["after_source_sha256"].items():
++        assert hashlib.sha256((PROJECT / path).read_bytes()).hexdigest() == sha, path
++    assert len(report["runs"]) == 18
++    log = (PROJECT / "data/htf-followup-final-tests.log").read_text()
++    test_summary = next(line for line in log.splitlines() if " passed" in line and " skipped" in line)
++    assert "failed" not in test_summary and "error" not in test_summary.lower()
++    manifest = cfg.load_freeze()
++    assert cfg.verify_freeze(manifest) == []
++    manifest["study_verdicts"] = report["verdicts"]
++    manifest["htf_followup"].update(study="docs/V14_HTF_FOLLOWUP_STUDY.json", paper_only=True,
++                                    validation=test_summary)
++    cfg.FREEZE_FILE.write_text(json.dumps(manifest, indent=2) + "\n")
++    assert cfg.verify_freeze(manifest) == []
++
++    lines = ["# V14 follow-up logic audit", "", "Completed 2026-10-05. Local paper bots; no service restart or deployment.", "",
++             "## Reproduced defects and repairs", "",
++             "1. **HTF state drift without an HTF close.** The rolling 600-hour buffer could discard part of the "
++             "oldest UTC day/hour group. EMA calculations then used a different history length. Fixed 42-bar 4h "
++             "and 20-bar daily calculation windows now make the same completed history produce the same state "
++             "across buffer sizes. A new incomplete 4h/day candle cannot change that state.",
++             "2. **Cache missed corrections.** Count and last-object identity did not detect in-place corruption "
++             "or repairs to a middle hour. Cache keys now include known source-bar contents. Repairs invalidate "
++             "a rejected view; corruption invalidates an accepted view. Future bars never enter the key. Returned "
++             "dicts are defensive copies. Errors outside the required history no longer block a valid current window.",
++             "3. **Invalid candidates consumed signal slots.** The scanners truncated to `max_signals` before "
++             "checking whether signal construction succeeded. The ranking loop now counts viable signals and "
++             "continues to the next candidate when stop/entry construction fails.",
++             "4. **Held coins displaced eligible setups.** V14 scanners/snapback now exclude held and pending "
++             "coins before ranking. Entry budgets respect remaining position capacity. When one slot remains, "
++             "only the best viable setup is queued, so alphabetic coin tape order cannot award that slot to "
++             "a lower-ranked candidate. Pending limits also reserve capacity.",
++             "5. **Cancelled orders left stale reservations.** The engine publishes its actual pending symbols "
++             "after each execution pass. Snapback reconciles reservations against that book, releasing cancelled, "
++             "expired or rejected orders before their old signal expiry. Filled positions remain protected by "
++             "the held-coin filter.",
++             "6. **Invalid regime values could pass.** A missing/NaN slope or a direction outside -1/0/+1 now "
++             "fails closed. The worker snapshots rejection dictionaries before iterating them, avoiding a "
++             "concurrent dictionary-size change while bot threads add rejection categories.",
++             "7. **Replay checkpoints could mix experiments.** Resume now verifies the full source, dataset, "
++             "instrument rules and execution inputs for every arm, including BASE and OLD. Legacy/mismatched "
++             "rows are discarded, duplicate checkpoint runs fail, each single-family study has its own checkpoint, "
++             "and writes are atomic. Inputs changing during a replay prevent publication.", "",
++             "No EMA, ATR deadband, target, stop or holding-time grid was searched. Trading thresholds remain "
++             "unchanged. The fixed EMA windows use the first close as their seed; these are reproducible bounded "
++             "calculations, not infinite-history EMAs. Entry risk checks and exits remain active.", "",
++             "## Verification", "", f"Full suite: **{test_summary}**. Focused HTF/order checks: **71 passed**.", "",
++             "The regressions cover rolling-buffer stability, equal histories with different extra bars, in-place "
++             "corruption, middle-bar repair, defensive copies, expired old history, invalid candidate geometry, "
++             "held/pending exclusions, cancelled reservations, actual engine pending publication, zero signal "
++             "budgets, free-slot priority, invalid regimes and study input consistency. Previous cutoff, gap, "
++             "UTC rollover, fill-risk and exit-preservation tests also pass.", "",
++             "## Paired replay results", "",
++             "BEFORE is the preceding completed-candle V14 implementation. Its archived rows were reused only "
++             "after verifying dataset SHA256, common frozen dependencies, execution/sizing/parameter profiles "
++             "and instrument rules. All nine AFTER bots were replayed with recorded funding and the same "
++             "72-day measurement window, 25-day warm-up, daily 20 USDT book resets and 60.001-second latency. "
++             "Reset/final close costs are included. Figures are aggregate replay P/L across daily resets, "
++             "not returns on a compounded live account.", "",
++             "| Family | BEFORE trades | AFTER trades | BEFORE net USDT | AFTER net USDT | BEFORE / AFTER mean net R |",
++             "|---|---:|---:|---:|---:|---:|"]
++    labels = {"V14.1": "VWAP (six coins)", "V14.2": "RS breakout", "V14.3": "RS pullback", "V14.4": "Limit snapback"}
++    for sid, arms in report["results"].items():
++        a, b = arms["BEFORE"], arms["AFTER"]
++        lines.append(f"| {sid} {labels[sid]} | {a['trades']} | {b['trades']} | {a['net_usdt']:+.2f} | "
++                     f"{b['net_usdt']:+.2f} | {a['net_r']:+.4f} / {b['net_r']:+.4f} |")
++    lines += ["", "| Family | BEFORE halves (mean net R) | AFTER halves (mean net R) | Verdict |",
++              "|---|---:|---:|---|"]
++    for sid, arms in report["results"].items():
++        a, b = arms["BEFORE"], arms["AFTER"]
++        lines.append(f"| {sid} | {a['net_r_half1']:+.4f} / {a['net_r_half2']:+.4f} | "
++                     f"{b['net_r_half1']:+.4f} / {b['net_r_half2']:+.4f} | {report['verdicts'][sid]} |")
++    for mode in ("BEFORE", "AFTER"):
++        trades = [t for r in report["runs"] if r["mode"] == mode for t in r["trades"]]
++        lines.append(f"\n{mode} total net: {sum(t['net'] for t in trades):+.4f} USDT; {len(trades)} trades.")
++    lines += ["", "These are correctness and selection repairs. Fewer losses alone do not prove a better trade "
++              "edge. The table reports trade counts, net R and both chronological halves to expose that distinction. "
++              "This dataset was used in earlier studies and is not an unseen holdout; results do not establish "
++              "future profitability. Bots remain paper-only and qualification still requires forward evidence.", "",
++              "Raw rows, rejection counts, funding coverage and source hashes: `V14_HTF_FOLLOWUP_STUDY.json`. "
++              "The incomplete first follow-up run was stopped after the free-slot priority defect was found. "
++              "Its output was not published or reused as AFTER evidence; the final nine AFTER runs all share "
++              "the completed implementation's input signature.", "",
++              "The preceding implementation, freeze and comparison are preserved under "
++              "`../snapshots/2026-10-05-htf-followup/`. The first HTF audit now identifies its results as historical. "
++              "V14 gets a new experiment identity; other programs' source files and freeze identities are unchanged.", "",
++              f"Manifest `{manifest['fingerprint']}`; experiment `{cfg.experiment_identity(manifest)[0]}`.", ""]
++    (PROJECT / "docs/HTF_FOLLOWUP_AUDIT.md").write_text("\n".join(lines), encoding="utf-8")
++
++    paths = ("app/strategies/v14/htf.py", "app/live/v14_engine.py", "app/live/v14_worker.py", "docs/V14_FREEZE.json",
++             "docs/V14_PROTOCOL.md", "docs/HTF_LOGIC_AUDIT.md", "docs/HTF_FOLLOWUP_AUDIT.md",
++             "scripts/v14_htf_revision_study.py", "scripts/v14_htf_followup_study.py", "scripts/write_v14_followup_audit.py",
++             "tests/test_v14_closed_htf.py", "tests/test_v14_followup.py")
++    patch = []
++    for path in paths:
++        previous = ARCHIVE / path
++        before = previous.read_text(encoding="utf-8").splitlines(keepends=True) if previous.exists() else []
++        after = (PROJECT / path).read_text(encoding="utf-8").splitlines(keepends=True)
++        patch.extend(difflib.unified_diff(before, after, fromfile="a/" + path, tofile="b/" + path))
++    (ARCHIVE / "changes.patch").write_text("".join(patch), encoding="utf-8")
++    print(json.dumps({"audit": "docs/HTF_FOLLOWUP_AUDIT.md", "tests": test_summary,
++                      "verdicts": report["verdicts"], "source_hashes_verified": True}, indent=2))
++
++
++if __name__ == "__main__":
++    main()
+--- a/tests/test_v14_closed_htf.py
++++ b/tests/test_v14_closed_htf.py
+@@ -90,8 +90,8 @@
+     view = htf.htf_view(ctx, "A", 1)  # large LTF dip cannot change the HTF state
+     four = htf.completed_bars(ctx.bars["A"], 4)
+     daily = htf.completed_bars(ctx.bars["A"], 24)
+-    assert (view["h4"], view["h4_slope_atr"]) == htf._trend(four, 21, 3)
+-    assert (view["d1"], view["d1_slope_atr"]) == htf._trend(daily, 10, 1)
++    assert (view["h4"], view["h4_slope_atr"]) == htf._trend(four[-htf.MIN_H4:], 21, 3)
++    assert (view["d1"], view["d1_slope_atr"]) == htf._trend(daily[-htf.MIN_D1:], 10, 1)
+     assert view["h4"] == view["d1"] == 1
+ 
+ 
+--- a/tests/test_v14_followup.py
++++ b/tests/test_v14_followup.py
+@@ -0,0 +1,233 @@
++"""HTF buffer stability, cache corrections, signal slots and order reservations."""
++from collections import deque
++from dataclasses import replace
++from types import SimpleNamespace
++
++import pytest
++
++from app.core.types import Candle, Signal
++from app.strategies.v11.scan import Cand
++from app.strategies.v14 import htf
++from tests.test_v14 import Ctx, T, T0, UP
++
++
++def test_htf_indicators_do_not_move_until_a_new_htf_candle_closes():
++    ctx = Ctx({"A": UP})
++    ctx.bars["A"] = deque(ctx.bars["A"], maxlen=600)
++    before = htf.htf_view(ctx, "A", 100, T)
++    last = ctx.bars["A"][-1]
++    ctx.bars["A"].append(replace(last, open_time=T + 1, close_time=T + htf.HOUR,
++                                  open=130, high=200, low=120, close=190))
++    after = htf.htf_view(ctx, "A", 190, T + htf.HOUR)
++    assert after["h4_close_ms"] == before["h4_close_ms"]
++    assert after["d1_close_ms"] == before["d1_close_ms"]
++    assert after["h4_slope_atr"] == before["h4_slope_atr"]
++    assert after["d1_slope_atr"] == before["d1_slope_atr"]
++
++
++def test_same_completed_history_has_same_view_regardless_of_extra_old_bars():
++    full = Ctx({"A": UP})
++    limited = Ctx({"A": UP})
++    limited.bars["A"] = limited.bars["A"][-480:]
++    assert htf.htf_view(full, "A", 100, T) == htf.htf_view(limited, "A", 100, T)
++
++
++def test_cached_view_detects_in_place_corruption():
++    ctx = Ctx({"A": UP})
++    assert htf.htf_view(ctx, "A", 100, T)
++    ctx.bars["A"][-1].low = 1e8
++    assert htf.htf_view(ctx, "A", 100, T) is None
++
++
++def test_cached_rejection_recovers_when_middle_bar_is_repaired():
++    ctx = Ctx({"A": UP})
++    original = ctx.bars["A"][-200]
++    ctx.bars["A"][-200] = replace(original, low=1e8)
++    assert htf.htf_view(ctx, "A", 100, T) is None
++    ctx.bars["A"][-200] = original
++    assert htf.htf_view(ctx, "A", 100, T)
++
++
++def test_returned_view_cannot_mutate_cached_trend():
++    ctx = Ctx({"A": UP})
++    view = htf.htf_view(ctx, "A", 100, T)
++    view["h4"] = -1
++    assert htf.htf_view(ctx, "A", 100, T)["h4"] == 1
++
++
++def test_old_invalid_bar_outside_required_window_does_not_block_valid_current_data():
++    ctx = Ctx({"A": UP})
++    ctx.bars["A"][0] = replace(ctx.bars["A"][0], low=1e8)
++    assert htf.htf_view(ctx, "A", 100, T)
++
++
++def scanner(max_signals=1, failed="A", capacity=None):
++    class Base:
++        timeframes = ("15m",)
++        signal_tf = "15m"
++        anchor = "BTC"
++
++        def __init__(self):
++            self.params = SimpleNamespace(max_signals=max_signals, min_score=0)
++
++        def bound(self, c):
++            return c.tf == "15m"
++
++        def scan(self, ctx, t):
++            return [Cand(s, "long", 99, 1, score, {}, "setup") for s, score in (("A", 0.9), ("B", 0.8))]
++
++        def _signal(self, ctx, x, t):
++            return None if x.symbol == failed else Signal(self.id, x.symbol, "entry", x.side, t, "15m", 100)
++
++        def on_candle(self, c, ctx):
++            found = sorted(self.scan(ctx, c.close_time), key=lambda x: -x.score)
++            return [sig for x in found[:self.params.max_signals]
++                    if (sig := self._signal(ctx, x, c.close_time)) is not None]
++    if capacity is not None:
++        Base.max_positions = capacity
++    return htf.htf_scanner(Base, "V14.2", "test")()
++
++
++def test_invalid_highest_ranked_candidate_does_not_consume_scanner_slot():
++    ctx = Ctx({"A": UP, "B": UP}, {"A": 100, "B": 100, "BTC": 100})
++    out = scanner().on_candle(ctx.candles("BTC", "15m")[-1], ctx)
++    assert [s.symbol for s in out] == ["B"]
++
++
++def test_held_coin_is_filtered_before_ranking():
++    ctx = Ctx({"A": UP, "B": UP}, {"A": 100, "B": 100})
++    ctx.positions_of = lambda sid: [SimpleNamespace(symbol="A")]
++    assert [c.symbol for c in scanner().scan(ctx, T)] == ["B"]
++
++
++def snapback(monkeypatch, *, failed="A", max_signals=1):
++    from app.strategies.v13 import snapback as original
++    monkeypatch.setattr(original, "stretch_atr", lambda cs: (-5 if cs[-1].symbol == "A" else -4, 1, 100))
++    class Base:
++        timeframes = ("5m",)
++        signal_tf = "5m"
++        anchor = "BTC"
++        universe = ("A", "B", "BTC")
++
++        def __init__(self):
++            self.params = SimpleNamespace(max_signals=max_signals, threshold=3)
++            self.resting = {}
++
++        def current(self, ctx, sym, tf, t, need):
++            return ctx.candles(sym, tf)
++
++        def limit_signal(self, ctx, c, st, atr, vwap, t):
++            if c.symbol == failed:
++                return None
++            return Signal(self.id, c.symbol, "entry", "long", t, "5m", 100,
++                          meta={"expire_ms": T + 900_000})
++    return htf.htf_snapback(Base, "V14.4", "test")()
++
++
++def test_invalid_highest_stretch_does_not_consume_limit_order_slot(monkeypatch):
++    ctx = Ctx({"A": UP, "B": UP}, {"A": 100, "B": 100, "BTC": 100})
++    out = snapback(monkeypatch).on_candle(ctx.candles("BTC", "5m")[-1], ctx)
++    assert [s.symbol for s in out] == ["B"]
++
++
++def test_cancelled_order_releases_its_strategy_reservation(monkeypatch):
++    bot = snapback(monkeypatch, failed=None)
++    bot.resting["A"] = T + 900_000
++    ctx = Ctx({"A": UP, "B": UP}, {"A": 100, "B": 100, "BTC": 100})
++    ctx._v14_pending_symbols = frozenset()  # engine confirms old order was cancelled
++    out = bot.on_candle(ctx.candles("BTC", "5m")[-1], ctx)
++    assert [s.symbol for s in out] == ["A"]
++
++
++def test_actual_pending_order_remains_reserved(monkeypatch):
++    bot = snapback(monkeypatch, failed=None)
++    ctx = Ctx({"A": UP, "B": UP}, {"A": 100, "B": 100, "BTC": 100})
++    ctx._v14_pending_symbols = frozenset({"A"})
++    out = bot.on_candle(ctx.candles("BTC", "5m")[-1], ctx)
++    assert [s.symbol for s in out] == ["B"]
++
++
++@pytest.mark.parametrize("values", [(2, 1, .3), (1, float("nan"), .3), (1, 1, float("nan"))])
++def test_invalid_regime_values_fail_closed(values):
++    h4, d1, slope = values
++    assert not htf.allows({"h4": h4, "d1": d1, "h4_slope_atr": slope}, "long", "breakout")
++
++
++def test_resume_checks_the_entire_experiment_for_every_arm():
++    from scripts.v14_htf_revision_study import reusable_rows
++    jobs = [("V14.2", mode, None) for mode in ("BASE", "OLD", "NEW")]
++    legacy = [{"sid": sid, "mode": mode, "coin": coin, "revision": "same"} for sid, mode, coin in jobs]
++    assert reusable_rows(legacy, jobs, "current") == []
++    wrong = [{**row, "input_signature": "changed-data-or-engine"} for row in legacy]
++    assert reusable_rows(wrong, jobs, "current") == []
++    matching = [{**row, "input_signature": "current"} for row in legacy]
++    assert reusable_rows(matching, jobs, "current") == matching
++    with pytest.raises(ValueError, match="Duplicate"):
++        reusable_rows(matching + matching[:1], jobs, "current")
++
++
++def test_single_family_study_uses_a_separate_checkpoint():
++    from scripts.v14_htf_revision_study import output_path
++    paths = [output_path(sid).with_suffix(".partial.json") for sid in (None, "V14.1", "V14.2")]
++    assert len(set(paths)) == 3
++
++
++def test_replay_discards_results_if_inputs_changed_before_start(monkeypatch):
++    from scripts import v14_htf_revision_study as study
++    monkeypatch.setattr(study, "study_signature", lambda: "edited-source")
++    with pytest.raises(RuntimeError, match="changed before"):
++        study.run(("V14.2", "NEW", None, "original-source"))
++
++
++def test_limit_engine_publishes_pending_and_filled_reservations():
++    from app.live.v14_engine import HTFLimitEngine
++    from tests.test_v14_fill_context import replay
++    seen = []
++    def inspect(eng):
++        seen.append(eng.ctx._v14_pending_symbols)
++    eng, result = replay(HTFLimitEngine, "V14.4", after_queue=inspect)
++    assert seen == [frozenset({"A"})]
++    assert any(f.kind == "entry" for f in result.fills)
++    assert eng.ctx._v14_pending_symbols == frozenset()
++
++
++@pytest.mark.parametrize("family", ["scanner", "snapback"])
++def test_zero_signal_budget_never_emits_an_order(monkeypatch, family):
++    ctx = Ctx({"A": UP, "B": UP}, {"A": 100, "B": 100, "BTC": 100})
++    bot = scanner(0) if family == "scanner" else snapback(monkeypatch, max_signals=0)
++    tf = "15m" if family == "scanner" else "5m"
++    assert bot.on_candle(ctx.candles("BTC", tf)[-1], ctx) == []
++
++
++def test_held_snapback_coin_cannot_displace_a_free_coin(monkeypatch):
++    ctx = Ctx({"A": UP, "B": UP}, {"A": 100, "B": 100, "BTC": 100})
++    ctx.positions_of = lambda sid: [SimpleNamespace(symbol="A")]
++    bot = snapback(monkeypatch, failed=None)
++    assert [s.symbol for s in bot.on_candle(ctx.candles("BTC", "5m")[-1], ctx)] == ["B"]
++
++
++@pytest.mark.parametrize("occupied_kind", ["held", "pending"])
++def test_scanner_reserves_free_slots_for_the_highest_ranked_setups(occupied_kind):
++    ctx = Ctx({"A": UP, "B": UP}, {"A": 100, "B": 100, "BTC": 100})
++    if occupied_kind == "held":
++        ctx.positions_of = lambda sid: [SimpleNamespace(symbol="C")]
++    else:
++        ctx._v14_pending_symbols = frozenset({"C"})
++    bot = scanner(max_signals=2, failed=None, capacity=2)
++    out = bot.on_candle(ctx.candles("BTC", "15m")[-1], ctx)
++    assert [s.symbol for s in out] == ["A"]  # lower-ranked B cannot fill the last slot first
++
++
++def test_full_scanner_book_does_not_queue_more_entries():
++    ctx = Ctx({"A": UP, "B": UP}, {"A": 100, "B": 100, "BTC": 100})
++    ctx.positions_of = lambda sid: [SimpleNamespace(symbol="C"), SimpleNamespace(symbol="D")]
++    bot = scanner(max_signals=2, failed=None, capacity=2)
++    assert bot.on_candle(ctx.candles("BTC", "15m")[-1], ctx) == []
++
++
++def test_resting_orders_reserve_limit_book_capacity(monkeypatch):
++    bot = snapback(monkeypatch, failed=None, max_signals=4)
++    bot.max_positions = 2
++    ctx = Ctx({"A": UP, "B": UP}, {"A": 100, "B": 100, "BTC": 100})
++    ctx._v14_pending_symbols = frozenset({"C"})
++    assert [s.symbol for s in bot.on_candle(ctx.candles("BTC", "5m")[-1], ctx)] == ["A"]

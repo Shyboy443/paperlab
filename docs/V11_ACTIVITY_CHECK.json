@@ -1,0 +1,155 @@
+{
+ "days": 90,
+ "families": [
+  {
+   "family": "V11.1",
+   "name": "Relative-strength breakout scanner",
+   "days": 90,
+   "elapsed_s": 180.4,
+   "signals": 837,
+   "rejects": {
+    "already_in_symbol": 120,
+    "max_positions": 99
+   },
+   "discovery": {
+    "trades": 348,
+    "per_day": 7.73,
+    "win": 0.376,
+    "net_r": -0.1511,
+    "pf_r": 0.692,
+    "net_usdt": -552.19,
+    "coins": 29
+   },
+   "confirmation": {
+    "trades": 203,
+    "per_day": 4.51,
+    "win": 0.453,
+    "net_r": 0.0108,
+    "pf_r": 1.022,
+    "net_usdt": 23.95,
+    "coins": 30
+   },
+   "all": {
+    "trades": 551,
+    "per_day": 6.12,
+    "win": 0.405,
+    "net_r": -0.0914,
+    "pf_r": 0.813,
+    "net_usdt": -528.24,
+    "coins": 30
+   }
+  },
+  {
+   "family": "V11.2",
+   "name": "Relative-strength pullback scanner",
+   "days": 90,
+   "elapsed_s": 268.4,
+   "signals": 1369,
+   "rejects": {
+    "already_in_symbol": 216,
+    "max_positions": 186
+   },
+   "discovery": {
+    "trades": 467,
+    "per_day": 10.38,
+    "win": 0.321,
+    "net_r": -0.3136,
+    "pf_r": 0.556,
+    "net_usdt": -1451.55,
+    "coins": 30
+   },
+   "confirmation": {
+    "trades": 381,
+    "per_day": 8.47,
+    "win": 0.402,
+    "net_r": -0.0504,
+    "pf_r": 0.918,
+    "net_usdt": -194.74,
+    "coins": 29
+   },
+   "all": {
+    "trades": 848,
+    "per_day": 9.42,
+    "win": 0.357,
+    "net_r": -0.1954,
+    "pf_r": 0.706,
+    "net_usdt": -1646.29,
+    "coins": 30
+   }
+  },
+  {
+   "family": "V11.3",
+   "name": "Capitulation snap-back scanner",
+   "days": 90,
+   "elapsed_s": 417.4,
+   "signals": 14272,
+   "rejects": {
+    "max_positions": 8889,
+    "already_in_symbol": 576,
+    "bot_halted": 181
+   },
+   "discovery": {
+    "trades": 2195,
+    "per_day": 48.78,
+    "win": 0.393,
+    "net_r": -0.2896,
+    "pf_r": 0.596,
+    "net_usdt": -5491.57,
+    "coins": 30
+   },
+   "confirmation": {
+    "trades": 2225,
+    "per_day": 49.44,
+    "win": 0.404,
+    "net_r": -0.2243,
+    "pf_r": 0.698,
+    "net_usdt": -4306.06,
+    "coins": 30
+   },
+   "all": {
+    "trades": 4420,
+    "per_day": 49.11,
+    "win": 0.399,
+    "net_r": -0.2567,
+    "pf_r": 0.648,
+    "net_usdt": -9797.63,
+    "coins": 30
+   }
+  },
+  {
+   "family": "V11.4",
+   "name": "1-hour reversal ranker",
+   "days": 90,
+   "elapsed_s": 78.2,
+   "signals": 7178,
+   "rejects": {},
+   "discovery": {
+    "trades": 3660,
+    "per_day": 81.33,
+    "win": 0.428,
+    "net_r": -0.063,
+    "pf_r": 0.606,
+    "net_usdt": -2233.88,
+    "coins": 30
+   },
+   "confirmation": {
+    "trades": 3212,
+    "per_day": 71.38,
+    "win": 0.437,
+    "net_r": -0.0599,
+    "pf_r": 0.623,
+    "net_usdt": -1899.25,
+    "coins": 30
+   },
+   "all": {
+    "trades": 6872,
+    "per_day": 76.36,
+    "win": 0.432,
+    "net_r": -0.0616,
+    "pf_r": 0.614,
+    "net_usdt": -4133.13,
+    "coins": 30
+   }
+  }
+ ]
+}

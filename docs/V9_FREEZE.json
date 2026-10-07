@@ -1,0 +1,290 @@
+{
+ "protocol": "V9_STOCKS_PAPER_V1",
+ "baseline_fingerprint": "93f9c48b67163c69",
+ "code": {
+  "app.strategies.v9.stocks": "ad85b9c679ef",
+  "app.strategies.v8.arena": "4a6a1edc4aaa",
+  "app.competition.v9_config": "e3accc45c25f",
+  "app.live.stock_engine": "0ca367e58339",
+  "app.live.v9_worker": "652bec22041d",
+  "app.live.alpaca_market": "a0fbd286034a",
+  "app.ai.jev.v9": "2711f4a2a625"
+ },
+ "params": {
+  "V9.1": {
+   "target_r": 1.5,
+   "min_stop_pct": 0.0025,
+   "max_stop_pct": 0.01,
+   "stop_buffer_atr": 0.2,
+   "max_hold_min": 45.0,
+   "cooldown_bars": 1,
+   "hold_to_day_close": false
+  },
+  "V9.2": {
+   "target_r": 1.5,
+   "min_stop_pct": 0.0025,
+   "max_stop_pct": 0.01,
+   "stop_buffer_atr": 0.2,
+   "max_hold_min": 45.0,
+   "cooldown_bars": 1,
+   "hold_to_day_close": false
+  },
+  "V9.3": {
+   "target_r": 1.5,
+   "min_stop_pct": 0.0025,
+   "max_stop_pct": 0.01,
+   "stop_buffer_atr": 0.2,
+   "max_hold_min": 45.0,
+   "cooldown_bars": 1,
+   "hold_to_day_close": false
+  }
+ },
+ "profile": {
+  "signal": "5m",
+  "context": [
+   "15m",
+   "1h"
+  ],
+  "market": "US stocks / ETFs, regular sessions (Alpaca IEX)",
+  "decision_window_ms": 60000,
+  "late_after_ms": 55000,
+  "execution": {
+   "level": 2,
+   "base_slippage_bps": 0.1,
+   "vol_component": 0.02,
+   "size_component": 0.0,
+   "slippage_mult": 1.0,
+   "force_taker": false,
+   "signal_latency_ms": 59601,
+   "order_latency_ms": 400
+  },
+  "fees": {
+   "maker_rate": 2e-05,
+   "taker_rate": 2e-05,
+   "source": "alpaca_us_equity",
+   "updated_at": "2026-10-07"
+  },
+  "warmup_days": 16,
+  "exit_model": {
+   "engine": "StockReplayEngine",
+   "stop": "crossed level plus friction; opening gaps at open",
+   "target": "resting limit, 0.5bp trade-through",
+   "session_deadline": "close minus 1 minute"
+  },
+  "symbols": [
+   "SPY",
+   "QQQ",
+   "AAPL",
+   "NVDA",
+   "TSLA",
+   "AMD",
+   "MSFT",
+   "META",
+   "AMZN",
+   "GOOGL"
+  ],
+  "starting_balance": 1000.0,
+  "leverage_cap": 3,
+  "risk": {
+   "base": 0.01,
+   "cap": 0.02,
+   "sizing": "AGGRESSIVE_V6 legal tiers"
+  },
+  "elimination": {
+   "window_sessions": 3,
+   "min_trades_window": 3,
+   "drawdown": 0.25
+  },
+  "qualify": {
+   "min_sessions": 4,
+   "min_trades": 20,
+   "min_net": 0.0,
+   "min_profit_factor": 1.2,
+   "max_drawdown": 0.15
+  },
+  "storage": "v9-forward.db",
+  "families": [
+   "V9.1",
+   "V9.2",
+   "V9.3"
+  ],
+  "jev": {
+   "twins": true,
+   "timeout_ms": 20000,
+   "retries": 1,
+   "deadline_margin_ms": 5000,
+   "prompt": "4ac831b622a1a158",
+   "policy": "b5b46ce9899d44d5",
+   "prompt_version": "JEV_PROMPT_V9_STOCKS",
+   "state_version": "JEV_STATE_V9",
+   "state_builder": "a005aea72a23"
+  }
+ },
+ "rules": {
+  "SPY": {
+   "symbol": "SPY",
+   "tick": 0.01,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 1.0,
+   "maint_margin_rate": 0.25,
+   "price_precision": 2,
+   "qty_precision": 0
+  },
+  "QQQ": {
+   "symbol": "QQQ",
+   "tick": 0.01,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 1.0,
+   "maint_margin_rate": 0.25,
+   "price_precision": 2,
+   "qty_precision": 0
+  },
+  "AAPL": {
+   "symbol": "AAPL",
+   "tick": 0.01,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 1.0,
+   "maint_margin_rate": 0.25,
+   "price_precision": 2,
+   "qty_precision": 0
+  },
+  "NVDA": {
+   "symbol": "NVDA",
+   "tick": 0.01,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 1.0,
+   "maint_margin_rate": 0.25,
+   "price_precision": 2,
+   "qty_precision": 0
+  },
+  "TSLA": {
+   "symbol": "TSLA",
+   "tick": 0.01,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 1.0,
+   "maint_margin_rate": 0.25,
+   "price_precision": 2,
+   "qty_precision": 0
+  },
+  "AMD": {
+   "symbol": "AMD",
+   "tick": 0.01,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 1.0,
+   "maint_margin_rate": 0.25,
+   "price_precision": 2,
+   "qty_precision": 0
+  },
+  "MSFT": {
+   "symbol": "MSFT",
+   "tick": 0.01,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 1.0,
+   "maint_margin_rate": 0.25,
+   "price_precision": 2,
+   "qty_precision": 0
+  },
+  "META": {
+   "symbol": "META",
+   "tick": 0.01,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 1.0,
+   "maint_margin_rate": 0.25,
+   "price_precision": 2,
+   "qty_precision": 0
+  },
+  "AMZN": {
+   "symbol": "AMZN",
+   "tick": 0.01,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 1.0,
+   "maint_margin_rate": 0.25,
+   "price_precision": 2,
+   "qty_precision": 0
+  },
+  "GOOGL": {
+   "symbol": "GOOGL",
+   "tick": 0.01,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 1.0,
+   "maint_margin_rate": 0.25,
+   "price_precision": 2,
+   "qty_precision": 0
+  }
+ },
+ "frozen_at": "2026-10-06T20:10:55Z",
+ "field": [
+  "V9.1-SPY-5M",
+  "V9.1-SPY-5M+JEV",
+  "V9.1-QQQ-5M",
+  "V9.1-QQQ-5M+JEV",
+  "V9.1-AAPL-5M",
+  "V9.1-AAPL-5M+JEV",
+  "V9.1-NVDA-5M",
+  "V9.1-NVDA-5M+JEV",
+  "V9.1-TSLA-5M",
+  "V9.1-TSLA-5M+JEV",
+  "V9.1-AMD-5M",
+  "V9.1-AMD-5M+JEV",
+  "V9.1-MSFT-5M",
+  "V9.1-MSFT-5M+JEV",
+  "V9.1-META-5M",
+  "V9.1-META-5M+JEV",
+  "V9.1-AMZN-5M",
+  "V9.1-AMZN-5M+JEV",
+  "V9.1-GOOGL-5M",
+  "V9.1-GOOGL-5M+JEV",
+  "V9.2-SPY-5M",
+  "V9.2-SPY-5M+JEV",
+  "V9.2-QQQ-5M",
+  "V9.2-QQQ-5M+JEV",
+  "V9.2-AAPL-5M",
+  "V9.2-AAPL-5M+JEV",
+  "V9.2-NVDA-5M",
+  "V9.2-NVDA-5M+JEV",
+  "V9.2-TSLA-5M",
+  "V9.2-TSLA-5M+JEV",
+  "V9.2-AMD-5M",
+  "V9.2-AMD-5M+JEV",
+  "V9.2-MSFT-5M",
+  "V9.2-MSFT-5M+JEV",
+  "V9.2-META-5M",
+  "V9.2-META-5M+JEV",
+  "V9.2-AMZN-5M",
+  "V9.2-AMZN-5M+JEV",
+  "V9.2-GOOGL-5M",
+  "V9.2-GOOGL-5M+JEV",
+  "V9.3-SPY-5M",
+  "V9.3-SPY-5M+JEV",
+  "V9.3-QQQ-5M",
+  "V9.3-QQQ-5M+JEV",
+  "V9.3-AAPL-5M",
+  "V9.3-AAPL-5M+JEV",
+  "V9.3-NVDA-5M",
+  "V9.3-NVDA-5M+JEV",
+  "V9.3-TSLA-5M",
+  "V9.3-TSLA-5M+JEV",
+  "V9.3-AMD-5M",
+  "V9.3-AMD-5M+JEV",
+  "V9.3-MSFT-5M",
+  "V9.3-MSFT-5M+JEV",
+  "V9.3-META-5M",
+  "V9.3-META-5M+JEV",
+  "V9.3-AMZN-5M",
+  "V9.3-AMZN-5M+JEV",
+  "V9.3-GOOGL-5M",
+  "V9.3-GOOGL-5M+JEV"
+ ],
+ "note": "V9 is judged on LIVE forward paper data only (Alpaca IEX, regular sessions); no edge claimed",
+ "fingerprint": "03100171b90664fa"
+}

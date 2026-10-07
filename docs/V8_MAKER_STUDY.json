@@ -1,0 +1,78 @@
+{
+ "window": {
+  "from": "2026-07-30",
+  "to": "2026-09-28"
+ },
+ "variants": {
+  "MKT_MKT": {
+   "orders": 13193,
+   "fill_rate": 0.999,
+   "trades": 13177,
+   "win_rate": 0.345,
+   "avg_R": -0.2486,
+   "avg_gross_R": -0.0389,
+   "avg_R_half1": -0.2567,
+   "avg_R_half2": -0.24,
+   "net_R_total": -3275.5,
+   "exits": {
+    "time": 7697,
+    "stop": 3568,
+    "tp": 1912
+   }
+  },
+  "LMT_MKT": {
+   "orders": 14508,
+   "fill_rate": 0.731,
+   "trades": 10604,
+   "win_rate": 0.358,
+   "avg_R": -0.1938,
+   "avg_gross_R": -0.0519,
+   "avg_R_half1": -0.1929,
+   "avg_R_half2": -0.1947,
+   "net_R_total": -2054.7,
+   "exits": {
+    "time": 5924,
+    "stop": 3415,
+    "tp": 1265
+   }
+  },
+  "LMT_LTP": {
+   "orders": 14503,
+   "fill_rate": 0.731,
+   "trades": 10599,
+   "win_rate": 0.358,
+   "avg_R": -0.1849,
+   "avg_gross_R": -0.0504,
+   "avg_R_half1": -0.1857,
+   "avg_R_half2": -0.1842,
+   "net_R_total": -1960.2,
+   "exits": {
+    "time": 5928,
+    "stop": 3414,
+    "tp": 1257
+   }
+  },
+  "MKT_LTP": {
+   "orders": 13188,
+   "fill_rate": 0.999,
+   "trades": 13172,
+   "win_rate": 0.345,
+   "avg_R": -0.2381,
+   "avg_gross_R": -0.0376,
+   "avg_R_half1": -0.248,
+   "avg_R_half2": -0.2277,
+   "net_R_total": -3136.5,
+   "exits": {
+    "time": 7706,
+    "stop": 3568,
+    "tp": 1898
+   }
+  }
+ },
+ "beats_market_in_both_halves": [
+  "LMT_MKT",
+  "LMT_LTP",
+  "MKT_LTP"
+ ],
+ "profitable_in_both_halves": []
+}

@@ -1,0 +1,3787 @@
+{
+  "health": {
+    "spot": {
+      "status": "OK",
+      "last_scan_ms": 1791314063279,
+      "markets": 502,
+      "liquid": 140,
+      "error": null
+    },
+    "perp": {
+      "status": "OK",
+      "last_scan_ms": 1791314065536,
+      "markets": 525,
+      "liquid": 326,
+      "error": null
+    },
+    "last_study_ms": 1791314288485,
+    "last_result": {
+      "market": "perp:USUSDT",
+      "state": "REJECTED"
+    },
+    "heartbeat_ms": 1791314290488,
+    "status": "RUNNING",
+    "working_on": "perp:ONDOUSDT",
+    "enabled": true,
+    "restarts": 0,
+    "heartbeat_age_s": 0.9
+  },
+  "coverage": [
+    {
+      "venue": "perp",
+      "markets": 525,
+      "liquid": 326,
+      "studied": 28,
+      "latest_study": 1791314285158
+    },
+    {
+      "venue": "spot",
+      "markets": 502,
+      "liquid": 140,
+      "studied": 7,
+      "latest_study": 1791314278073
+    }
+  ],
+  "markets": [
+    {
+      "id": "perp:BTCUSDT",
+      "venue": "perp",
+      "symbol": "BTCUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 9522644578.95,
+      "spread": 0.011703866429772862,
+      "price": 85424.8,
+      "seen": 1791314065526,
+      "studied": 1791314065543,
+      "error": null,
+      "constraints": "{\"step\": 0.001, \"min_qty\": 0.001, \"max_qty\": 120.0, \"min_notional\": 50.0, \"tick\": 0.1}"
+    },
+    {
+      "id": "perp:ETHUSDT",
+      "venue": "perp",
+      "symbol": "ETHUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 5759471674.73,
+      "spread": 0.03723195320600079,
+      "price": 2685.5,
+      "seen": 1791314065526,
+      "studied": 1791314071614,
+      "error": null,
+      "constraints": "{\"step\": 0.001, \"min_qty\": 0.001, \"max_qty\": 2000.0, \"min_notional\": 20.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "spot:USDCUSDT",
+      "venue": "spot",
+      "symbol": "USDCUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 3111175388.7828,
+      "spread": 0.10000250006204645,
+      "price": 0.99997,
+      "seen": 1791314063271,
+      "studied": 1791314076940,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 10000000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "perp:ZECUSDT",
+      "venue": "perp",
+      "symbol": "ZECUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 1524967293.36,
+      "spread": 0.0738467900645857,
+      "price": 1353.35,
+      "seen": 1791314065526,
+      "studied": 1791314084050,
+      "error": null,
+      "constraints": "{\"step\": 0.001, \"min_qty\": 0.001, \"max_qty\": 2000.0, \"min_notional\": 5.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "perp:SOLUSDT",
+      "venue": "perp",
+      "symbol": "SOLUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 1510533172.0236,
+      "spread": 0.8293593199257819,
+      "price": 120.56,
+      "seen": 1791314065526,
+      "studied": 1791314089950,
+      "error": null,
+      "constraints": "{\"step\": 0.01, \"min_qty\": 0.01, \"max_qty\": 80000.0, \"min_notional\": 5.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "perp:RLCUSDT",
+      "venue": "perp",
+      "symbol": "RLCUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 1182434390.8354,
+      "spread": 1.3045463440087275,
+      "price": 0.7669,
+      "seen": 1791314065526,
+      "studied": 1791314119079,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 200000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "spot:BTCUSDT",
+      "venue": "spot",
+      "symbol": "BTCUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 1088919556.4333735,
+      "spread": 0.001169870250195263,
+      "price": 85472.01,
+      "seen": 1791314063271,
+      "studied": 1791314124450,
+      "error": null,
+      "constraints": "{\"step\": 1e-05, \"min_qty\": 1e-05, \"max_qty\": 9000.0, \"min_notional\": 5.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "perp:XRPUSDT",
+      "venue": "perp",
+      "symbol": "XRPUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 670601611.9618,
+      "spread": 0.667267207153031,
+      "price": 1.4983,
+      "seen": 1791314065526,
+      "studied": 1791314131602,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 2000000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:NEARUSDT",
+      "venue": "perp",
+      "symbol": "NEARUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 612297531.446,
+      "spread": 1.9745285813018736,
+      "price": 5.062,
+      "seen": 1791314065526,
+      "studied": 1791314136931,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 400000.0, \"min_notional\": 5.0, \"tick\": 0.001}"
+    },
+    {
+      "id": "spot:ETHUSDT",
+      "venue": "spot",
+      "symbol": "ETHUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 581304359.700383,
+      "spread": 0.03722197511047772,
+      "price": 2686.39,
+      "seen": 1791314063271,
+      "studied": 1791314142251,
+      "error": null,
+      "constraints": "{\"step\": 0.0001, \"min_qty\": 0.0001, \"max_qty\": 9000.0, \"min_notional\": 5.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "perp:HYPEUSDT",
+      "venue": "perp",
+      "symbol": "HYPEUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 533368176.82625,
+      "spread": 0.10927827165537729,
+      "price": 91.514,
+      "seen": 1791314065526,
+      "studied": 1791314149162,
+      "error": null,
+      "constraints": "{\"step\": 0.01, \"min_qty\": 0.01, \"max_qty\": 20000.0, \"min_notional\": 5.0, \"tick\": 0.001}"
+    },
+    {
+      "id": "perp:BRUSDT",
+      "venue": "perp",
+      "symbol": "BRUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 470134681.64717,
+      "spread": 3.4774257114222245,
+      "price": 0.60468,
+      "seen": 1791314065526,
+      "studied": 1791314154486,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 500000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "perp:DOGEUSDT",
+      "venue": "perp",
+      "symbol": "DOGEUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 350467733.70923,
+      "spread": 1.06581401545389,
+      "price": 0.09381,
+      "seen": 1791314065526,
+      "studied": 1791314159814,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 30000000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "perp:SUIUSDT",
+      "venue": "perp",
+      "symbol": "SUIUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 330403211.24897,
+      "spread": 0.845058520302438,
+      "price": 1.1833,
+      "seen": 1791314065526,
+      "studied": 1791314165491,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 600000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:ADAUSDT",
+      "venue": "perp",
+      "symbol": "ADAUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 308157134.819,
+      "spread": 3.6948087936445217,
+      "price": 0.2705,
+      "seen": 1791314065526,
+      "studied": 1791314170804,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 3000000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:ORCAUSDT",
+      "venue": "perp",
+      "symbol": "ORCAUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 300126214.9841,
+      "spread": 3.4644032565386795,
+      "price": 2.901,
+      "seen": 1791314065526,
+      "studied": 1791314176115,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 70000.0, \"min_notional\": 5.0, \"tick\": 0.001}"
+    },
+    {
+      "id": "perp:QNTUSDT",
+      "venue": "perp",
+      "symbol": "QNTUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 266011190.432,
+      "spread": 0.39170371531049675,
+      "price": 255.3,
+      "seen": 1791314065526,
+      "studied": 1791314181442,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 3000.0, \"min_notional\": 5.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "perp:BNBUSDT",
+      "venue": "perp",
+      "symbol": "BNBUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 261418200.668,
+      "spread": 0.12815665869947784,
+      "price": 780.29,
+      "seen": 1791314065526,
+      "studied": 1791314186773,
+      "error": null,
+      "constraints": "{\"step\": 0.01, \"min_qty\": 0.01, \"max_qty\": 2000.0, \"min_notional\": 5.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "perp:PUMPUSDT",
+      "venue": "perp",
+      "symbol": "PUMPUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 246240797.205832,
+      "spread": 1.608881023248544,
+      "price": 0.006214,
+      "seen": 1791314065526,
+      "studied": 1791314192075,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 90000000.0, \"min_notional\": 5.0, \"tick\": 1e-06}"
+    },
+    {
+      "id": "perp:UNIUSDT",
+      "venue": "perp",
+      "symbol": "UNIUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 226796681.397,
+      "spread": 1.159621963241401,
+      "price": 8.622,
+      "seen": 1791314065526,
+      "studied": 1791314197405,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 100000.0, \"min_notional\": 5.0, \"tick\": 0.001}"
+    },
+    {
+      "id": "perp:FILUSDT",
+      "venue": "perp",
+      "symbol": "FILUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 218205293.32143,
+      "spread": 0.8658383479803368,
+      "price": 1.1549,
+      "seen": 1791314065526,
+      "studied": 1791314202719,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 600000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:NMRUSDT",
+      "venue": "perp",
+      "symbol": "NMRUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 217995944.0869,
+      "spread": 0.6387939570088127,
+      "price": 15.658,
+      "seen": 1791314065526,
+      "studied": 1791314208036,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 10000.0, \"min_notional\": 5.0, \"tick\": 0.001}"
+    },
+    {
+      "id": "perp:WLDUSDT",
+      "venue": "perp",
+      "symbol": "WLDUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 214360859.3949,
+      "spread": 1.8114301240827637,
+      "price": 0.552,
+      "seen": 1791314065526,
+      "studied": 1791314213361,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 700000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:ENAUSDT",
+      "venue": "perp",
+      "symbol": "ENAUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 212091839.35859,
+      "spread": 0.42106149603074783,
+      "price": 0.2375,
+      "seen": 1791314065526,
+      "studied": 1791314218683,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 2000000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "perp:AVAXUSDT",
+      "venue": "perp",
+      "symbol": "AVAXUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 209372855.997,
+      "spread": 0.8737821661055054,
+      "price": 11.442,
+      "seen": 1791314065526,
+      "studied": 1791314223994,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 50000.0, \"min_notional\": 5.0, \"tick\": 0.001}"
+    },
+    {
+      "id": "spot:SOLUSDT",
+      "venue": "spot",
+      "symbol": "SOLUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 179032427.79181,
+      "spread": 0.8290155440406968,
+      "price": 120.61,
+      "seen": 1791314063271,
+      "studied": 1791314229523,
+      "error": null,
+      "constraints": "{\"step\": 0.001, \"min_qty\": 0.001, \"max_qty\": 90000.0, \"min_notional\": 5.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "perp:CAPUSDT",
+      "venue": "perp",
+      "symbol": "CAPUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 178440423.39116,
+      "spread": 2.3463162834357254,
+      "price": 0.08524,
+      "seen": 1791314065526,
+      "studied": 1791314236317,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 3000000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "spot:ZECUSDT",
+      "venue": "spot",
+      "symbol": "ZECUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 172408506.14258,
+      "spread": 0.07384297291802253,
+      "price": 1354.13,
+      "seen": 1791314063271,
+      "studied": 1791314241660,
+      "error": null,
+      "constraints": "{\"step\": 0.001, \"min_qty\": 0.001, \"max_qty\": 90000.0, \"min_notional\": 5.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "perp:1000PEPEUSDT",
+      "venue": "perp",
+      "symbol": "1000PEPEUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 166002973.1373999,
+      "spread": 0.23311381782218887,
+      "price": 0.0042888,
+      "seen": 1791314065526,
+      "studied": 1791314248733,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 100000000.0, \"min_notional\": 5.0, \"tick\": 1e-07}"
+    },
+    {
+      "id": "perp:AAVEUSDT",
+      "venue": "perp",
+      "symbol": "AAVEUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 145180987.906,
+      "spread": 0.5511919525985574,
+      "price": 181.34,
+      "seen": 1791314065526,
+      "studied": 1791314254036,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 9000.0, \"min_notional\": 5.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "spot:NEARUSDT",
+      "venue": "spot",
+      "symbol": "NEARUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 128100071.9136,
+      "spread": 1.973749136485412,
+      "price": 5.065,
+      "seen": 1791314063271,
+      "studied": 1791314259881,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 900000.0, \"min_notional\": 5.0, \"tick\": 0.001}"
+    },
+    {
+      "id": "perp:TAOUSDT",
+      "venue": "perp",
+      "symbol": "TAOUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 126754300.59,
+      "spread": 0.3294078893186496,
+      "price": 303.51,
+      "seen": 1791314065526,
+      "studied": 1791314266998,
+      "error": null,
+      "constraints": "{\"step\": 0.001, \"min_qty\": 0.001, \"max_qty\": 2000.0, \"min_notional\": 5.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "perp:API3USDT",
+      "venue": "perp",
+      "symbol": "API3USDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 123821252.677,
+      "spread": 2.987303958177416,
+      "price": 0.3348,
+      "seen": 1791314065526,
+      "studied": 1791314272527,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 300000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "spot:XRPUSDT",
+      "venue": "spot",
+      "symbol": "XRPUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 119926502.91708,
+      "spread": 0.6670446586398224,
+      "price": 1.4989,
+      "seen": 1791314063271,
+      "studied": 1791314278073,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 9222449.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:USUSDT",
+      "venue": "perp",
+      "symbol": "USUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 116757577.749087,
+      "spread": 4.0691759918621875,
+      "price": 0.014737,
+      "seen": 1791314065526,
+      "studied": 1791314285158,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 4000000.0, \"min_notional\": 5.0, \"tick\": 1e-06}"
+    },
+    {
+      "id": "perp:ONDOUSDT",
+      "venue": "perp",
+      "symbol": "ONDOUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 107685614.84549,
+      "spread": 2.0195900232250628,
+      "price": 0.495,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 900000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:SANDUSDT",
+      "venue": "perp",
+      "symbol": "SANDUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 104700743.3275,
+      "spread": 1.5217225899712583,
+      "price": 0.06574,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 3000000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "spot:USD1USDT",
+      "venue": "spot",
+      "symbol": "USD1USDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 99267169.84228,
+      "spread": 0.10003551260763084,
+      "price": 0.99965,
+      "seen": 1791314063271,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 10000000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "perp:LINKUSDT",
+      "venue": "perp",
+      "symbol": "LINKUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 98212578.794,
+      "spread": 0.7173858459768613,
+      "price": 13.934,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.01, \"min_qty\": 0.01, \"max_qty\": 50000.0, \"min_notional\": 20.0, \"tick\": 0.001}"
+    },
+    {
+      "id": "perp:ZROUSDT",
+      "venue": "perp",
+      "symbol": "ZROUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 92425067.41104,
+      "spread": 1.7731282414998712,
+      "price": 2.2573,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 200000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:GTCUSDT",
+      "venue": "perp",
+      "symbol": "GTCUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 90078384.822214,
+      "spread": 1.9192016121294984,
+      "price": 0.15636,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 600000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "perp:ARBUSDT",
+      "venue": "perp",
+      "symbol": "ARBUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 87116458.670031,
+      "spread": 0.4903523181410744,
+      "price": 0.20388,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 6000000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "perp:BTWUSDT",
+      "venue": "perp",
+      "symbol": "BTWUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 83534776.3596,
+      "spread": 0.8297722275234533,
+      "price": 1.2052,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 1000000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:\u9f99\u867eUSDT",
+      "venue": "perp",
+      "symbol": "\u9f99\u867eUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 81201938.244256,
+      "spread": 1.7278617710588444,
+      "price": 0.05789,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 3000000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "perp:MOVRUSDT",
+      "venue": "perp",
+      "symbol": "MOVRUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 80923823.132504,
+      "spread": 1.0739984964019866,
+      "price": 1.8611,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.01, \"min_qty\": 0.01, \"max_qty\": 70000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:NILUSDT",
+      "venue": "perp",
+      "symbol": "NILUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 76402369.972865,
+      "spread": 1.028859509233615,
+      "price": 0.09718,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 2000000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "spot:RLUSDUSDT",
+      "venue": "spot",
+      "symbol": "RLUSDUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 75453112.5953,
+      "spread": 0.999950002499765,
+      "price": 1.0,
+      "seen": 1791314063271,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 10000000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:TRUMPUSDT",
+      "venue": "perp",
+      "symbol": "TRUMPUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 74916002.37936,
+      "spread": 4.981320049812652,
+      "price": 2.006,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.01, \"min_qty\": 0.01, \"max_qty\": 1000000.0, \"min_notional\": 5.0, \"tick\": 0.001}"
+    },
+    {
+      "id": "perp:LTCUSDT",
+      "venue": "perp",
+      "symbol": "LTCUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 73527796.18,
+      "spread": 1.4372978799863625,
+      "price": 69.57,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.001, \"min_qty\": 0.001, \"max_qty\": 100000.0, \"min_notional\": 20.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "spot:SUIUSDT",
+      "venue": "spot",
+      "symbol": "SUIUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 70526256.72827,
+      "spread": 0.8447016091564723,
+      "price": 1.1839,
+      "seen": 1791314063271,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 92141578.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:LITUSDT",
+      "venue": "perp",
+      "symbol": "LITUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 69734478.69524,
+      "spread": 0.529044545550677,
+      "price": 3.7785,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 70000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "spot:BNBUSDT",
+      "venue": "spot",
+      "symbol": "BNBUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 68460099.53453,
+      "spread": 0.1282338986309865,
+      "price": 779.77,
+      "seen": 1791314063271,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.001, \"min_qty\": 0.001, \"max_qty\": 900000.0, \"min_notional\": 5.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "perp:PAXGUSDT",
+      "venue": "perp",
+      "symbol": "PAXGUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 67517901.1025,
+      "spread": 0.023923187430322585,
+      "price": 4180.05,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.001, \"min_qty\": 0.001, \"max_qty\": 200.0, \"min_notional\": 5.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "spot:AVAXUSDT",
+      "venue": "spot",
+      "symbol": "AVAXUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 63614157.44056,
+      "spread": 0.8731717965504875,
+      "price": 11.45,
+      "seen": 1791314063271,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.01, \"min_qty\": 0.01, \"max_qty\": 90000.0, \"min_notional\": 5.0, \"tick\": 0.001}"
+    },
+    {
+      "id": "spot:ADAUSDT",
+      "venue": "spot",
+      "symbol": "ADAUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 62715438.99132,
+      "spread": 3.6920804873542177,
+      "price": 0.2709,
+      "seen": 1791314063271,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 900000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:DOTUSDT",
+      "venue": "perp",
+      "symbol": "DOTUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 62023192.43722,
+      "spread": 0.8229436695057317,
+      "price": 1.2151,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 300000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:ASTERUSDT",
+      "venue": "perp",
+      "symbol": "ASTERUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 61227795.3547,
+      "spread": 1.3525393927096636,
+      "price": 0.739,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 400000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:PONSUSDT",
+      "venue": "perp",
+      "symbol": "PONSUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 60691555.4838,
+      "spread": 2.438726984515169,
+      "price": 0.41,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 200000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "spot:RLCUSDT",
+      "venue": "spot",
+      "symbol": "RLCUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 60403866.54331,
+      "spread": 6.5006825716693095,
+      "price": 0.7679,
+      "seen": 1791314063271,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 900000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:APTUSDT",
+      "venue": "perp",
+      "symbol": "APTUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 60350491.28603,
+      "spread": 1.195814648729315,
+      "price": 0.8359,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 200000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:FETUSDT",
+      "venue": "perp",
+      "symbol": "FETUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 59821396.1682,
+      "spread": 4.1502386387212695,
+      "price": 0.241,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 700000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:XLMUSDT",
+      "venue": "perp",
+      "symbol": "XLMUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 59393613.74151,
+      "spread": 0.4698916899659329,
+      "price": 0.2128,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 2000000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "spot:DOGEUSDT",
+      "venue": "spot",
+      "symbol": "DOGEUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 57829872.59199,
+      "spread": 1.0654733365293403,
+      "price": 0.09383,
+      "seen": 1791314063271,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 9000000.0, \"min_notional\": 1.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "perp:PENGUUSDT",
+      "venue": "perp",
+      "symbol": "PENGUUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 56938366.642449,
+      "spread": 1.069118511786246,
+      "price": 0.009349,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 20000000.0, \"min_notional\": 5.0, \"tick\": 1e-06}"
+    },
+    {
+      "id": "perp:MUBARAKUSDT",
+      "venue": "perp",
+      "symbol": "MUBARAKUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 55766428.47746,
+      "spread": 1.3138014845951684,
+      "price": 0.07616,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 5000000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "spot:UNIUSDT",
+      "venue": "spot",
+      "symbol": "UNIUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 54554159.13977,
+      "spread": 1.1590843233838837,
+      "price": 8.626,
+      "seen": 1791314063271,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.01, \"min_qty\": 0.01, \"max_qty\": 90000.0, \"min_notional\": 5.0, \"tick\": 0.001}"
+    },
+    {
+      "id": "perp:RENDERUSDT",
+      "venue": "perp",
+      "symbol": "RENDERUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 54282697.1934,
+      "spread": 4.607233356368994,
+      "price": 2.172,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 200000.0, \"min_notional\": 5.0, \"tick\": 0.001}"
+    },
+    {
+      "id": "perp:INJUSDT",
+      "venue": "perp",
+      "symbol": "INJUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 53461283.4502,
+      "spread": 1.2768945923506938,
+      "price": 7.829,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 40000.0, \"min_notional\": 5.0, \"tick\": 0.001}"
+    },
+    {
+      "id": "perp:VTHOUSDT",
+      "venue": "perp",
+      "symbol": "VTHOUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 52448214.1752958,
+      "spread": 2.7643400138217675,
+      "price": 0.0007231,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 200000000.0, \"min_notional\": 5.0, \"tick\": 1e-07}"
+    },
+    {
+      "id": "perp:XAUTUSDT",
+      "venue": "perp",
+      "symbol": "XAUTUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 51417841.53,
+      "spread": 0.023961536939246207,
+      "price": 4173.36,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.001, \"min_qty\": 0.001, \"max_qty\": 200.0, \"min_notional\": 5.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "perp:AINUSDT",
+      "venue": "perp",
+      "symbol": "AINUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 48203657.55227,
+      "spread": 4.1788549937329975,
+      "price": 0.04793,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 2000000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "perp:FLUIDUSDT",
+      "venue": "perp",
+      "symbol": "FLUIDUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 48153211.5207,
+      "spread": 5.234231876472714,
+      "price": 1.911,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 70000.0, \"min_notional\": 5.0, \"tick\": 0.001}"
+    },
+    {
+      "id": "perp:LYNUSDT",
+      "venue": "perp",
+      "symbol": "LYNUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 46952742.71961,
+      "spread": 5.0365147318053864,
+      "price": 0.01987,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 1300000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "perp:MINAUSDT",
+      "venue": "perp",
+      "symbol": "MINAUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 46863828.07688,
+      "spread": 3.3305578684428285,
+      "price": 0.11997,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 1400000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "perp:MONUSDT",
+      "venue": "perp",
+      "symbol": "MONUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 46772144.91164,
+      "spread": 3.488574917146203,
+      "price": 0.02866,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 5000000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    },
+    {
+      "id": "spot:QNTUSDT",
+      "venue": "spot",
+      "symbol": "QNTUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 46704344.47768,
+      "spread": 0.7821360134531397,
+      "price": 255.69,
+      "seen": 1791314063271,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.001, \"min_qty\": 0.001, \"max_qty\": 922327.0, \"min_notional\": 5.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "perp:ETHFIUSDT",
+      "venue": "perp",
+      "symbol": "ETHFIUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 45293414.19807,
+      "spread": 1.2977743170461227,
+      "price": 0.7705,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 300000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "spot:HYPEUSDT",
+      "venue": "spot",
+      "symbol": "HYPEUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 44185859.41881,
+      "spread": 1.09212035166176,
+      "price": 91.57,
+      "seen": 1791314063271,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.001, \"min_qty\": 0.001, \"max_qty\": 9222449.0, \"min_notional\": 5.0, \"tick\": 0.01}"
+    },
+    {
+      "id": "perp:RAYSOLUSDT",
+      "venue": "perp",
+      "symbol": "RAYSOLUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 42949963.45696,
+      "spread": 0.4543699025365969,
+      "price": 2.2012,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 0.1, \"min_qty\": 0.1, \"max_qty\": 200000.0, \"min_notional\": 5.0, \"tick\": 0.0001}"
+    },
+    {
+      "id": "perp:EDUUSDT",
+      "venue": "perp",
+      "symbol": "EDUUSDT",
+      "active": 1,
+      "liquid": 1,
+      "volume": 42826416.20183,
+      "spread": 4.321209938783182,
+      "price": 0.06959,
+      "seen": 1791314065526,
+      "studied": 0,
+      "error": null,
+      "constraints": "{\"step\": 1.0, \"min_qty\": 1.0, \"max_qty\": 2000000.0, \"min_notional\": 5.0, \"tick\": 1e-05}"
+    }
+  ],
+  "bots": [
+    {
+      "id": "perp:AAVEUSDT:AR1-breakout-20-2.5:1791314254036",
+      "market": "perp:AAVEUSDT",
+      "created": 1791314254036,
+      "state": "PAPER_PROBATION",
+      "rule": {
+        "family": "breakout",
+        "lookback": 20,
+        "stop_atr": 2.5,
+        "max_hold": 24
+      },
+      "evidence": {
+        "state": "HISTORICALLY_QUALIFIED",
+        "reasons": [],
+        "rule": {
+          "family": "breakout",
+          "lookback": 20,
+          "stop_atr": 2.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-breakout-20-2.5",
+        "train": {
+          "trades": 23,
+          "execution_rejects": 0,
+          "net": 11.087015,
+          "profit_factor": 1.207,
+          "drawdown": 0.028877,
+          "expectancy": 0.482044,
+          "winner_concentration": 0.14482340360514825
+        },
+        "validation": {
+          "trades": 10,
+          "execution_rejects": 0,
+          "net": 8.263151,
+          "profit_factor": 1.4463,
+          "drawdown": 0.010185,
+          "expectancy": 0.826315,
+          "winner_concentration": 0.33653208371437926
+        },
+        "holdout": {
+          "trades": 11,
+          "execution_rejects": 0,
+          "net": 9.58534,
+          "profit_factor": 1.4586,
+          "drawdown": 0.011773,
+          "expectancy": 0.871395,
+          "winner_concentration": 0.31408709451419037
+        },
+        "stress": {
+          "trades": 11,
+          "execution_rejects": 0,
+          "net": 5.529577,
+          "profit_factor": 1.2428,
+          "drawdown": 0.012012,
+          "expectancy": 0.502689,
+          "winner_concentration": 0.3263784193545274
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.1,
+          "min_qty": 0.1,
+          "max_qty": 9000.0,
+          "min_notional": 5.0,
+          "tick": 0.01
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      },
+      "equity": 1000.0,
+      "position": null,
+      "last_bar": 1791309600000,
+      "last_quote": 0,
+      "trades": 0,
+      "net": 0.0,
+      "peak": 1000.0,
+      "drawdown": 0.0,
+      "error": null
+    }
+  ],
+  "studies": [
+    {
+      "id": 35,
+      "market": "perp:USUSDT",
+      "ts": 1791314285158,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: nonpositive net after costs",
+          "train: profit factor below 1.2",
+          "validation: profit factor below 1.2",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "breakout",
+          "lookback": 20,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-breakout-20-1.5",
+        "train": {
+          "trades": 21,
+          "execution_rejects": 0,
+          "net": -2.465277,
+          "profit_factor": 0.9612,
+          "drawdown": 0.024304,
+          "expectancy": -0.117394,
+          "winner_concentration": 0.16207046903045613
+        },
+        "validation": {
+          "trades": 11,
+          "execution_rejects": 0,
+          "net": 0.429008,
+          "profit_factor": 1.0113,
+          "drawdown": 0.01874,
+          "expectancy": 0.039001,
+          "winner_concentration": 0.25392410380779085
+        },
+        "holdout": {
+          "trades": 12,
+          "execution_rejects": 0,
+          "net": -18.340202,
+          "profit_factor": 0.6095,
+          "drawdown": 0.032219,
+          "expectancy": -1.52835,
+          "winner_concentration": 0.33454044822964274
+        },
+        "stress": {
+          "trades": 12,
+          "execution_rejects": 0,
+          "net": -20.650406,
+          "profit_factor": 0.5754,
+          "drawdown": 0.033966,
+          "expectancy": -1.720867,
+          "winner_concentration": 0.33620079970872274
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 1.0,
+          "min_qty": 1.0,
+          "max_qty": 4000000.0,
+          "min_notional": 5.0,
+          "tick": 1e-06
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 34,
+      "market": "spot:XRPUSDT",
+      "ts": 1791314278073,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: nonpositive net after costs",
+          "train: profit factor below 1.2",
+          "validation: insufficient trades (9/10)",
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2",
+          "holdout: insufficient trades (2/10)",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: one winner accounts for over 40% of gains",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "reversion",
+          "lookback": 40,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-reversion-40-1.5",
+        "train": {
+          "trades": 21,
+          "execution_rejects": 0,
+          "net": -68.185354,
+          "profit_factor": 0.3198,
+          "drawdown": 0.095941,
+          "expectancy": -3.246922,
+          "winner_concentration": 0.2532261946958093
+        },
+        "validation": {
+          "trades": 9,
+          "execution_rejects": 0,
+          "net": -37.732021,
+          "profit_factor": 0.186,
+          "drawdown": 0.037732,
+          "expectancy": -4.192447,
+          "winner_concentration": 1.0
+        },
+        "holdout": {
+          "trades": 2,
+          "execution_rejects": 0,
+          "net": -2.287448,
+          "profit_factor": 0.614,
+          "drawdown": 0.011507,
+          "expectancy": -1.143724,
+          "winner_concentration": 1.0
+        },
+        "stress": {
+          "trades": 3,
+          "execution_rejects": 0,
+          "net": -4.662726,
+          "profit_factor": 0.3535,
+          "drawdown": 0.011058,
+          "expectancy": -1.554242,
+          "winner_concentration": 1.0
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.1,
+          "min_qty": 0.1,
+          "max_qty": 9222449.0,
+          "min_notional": 5.0,
+          "tick": 0.0001
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 33,
+      "market": "perp:API3USDT",
+      "ts": 1791314272527,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: profit factor below 1.2",
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2",
+          "holdout: insufficient trades (2/10)",
+          "holdout: one winner accounts for over 40% of gains"
+        ],
+        "rule": {
+          "family": "reversion",
+          "lookback": 20,
+          "stop_atr": 2.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-reversion-20-2.5",
+        "train": {
+          "trades": 29,
+          "execution_rejects": 0,
+          "net": 14.031462,
+          "profit_factor": 1.1957,
+          "drawdown": 0.038936,
+          "expectancy": 0.483844,
+          "winner_concentration": 0.11553306455667614
+        },
+        "validation": {
+          "trades": 11,
+          "execution_rejects": 0,
+          "net": -27.379278,
+          "profit_factor": 0.2389,
+          "drawdown": 0.031706,
+          "expectancy": -2.489025,
+          "winner_concentration": 0.9191187780468806
+        },
+        "holdout": {
+          "trades": 2,
+          "execution_rejects": 0,
+          "net": 4.345248,
+          "profit_factor": 1.8265,
+          "drawdown": 0.005954,
+          "expectancy": 2.172624,
+          "winner_concentration": 1.0
+        },
+        "stress": {
+          "trades": 2,
+          "execution_rejects": 0,
+          "net": 3.839996,
+          "profit_factor": 1.6939,
+          "drawdown": 0.006482,
+          "expectancy": 1.919998,
+          "winner_concentration": 1.0
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.1,
+          "min_qty": 0.1,
+          "max_qty": 300000.0,
+          "min_notional": 5.0,
+          "tick": 0.0001
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 32,
+      "market": "perp:TAOUSDT",
+      "ts": 1791314266998,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: profit factor below 1.2",
+          "validation: insufficient trades (6/10)",
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2",
+          "holdout: insufficient trades (3/10)",
+          "holdout: one winner accounts for over 40% of gains"
+        ],
+        "rule": {
+          "family": "reversion",
+          "lookback": 40,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-reversion-40-1.5",
+        "train": {
+          "trades": 36,
+          "execution_rejects": 0,
+          "net": 1.556258,
+          "profit_factor": 1.014,
+          "drawdown": 0.040749,
+          "expectancy": 0.043229,
+          "winner_concentration": 0.08281761840929208
+        },
+        "validation": {
+          "trades": 6,
+          "execution_rejects": 0,
+          "net": -18.703391,
+          "profit_factor": 0.1571,
+          "drawdown": 0.02477,
+          "expectancy": -3.117232,
+          "winner_concentration": 1.0
+        },
+        "holdout": {
+          "trades": 3,
+          "execution_rejects": 0,
+          "net": 18.085113,
+          "profit_factor": 99,
+          "drawdown": 0.005957,
+          "expectancy": 6.028371,
+          "winner_concentration": 0.5304474940966776
+        },
+        "stress": {
+          "trades": 3,
+          "execution_rejects": 0,
+          "net": 16.337494,
+          "profit_factor": 99,
+          "drawdown": 0.005955,
+          "expectancy": 5.445831,
+          "winner_concentration": 0.5609432967444102
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.001,
+          "min_qty": 0.001,
+          "max_qty": 2000.0,
+          "min_notional": 5.0,
+          "tick": 0.01
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 31,
+      "market": "spot:NEARUSDT",
+      "ts": 1791314259881,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: insufficient trades (13/20)",
+          "validation: insufficient trades (2/10)",
+          "holdout: insufficient trades (1/10)",
+          "holdout: one winner accounts for over 40% of gains"
+        ],
+        "rule": {
+          "family": "reversion",
+          "lookback": 20,
+          "stop_atr": 2.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-reversion-20-2.5",
+        "train": {
+          "trades": 13,
+          "execution_rejects": 0,
+          "net": 20.863241,
+          "profit_factor": 1.8353,
+          "drawdown": 0.01439,
+          "expectancy": 1.604865,
+          "winner_concentration": 0.20302017563677766
+        },
+        "validation": {
+          "trades": 2,
+          "execution_rejects": 0,
+          "net": 19.188542,
+          "profit_factor": 99,
+          "drawdown": 0.003978,
+          "expectancy": 9.594271,
+          "winner_concentration": 0.5067903453572908
+        },
+        "holdout": {
+          "trades": 1,
+          "execution_rejects": 0,
+          "net": 0.955505,
+          "profit_factor": 99,
+          "drawdown": 0.001352,
+          "expectancy": 0.955505,
+          "winner_concentration": 1.0
+        },
+        "stress": {
+          "trades": 1,
+          "execution_rejects": 0,
+          "net": 0.626213,
+          "profit_factor": 99,
+          "drawdown": 0.001351,
+          "expectancy": 0.626213,
+          "winner_concentration": 1.0
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.1,
+          "min_qty": 0.1,
+          "max_qty": 900000.0,
+          "min_notional": 5.0,
+          "tick": 0.001
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 30,
+      "market": "perp:AAVEUSDT",
+      "ts": 1791314254036,
+      "state": "HISTORICALLY_QUALIFIED",
+      "report": {
+        "state": "HISTORICALLY_QUALIFIED",
+        "reasons": [],
+        "rule": {
+          "family": "breakout",
+          "lookback": 20,
+          "stop_atr": 2.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-breakout-20-2.5",
+        "train": {
+          "trades": 23,
+          "execution_rejects": 0,
+          "net": 11.087015,
+          "profit_factor": 1.207,
+          "drawdown": 0.028877,
+          "expectancy": 0.482044,
+          "winner_concentration": 0.14482340360514825
+        },
+        "validation": {
+          "trades": 10,
+          "execution_rejects": 0,
+          "net": 8.263151,
+          "profit_factor": 1.4463,
+          "drawdown": 0.010185,
+          "expectancy": 0.826315,
+          "winner_concentration": 0.33653208371437926
+        },
+        "holdout": {
+          "trades": 11,
+          "execution_rejects": 0,
+          "net": 9.58534,
+          "profit_factor": 1.4586,
+          "drawdown": 0.011773,
+          "expectancy": 0.871395,
+          "winner_concentration": 0.31408709451419037
+        },
+        "stress": {
+          "trades": 11,
+          "execution_rejects": 0,
+          "net": 5.529577,
+          "profit_factor": 1.2428,
+          "drawdown": 0.012012,
+          "expectancy": 0.502689,
+          "winner_concentration": 0.3263784193545274
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.1,
+          "min_qty": 0.1,
+          "max_qty": 9000.0,
+          "min_notional": 5.0,
+          "tick": 0.01
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 29,
+      "market": "perp:1000PEPEUSDT",
+      "ts": 1791314248733,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: profit factor below 1.2",
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2"
+        ],
+        "rule": {
+          "family": "breakout",
+          "lookback": 20,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-breakout-20-1.5",
+        "train": {
+          "trades": 27,
+          "execution_rejects": 0,
+          "net": 14.733048,
+          "profit_factor": 1.1696,
+          "drawdown": 0.020714,
+          "expectancy": 0.545668,
+          "winner_concentration": 0.09735506094320354
+        },
+        "validation": {
+          "trades": 10,
+          "execution_rejects": 0,
+          "net": -32.830795,
+          "profit_factor": 0.2141,
+          "drawdown": 0.042142,
+          "expectancy": -3.28308,
+          "winner_concentration": 1.0
+        },
+        "holdout": {
+          "trades": 11,
+          "execution_rejects": 0,
+          "net": 15.127115,
+          "profit_factor": 1.4544,
+          "drawdown": 0.018065,
+          "expectancy": 1.375192,
+          "winner_concentration": 0.20415704993209863
+        },
+        "stress": {
+          "trades": 11,
+          "execution_rejects": 0,
+          "net": 10.44713,
+          "profit_factor": 1.292,
+          "drawdown": 0.020064,
+          "expectancy": 0.949739,
+          "winner_concentration": 0.20635946737063704
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 1.0,
+          "min_qty": 1.0,
+          "max_qty": 100000000.0,
+          "min_notional": 5.0,
+          "tick": 1e-07
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 28,
+      "market": "spot:ZECUSDT",
+      "ts": 1791314241660,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: profit factor below 1.2",
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2",
+          "holdout: insufficient trades (8/10)"
+        ],
+        "rule": {
+          "family": "pullback",
+          "lookback": 40,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-pullback-40-1.5",
+        "train": {
+          "trades": 21,
+          "execution_rejects": 0,
+          "net": 5.044684,
+          "profit_factor": 1.073,
+          "drawdown": 0.021572,
+          "expectancy": 0.240223,
+          "winner_concentration": 0.12942031589627703
+        },
+        "validation": {
+          "trades": 12,
+          "execution_rejects": 0,
+          "net": -1.066225,
+          "profit_factor": 0.9726,
+          "drawdown": 0.016237,
+          "expectancy": -0.088852,
+          "winner_concentration": 0.2503394384820673
+        },
+        "holdout": {
+          "trades": 8,
+          "execution_rejects": 0,
+          "net": 29.859888,
+          "profit_factor": 2.7222,
+          "drawdown": 0.01037,
+          "expectancy": 3.732486,
+          "winner_concentration": 0.20373738100816471
+        },
+        "stress": {
+          "trades": 8,
+          "execution_rejects": 0,
+          "net": 24.7273,
+          "profit_factor": 2.284,
+          "drawdown": 0.010951,
+          "expectancy": 3.090912,
+          "winner_concentration": 0.2067449097515976
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.001,
+          "min_qty": 0.001,
+          "max_qty": 90000.0,
+          "min_notional": 5.0,
+          "tick": 0.01
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 27,
+      "market": "perp:CAPUSDT",
+      "ts": 1791314236317,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: profit factor below 1.2",
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "breakout",
+          "lookback": 20,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-breakout-20-1.5",
+        "train": {
+          "trades": 28,
+          "execution_rejects": 0,
+          "net": 17.673197,
+          "profit_factor": 1.1954,
+          "drawdown": 0.022277,
+          "expectancy": 0.631186,
+          "winner_concentration": 0.09315627679070933
+        },
+        "validation": {
+          "trades": 10,
+          "execution_rejects": 0,
+          "net": -9.470748,
+          "profit_factor": 0.7494,
+          "drawdown": 0.016837,
+          "expectancy": -0.947075,
+          "winner_concentration": 0.3376429835078845
+        },
+        "holdout": {
+          "trades": 19,
+          "execution_rejects": 0,
+          "net": 19.520395,
+          "profit_factor": 1.344,
+          "drawdown": 0.035794,
+          "expectancy": 1.027389,
+          "winner_concentration": 0.1288574280047535
+        },
+        "stress": {
+          "trades": 19,
+          "execution_rejects": 0,
+          "net": -2.258373,
+          "profit_factor": 0.9656,
+          "drawdown": 0.038952,
+          "expectancy": -0.118862,
+          "winner_concentration": 0.14646435467615168
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 1.0,
+          "min_qty": 1.0,
+          "max_qty": 3000000.0,
+          "min_notional": 5.0,
+          "tick": 1e-05
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 26,
+      "market": "spot:SOLUSDT",
+      "ts": 1791314229523,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "validation: insufficient trades (5/10)",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "breakout",
+          "lookback": 20,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-breakout-20-1.5",
+        "train": {
+          "trades": 23,
+          "execution_rejects": 0,
+          "net": 39.340901,
+          "profit_factor": 1.6486,
+          "drawdown": 0.031975,
+          "expectancy": 1.710474,
+          "winner_concentration": 0.09476521423400376
+        },
+        "validation": {
+          "trades": 5,
+          "execution_rejects": 0,
+          "net": 19.751612,
+          "profit_factor": 4.0949,
+          "drawdown": 0.007049,
+          "expectancy": 3.950322,
+          "winner_concentration": 0.3472223850178842
+        },
+        "holdout": {
+          "trades": 12,
+          "execution_rejects": 0,
+          "net": -13.805457,
+          "profit_factor": 0.7166,
+          "drawdown": 0.033781,
+          "expectancy": -1.150455,
+          "winner_concentration": 0.26217043428619813
+        },
+        "stress": {
+          "trades": 11,
+          "execution_rejects": 0,
+          "net": -20.417093,
+          "profit_factor": 0.5955,
+          "drawdown": 0.040821,
+          "expectancy": -1.856099,
+          "winner_concentration": 0.2758464396207458
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.001,
+          "min_qty": 0.001,
+          "max_qty": 90000.0,
+          "min_notional": 5.0,
+          "tick": 0.01
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 25,
+      "market": "perp:AVAXUSDT",
+      "ts": 1791314223994,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2",
+          "holdout: insufficient trades (8/10)",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: one winner accounts for over 40% of gains",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "reversion",
+          "lookback": 20,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-reversion-20-1.5",
+        "train": {
+          "trades": 54,
+          "execution_rejects": 0,
+          "net": 48.427737,
+          "profit_factor": 1.3132,
+          "drawdown": 0.03628,
+          "expectancy": 0.89681,
+          "winner_concentration": 0.048271911101075295
+        },
+        "validation": {
+          "trades": 15,
+          "execution_rejects": 0,
+          "net": -10.923416,
+          "profit_factor": 0.8066,
+          "drawdown": 0.027331,
+          "expectancy": -0.728228,
+          "winner_concentration": 0.20556212006906804
+        },
+        "holdout": {
+          "trades": 8,
+          "execution_rejects": 0,
+          "net": -16.22112,
+          "profit_factor": 0.5246,
+          "drawdown": 0.023109,
+          "expectancy": -2.02764,
+          "winner_concentration": 0.5036617130646673
+        },
+        "stress": {
+          "trades": 9,
+          "execution_rejects": 0,
+          "net": -42.757682,
+          "profit_factor": 0.1673,
+          "drawdown": 0.047767,
+          "expectancy": -4.750854,
+          "winner_concentration": 1.0
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 1.0,
+          "min_qty": 1.0,
+          "max_qty": 50000.0,
+          "min_notional": 5.0,
+          "tick": 0.001
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 24,
+      "market": "perp:ENAUSDT",
+      "ts": 1791314218683,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: profit factor below 1.2"
+        ],
+        "rule": {
+          "family": "breakout",
+          "lookback": 20,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-breakout-20-1.5",
+        "train": {
+          "trades": 33,
+          "execution_rejects": 0,
+          "net": 15.134058,
+          "profit_factor": 1.1416,
+          "drawdown": 0.035779,
+          "expectancy": 0.458608,
+          "winner_concentration": 0.08142953759981089
+        },
+        "validation": {
+          "trades": 10,
+          "execution_rejects": 0,
+          "net": 6.772336,
+          "profit_factor": 1.2653,
+          "drawdown": 0.024992,
+          "expectancy": 0.677234,
+          "winner_concentration": 0.2973543415390503
+        },
+        "holdout": {
+          "trades": 13,
+          "execution_rejects": 0,
+          "net": 11.669299,
+          "profit_factor": 1.3129,
+          "drawdown": 0.023616,
+          "expectancy": 0.897638,
+          "winner_concentration": 0.20303152746623698
+        },
+        "stress": {
+          "trades": 12,
+          "execution_rejects": 0,
+          "net": 13.19251,
+          "profit_factor": 1.3832,
+          "drawdown": 0.024954,
+          "expectancy": 1.099376,
+          "winner_concentration": 0.2043333326649272
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 1.0,
+          "min_qty": 1.0,
+          "max_qty": 2000000.0,
+          "min_notional": 5.0,
+          "tick": 1e-05
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 23,
+      "market": "perp:WLDUSDT",
+      "ts": 1791314213361,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: profit factor below 1.2"
+        ],
+        "rule": {
+          "family": "pullback",
+          "lookback": 40,
+          "stop_atr": 2.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-pullback-40-2.5",
+        "train": {
+          "trades": 31,
+          "execution_rejects": 0,
+          "net": 3.363646,
+          "profit_factor": 1.0514,
+          "drawdown": 0.04094,
+          "expectancy": 0.108505,
+          "winner_concentration": 0.1424989621741786
+        },
+        "validation": {
+          "trades": 12,
+          "execution_rejects": 0,
+          "net": 13.842037,
+          "profit_factor": 1.6255,
+          "drawdown": 0.011767,
+          "expectancy": 1.153503,
+          "winner_concentration": 0.2711581170666153
+        },
+        "holdout": {
+          "trades": 11,
+          "execution_rejects": 0,
+          "net": 15.200251,
+          "profit_factor": 1.9388,
+          "drawdown": 0.017158,
+          "expectancy": 1.381841,
+          "winner_concentration": 0.31581946812591466
+        },
+        "stress": {
+          "trades": 11,
+          "execution_rejects": 0,
+          "net": 12.396155,
+          "profit_factor": 1.7309,
+          "drawdown": 0.017945,
+          "expectancy": 1.126923,
+          "winner_concentration": 0.32859360260768417
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 1.0,
+          "min_qty": 1.0,
+          "max_qty": 700000.0,
+          "min_notional": 5.0,
+          "tick": 0.0001
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 22,
+      "market": "perp:NMRUSDT",
+      "ts": 1791314208036,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2",
+          "holdout: insufficient trades (5/10)",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: one winner accounts for over 40% of gains",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "reversion",
+          "lookback": 20,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-reversion-20-1.5",
+        "train": {
+          "trades": 33,
+          "execution_rejects": 0,
+          "net": 44.513609,
+          "profit_factor": 1.4709,
+          "drawdown": 0.030944,
+          "expectancy": 1.348897,
+          "winner_concentration": 0.06898281475860428
+        },
+        "validation": {
+          "trades": 18,
+          "execution_rejects": 0,
+          "net": -41.08106,
+          "profit_factor": 0.4663,
+          "drawdown": 0.044113,
+          "expectancy": -2.282281,
+          "winner_concentration": 0.25102687950857394
+        },
+        "holdout": {
+          "trades": 5,
+          "execution_rejects": 0,
+          "net": -4.139871,
+          "profit_factor": 0.7292,
+          "drawdown": 0.012134,
+          "expectancy": -0.827974,
+          "winner_concentration": 0.806262167903407
+        },
+        "stress": {
+          "trades": 5,
+          "execution_rejects": 0,
+          "net": -10.819416,
+          "profit_factor": 0.4489,
+          "drawdown": 0.016735,
+          "expectancy": -2.163883,
+          "winner_concentration": 0.9190894398244045
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.1,
+          "min_qty": 0.1,
+          "max_qty": 10000.0,
+          "min_notional": 5.0,
+          "tick": 0.001
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 21,
+      "market": "perp:FILUSDT",
+      "ts": 1791314202719,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: one winner accounts for over 40% of gains",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "pullback",
+          "lookback": 40,
+          "stop_atr": 2.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-pullback-40-2.5",
+        "train": {
+          "trades": 30,
+          "execution_rejects": 0,
+          "net": 15.817626,
+          "profit_factor": 1.2328,
+          "drawdown": 0.022252,
+          "expectancy": 0.527254,
+          "winner_concentration": 0.11401665579649657
+        },
+        "validation": {
+          "trades": 10,
+          "execution_rejects": 0,
+          "net": 5.454423,
+          "profit_factor": 1.2692,
+          "drawdown": 0.013603,
+          "expectancy": 0.545442,
+          "winner_concentration": 0.3728323709190632
+        },
+        "holdout": {
+          "trades": 12,
+          "execution_rejects": 0,
+          "net": -12.679216,
+          "profit_factor": 0.5454,
+          "drawdown": 0.032,
+          "expectancy": -1.056601,
+          "winner_concentration": 0.6099633076849504
+        },
+        "stress": {
+          "trades": 13,
+          "execution_rejects": 0,
+          "net": -21.240324,
+          "profit_factor": 0.3942,
+          "drawdown": 0.038683,
+          "expectancy": -1.633871,
+          "winner_concentration": 0.6315362378200515
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.1,
+          "min_qty": 0.1,
+          "max_qty": 600000.0,
+          "min_notional": 5.0,
+          "tick": 0.0001
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 20,
+      "market": "perp:UNIUSDT",
+      "ts": 1791314197405,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "holdout: insufficient trades (7/10)",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: one winner accounts for over 40% of gains",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "breakout",
+          "lookback": 20,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-breakout-20-1.5",
+        "train": {
+          "trades": 30,
+          "execution_rejects": 0,
+          "net": 83.665229,
+          "profit_factor": 2.1479,
+          "drawdown": 0.016408,
+          "expectancy": 2.788841,
+          "winner_concentration": 0.06557381964730721
+        },
+        "validation": {
+          "trades": 14,
+          "execution_rejects": 0,
+          "net": 29.476006,
+          "profit_factor": 1.9133,
+          "drawdown": 0.027565,
+          "expectancy": 2.105429,
+          "winner_concentration": 0.1574628051584268
+        },
+        "holdout": {
+          "trades": 7,
+          "execution_rejects": 0,
+          "net": -30.941402,
+          "profit_factor": 0.0,
+          "drawdown": 0.030941,
+          "expectancy": -4.4202,
+          "winner_concentration": 1
+        },
+        "stress": {
+          "trades": 7,
+          "execution_rejects": 0,
+          "net": -33.681059,
+          "profit_factor": 0.0,
+          "drawdown": 0.033681,
+          "expectancy": -4.81158,
+          "winner_concentration": 1
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 1.0,
+          "min_qty": 1.0,
+          "max_qty": 100000.0,
+          "min_notional": 5.0,
+          "tick": 0.001
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 19,
+      "market": "perp:PUMPUSDT",
+      "ts": 1791314192075,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "breakout",
+          "lookback": 20,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-breakout-20-1.5",
+        "train": {
+          "trades": 31,
+          "execution_rejects": 0,
+          "net": 37.614794,
+          "profit_factor": 1.4049,
+          "drawdown": 0.036123,
+          "expectancy": 1.21338,
+          "winner_concentration": 0.07640197016245179
+        },
+        "validation": {
+          "trades": 11,
+          "execution_rejects": 0,
+          "net": 7.341088,
+          "profit_factor": 1.2291,
+          "drawdown": 0.020776,
+          "expectancy": 0.667372,
+          "winner_concentration": 0.24339388013286592
+        },
+        "holdout": {
+          "trades": 13,
+          "execution_rejects": 0,
+          "net": -16.863538,
+          "profit_factor": 0.6402,
+          "drawdown": 0.026238,
+          "expectancy": -1.297195,
+          "winner_concentration": 0.3158979684053986
+        },
+        "stress": {
+          "trades": 12,
+          "execution_rejects": 0,
+          "net": -15.108599,
+          "profit_factor": 0.6553,
+          "drawdown": 0.027728,
+          "expectancy": -1.25905,
+          "winner_concentration": 0.32165477035950757
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 1.0,
+          "min_qty": 1.0,
+          "max_qty": 90000000.0,
+          "min_notional": 5.0,
+          "tick": 1e-06
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 18,
+      "market": "perp:BNBUSDT",
+      "ts": 1791314186773,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "validation: profit factor below 1.2",
+          "holdout: insufficient trades (9/10)",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: one winner accounts for over 40% of gains",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "breakout",
+          "lookback": 20,
+          "stop_atr": 2.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-breakout-20-2.5",
+        "train": {
+          "trades": 24,
+          "execution_rejects": 0,
+          "net": 19.333051,
+          "profit_factor": 1.3567,
+          "drawdown": 0.032139,
+          "expectancy": 0.805544,
+          "winner_concentration": 0.12902177774108653
+        },
+        "validation": {
+          "trades": 10,
+          "execution_rejects": 0,
+          "net": 2.644761,
+          "profit_factor": 1.1125,
+          "drawdown": 0.020929,
+          "expectancy": 0.264476,
+          "winner_concentration": 0.3564580106000996
+        },
+        "holdout": {
+          "trades": 9,
+          "execution_rejects": 0,
+          "net": -18.91824,
+          "profit_factor": 0.4829,
+          "drawdown": 0.029382,
+          "expectancy": -2.102027,
+          "winner_concentration": 0.5180144657084031
+        },
+        "stress": {
+          "trades": 9,
+          "execution_rejects": 0,
+          "net": -26.070102,
+          "profit_factor": 0.3787,
+          "drawdown": 0.033906,
+          "expectancy": -2.896678,
+          "winner_concentration": 0.540200343427194
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.01,
+          "min_qty": 0.01,
+          "max_qty": 2000.0,
+          "min_notional": 5.0,
+          "tick": 0.01
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 17,
+      "market": "perp:QNTUSDT",
+      "ts": 1791314181442,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: nonpositive net after costs",
+          "train: profit factor below 1.2",
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2"
+        ],
+        "rule": {
+          "family": "pullback",
+          "lookback": 40,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-pullback-40-1.5",
+        "train": {
+          "trades": 40,
+          "execution_rejects": 0,
+          "net": -3.953034,
+          "profit_factor": 0.9662,
+          "drawdown": 0.043577,
+          "expectancy": -0.098826,
+          "winner_concentration": 0.07989734098894329
+        },
+        "validation": {
+          "trades": 17,
+          "execution_rejects": 0,
+          "net": -2.987771,
+          "profit_factor": 0.944,
+          "drawdown": 0.021682,
+          "expectancy": -0.175751,
+          "winner_concentration": 0.18108086991105288
+        },
+        "holdout": {
+          "trades": 10,
+          "execution_rejects": 0,
+          "net": 8.151361,
+          "profit_factor": 1.366,
+          "drawdown": 0.010849,
+          "expectancy": 0.815136,
+          "winner_concentration": 0.30648338008144127
+        },
+        "stress": {
+          "trades": 10,
+          "execution_rejects": 0,
+          "net": 3.631955,
+          "profit_factor": 1.1476,
+          "drawdown": 0.011518,
+          "expectancy": 0.363195,
+          "winner_concentration": 0.3133731503104334
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.1,
+          "min_qty": 0.1,
+          "max_qty": 3000.0,
+          "min_notional": 5.0,
+          "tick": 0.01
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 16,
+      "market": "perp:ORCAUSDT",
+      "ts": 1791314176115,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2",
+          "holdout: insufficient trades (2/10)",
+          "holdout: one winner accounts for over 40% of gains"
+        ],
+        "rule": {
+          "family": "reversion",
+          "lookback": 40,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-reversion-40-1.5",
+        "train": {
+          "trades": 24,
+          "execution_rejects": 0,
+          "net": 18.444225,
+          "profit_factor": 1.254,
+          "drawdown": 0.02231,
+          "expectancy": 0.768509,
+          "winner_concentration": 0.10202111255747401
+        },
+        "validation": {
+          "trades": 11,
+          "execution_rejects": 0,
+          "net": -26.946528,
+          "profit_factor": 0.4055,
+          "drawdown": 0.030874,
+          "expectancy": -2.449684,
+          "winner_concentration": 0.5000649444053321
+        },
+        "holdout": {
+          "trades": 2,
+          "execution_rejects": 0,
+          "net": 3.902604,
+          "profit_factor": 1.7131,
+          "drawdown": 0.006959,
+          "expectancy": 1.951302,
+          "winner_concentration": 1.0
+        },
+        "stress": {
+          "trades": 2,
+          "execution_rejects": 0,
+          "net": 2.960823,
+          "profit_factor": 1.4976,
+          "drawdown": 0.007911,
+          "expectancy": 1.480412,
+          "winner_concentration": 1.0
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.1,
+          "min_qty": 0.1,
+          "max_qty": 70000.0,
+          "min_notional": 5.0,
+          "tick": 0.001
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 15,
+      "market": "perp:ADAUSDT",
+      "ts": 1791314170804,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: nonpositive net after costs",
+          "train: profit factor below 1.2",
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: one winner accounts for over 40% of gains",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "pullback",
+          "lookback": 40,
+          "stop_atr": 2.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-pullback-40-2.5",
+        "train": {
+          "trades": 31,
+          "execution_rejects": 0,
+          "net": -7.103003,
+          "profit_factor": 0.9074,
+          "drawdown": 0.027571,
+          "expectancy": -0.229129,
+          "winner_concentration": 0.1365890526062169
+        },
+        "validation": {
+          "trades": 13,
+          "execution_rejects": 0,
+          "net": -21.117319,
+          "profit_factor": 0.4237,
+          "drawdown": 0.028846,
+          "expectancy": -1.624409,
+          "winner_concentration": 0.6001021791164591
+        },
+        "holdout": {
+          "trades": 15,
+          "execution_rejects": 0,
+          "net": -22.407024,
+          "profit_factor": 0.4605,
+          "drawdown": 0.031437,
+          "expectancy": -1.493802,
+          "winner_concentration": 0.49816365269756785
+        },
+        "stress": {
+          "trades": 15,
+          "execution_rejects": 0,
+          "net": -27.802156,
+          "profit_factor": 0.3859,
+          "drawdown": 0.035923,
+          "expectancy": -1.853477,
+          "winner_concentration": 0.523681668883683
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 1.0,
+          "min_qty": 1.0,
+          "max_qty": 3000000.0,
+          "min_notional": 5.0,
+          "tick": 0.0001
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 14,
+      "market": "perp:SUIUSDT",
+      "ts": 1791314165491,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: nonpositive net after costs",
+          "train: profit factor below 1.2",
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "breakout",
+          "lookback": 40,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-breakout-40-1.5",
+        "train": {
+          "trades": 20,
+          "execution_rejects": 0,
+          "net": -14.98566,
+          "profit_factor": 0.7873,
+          "drawdown": 0.037772,
+          "expectancy": -0.749283,
+          "winner_concentration": 0.17132256757210274
+        },
+        "validation": {
+          "trades": 11,
+          "execution_rejects": 0,
+          "net": -42.012597,
+          "profit_factor": 0.1813,
+          "drawdown": 0.043295,
+          "expectancy": -3.819327,
+          "winner_concentration": 1.0
+        },
+        "holdout": {
+          "trades": 12,
+          "execution_rejects": 0,
+          "net": -3.380066,
+          "profit_factor": 0.9179,
+          "drawdown": 0.020868,
+          "expectancy": -0.281672,
+          "winner_concentration": 0.2557263483997364
+        },
+        "stress": {
+          "trades": 12,
+          "execution_rejects": 0,
+          "net": -8.343347,
+          "profit_factor": 0.8108,
+          "drawdown": 0.023525,
+          "expectancy": -0.695279,
+          "winner_concentration": 0.2612461038537651
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.1,
+          "min_qty": 0.1,
+          "max_qty": 600000.0,
+          "min_notional": 5.0,
+          "tick": 0.0001
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 13,
+      "market": "perp:DOGEUSDT",
+      "ts": 1791314159814,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: nonpositive net after costs",
+          "train: profit factor below 1.2",
+          "validation: insufficient trades (7/10)",
+          "validation: profit factor below 1.2",
+          "holdout: insufficient trades (8/10)",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: one winner accounts for over 40% of gains",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "breakout",
+          "lookback": 20,
+          "stop_atr": 2.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-breakout-20-2.5",
+        "train": {
+          "trades": 21,
+          "execution_rejects": 0,
+          "net": -1.254989,
+          "profit_factor": 0.9789,
+          "drawdown": 0.051489,
+          "expectancy": -0.059761,
+          "winner_concentration": 0.1651899178087418
+        },
+        "validation": {
+          "trades": 7,
+          "execution_rejects": 0,
+          "net": 3.888559,
+          "profit_factor": 1.1975,
+          "drawdown": 0.01527,
+          "expectancy": 0.555508,
+          "winner_concentration": 0.3973433109902041
+        },
+        "holdout": {
+          "trades": 8,
+          "execution_rejects": 0,
+          "net": -1.110052,
+          "profit_factor": 0.9492,
+          "drawdown": 0.023567,
+          "expectancy": -0.138756,
+          "winner_concentration": 0.47120575049141583
+        },
+        "stress": {
+          "trades": 8,
+          "execution_rejects": 0,
+          "net": -4.339798,
+          "profit_factor": 0.8143,
+          "drawdown": 0.025184,
+          "expectancy": -0.542475,
+          "winner_concentration": 0.4973346907878941
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 1.0,
+          "min_qty": 1.0,
+          "max_qty": 30000000.0,
+          "min_notional": 5.0,
+          "tick": 1e-05
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 12,
+      "market": "perp:BRUSDT",
+      "ts": 1791314154486,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: nonpositive net after costs",
+          "train: profit factor below 1.2",
+          "validation: insufficient trades (9/10)",
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2",
+          "holdout: insufficient trades (9/10)",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: one winner accounts for over 40% of gains",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "pullback",
+          "lookback": 40,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-pullback-40-1.5",
+        "train": {
+          "trades": 30,
+          "execution_rejects": 0,
+          "net": -24.879511,
+          "profit_factor": 0.7224,
+          "drawdown": 0.030713,
+          "expectancy": -0.829317,
+          "winner_concentration": 0.14906886788190907
+        },
+        "validation": {
+          "trades": 9,
+          "execution_rejects": 0,
+          "net": -7.842579,
+          "profit_factor": 0.7294,
+          "drawdown": 0.021615,
+          "expectancy": -0.871398,
+          "winner_concentration": 0.45459545435431337
+        },
+        "holdout": {
+          "trades": 9,
+          "execution_rejects": 0,
+          "net": -14.552598,
+          "profit_factor": 0.5227,
+          "drawdown": 0.021405,
+          "expectancy": -1.616955,
+          "winner_concentration": 0.46933652107845986
+        },
+        "stress": {
+          "trades": 9,
+          "execution_rejects": 0,
+          "net": -16.139182,
+          "profit_factor": 0.4848,
+          "drawdown": 0.02226,
+          "expectancy": -1.793242,
+          "winner_concentration": 0.4772274410540661
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 1.0,
+          "min_qty": 1.0,
+          "max_qty": 500000.0,
+          "min_notional": 5.0,
+          "tick": 1e-05
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 11,
+      "market": "perp:HYPEUSDT",
+      "ts": 1791314149162,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: profit factor below 1.2",
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: one winner accounts for over 40% of gains",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "pullback",
+          "lookback": 40,
+          "stop_atr": 2.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-pullback-40-2.5",
+        "train": {
+          "trades": 33,
+          "execution_rejects": 0,
+          "net": 12.431972,
+          "profit_factor": 1.1711,
+          "drawdown": 0.031888,
+          "expectancy": 0.376726,
+          "winner_concentration": 0.11471259377854777
+        },
+        "validation": {
+          "trades": 12,
+          "execution_rejects": 0,
+          "net": -5.957502,
+          "profit_factor": 0.8185,
+          "drawdown": 0.013031,
+          "expectancy": -0.496458,
+          "winner_concentration": 0.3504438028992336
+        },
+        "holdout": {
+          "trades": 12,
+          "execution_rejects": 0,
+          "net": -14.285126,
+          "profit_factor": 0.5438,
+          "drawdown": 0.02453,
+          "expectancy": -1.190427,
+          "winner_concentration": 0.5530850486603135
+        },
+        "stress": {
+          "trades": 12,
+          "execution_rejects": 0,
+          "net": -23.493964,
+          "profit_factor": 0.3688,
+          "drawdown": 0.030976,
+          "expectancy": -1.95783,
+          "winner_concentration": 0.5416929340328288
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.01,
+          "min_qty": 0.01,
+          "max_qty": 20000.0,
+          "min_notional": 5.0,
+          "tick": 0.001
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 10,
+      "market": "spot:ETHUSDT",
+      "ts": 1791314142251,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: profit factor below 1.2",
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2",
+          "holdout: insufficient trades (5/10)",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: one winner accounts for over 40% of gains",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "reversion",
+          "lookback": 20,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-reversion-20-1.5",
+        "train": {
+          "trades": 23,
+          "execution_rejects": 0,
+          "net": 9.683528,
+          "profit_factor": 1.1499,
+          "drawdown": 0.035807,
+          "expectancy": 0.421023,
+          "winner_concentration": 0.11958010372989246
+        },
+        "validation": {
+          "trades": 16,
+          "execution_rejects": 0,
+          "net": -41.803654,
+          "profit_factor": 0.3788,
+          "drawdown": 0.043078,
+          "expectancy": -2.612728,
+          "winner_concentration": 0.3293078056161781
+        },
+        "holdout": {
+          "trades": 5,
+          "execution_rejects": 0,
+          "net": -9.427446,
+          "profit_factor": 0.4806,
+          "drawdown": 0.017967,
+          "expectancy": -1.885489,
+          "winner_concentration": 0.8391624350358021
+        },
+        "stress": {
+          "trades": 5,
+          "execution_rejects": 0,
+          "net": -20.365517,
+          "profit_factor": 0.1855,
+          "drawdown": 0.024954,
+          "expectancy": -4.073103,
+          "winner_concentration": 1.0
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.0001,
+          "min_qty": 0.0001,
+          "max_qty": 9000.0,
+          "min_notional": 5.0,
+          "tick": 0.01
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 9,
+      "market": "perp:NEARUSDT",
+      "ts": 1791314136931,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "validation: insufficient trades (9/10)",
+          "holdout: insufficient trades (3/10)",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: one winner accounts for over 40% of gains",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "reversion",
+          "lookback": 20,
+          "stop_atr": 2.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-reversion-20-2.5",
+        "train": {
+          "trades": 24,
+          "execution_rejects": 0,
+          "net": 11.875513,
+          "profit_factor": 1.2244,
+          "drawdown": 0.01622,
+          "expectancy": 0.494813,
+          "winner_concentration": 0.1459540191852957
+        },
+        "validation": {
+          "trades": 9,
+          "execution_rejects": 0,
+          "net": 9.23004,
+          "profit_factor": 1.405,
+          "drawdown": 0.015764,
+          "expectancy": 1.02556,
+          "winner_concentration": 0.29895385528225926
+        },
+        "holdout": {
+          "trades": 3,
+          "execution_rejects": 0,
+          "net": -6.937888,
+          "profit_factor": 0.1191,
+          "drawdown": 0.01127,
+          "expectancy": -2.312629,
+          "winner_concentration": 1.0
+        },
+        "stress": {
+          "trades": 3,
+          "execution_rejects": 0,
+          "net": -7.752488,
+          "profit_factor": 0.0819,
+          "drawdown": 0.01148,
+          "expectancy": -2.584163,
+          "winner_concentration": 1.0
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 1.0,
+          "min_qty": 1.0,
+          "max_qty": 400000.0,
+          "min_notional": 5.0,
+          "tick": 0.001
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 8,
+      "market": "perp:XRPUSDT",
+      "ts": 1791314131602,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: nonpositive net after costs",
+          "train: profit factor below 1.2",
+          "validation: insufficient trades (6/10)",
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2",
+          "holdout: insufficient trades (5/10)",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: one winner accounts for over 40% of gains",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "breakout",
+          "lookback": 40,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-breakout-40-1.5",
+        "train": {
+          "trades": 27,
+          "execution_rejects": 0,
+          "net": -2.715849,
+          "profit_factor": 0.9709,
+          "drawdown": 0.025797,
+          "expectancy": -0.100587,
+          "winner_concentration": 0.10738652112854206
+        },
+        "validation": {
+          "trades": 6,
+          "execution_rejects": 0,
+          "net": -31.538388,
+          "profit_factor": 0.0,
+          "drawdown": 0.031538,
+          "expectancy": -5.256398,
+          "winner_concentration": 1
+        },
+        "holdout": {
+          "trades": 5,
+          "execution_rejects": 0,
+          "net": -12.628919,
+          "profit_factor": 0.4251,
+          "drawdown": 0.024886,
+          "expectancy": -2.525784,
+          "winner_concentration": 1.0
+        },
+        "stress": {
+          "trades": 5,
+          "execution_rejects": 0,
+          "net": -15.09056,
+          "profit_factor": 0.3673,
+          "drawdown": 0.026245,
+          "expectancy": -3.018112,
+          "winner_concentration": 1.0
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.1,
+          "min_qty": 0.1,
+          "max_qty": 2000000.0,
+          "min_notional": 5.0,
+          "tick": 0.0001
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 7,
+      "market": "spot:BTCUSDT",
+      "ts": 1791314124450,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "train: nonpositive net after costs",
+          "train: profit factor below 1.2",
+          "validation: insufficient trades (3/10)",
+          "validation: nonpositive net after costs",
+          "validation: profit factor below 1.2",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "breakout",
+          "lookback": 20,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-breakout-20-1.5",
+        "train": {
+          "trades": 23,
+          "execution_rejects": 0,
+          "net": -34.63511,
+          "profit_factor": 0.6243,
+          "drawdown": 0.035074,
+          "expectancy": -1.505874,
+          "winner_concentration": 0.15288038468969148
+        },
+        "validation": {
+          "trades": 3,
+          "execution_rejects": 0,
+          "net": -20.941324,
+          "profit_factor": 0.0,
+          "drawdown": 0.021853,
+          "expectancy": -6.980441,
+          "winner_concentration": 1
+        },
+        "holdout": {
+          "trades": 13,
+          "execution_rejects": 0,
+          "net": -37.304874,
+          "profit_factor": 0.3811,
+          "drawdown": 0.037305,
+          "expectancy": -2.869606,
+          "winner_concentration": 0.3631873428407736
+        },
+        "stress": {
+          "trades": 16,
+          "execution_rejects": 0,
+          "net": -90.630906,
+          "profit_factor": 0.1346,
+          "drawdown": 0.090631,
+          "expectancy": -5.664432,
+          "winner_concentration": 0.4831396145004246
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 1e-05,
+          "min_qty": 1e-05,
+          "max_qty": 9000.0,
+          "min_notional": 5.0,
+          "tick": 0.01
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    },
+    {
+      "id": 6,
+      "market": "perp:RLCUSDT",
+      "ts": 1791314119079,
+      "state": "REJECTED",
+      "report": {
+        "state": "REJECTED",
+        "reasons": [
+          "holdout: insufficient trades (3/10)",
+          "holdout: nonpositive net after costs",
+          "holdout: profit factor below 1.2",
+          "holdout: one winner accounts for over 40% of gains",
+          "holdout: loses with doubled fees/slippage"
+        ],
+        "rule": {
+          "family": "reversion",
+          "lookback": 20,
+          "stop_atr": 1.5,
+          "max_hold": 24
+        },
+        "rule_key": "AR1-reversion-20-1.5",
+        "train": {
+          "trades": 22,
+          "execution_rejects": 0,
+          "net": 23.555662,
+          "profit_factor": 1.4445,
+          "drawdown": 0.045288,
+          "expectancy": 1.070712,
+          "winner_concentration": 0.12170876357381646
+        },
+        "validation": {
+          "trades": 17,
+          "execution_rejects": 0,
+          "net": 13.924524,
+          "profit_factor": 1.3152,
+          "drawdown": 0.01413,
+          "expectancy": 0.81909,
+          "winner_concentration": 0.16293727297080118
+        },
+        "holdout": {
+          "trades": 3,
+          "execution_rejects": 0,
+          "net": -8.808086,
+          "profit_factor": 0.1884,
+          "drawdown": 0.01761,
+          "expectancy": -2.936029,
+          "winner_concentration": 1.0
+        },
+        "stress": {
+          "trades": 3,
+          "execution_rejects": 0,
+          "net": -10.329252,
+          "profit_factor": 0.1216,
+          "drawdown": 0.018458,
+          "expectancy": -3.443084,
+          "winner_concentration": 1.0
+        },
+        "split": {
+          "train": [
+            1784404800000,
+            1788202800000
+          ],
+          "validation": [
+            1788202800000,
+            1789758000000
+          ],
+          "holdout": [
+            1789758000000,
+            1791313200000
+          ]
+        },
+        "variants_tried": 12,
+        "starting_paper_equity": 1000.0,
+        "constraints": {
+          "step": 0.1,
+          "min_qty": 0.1,
+          "max_qty": 200000.0,
+          "min_notional": 5.0,
+          "tick": 0.0001
+        },
+        "note": "Repeated searches remain subject to selection bias; independent forward paper evidence is required."
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": 2,
+      "ts": 1791314257875,
+      "kind": "paper_bot_created",
+      "detail": "perp:AAVEUSDT:AR1-breakout-20-2.5:1791314254036"
+    },
+    {
+      "id": 1,
+      "ts": 1791314054761,
+      "kind": "worker_started",
+      "detail": "Continuous Binance spot/perpetual public data research; paper-only execution"
+    }
+  ],
+  "execution": "PAPER_ONLY",
+  "quote_asset": "USDT",
+  "timeframe": "1h with completed UTC 4h context",
+  "read_only": true,
+  "scope": "All active Binance USDT spot and perpetual listings; deep study only when liquid"
+}

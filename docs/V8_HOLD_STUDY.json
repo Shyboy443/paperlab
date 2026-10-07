@@ -1,0 +1,301 @@
+{
+ "window_days": 60,
+ "all": {
+  "holds": {
+   "X1": {
+    "trades": 13181,
+    "win_rate": 0.346,
+    "avg_R": -0.2836,
+    "net_R_total": -3738.74,
+    "net_R_half1": -1873.36,
+    "net_R_half2": -1865.39,
+    "profit_factor": 0.517,
+    "median_hold_min": 45.0,
+    "exits": {
+     "time": 7501,
+     "stop": 3516,
+     "tp": 1860,
+     "reset": 304
+    }
+   },
+   "X2": {
+    "trades": 10928,
+    "win_rate": 0.373,
+    "avg_R": -0.2818,
+    "net_R_total": -3079.64,
+    "net_R_half1": -1550.13,
+    "net_R_half2": -1529.51,
+    "profit_factor": 0.595,
+    "median_hold_min": 53.6,
+    "exits": {
+     "time": 3699,
+     "stop": 4281,
+     "tp": 2539,
+     "reset": 409
+    }
+   },
+   "X4": {
+    "trades": 9522,
+    "win_rate": 0.39,
+    "avg_R": -0.2788,
+    "net_R_total": -2654.92,
+    "net_R_half1": -1295.27,
+    "net_R_half2": -1359.65,
+    "profit_factor": 0.646,
+    "median_hold_min": 50.3,
+    "exits": {
+     "stop": 4650,
+     "time": 1480,
+     "tp": 2896,
+     "reset": 496
+    }
+   },
+   "NONE": {
+    "trades": 8507,
+    "win_rate": 0.395,
+    "avg_R": -0.2806,
+    "net_R_total": -2386.97,
+    "net_R_half1": -1121.5,
+    "net_R_half2": -1265.47,
+    "profit_factor": 0.677,
+    "median_hold_min": 45.6,
+    "exits": {
+     "stop": 4791,
+     "tp": 3140,
+     "reset": 570,
+     "time": 6
+    }
+   }
+  },
+  "passing": [
+   "X2",
+   "X4",
+   "NONE"
+  ],
+  "decision": "NONE"
+ },
+ "per_family": {
+  "V8.1": {
+   "holds": {
+    "X1": {
+     "trades": 3669,
+     "win_rate": 0.337,
+     "avg_R": -0.2821,
+     "net_R_total": -1035.21,
+     "net_R_half1": -453.41,
+     "net_R_half2": -581.8,
+     "profit_factor": 0.535,
+     "median_hold_min": 45.0,
+     "exits": {
+      "time": 2156,
+      "stop": 903,
+      "tp": 512,
+      "reset": 98
+     }
+    },
+    "X2": {
+     "trades": 2902,
+     "win_rate": 0.359,
+     "avg_R": -0.2619,
+     "net_R_total": -760.12,
+     "net_R_half1": -369.03,
+     "net_R_half2": -391.09,
+     "profit_factor": 0.607,
+     "median_hold_min": 58.3,
+     "exits": {
+      "time": 1052,
+      "stop": 1071,
+      "tp": 660,
+      "reset": 119
+     }
+    },
+    "X4": {
+     "trades": 2430,
+     "win_rate": 0.384,
+     "avg_R": -0.261,
+     "net_R_total": -634.22,
+     "net_R_half1": -261.9,
+     "net_R_half2": -372.32,
+     "profit_factor": 0.662,
+     "median_hold_min": 55.3,
+     "exits": {
+      "stop": 1166,
+      "time": 391,
+      "tp": 739,
+      "reset": 134
+     }
+    },
+    "NONE": {
+     "trades": 2147,
+     "win_rate": 0.391,
+     "avg_R": -0.258,
+     "net_R_total": -553.96,
+     "net_R_half1": -206.94,
+     "net_R_half2": -347.02,
+     "profit_factor": 0.697,
+     "median_hold_min": 50.3,
+     "exits": {
+      "stop": 1200,
+      "tp": 793,
+      "reset": 153,
+      "time": 1
+     }
+    }
+   },
+   "passing": [
+    "X2",
+    "X4",
+    "NONE"
+   ],
+   "decision": "NONE"
+  },
+  "V8.2": {
+   "holds": {
+    "X1": {
+     "trades": 3592,
+     "win_rate": 0.324,
+     "avg_R": -0.2503,
+     "net_R_total": -899.21,
+     "net_R_half1": -484.47,
+     "net_R_half2": -414.74,
+     "profit_factor": 0.529,
+     "median_hold_min": 45.0,
+     "exits": {
+      "time": 2224,
+      "stop": 811,
+      "tp": 474,
+      "reset": 83
+     }
+    },
+    "X2": {
+     "trades": 3073,
+     "win_rate": 0.362,
+     "avg_R": -0.2468,
+     "net_R_total": -758.4,
+     "net_R_half1": -392.95,
+     "net_R_half2": -365.45,
+     "profit_factor": 0.624,
+     "median_hold_min": 60.6,
+     "exits": {
+      "stop": 1139,
+      "time": 1131,
+      "tp": 680,
+      "reset": 123
+     }
+    },
+    "X4": {
+     "trades": 2649,
+     "win_rate": 0.387,
+     "avg_R": -0.2222,
+     "net_R_total": -588.69,
+     "net_R_half1": -299.53,
+     "net_R_half2": -289.16,
+     "profit_factor": 0.698,
+     "median_hold_min": 59.6,
+     "exits": {
+      "stop": 1250,
+      "time": 467,
+      "tp": 783,
+      "reset": 149
+     }
+    },
+    "NONE": {
+     "trades": 2338,
+     "win_rate": 0.388,
+     "avg_R": -0.2296,
+     "net_R_total": -536.86,
+     "net_R_half1": -255.57,
+     "net_R_half2": -281.29,
+     "profit_factor": 0.723,
+     "median_hold_min": 55.3,
+     "exits": {
+      "stop": 1308,
+      "tp": 846,
+      "reset": 181,
+      "time": 3
+     }
+    }
+   },
+   "passing": [
+    "X2",
+    "X4",
+    "NONE"
+   ],
+   "decision": "NONE"
+  },
+  "V8.3": {
+   "holds": {
+    "X1": {
+     "trades": 5920,
+     "win_rate": 0.365,
+     "avg_R": -0.3048,
+     "net_R_total": -1804.32,
+     "net_R_half1": -935.48,
+     "net_R_half2": -868.84,
+     "profit_factor": 0.5,
+     "median_hold_min": 45.0,
+     "exits": {
+      "time": 3121,
+      "stop": 1802,
+      "tp": 874,
+      "reset": 123
+     }
+    },
+    "X2": {
+     "trades": 4953,
+     "win_rate": 0.388,
+     "avg_R": -0.3152,
+     "net_R_total": -1561.11,
+     "net_R_half1": -788.14,
+     "net_R_half2": -772.98,
+     "profit_factor": 0.573,
+     "median_hold_min": 45.3,
+     "exits": {
+      "stop": 2071,
+      "time": 1516,
+      "tp": 1199,
+      "reset": 167
+     }
+    },
+    "X4": {
+     "trades": 4443,
+     "win_rate": 0.396,
+     "avg_R": -0.3223,
+     "net_R_total": -1432.01,
+     "net_R_half1": -733.84,
+     "net_R_half2": -698.17,
+     "profit_factor": 0.61,
+     "median_hold_min": 41.3,
+     "exits": {
+      "stop": 2234,
+      "tp": 1374,
+      "time": 622,
+      "reset": 213
+     }
+    },
+    "NONE": {
+     "trades": 4022,
+     "win_rate": 0.402,
+     "avg_R": -0.3223,
+     "net_R_total": -1296.15,
+     "net_R_half1": -658.99,
+     "net_R_half2": -637.16,
+     "profit_factor": 0.643,
+     "median_hold_min": 39.0,
+     "exits": {
+      "stop": 2283,
+      "tp": 1501,
+      "reset": 236,
+      "time": 2
+     }
+    }
+   },
+   "passing": [
+    "X2",
+    "X4",
+    "NONE"
+   ],
+   "decision": "NONE"
+  }
+ }
+}

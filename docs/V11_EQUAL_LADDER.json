@@ -1,0 +1,610 @@
+{
+ "variants": {
+  "E050": [
+   0.5,
+   1.0,
+   1.5
+  ],
+  "E067": [
+   0.6666666666666666,
+   1.3333333333333333,
+   2.0
+  ],
+  "E075": [
+   0.75,
+   1.5,
+   2.25
+  ],
+  "E100": [
+   1.0,
+   2.0,
+   3.0
+  ]
+ },
+ "runs": [
+  {
+   "family": "V11.1",
+   "variant": "E050",
+   "rungs": [
+    0.5,
+    1.0,
+    1.5
+   ],
+   "guard": true,
+   "skipped": {
+    "gap_past_tp1": 1
+   },
+   "discovery": {
+    "trades": 427,
+    "per_day": 9.5,
+    "win": 0.489,
+    "net_r": -0.0945,
+    "pf": 0.727,
+    "net_usdt_per_day": -0.17
+   },
+   "confirmation": {
+    "trades": 220,
+    "per_day": 4.9,
+    "win": 0.545,
+    "net_r": -0.0304,
+    "pf": 0.91,
+    "net_usdt_per_day": -0.026
+   },
+   "all": {
+    "trades": 647,
+    "per_day": 7.2,
+    "win": 0.509,
+    "net_r": -0.0727,
+    "pf": 0.788,
+    "net_usdt_per_day": -0.098
+   }
+  },
+  {
+   "family": "V11.1",
+   "variant": "E067",
+   "rungs": [
+    0.6666666666666666,
+    1.3333333333333333,
+    2.0
+   ],
+   "guard": true,
+   "skipped": {},
+   "discovery": {
+    "trades": 401,
+    "per_day": 8.9,
+    "win": 0.489,
+    "net_r": -0.0923,
+    "pf": 0.761,
+    "net_usdt_per_day": -0.155
+   },
+   "confirmation": {
+    "trades": 214,
+    "per_day": 4.8,
+    "win": 0.509,
+    "net_r": -0.043,
+    "pf": 0.889,
+    "net_usdt_per_day": -0.032
+   },
+   "all": {
+    "trades": 615,
+    "per_day": 6.8,
+    "win": 0.496,
+    "net_r": -0.0751,
+    "pf": 0.806,
+    "net_usdt_per_day": -0.094
+   }
+  },
+  {
+   "family": "V11.1",
+   "variant": "E075",
+   "rungs": [
+    0.75,
+    1.5,
+    2.25
+   ],
+   "guard": true,
+   "skipped": {},
+   "discovery": {
+    "trades": 399,
+    "per_day": 8.9,
+    "win": 0.426,
+    "net_r": -0.1298,
+    "pf": 0.685,
+    "net_usdt_per_day": -0.217
+   },
+   "confirmation": {
+    "trades": 213,
+    "per_day": 4.7,
+    "win": 0.521,
+    "net_r": -0.0296,
+    "pf": 0.926,
+    "net_usdt_per_day": -0.026
+   },
+   "all": {
+    "trades": 612,
+    "per_day": 6.8,
+    "win": 0.459,
+    "net_r": -0.0949,
+    "pf": 0.767,
+    "net_usdt_per_day": -0.122
+   }
+  },
+  {
+   "family": "V11.1",
+   "variant": "E100",
+   "rungs": [
+    1.0,
+    2.0,
+    3.0
+   ],
+   "guard": true,
+   "skipped": {},
+   "discovery": {
+    "trades": 386,
+    "per_day": 8.6,
+    "win": 0.412,
+    "net_r": -0.146,
+    "pf": 0.678,
+    "net_usdt_per_day": -0.237
+   },
+   "confirmation": {
+    "trades": 207,
+    "per_day": 4.6,
+    "win": 0.507,
+    "net_r": -0.0291,
+    "pf": 0.931,
+    "net_usdt_per_day": -0.034
+   },
+   "all": {
+    "trades": 593,
+    "per_day": 6.6,
+    "win": 0.445,
+    "net_r": -0.1052,
+    "pf": 0.762,
+    "net_usdt_per_day": -0.135
+   }
+  },
+  {
+   "family": "V11.2",
+   "variant": "E050",
+   "rungs": [
+    0.5,
+    1.0,
+    1.5
+   ],
+   "guard": true,
+   "skipped": {
+    "gap_past_tp1": 2
+   },
+   "discovery": {
+    "trades": 575,
+    "per_day": 12.8,
+    "win": 0.457,
+    "net_r": -0.1738,
+    "pf": 0.599,
+    "net_usdt_per_day": -0.416
+   },
+   "confirmation": {
+    "trades": 484,
+    "per_day": 10.8,
+    "win": 0.533,
+    "net_r": -0.0298,
+    "pf": 0.91,
+    "net_usdt_per_day": -0.062
+   },
+   "all": {
+    "trades": 1059,
+    "per_day": 11.8,
+    "win": 0.492,
+    "net_r": -0.108,
+    "pf": 0.72,
+    "net_usdt_per_day": -0.239
+   }
+  },
+  {
+   "family": "V11.2",
+   "variant": "E067",
+   "rungs": [
+    0.6666666666666666,
+    1.3333333333333333,
+    2.0
+   ],
+   "guard": true,
+   "skipped": {
+    "gap_past_tp1": 1
+   },
+   "discovery": {
+    "trades": 553,
+    "per_day": 12.3,
+    "win": 0.45,
+    "net_r": -0.2126,
+    "pf": 0.581,
+    "net_usdt_per_day": -0.493
+   },
+   "confirmation": {
+    "trades": 460,
+    "per_day": 10.2,
+    "win": 0.539,
+    "net_r": -0.066,
+    "pf": 0.839,
+    "net_usdt_per_day": -0.131
+   },
+   "all": {
+    "trades": 1013,
+    "per_day": 11.3,
+    "win": 0.491,
+    "net_r": -0.146,
+    "pf": 0.685,
+    "net_usdt_per_day": -0.312
+   }
+  },
+  {
+   "family": "V11.2",
+   "variant": "E075",
+   "rungs": [
+    0.75,
+    1.5,
+    2.25
+   ],
+   "guard": true,
+   "skipped": {},
+   "discovery": {
+    "trades": 545,
+    "per_day": 12.1,
+    "win": 0.433,
+    "net_r": -0.2447,
+    "pf": 0.549,
+    "net_usdt_per_day": -0.559
+   },
+   "confirmation": {
+    "trades": 449,
+    "per_day": 10.0,
+    "win": 0.523,
+    "net_r": -0.0766,
+    "pf": 0.826,
+    "net_usdt_per_day": -0.15
+   },
+   "all": {
+    "trades": 994,
+    "per_day": 11.0,
+    "win": 0.474,
+    "net_r": -0.1687,
+    "pf": 0.66,
+    "net_usdt_per_day": -0.354
+   }
+  },
+  {
+   "family": "V11.2",
+   "variant": "E100",
+   "rungs": [
+    1.0,
+    2.0,
+    3.0
+   ],
+   "guard": true,
+   "skipped": {},
+   "discovery": {
+    "trades": 526,
+    "per_day": 11.7,
+    "win": 0.405,
+    "net_r": -0.2616,
+    "pf": 0.557,
+    "net_usdt_per_day": -0.574
+   },
+   "confirmation": {
+    "trades": 430,
+    "per_day": 9.6,
+    "win": 0.484,
+    "net_r": -0.0679,
+    "pf": 0.865,
+    "net_usdt_per_day": -0.12
+   },
+   "all": {
+    "trades": 956,
+    "per_day": 10.6,
+    "win": 0.44,
+    "net_r": -0.1745,
+    "pf": 0.683,
+    "net_usdt_per_day": -0.347
+   }
+  },
+  {
+   "family": "V11.3",
+   "variant": "E050",
+   "rungs": [
+    0.5,
+    1.0,
+    1.5
+   ],
+   "guard": true,
+   "skipped": {
+    "gap_past_tp1": 122,
+    "gap_past_stop": 5
+   },
+   "discovery": {
+    "trades": 4098,
+    "per_day": 91.1,
+    "win": 0.359,
+    "net_r": -0.2699,
+    "pf": 0.433,
+    "net_usdt_per_day": -4.13
+   },
+   "confirmation": {
+    "trades": 3916,
+    "per_day": 87.0,
+    "win": 0.407,
+    "net_r": -0.223,
+    "pf": 0.515,
+    "net_usdt_per_day": -3.076
+   },
+   "all": {
+    "trades": 8014,
+    "per_day": 89.0,
+    "win": 0.382,
+    "net_r": -0.247,
+    "pf": 0.472,
+    "net_usdt_per_day": -3.603
+   }
+  },
+  {
+   "family": "V11.3",
+   "variant": "E067",
+   "rungs": [
+    0.6666666666666666,
+    1.3333333333333333,
+    2.0
+   ],
+   "guard": true,
+   "skipped": {
+    "gap_past_tp1": 41,
+    "gap_past_stop": 6
+   },
+   "discovery": {
+    "trades": 3666,
+    "per_day": 81.5,
+    "win": 0.372,
+    "net_r": -0.294,
+    "pf": 0.468,
+    "net_usdt_per_day": -4.075
+   },
+   "confirmation": {
+    "trades": 3632,
+    "per_day": 80.7,
+    "win": 0.407,
+    "net_r": -0.2301,
+    "pf": 0.563,
+    "net_usdt_per_day": -2.992
+   },
+   "all": {
+    "trades": 7298,
+    "per_day": 81.1,
+    "win": 0.39,
+    "net_r": -0.2622,
+    "pf": 0.514,
+    "net_usdt_per_day": -3.533
+   }
+  },
+  {
+   "family": "V11.3",
+   "variant": "E075",
+   "rungs": [
+    0.75,
+    1.5,
+    2.25
+   ],
+   "guard": true,
+   "skipped": {
+    "gap_past_tp1": 28,
+    "gap_past_stop": 7
+   },
+   "discovery": {
+    "trades": 3483,
+    "per_day": 77.4,
+    "win": 0.38,
+    "net_r": -0.2936,
+    "pf": 0.488,
+    "net_usdt_per_day": -3.9
+   },
+   "confirmation": {
+    "trades": 3446,
+    "per_day": 76.6,
+    "win": 0.409,
+    "net_r": -0.2505,
+    "pf": 0.555,
+    "net_usdt_per_day": -3.046
+   },
+   "all": {
+    "trades": 6929,
+    "per_day": 77.0,
+    "win": 0.394,
+    "net_r": -0.2722,
+    "pf": 0.521,
+    "net_usdt_per_day": -3.473
+   }
+  },
+  {
+   "family": "V11.3",
+   "variant": "E100",
+   "rungs": [
+    1.0,
+    2.0,
+    3.0
+   ],
+   "guard": true,
+   "skipped": {
+    "gap_past_stop": 7,
+    "gap_past_tp1": 6
+   },
+   "discovery": {
+    "trades": 3218,
+    "per_day": 71.5,
+    "win": 0.386,
+    "net_r": -0.3157,
+    "pf": 0.504,
+    "net_usdt_per_day": -3.914
+   },
+   "confirmation": {
+    "trades": 3174,
+    "per_day": 70.5,
+    "win": 0.416,
+    "net_r": -0.2525,
+    "pf": 0.601,
+    "net_usdt_per_day": -2.898
+   },
+   "all": {
+    "trades": 6392,
+    "per_day": 71.0,
+    "win": 0.401,
+    "net_r": -0.2843,
+    "pf": 0.552,
+    "net_usdt_per_day": -3.406
+   }
+  },
+  {
+   "family": "V11.4",
+   "variant": "E050",
+   "rungs": [
+    0.5,
+    1.0,
+    1.5
+   ],
+   "guard": true,
+   "skipped": {},
+   "discovery": {
+    "trades": 3529,
+    "per_day": 78.4,
+    "win": 0.434,
+    "net_r": -0.0595,
+    "pf": 0.627,
+    "net_usdt_per_day": -0.909
+   },
+   "confirmation": {
+    "trades": 2369,
+    "per_day": 52.6,
+    "win": 0.443,
+    "net_r": -0.0622,
+    "pf": 0.627,
+    "net_usdt_per_day": -0.704
+   },
+   "all": {
+    "trades": 5898,
+    "per_day": 65.5,
+    "win": 0.438,
+    "net_r": -0.0606,
+    "pf": 0.627,
+    "net_usdt_per_day": -0.807
+   }
+  },
+  {
+   "family": "V11.4",
+   "variant": "E067",
+   "rungs": [
+    0.6666666666666666,
+    1.3333333333333333,
+    2.0
+   ],
+   "guard": true,
+   "skipped": {},
+   "discovery": {
+    "trades": 3526,
+    "per_day": 78.4,
+    "win": 0.431,
+    "net_r": -0.0608,
+    "pf": 0.619,
+    "net_usdt_per_day": -0.924
+   },
+   "confirmation": {
+    "trades": 2366,
+    "per_day": 52.6,
+    "win": 0.443,
+    "net_r": -0.0626,
+    "pf": 0.626,
+    "net_usdt_per_day": -0.705
+   },
+   "all": {
+    "trades": 5892,
+    "per_day": 65.5,
+    "win": 0.436,
+    "net_r": -0.0615,
+    "pf": 0.622,
+    "net_usdt_per_day": -0.814
+   }
+  },
+  {
+   "family": "V11.4",
+   "variant": "E075",
+   "rungs": [
+    0.75,
+    1.5,
+    2.25
+   ],
+   "guard": true,
+   "skipped": {},
+   "discovery": {
+    "trades": 3526,
+    "per_day": 78.4,
+    "win": 0.43,
+    "net_r": -0.0624,
+    "pf": 0.612,
+    "net_usdt_per_day": -0.95
+   },
+   "confirmation": {
+    "trades": 2364,
+    "per_day": 52.5,
+    "win": 0.442,
+    "net_r": -0.0638,
+    "pf": 0.621,
+    "net_usdt_per_day": -0.72
+   },
+   "all": {
+    "trades": 5890,
+    "per_day": 65.4,
+    "win": 0.435,
+    "net_r": -0.063,
+    "pf": 0.615,
+    "net_usdt_per_day": -0.835
+   }
+  },
+  {
+   "family": "V11.4",
+   "variant": "E100",
+   "rungs": [
+    1.0,
+    2.0,
+    3.0
+   ],
+   "guard": true,
+   "skipped": {},
+   "discovery": {
+    "trades": 3526,
+    "per_day": 78.4,
+    "win": 0.43,
+    "net_r": -0.0638,
+    "pf": 0.604,
+    "net_usdt_per_day": -0.973
+   },
+   "confirmation": {
+    "trades": 2364,
+    "per_day": 52.5,
+    "win": 0.441,
+    "net_r": -0.0649,
+    "pf": 0.616,
+    "net_usdt_per_day": -0.736
+   },
+   "all": {
+    "trades": 5890,
+    "per_day": 65.4,
+    "win": 0.434,
+    "net_r": -0.0642,
+    "pf": 0.609,
+    "net_usdt_per_day": -0.855
+   }
+  }
+ ],
+ "picks": {
+  "V11.1": "E067",
+  "V11.2": "E050",
+  "V11.3": "E050",
+  "V11.4": "E050"
+ }
+}

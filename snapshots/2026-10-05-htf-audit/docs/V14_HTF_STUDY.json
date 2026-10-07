@@ -1,0 +1,144 @@
+{
+ "built": "2026-10-04 11:07 UTC",
+ "rules": " (2026-10-04, before the first run):\n  Data: the research store's Bybit 1m bars (data/research/market.duckdb, 2026-06-26 .. 2026-10-02), 30 coins; the first\n  14 days are warm-up (the HTF rule needs 300 hourly candles); the rest is split into a first and a second half.\n  Pairs, each strategy exactly as it runs live, once WITHOUT and once WITH the HTF rule (app/strategies/v14/htf.py):\n    V14.1  V8.3 VWAP snap-back on V8's 6 coins (LevelMakerEngineV8, resting targets, 3 h hold)\n    V14.2  V11.1 relative-strength breakout scanner, 30 coins (ScanReplayEngine, 25/50/25 ladder, resting targets)\n    V14.3  V11.2 relative-strength pullback scanner, 30 coins (same)\n    V14.4  V13.1 Snapback, 29 coins (LimitEntryEngineV13, post-only limit entries)\n  Book: 20 USDT, SizingV6 (1% risk, hard cap 2%), reset daily; fees by role, funding, 60 s latency.\n  VERDICT per strategy: \"HTF HELPS\" only if the HTF version's net R per trade beats the copy without it in BOTH halves;\n  otherwise \"HTF DOES NOT HELP\". Reported too: trades, win rate, profit factor, net USDT. The V14 bots run forward on\n  paper whatever the verdict (the operator asked for them), each labelled with its strategy's verdict.\n",
+ "results": {
+  "V14.1": {
+   "BASE": {
+    "trades": 3376,
+    "per_day": 40.67,
+    "win": 0.437,
+    "net_r": -0.0937,
+    "net_r_half1": -0.1053,
+    "net_r_half2": -0.0837,
+    "pf": 0.778,
+    "net_usdt": -66.94,
+    "exits": {
+     "tp": 528,
+     "time": 1801,
+     "stop": 1047
+    }
+   },
+   "HTF": {
+    "trades": 1463,
+    "per_day": 17.63,
+    "win": 0.412,
+    "net_r": -0.1201,
+    "net_r_half1": -0.0986,
+    "net_r_half2": -0.141,
+    "pf": 0.717,
+    "net_usdt": -36.06,
+    "exits": {
+     "tp": 212,
+     "time": 828,
+     "stop": 423
+    }
+   }
+  },
+  "V14.2": {
+   "BASE": {
+    "trades": 544,
+    "per_day": 6.55,
+    "win": 0.551,
+    "net_r": -0.0672,
+    "net_r_half1": -0.0529,
+    "net_r_half2": -0.1004,
+    "pf": 0.811,
+    "net_usdt": -6.5,
+    "exits": {
+     "time": 179,
+     "be": 153,
+     "tp": 73,
+     "stop": 139
+    }
+   },
+   "HTF": {
+    "trades": 479,
+    "per_day": 5.77,
+    "win": 0.532,
+    "net_r": -0.0851,
+    "net_r_half1": -0.0785,
+    "net_r_half2": -0.1004,
+    "pf": 0.771,
+    "net_usdt": -7.85,
+    "exits": {
+     "be": 128,
+     "time": 152,
+     "tp": 68,
+     "stop": 131
+    }
+   }
+  },
+  "V14.3": {
+   "BASE": {
+    "trades": 924,
+    "per_day": 11.13,
+    "win": 0.655,
+    "net_r": -0.0399,
+    "net_r_half1": -0.0704,
+    "net_r_half2": -0.0067,
+    "pf": 0.864,
+    "net_usdt": -7.08,
+    "exits": {
+     "be": 452,
+     "tp": 125,
+     "stop": 215,
+     "time": 132
+    }
+   },
+   "HTF": {
+    "trades": 771,
+    "per_day": 9.29,
+    "win": 0.652,
+    "net_r": -0.04,
+    "net_r_half1": -0.086,
+    "net_r_half2": 0.0116,
+    "pf": 0.865,
+    "net_usdt": -5.78,
+    "exits": {
+     "be": 367,
+     "stop": 181,
+     "time": 113,
+     "tp": 110
+    }
+   }
+  },
+  "V14.4": {
+   "BASE": {
+    "trades": 684,
+    "per_day": 8.24,
+    "win": 0.557,
+    "net_r": -0.0503,
+    "net_r_half1": -0.0728,
+    "net_r_half2": -0.0259,
+    "pf": 0.884,
+    "net_usdt": -6.13,
+    "exits": {
+     "tp": 353,
+     "stop": 264,
+     "time": 67
+    }
+   },
+   "HTF": {
+    "trades": 36,
+    "per_day": 0.43,
+    "win": 0.667,
+    "net_r": 0.1171,
+    "net_r_half1": 0.0547,
+    "net_r_half2": 0.1869,
+    "pf": 1.352,
+    "net_usdt": 0.71,
+    "exits": {
+     "tp": 22,
+     "stop": 10,
+     "time": 4
+    }
+   }
+  }
+ },
+ "verdicts": {
+  "V14.1": "HTF DOES NOT HELP",
+  "V14.2": "HTF DOES NOT HELP",
+  "V14.3": "HTF DOES NOT HELP",
+  "V14.4": "HTF HELPS"
+ }
+}

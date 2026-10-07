@@ -1,0 +1,1003 @@
+{
+ "protocol": "V31_AGGRESSIVE_EDGE_PROTOCOL_V1",
+ "written_ts": 1790211771918,
+ "statement": "Written before any TEST month (2026-05..2026-08) was downloaded. The TEST run must match every fingerprint here; the ADVANCED SET is the bots that pass every gate on DEVELOPMENT and on TEST, and stays NONE if none do.",
+ "fingerprints": {
+  "v3_base": "33d10d257921",
+  "base": "0de866f0754c",
+  "S33.1": "05629760d058",
+  "S35.1": "21ad7d9b13c9",
+  "S37": "4a357437251a",
+  "jev_prompt": "6dc3edafd6250578",
+  "jev_policy": "99fc4089f1e22c97"
+ },
+ "config_fingerprint": "e55c6ed46328c78b",
+ "config": {
+  "protocol": "V31_AGGRESSIVE_EDGE_PROTOCOL_V1",
+  "dataset_role": "TEST",
+  "months": [
+   "2026-04",
+   "2026-05",
+   "2026-06",
+   "2026-07",
+   "2026-08"
+  ],
+  "observe_from": "2025-10-11",
+  "trade_from": "2026-05-01",
+  "trade_to": "2026-08-31",
+  "coins": [
+   "ZEC",
+   "UNI",
+   "HYPE",
+   "SUI",
+   "ARB",
+   "TAO",
+   "PENGU",
+   "ENA",
+   "AAVE",
+   "ZRO"
+  ],
+  "timeframes": [
+   "3m",
+   "5m",
+   "15m",
+   "30m"
+  ],
+  "starting_balance": 20.0,
+  "capacity_balances": [
+   50.0,
+   100.0
+  ],
+  "leverage_ceiling": 20,
+  "fees": {
+   "maker_rate": 0.0002,
+   "taker_rate": 0.00055,
+   "source": "bybit_linear",
+   "updated_at": "2026-09-23"
+  },
+  "execution": {
+   "level": 1,
+   "base_slippage_bps": 0.1,
+   "vol_component": 0.02,
+   "size_component": 0.0,
+   "slippage_mult": 1.0,
+   "force_taker": false,
+   "signal_latency_ms": 250,
+   "order_latency_ms": 150
+  },
+  "max_fee_share_of_r": 0.25,
+  "min_notional_safety_multiplier": 1.0,
+  "leverage_policy": "needed",
+  "edge": {
+   "shrinkage_k": 30.0,
+   "min_family_n": 30,
+   "take_margin_r": 0.05,
+   "attack_lower_r": 0.1,
+   "attack_headroom_ratio": 2.0,
+   "attack_min_quality": 0.6,
+   "exceptional_lower_r": 0.2,
+   "exceptional_quality": 0.85,
+   "quality_bands": [
+    0.4,
+    0.6
+   ],
+   "evidence": "RAW observation ledger (every legal candidate, simulated at TAKE size, non-overlapping)"
+  },
+  "maker": {
+   "wait_minutes": [
+    5,
+    15
+   ],
+   "convert_within_stop_frac": 0.25,
+   "conservative_through_ticks": 1,
+   "conservative_through_bps": 1.0
+  },
+  "field_min_pairs": 20,
+  "field_target_pairs": 30,
+  "field_coins_per_slot": 3,
+  "seed": 7,
+  "random_seeds": 20,
+  "permutations": 2000,
+  "gates": {
+   "min_net_profit": 0.0,
+   "min_expectancy_r": 0.0,
+   "min_profit_factor": 1.1,
+   "max_drawdown_pct": 0.3,
+   "max_liquidations": 0,
+   "positive_without_top3": true,
+   "max_top3_share": 0.6,
+   "max_skip_rate": 0.8,
+   "random_percentile": 0.9,
+   "min_delta_vs_control": 0.5,
+   "min_auc_low": 0.5,
+   "max_error_rate": 0.02,
+   "max_latency_p95_ms": 2000.0,
+   "catastrophic_drawdown": 0.3
+  },
+  "strategy_fingerprints": {
+   "S33.1": "05629760d058",
+   "S35.1": "21ad7d9b13c9",
+   "S37": "4a357437251a",
+   "base": "0de866f0754c",
+   "v3_base": "33d10d257921"
+  },
+  "jev_fingerprints": {
+   "policy": "99fc4089f1e22c97",
+   "prompt": "6dc3edafd6250578",
+   "prompt_version": "JEV_PROMPT_V3",
+   "state_version": "JEV_STATE_V3"
+  },
+  "edge_model_fingerprint": "99eb832170728587",
+  "venue": "BYBIT_LINEAR",
+  "price_tape": "BINANCE_USDM_1M",
+  "rules_source": "bybit v5 instruments-info (linear) @ 1790181583389",
+  "risk_profile": {
+   "name": "AGGRESSIVE_V31",
+   "starting_balance": 20.0,
+   "max_leverage": 20,
+   "ordinary_risk_pct": 0.01,
+   "strong_risk_pct": 0.015,
+   "exceptional_risk_pct": 0.02,
+   "max_risk_pct": 0.02,
+   "attack_multiplier": 1.5,
+   "defensive_multiplier": 1.0,
+   "health_window": 20,
+   "attack_min_trades": 0,
+   "attack_min_expectancy_r": -0.25,
+   "attack_max_drawdown": 0.18,
+   "defensive_expectancy_r": -9.0,
+   "defensive_drawdown": 1.0,
+   "halt_drawdown": 0.3,
+   "strong_quality": 0.6,
+   "exceptional_quality": 0.85,
+   "attack_min_edge_to_cost": 2.0
+  },
+  "tier_risk": {
+   "TAKE": 0.01,
+   "ATTACK": 0.015,
+   "STRONG_ATTACK": 0.02
+  },
+  "participation_per_day": {
+   "3m": 2.0,
+   "5m": 1.5,
+   "15m": 0.5,
+   "30m": 0.25
+  },
+  "participation_min_trades": {
+   "3m": 246,
+   "5m": 185,
+   "15m": 62,
+   "30m": 31
+  }
+ },
+ "jev": {
+  "prompt_version": "JEV_PROMPT_V3",
+  "state_version": "JEV_STATE_V3",
+  "policy": {
+   "version": "JEV_POLICY_V3",
+   "multipliers": {
+    "SKIP": 0.0,
+    "TAKE": 1.0,
+    "ATTACK": 1.5,
+    "STRONG_ATTACK": 2.0
+   },
+   "strong_attack_prob": 0.6,
+   "strong_needs_exceptional_edge": true,
+   "attack_rule": "v31_config.attack_tier: edge ATTACK-eligible + bot health OK",
+   "on_error": "SKIP"
+  },
+  "questions": {
+   "support": {
+    "type": "noul",
+    "instructions": "An intraday trading bot's rule-based strategy proposes the candidate trade in `signal` for one crypto perpetual. The candidate has ALREADY passed deterministic checks: it is a legal exchange order, its execution cost is known, and a model fitted on this strategy's own past candidates predicts a positive expected net edge after fees, spread and slippage (`expected_edge`). Given that this setup has already passed deterministic legality, execution-cost and positive-edge checks, determine whether current market conditions SUPPORT or CONTRADICT the strategy's setup (`thesis`, `signal`), using the multi-timeframe, momentum, volume, flow, volatility, execution, derivatives and bot-health data in this state.",
+    "criteria": {
+     "true": "Current conditions support the setup, or at least do not materially contradict its direction and thesis.",
+     "false": "Current conditions materially contradict the setup: the higher-timeframe structure is against the direction, the move is exhausted, or momentum and flow point the other way."
+    }
+   },
+   "action": {
+    "type": "choice",
+    "instructions": "Choose the action for this candidate. It already passed legality, execution-cost and positive-edge checks, so TAKE is the normal action for a setup that remains valid. A continuation strategy with a trailing runner can win fewer than half of its trades and still have a positive expectancy: judge the setup against the evidence, not the chance of a single loss. Distinguish an ordinary opportunity (TAKE) from an exceptional one (ATTACK) and from one the evidence contradicts (SKIP).",
+    "criteria": {
+     "SKIP": "The evidence in this state materially contradicts the setup: direction against the higher-timeframe structure, an exhausted move, opposing momentum or taker flow, or conditions that invalidate the thesis. Do not trade.",
+     "TAKE": "The setup remains valid: nothing in this state materially contradicts it. Trade at normal size.",
+     "ATTACK": "Exceptional: multiple independent conditions strongly reinforce the setup -- higher timeframes aligned with the direction, momentum and relative volume building, taker flow agreeing, and an expected net edge well above the execution cost. Trade above normal size."
+    }
+   }
+  },
+  "model": "typesafe/jev-1.13 (pinned by JEV_MODEL)"
+ },
+ "risk": {
+  "profile": {
+   "name": "AGGRESSIVE_V31",
+   "starting_balance": 20.0,
+   "max_leverage": 20,
+   "ordinary_risk_pct": 0.01,
+   "strong_risk_pct": 0.015,
+   "exceptional_risk_pct": 0.02,
+   "max_risk_pct": 0.02,
+   "attack_multiplier": 1.5,
+   "defensive_multiplier": 1.0,
+   "health_window": 20,
+   "attack_min_trades": 0,
+   "attack_min_expectancy_r": -0.25,
+   "attack_max_drawdown": 0.18,
+   "defensive_expectancy_r": -9.0,
+   "defensive_drawdown": 1.0,
+   "halt_drawdown": 0.3,
+   "strong_quality": 0.6,
+   "exceptional_quality": 0.85,
+   "attack_min_edge_to_cost": 2.0
+  },
+  "tier_risk": {
+   "TAKE": 0.01,
+   "ATTACK": 0.015,
+   "STRONG_ATTACK": 0.02
+  }
+ },
+ "edge_gate": {
+  "shrinkage_k": 30.0,
+  "min_family_n": 30,
+  "take_margin_r": 0.05,
+  "attack_lower_r": 0.1,
+  "attack_headroom_ratio": 2.0,
+  "attack_min_quality": 0.6,
+  "exceptional_lower_r": 0.2,
+  "exceptional_quality": 0.85,
+  "quality_bands": [
+   0.4,
+   0.6
+  ],
+  "evidence": "RAW observation ledger (every legal candidate, simulated at TAKE size, non-overlapping)"
+ },
+ "maker": {
+  "wait_minutes": [
+   5,
+   15
+  ],
+  "convert_within_stop_frac": 0.25,
+  "conservative_through_ticks": 1,
+  "conservative_through_bps": 1.0
+ },
+ "gates": {
+  "min_net_profit": 0.0,
+  "min_expectancy_r": 0.0,
+  "min_profit_factor": 1.1,
+  "max_drawdown_pct": 0.3,
+  "max_liquidations": 0,
+  "positive_without_top3": true,
+  "max_top3_share": 0.6,
+  "max_skip_rate": 0.8,
+  "random_percentile": 0.9,
+  "min_delta_vs_control": 0.5,
+  "min_auc_low": 0.5,
+  "max_error_rate": 0.02,
+  "max_latency_p95_ms": 2000.0,
+  "catastrophic_drawdown": 0.3
+ },
+ "evidence": {
+  "run_id": "v31-46d2e9af7d",
+  "fingerprint": "99eb832170728587",
+  "observations": 24994,
+  "until": "2026-04-30 23:59:59 UTC (exit time)",
+  "by_family_tf": {
+   "S33.1 15m": 1123,
+   "S33.1 30m": 403,
+   "S33.1 3m": 4737,
+   "S33.1 5m": 3255,
+   "S35.1 15m": 920,
+   "S35.1 30m": 322,
+   "S35.1 3m": 4698,
+   "S35.1 5m": 3198,
+   "S37 15m": 2128,
+   "S37 30m": 1074,
+   "S37 3m": 1662,
+   "S37 5m": 1474
+  }
+ },
+ "field": {
+  "pairs": [
+   {
+    "strategy_id": "S33.1",
+    "coin": "ZEC",
+    "timeframe": "3m",
+    "activity": 119,
+    "extended": false
+   },
+   {
+    "strategy_id": "S33.1",
+    "coin": "SUI",
+    "timeframe": "3m",
+    "activity": 42,
+    "extended": false
+   },
+   {
+    "strategy_id": "S33.1",
+    "coin": "PENGU",
+    "timeframe": "3m",
+    "activity": 38,
+    "extended": false
+   },
+   {
+    "strategy_id": "S35.1",
+    "coin": "ARB",
+    "timeframe": "3m",
+    "activity": 47,
+    "extended": false
+   },
+   {
+    "strategy_id": "S35.1",
+    "coin": "ZEC",
+    "timeframe": "3m",
+    "activity": 31,
+    "extended": false
+   },
+   {
+    "strategy_id": "S35.1",
+    "coin": "AAVE",
+    "timeframe": "3m",
+    "activity": 13,
+    "extended": true
+   },
+   {
+    "strategy_id": "S37",
+    "coin": "UNI",
+    "timeframe": "3m",
+    "activity": 33,
+    "extended": false
+   },
+   {
+    "strategy_id": "S37",
+    "coin": "AAVE",
+    "timeframe": "3m",
+    "activity": 14,
+    "extended": true
+   },
+   {
+    "strategy_id": "S37",
+    "coin": "PENGU",
+    "timeframe": "3m",
+    "activity": 13,
+    "extended": true
+   },
+   {
+    "strategy_id": "S33.1",
+    "coin": "ZEC",
+    "timeframe": "5m",
+    "activity": 130,
+    "extended": false
+   },
+   {
+    "strategy_id": "S33.1",
+    "coin": "PENGU",
+    "timeframe": "5m",
+    "activity": 27,
+    "extended": true
+   },
+   {
+    "strategy_id": "S33.1",
+    "coin": "ARB",
+    "timeframe": "5m",
+    "activity": 20,
+    "extended": true
+   },
+   {
+    "strategy_id": "S35.1",
+    "coin": "UNI",
+    "timeframe": "5m",
+    "activity": 60,
+    "extended": false
+   },
+   {
+    "strategy_id": "S35.1",
+    "coin": "ZEC",
+    "timeframe": "5m",
+    "activity": 59,
+    "extended": false
+   },
+   {
+    "strategy_id": "S35.1",
+    "coin": "SUI",
+    "timeframe": "5m",
+    "activity": 24,
+    "extended": true
+   },
+   {
+    "strategy_id": "S37",
+    "coin": "UNI",
+    "timeframe": "5m",
+    "activity": 27,
+    "extended": true
+   },
+   {
+    "strategy_id": "S37",
+    "coin": "ENA",
+    "timeframe": "5m",
+    "activity": 13,
+    "extended": true
+   },
+   {
+    "strategy_id": "S33.1",
+    "coin": "ZEC",
+    "timeframe": "15m",
+    "activity": 87,
+    "extended": false
+   },
+   {
+    "strategy_id": "S33.1",
+    "coin": "UNI",
+    "timeframe": "15m",
+    "activity": 38,
+    "extended": false
+   },
+   {
+    "strategy_id": "S33.1",
+    "coin": "ENA",
+    "timeframe": "15m",
+    "activity": 32,
+    "extended": false
+   },
+   {
+    "strategy_id": "S35.1",
+    "coin": "ZEC",
+    "timeframe": "15m",
+    "activity": 28,
+    "extended": true
+   },
+   {
+    "strategy_id": "S35.1",
+    "coin": "UNI",
+    "timeframe": "15m",
+    "activity": 13,
+    "extended": true
+   },
+   {
+    "strategy_id": "S35.1",
+    "coin": "ARB",
+    "timeframe": "15m",
+    "activity": 10,
+    "extended": true
+   },
+   {
+    "strategy_id": "S37",
+    "coin": "TAO",
+    "timeframe": "15m",
+    "activity": 71,
+    "extended": false
+   },
+   {
+    "strategy_id": "S37",
+    "coin": "UNI",
+    "timeframe": "15m",
+    "activity": 35,
+    "extended": false
+   },
+   {
+    "strategy_id": "S37",
+    "coin": "ZEC",
+    "timeframe": "15m",
+    "activity": 16,
+    "extended": true
+   },
+   {
+    "strategy_id": "S35.1",
+    "coin": "UNI",
+    "timeframe": "30m",
+    "activity": 10,
+    "extended": true
+   },
+   {
+    "strategy_id": "S37",
+    "coin": "ZEC",
+    "timeframe": "30m",
+    "activity": 38,
+    "extended": false
+   },
+   {
+    "strategy_id": "S37",
+    "coin": "UNI",
+    "timeframe": "30m",
+    "activity": 19,
+    "extended": true
+   },
+   {
+    "strategy_id": "S37",
+    "coin": "TAO",
+    "timeframe": "30m",
+    "activity": 17,
+    "extended": true
+   }
+  ],
+  "n": 30,
+  "thin_slots": [
+   {
+    "strategy_id": "S35.1",
+    "timeframe": "3m",
+    "eligible": 2,
+    "best": [
+     {
+      "coin": "ARB",
+      "entries": 47
+     },
+     {
+      "coin": "ZEC",
+      "entries": 31
+     },
+     {
+      "coin": "AAVE",
+      "entries": 13
+     }
+    ]
+   },
+   {
+    "strategy_id": "S37",
+    "timeframe": "3m",
+    "eligible": 1,
+    "best": [
+     {
+      "coin": "UNI",
+      "entries": 33
+     },
+     {
+      "coin": "AAVE",
+      "entries": 14
+     },
+     {
+      "coin": "PENGU",
+      "entries": 13
+     }
+    ]
+   },
+   {
+    "strategy_id": "S33.1",
+    "timeframe": "5m",
+    "eligible": 1,
+    "best": [
+     {
+      "coin": "ZEC",
+      "entries": 130
+     },
+     {
+      "coin": "PENGU",
+      "entries": 27
+     },
+     {
+      "coin": "ARB",
+      "entries": 20
+     }
+    ]
+   },
+   {
+    "strategy_id": "S35.1",
+    "timeframe": "5m",
+    "eligible": 2,
+    "best": [
+     {
+      "coin": "UNI",
+      "entries": 60
+     },
+     {
+      "coin": "ZEC",
+      "entries": 59
+     },
+     {
+      "coin": "SUI",
+      "entries": 24
+     }
+    ]
+   },
+   {
+    "strategy_id": "S37",
+    "timeframe": "5m",
+    "eligible": 0,
+    "best": [
+     {
+      "coin": "UNI",
+      "entries": 27
+     },
+     {
+      "coin": "ENA",
+      "entries": 13
+     },
+     {
+      "coin": "ARB",
+      "entries": 8
+     }
+    ]
+   },
+   {
+    "strategy_id": "S35.1",
+    "timeframe": "15m",
+    "eligible": 0,
+    "best": [
+     {
+      "coin": "ZEC",
+      "entries": 28
+     },
+     {
+      "coin": "UNI",
+      "entries": 13
+     },
+     {
+      "coin": "ARB",
+      "entries": 10
+     }
+    ]
+   },
+   {
+    "strategy_id": "S37",
+    "timeframe": "15m",
+    "eligible": 2,
+    "best": [
+     {
+      "coin": "TAO",
+      "entries": 71
+     },
+     {
+      "coin": "UNI",
+      "entries": 35
+     },
+     {
+      "coin": "ZEC",
+      "entries": 16
+     }
+    ]
+   },
+   {
+    "strategy_id": "S33.1",
+    "timeframe": "30m",
+    "eligible": 0,
+    "best": [
+     {
+      "coin": "ENA",
+      "entries": 1
+     },
+     {
+      "coin": "TAO",
+      "entries": 1
+     },
+     {
+      "coin": "AAVE",
+      "entries": 0
+     }
+    ]
+   },
+   {
+    "strategy_id": "S35.1",
+    "timeframe": "30m",
+    "eligible": 0,
+    "best": [
+     {
+      "coin": "UNI",
+      "entries": 10
+     },
+     {
+      "coin": "SUI",
+      "entries": 3
+     },
+     {
+      "coin": "TAO",
+      "entries": 2
+     }
+    ]
+   },
+   {
+    "strategy_id": "S37",
+    "timeframe": "30m",
+    "eligible": 1,
+    "best": [
+     {
+      "coin": "ZEC",
+      "entries": 38
+     },
+     {
+      "coin": "UNI",
+      "entries": 19
+     },
+     {
+      "coin": "TAO",
+      "entries": 17
+     }
+    ]
+   }
+  ],
+  "meets_minimum": true,
+  "rule": "activity only: top 3 coins per family x timeframe by executed entries (>= 30), ties alphabetical; never PnL",
+  "preregistered": {
+   "pairs": 15,
+   "status": "BELOW_MINIMUM",
+   "rule": "activity only: top 3 coins per family x timeframe by executed entries (>= 30), ties alphabetical; never PnL"
+  },
+  "amendment": {
+   "id": 1,
+   "floor": 10,
+   "added": 15,
+   "decided_ts": 1790200102830,
+   "basis": "executed-entry counts of the DEVELOPMENT CONTROL bots only; no PnL and no Jev answer read",
+   "rule": "top 3 coins per family x timeframe by executed entries, floor lowered from 30 to 10 (the highest floor reaching the 30-pair target); ties alphabetical; EXTENDED pairs keep every gate"
+  }
+ },
+ "dev_passed": [],
+ "identities": {
+  "CONTROL": [
+   "S33.1-ZEC-3m-CONTROL@20x",
+   "S33.1-ZEC-5m-CONTROL@20x",
+   "S33.1-ZEC-15m-CONTROL@20x",
+   "S33.1-ZEC-30m-CONTROL@20x",
+   "S33.1-UNI-3m-CONTROL@20x",
+   "S33.1-UNI-5m-CONTROL@20x",
+   "S33.1-UNI-15m-CONTROL@20x",
+   "S33.1-UNI-30m-CONTROL@20x",
+   "S33.1-HYPE-3m-CONTROL@20x",
+   "S33.1-HYPE-5m-CONTROL@20x",
+   "S33.1-HYPE-15m-CONTROL@20x",
+   "S33.1-HYPE-30m-CONTROL@20x",
+   "S33.1-SUI-3m-CONTROL@20x",
+   "S33.1-SUI-5m-CONTROL@20x",
+   "S33.1-SUI-15m-CONTROL@20x",
+   "S33.1-SUI-30m-CONTROL@20x",
+   "S33.1-ARB-3m-CONTROL@20x",
+   "S33.1-ARB-5m-CONTROL@20x",
+   "S33.1-ARB-15m-CONTROL@20x",
+   "S33.1-ARB-30m-CONTROL@20x",
+   "S33.1-TAO-3m-CONTROL@20x",
+   "S33.1-TAO-5m-CONTROL@20x",
+   "S33.1-TAO-15m-CONTROL@20x",
+   "S33.1-TAO-30m-CONTROL@20x",
+   "S33.1-PENGU-3m-CONTROL@20x",
+   "S33.1-PENGU-5m-CONTROL@20x",
+   "S33.1-PENGU-15m-CONTROL@20x",
+   "S33.1-PENGU-30m-CONTROL@20x",
+   "S33.1-ENA-3m-CONTROL@20x",
+   "S33.1-ENA-5m-CONTROL@20x",
+   "S33.1-ENA-15m-CONTROL@20x",
+   "S33.1-ENA-30m-CONTROL@20x",
+   "S33.1-AAVE-3m-CONTROL@20x",
+   "S33.1-AAVE-5m-CONTROL@20x",
+   "S33.1-AAVE-15m-CONTROL@20x",
+   "S33.1-AAVE-30m-CONTROL@20x",
+   "S33.1-ZRO-3m-CONTROL@20x",
+   "S33.1-ZRO-5m-CONTROL@20x",
+   "S33.1-ZRO-15m-CONTROL@20x",
+   "S33.1-ZRO-30m-CONTROL@20x",
+   "S35.1-ZEC-3m-CONTROL@20x",
+   "S35.1-ZEC-5m-CONTROL@20x",
+   "S35.1-ZEC-15m-CONTROL@20x",
+   "S35.1-ZEC-30m-CONTROL@20x",
+   "S35.1-UNI-3m-CONTROL@20x",
+   "S35.1-UNI-5m-CONTROL@20x",
+   "S35.1-UNI-15m-CONTROL@20x",
+   "S35.1-UNI-30m-CONTROL@20x",
+   "S35.1-HYPE-3m-CONTROL@20x",
+   "S35.1-HYPE-5m-CONTROL@20x",
+   "S35.1-HYPE-15m-CONTROL@20x",
+   "S35.1-HYPE-30m-CONTROL@20x",
+   "S35.1-SUI-3m-CONTROL@20x",
+   "S35.1-SUI-5m-CONTROL@20x",
+   "S35.1-SUI-15m-CONTROL@20x",
+   "S35.1-SUI-30m-CONTROL@20x",
+   "S35.1-ARB-3m-CONTROL@20x",
+   "S35.1-ARB-5m-CONTROL@20x",
+   "S35.1-ARB-15m-CONTROL@20x",
+   "S35.1-ARB-30m-CONTROL@20x",
+   "S35.1-TAO-3m-CONTROL@20x",
+   "S35.1-TAO-5m-CONTROL@20x",
+   "S35.1-TAO-15m-CONTROL@20x",
+   "S35.1-TAO-30m-CONTROL@20x",
+   "S35.1-PENGU-3m-CONTROL@20x",
+   "S35.1-PENGU-5m-CONTROL@20x",
+   "S35.1-PENGU-15m-CONTROL@20x",
+   "S35.1-PENGU-30m-CONTROL@20x",
+   "S35.1-ENA-3m-CONTROL@20x",
+   "S35.1-ENA-5m-CONTROL@20x",
+   "S35.1-ENA-15m-CONTROL@20x",
+   "S35.1-ENA-30m-CONTROL@20x",
+   "S35.1-AAVE-3m-CONTROL@20x",
+   "S35.1-AAVE-5m-CONTROL@20x",
+   "S35.1-AAVE-15m-CONTROL@20x",
+   "S35.1-AAVE-30m-CONTROL@20x",
+   "S35.1-ZRO-3m-CONTROL@20x",
+   "S35.1-ZRO-5m-CONTROL@20x",
+   "S35.1-ZRO-15m-CONTROL@20x",
+   "S35.1-ZRO-30m-CONTROL@20x",
+   "S37-ZEC-3m-CONTROL@20x",
+   "S37-ZEC-5m-CONTROL@20x",
+   "S37-ZEC-15m-CONTROL@20x",
+   "S37-ZEC-30m-CONTROL@20x",
+   "S37-UNI-3m-CONTROL@20x",
+   "S37-UNI-5m-CONTROL@20x",
+   "S37-UNI-15m-CONTROL@20x",
+   "S37-UNI-30m-CONTROL@20x",
+   "S37-HYPE-3m-CONTROL@20x",
+   "S37-HYPE-5m-CONTROL@20x",
+   "S37-HYPE-15m-CONTROL@20x",
+   "S37-HYPE-30m-CONTROL@20x",
+   "S37-SUI-3m-CONTROL@20x",
+   "S37-SUI-5m-CONTROL@20x",
+   "S37-SUI-15m-CONTROL@20x",
+   "S37-SUI-30m-CONTROL@20x",
+   "S37-ARB-3m-CONTROL@20x",
+   "S37-ARB-5m-CONTROL@20x",
+   "S37-ARB-15m-CONTROL@20x",
+   "S37-ARB-30m-CONTROL@20x",
+   "S37-TAO-3m-CONTROL@20x",
+   "S37-TAO-5m-CONTROL@20x",
+   "S37-TAO-15m-CONTROL@20x",
+   "S37-TAO-30m-CONTROL@20x",
+   "S37-PENGU-3m-CONTROL@20x",
+   "S37-PENGU-5m-CONTROL@20x",
+   "S37-PENGU-15m-CONTROL@20x",
+   "S37-PENGU-30m-CONTROL@20x",
+   "S37-ENA-3m-CONTROL@20x",
+   "S37-ENA-5m-CONTROL@20x",
+   "S37-ENA-15m-CONTROL@20x",
+   "S37-ENA-30m-CONTROL@20x",
+   "S37-AAVE-3m-CONTROL@20x",
+   "S37-AAVE-5m-CONTROL@20x",
+   "S37-AAVE-15m-CONTROL@20x",
+   "S37-AAVE-30m-CONTROL@20x",
+   "S37-ZRO-3m-CONTROL@20x",
+   "S37-ZRO-5m-CONTROL@20x",
+   "S37-ZRO-15m-CONTROL@20x",
+   "S37-ZRO-30m-CONTROL@20x"
+  ],
+  "JEV": [
+   "S33.1-ZEC-3m-JEV3@20x",
+   "S33.1-SUI-3m-JEV3@20x",
+   "S33.1-PENGU-3m-JEV3@20x",
+   "S35.1-ARB-3m-JEV3@20x",
+   "S35.1-ZEC-3m-JEV3@20x",
+   "S35.1-AAVE-3m-JEV3@20x",
+   "S37-UNI-3m-JEV3@20x",
+   "S37-AAVE-3m-JEV3@20x",
+   "S37-PENGU-3m-JEV3@20x",
+   "S33.1-ZEC-5m-JEV3@20x",
+   "S33.1-PENGU-5m-JEV3@20x",
+   "S33.1-ARB-5m-JEV3@20x",
+   "S35.1-UNI-5m-JEV3@20x",
+   "S35.1-ZEC-5m-JEV3@20x",
+   "S35.1-SUI-5m-JEV3@20x",
+   "S37-UNI-5m-JEV3@20x",
+   "S37-ENA-5m-JEV3@20x",
+   "S33.1-ZEC-15m-JEV3@20x",
+   "S33.1-UNI-15m-JEV3@20x",
+   "S33.1-ENA-15m-JEV3@20x",
+   "S35.1-ZEC-15m-JEV3@20x",
+   "S35.1-UNI-15m-JEV3@20x",
+   "S35.1-ARB-15m-JEV3@20x",
+   "S37-TAO-15m-JEV3@20x",
+   "S37-UNI-15m-JEV3@20x",
+   "S37-ZEC-15m-JEV3@20x",
+   "S35.1-UNI-30m-JEV3@20x",
+   "S37-ZEC-30m-JEV3@20x",
+   "S37-UNI-30m-JEV3@20x",
+   "S37-TAO-30m-JEV3@20x"
+  ],
+  "TAKE": [
+   "S33.1-ZEC-3m-TAKE@20x",
+   "S33.1-SUI-3m-TAKE@20x",
+   "S33.1-PENGU-3m-TAKE@20x",
+   "S35.1-ARB-3m-TAKE@20x",
+   "S35.1-ZEC-3m-TAKE@20x",
+   "S35.1-AAVE-3m-TAKE@20x",
+   "S37-UNI-3m-TAKE@20x",
+   "S37-AAVE-3m-TAKE@20x",
+   "S37-PENGU-3m-TAKE@20x",
+   "S33.1-ZEC-5m-TAKE@20x",
+   "S33.1-PENGU-5m-TAKE@20x",
+   "S33.1-ARB-5m-TAKE@20x",
+   "S35.1-UNI-5m-TAKE@20x",
+   "S35.1-ZEC-5m-TAKE@20x",
+   "S35.1-SUI-5m-TAKE@20x",
+   "S37-UNI-5m-TAKE@20x",
+   "S37-ENA-5m-TAKE@20x",
+   "S33.1-ZEC-15m-TAKE@20x",
+   "S33.1-UNI-15m-TAKE@20x",
+   "S33.1-ENA-15m-TAKE@20x",
+   "S35.1-ZEC-15m-TAKE@20x",
+   "S35.1-UNI-15m-TAKE@20x",
+   "S35.1-ARB-15m-TAKE@20x",
+   "S37-TAO-15m-TAKE@20x",
+   "S37-UNI-15m-TAKE@20x",
+   "S37-ZEC-15m-TAKE@20x",
+   "S35.1-UNI-30m-TAKE@20x",
+   "S37-ZEC-30m-TAKE@20x",
+   "S37-UNI-30m-TAKE@20x",
+   "S37-TAO-30m-TAKE@20x"
+  ],
+  "RANDOM": "20 seeds per field pair, action rates from that pair's TEST +JEV3 bot",
+  "CAPACITY": [
+   "S33.1-ZEC-3m-CAP50@20x",
+   "S33.1-ZEC-3m-CAP100@20x",
+   "S33.1-SUI-3m-CAP50@20x",
+   "S33.1-SUI-3m-CAP100@20x",
+   "S33.1-PENGU-3m-CAP50@20x",
+   "S33.1-PENGU-3m-CAP100@20x",
+   "S35.1-ARB-3m-CAP50@20x",
+   "S35.1-ARB-3m-CAP100@20x",
+   "S35.1-ZEC-3m-CAP50@20x",
+   "S35.1-ZEC-3m-CAP100@20x",
+   "S35.1-AAVE-3m-CAP50@20x",
+   "S35.1-AAVE-3m-CAP100@20x",
+   "S37-UNI-3m-CAP50@20x",
+   "S37-UNI-3m-CAP100@20x",
+   "S37-AAVE-3m-CAP50@20x",
+   "S37-AAVE-3m-CAP100@20x",
+   "S37-PENGU-3m-CAP50@20x",
+   "S37-PENGU-3m-CAP100@20x",
+   "S33.1-ZEC-5m-CAP50@20x",
+   "S33.1-ZEC-5m-CAP100@20x",
+   "S33.1-PENGU-5m-CAP50@20x",
+   "S33.1-PENGU-5m-CAP100@20x",
+   "S33.1-ARB-5m-CAP50@20x",
+   "S33.1-ARB-5m-CAP100@20x",
+   "S35.1-UNI-5m-CAP50@20x",
+   "S35.1-UNI-5m-CAP100@20x",
+   "S35.1-ZEC-5m-CAP50@20x",
+   "S35.1-ZEC-5m-CAP100@20x",
+   "S35.1-SUI-5m-CAP50@20x",
+   "S35.1-SUI-5m-CAP100@20x",
+   "S37-UNI-5m-CAP50@20x",
+   "S37-UNI-5m-CAP100@20x",
+   "S37-ENA-5m-CAP50@20x",
+   "S37-ENA-5m-CAP100@20x",
+   "S33.1-ZEC-15m-CAP50@20x",
+   "S33.1-ZEC-15m-CAP100@20x",
+   "S33.1-UNI-15m-CAP50@20x",
+   "S33.1-UNI-15m-CAP100@20x",
+   "S33.1-ENA-15m-CAP50@20x",
+   "S33.1-ENA-15m-CAP100@20x",
+   "S35.1-ZEC-15m-CAP50@20x",
+   "S35.1-ZEC-15m-CAP100@20x",
+   "S35.1-UNI-15m-CAP50@20x",
+   "S35.1-UNI-15m-CAP100@20x",
+   "S35.1-ARB-15m-CAP50@20x",
+   "S35.1-ARB-15m-CAP100@20x",
+   "S37-TAO-15m-CAP50@20x",
+   "S37-TAO-15m-CAP100@20x",
+   "S37-UNI-15m-CAP50@20x",
+   "S37-UNI-15m-CAP100@20x",
+   "S37-ZEC-15m-CAP50@20x",
+   "S37-ZEC-15m-CAP100@20x",
+   "S35.1-UNI-30m-CAP50@20x",
+   "S35.1-UNI-30m-CAP100@20x",
+   "S37-ZEC-30m-CAP50@20x",
+   "S37-ZEC-30m-CAP100@20x",
+   "S37-UNI-30m-CAP50@20x",
+   "S37-UNI-30m-CAP100@20x",
+   "S37-TAO-30m-CAP50@20x",
+   "S37-TAO-30m-CAP100@20x"
+  ]
+ },
+ "data": {
+  "months": [
+   "2026-04",
+   "2026-05",
+   "2026-06",
+   "2026-07",
+   "2026-08"
+  ],
+  "warmup_month": "2026-04",
+  "trade_from": "2026-05-01",
+  "trade_to": "2026-08-31",
+  "archive_dir": "/data/v31test",
+  "source": "https://data.binance.vision/data/futures/um (SHA-256 verified)",
+  "kinds": [
+   "klines",
+   "fundingRate"
+  ],
+  "symbols": [
+   "ZECUSDT",
+   "UNIUSDT",
+   "HYPEUSDT",
+   "SUIUSDT",
+   "ARBUSDT",
+   "TAOUSDT",
+   "PENGUUSDT",
+   "ENAUSDT",
+   "AAVEUSDT",
+   "ZROUSDT"
+  ],
+  "rules": "bybit v5 instruments-info (linear)"
+ }
+}

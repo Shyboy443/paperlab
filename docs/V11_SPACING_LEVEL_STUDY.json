@@ -1,0 +1,618 @@
+{
+ "runs": [
+  {
+   "family": "V11.3",
+   "split": "F25",
+   "lock": "T33",
+   "k": 0.5,
+   "level_fills": true,
+   "discovery": {
+    "trades": 4445,
+    "per_day": 98.8,
+    "win": 0.634,
+    "net_r": -0.2006,
+    "pf": 0.438,
+    "tp1_hits": 2519,
+    "tp1_then_loss": 120,
+    "tp1_then_loss_pct": 0.0476
+   },
+   "confirmation": {
+    "trades": 4206,
+    "per_day": 93.5,
+    "win": 0.654,
+    "net_r": -0.1637,
+    "pf": 0.523,
+    "tp1_hits": 2460,
+    "tp1_then_loss": 125,
+    "tp1_then_loss_pct": 0.0508
+   },
+   "all": {
+    "trades": 8651,
+    "per_day": 96.1,
+    "win": 0.644,
+    "net_r": -0.1827,
+    "pf": 0.478,
+    "tp1_hits": 4979,
+    "tp1_then_loss": 245,
+    "tp1_then_loss_pct": 0.0492
+   }
+  },
+  {
+   "family": "V11.3",
+   "split": "F25",
+   "lock": "T33",
+   "k": 0.6667,
+   "level_fills": true,
+   "discovery": {
+    "trades": 4136,
+    "per_day": 91.9,
+    "win": 0.612,
+    "net_r": -0.2022,
+    "pf": 0.478,
+    "tp1_hits": 1846,
+    "tp1_then_loss": 35,
+    "tp1_then_loss_pct": 0.019
+   },
+   "confirmation": {
+    "trades": 4077,
+    "per_day": 90.6,
+    "win": 0.65,
+    "net_r": -0.1524,
+    "pf": 0.581,
+    "tp1_hits": 1947,
+    "tp1_then_loss": 35,
+    "tp1_then_loss_pct": 0.018
+   },
+   "all": {
+    "trades": 8213,
+    "per_day": 91.3,
+    "win": 0.631,
+    "net_r": -0.1775,
+    "pf": 0.528,
+    "tp1_hits": 3793,
+    "tp1_then_loss": 70,
+    "tp1_then_loss_pct": 0.0185
+   }
+  },
+  {
+   "family": "V11.3",
+   "split": "F25",
+   "lock": "T33",
+   "k": 0.75,
+   "level_fills": true,
+   "discovery": {
+    "trades": 4022,
+    "per_day": 89.4,
+    "win": 0.609,
+    "net_r": -0.2033,
+    "pf": 0.485,
+    "tp1_hits": 1544,
+    "tp1_then_loss": 15,
+    "tp1_then_loss_pct": 0.0097
+   },
+   "confirmation": {
+    "trades": 3983,
+    "per_day": 88.5,
+    "win": 0.648,
+    "net_r": -0.1545,
+    "pf": 0.582,
+    "tp1_hits": 1688,
+    "tp1_then_loss": 17,
+    "tp1_then_loss_pct": 0.0101
+   },
+   "all": {
+    "trades": 8005,
+    "per_day": 88.9,
+    "win": 0.628,
+    "net_r": -0.179,
+    "pf": 0.532,
+    "tp1_hits": 3232,
+    "tp1_then_loss": 32,
+    "tp1_then_loss_pct": 0.0099
+   }
+  },
+  {
+   "family": "V11.3",
+   "split": "F25",
+   "lock": "T33",
+   "k": 1.0,
+   "level_fills": true,
+   "discovery": {
+    "trades": 3897,
+    "per_day": 86.6,
+    "win": 0.596,
+    "net_r": -0.2113,
+    "pf": 0.478,
+    "tp1_hits": 1024,
+    "tp1_then_loss": 8,
+    "tp1_then_loss_pct": 0.0078
+   },
+   "confirmation": {
+    "trades": 3860,
+    "per_day": 85.8,
+    "win": 0.633,
+    "net_r": -0.1559,
+    "pf": 0.593,
+    "tp1_hits": 1169,
+    "tp1_then_loss": 10,
+    "tp1_then_loss_pct": 0.0086
+   },
+   "all": {
+    "trades": 7757,
+    "per_day": 86.2,
+    "win": 0.615,
+    "net_r": -0.1837,
+    "pf": 0.534,
+    "tp1_hits": 2193,
+    "tp1_then_loss": 18,
+    "tp1_then_loss_pct": 0.0082
+   }
+  },
+  {
+   "family": "V11.1",
+   "split": "F25",
+   "lock": "FEES",
+   "k": 0.5,
+   "level_fills": true,
+   "discovery": {
+    "trades": 430,
+    "per_day": 9.6,
+    "win": 0.588,
+    "net_r": -0.0961,
+    "pf": 0.706,
+    "tp1_hits": 246,
+    "tp1_then_loss": 2,
+    "tp1_then_loss_pct": 0.0081
+   },
+   "confirmation": {
+    "trades": 220,
+    "per_day": 4.9,
+    "win": 0.641,
+    "net_r": -0.0462,
+    "pf": 0.858,
+    "tp1_hits": 134,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "all": {
+    "trades": 650,
+    "per_day": 7.2,
+    "win": 0.606,
+    "net_r": -0.0792,
+    "pf": 0.757,
+    "tp1_hits": 380,
+    "tp1_then_loss": 2,
+    "tp1_then_loss_pct": 0.0053
+   }
+  },
+  {
+   "family": "V11.1",
+   "split": "F25",
+   "lock": "FEES",
+   "k": 0.6667,
+   "level_fills": true,
+   "discovery": {
+    "trades": 404,
+    "per_day": 9.0,
+    "win": 0.542,
+    "net_r": -0.0972,
+    "pf": 0.73,
+    "tp1_hits": 192,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "confirmation": {
+    "trades": 214,
+    "per_day": 4.8,
+    "win": 0.598,
+    "net_r": -0.0482,
+    "pf": 0.865,
+    "tp1_hits": 105,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "all": {
+    "trades": 618,
+    "per_day": 6.9,
+    "win": 0.561,
+    "net_r": -0.0802,
+    "pf": 0.777,
+    "tp1_hits": 297,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   }
+  },
+  {
+   "family": "V11.1",
+   "split": "F25",
+   "lock": "FEES",
+   "k": 0.75,
+   "level_fills": true,
+   "discovery": {
+    "trades": 403,
+    "per_day": 9.0,
+    "win": 0.504,
+    "net_r": -0.1246,
+    "pf": 0.665,
+    "tp1_hits": 154,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "confirmation": {
+    "trades": 213,
+    "per_day": 4.7,
+    "win": 0.592,
+    "net_r": -0.0439,
+    "pf": 0.879,
+    "tp1_hits": 97,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "all": {
+    "trades": 616,
+    "per_day": 6.8,
+    "win": 0.534,
+    "net_r": -0.0967,
+    "pf": 0.738,
+    "tp1_hits": 251,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   }
+  },
+  {
+   "family": "V11.1",
+   "split": "F25",
+   "lock": "FEES",
+   "k": 1.0,
+   "level_fills": true,
+   "discovery": {
+    "trades": 394,
+    "per_day": 8.8,
+    "win": 0.49,
+    "net_r": -0.1239,
+    "pf": 0.674,
+    "tp1_hits": 115,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "confirmation": {
+    "trades": 209,
+    "per_day": 4.6,
+    "win": 0.584,
+    "net_r": -0.0411,
+    "pf": 0.888,
+    "tp1_hits": 78,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "all": {
+    "trades": 603,
+    "per_day": 6.7,
+    "win": 0.522,
+    "net_r": -0.0952,
+    "pf": 0.747,
+    "tp1_hits": 193,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   }
+  },
+  {
+   "family": "V11.2",
+   "split": "F25",
+   "lock": "T50",
+   "k": 0.5,
+   "level_fills": true,
+   "discovery": {
+    "trades": 582,
+    "per_day": 12.9,
+    "win": 0.627,
+    "net_r": -0.1597,
+    "pf": 0.572,
+    "tp1_hits": 345,
+    "tp1_then_loss": 2,
+    "tp1_then_loss_pct": 0.0058
+   },
+   "confirmation": {
+    "trades": 495,
+    "per_day": 11.0,
+    "win": 0.721,
+    "net_r": -0.0203,
+    "pf": 0.929,
+    "tp1_hits": 326,
+    "tp1_then_loss": 1,
+    "tp1_then_loss_pct": 0.0031
+   },
+   "all": {
+    "trades": 1077,
+    "per_day": 12.0,
+    "win": 0.67,
+    "net_r": -0.0956,
+    "pf": 0.712,
+    "tp1_hits": 671,
+    "tp1_then_loss": 3,
+    "tp1_then_loss_pct": 0.0045
+   }
+  },
+  {
+   "family": "V11.2",
+   "split": "F25",
+   "lock": "T50",
+   "k": 0.6667,
+   "level_fills": true,
+   "discovery": {
+    "trades": 573,
+    "per_day": 12.7,
+    "win": 0.578,
+    "net_r": -0.1762,
+    "pf": 0.572,
+    "tp1_hits": 269,
+    "tp1_then_loss": 1,
+    "tp1_then_loss_pct": 0.0037
+   },
+   "confirmation": {
+    "trades": 481,
+    "per_day": 10.7,
+    "win": 0.672,
+    "net_r": -0.0398,
+    "pf": 0.871,
+    "tp1_hits": 239,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "all": {
+    "trades": 1054,
+    "per_day": 11.7,
+    "win": 0.62,
+    "net_r": -0.1139,
+    "pf": 0.688,
+    "tp1_hits": 508,
+    "tp1_then_loss": 1,
+    "tp1_then_loss_pct": 0.002
+   }
+  },
+  {
+   "family": "V11.2",
+   "split": "F25",
+   "lock": "T50",
+   "k": 0.75,
+   "level_fills": true,
+   "discovery": {
+    "trades": 571,
+    "per_day": 12.7,
+    "win": 0.559,
+    "net_r": -0.1827,
+    "pf": 0.564,
+    "tp1_hits": 234,
+    "tp1_then_loss": 2,
+    "tp1_then_loss_pct": 0.0085
+   },
+   "confirmation": {
+    "trades": 481,
+    "per_day": 10.7,
+    "win": 0.665,
+    "net_r": -0.0387,
+    "pf": 0.876,
+    "tp1_hits": 210,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "all": {
+    "trades": 1052,
+    "per_day": 11.7,
+    "win": 0.607,
+    "net_r": -0.1168,
+    "pf": 0.684,
+    "tp1_hits": 444,
+    "tp1_then_loss": 2,
+    "tp1_then_loss_pct": 0.0045
+   }
+  },
+  {
+   "family": "V11.2",
+   "split": "F25",
+   "lock": "T50",
+   "k": 1.0,
+   "level_fills": true,
+   "discovery": {
+    "trades": 569,
+    "per_day": 12.6,
+    "win": 0.522,
+    "net_r": -0.1901,
+    "pf": 0.552,
+    "tp1_hits": 161,
+    "tp1_then_loss": 1,
+    "tp1_then_loss_pct": 0.0062
+   },
+   "confirmation": {
+    "trades": 477,
+    "per_day": 10.6,
+    "win": 0.631,
+    "net_r": -0.0534,
+    "pf": 0.835,
+    "tp1_hits": 146,
+    "tp1_then_loss": 1,
+    "tp1_then_loss_pct": 0.0068
+   },
+   "all": {
+    "trades": 1046,
+    "per_day": 11.6,
+    "win": 0.572,
+    "net_r": -0.1277,
+    "pf": 0.662,
+    "tp1_hits": 307,
+    "tp1_then_loss": 2,
+    "tp1_then_loss_pct": 0.0065
+   }
+  },
+  {
+   "family": "V11.4",
+   "split": "F25",
+   "lock": "T50",
+   "k": 0.5,
+   "level_fills": true,
+   "discovery": {
+    "trades": 3529,
+    "per_day": 78.4,
+    "win": 0.438,
+    "net_r": -0.0582,
+    "pf": 0.623,
+    "tp1_hits": 442,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "confirmation": {
+    "trades": 2371,
+    "per_day": 52.7,
+    "win": 0.447,
+    "net_r": -0.0615,
+    "pf": 0.62,
+    "tp1_hits": 315,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "all": {
+    "trades": 5900,
+    "per_day": 65.6,
+    "win": 0.442,
+    "net_r": -0.0595,
+    "pf": 0.622,
+    "tp1_hits": 757,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   }
+  },
+  {
+   "family": "V11.4",
+   "split": "F25",
+   "lock": "T50",
+   "k": 0.6667,
+   "level_fills": true,
+   "discovery": {
+    "trades": 3529,
+    "per_day": 78.4,
+    "win": 0.432,
+    "net_r": -0.0586,
+    "pf": 0.622,
+    "tp1_hits": 196,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "confirmation": {
+    "trades": 2368,
+    "per_day": 52.6,
+    "win": 0.442,
+    "net_r": -0.0608,
+    "pf": 0.626,
+    "tp1_hits": 151,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "all": {
+    "trades": 5897,
+    "per_day": 65.5,
+    "win": 0.436,
+    "net_r": -0.0595,
+    "pf": 0.624,
+    "tp1_hits": 347,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   }
+  },
+  {
+   "family": "V11.4",
+   "split": "F25",
+   "lock": "T50",
+   "k": 0.75,
+   "level_fills": true,
+   "discovery": {
+    "trades": 3529,
+    "per_day": 78.4,
+    "win": 0.431,
+    "net_r": -0.0593,
+    "pf": 0.617,
+    "tp1_hits": 126,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "confirmation": {
+    "trades": 2367,
+    "per_day": 52.6,
+    "win": 0.44,
+    "net_r": -0.0614,
+    "pf": 0.623,
+    "tp1_hits": 111,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "all": {
+    "trades": 5896,
+    "per_day": 65.5,
+    "win": 0.435,
+    "net_r": -0.0602,
+    "pf": 0.62,
+    "tp1_hits": 237,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   }
+  },
+  {
+   "family": "V11.4",
+   "split": "F25",
+   "lock": "T50",
+   "k": 1.0,
+   "level_fills": true,
+   "discovery": {
+    "trades": 3531,
+    "per_day": 78.5,
+    "win": 0.43,
+    "net_r": -0.0598,
+    "pf": 0.614,
+    "tp1_hits": 40,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "confirmation": {
+    "trades": 2367,
+    "per_day": 52.6,
+    "win": 0.438,
+    "net_r": -0.0617,
+    "pf": 0.622,
+    "tp1_hits": 40,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   },
+   "all": {
+    "trades": 5898,
+    "per_day": 65.5,
+    "win": 0.433,
+    "net_r": -0.0606,
+    "pf": 0.617,
+    "tp1_hits": 80,
+    "tp1_then_loss": 0,
+    "tp1_then_loss_pct": 0.0
+   }
+  }
+ ],
+ "chosen": {
+  "V11.1": {
+   "split": "F25",
+   "lock": "FEES",
+   "k": 0.6667
+  },
+  "V11.2": {
+   "split": "F25",
+   "lock": "T50",
+   "k": 0.5
+  },
+  "V11.3": {
+   "split": "F25",
+   "lock": "T33",
+   "k": 0.5
+  },
+  "V11.4": {
+   "split": "F25",
+   "lock": "T50",
+   "k": 0.5
+  }
+ }
+}

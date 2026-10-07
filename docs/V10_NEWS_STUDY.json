@@ -1,0 +1,69 @@
+{
+ "window": {
+  "from": "2026-03-31T14:45:00Z",
+  "to": "2026-09-27T14:45:00Z",
+  "days": 180
+ },
+ "news_items": 15304,
+ "pairs": 24781,
+ "tone_source": "jev",
+ "pass_rules": {
+  "vol_ratio": 1.3,
+  "min_events_half": 200,
+  "min_toned_half": 100,
+  "t_stat": 2.5,
+  "tone_min": 0.3
+ },
+ "markets": {
+  "crypto": {
+   "halves": [
+    {
+     "events": 2347,
+     "vol_ratio": 0.891,
+     "toned": 1550,
+     "net_mean_bps": -14.79,
+     "t": -8.58
+    },
+    {
+     "events": 2469,
+     "vol_ratio": 0.751,
+     "toned": 1720,
+     "net_mean_bps": -15.33,
+     "t": -10.3
+    }
+   ],
+   "net_mean_bps_all": -15.08,
+   "t_all": -13.32,
+   "cost_bps": 13.0,
+   "verdict": {
+    "attention_predicts_volatility": false,
+    "tone_predicts_direction": false
+   }
+  },
+  "stocks": {
+   "halves": [
+    {
+     "events": 5385,
+     "vol_ratio": 1.087,
+     "toned": 2964,
+     "net_mean_bps": -2.77,
+     "t": -1.97
+    },
+    {
+     "events": 5560,
+     "vol_ratio": 1.232,
+     "toned": 3153,
+     "net_mean_bps": -2.94,
+     "t": -1.89
+    }
+   ],
+   "net_mean_bps_all": -2.86,
+   "t_all": -2.72,
+   "cost_bps": 2.0,
+   "verdict": {
+    "attention_predicts_volatility": false,
+    "tone_predicts_direction": false
+   }
+  }
+ }
+}

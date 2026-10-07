@@ -1,0 +1,32 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+data/
+*.db
+*.db-shm
+*.db-wal
+*.log
+.pytest_cache/
+.env.*
+!.env.example
+# keys and secrets
+*.pem
+*.key
+*.p12
+*.vault
+provider_keys*
+# data and large research artifacts
+*.duckdb
+*.duckdb.wal
+*.npz
+*.pkl
+*.parquet
+# downloaded binaries and third-party packages
+.remotion/
+node_modules/
+*.zip
+# local tooling
+.claude/
+# generated research outputs (re-created by the research scripts)
+research/**/output/

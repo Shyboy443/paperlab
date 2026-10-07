@@ -1,0 +1,956 @@
+{
+ "built": "2026-10-02 21:47 UTC",
+ "rules": " (2026-10-03, written before the first run; nothing below is changed after seeing a result):\n\nData: the V11 cache (data/v11_scan: 30 Bybit perps, 1m, 95 days to 2026-09-29), the first 5 days warm-up. DEV = the first\nhalf of the remaining 90 days, TEST = the second half. Book: 20 USDT, SizingV6 tiers (1% base risk, legal minimums,\nhard cap 2%), max 4 positions, reset daily (each day an independent book, as the V11 studies). Costs: Bybit fees by the\nrole achieved (limit entries and take-profits maker 0.020%; stops and time exits taker 0.055% + the modelled spread),\nfunding, 60 s decision latency; entries fill only on a 0.5 bp trade-through and are rejected if they would cross when\nplaced (app/live/v13_engine.py).\n\nGrid (54 variants): threshold {0.80, 0.95, 1.10} x offset_atr {0.25, 0.50, 1.00} x target_r {0.75, 1.00, 1.50}\nx max_hold_min {120, 240}. Fixed: expiry 15 min, stop max(1.0%, 2.5 ATR) capped at 3%, at most 4 orders a decision.\n\nSELECTION (DEV only): among variants with >= 150 DEV trades, the highest SMOOTHED DEV net R per trade = the mean of its\nown DEV net R and that of its grid neighbours (one step in one parameter), so a lucky corner cannot win alone.\nTEST VERDICT (the selected variant, once):\n    PASS   TEST net R per trade > 0, day-clustered t >= 2.0, profit factor >= 1.10, >= 100 TEST trades\n    WEAK   TEST net R per trade > 0 but a t / PF / count condition fails\n    FAIL   TEST net R per trade <= 0\nDiagnostics for the selected variant (no selection): TAKER (the same set-ups bought at market, no limit) and TOUCH\n(limits filled on a touch, no trade-through) -- how much the maker entry adds, and how sensitive it is to the fill rule.\nThe forward paper bot runs the SELECTED variant whatever the verdict (the operator asked for the bot); its label is\nthe verdict, and it never goes live on a paper result alone.\n",
+ "grid": {
+  "threshold": [
+   0.8,
+   0.95,
+   1.1
+  ],
+  "offset_atr": [
+   0.25,
+   0.5,
+   1.0
+  ],
+  "target_r": [
+   0.75,
+   1.0,
+   1.5
+  ],
+  "max_hold_min": [
+   120.0,
+   240.0
+  ]
+ },
+ "selected": {
+  "threshold": 1.1,
+  "offset_atr": 0.5,
+  "target_r": 0.75,
+  "max_hold_min": 240.0
+ },
+ "smoothed_dev_net_r": 0.0276,
+ "verdict": "FAIL",
+ "selected_result": {
+  "variant": "threshold=1.1 offset_atr=0.5 target_r=0.75 max_hold_min=240",
+  "mode": "LIMIT",
+  "params": {
+   "threshold": 1.1,
+   "offset_atr": 0.5,
+   "target_r": 0.75,
+   "max_hold_min": 240.0
+  },
+  "rejects": {
+   "already_in_symbol": 1002,
+   "limit_expired": 492,
+   "min_notional_needs_strong_setup": 127,
+   "max_positions": 655,
+   "min_notional_needs_attack": 43,
+   "post_only_would_cross": 107,
+   "limit_slot_taken": 49,
+   "min_notional_above_max_risk": 13
+  },
+  "signals": 3279,
+  "dev": {
+   "trades": 320,
+   "per_day": 7.11,
+   "win": 0.603,
+   "net_r": 0.0215,
+   "day_t": 3.14,
+   "pf": 1.057,
+   "net_usdt": 0.95,
+   "fees_r": 0.0455,
+   "avg_win_r": 0.663,
+   "avg_loss_r": -0.954,
+   "exits": {
+    "stop": 107,
+    "tp": 171,
+    "time": 42
+   }
+  },
+  "test": {
+   "trades": 421,
+   "per_day": 9.36,
+   "win": 0.534,
+   "net_r": -0.0886,
+   "day_t": 1.91,
+   "pf": 0.809,
+   "net_usdt": -6.45,
+   "fees_r": 0.0388,
+   "avg_win_r": 0.704,
+   "avg_loss_r": -0.999,
+   "exits": {
+    "stop": 177,
+    "tp": 216,
+    "time": 28
+   }
+  },
+  "all": {
+   "trades": 741,
+   "per_day": 8.23,
+   "win": 0.564,
+   "net_r": -0.0411,
+   "day_t": 3.49,
+   "pf": 0.904,
+   "net_usdt": -5.5,
+   "fees_r": 0.0417,
+   "avg_win_r": 0.685,
+   "avg_loss_r": -0.981,
+   "exits": {
+    "stop": 284,
+    "tp": 387,
+    "time": 70
+   }
+  }
+ },
+ "diagnostics": {
+  "TAKER": {
+   "variant": "threshold=1.1 offset_atr=0.5 target_r=0.75 max_hold_min=240",
+   "mode": "TAKER",
+   "params": {
+    "threshold": 1.1,
+    "offset_atr": 0.5,
+    "target_r": 0.75,
+    "max_hold_min": 240.0
+   },
+   "rejects": {
+    "already_in_symbol": 4724,
+    "min_notional_needs_strong_setup": 739,
+    "min_notional_needs_attack": 251,
+    "max_positions": 1474,
+    "min_notional_above_max_risk": 140,
+    "gap_past_tp1": 17
+   },
+   "signals": 8724,
+   "dev": {
+    "trades": 606,
+    "per_day": 13.47,
+    "win": 0.777,
+    "net_r": -0.0368,
+    "day_t": 0.12,
+    "pf": 0.818,
+    "net_usdt": -3.39,
+    "fees_r": 0.0526,
+    "avg_win_r": 0.213,
+    "avg_loss_r": -0.907,
+    "exits": {
+     "tp": 469,
+     "stop": 104,
+     "time": 33
+    }
+   },
+   "test": {
+    "trades": 729,
+    "per_day": 16.2,
+    "win": 0.75,
+    "net_r": -0.0829,
+    "day_t": 0.62,
+    "pf": 0.652,
+    "net_usdt": -10.48,
+    "fees_r": 0.0418,
+    "avg_win_r": 0.207,
+    "avg_loss_r": -0.953,
+    "exits": {
+     "tp": 557,
+     "stop": 157,
+     "time": 15
+    }
+   },
+   "all": {
+    "trades": 1335,
+    "per_day": 14.83,
+    "win": 0.763,
+    "net_r": -0.062,
+    "day_t": 0.56,
+    "pf": 0.72,
+    "net_usdt": -13.87,
+    "fees_r": 0.0467,
+    "avg_win_r": 0.209,
+    "avg_loss_r": -0.934,
+    "exits": {
+     "tp": 1026,
+     "stop": 261,
+     "time": 48
+    }
+   }
+  },
+  "TOUCH": {
+   "variant": "threshold=1.1 offset_atr=0.5 target_r=0.75 max_hold_min=240",
+   "mode": "TOUCH",
+   "params": {
+    "threshold": 1.1,
+    "offset_atr": 0.5,
+    "target_r": 0.75,
+    "max_hold_min": 240.0
+   },
+   "rejects": {
+    "already_in_symbol": 1000,
+    "limit_expired": 492,
+    "min_notional_needs_strong_setup": 127,
+    "max_positions": 657,
+    "min_notional_needs_attack": 43,
+    "post_only_would_cross": 107,
+    "limit_slot_taken": 49,
+    "min_notional_above_max_risk": 13
+   },
+   "signals": 3279,
+   "dev": {
+    "trades": 320,
+    "per_day": 7.11,
+    "win": 0.606,
+    "net_r": 0.0221,
+    "day_t": 3.14,
+    "pf": 1.059,
+    "net_usdt": 0.99,
+    "fees_r": 0.0455,
+    "avg_win_r": 0.66,
+    "avg_loss_r": -0.96,
+    "exits": {
+     "stop": 107,
+     "tp": 171,
+     "time": 42
+    }
+   },
+   "test": {
+    "trades": 421,
+    "per_day": 9.36,
+    "win": 0.534,
+    "net_r": -0.0886,
+    "day_t": 1.91,
+    "pf": 0.809,
+    "net_usdt": -6.45,
+    "fees_r": 0.0388,
+    "avg_win_r": 0.704,
+    "avg_loss_r": -0.999,
+    "exits": {
+     "stop": 177,
+     "tp": 216,
+     "time": 28
+    }
+   },
+   "all": {
+    "trades": 741,
+    "per_day": 8.23,
+    "win": 0.565,
+    "net_r": -0.0408,
+    "day_t": 3.5,
+    "pf": 0.905,
+    "net_usdt": -5.46,
+    "fees_r": 0.0417,
+    "avg_win_r": 0.684,
+    "avg_loss_r": -0.984,
+    "exits": {
+     "stop": 284,
+     "tp": 387,
+     "time": 70
+    }
+   }
+  }
+ },
+ "smoothed": {
+  "threshold=0.8 offset_atr=0.25 target_r=0.75 max_hold_min=120": -0.032600000000000004,
+  "threshold=0.8 offset_atr=0.25 target_r=0.75 max_hold_min=240": -0.0259,
+  "threshold=0.8 offset_atr=0.25 target_r=1 max_hold_min=120": -0.041699999999999994,
+  "threshold=0.8 offset_atr=0.25 target_r=1 max_hold_min=240": -0.03075,
+  "threshold=0.8 offset_atr=0.25 target_r=1.5 max_hold_min=120": -0.05172,
+  "threshold=0.8 offset_atr=0.25 target_r=1.5 max_hold_min=240": -0.04448,
+  "threshold=0.8 offset_atr=0.5 target_r=0.75 max_hold_min=120": -0.021066666666666668,
+  "threshold=0.8 offset_atr=0.5 target_r=0.75 max_hold_min=240": -0.00895,
+  "threshold=0.8 offset_atr=0.5 target_r=1 max_hold_min=120": -0.030185714285714284,
+  "threshold=0.8 offset_atr=0.5 target_r=1 max_hold_min=240": -0.017657142857142857,
+  "threshold=0.8 offset_atr=0.5 target_r=1.5 max_hold_min=120": -0.04586666666666667,
+  "threshold=0.8 offset_atr=0.5 target_r=1.5 max_hold_min=240": -0.03118333333333333,
+  "threshold=0.8 offset_atr=1 target_r=0.75 max_hold_min=120": -0.028680000000000004,
+  "threshold=0.8 offset_atr=1 target_r=0.75 max_hold_min=240": -0.01838,
+  "threshold=0.8 offset_atr=1 target_r=1 max_hold_min=120": -0.03445,
+  "threshold=0.8 offset_atr=1 target_r=1 max_hold_min=240": -0.020333333333333335,
+  "threshold=0.8 offset_atr=1 target_r=1.5 max_hold_min=120": -0.04562,
+  "threshold=0.8 offset_atr=1 target_r=1.5 max_hold_min=240": -0.0301,
+  "threshold=0.95 offset_atr=0.25 target_r=0.75 max_hold_min=120": -0.011733333333333333,
+  "threshold=0.95 offset_atr=0.25 target_r=0.75 max_hold_min=240": 0.002950000000000001,
+  "threshold=0.95 offset_atr=0.25 target_r=1 max_hold_min=120": -0.022942857142857147,
+  "threshold=0.95 offset_atr=0.25 target_r=1 max_hold_min=240": -0.006642857142857143,
+  "threshold=0.95 offset_atr=0.25 target_r=1.5 max_hold_min=120": -0.04053333333333333,
+  "threshold=0.95 offset_atr=0.25 target_r=1.5 max_hold_min=240": -0.021766666666666667,
+  "threshold=0.95 offset_atr=0.5 target_r=0.75 max_hold_min=120": 0.0032857142857142868,
+  "threshold=0.95 offset_atr=0.5 target_r=0.75 max_hold_min=240": 0.015957142857142857,
+  "threshold=0.95 offset_atr=0.5 target_r=1 max_hold_min=120": -0.003162500000000001,
+  "threshold=0.95 offset_atr=0.5 target_r=1 max_hold_min=240": 0.0178625,
+  "threshold=0.95 offset_atr=0.5 target_r=1.5 max_hold_min=120": -0.023985714285714287,
+  "threshold=0.95 offset_atr=0.5 target_r=1.5 max_hold_min=240": -0.0037285714285714283,
+  "threshold=0.95 offset_atr=1 target_r=0.75 max_hold_min=120": -0.011683333333333332,
+  "threshold=0.95 offset_atr=1 target_r=0.75 max_hold_min=240": 0.005433333333333334,
+  "threshold=0.95 offset_atr=1 target_r=1 max_hold_min=120": -0.014442857142857143,
+  "threshold=0.95 offset_atr=1 target_r=1 max_hold_min=240": 0.0057714285714285714,
+  "threshold=0.95 offset_atr=1 target_r=1.5 max_hold_min=120": -0.019216666666666663,
+  "threshold=0.95 offset_atr=1 target_r=1.5 max_hold_min=240": -0.00011666666666666654,
+  "threshold=1.1 offset_atr=0.25 target_r=0.75 max_hold_min=120": 0.0006400000000000003,
+  "threshold=1.1 offset_atr=0.25 target_r=0.75 max_hold_min=240": 0.013500000000000002,
+  "threshold=1.1 offset_atr=0.25 target_r=1 max_hold_min=120": -0.009783333333333333,
+  "threshold=1.1 offset_atr=0.25 target_r=1 max_hold_min=240": 0.011283333333333334,
+  "threshold=1.1 offset_atr=0.25 target_r=1.5 max_hold_min=120": -0.025500000000000005,
+  "threshold=1.1 offset_atr=0.25 target_r=1.5 max_hold_min=240": -0.007240000000000002,
+  "threshold=1.1 offset_atr=0.5 target_r=0.75 max_hold_min=120": 0.007599999999999999,
+  "threshold=1.1 offset_atr=0.5 target_r=0.75 max_hold_min=240": 0.02758333333333333,
+  "threshold=1.1 offset_atr=0.5 target_r=1 max_hold_min=120": 0.0033,
+  "threshold=1.1 offset_atr=0.5 target_r=1 max_hold_min=240": 0.02352857142857143,
+  "threshold=1.1 offset_atr=0.5 target_r=1.5 max_hold_min=120": -0.01085,
+  "threshold=1.1 offset_atr=0.5 target_r=1.5 max_hold_min=240": 0.012633333333333331,
+  "threshold=1.1 offset_atr=1 target_r=0.75 max_hold_min=120": -0.003119999999999999,
+  "threshold=1.1 offset_atr=1 target_r=0.75 max_hold_min=240": 0.006939999999999999,
+  "threshold=1.1 offset_atr=1 target_r=1 max_hold_min=120": -0.0018000000000000004,
+  "threshold=1.1 offset_atr=1 target_r=1 max_hold_min=240": 0.018866666666666667,
+  "threshold=1.1 offset_atr=1 target_r=1.5 max_hold_min=120": -0.00504,
+  "threshold=1.1 offset_atr=1 target_r=1.5 max_hold_min=240": 0.015100000000000002
+ },
+ "variants": [
+  {
+   "variant": "threshold=0.8 offset_atr=0.25 target_r=0.75 max_hold_min=120",
+   "dev": {
+    "trades": 1374,
+    "net_r": -0.0487,
+    "pf": 0.869
+   },
+   "test": {
+    "trades": 1498,
+    "net_r": -0.0771
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=0.25 target_r=0.75 max_hold_min=240",
+   "dev": {
+    "trades": 1170,
+    "net_r": -0.0267,
+    "pf": 0.934
+   },
+   "test": {
+    "trades": 1336,
+    "net_r": -0.0625
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=0.25 target_r=1 max_hold_min=120",
+   "dev": {
+    "trades": 1284,
+    "net_r": -0.0484,
+    "pf": 0.876
+   },
+   "test": {
+    "trades": 1376,
+    "net_r": -0.0893
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=0.25 target_r=1 max_hold_min=240",
+   "dev": {
+    "trades": 1038,
+    "net_r": -0.0364,
+    "pf": 0.919
+   },
+   "test": {
+    "trades": 1169,
+    "net_r": -0.0946
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=0.25 target_r=1.5 max_hold_min=120",
+   "dev": {
+    "trades": 1227,
+    "net_r": -0.06,
+    "pf": 0.851
+   },
+   "test": {
+    "trades": 1261,
+    "net_r": -0.1148
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=0.25 target_r=1.5 max_hold_min=240",
+   "dev": {
+    "trades": 923,
+    "net_r": -0.0447,
+    "pf": 0.906
+   },
+   "test": {
+    "trades": 1019,
+    "net_r": -0.1076
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=0.5 target_r=0.75 max_hold_min=120",
+   "dev": {
+    "trades": 1363,
+    "net_r": -0.0224,
+    "pf": 0.938
+   },
+   "test": {
+    "trades": 1435,
+    "net_r": -0.0908
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=0.5 target_r=0.75 max_hold_min=240",
+   "dev": {
+    "trades": 1174,
+    "net_r": -0.0186,
+    "pf": 0.954
+   },
+   "test": {
+    "trades": 1302,
+    "net_r": -0.0824
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=0.5 target_r=1 max_hold_min=120",
+   "dev": {
+    "trades": 1270,
+    "net_r": -0.029,
+    "pf": 0.925
+   },
+   "test": {
+    "trades": 1314,
+    "net_r": -0.0829
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=0.5 target_r=1 max_hold_min=240",
+   "dev": {
+    "trades": 1058,
+    "net_r": -0.0173,
+    "pf": 0.961
+   },
+   "test": {
+    "trades": 1132,
+    "net_r": -0.0829
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=0.5 target_r=1.5 max_hold_min=120",
+   "dev": {
+    "trades": 1203,
+    "net_r": -0.055,
+    "pf": 0.866
+   },
+   "test": {
+    "trades": 1215,
+    "net_r": -0.104
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=0.5 target_r=1.5 max_hold_min=240",
+   "dev": {
+    "trades": 937,
+    "net_r": -0.0439,
+    "pf": 0.911
+   },
+   "test": {
+    "trades": 983,
+    "net_r": -0.1262
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=1 target_r=0.75 max_hold_min=120",
+   "dev": {
+    "trades": 1146,
+    "net_r": -0.0313,
+    "pf": 0.917
+   },
+   "test": {
+    "trades": 1244,
+    "net_r": -0.065
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=1 target_r=0.75 max_hold_min=240",
+   "dev": {
+    "trades": 1022,
+    "net_r": -0.015,
+    "pf": 0.963
+   },
+   "test": {
+    "trades": 1137,
+    "net_r": -0.0598
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=1 target_r=1 max_hold_min=120",
+   "dev": {
+    "trades": 1060,
+    "net_r": -0.0475,
+    "pf": 0.883
+   },
+   "test": {
+    "trades": 1169,
+    "net_r": -0.0572
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=1 target_r=1 max_hold_min=240",
+   "dev": {
+    "trades": 897,
+    "net_r": -0.0217,
+    "pf": 0.952
+   },
+   "test": {
+    "trades": 1027,
+    "net_r": -0.0611
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=1 target_r=1.5 max_hold_min=120",
+   "dev": {
+    "trades": 1009,
+    "net_r": -0.059,
+    "pf": 0.86
+   },
+   "test": {
+    "trades": 1074,
+    "net_r": -0.1025
+   }
+  },
+  {
+   "variant": "threshold=0.8 offset_atr=1 target_r=1.5 max_hold_min=240",
+   "dev": {
+    "trades": 811,
+    "net_r": -0.0376,
+    "pf": 0.925
+   },
+   "test": {
+    "trades": 908,
+    "net_r": -0.1198
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=0.25 target_r=0.75 max_hold_min=120",
+   "dev": {
+    "trades": 738,
+    "net_r": -0.0168,
+    "pf": 0.954
+   },
+   "test": {
+    "trades": 841,
+    "net_r": -0.0772
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=0.25 target_r=0.75 max_hold_min=240",
+   "dev": {
+    "trades": 665,
+    "net_r": 0.0009,
+    "pf": 1.002
+   },
+   "test": {
+    "trades": 773,
+    "net_r": -0.0776
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=0.25 target_r=1 max_hold_min=120",
+   "dev": {
+    "trades": 699,
+    "net_r": -0.0277,
+    "pf": 0.928
+   },
+   "test": {
+    "trades": 779,
+    "net_r": -0.0755
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=0.25 target_r=1 max_hold_min=240",
+   "dev": {
+    "trades": 600,
+    "net_r": -0.011,
+    "pf": 0.975
+   },
+   "test": {
+    "trades": 698,
+    "net_r": -0.0862
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=0.25 target_r=1.5 max_hold_min=120",
+   "dev": {
+    "trades": 671,
+    "net_r": -0.0505,
+    "pf": 0.876
+   },
+   "test": {
+    "trades": 731,
+    "net_r": -0.0849
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=0.25 target_r=1.5 max_hold_min=240",
+   "dev": {
+    "trades": 555,
+    "net_r": -0.0374,
+    "pf": 0.923
+   },
+   "test": {
+    "trades": 616,
+    "net_r": -0.0945
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=0.5 target_r=0.75 max_hold_min=120",
+   "dev": {
+    "trades": 730,
+    "net_r": 0.0236,
+    "pf": 1.07
+   },
+   "test": {
+    "trades": 826,
+    "net_r": -0.08
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=0.5 target_r=0.75 max_hold_min=240",
+   "dev": {
+    "trades": 663,
+    "net_r": 0.0463,
+    "pf": 1.124
+   },
+   "test": {
+    "trades": 771,
+    "net_r": -0.0869
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=0.5 target_r=1 max_hold_min=120",
+   "dev": {
+    "trades": 685,
+    "net_r": 0.0083,
+    "pf": 1.023
+   },
+   "test": {
+    "trades": 761,
+    "net_r": -0.0802
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=0.5 target_r=1 max_hold_min=240",
+   "dev": {
+    "trades": 598,
+    "net_r": 0.0433,
+    "pf": 1.103
+   },
+   "test": {
+    "trades": 696,
+    "net_r": -0.0638
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=0.5 target_r=1.5 max_hold_min=120",
+   "dev": {
+    "trades": 654,
+    "net_r": -0.0283,
+    "pf": 0.929
+   },
+   "test": {
+    "trades": 708,
+    "net_r": -0.0905
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=0.5 target_r=1.5 max_hold_min=240",
+   "dev": {
+    "trades": 538,
+    "net_r": 0.0114,
+    "pf": 1.024
+   },
+   "test": {
+    "trades": 607,
+    "net_r": -0.0836
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=1 target_r=0.75 max_hold_min=120",
+   "dev": {
+    "trades": 584,
+    "net_r": -0.0272,
+    "pf": 0.928
+   },
+   "test": {
+    "trades": 725,
+    "net_r": -0.0467
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=1 target_r=0.75 max_hold_min=240",
+   "dev": {
+    "trades": 549,
+    "net_r": -0.0053,
+    "pf": 0.987
+   },
+   "test": {
+    "trades": 685,
+    "net_r": -0.0538
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=1 target_r=1 max_hold_min=120",
+   "dev": {
+    "trades": 549,
+    "net_r": -0.0182,
+    "pf": 0.954
+   },
+   "test": {
+    "trades": 660,
+    "net_r": -0.0759
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=1 target_r=1 max_hold_min=240",
+   "dev": {
+    "trades": 501,
+    "net_r": 0.0171,
+    "pf": 1.039
+   },
+   "test": {
+    "trades": 594,
+    "net_r": -0.0954
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=1 target_r=1.5 max_hold_min=120",
+   "dev": {
+    "trades": 532,
+    "net_r": -0.029,
+    "pf": 0.93
+   },
+   "test": {
+    "trades": 619,
+    "net_r": -0.1058
+   }
+  },
+  {
+   "variant": "threshold=0.95 offset_atr=1 target_r=1.5 max_hold_min=240",
+   "dev": {
+    "trades": 455,
+    "net_r": 0.0117,
+    "pf": 1.024
+   },
+   "test": {
+    "trades": 540,
+    "net_r": -0.1178
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=0.25 target_r=0.75 max_hold_min=120",
+   "dev": {
+    "trades": 348,
+    "net_r": -0.0017,
+    "pf": 0.995
+   },
+   "test": {
+    "trades": 471,
+    "net_r": -0.0835
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=0.25 target_r=0.75 max_hold_min=240",
+   "dev": {
+    "trades": 316,
+    "net_r": 0.025,
+    "pf": 1.067
+   },
+   "test": {
+    "trades": 442,
+    "net_r": -0.084
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=0.25 target_r=1 max_hold_min=120",
+   "dev": {
+    "trades": 337,
+    "net_r": -0.0145,
+    "pf": 0.961
+   },
+   "test": {
+    "trades": 448,
+    "net_r": -0.075
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=0.25 target_r=1 max_hold_min=240",
+   "dev": {
+    "trades": 305,
+    "net_r": 0.0218,
+    "pf": 1.051
+   },
+   "test": {
+    "trades": 397,
+    "net_r": -0.1019
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=0.25 target_r=1.5 max_hold_min=120",
+   "dev": {
+    "trades": 329,
+    "net_r": -0.0393,
+    "pf": 0.902
+   },
+   "test": {
+    "trades": 428,
+    "net_r": -0.0738
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=0.25 target_r=1.5 max_hold_min=240",
+   "dev": {
+    "trades": 292,
+    "net_r": 0.0016,
+    "pf": 1.003
+   },
+   "test": {
+    "trades": 374,
+    "net_r": -0.0824
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=0.5 target_r=0.75 max_hold_min=120",
+   "dev": {
+    "trades": 349,
+    "net_r": 0.0112,
+    "pf": 1.033
+   },
+   "test": {
+    "trades": 447,
+    "net_r": -0.0824
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=0.5 target_r=0.75 max_hold_min=240",
+   "dev": {
+    "trades": 320,
+    "net_r": 0.0215,
+    "pf": 1.057
+   },
+   "test": {
+    "trades": 421,
+    "net_r": -0.0886
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=0.5 target_r=1 max_hold_min=120",
+   "dev": {
+    "trades": 329,
+    "net_r": 0.0027,
+    "pf": 1.007
+   },
+   "test": {
+    "trades": 427,
+    "net_r": -0.0974
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=0.5 target_r=1 max_hold_min=240",
+   "dev": {
+    "trades": 295,
+    "net_r": 0.0448,
+    "pf": 1.108
+   },
+   "test": {
+    "trades": 394,
+    "net_r": -0.1061
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=0.5 target_r=1.5 max_hold_min=120",
+   "dev": {
+    "trades": 316,
+    "net_r": -0.0248,
+    "pf": 0.936
+   },
+   "test": {
+    "trades": 407,
+    "net_r": -0.0835
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=0.5 target_r=1.5 max_hold_min=240",
+   "dev": {
+    "trades": 275,
+    "net_r": 0.0171,
+    "pf": 1.037
+   },
+   "test": {
+    "trades": 364,
+    "net_r": -0.0796
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=1 target_r=0.75 max_hold_min=120",
+   "dev": {
+    "trades": 285,
+    "net_r": -0.0117,
+    "pf": 0.968
+   },
+   "test": {
+    "trades": 399,
+    "net_r": -0.0235
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=1 target_r=0.75 max_hold_min=240",
+   "dev": {
+    "trades": 267,
+    "net_r": 0.0167,
+    "pf": 1.043
+   },
+   "test": {
+    "trades": 376,
+    "net_r": -0.0316
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=1 target_r=1 max_hold_min=120",
+   "dev": {
+    "trades": 267,
+    "net_r": -0.0046,
+    "pf": 0.988
+   },
+   "test": {
+    "trades": 369,
+    "net_r": -0.0265
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=1 target_r=1 max_hold_min=240",
+   "dev": {
+    "trades": 247,
+    "net_r": 0.0135,
+    "pf": 1.031
+   },
+   "test": {
+    "trades": 341,
+    "net_r": -0.0521
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=1 target_r=1.5 max_hold_min=120",
+   "dev": {
+    "trades": 261,
+    "net_r": 0.0075,
+    "pf": 1.019
+   },
+   "test": {
+    "trades": 360,
+    "net_r": -0.0175
+   }
+  },
+  {
+   "variant": "threshold=1.1 offset_atr=1 target_r=1.5 max_hold_min=240",
+   "dev": {
+    "trades": 236,
+    "net_r": 0.0257,
+    "pf": 1.056
+   },
+   "test": {
+    "trades": 321,
+    "net_r": -0.038
+   }
+  }
+ ],
+ "note": "variants: the grid run's DEV / TEST summary lines (the full per-variant detail was lost when the diagnostics crashed); selected_result: the selected variant re-run (deterministic, seed 7)"
+}

@@ -1,0 +1,128 @@
+{
+ "protocol": "V4_INTRADAY_SPECIALIST_PROTOCOL_V1",
+ "written_at": "2026-09-24T06:58:10Z",
+ "role": "TEST",
+ "window": {
+  "months": [
+   "2025-03",
+   "2025-04",
+   "2025-05",
+   "2025-06",
+   "2025-07",
+   "2025-08",
+   "2025-09"
+  ],
+  "observe_from": "2025-03-11",
+  "trade_from": "2025-04-01",
+  "trade_to": "2025-09-30",
+  "warm_up": "2025-03"
+ },
+ "data_rule": "no TEST month's price data was downloaded before this file existed",
+ "fingerprints": {
+  "strategy:v3_base": "33d10d257921",
+  "strategy:base": "fa7ce5a960e3",
+  "strategy:V4.1": "9699fc9a1487",
+  "strategy:V4.2": "a547c5820bf2",
+  "strategy:V4.3": "e8cbdc999c4d",
+  "strategy:V4.4": "f20838069379",
+  "strategy:V4.5": "7588ef4d6105",
+  "strategy:V4.6": "b1e48f9c0b7d",
+  "strategy:V4.7": "1dbbfcdddc1a",
+  "jev:prompt": "d61b2171b8d620d3",
+  "jev:policy": "aae92ebe2c8bf0e6",
+  "jev:state_version": "JEV_STATE_V4",
+  "jev:prompt_version": "JEV_PROMPT_V4",
+  "edge_model": "b3ad781537bb",
+  "edge_model_source": "efd551b45614",
+  "tradeability_rule": "983b0eee3243"
+ },
+ "config_fingerprint": "d8601d8ef96a936b",
+ "universe": [
+  "ALCHUSDT",
+  "FARTCOINUSDT",
+  "ARCUSDT",
+  "ENAUSDT",
+  "POPCATUSDT",
+  "DOGEUSDT",
+  "PNUTUSDT",
+  "WIFUSDT",
+  "1000PEPEUSDT",
+  "XRPUSDT"
+ ],
+ "universe_fingerprint": "8588f107f675",
+ "scoring_period": {
+  "from": "2025-03-02",
+  "to": "2025-03-31"
+ },
+ "coins_per_tf": {
+  "3m": [
+   "ALCH",
+   "FARTCOIN",
+   "ARC"
+  ],
+  "5m": [
+   "ALCH",
+   "FARTCOIN",
+   "ARC",
+   "ENA"
+  ],
+  "15m": [
+   "ALCH",
+   "FARTCOIN",
+   "ARC",
+   "ENA",
+   "POPCAT",
+   "DOGE",
+   "PNUT"
+  ],
+  "30m": [
+   "ALCH",
+   "FARTCOIN",
+   "ARC",
+   "ENA",
+   "POPCAT",
+   "DOGE"
+  ]
+ },
+ "allocation": {
+  "3m": 3,
+  "5m": 4,
+  "15m": 7,
+  "30m": 6
+ },
+ "participation_per_day": {
+  "3m": 0.5,
+  "5m": 0.5,
+  "15m": 0.4,
+  "30m": 0.25
+ },
+ "gates": {
+  "min_net_profit": 0.0,
+  "min_expectancy_r": 0.0,
+  "min_gross_expectancy_r": 0.0,
+  "min_profit_factor": 1.1,
+  "max_drawdown_pct": 0.3,
+  "max_liquidations": 0,
+  "positive_without_top3": true,
+  "max_top3_share": 0.6,
+  "max_p_mean_le_0": 0.1,
+  "max_skip_rate": 0.8,
+  "random_percentile": 0.9,
+  "min_delta_vs_control": 0.5,
+  "min_auc_low": 0.5,
+  "max_error_rate": 0.02,
+  "catastrophic_drawdown": 0.3
+ },
+ "edge_model": {
+  "shrinkage_k": 30.0,
+  "window": 300,
+  "min_n": 30,
+  "take_margin_r": 0.02,
+  "attack_lower_r": 0.05,
+  "evidence": "RAW observation ledger of the SAME window, causal (only outcomes that exited before t)"
+ },
+ "field_rule": "activity only: top 2 coins per family x timeframe by executed entries (>= 10), ties alphabetical",
+ "dev_run_id": "v4-7bdf031bfc",
+ "advanced": "a bot is ADVANCED only if it passes every gate in DEVELOPMENT (run dev_run_id) AND in this TEST",
+ "if_it_fails": "V4 is not patched: a failed TEST is answered by a V5 hypothesis"
+}

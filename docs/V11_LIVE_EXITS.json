@@ -1,0 +1,159 @@
+[
+ {
+  "family": "V11.1",
+  "variant": "E067",
+  "rungs": [
+   0.6666666666666666,
+   1.3333333333333333,
+   2.0
+  ],
+  "guard": true,
+  "exits": {
+   "be_cover": 15.0
+  },
+  "skipped": {},
+  "discovery": {
+   "trades": 403,
+   "per_day": 9.0,
+   "win": 0.506,
+   "net_r": -0.0929,
+   "pf": 0.759,
+   "net_usdt_per_day": -0.159
+  },
+  "confirmation": {
+   "trades": 214,
+   "per_day": 4.8,
+   "win": 0.519,
+   "net_r": -0.0354,
+   "pf": 0.908,
+   "net_usdt_per_day": -0.024
+  },
+  "all": {
+   "trades": 617,
+   "per_day": 6.9,
+   "win": 0.511,
+   "net_r": -0.073,
+   "pf": 0.81,
+   "net_usdt_per_day": -0.092
+  }
+ },
+ {
+  "family": "V11.2",
+  "variant": "E050",
+  "rungs": [
+   0.5,
+   1.0,
+   1.5
+  ],
+  "guard": true,
+  "exits": {
+   "be_cover": 15.0
+  },
+  "skipped": {
+   "gap_past_tp1": 2
+  },
+  "discovery": {
+   "trades": 576,
+   "per_day": 12.8,
+   "win": 0.533,
+   "net_r": -0.1711,
+   "pf": 0.595,
+   "net_usdt_per_day": -0.406
+  },
+  "confirmation": {
+   "trades": 487,
+   "per_day": 10.8,
+   "win": 0.608,
+   "net_r": -0.0336,
+   "pf": 0.896,
+   "net_usdt_per_day": -0.074
+  },
+  "all": {
+   "trades": 1063,
+   "per_day": 11.8,
+   "win": 0.567,
+   "net_r": -0.1081,
+   "pf": 0.713,
+   "net_usdt_per_day": -0.24
+  }
+ },
+ {
+  "family": "V11.3",
+  "variant": "E050",
+  "rungs": [
+   0.5,
+   1.0,
+   1.5
+  ],
+  "guard": true,
+  "exits": {
+   "be_cover": 15.0
+  },
+  "skipped": {
+   "gap_past_tp1": 121,
+   "gap_past_stop": 5
+  },
+  "discovery": {
+   "trades": 4226,
+   "per_day": 93.9,
+   "win": 0.497,
+   "net_r": -0.2763,
+   "pf": 0.383,
+   "net_usdt_per_day": -4.39
+  },
+  "confirmation": {
+   "trades": 4016,
+   "per_day": 89.2,
+   "win": 0.501,
+   "net_r": -0.2334,
+   "pf": 0.466,
+   "net_usdt_per_day": -3.294
+  },
+  "all": {
+   "trades": 8242,
+   "per_day": 91.6,
+   "win": 0.499,
+   "net_r": -0.2554,
+   "pf": 0.423,
+   "net_usdt_per_day": -3.842
+  }
+ },
+ {
+  "family": "V11.4",
+  "variant": "E050",
+  "rungs": [
+   0.5,
+   1.0,
+   1.5
+  ],
+  "guard": true,
+  "exits": {
+   "be_cover": 15.0
+  },
+  "skipped": {},
+  "discovery": {
+   "trades": 3529,
+   "per_day": 78.4,
+   "win": 0.434,
+   "net_r": -0.06,
+   "pf": 0.624,
+   "net_usdt_per_day": -0.915
+  },
+  "confirmation": {
+   "trades": 2370,
+   "per_day": 52.7,
+   "win": 0.443,
+   "net_r": -0.062,
+   "pf": 0.627,
+   "net_usdt_per_day": -0.702
+  },
+  "all": {
+   "trades": 5899,
+   "per_day": 65.5,
+   "win": 0.437,
+   "net_r": -0.0608,
+   "pf": 0.625,
+   "net_usdt_per_day": -0.808
+  }
+ }
+]

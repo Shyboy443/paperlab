@@ -1,0 +1,237 @@
+{
+ "protocol": "V8_SCALP_PAPER_V1",
+ "baseline_fingerprint": "93f9c48b67163c69",
+ "code": {
+  "app.strategies.v8.arena": "4a6a1edc4aaa",
+  "app.strategies.v8.ladder": "5030afecfa9f",
+  "app.competition.v8_config": "b1ce17a12007",
+  "app.live.v8_worker": "10a7b040d3df",
+  "app.ai.jev.v8": "f256f18cd807",
+  "app.live.v8_engine": "0f628fcecf5e",
+  "app.live.scan_engine": "9ce04396befb"
+ },
+ "params": {
+  "V8.3": {
+   "target_r": 1.5,
+   "min_stop_pct": 0.012,
+   "max_stop_pct": 0.012,
+   "stop_buffer_atr": 0.2,
+   "max_hold_min": 180.0,
+   "cooldown_bars": 1,
+   "hold_to_day_close": false
+  }
+ },
+ "profile": {
+  "signal": "5m",
+  "context": [
+   "15m",
+   "1h"
+  ],
+  "decision_window_ms": 60000,
+  "late_after_ms": 55000,
+  "execution": {
+   "level": 2,
+   "base_slippage_bps": 0.1,
+   "vol_component": 0.02,
+   "size_component": 0.0,
+   "slippage_mult": 1.0,
+   "force_taker": false,
+   "signal_latency_ms": 59601,
+   "order_latency_ms": 400
+  },
+  "warmup_days": 5,
+  "history_days": {
+   "funding": 10,
+   "positioning": 3,
+   "context": 5,
+   "context_oi": 2
+  },
+  "coins": [
+   "ETH",
+   "SOL",
+   "XRP",
+   "DOGE",
+   "ARB",
+   "ENA"
+  ],
+  "context_symbols": [
+   "BTCUSDT",
+   "ETHUSDT"
+  ],
+  "risk": {
+   "base": 0.01,
+   "cap": 0.02,
+   "sizing": "AGGRESSIVE_V6 legal tiers"
+  },
+  "exits_2026_10_02": {
+   "fills": "stops and targets fill at their level (app/live/v8_engine.py)",
+   "targets": "resting LIMIT orders: maker fee, filled on a 0.5 bp trade-through",
+   "min_stop": {
+    "V8.1": 0.01,
+    "V8.2": 0.012,
+    "V8.3": 0.012
+   },
+   "time_stop": {
+    "V8.1": "none (to the UTC day close)",
+    "V8.2": "none (to the UTC day close)",
+    "V8.3": "45 min"
+   },
+   "source": "docs/V8_COST_STUDY.json"
+  },
+  "elimination": {
+   "after_h": 24,
+   "min_trades_24h": 5,
+   "min_trades_24h_by_family": {
+    "V8.3": 2
+   },
+   "drawdown": 0.25
+  },
+  "qualify": {
+   "min_days": 2.0,
+   "min_trades": 40,
+   "min_net": 0.0,
+   "min_profit_factor": 1.2,
+   "max_drawdown": 0.15
+  },
+  "storage": "v8-forward.db",
+  "families": [
+   "V8.3"
+  ],
+  "retired": [
+   "V8.1",
+   "V8.2"
+  ],
+  "jev": {
+   "twins": true,
+   "timeout_ms": 20000,
+   "retries": 1,
+   "deadline_margin_ms": 5000,
+   "prompt": "df1bdc4d13bcddaf",
+   "policy": "b5b46ce9899d44d5",
+   "prompt_version": "JEV_PROMPT_V8_SCALP",
+   "state_version": "JEV_STATE_V8",
+   "state_builder": "30306c5dae32"
+  },
+  "ladder": {
+   "twins": true,
+   "tps_r_fraction": [
+    [
+     0.75,
+     0.3333333333333333
+    ],
+    [
+     1.5,
+     0.3333333333333333
+    ],
+    [
+     2.5,
+     0.3333333333333333
+    ]
+   ],
+   "lock_after_tp1": "entry + 0.15%",
+   "lock_after_tp2_r": 0.75
+  }
+ },
+ "frozen_at": "2026-10-04T15:10:55Z",
+ "rules": {
+  "ETHUSDT": {
+   "symbol": "ETHUSDT",
+   "tick": 0.01,
+   "step": 0.01,
+   "min_qty": 0.01,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 4,
+   "qty_precision": 4
+  },
+  "SOLUSDT": {
+   "symbol": "SOLUSDT",
+   "tick": 0.01,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 4,
+   "qty_precision": 3
+  },
+  "XRPUSDT": {
+   "symbol": "XRPUSDT",
+   "tick": 0.0001,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 6,
+   "qty_precision": 3
+  },
+  "DOGEUSDT": {
+   "symbol": "DOGEUSDT",
+   "tick": 1e-05,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 7,
+   "qty_precision": 2
+  },
+  "ARBUSDT": {
+   "symbol": "ARBUSDT",
+   "tick": 1e-05,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 7,
+   "qty_precision": 3
+  },
+  "ENAUSDT": {
+   "symbol": "ENAUSDT",
+   "tick": 1e-05,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 7,
+   "qty_precision": 2
+  }
+ },
+ "funding_interval_min": {
+  "ARBUSDT": 480,
+  "BTCUSDT": 480,
+  "DOGEUSDT": 480,
+  "ENAUSDT": 240,
+  "ETHUSDT": 480,
+  "SOLUSDT": 480,
+  "XRPUSDT": 480
+ },
+ "field": [
+  "V8.3-ETH-5M",
+  "V8.3-ETH-5M+JEV",
+  "V8.3-ETH-5M+LADDER",
+  "V8.3-SOL-5M",
+  "V8.3-SOL-5M+JEV",
+  "V8.3-SOL-5M+LADDER",
+  "V8.3-XRP-5M",
+  "V8.3-XRP-5M+JEV",
+  "V8.3-XRP-5M+LADDER",
+  "V8.3-DOGE-5M",
+  "V8.3-DOGE-5M+JEV",
+  "V8.3-DOGE-5M+LADDER",
+  "V8.3-ARB-5M",
+  "V8.3-ARB-5M+JEV",
+  "V8.3-ARB-5M+LADDER",
+  "V8.3-ENA-5M",
+  "V8.3-ENA-5M+JEV",
+  "V8.3-ENA-5M+LADDER"
+ ],
+ "note": "V8 is judged on LIVE forward paper data only; aggressive by design, no edge claimed",
+ "fingerprint": "deea5ae2ad5fb2d2",
+ "execution_revision": {
+  "supersedes": "2e737eb39426f4be",
+  "baseline": "93f9c48b67163c69",
+  "updated_at": "2026-10-04T18:24:16.405286+00:00",
+  "reason": "execution and loss-limit correction; historical study verdicts retained",
+  "archive": "snapshots/2026-10-04-execution-audit/docs/V8_FREEZE.json",
+  "rules": "existing instrument rules retained; no universe reselection"
+ }
+}

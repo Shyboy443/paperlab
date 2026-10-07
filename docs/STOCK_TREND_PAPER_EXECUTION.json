@@ -1,0 +1,111 @@
+{
+  "phase": "PASSED",
+  "rule": "TREND5-SMA200-MOM63-LOT1-v1",
+  "generation": "1791378821564086296",
+  "symbols": [
+    "PLTR",
+    "LITE",
+    "DELL",
+    "MSFT",
+    "META"
+  ],
+  "orders": [
+    {
+      "client_order_id": "pc5-1791378821564086296-PLTR-buy",
+      "symbol": "PLTR",
+      "side": "buy",
+      "status": "filled",
+      "filled_qty": "0.009767665",
+      "filled_avg_price": "191.448",
+      "filled_at": "2026-10-07T13:43:35.191863102Z"
+    },
+    {
+      "client_order_id": "pc5-1791378821564086296-LITE-buy",
+      "symbol": "LITE",
+      "side": "buy",
+      "status": "filled",
+      "filled_qty": "0.001708342",
+      "filled_avg_price": "1094.628",
+      "filled_at": "2026-10-07T13:43:59.15181663Z"
+    },
+    {
+      "client_order_id": "pc5-1791378821564086296-DELL-buy",
+      "symbol": "DELL",
+      "side": "buy",
+      "status": "filled",
+      "filled_qty": "0.003230018",
+      "filled_avg_price": "578.944",
+      "filled_at": "2026-10-07T13:44:22.16525569Z"
+    },
+    {
+      "client_order_id": "pc5-1791378821564086296-MSFT-buy",
+      "symbol": "MSFT",
+      "side": "buy",
+      "status": "filled",
+      "filled_qty": "0.003547148",
+      "filled_avg_price": "527.184",
+      "filled_at": "2026-10-07T13:44:45.606564576Z"
+    },
+    {
+      "client_order_id": "pc5-1791378821564086296-META-buy",
+      "symbol": "META",
+      "side": "buy",
+      "status": "filled",
+      "filled_qty": "0.00257592",
+      "filled_avg_price": "725.954",
+      "filled_at": "2026-10-07T13:45:11.200131022Z"
+    },
+    {
+      "client_order_id": "pc5-1791378821564086296-DELL-sell",
+      "symbol": "DELL",
+      "side": "sell",
+      "status": "filled",
+      "filled_qty": "0.003230018",
+      "filled_avg_price": "576.2",
+      "filled_at": "2026-10-07T13:45:35.756190419Z"
+    },
+    {
+      "client_order_id": "pc5-1791378821564086296-LITE-sell",
+      "symbol": "LITE",
+      "side": "sell",
+      "status": "filled",
+      "filled_qty": "0.001708342",
+      "filled_avg_price": "1084.674",
+      "filled_at": "2026-10-07T13:45:59.191101702Z"
+    },
+    {
+      "client_order_id": "pc5-1791378821564086296-META-sell",
+      "symbol": "META",
+      "side": "sell",
+      "status": "filled",
+      "filled_qty": "0.00257592",
+      "filled_avg_price": "725.242",
+      "filled_at": "2026-10-07T13:46:24.493534544Z"
+    },
+    {
+      "client_order_id": "pc5-1791378821564086296-MSFT-sell",
+      "symbol": "MSFT",
+      "side": "sell",
+      "status": "filled",
+      "filled_qty": "0.003547148",
+      "filled_avg_price": "526.154",
+      "filled_at": "2026-10-07T13:46:49.391713519Z"
+    },
+    {
+      "client_order_id": "pc5-1791378821564086296-PLTR-sell",
+      "symbol": "PLTR",
+      "side": "sell",
+      "status": "filled",
+      "filled_qty": "0.009767665",
+      "filled_avg_price": "191.594",
+      "filled_at": "2026-10-07T13:47:24.197773615Z"
+    }
+  ],
+  "paper_only": true,
+  "maximum_buy_notional_usd": 9.4,
+  "started_at": 1791378821.5640922,
+  "error": null,
+  "quote_feed": "iex",
+  "finished_at": 1791380868.7089005,
+  "flat_confirmed": true
+}

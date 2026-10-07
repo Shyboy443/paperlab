@@ -1,0 +1,286 @@
+{
+  "protocol": "Compare the saved pre-fix engine with the corrected engine on cached V8 bars.\n\nNo strategy selection or parameter tuning. Six coins, the existing active V8.3\nstrategy and fees; five warm-up days, then two chronological reporting halves.\nDaily resets match the earlier cost studies. This is an engineering comparison\non previously studied data, not an independent out-of-sample profitability test.\n\nRun: .venv/Scripts/python.exe scripts/execution_guard_study.py --workers 3\n",
+  "start_ms": 1785801600000,
+  "end_ms": 1790553600000,
+  "mid_ms": 1788177600000,
+  "summary": {
+    "BEFORE": {
+      "all": {
+        "trades": 2285,
+        "net_usdt": -54.4902,
+        "fees_usdt": 38.6864,
+        "net_r_per_trade": -0.113019,
+        "profit_factor": 0.7325,
+        "win_rate": 0.4263,
+        "exits": {
+          "time": 1103,
+          "stop": 789,
+          "tp": 393
+        }
+      },
+      "first_half": {
+        "trades": 1101,
+        "net_usdt": -33.3917,
+        "fees_usdt": 18.9091,
+        "net_r_per_trade": -0.157281,
+        "profit_factor": 0.6323,
+        "win_rate": 0.4078,
+        "exits": {
+          "time": 624,
+          "stop": 336,
+          "tp": 141
+        }
+      },
+      "second_half": {
+        "trades": 1184,
+        "net_usdt": -21.0984,
+        "fees_usdt": 19.7773,
+        "net_r_per_trade": -0.07186,
+        "profit_factor": 0.8131,
+        "win_rate": 0.4434,
+        "exits": {
+          "time": 479,
+          "stop": 453,
+          "tp": 252
+        }
+      }
+    },
+    "AFTER": {
+      "all": {
+        "trades": 2155,
+        "net_usdt": -46.5593,
+        "fees_usdt": 34.6667,
+        "net_r_per_trade": -0.113611,
+        "profit_factor": 0.7471,
+        "win_rate": 0.4223,
+        "exits": {
+          "time": 1012,
+          "stop": 763,
+          "tp": 380
+        }
+      },
+      "first_half": {
+        "trades": 1044,
+        "net_usdt": -27.4279,
+        "fees_usdt": 16.9323,
+        "net_r_per_trade": -0.149532,
+        "profit_factor": 0.6603,
+        "win_rate": 0.4128,
+        "exits": {
+          "time": 591,
+          "stop": 318,
+          "tp": 135
+        }
+      },
+      "second_half": {
+        "trades": 1111,
+        "net_usdt": -19.1314,
+        "fees_usdt": 17.7344,
+        "net_r_per_trade": -0.079856,
+        "profit_factor": 0.8149,
+        "win_rate": 0.4311,
+        "exits": {
+          "time": 421,
+          "stop": 445,
+          "tp": 245
+        }
+      }
+    }
+  },
+  "by_coin": {
+    "ETH": {
+      "BEFORE": {
+        "trades": 187,
+        "net_usdt": -7.0927,
+        "fees_usdt": 4.6651,
+        "net_r_per_trade": -0.132998,
+        "profit_factor": 0.5691,
+        "win_rate": 0.4064,
+        "exits": {
+          "time": 147,
+          "stop": 32,
+          "tp": 8
+        }
+      },
+      "AFTER": {
+        "trades": 125,
+        "net_usdt": -3.536,
+        "fees_usdt": 3.0967,
+        "net_r_per_trade": -0.10334,
+        "profit_factor": 0.6541,
+        "win_rate": 0.416,
+        "exits": {
+          "time": 99,
+          "stop": 21,
+          "tp": 5
+        }
+      }
+    },
+    "SOL": {
+      "BEFORE": {
+        "trades": 371,
+        "net_usdt": -5.72,
+        "fees_usdt": 4.6576,
+        "net_r_per_trade": -0.10235,
+        "profit_factor": 0.6659,
+        "win_rate": 0.4663,
+        "exits": {
+          "time": 265,
+          "stop": 78,
+          "tp": 28
+        }
+      },
+      "AFTER": {
+        "trades": 305,
+        "net_usdt": -3.31,
+        "fees_usdt": 3.4664,
+        "net_r_per_trade": -0.093835,
+        "profit_factor": 0.7368,
+        "win_rate": 0.4393,
+        "exits": {
+          "time": 222,
+          "stop": 64,
+          "tp": 19
+        }
+      }
+    },
+    "XRP": {
+      "BEFORE": {
+        "trades": 390,
+        "net_usdt": -10.4091,
+        "fees_usdt": 6.7897,
+        "net_r_per_trade": -0.124592,
+        "profit_factor": 0.6784,
+        "win_rate": 0.4231,
+        "exits": {
+          "time": 221,
+          "stop": 119,
+          "tp": 50
+        }
+      },
+      "AFTER": {
+        "trades": 390,
+        "net_usdt": -9.58,
+        "fees_usdt": 6.5471,
+        "net_r_per_trade": -0.124554,
+        "profit_factor": 0.6882,
+        "win_rate": 0.4231,
+        "exits": {
+          "time": 221,
+          "stop": 119,
+          "tp": 50
+        }
+      }
+    },
+    "DOGE": {
+      "BEFORE": {
+        "trades": 378,
+        "net_usdt": -12.7715,
+        "fees_usdt": 6.6649,
+        "net_r_per_trade": -0.165868,
+        "profit_factor": 0.5919,
+        "win_rate": 0.4021,
+        "exits": {
+          "time": 236,
+          "stop": 106,
+          "tp": 36
+        }
+      },
+      "AFTER": {
+        "trades": 378,
+        "net_usdt": -12.0601,
+        "fees_usdt": 6.4383,
+        "net_r_per_trade": -0.16583,
+        "profit_factor": 0.5977,
+        "win_rate": 0.4021,
+        "exits": {
+          "time": 236,
+          "stop": 106,
+          "tp": 36
+        }
+      }
+    },
+    "ARB": {
+      "BEFORE": {
+        "trades": 472,
+        "net_usdt": -15.2757,
+        "fees_usdt": 7.8982,
+        "net_r_per_trade": -0.148967,
+        "profit_factor": 0.7184,
+        "win_rate": 0.3919,
+        "exits": {
+          "stop": 230,
+          "time": 122,
+          "tp": 120
+        }
+      },
+      "AFTER": {
+        "trades": 470,
+        "net_usdt": -14.8178,
+        "fees_usdt": 7.5446,
+        "net_r_per_trade": -0.166497,
+        "profit_factor": 0.7123,
+        "win_rate": 0.3915,
+        "exits": {
+          "stop": 229,
+          "time": 122,
+          "tp": 119
+        }
+      }
+    },
+    "ENA": {
+      "BEFORE": {
+        "trades": 487,
+        "net_usdt": -3.2213,
+        "fees_usdt": 8.011,
+        "net_r_per_trade": -0.028349,
+        "profit_factor": 0.9383,
+        "win_rate": 0.4579,
+        "exits": {
+          "tp": 151,
+          "stop": 224,
+          "time": 112
+        }
+      },
+      "AFTER": {
+        "trades": 487,
+        "net_usdt": -3.2554,
+        "fees_usdt": 7.5735,
+        "net_r_per_trade": -0.0283,
+        "profit_factor": 0.9337,
+        "win_rate": 0.4579,
+        "exits": {
+          "tp": 151,
+          "stop": 224,
+          "time": 112
+        }
+      }
+    }
+  },
+  "rejects": {
+    "BEFORE": {
+      "min_notional_needs_strong_setup": 1005,
+      "max_positions": 7694,
+      "min_notional_needs_attack": 583
+    },
+    "AFTER": {
+      "min_notional_needs_strong_setup": 1059,
+      "fill_insufficient_capacity": 493,
+      "max_positions": 7358,
+      "min_notional_needs_attack": 510,
+      "fill_fee_gt_r": 2
+    }
+  },
+  "source_sha256": {
+    "BEFORE": {
+      "app/backtest/replay.py": "4ea9d8c255c61c2f1edb21aa125465f136d8713650bca853b1e076770a6950e6",
+      "app/live/scan_engine.py": "79127525ff6ab8b189fcfdbc1b28d8dde332602eed4908219d0157389376b5ba",
+      "app/live/v8_engine.py": "859684b0eddde9b57ee254f8ff880f192b677ae0c9ccbef84767209c8c8d912c"
+    },
+    "AFTER": {
+      "app/backtest/replay.py": "21353e3d3ebd341d7e9afb4bb96a910d7cfcd6cc1dfa1d292447195a57586503",
+      "app/live/scan_engine.py": "95cd64ed780677949b7bd50822470e80e52a49afa38980989b4566b5d17f49d8",
+      "app/live/v8_engine.py": "0f628fcecf5e4beb786c102717378c00244d49feb02d13d5c0dca247fd1ec8fa"
+    }
+  }
+}

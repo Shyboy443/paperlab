@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>PaperLab</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+
+<!-- login overlay: the shell is served openly, every /api call carries Basic auth from sessionStorage -->
+<div id="login" class="overlay" hidden>
+  <form id="login-form" class="card login" autocomplete="off">
+    <div class="brand"><span class="brand-mark"></span>PaperLab</div>
+    <p class="muted">Dashboard password for <code>admin</code>. Kept in this tab's session only.</p>
+    <label class="field"><span>password</span>
+      <input id="login-pw" type="password" autocomplete="current-password" required>
+    </label>
+    <div id="login-err" class="err" role="alert"></div>
+    <button type="submit" class="btn primary">Enter lab</button>
+  </form>
+</div>
+
+<header id="top">
+  <div id="stale" class="banner" role="alert" hidden>STALE</div>
+  <div class="top-row">
+    <div class="brand"><span class="brand-mark"></span>PaperLab</div>
+    <span id="mode-badge" class="badge mode other">&hellip;</span>
+    <span id="dry-pill" class="pill dry" hidden>DRY RUN</span>
+    <span id="conn" class="conn" title="market feed"><i class="dot"></i><span id="conn-txt">feed</span></span>
+    <span id="desync-badge" class="badge desync" hidden>DESYNC</span>
+    <span class="spacer"></span>
+    <span id="stream-pill" class="pill ghost" title="server push connection (SSE)">STREAM ● OFF</span>
+    <div class="top-eq">
+      <span class="lbl">equity</span>
+      <span id="eq-total" class="num big">&mdash;</span>
+      <span id="eq-pnl" class="num">&mdash;</span>
+    </div>
+  </div>
+  <div class="top-row second">
+    <span id="daily" class="chip" title="daily PnL vs the daily halt threshold">day &mdash;</span>
+    <span id="engine-chip" class="chip">engine &mdash;</span>
+    <span id="updated" class="chip ghost">updated &mdash;</span>
+    <span class="spacer"></span>
+    <button id="kill-btn" class="btn danger" type="button">KILL ALL</button>
+    <button id="sys-btn" class="btn ghost" type="button" title="controls, settings and health">&#9881; System</button>
+    <a class="btn ghost" href="/public/stock-trend" title="Five-stock small-account trend strategy">Stock portfolio</a>
+    <a class="btn ghost" href="/?p=video&bot=BTC-4H-BREAKOUT#bots/bots" title="Bitcoin breakout in Competition">Bitcoin breakout</a>
+    <a id="logout" href="#" class="link">log out</a>
+  </div>
+  <div id="safety-strip" class="top-row safety-strip" aria-label="stream, data and Jev health"></div>
+  <nav id="nav" class="mainnav" role="tablist" aria-label="sections"></nav>
+  <nav id="subnav" class="subnav" role="tablist" aria-label="views"></nav>
+</header>
+<div id="alive" class="alive" aria-live="polite"></div>
+
+<main id="main">
+  <section data-panel="home" class="panel">
+    <div id="home-grid" class="grid"><div class="card"><p class="sub">loading the V6 forward arena&hellip;</p></div></div>
+  </section>
+  <section data-panel="research" class="panel" hidden>
+    <div id="research-grid" class="grid"><div class="card"><p class="sub">loading the research history&hellip;</p></div></div>
+  </section>
+  <section data-panel="traders" class="panel" hidden>
+    <div id="traders-grid" class="grid"><div class="card"><p class="sub">loading the traders&hellip;</p></div></div>
+  </section>
+  <section data-panel="v5" class="panel" hidden>
+    <div id="v5-grid" class="grid"><div class="card"><p class="sub">loading the V5 futures arena&hellip;</p></div></div>
+  </section>
+  <section data-panel="v4" class="panel" hidden>
+    <div id="v4-grid" class="grid"><div class="card"><p class="sub">loading the V4 specialists&hellip;</p></div></div>
+  </section>
+  <section data-panel="system" class="panel" hidden>
+    <div id="system-grid" class="grid"><div class="card"><p class="sub">loading the system status&hellip;</p></div></div>
+  </section>
+  <section data-panel="live" class="panel" hidden>
+    <div id="live-grid" class="grid"><div class="card"><p class="sub">loading the live shadow&hellip;</p></div></div>
+  </section>
+
+  <section data-panel="market" class="panel" hidden>
+    <div class="grid"><div class="card" id="market-live"></div></div>
+  </section>
+
+  <section data-panel="v31" class="panel" hidden>
+    <div id="v31-grid" class="grid"><div class="card"><p class="sub">loading the V3.1 aggressive arena&hellip;</p></div></div>
+  </section>
+  <section data-panel="v3" class="panel" hidden>
+    <div id="v3-grid" class="grid"><div class="card"><p class="sub">loading the V3 aggressive arena&hellip;</p></div></div>
+  </section>
+
+  <section data-panel="candidates" class="panel" hidden>
+    <div id="candidates-grid" class="grid"><div class="card"><p class="sub">loading the v2 candidates&hellip;</p></div></div>
+  </section>
+
+  <section data-panel="activity" class="panel" hidden>
+    <div class="card toolbar"><div id="activity-filters" class="chips"></div>
+      <span class="sub">live: candidates, Jev decisions, opens and closes in the live shadow; paper-engine fills, signals and notes; competition progress</span></div>
+    <div class="card"><ul id="activity-feed" class="feed"></ul></div>
+  </section>
+
+  <section data-panel="scout" class="panel" hidden>
+    <div id="scout-grid" class="grid"><div class="card"><p class="sub">loading the scout&hellip;</p></div></div>
+  </section>
+  <section data-panel="mirror" class="panel" hidden>
+    <div id="mirror-grid" class="grid"><div class="card"><p class="sub">loading providers&hellip;</p></div></div>
+  </section>
+  <section data-panel="health" class="panel" hidden>
+    <div id="health-body" class="grid"></div>
+  </section>
+
+  <section data-panel="overview" class="panel" hidden>
+    <div class="grid">
+      <div class="card winners-card" id="winners-card" hidden>
+        <div class="card-head"><h2>winners — trading real money</h2>
+          <span class="sub">promoted out of the bake-off; these books send real orders</span></div>
+        <div class="tablewrap"><table id="winners-table" class="tbl lb"></table></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>bake-off leaderboard</h2><span id="lb-sub" class="sub"></span></div>
+        <div class="tablewrap"><table id="lb-table" class="tbl lb"></table></div>
+      </div>
+      <div class="card c8">
+        <div class="card-head"><h2>equity curve</h2><div id="curve-toggles" class="toggles"></div></div>
+        <div id="equity-chart" class="chart"></div>
+      </div>
+      <div class="card c4"><h2>stats</h2><div id="stat-tiles" class="tiles"></div></div>
+      <div class="card c4"><h2>how trades ended <span class="sub" id="exit-sub"></span></h2><div id="exit-tiles" class="tiles small"></div></div>
+      <div class="card c6"><h2>lab journal</h2><ul id="journal" class="journal"></ul></div>
+      <div class="card c6"><h2>notional vs caps</h2><div id="notional" class="bars"></div></div>
+      <div class="card c3" id="wallet-card" hidden><h2>exchange wallet</h2><div id="wallet"></div></div>
+      <div class="card c6" id="prices-card"><h2>prices</h2><div class="tablewrap"><table id="prices-table" class="tbl"></table></div></div>
+    </div>
+  </section>
+
+  <section data-panel="strategies" class="panel" hidden>
+    <div class="card">
+      <div class="card-head"><h2>strategies</h2><span id="strat-count" class="sub"></span></div>
+      <div class="tablewrap"><table id="strat-table" class="tbl"></table></div>
+    </div>
+  </section>
+
+  <section data-panel="positions" class="panel" hidden>
+    <div class="grid">
+      <div class="card"><h2>virtual positions</h2><div class="tablewrap"><table id="vpos-table" class="tbl"></table></div></div>
+      <div class="card"><h2>exchange positions</h2><div class="tablewrap"><table id="xpos-table" class="tbl"></table></div></div>
+      <div class="card"><h2>net-delta router</h2><div id="router" class="router-grid"></div></div>
+    </div>
+  </section>
+
+  <section data-panel="tape" class="panel" hidden>
+    <div class="card toolbar">
+      <input id="tape-filter" type="search" placeholder="filter: strategy id / symbol / status" autocomplete="off">
+      <select id="tape-strategy" aria-label="filter by strategy"><option value="">all strategies</option></select>
+      <label class="check"><input id="tape-rejected" type="checkbox"> show rejected only</label>
+      <span id="tape-count" class="sub"></span>
+    </div>
+    <div class="grid">
+      <div class="card"><h2>fills</h2><div class="tablewrap"><table id="fills-table" class="tbl"></table></div></div>
+      <div class="card"><h2>signals</h2><div class="tablewrap"><table id="signals-table" class="tbl"></table></div></div>
+    </div>
+  </section>
+
+  <section data-panel="competition" class="panel" hidden>
+    <div class="banner info" id="comp-banner">
+      <b>Ranking is not qualification.</b> A bot can rank #1 and still fail — on insufficient trades,
+      drawdown, liquidation, weak expectancy, execution costs, or validation stages that have not run.
+    </div>
+    <nav id="comp-tabs" class="subtabs" role="tablist" hidden>
+      <button role="tab" data-ctab="overview" class="active" type="button">Overview</button>
+      <button role="tab" data-ctab="arena" type="button">Bot Arena</button>
+      <button role="tab" data-ctab="jev" type="button">Control vs Jev</button>
+      <button role="tab" data-ctab="leaderboard" type="button">Leaderboard</button>
+      <button role="tab" data-ctab="bots" type="button">Bots</button>
+      <button role="tab" data-ctab="seasons" type="button">Seasons</button>
+      <button role="tab" data-ctab="execution" type="button">Execution</button>
+      <button role="tab" data-ctab="validation" type="button">Validation</button>
+      <button role="tab" data-ctab="settings" type="button">Settings</button>
+    </nav>
+    <div id="comp-progress" class="card run-strip" hidden></div>
+    <div data-cpanel="overview" class="cpanel"><div id="comp-overview" class="grid"></div></div>
+    <div data-cpanel="leaderboard" class="cpanel" hidden>
+      <div class="card toolbar">
+        <label class="field inline"><span>sort</span>
+          <select id="comp-sort">
+            <option value="score">competition score</option>
+            <option value="net">net PnL</option>
+            <option value="return">return %</option>
+            <option value="expectancy">expectancy R</option>
+            <option value="profit_factor">profit factor</option>
+            <option value="drawdown">max drawdown</option>
+            <option value="trades">trades</option>
+          </select></label>
+        <span id="comp-lb-sub" class="sub"></span>
+      </div>
+      <div class="card"><div class="tablewrap"><table id="comp-lb-table" class="tbl lb"></table></div></div>
+      <div class="card" id="comp-skipped-card" hidden><h2>not entered</h2><div id="comp-skipped"></div></div>
+    </div>
+    <div data-cpanel="arena" class="cpanel" hidden><div id="comp-arena" class="grid"></div></div>
+    <div data-cpanel="jev" class="cpanel" hidden><div id="comp-jev" class="grid"></div></div>
+    <div data-cpanel="bots" class="cpanel" hidden><div id="comp-bots" class="grid"></div></div>
+    <div data-cpanel="seasons" class="cpanel" hidden>
+      <div class="card"><div class="card-head"><h2>seasons</h2><span id="comp-seasons-sub" class="sub"></span></div>
+        <div class="tablewrap"><table id="comp-seasons-table" class="tbl"></table></div></div>
+    </div>
+    <div data-cpanel="execution" class="cpanel" hidden><div id="comp-exec" class="grid"></div></div>
+    <div data-cpanel="validation" class="cpanel" hidden><div id="comp-validation" class="grid"></div></div>
+    <div data-cpanel="settings" class="cpanel" hidden><div id="comp-settings" class="grid"></div></div>
+  </section>
+
+  <section data-panel="controls" class="panel" hidden>
+    <div class="grid two">
+      <div class="card live-card">
+        <h2>exchange connection <span id="cred-badge" class="pill">not connected</span></h2>
+        <p class="sub">Keys are held <b>in memory only</b> — never saved to disk or the database, never
+          logged, never readable back. A restart clears them. Use a <b>trade-only</b> key with withdrawals
+          disabled.</p>
+        <div class="btn-row wrap">
+          <input id="cred-key" type="password" placeholder="API key" autocomplete="off" spellcheck="false">
+          <input id="cred-secret" type="password" placeholder="API secret" autocomplete="off" spellcheck="false">
+          <button id="cred-save" class="btn" type="button">Connect &amp; verify</button>
+          <button id="cred-clear" class="btn" type="button" hidden>Disconnect</button>
+        </div>
+        <div id="cred-msg" class="msg"></div>
+
+        <h2>real money <span id="live-badge" class="pill">paper</span></h2>
+        <p class="sub" id="live-blurb">While this says <b>paper</b>, fills are simulated and nothing reaches an
+          exchange. Arming sends <b>real orders</b> with <b>real funds</b>. Everything below must be green first.</p>
+        <div class="btn-row wrap">
+          <label class="field inline"><span>trade live with</span><select id="solo-pick"></select></label>
+          <button id="solo-btn" class="btn ghost" type="button" title="optional: disables the other 26 books">
+            Focus — disable all others</button>
+        </div>
+        <p class="sub note">Picking a strategy above is all that arming needs. <b>Focus is optional and stops
+          the paper bake-off</b> — only the selected book reaches the exchange either way.</p>
+        <div id="solo-msg" class="msg"></div>
+        <ul id="live-checks" class="checks"></ul>
+        <div class="btn-row">
+          <input id="live-word" type="text" placeholder="type GO LIVE" autocomplete="off" spellcheck="false">
+          <button id="live-arm" class="btn danger" type="button" disabled>Arm live trading</button>
+          <button id="live-disarm" class="btn" type="button" hidden>Disarm (flatten + back to paper)</button>
+        </div>
+        <div id="live-msg" class="msg"></div>
+      </div>
+      <div class="card">
+        <h2>engine</h2>
+        <div class="btn-row" id="controls-engine">
+          <button class="btn" data-act="engine/start" type="button">Start</button>
+          <button class="btn" data-act="engine/stop" type="button">Stop</button>
+          <button class="btn warn" data-act="resume" type="button">Resume</button>
+          <button class="btn danger" data-act="flatten" type="button">Flatten all</button>
+        </div>
+        <h2>bake-off</h2>
+        <div class="btn-row">
+          <button id="arm-all" class="btn" type="button">Arm every strategy (paper)</button>
+          <button id="disarm-all" class="btn" type="button">Disable all</button>
+        </div>
+        <div id="armall-msg" class="msg"></div>
+        <div id="engine-msg" class="msg"></div>
+        <h2>reset paper balances</h2>
+        <div class="btn-row">
+          <input id="reset-word" type="text" placeholder="type RESET" autocomplete="off" spellcheck="false">
+          <button id="reset-btn" class="btn danger" type="button" disabled>Reset</button>
+        </div>
+        <div id="reset-msg" class="msg"></div>
+        <h2>symbols</h2>
+        <div class="btn-row">
+          <input id="symbols-input" type="text" placeholder="BTCUSDT, ETHUSDT" autocomplete="off" spellcheck="false">
+          <button id="symbols-btn" class="btn" type="button">Apply symbols</button>
+        </div>
+        <div id="symbols-msg" class="msg"></div>
+        <h2>export csv</h2>
+        <div class="btn-row" id="exports"></div>
+        <div id="export-msg" class="msg"></div>
+      </div>
+      <div class="card">
+        <h2>runtime</h2>
+        <div id="runtime"></div>
+        <h2>boot report</h2>
+        <div id="boot"></div>
+        <h2>feed</h2>
+        <div id="feed"></div>
+        <h2>feed events</h2>
+        <ul id="feed-events" class="list"></ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="drawer-backdrop" hidden></div>
+<aside id="drawer" hidden aria-label="strategy detail">
+  <div class="drawer-head">
+    <div class="drawer-title">
+      <div><span id="drawer-id"></span> <span id="drawer-name"></span> <span id="drawer-switch"></span></div>
+      <div id="drawer-badges" class="badges"></div>
+    </div>
+    <div class="btn-row tight">
+      <button id="drawer-refresh" class="btn ghost" type="button">refresh</button>
+      <button id="drawer-close" class="btn ghost" type="button" aria-label="close">&#10005;</button>
+    </div>
+  </div>
+  <div id="drawer-body" class="drawer-body"></div>
+</aside>
+
+<div id="modal" class="overlay" hidden>
+  <div class="card modal" role="dialog" aria-modal="true">
+    <h3 id="modal-title"></h3>
+    <p id="modal-text" class="muted"></p>
+    <input id="modal-input" type="text" hidden autocomplete="off" spellcheck="false">
+    <div class="btn-row right">
+      <button id="modal-cancel" class="btn ghost" type="button">Cancel</button>
+      <button id="modal-ok" class="btn danger" type="button">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<div id="toasts"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.3/dist/lightweight-charts.standalone.production.js"></script>
+<script src="/static/charts.js"></script>
+<script src="/static/stream.js"></script>
+<script src="/static/competition.js"></script>
+<script src="/static/live.js"></script>
+<script src="/static/candidates.js"></script>
+  <script src="/static/v3.js"></script>
+  <script src="/static/v31.js"></script>
+<script src="/static/home.js"></script>
+<script src="/static/prices.js"></script>
+<script src="/static/arena.js"></script>
+<script src="/static/roster.js"></script>
+<script src="/static/breakout-competition.js"></script>
+<script src="/static/mirror.js"></script>
+<script src="/static/scout.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

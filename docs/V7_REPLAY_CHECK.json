@@ -1,0 +1,142 @@
+{
+  "window": "2026-09-18..2026-09-25 UTC",
+  "bots": [
+    {
+      "bot": "V7.1-ARB",
+      "trades": 10,
+      "signals": 15,
+      "net_usdt": -0.488246,
+      "max_drawdown": 0.056755,
+      "fees": 0.115094,
+      "halted": false,
+      "exit_kinds": {
+        "stop": 7,
+        "tp": 3
+      },
+      "rejects": {
+        "max_positions": 5
+      }
+    },
+    {
+      "bot": "V7.2-ARB",
+      "trades": 3,
+      "signals": 5,
+      "net_usdt": 0.538106,
+      "max_drawdown": 0.01263,
+      "fees": 0.028462,
+      "halted": false,
+      "exit_kinds": {
+        "stop": 1,
+        "tp": 2
+      },
+      "rejects": {
+        "max_positions": 2
+      }
+    },
+    {
+      "bot": "V7.1-ENA",
+      "trades": 19,
+      "signals": 38,
+      "net_usdt": 2.313277,
+      "max_drawdown": 0.04502,
+      "fees": 0.206139,
+      "halted": false,
+      "exit_kinds": {
+        "stop": 7,
+        "time": 2,
+        "tp": 10
+      },
+      "rejects": {
+        "max_positions": 19
+      }
+    },
+    {
+      "bot": "V7.2-ENA",
+      "trades": 4,
+      "signals": 6,
+      "net_usdt": 0.246727,
+      "max_drawdown": 0.025314,
+      "fees": 0.040461,
+      "halted": false,
+      "exit_kinds": {
+        "stop": 2,
+        "tp": 2
+      },
+      "rejects": {
+        "max_positions": 2
+      }
+    },
+    {
+      "bot": "V7.1-XRP",
+      "trades": 17,
+      "signals": 43,
+      "net_usdt": 0.491312,
+      "max_drawdown": 0.038833,
+      "fees": 0.331385,
+      "halted": false,
+      "exit_kinds": {
+        "stop": 7,
+        "time": 4,
+        "tp": 6
+      },
+      "rejects": {
+        "max_positions": 26
+      }
+    },
+    {
+      "bot": "V7.2-XRP",
+      "trades": 11,
+      "signals": 20,
+      "net_usdt": -0.05706,
+      "max_drawdown": 0.034788,
+      "fees": 0.153392,
+      "halted": false,
+      "exit_kinds": {
+        "stop": 5,
+        "time": 3,
+        "tp": 3
+      },
+      "rejects": {
+        "max_positions": 9
+      }
+    },
+    {
+      "bot": "V7.1-DOGE",
+      "trades": 19,
+      "signals": 44,
+      "net_usdt": 3.517199,
+      "max_drawdown": 0.027596,
+      "fees": 0.354052,
+      "halted": false,
+      "exit_kinds": {
+        "stop": 5,
+        "time": 3,
+        "tp": 11
+      },
+      "rejects": {
+        "max_positions": 25
+      }
+    },
+    {
+      "bot": "V7.2-DOGE",
+      "trades": 8,
+      "signals": 15,
+      "net_usdt": 0.732209,
+      "max_drawdown": 0.024746,
+      "fees": 0.108882,
+      "halted": false,
+      "exit_kinds": {
+        "stop": 2,
+        "time": 4,
+        "tp": 2
+      },
+      "rejects": {
+        "max_positions": 7
+      }
+    }
+  ],
+  "total_net_usdt": 7.293524,
+  "total_trades": 91,
+  "starting_usdt": 160,
+  "limitations": "One recent week, no holdout; modelled spreads; historical REST arrival unavailable; end-of-run exits included. No proven edge."
+}

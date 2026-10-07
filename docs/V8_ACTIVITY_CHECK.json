@@ -1,0 +1,183 @@
+{
+ "window": {
+  "from": "2026-09-20",
+  "to": "2026-09-27",
+  "days": 7
+ },
+ "target_trades_per_bot_per_day": 10,
+ "bots": [
+  {
+   "bot": "V8.1-ETH-5M",
+   "signals": 149,
+   "trades": 71,
+   "trades_per_day": 10.1,
+   "refused": {
+    "max_positions": 77,
+    "min_notional_needs_attack": 1
+   }
+  },
+  {
+   "bot": "V8.2-ETH-5M",
+   "signals": 125,
+   "trades": 75,
+   "trades_per_day": 10.7,
+   "refused": {
+    "max_positions": 49,
+    "min_notional_needs_attack": 1
+   }
+  },
+  {
+   "bot": "V8.3-ETH-5M",
+   "signals": 255,
+   "trades": 111,
+   "trades_per_day": 15.9,
+   "refused": {
+    "max_positions": 133,
+    "min_notional_needs_attack": 1,
+    "min_notional_needs_strong_setup": 10
+   }
+  },
+  {
+   "bot": "V8.1-SOL-5M",
+   "signals": 168,
+   "trades": 80,
+   "trades_per_day": 11.4,
+   "refused": {
+    "max_positions": 88
+   }
+  },
+  {
+   "bot": "V8.2-SOL-5M",
+   "signals": 153,
+   "trades": 82,
+   "trades_per_day": 11.7,
+   "refused": {
+    "max_positions": 71
+   }
+  },
+  {
+   "bot": "V8.3-SOL-5M",
+   "signals": 294,
+   "trades": 96,
+   "trades_per_day": 13.7,
+   "refused": {
+    "max_positions": 122,
+    "strategy_halted": 76
+   }
+  },
+  {
+   "bot": "V8.1-XRP-5M",
+   "signals": 173,
+   "trades": 89,
+   "trades_per_day": 12.7,
+   "refused": {
+    "max_positions": 84
+   }
+  },
+  {
+   "bot": "V8.2-XRP-5M",
+   "signals": 144,
+   "trades": 85,
+   "trades_per_day": 12.1,
+   "refused": {
+    "max_positions": 58
+   }
+  },
+  {
+   "bot": "V8.3-XRP-5M",
+   "signals": 243,
+   "trades": 65,
+   "trades_per_day": 9.3,
+   "refused": {
+    "max_positions": 48,
+    "strategy_halted": 130
+   }
+  },
+  {
+   "bot": "V8.1-DOGE-5M",
+   "signals": 145,
+   "trades": 69,
+   "trades_per_day": 9.9,
+   "refused": {
+    "max_positions": 50,
+    "strategy_halted": 26
+   }
+  },
+  {
+   "bot": "V8.2-DOGE-5M",
+   "signals": 101,
+   "trades": 72,
+   "trades_per_day": 10.3,
+   "refused": {
+    "max_positions": 29
+   }
+  },
+  {
+   "bot": "V8.3-DOGE-5M",
+   "signals": 234,
+   "trades": 95,
+   "trades_per_day": 13.6,
+   "refused": {
+    "max_positions": 83,
+    "strategy_halted": 56
+   }
+  },
+  {
+   "bot": "V8.1-ARB-5M",
+   "signals": 75,
+   "trades": 40,
+   "trades_per_day": 5.7,
+   "refused": {
+    "max_positions": 35
+   }
+  },
+  {
+   "bot": "V8.2-ARB-5M",
+   "signals": 63,
+   "trades": 42,
+   "trades_per_day": 6.0,
+   "refused": {
+    "max_positions": 21
+   }
+  },
+  {
+   "bot": "V8.3-ARB-5M",
+   "signals": 197,
+   "trades": 60,
+   "trades_per_day": 8.6,
+   "refused": {
+    "max_positions": 22,
+    "strategy_halted": 115
+   }
+  },
+  {
+   "bot": "V8.1-ENA-5M",
+   "signals": 53,
+   "trades": 35,
+   "trades_per_day": 5.0,
+   "refused": {
+    "max_positions": 18
+   }
+  },
+  {
+   "bot": "V8.2-ENA-5M",
+   "signals": 41,
+   "trades": 28,
+   "trades_per_day": 4.0,
+   "refused": {
+    "max_positions": 13
+   }
+  },
+  {
+   "bot": "V8.3-ENA-5M",
+   "signals": 161,
+   "trades": 100,
+   "trades_per_day": 14.3,
+   "refused": {
+    "max_positions": 61
+   }
+  }
+ ],
+ "median_trades_per_day": 10.7,
+ "note": "executed-trade COUNTS only (not returns); recent Bybit 1m bars through the live engine"
+}

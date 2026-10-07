@@ -1,0 +1,909 @@
+{
+  "observed_at": "2026-10-06T20:16:13.605378+00:00",
+  "url": "https://paperlab-production-919c.up.railway.app",
+  "deployment_id": "cf723271-d99a-460b-a9fa-124b8fceabf6",
+  "expected_stock_freeze": "03100171b90664fa",
+  "stock_experiment": {
+    "experiment_id": "v9x-436309c56f0c",
+    "forward_start_ms": 1791317520000,
+    "created_ts": 1791317520000,
+    "warmup_from_ms": 1789935120000,
+    "manifest": "03100171b90664fa",
+    "identity": {
+      "protocol": "V9_STOCKS_PAPER_V1",
+      "manifest": "03100171b90664fa",
+      "venue": "ALPACA_IEX_US_EQUITY",
+      "jev_model": "typesafe/jev-1.13"
+    },
+    "coins": [
+      "SPY",
+      "QQQ",
+      "AAPL",
+      "NVDA",
+      "TSLA",
+      "AMD",
+      "MSFT",
+      "META",
+      "AMZN",
+      "GOOGL"
+    ],
+    "sessions": 1,
+    "sessions_detail": [
+      {
+        "session_id": "593bb9746ba8",
+        "created_ts": 1791317528813,
+        "live_ts": 1791317520000,
+        "heartbeat_ts": 1791317768769,
+        "ended_ts": null,
+        "status": "LIVE"
+      }
+    ]
+  },
+  "stock_status": {
+    "status": "MARKET_CLOSED",
+    "enabled": true,
+    "restarts": 0,
+    "session_id": "593bb9746ba8",
+    "experiment_id": "v9x-436309c56f0c",
+    "forward_start_ms": 1791317520000,
+    "live_from_ms": 1791317520000,
+    "bots": 60,
+    "live_bots": 60,
+    "controls": 30,
+    "jev_bots": 30,
+    "positions_open": 0,
+    "evaluating": 0,
+    "jev_state": "READY",
+    "ws": false,
+    "ws_age_s": null,
+    "klines_age_s": null,
+    "rest_errors": 0,
+    "barrier_last": null,
+    "error": null,
+    "diffs": null,
+    "detail": null,
+    "session": {
+      "open": false,
+      "close_ms": null,
+      "next_open_ms": 1791379800000
+    },
+    "sessions_live": 0
+  },
+  "historical_review": {
+    "date": "2026-10-07",
+    "comparisons": 120,
+    "active_variant": "SESSION",
+    "state": "FAILED_PROFITABILITY_CHECKS",
+    "passed_families": [],
+    "detail": "Correctness repairs reduced aggregate losses. No tested family passed all historical stages; the repaired version remains a paper experiment. Wider stops were not adopted.",
+    "data_limit": "Historical dates were inspected previously; new forward evidence is required."
+  },
+  "program_statuses": {
+    "v6": {
+      "status": "LIVE",
+      "enabled": true,
+      "restarts": 0,
+      "session_id": "af755664abc6",
+      "experiment_id": "v6x-dcb7cbf3a418",
+      "forward_start_ms": 1791174780000,
+      "live_from_ms": 1791317520000,
+      "bots": 56,
+      "live_bots": 56,
+      "controls": 28,
+      "jev_bots": 28,
+      "positions_open": 4,
+      "evaluating": 0,
+      "jev_state": "READY",
+      "ws": true,
+      "ws_age_s": 0.0,
+      "klines_age_s": 0.3,
+      "rest_errors": 0,
+      "barrier_last": null,
+      "error": null,
+      "diffs": null,
+      "detail": null,
+      "session": null,
+      "sessions_live": null
+    },
+    "v7": {
+      "status": "LIVE",
+      "enabled": true,
+      "restarts": 0,
+      "session_id": "e43a46c1dfa4",
+      "experiment_id": "v7x-68f5f5c29c2c",
+      "forward_start_ms": 1791174780000,
+      "live_from_ms": 1791317520000,
+      "bots": 8,
+      "live_bots": 8,
+      "controls": 8,
+      "jev_bots": 0,
+      "positions_open": 1,
+      "evaluating": 0,
+      "jev_state": "DISABLED",
+      "ws": true,
+      "ws_age_s": 0.0,
+      "klines_age_s": 0.0,
+      "rest_errors": 0,
+      "barrier_last": null,
+      "error": null,
+      "diffs": null,
+      "detail": null,
+      "session": null,
+      "sessions_live": null
+    },
+    "v8": {
+      "status": "LIVE",
+      "enabled": true,
+      "restarts": 0,
+      "session_id": "5965339c0a32",
+      "experiment_id": "v8x-972151dbad84",
+      "forward_start_ms": 1791174780000,
+      "live_from_ms": 1791317520000,
+      "bots": 18,
+      "live_bots": 18,
+      "controls": 6,
+      "jev_bots": 6,
+      "positions_open": 6,
+      "evaluating": 0,
+      "jev_state": "READY",
+      "ws": true,
+      "ws_age_s": 0.0,
+      "klines_age_s": 0.3,
+      "rest_errors": 0,
+      "barrier_last": null,
+      "error": null,
+      "diffs": null,
+      "detail": null,
+      "session": null,
+      "sessions_live": null
+    },
+    "v9": {
+      "status": "MARKET_CLOSED",
+      "enabled": true,
+      "restarts": 0,
+      "session_id": "593bb9746ba8",
+      "experiment_id": "v9x-436309c56f0c",
+      "forward_start_ms": 1791317520000,
+      "live_from_ms": 1791317520000,
+      "bots": 60,
+      "live_bots": 60,
+      "controls": 30,
+      "jev_bots": 30,
+      "positions_open": 0,
+      "evaluating": 0,
+      "jev_state": "READY",
+      "ws": false,
+      "ws_age_s": null,
+      "klines_age_s": null,
+      "rest_errors": 0,
+      "barrier_last": null,
+      "error": null,
+      "diffs": null,
+      "detail": null,
+      "session": {
+        "open": false,
+        "close_ms": null,
+        "next_open_ms": 1791379800000
+      },
+      "sessions_live": 0
+    },
+    "v11": {
+      "status": "LIVE",
+      "enabled": true,
+      "restarts": 0,
+      "session_id": "469f9719a060",
+      "experiment_id": "v11x-f3af75981c6f",
+      "forward_start_ms": 1791174840000,
+      "live_from_ms": 1791317580000,
+      "bots": 8,
+      "live_bots": 8,
+      "controls": 4,
+      "jev_bots": 4,
+      "positions_open": 8,
+      "evaluating": 0,
+      "jev_state": "READY",
+      "ws": true,
+      "ws_age_s": 10.0,
+      "klines_age_s": 13.3,
+      "rest_errors": 0,
+      "barrier_last": null,
+      "error": null,
+      "diffs": null,
+      "detail": null,
+      "session": null,
+      "sessions_live": null
+    },
+    "v12": {
+      "status": "LIVE",
+      "enabled": true,
+      "restarts": 0,
+      "session_id": "2c5afa8c9ba4",
+      "experiment_id": "v12x-50c654e13e8c",
+      "forward_start_ms": 1791174840000,
+      "live_from_ms": 1791317580000,
+      "bots": 2,
+      "live_bots": 2,
+      "controls": 1,
+      "jev_bots": 1,
+      "positions_open": 0,
+      "evaluating": 0,
+      "jev_state": "READY",
+      "ws": true,
+      "ws_age_s": 10.5,
+      "klines_age_s": 13.3,
+      "rest_errors": 0,
+      "barrier_last": null,
+      "error": null,
+      "diffs": null,
+      "detail": null,
+      "session": null,
+      "sessions_live": null
+    },
+    "v13": {
+      "status": "LIVE",
+      "enabled": true,
+      "restarts": 0,
+      "session_id": "8001f832c5bc",
+      "experiment_id": "v13x-8cb0dd6e7ec1",
+      "forward_start_ms": 1791174840000,
+      "live_from_ms": 1791317580000,
+      "bots": 1,
+      "live_bots": 1,
+      "controls": 1,
+      "jev_bots": 0,
+      "positions_open": 0,
+      "evaluating": 0,
+      "jev_state": "DISABLED",
+      "ws": true,
+      "ws_age_s": 10.5,
+      "klines_age_s": 14.7,
+      "rest_errors": 0,
+      "barrier_last": null,
+      "error": null,
+      "diffs": null,
+      "detail": null,
+      "session": null,
+      "sessions_live": null
+    },
+    "v14": {
+      "status": "WARMING_UP",
+      "enabled": true,
+      "restarts": 0,
+      "session_id": "4b963bbbd436",
+      "experiment_id": "v14x-227dd5f1e221",
+      "forward_start_ms": 1791174840000,
+      "live_from_ms": 1791317580000,
+      "bots": 9,
+      "live_bots": 0,
+      "controls": 9,
+      "jev_bots": 0,
+      "positions_open": 0,
+      "evaluating": 0,
+      "jev_state": "DISABLED",
+      "ws": false,
+      "ws_age_s": null,
+      "klines_age_s": 821714.0,
+      "rest_errors": 0,
+      "barrier_last": null,
+      "error": null,
+      "diffs": null,
+      "detail": null,
+      "session": null,
+      "sessions_live": null
+    }
+  },
+  "health": {
+    "ok": true,
+    "mode": "LIVE_OVERRIDE_I_UNDERSTAND",
+    "venue": "LIVE BYBIT",
+    "dry_run": true,
+    "engine_state": "running",
+    "uptime_s": 246,
+    "feed_connected": true,
+    "strategies": 27,
+    "boot_error": null
+  },
+  "research_keys": [
+    "health",
+    "coverage",
+    "markets",
+    "bots",
+    "studies",
+    "events",
+    "execution",
+    "quote_asset",
+    "timeframe",
+    "read_only",
+    "scope"
+  ],
+  "research_health": {
+    "last_study_ms": 1791317495736,
+    "last_result": {
+      "market": "perp:ALPINEUSDT",
+      "state": "REJECTED"
+    },
+    "working_on": null,
+    "spot": {
+      "status": "OK",
+      "last_scan_ms": 1791317537562,
+      "markets": 502,
+      "liquid": 138,
+      "error": null
+    },
+    "perp": {
+      "status": "OK",
+      "last_scan_ms": 1791317540381,
+      "markets": 525,
+      "liquid": 330,
+      "error": null
+    },
+    "status": "RUNNING",
+    "heartbeat_ms": 1791317774842,
+    "enabled": true,
+    "restarts": 0,
+    "heartbeat_age_s": 0.3
+  },
+  "research_coverage": [
+    {
+      "venue": "perp",
+      "markets": 525,
+      "liquid": 330,
+      "studied": 332,
+      "latest_study": 1791317492357
+    },
+    {
+      "venue": "spot",
+      "markets": 502,
+      "liquid": 138,
+      "studied": 142,
+      "latest_study": 1791317177041
+    }
+  ],
+  "research_execution": "PAPER_ONLY",
+  "tests": {
+    "full": "1537 passed, 4 skipped",
+    "stock_and_arena_focused": "81 passed"
+  },
+  "comparisons": 120,
+  "paper_books": [
+    {
+      "key": "V9.1-AAPL-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-AAPL-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-AMD-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-AMD-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-AMZN-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-AMZN-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-GOOGL-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-GOOGL-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-META-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-META-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-MSFT-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-MSFT-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-NVDA-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-NVDA-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-QQQ-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-QQQ-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-SPY-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-SPY-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-TSLA-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.1-TSLA-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-AAPL-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-AAPL-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-AMD-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-AMD-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-AMZN-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-AMZN-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-GOOGL-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-GOOGL-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-META-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-META-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-MSFT-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-MSFT-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-NVDA-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-NVDA-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-QQQ-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-QQQ-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-SPY-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-SPY-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-TSLA-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.2-TSLA-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-AAPL-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-AAPL-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-AMD-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-AMD-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-AMZN-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-AMZN-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-GOOGL-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-GOOGL-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-META-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-META-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-MSFT-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-MSFT-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-NVDA-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-NVDA-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-QQQ-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-QQQ-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-SPY-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-SPY-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-TSLA-5M",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    },
+    {
+      "key": "V9.3-TSLA-5M+JEV",
+      "trades": 0,
+      "equity": 1000.0,
+      "equity_live": null,
+      "start_equity": 1000.0,
+      "net_now": 0.0
+    }
+  ],
+  "preserved_books": [
+    {
+      "experiment_id": "v9x-102aa42b8c91",
+      "created_ts": 1790502600000,
+      "forward_start_ms": 1790502600000,
+      "trades": 609
+    },
+    {
+      "experiment_id": "v9x-8bc296987fc5",
+      "created_ts": 1790935740000,
+      "forward_start_ms": 1790935740000,
+      "trades": 0
+    },
+    {
+      "experiment_id": "v9x-91485d58ea65",
+      "created_ts": 1790940600000,
+      "forward_start_ms": 1790940600000,
+      "trades": 0
+    },
+    {
+      "experiment_id": "v9x-51dcf8f1d0a4",
+      "created_ts": 1790942640000,
+      "forward_start_ms": 1790942640000,
+      "trades": 96
+    },
+    {
+      "experiment_id": "v9x-09f4c43cdba7",
+      "created_ts": 1791009060000,
+      "forward_start_ms": 1791009060000,
+      "trades": 0
+    },
+    {
+      "experiment_id": "v9x-ce9ac48d79e0",
+      "created_ts": 1791174780000,
+      "forward_start_ms": 1791174780000,
+      "trades": 248
+    }
+  ],
+  "new_books": [
+    {
+      "experiment_id": "v9x-436309c56f0c",
+      "created_ts": 1791317520000,
+      "forward_start_ms": 1791317520000,
+      "trades": 0
+    }
+  ],
+  "checks": {
+    "new_stock_manifest": true,
+    "stock_worker_ready": true,
+    "60_stock_books": true,
+    "no_stock_worker_error": true,
+    "historical_failure_disclosed": true,
+    "other_programs_no_freeze_errors": true,
+    "continuous_research_running": true,
+    "research_spot_and_perp_healthy": true,
+    "research_remains_paper_only": true,
+    "separate_clean_paper_books": true,
+    "previous_experiments_and_trades_preserved": true
+  }
+}

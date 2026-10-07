@@ -1,0 +1,691 @@
+{
+ "variants": {
+  "BASE": null,
+  "L050": [
+   0.5,
+   1.0,
+   2.0
+  ],
+  "L075": [
+   0.75,
+   1.5,
+   2.5
+  ],
+  "L100": [
+   1.0,
+   1.5,
+   2.0
+  ],
+  "L100W": [
+   1.0,
+   2.0,
+   3.0
+  ]
+ },
+ "families": {
+  "V11.1": {
+   "runs": [
+    {
+     "family": "V11.1",
+     "variant": "BASE",
+     "rungs": null,
+     "discovery": {
+      "trades": 382,
+      "per_day": 8.5,
+      "win": 0.38,
+      "net_r": -0.1425,
+      "pf": 0.709,
+      "net_usdt_per_day": -0.234
+     },
+     "confirmation": {
+      "trades": 204,
+      "per_day": 4.5,
+      "win": 0.451,
+      "net_r": 0.018,
+      "pf": 1.037,
+      "net_usdt_per_day": 0.005
+     },
+     "all": {
+      "trades": 586,
+      "per_day": 6.5,
+      "win": 0.404,
+      "net_r": -0.0867,
+      "pf": 0.822,
+      "net_usdt_per_day": -0.114
+     }
+    },
+    {
+     "family": "V11.1",
+     "variant": "L050",
+     "rungs": [
+      0.5,
+      1.0,
+      2.0
+     ],
+     "discovery": {
+      "trades": 420,
+      "per_day": 9.3,
+      "win": 0.493,
+      "net_r": -0.0999,
+      "pf": 0.712,
+      "net_usdt_per_day": -0.177
+     },
+     "confirmation": {
+      "trades": 219,
+      "per_day": 4.9,
+      "win": 0.543,
+      "net_r": -0.0354,
+      "pf": 0.896,
+      "net_usdt_per_day": -0.032
+     },
+     "all": {
+      "trades": 639,
+      "per_day": 7.1,
+      "win": 0.51,
+      "net_r": -0.0778,
+      "pf": 0.774,
+      "net_usdt_per_day": -0.105
+     }
+    },
+    {
+     "family": "V11.1",
+     "variant": "L075",
+     "rungs": [
+      0.75,
+      1.5,
+      2.5
+     ],
+     "discovery": {
+      "trades": 398,
+      "per_day": 8.8,
+      "win": 0.427,
+      "net_r": -0.127,
+      "pf": 0.69,
+      "net_usdt_per_day": -0.212
+     },
+     "confirmation": {
+      "trades": 211,
+      "per_day": 4.7,
+      "win": 0.526,
+      "net_r": -0.0252,
+      "pf": 0.936,
+      "net_usdt_per_day": -0.022
+     },
+     "all": {
+      "trades": 609,
+      "per_day": 6.8,
+      "win": 0.461,
+      "net_r": -0.0918,
+      "pf": 0.773,
+      "net_usdt_per_day": -0.117
+     }
+    },
+    {
+     "family": "V11.1",
+     "variant": "L100",
+     "rungs": [
+      1.0,
+      1.5,
+      2.0
+     ],
+     "discovery": {
+      "trades": 390,
+      "per_day": 8.7,
+      "win": 0.413,
+      "net_r": -0.1263,
+      "pf": 0.721,
+      "net_usdt_per_day": -0.206
+     },
+     "confirmation": {
+      "trades": 211,
+      "per_day": 4.7,
+      "win": 0.502,
+      "net_r": -0.0135,
+      "pf": 0.968,
+      "net_usdt_per_day": -0.017
+     },
+     "all": {
+      "trades": 601,
+      "per_day": 6.7,
+      "win": 0.444,
+      "net_r": -0.0867,
+      "pf": 0.804,
+      "net_usdt_per_day": -0.112
+     }
+    },
+    {
+     "family": "V11.1",
+     "variant": "L100W",
+     "rungs": [
+      1.0,
+      2.0,
+      3.0
+     ],
+     "discovery": {
+      "trades": 386,
+      "per_day": 8.6,
+      "win": 0.412,
+      "net_r": -0.146,
+      "pf": 0.678,
+      "net_usdt_per_day": -0.237
+     },
+     "confirmation": {
+      "trades": 207,
+      "per_day": 4.6,
+      "win": 0.507,
+      "net_r": -0.0291,
+      "pf": 0.931,
+      "net_usdt_per_day": -0.034
+     },
+     "all": {
+      "trades": 593,
+      "per_day": 6.6,
+      "win": 0.445,
+      "net_r": -0.1052,
+      "pf": 0.762,
+      "net_usdt_per_day": -0.135
+     }
+    }
+   ],
+   "pick": "L050"
+  },
+  "V11.2": {
+   "runs": [
+    {
+     "family": "V11.2",
+     "variant": "BASE",
+     "rungs": null,
+     "discovery": {
+      "trades": 502,
+      "per_day": 11.2,
+      "win": 0.329,
+      "net_r": -0.2793,
+      "pf": 0.594,
+      "net_usdt_per_day": -0.586
+     },
+     "confirmation": {
+      "trades": 413,
+      "per_day": 9.2,
+      "win": 0.404,
+      "net_r": -0.0385,
+      "pf": 0.937,
+      "net_usdt_per_day": -0.066
+     },
+     "all": {
+      "trades": 915,
+      "per_day": 10.2,
+      "win": 0.363,
+      "net_r": -0.1707,
+      "pf": 0.74,
+      "net_usdt_per_day": -0.326
+     }
+    },
+    {
+     "family": "V11.2",
+     "variant": "L050",
+     "rungs": [
+      0.5,
+      1.0,
+      2.0
+     ],
+     "discovery": {
+      "trades": 577,
+      "per_day": 12.8,
+      "win": 0.458,
+      "net_r": -0.1755,
+      "pf": 0.593,
+      "net_usdt_per_day": -0.422
+     },
+     "confirmation": {
+      "trades": 481,
+      "per_day": 10.7,
+      "win": 0.53,
+      "net_r": -0.0439,
+      "pf": 0.868,
+      "net_usdt_per_day": -0.088
+     },
+     "all": {
+      "trades": 1058,
+      "per_day": 11.8,
+      "win": 0.491,
+      "net_r": -0.1157,
+      "pf": 0.701,
+      "net_usdt_per_day": -0.255
+     }
+    },
+    {
+     "family": "V11.2",
+     "variant": "L075",
+     "rungs": [
+      0.75,
+      1.5,
+      2.5
+     ],
+     "discovery": {
+      "trades": 543,
+      "per_day": 12.1,
+      "win": 0.431,
+      "net_r": -0.2477,
+      "pf": 0.545,
+      "net_usdt_per_day": -0.563
+     },
+     "confirmation": {
+      "trades": 449,
+      "per_day": 10.0,
+      "win": 0.523,
+      "net_r": -0.0793,
+      "pf": 0.82,
+      "net_usdt_per_day": -0.155
+     },
+     "all": {
+      "trades": 992,
+      "per_day": 11.0,
+      "win": 0.473,
+      "net_r": -0.1714,
+      "pf": 0.655,
+      "net_usdt_per_day": -0.359
+     }
+    },
+    {
+     "family": "V11.2",
+     "variant": "L100",
+     "rungs": [
+      1.0,
+      1.5,
+      2.0
+     ],
+     "discovery": {
+      "trades": 531,
+      "per_day": 11.8,
+      "win": 0.412,
+      "net_r": -0.2403,
+      "pf": 0.592,
+      "net_usdt_per_day": -0.532
+     },
+     "confirmation": {
+      "trades": 435,
+      "per_day": 9.7,
+      "win": 0.485,
+      "net_r": -0.0596,
+      "pf": 0.881,
+      "net_usdt_per_day": -0.111
+     },
+     "all": {
+      "trades": 966,
+      "per_day": 10.7,
+      "win": 0.445,
+      "net_r": -0.1589,
+      "pf": 0.711,
+      "net_usdt_per_day": -0.321
+     }
+    },
+    {
+     "family": "V11.2",
+     "variant": "L100W",
+     "rungs": [
+      1.0,
+      2.0,
+      3.0
+     ],
+     "discovery": {
+      "trades": 526,
+      "per_day": 11.7,
+      "win": 0.405,
+      "net_r": -0.2616,
+      "pf": 0.557,
+      "net_usdt_per_day": -0.574
+     },
+     "confirmation": {
+      "trades": 430,
+      "per_day": 9.6,
+      "win": 0.484,
+      "net_r": -0.0679,
+      "pf": 0.865,
+      "net_usdt_per_day": -0.12
+     },
+     "all": {
+      "trades": 956,
+      "per_day": 10.6,
+      "win": 0.44,
+      "net_r": -0.1745,
+      "pf": 0.683,
+      "net_usdt_per_day": -0.347
+     }
+    }
+   ],
+   "pick": "L050"
+  },
+  "V11.3": {
+   "runs": [
+    {
+     "family": "V11.3",
+     "variant": "BASE",
+     "rungs": null,
+     "discovery": {
+      "trades": 3038,
+      "per_day": 67.5,
+      "win": 0.389,
+      "net_r": -0.3142,
+      "pf": 0.573,
+      "net_usdt_per_day": -3.49
+     },
+     "confirmation": {
+      "trades": 2968,
+      "per_day": 66.0,
+      "win": 0.4,
+      "net_r": -0.2325,
+      "pf": 0.692,
+      "net_usdt_per_day": -2.517
+     },
+     "all": {
+      "trades": 6006,
+      "per_day": 66.7,
+      "win": 0.395,
+      "net_r": -0.2738,
+      "pf": 0.633,
+      "net_usdt_per_day": -3.003
+     }
+    },
+    {
+     "family": "V11.3",
+     "variant": "L050",
+     "rungs": [
+      0.5,
+      1.0,
+      2.0
+     ],
+     "discovery": {
+      "trades": 4082,
+      "per_day": 90.7,
+      "win": 0.358,
+      "net_r": -0.2802,
+      "pf": 0.418,
+      "net_usdt_per_day": -4.134
+     },
+     "confirmation": {
+      "trades": 3959,
+      "per_day": 88.0,
+      "win": 0.406,
+      "net_r": -0.2238,
+      "pf": 0.508,
+      "net_usdt_per_day": -3.107
+     },
+     "all": {
+      "trades": 8041,
+      "per_day": 89.3,
+      "win": 0.382,
+      "net_r": -0.2524,
+      "pf": 0.461,
+      "net_usdt_per_day": -3.621
+     }
+    },
+    {
+     "family": "V11.3",
+     "variant": "L075",
+     "rungs": [
+      0.75,
+      1.5,
+      2.5
+     ],
+     "discovery": {
+      "trades": 3475,
+      "per_day": 77.2,
+      "win": 0.381,
+      "net_r": -0.3076,
+      "pf": 0.475,
+      "net_usdt_per_day": -3.93
+     },
+     "confirmation": {
+      "trades": 3459,
+      "per_day": 76.9,
+      "win": 0.409,
+      "net_r": -0.2525,
+      "pf": 0.551,
+      "net_usdt_per_day": -3.037
+     },
+     "all": {
+      "trades": 6934,
+      "per_day": 77.0,
+      "win": 0.395,
+      "net_r": -0.2801,
+      "pf": 0.512,
+      "net_usdt_per_day": -3.484
+     }
+    },
+    {
+     "family": "V11.3",
+     "variant": "L100",
+     "rungs": [
+      1.0,
+      1.5,
+      2.0
+     ],
+     "discovery": {
+      "trades": 3352,
+      "per_day": 74.5,
+      "win": 0.399,
+      "net_r": -0.3253,
+      "pf": 0.5,
+      "net_usdt_per_day": -3.957
+     },
+     "confirmation": {
+      "trades": 3351,
+      "per_day": 74.5,
+      "win": 0.433,
+      "net_r": -0.2361,
+      "pf": 0.621,
+      "net_usdt_per_day": -2.796
+     },
+     "all": {
+      "trades": 6703,
+      "per_day": 74.5,
+      "win": 0.416,
+      "net_r": -0.2807,
+      "pf": 0.56,
+      "net_usdt_per_day": -3.377
+     }
+    },
+    {
+     "family": "V11.3",
+     "variant": "L100W",
+     "rungs": [
+      1.0,
+      2.0,
+      3.0
+     ],
+     "discovery": {
+      "trades": 3221,
+      "per_day": 71.6,
+      "win": 0.386,
+      "net_r": -0.3277,
+      "pf": 0.494,
+      "net_usdt_per_day": -3.917
+     },
+     "confirmation": {
+      "trades": 3184,
+      "per_day": 70.8,
+      "win": 0.415,
+      "net_r": -0.2553,
+      "pf": 0.597,
+      "net_usdt_per_day": -2.908
+     },
+     "all": {
+      "trades": 6405,
+      "per_day": 71.2,
+      "win": 0.4,
+      "net_r": -0.2917,
+      "pf": 0.545,
+      "net_usdt_per_day": -3.413
+     }
+    }
+   ],
+   "pick": "L050"
+  },
+  "V11.4": {
+   "runs": [
+    {
+     "family": "V11.4",
+     "variant": "BASE",
+     "rungs": null,
+     "discovery": {
+      "trades": 3524,
+      "per_day": 78.3,
+      "win": 0.429,
+      "net_r": -0.0647,
+      "pf": 0.599,
+      "net_usdt_per_day": -0.991
+     },
+     "confirmation": {
+      "trades": 2362,
+      "per_day": 52.5,
+      "win": 0.44,
+      "net_r": -0.0661,
+      "pf": 0.608,
+      "net_usdt_per_day": -0.751
+     },
+     "all": {
+      "trades": 5886,
+      "per_day": 65.4,
+      "win": 0.434,
+      "net_r": -0.0653,
+      "pf": 0.603,
+      "net_usdt_per_day": -0.871
+     }
+    },
+    {
+     "family": "V11.4",
+     "variant": "L050",
+     "rungs": [
+      0.5,
+      1.0,
+      2.0
+     ],
+     "discovery": {
+      "trades": 3529,
+      "per_day": 78.4,
+      "win": 0.434,
+      "net_r": -0.0597,
+      "pf": 0.626,
+      "net_usdt_per_day": -0.912
+     },
+     "confirmation": {
+      "trades": 2369,
+      "per_day": 52.6,
+      "win": 0.443,
+      "net_r": -0.0622,
+      "pf": 0.626,
+      "net_usdt_per_day": -0.705
+     },
+     "all": {
+      "trades": 5898,
+      "per_day": 65.5,
+      "win": 0.438,
+      "net_r": -0.0607,
+      "pf": 0.626,
+      "net_usdt_per_day": -0.808
+     }
+    },
+    {
+     "family": "V11.4",
+     "variant": "L075",
+     "rungs": [
+      0.75,
+      1.5,
+      2.5
+     ],
+     "discovery": {
+      "trades": 3526,
+      "per_day": 78.4,
+      "win": 0.43,
+      "net_r": -0.0625,
+      "pf": 0.611,
+      "net_usdt_per_day": -0.951
+     },
+     "confirmation": {
+      "trades": 2364,
+      "per_day": 52.5,
+      "win": 0.442,
+      "net_r": -0.0638,
+      "pf": 0.621,
+      "net_usdt_per_day": -0.72
+     },
+     "all": {
+      "trades": 5890,
+      "per_day": 65.4,
+      "win": 0.435,
+      "net_r": -0.063,
+      "pf": 0.615,
+      "net_usdt_per_day": -0.836
+     }
+    },
+    {
+     "family": "V11.4",
+     "variant": "L100",
+     "rungs": [
+      1.0,
+      1.5,
+      2.0
+     ],
+     "discovery": {
+      "trades": 3526,
+      "per_day": 78.4,
+      "win": 0.43,
+      "net_r": -0.0633,
+      "pf": 0.608,
+      "net_usdt_per_day": -0.965
+     },
+     "confirmation": {
+      "trades": 2363,
+      "per_day": 52.5,
+      "win": 0.441,
+      "net_r": -0.0646,
+      "pf": 0.617,
+      "net_usdt_per_day": -0.731
+     },
+     "all": {
+      "trades": 5889,
+      "per_day": 65.4,
+      "win": 0.434,
+      "net_r": -0.0638,
+      "pf": 0.611,
+      "net_usdt_per_day": -0.848
+     }
+    },
+    {
+     "family": "V11.4",
+     "variant": "L100W",
+     "rungs": [
+      1.0,
+      2.0,
+      3.0
+     ],
+     "discovery": {
+      "trades": 3526,
+      "per_day": 78.4,
+      "win": 0.43,
+      "net_r": -0.0638,
+      "pf": 0.604,
+      "net_usdt_per_day": -0.973
+     },
+     "confirmation": {
+      "trades": 2364,
+      "per_day": 52.5,
+      "win": 0.441,
+      "net_r": -0.0649,
+      "pf": 0.616,
+      "net_usdt_per_day": -0.736
+     },
+     "all": {
+      "trades": 5890,
+      "per_day": 65.4,
+      "win": 0.434,
+      "net_r": -0.0642,
+      "pf": 0.609,
+      "net_usdt_per_day": -0.855
+     }
+    }
+   ],
+   "pick": "L050"
+  }
+ }
+}

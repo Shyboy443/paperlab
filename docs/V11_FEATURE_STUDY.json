@@ -1,0 +1,1166 @@
+{
+ "coins": [
+  "BTCUSDT",
+  "ETHUSDT",
+  "SOLUSDT",
+  "ZECUSDT",
+  "XRPUSDT",
+  "HYPEUSDT",
+  "NEARUSDT",
+  "DOGEUSDT",
+  "ENAUSDT",
+  "SUIUSDT",
+  "ADAUSDT",
+  "ARBUSDT",
+  "UNIUSDT",
+  "1000PEPEUSDT",
+  "PUMPFUNUSDT",
+  "TAOUSDT",
+  "LINKUSDT",
+  "AKEUSDT",
+  "WLDUSDT",
+  "BNBUSDT",
+  "USELESSUSDT",
+  "ONDOUSDT",
+  "AAVEUSDT",
+  "LITUSDT",
+  "TRUMPUSDT",
+  "AVAXUSDT",
+  "XMRUSDT",
+  "FARTCOINUSDT",
+  "LTCUSDT",
+  "XPLUSDT"
+ ],
+ "horizons_h": [
+  1,
+  4,
+  8,
+  24
+ ],
+ "k": 3,
+ "split_hour": 1187,
+ "features": {
+  "r1@1h": {
+   "ic_disc": -0.0426,
+   "t_disc": -6.26,
+   "n_disc": 1066,
+   "ic_conf": -0.0349,
+   "t_conf": -4.74,
+   "n_conf": 1068,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 6396,
+    "net_bps": -9.71,
+    "gross_bps": 4.71
+   },
+   "ls_conf": {
+    "positions": 6408,
+    "net_bps": -12.34,
+    "gross_bps": 1.99
+   },
+   "robust": false
+  },
+  "r4@1h": {
+   "ic_disc": -0.0435,
+   "t_disc": -6.35,
+   "n_disc": 1066,
+   "ic_conf": -0.0355,
+   "t_conf": -4.87,
+   "n_conf": 1068,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 6396,
+    "net_bps": -10.76,
+    "gross_bps": 3.67
+   },
+   "ls_conf": {
+    "positions": 6408,
+    "net_bps": -13.37,
+    "gross_bps": 0.99
+   },
+   "robust": false
+  },
+  "r24@1h": {
+   "ic_disc": -0.0119,
+   "t_disc": -1.7,
+   "n_disc": 1066,
+   "ic_conf": -0.0224,
+   "t_conf": -3.06,
+   "n_conf": 1068,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 6396,
+    "net_bps": -18.01,
+    "gross_bps": -3.58
+   },
+   "ls_conf": {
+    "positions": 6408,
+    "net_bps": -17.34,
+    "gross_bps": -2.94
+   },
+   "robust": false
+  },
+  "r72@1h": {
+   "ic_disc": -0.0092,
+   "t_disc": -1.33,
+   "n_disc": 1066,
+   "ic_conf": -0.006,
+   "t_conf": -0.8,
+   "n_conf": 1068,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 6396,
+    "net_bps": -17.22,
+    "gross_bps": -2.72
+   },
+   "ls_conf": {
+    "positions": 6408,
+    "net_bps": -16.78,
+    "gross_bps": -2.32
+   },
+   "robust": false
+  },
+  "idio4@1h": {
+   "ic_disc": -0.038,
+   "t_disc": -5.36,
+   "n_disc": 1017,
+   "ic_conf": -0.0384,
+   "t_conf": -5.36,
+   "n_conf": 1068,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 6102,
+    "net_bps": -10.68,
+    "gross_bps": 3.74
+   },
+   "ls_conf": {
+    "positions": 6408,
+    "net_bps": -12.75,
+    "gross_bps": 1.61
+   },
+   "robust": false
+  },
+  "volz@1h": {
+   "ic_disc": 0.0137,
+   "t_disc": 2.15,
+   "n_disc": 1017,
+   "ic_conf": 0.002,
+   "t_conf": 0.3,
+   "n_conf": 1068,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 6102,
+    "net_bps": -9.27,
+    "gross_bps": 5.01
+   },
+   "ls_conf": {
+    "positions": 6408,
+    "net_bps": -9.51,
+    "gross_bps": 4.76
+   },
+   "robust": false
+  },
+  "rpos24@1h": {
+   "ic_disc": -0.0252,
+   "t_disc": -3.92,
+   "n_disc": 1066,
+   "ic_conf": -0.0176,
+   "t_conf": -2.64,
+   "n_conf": 1068,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 6396,
+    "net_bps": -12.87,
+    "gross_bps": 1.09
+   },
+   "ls_conf": {
+    "positions": 6408,
+    "net_bps": -15.89,
+    "gross_bps": -1.77
+   },
+   "robust": false
+  },
+  "rvol24@1h": {
+   "ic_disc": -0.0244,
+   "t_disc": -2.95,
+   "n_disc": 1066,
+   "ic_conf": -0.0176,
+   "t_conf": -1.98,
+   "n_conf": 1068,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 6396,
+    "net_bps": -19.14,
+    "gross_bps": -4.9
+   },
+   "ls_conf": {
+    "positions": 6408,
+    "net_bps": -22.12,
+    "gross_bps": -7.99
+   },
+   "robust": false
+  },
+  "fund@1h": {
+   "ic_disc": -0.0063,
+   "t_disc": -1.08,
+   "n_disc": 1066,
+   "ic_conf": -0.0072,
+   "t_conf": -1.25,
+   "n_conf": 1068,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 6396,
+    "net_bps": -12.59,
+    "gross_bps": 1.58
+   },
+   "ls_conf": {
+    "positions": 6408,
+    "net_bps": -12.97,
+    "gross_bps": 1.08
+   },
+   "robust": false
+  },
+  "prem@1h": {
+   "ic_disc": -0.0191,
+   "t_disc": -3.05,
+   "n_disc": 1066,
+   "ic_conf": -0.0167,
+   "t_conf": -2.62,
+   "n_conf": 1068,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 6396,
+    "net_bps": -14.48,
+    "gross_bps": -0.04
+   },
+   "ls_conf": {
+    "positions": 6408,
+    "net_bps": -11.0,
+    "gross_bps": 3.21
+   },
+   "robust": false
+  },
+  "oi4@1h": {
+   "ic_disc": 0.0045,
+   "t_disc": 0.76,
+   "n_disc": 1066,
+   "ic_conf": 0.003,
+   "t_conf": 0.5,
+   "n_conf": 1068,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 6396,
+    "net_bps": -8.73,
+    "gross_bps": 5.3
+   },
+   "ls_conf": {
+    "positions": 6408,
+    "net_bps": -10.17,
+    "gross_bps": 3.83
+   },
+   "robust": false
+  },
+  "oi24@1h": {
+   "ic_disc": 0.0032,
+   "t_disc": 0.54,
+   "n_disc": 1066,
+   "ic_conf": 0.0039,
+   "t_conf": 0.62,
+   "n_conf": 1068,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 6396,
+    "net_bps": -13.85,
+    "gross_bps": 0.31
+   },
+   "ls_conf": {
+    "positions": 6408,
+    "net_bps": -13.68,
+    "gross_bps": 0.43
+   },
+   "robust": false
+  },
+  "ratio@1h": {
+   "ic_disc": 0.0117,
+   "t_disc": 1.77,
+   "n_disc": 1066,
+   "ic_conf": 0.0002,
+   "t_conf": 0.03,
+   "n_conf": 1068,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 6396,
+    "net_bps": -18.75,
+    "gross_bps": -4.42
+   },
+   "ls_conf": {
+    "positions": 6408,
+    "net_bps": -19.9,
+    "gross_bps": -5.66
+   },
+   "robust": false
+  },
+  "dratio24@1h": {
+   "ic_disc": 0.0061,
+   "t_disc": 1.01,
+   "n_disc": 1066,
+   "ic_conf": 0.0097,
+   "t_conf": 1.55,
+   "n_conf": 1068,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 6396,
+    "net_bps": -13.92,
+    "gross_bps": 0.0
+   },
+   "ls_conf": {
+    "positions": 6408,
+    "net_bps": -14.16,
+    "gross_bps": -0.12
+   },
+   "robust": false
+  },
+  "r1@4h": {
+   "ic_disc": -0.0159,
+   "t_disc": -1.18,
+   "n_disc": 266,
+   "ic_conf": -0.0388,
+   "t_conf": -2.82,
+   "n_conf": 267,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 1596,
+    "net_bps": -7.77,
+    "gross_bps": 6.6
+   },
+   "ls_conf": {
+    "positions": 1602,
+    "net_bps": 6.68,
+    "gross_bps": 21.02
+   },
+   "robust": false
+  },
+  "r4@4h": {
+   "ic_disc": -0.0491,
+   "t_disc": -3.45,
+   "n_disc": 266,
+   "ic_conf": -0.0165,
+   "t_conf": -1.14,
+   "n_conf": 267,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 1596,
+    "net_bps": 0.76,
+    "gross_bps": 15.19
+   },
+   "ls_conf": {
+    "positions": 1602,
+    "net_bps": -28.37,
+    "gross_bps": -13.97
+   },
+   "robust": false
+  },
+  "r24@4h": {
+   "ic_disc": -0.0238,
+   "t_disc": -1.8,
+   "n_disc": 266,
+   "ic_conf": -0.0143,
+   "t_conf": -1.05,
+   "n_conf": 267,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 1596,
+    "net_bps": -12.75,
+    "gross_bps": 1.66
+   },
+   "ls_conf": {
+    "positions": 1602,
+    "net_bps": -28.23,
+    "gross_bps": -13.8
+   },
+   "robust": false
+  },
+  "r72@4h": {
+   "ic_disc": -0.021,
+   "t_disc": -1.51,
+   "n_disc": 266,
+   "ic_conf": -0.011,
+   "t_conf": -0.75,
+   "n_conf": 267,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 1596,
+    "net_bps": -11.99,
+    "gross_bps": 2.49
+   },
+   "ls_conf": {
+    "positions": 1602,
+    "net_bps": -20.09,
+    "gross_bps": -5.64
+   },
+   "robust": false
+  },
+  "idio4@4h": {
+   "ic_disc": -0.0437,
+   "t_disc": -2.96,
+   "n_disc": 253,
+   "ic_conf": -0.0166,
+   "t_conf": -1.18,
+   "n_conf": 267,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 1518,
+    "net_bps": 1.02,
+    "gross_bps": 15.42
+   },
+   "ls_conf": {
+    "positions": 1602,
+    "net_bps": -25.37,
+    "gross_bps": -10.99
+   },
+   "robust": false
+  },
+  "volz@4h": {
+   "ic_disc": -0.0042,
+   "t_disc": -0.34,
+   "n_disc": 253,
+   "ic_conf": 0.0095,
+   "t_conf": 0.78,
+   "n_conf": 267,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 1518,
+    "net_bps": -24.85,
+    "gross_bps": -10.62
+   },
+   "ls_conf": {
+    "positions": 1602,
+    "net_bps": -33.68,
+    "gross_bps": -19.34
+   },
+   "robust": false
+  },
+  "rpos24@4h": {
+   "ic_disc": -0.0178,
+   "t_disc": -1.35,
+   "n_disc": 266,
+   "ic_conf": -0.003,
+   "t_conf": -0.23,
+   "n_conf": 267,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 1596,
+    "net_bps": -1.35,
+    "gross_bps": 12.64
+   },
+   "ls_conf": {
+    "positions": 1602,
+    "net_bps": -17.61,
+    "gross_bps": -3.51
+   },
+   "robust": false
+  },
+  "rvol24@4h": {
+   "ic_disc": -0.0355,
+   "t_disc": -2.21,
+   "n_disc": 266,
+   "ic_conf": -0.0213,
+   "t_conf": -1.28,
+   "n_conf": 267,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 1596,
+    "net_bps": -26.06,
+    "gross_bps": -11.82
+   },
+   "ls_conf": {
+    "positions": 1602,
+    "net_bps": -41.04,
+    "gross_bps": -26.91
+   },
+   "robust": false
+  },
+  "fund@4h": {
+   "ic_disc": -0.0123,
+   "t_disc": -1.02,
+   "n_disc": 266,
+   "ic_conf": -0.0027,
+   "t_conf": -0.23,
+   "n_conf": 267,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 1596,
+    "net_bps": -7.33,
+    "gross_bps": 6.84
+   },
+   "ls_conf": {
+    "positions": 1602,
+    "net_bps": -12.77,
+    "gross_bps": 1.27
+   },
+   "robust": false
+  },
+  "prem@4h": {
+   "ic_disc": -0.0244,
+   "t_disc": -1.83,
+   "n_disc": 266,
+   "ic_conf": -0.0077,
+   "t_conf": -0.63,
+   "n_conf": 267,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 1596,
+    "net_bps": -11.57,
+    "gross_bps": 2.81
+   },
+   "ls_conf": {
+    "positions": 1602,
+    "net_bps": -13.15,
+    "gross_bps": 1.06
+   },
+   "robust": false
+  },
+  "oi4@4h": {
+   "ic_disc": 0.0004,
+   "t_disc": 0.03,
+   "n_disc": 266,
+   "ic_conf": 0.0128,
+   "t_conf": 1.07,
+   "n_conf": 267,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 1596,
+    "net_bps": -10.01,
+    "gross_bps": 4.01
+   },
+   "ls_conf": {
+    "positions": 1602,
+    "net_bps": 7.69,
+    "gross_bps": 21.72
+   },
+   "robust": false
+  },
+  "oi24@4h": {
+   "ic_disc": -0.0109,
+   "t_disc": -0.88,
+   "n_disc": 266,
+   "ic_conf": 0.0201,
+   "t_conf": 1.55,
+   "n_conf": 267,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 1596,
+    "net_bps": 2.09,
+    "gross_bps": 16.24
+   },
+   "ls_conf": {
+    "positions": 1602,
+    "net_bps": -20.87,
+    "gross_bps": -6.74
+   },
+   "robust": false
+  },
+  "ratio@4h": {
+   "ic_disc": 0.0056,
+   "t_disc": 0.41,
+   "n_disc": 266,
+   "ic_conf": -0.0185,
+   "t_conf": -1.23,
+   "n_conf": 267,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 1596,
+    "net_bps": -32.46,
+    "gross_bps": -18.12
+   },
+   "ls_conf": {
+    "positions": 1602,
+    "net_bps": -39.65,
+    "gross_bps": -25.4
+   },
+   "robust": false
+  },
+  "dratio24@4h": {
+   "ic_disc": 0.0076,
+   "t_disc": 0.65,
+   "n_disc": 266,
+   "ic_conf": 0.0114,
+   "t_conf": 0.94,
+   "n_conf": 267,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 1596,
+    "net_bps": -10.5,
+    "gross_bps": 3.43
+   },
+   "ls_conf": {
+    "positions": 1602,
+    "net_bps": -9.25,
+    "gross_bps": 4.79
+   },
+   "robust": false
+  },
+  "r1@8h": {
+   "ic_disc": 0.0053,
+   "t_disc": 0.28,
+   "n_disc": 133,
+   "ic_conf": -0.073,
+   "t_conf": -3.43,
+   "n_conf": 134,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 798,
+    "net_bps": 21.1,
+    "gross_bps": 35.49
+   },
+   "ls_conf": {
+    "positions": 804,
+    "net_bps": -75.17,
+    "gross_bps": -60.82
+   },
+   "robust": false
+  },
+  "r4@8h": {
+   "ic_disc": -0.0475,
+   "t_disc": -2.33,
+   "n_disc": 133,
+   "ic_conf": 0.0034,
+   "t_conf": 0.16,
+   "n_conf": 134,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 798,
+    "net_bps": 0.76,
+    "gross_bps": 15.23
+   },
+   "ls_conf": {
+    "positions": 804,
+    "net_bps": -14.98,
+    "gross_bps": -0.62
+   },
+   "robust": false
+  },
+  "r24@8h": {
+   "ic_disc": 0.0018,
+   "t_disc": 0.09,
+   "n_disc": 133,
+   "ic_conf": -0.0157,
+   "t_conf": -0.84,
+   "n_conf": 134,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 798,
+    "net_bps": -23.49,
+    "gross_bps": -9.1
+   },
+   "ls_conf": {
+    "positions": 804,
+    "net_bps": 3.71,
+    "gross_bps": 18.14
+   },
+   "robust": false
+  },
+  "r72@8h": {
+   "ic_disc": -0.0157,
+   "t_disc": -0.8,
+   "n_disc": 133,
+   "ic_conf": -0.0011,
+   "t_conf": -0.05,
+   "n_conf": 134,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 798,
+    "net_bps": -4.29,
+    "gross_bps": 10.22
+   },
+   "ls_conf": {
+    "positions": 804,
+    "net_bps": -31.66,
+    "gross_bps": -17.22
+   },
+   "robust": false
+  },
+  "idio4@8h": {
+   "ic_disc": -0.0415,
+   "t_disc": -2.0,
+   "n_disc": 126,
+   "ic_conf": -0.0059,
+   "t_conf": -0.29,
+   "n_conf": 134,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 756,
+    "net_bps": -8.24,
+    "gross_bps": 6.19
+   },
+   "ls_conf": {
+    "positions": 804,
+    "net_bps": 9.78,
+    "gross_bps": 24.12
+   },
+   "robust": false
+  },
+  "volz@8h": {
+   "ic_disc": 0.0242,
+   "t_disc": 1.33,
+   "n_disc": 126,
+   "ic_conf": 0.0079,
+   "t_conf": 0.42,
+   "n_conf": 134,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 756,
+    "net_bps": -39.11,
+    "gross_bps": -24.8
+   },
+   "ls_conf": {
+    "positions": 804,
+    "net_bps": 8.56,
+    "gross_bps": 22.87
+   },
+   "robust": false
+  },
+  "rpos24@8h": {
+   "ic_disc": 0.0051,
+   "t_disc": 0.29,
+   "n_disc": 133,
+   "ic_conf": 0.0149,
+   "t_conf": 0.87,
+   "n_conf": 134,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 798,
+    "net_bps": -36.71,
+    "gross_bps": -22.67
+   },
+   "ls_conf": {
+    "positions": 804,
+    "net_bps": 10.92,
+    "gross_bps": 25.05
+   },
+   "robust": false
+  },
+  "rvol24@8h": {
+   "ic_disc": -0.0429,
+   "t_disc": -1.81,
+   "n_disc": 133,
+   "ic_conf": -0.0378,
+   "t_conf": -1.6,
+   "n_conf": 134,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 798,
+    "net_bps": -34.92,
+    "gross_bps": -20.67
+   },
+   "ls_conf": {
+    "positions": 804,
+    "net_bps": -68.4,
+    "gross_bps": -54.26
+   },
+   "robust": false
+  },
+  "fund@8h": {
+   "ic_disc": -0.0132,
+   "t_disc": -0.73,
+   "n_disc": 133,
+   "ic_conf": -0.0005,
+   "t_conf": -0.03,
+   "n_conf": 134,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 798,
+    "net_bps": -12.35,
+    "gross_bps": 1.85
+   },
+   "ls_conf": {
+    "positions": 804,
+    "net_bps": -31.86,
+    "gross_bps": -17.83
+   },
+   "robust": false
+  },
+  "prem@8h": {
+   "ic_disc": -0.0242,
+   "t_disc": -1.41,
+   "n_disc": 133,
+   "ic_conf": -0.019,
+   "t_conf": -1.12,
+   "n_conf": 134,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 798,
+    "net_bps": -41.99,
+    "gross_bps": -27.6
+   },
+   "ls_conf": {
+    "positions": 804,
+    "net_bps": 9.74,
+    "gross_bps": 23.95
+   },
+   "robust": false
+  },
+  "oi4@8h": {
+   "ic_disc": -0.0009,
+   "t_disc": -0.05,
+   "n_disc": 133,
+   "ic_conf": 0.0452,
+   "t_conf": 2.86,
+   "n_conf": 134,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 798,
+    "net_bps": -2.5,
+    "gross_bps": 11.53
+   },
+   "ls_conf": {
+    "positions": 804,
+    "net_bps": -19.94,
+    "gross_bps": -5.9
+   },
+   "robust": false
+  },
+  "oi24@8h": {
+   "ic_disc": -0.0117,
+   "t_disc": -0.68,
+   "n_disc": 133,
+   "ic_conf": 0.015,
+   "t_conf": 0.84,
+   "n_conf": 134,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 798,
+    "net_bps": 13.78,
+    "gross_bps": 27.94
+   },
+   "ls_conf": {
+    "positions": 804,
+    "net_bps": -12.17,
+    "gross_bps": 1.95
+   },
+   "robust": false
+  },
+  "ratio@8h": {
+   "ic_disc": -0.0003,
+   "t_disc": -0.02,
+   "n_disc": 133,
+   "ic_conf": -0.0295,
+   "t_conf": -1.38,
+   "n_conf": 134,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 798,
+    "net_bps": 20.07,
+    "gross_bps": 34.41
+   },
+   "ls_conf": {
+    "positions": 804,
+    "net_bps": 30.45,
+    "gross_bps": 44.68
+   },
+   "robust": false
+  },
+  "dratio24@8h": {
+   "ic_disc": -0.0135,
+   "t_disc": -0.75,
+   "n_disc": 133,
+   "ic_conf": 0.0007,
+   "t_conf": 0.04,
+   "n_conf": 134,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 798,
+    "net_bps": -14.89,
+    "gross_bps": -0.99
+   },
+   "ls_conf": {
+    "positions": 804,
+    "net_bps": -26.54,
+    "gross_bps": -12.54
+   },
+   "robust": false
+  },
+  "r1@24h": {
+   "ic_disc": -0.0023,
+   "t_disc": -0.06,
+   "n_disc": 44,
+   "ic_conf": -0.0259,
+   "t_conf": -0.86,
+   "n_conf": 45,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 264,
+    "net_bps": -96.52,
+    "gross_bps": -82.19
+   },
+   "ls_conf": {
+    "positions": 270,
+    "net_bps": 21.99,
+    "gross_bps": 36.26
+   },
+   "robust": false
+  },
+  "r4@24h": {
+   "ic_disc": -0.0634,
+   "t_disc": -1.75,
+   "n_disc": 44,
+   "ic_conf": 0.0437,
+   "t_conf": 1.22,
+   "n_conf": 45,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 264,
+    "net_bps": 23.24,
+    "gross_bps": 37.58
+   },
+   "ls_conf": {
+    "positions": 270,
+    "net_bps": -74.42,
+    "gross_bps": -60.12
+   },
+   "robust": false
+  },
+  "r24@24h": {
+   "ic_disc": -0.0148,
+   "t_disc": -0.46,
+   "n_disc": 44,
+   "ic_conf": -0.0127,
+   "t_conf": -0.39,
+   "n_conf": 45,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 264,
+    "net_bps": 17.21,
+    "gross_bps": 31.57
+   },
+   "ls_conf": {
+    "positions": 270,
+    "net_bps": -24.36,
+    "gross_bps": -9.99
+   },
+   "robust": false
+  },
+  "r72@24h": {
+   "ic_disc": -0.0083,
+   "t_disc": -0.24,
+   "n_disc": 44,
+   "ic_conf": 0.0251,
+   "t_conf": 0.84,
+   "n_conf": 45,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 264,
+    "net_bps": 23.59,
+    "gross_bps": 38.11
+   },
+   "ls_conf": {
+    "positions": 270,
+    "net_bps": -44.79,
+    "gross_bps": -30.38
+   },
+   "robust": false
+  },
+  "idio4@24h": {
+   "ic_disc": -0.0561,
+   "t_disc": -1.57,
+   "n_disc": 41,
+   "ic_conf": 0.0366,
+   "t_conf": 1.02,
+   "n_conf": 45,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 246,
+    "net_bps": -14.43,
+    "gross_bps": -0.13
+   },
+   "ls_conf": {
+    "positions": 270,
+    "net_bps": -24.99,
+    "gross_bps": -10.68
+   },
+   "robust": false
+  },
+  "volz@24h": {
+   "ic_disc": 0.0309,
+   "t_disc": 0.92,
+   "n_disc": 41,
+   "ic_conf": 0.0179,
+   "t_conf": 0.52,
+   "n_conf": 45,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 246,
+    "net_bps": -106.61,
+    "gross_bps": -92.34
+   },
+   "ls_conf": {
+    "positions": 270,
+    "net_bps": 91.2,
+    "gross_bps": 105.55
+   },
+   "robust": false
+  },
+  "rpos24@24h": {
+   "ic_disc": 0.005,
+   "t_disc": 0.15,
+   "n_disc": 44,
+   "ic_conf": 0.044,
+   "t_conf": 1.39,
+   "n_conf": 45,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 264,
+    "net_bps": -117.9,
+    "gross_bps": -103.95
+   },
+   "ls_conf": {
+    "positions": 270,
+    "net_bps": 54.35,
+    "gross_bps": 68.42
+   },
+   "robust": false
+  },
+  "rvol24@24h": {
+   "ic_disc": -0.0672,
+   "t_disc": -1.7,
+   "n_disc": 44,
+   "ic_conf": -0.0279,
+   "t_conf": -0.64,
+   "n_conf": 45,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 264,
+    "net_bps": -78.24,
+    "gross_bps": -64.03
+   },
+   "ls_conf": {
+    "positions": 270,
+    "net_bps": -93.74,
+    "gross_bps": -79.59
+   },
+   "robust": false
+  },
+  "fund@24h": {
+   "ic_disc": -0.0228,
+   "t_disc": -0.75,
+   "n_disc": 44,
+   "ic_conf": -0.0003,
+   "t_conf": -0.01,
+   "n_conf": 45,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 264,
+    "net_bps": -40.67,
+    "gross_bps": -26.4
+   },
+   "ls_conf": {
+    "positions": 270,
+    "net_bps": -16.61,
+    "gross_bps": -2.59
+   },
+   "robust": false
+  },
+  "prem@24h": {
+   "ic_disc": -0.0255,
+   "t_disc": -0.8,
+   "n_disc": 44,
+   "ic_conf": -0.0018,
+   "t_conf": -0.06,
+   "n_conf": 45,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 264,
+    "net_bps": -141.74,
+    "gross_bps": -127.34
+   },
+   "ls_conf": {
+    "positions": 270,
+    "net_bps": -23.15,
+    "gross_bps": -8.92
+   },
+   "robust": false
+  },
+  "oi4@24h": {
+   "ic_disc": -0.0215,
+   "t_disc": -0.9,
+   "n_disc": 44,
+   "ic_conf": 0.0068,
+   "t_conf": 0.22,
+   "n_conf": 45,
+   "sign": -1.0,
+   "ls_disc": {
+    "positions": 264,
+    "net_bps": 1.92,
+    "gross_bps": 15.94
+   },
+   "ls_conf": {
+    "positions": 270,
+    "net_bps": 32.64,
+    "gross_bps": 46.7
+   },
+   "robust": false
+  },
+  "oi24@24h": {
+   "ic_disc": 0.0094,
+   "t_disc": 0.33,
+   "n_disc": 44,
+   "ic_conf": 0.009,
+   "t_conf": 0.31,
+   "n_conf": 45,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 264,
+    "net_bps": -117.53,
+    "gross_bps": -103.32
+   },
+   "ls_conf": {
+    "positions": 270,
+    "net_bps": -40.15,
+    "gross_bps": -25.93
+   },
+   "robust": false
+  },
+  "ratio@24h": {
+   "ic_disc": 0.0052,
+   "t_disc": 0.15,
+   "n_disc": 44,
+   "ic_conf": -0.0616,
+   "t_conf": -1.76,
+   "n_conf": 45,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 264,
+    "net_bps": -120.66,
+    "gross_bps": -106.33
+   },
+   "ls_conf": {
+    "positions": 270,
+    "net_bps": -142.25,
+    "gross_bps": -128.06
+   },
+   "robust": false
+  },
+  "dratio24@24h": {
+   "ic_disc": 0.0187,
+   "t_disc": 0.61,
+   "n_disc": 44,
+   "ic_conf": 0.0403,
+   "t_conf": 1.26,
+   "n_conf": 45,
+   "sign": 1.0,
+   "ls_disc": {
+    "positions": 264,
+    "net_bps": -16.34,
+    "gross_bps": -2.51
+   },
+   "ls_conf": {
+    "positions": 270,
+    "net_bps": 58.87,
+    "gross_bps": 72.75
+   },
+   "robust": false
+  }
+ },
+ "robust": [],
+ "elapsed_s": 2.6
+}

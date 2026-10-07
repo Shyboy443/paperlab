@@ -1,0 +1,21 @@
+{
+  "case": "OOS_L63_seedNone",
+  "period": "OOS",
+  "lookback": 63,
+  "seed": null,
+  "monthly_average_net": 0.015351128053416617,
+  "annualized_return": 0.18948666897201405,
+  "sharpe_over_tbill": 0.9019026549216679,
+  "max_drawdown": 0.1755562293011137,
+  "worst_month": "2025-03",
+  "worst_month_return": -0.0631090606191933,
+  "positive_month_fraction": 0.5333333333333333,
+  "ending_equity_usd": 22.51273084707607,
+  "total_proxy_cost_usd": 1.7446313954258161,
+  "blocked_days": 0,
+  "unquoted_held_days": 0,
+  "positive_execution_seeds": 5,
+  "status": "RETROSPECTIVE ONLY \u2014 new variant, no prospective performance evidence",
+  "evaluation_period": "2021\u20132025",
+  "cost_model": "6bps per executed side, square-root impact and 1c per sell fee proxy; no cash interest"
+}

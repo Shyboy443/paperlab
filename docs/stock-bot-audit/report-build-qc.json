@@ -1,0 +1,197 @@
+{
+  "report": "D:\\Projects\\BinanceBOt\\paperlab\\docs\\stock-bot-audit\\Stock-Bot-Performance-Audit.html",
+  "recent_snapshot_local": "2026-10-07 00:57:52",
+  "bots": [
+    {
+      "name": "Halo",
+      "historical_peak": {
+        "ts": 1740762359999,
+        "equity": 1132.5912112847263
+      },
+      "historical_final": 790.6519,
+      "recent": {
+        "equity_marked": 1022.2035,
+        "recorded_peak": 1034.6323704178503,
+        "settled_balance": 1019.7042432481609,
+        "trades": 8,
+        "wins": 4,
+        "profit_factor": 2.694107203464795,
+        "losing_trades": [
+          {
+            "symbol": "TSLA",
+            "side": "long",
+            "entry_ts": 1791308460000,
+            "exit_ts": 1791311160000,
+            "entry_price": 380.648061,
+            "exit_price": 379.852011,
+            "qty": 8.0,
+            "gross": -6.480000000000018,
+            "fees": 0.12168001152000002,
+            "slippage": -0.11160000000018044,
+            "funding": 0.0,
+            "funding_paid": 0.0,
+            "funding_received": 0.0,
+            "net": -6.490080011519837,
+            "r": -0.8806563933362419,
+            "exit_kind": "time",
+            "risk_pct": 0.007181479924259228,
+            "tier": "TAKE",
+            "jev_level": "TAKE",
+            "counterfactual": 0,
+            "rederived": 0
+          },
+          {
+            "symbol": "TSLA",
+            "side": "long",
+            "entry_ts": 1791304560000,
+            "exit_ts": 1791307260000,
+            "entry_price": 380.648061,
+            "exit_price": 380.521944,
+            "qty": 8.0,
+            "gross": -1.4400000000000546,
+            "fees": 0.12178720080000001,
+            "slippage": -0.4310640000003332,
+            "funding": 0.0,
+            "funding_paid": 0.0,
+            "funding_received": 0.0,
+            "net": -1.1307232007997214,
+            "r": -0.1643663124439305,
+            "exit_kind": "time",
+            "risk_pct": 0.006696310991055223,
+            "tier": "TAKE",
+            "jev_level": "TAKE",
+            "counterfactual": 0,
+            "rederived": 0
+          },
+          {
+            "symbol": "TSLA",
+            "side": "long",
+            "entry_ts": 1791300660000,
+            "exit_ts": 1791303360000,
+            "entry_price": 380.8530815,
+            "exit_price": 380.541942,
+            "qty": 7.0,
+            "gross": -1.120000000000175,
+            "fees": 0.10659530329,
+            "slippage": 1.0579764999995973,
+            "funding": 0.0,
+            "funding_paid": 0.0,
+            "funding_received": 0.0,
+            "net": -2.284571803289772,
+            "r": -0.3064679751420489,
+            "exit_kind": "time",
+            "risk_pct": 0.007240142640246654,
+            "tier": "TAKE",
+            "jev_level": "TAKE",
+            "counterfactual": 0,
+            "rederived": 0
+          },
+          {
+            "symbol": "TSLA",
+            "side": "long",
+            "entry_ts": 1791295860000,
+            "exit_ts": 1791298560000,
+            "entry_price": 381.118108,
+            "exit_price": 380.701926,
+            "qty": 4.0,
+            "gross": -2.9600000000000364,
+            "fees": 0.060945602720000006,
+            "slippage": -1.2952720000000681,
+            "funding": 0.0,
+            "funding_paid": 0.0,
+            "funding_received": 0.0,
+            "net": -1.7256736027199682,
+            "r": -0.22776623740091298,
+            "exit_kind": "time",
+            "risk_pct": 0.0073463130140031686,
+            "tier": "TAKE",
+            "jev_level": "TAKE",
+            "counterfactual": 0,
+            "rederived": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "Iris",
+      "historical_peak": {
+        "ts": 1727880599999,
+        "equity": 1015.7060449812485
+      },
+      "historical_final": 708.1716,
+      "recent": {
+        "equity_marked": 1021.7873,
+        "recorded_peak": 1026.4673147514818,
+        "settled_balance": 1022.4406507526818,
+        "trades": 4,
+        "wins": 4,
+        "profit_factor": 999.0,
+        "losing_trades": []
+      }
+    },
+    {
+      "name": "Oscar",
+      "historical_peak": {
+        "ts": 1728581519999,
+        "equity": 1028.787791219035
+      },
+      "historical_final": 716.866,
+      "recent": {
+        "equity_marked": 1023.0868,
+        "recorded_peak": 1026.1372192338804,
+        "settled_balance": 1021.5635677289317,
+        "trades": 9,
+        "wins": 7,
+        "profit_factor": 2.314152078680162,
+        "losing_trades": [
+          {
+            "symbol": "AMZN",
+            "side": "long",
+            "entry_ts": 1791306360000,
+            "exit_ts": 1791307399999,
+            "entry_price": 255.62555999999998,
+            "exit_price": 254.90950650000002,
+            "qty": 11.0,
+            "gross": -7.8100000000000875,
+            "fees": 0.11231771463000001,
+            "slippage": 0.0665884999994546,
+            "funding": 0.0,
+            "funding_paid": 0.0,
+            "funding_received": 0.0,
+            "net": -7.988906214629542,
+            "r": -1.1720129606041632,
+            "exit_kind": "stop",
+            "risk_pct": 0.006669272439939013,
+            "tier": "TAKE",
+            "jev_level": "TAKE",
+            "counterfactual": 0,
+            "rederived": 0
+          },
+          {
+            "symbol": "AMZN",
+            "side": "long",
+            "entry_ts": 1791215160000,
+            "exit_ts": 1791217020000,
+            "entry_price": 252.20521800000003,
+            "exit_price": 251.4498525,
+            "qty": 11.0,
+            "gross": -9.019999999999925,
+            "fees": 0.11080411551000001,
+            "slippage": -0.7109794999994961,
+            "funding": 0.0,
+            "funding_paid": 0.0,
+            "funding_received": 0.0,
+            "net": -8.419824615510429,
+            "r": -1.153673144225386,
+            "exit_kind": "stop",
+            "risk_pct": 0.00728268884075838,
+            "tier": "TAKE",
+            "jev_level": "TAKE",
+            "counterfactual": 0,
+            "rederived": 0
+          }
+        ]
+      }
+    }
+  ]
+}

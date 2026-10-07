@@ -1,0 +1,112 @@
+{
+  "window": "2026-09-18..2026-09-25 UTC",
+  "bots": [
+    {
+      "bot": "V8.1-ARB",
+      "trades": 42,
+      "signals": 68,
+      "net_usdt": -1.448255,
+      "max_drawdown": 0.107053,
+      "fees": 0.851786,
+      "halted": false,
+      "rejects": {
+        "max_positions": 24,
+        "fee_gt_r": 2
+      }
+    },
+    {
+      "bot": "V8.2-ARB",
+      "trades": 41,
+      "signals": 82,
+      "net_usdt": -0.886026,
+      "max_drawdown": 0.086675,
+      "fees": 0.784331,
+      "halted": false,
+      "rejects": {
+        "max_positions": 40,
+        "fee_gt_r": 1
+      }
+    },
+    {
+      "bot": "V8.1-ENA",
+      "trades": 77,
+      "signals": 109,
+      "net_usdt": -2.364215,
+      "max_drawdown": 0.169071,
+      "fees": 1.509491,
+      "halted": false,
+      "rejects": {
+        "max_positions": 31,
+        "fee_gt_r": 1
+      }
+    },
+    {
+      "bot": "V8.2-ENA",
+      "trades": 65,
+      "signals": 116,
+      "net_usdt": -2.425388,
+      "max_drawdown": 0.173516,
+      "fees": 1.169858,
+      "halted": false,
+      "rejects": {
+        "max_positions": 51
+      }
+    },
+    {
+      "bot": "V8.1-XRP",
+      "trades": 90,
+      "signals": 203,
+      "net_usdt": -2.193549,
+      "max_drawdown": 0.181529,
+      "fees": 2.836758,
+      "halted": false,
+      "rejects": {
+        "fee_gt_r": 41,
+        "max_positions": 72
+      }
+    },
+    {
+      "bot": "V8.2-XRP",
+      "trades": 99,
+      "signals": 240,
+      "net_usdt": -2.931987,
+      "max_drawdown": 0.152715,
+      "fees": 2.922009,
+      "halted": false,
+      "rejects": {
+        "fee_gt_r": 39,
+        "max_positions": 102
+      }
+    },
+    {
+      "bot": "V8.1-DOGE",
+      "trades": 77,
+      "signals": 165,
+      "net_usdt": -1.088724,
+      "max_drawdown": 0.096209,
+      "fees": 2.282025,
+      "halted": false,
+      "rejects": {
+        "fee_gt_r": 31,
+        "max_positions": 57
+      }
+    },
+    {
+      "bot": "V8.2-DOGE",
+      "trades": 85,
+      "signals": 187,
+      "net_usdt": -2.916018,
+      "max_drawdown": 0.175982,
+      "fees": 2.489181,
+      "halted": false,
+      "rejects": {
+        "max_positions": 78,
+        "fee_gt_r": 24
+      }
+    }
+  ],
+  "total_net_usdt": -16.254162,
+  "total_trades": 576,
+  "starting_usdt": 160,
+  "limitations": "Retrospective week, no holdout; modelled spreads, no historical bid/ask timestamps or REST arrival times; live spread gate not reconstructed; end-of-run exits included. No proven edge."
+}

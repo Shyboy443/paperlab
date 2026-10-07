@@ -1,0 +1,52 @@
+{
+  "window": "2026-09-18..2026-09-25 UTC",
+  "days": 7,
+  "results": [
+    {
+      "coin": "ARB",
+      "setups": {
+        "V7.1": 3,
+        "V7.2": 1
+      },
+      "size_eligible_at_20_usdt": {
+        "V7.1": 3,
+        "V7.2": 1
+      }
+    },
+    {
+      "coin": "ENA",
+      "setups": {
+        "V7.1": 4,
+        "V7.2": 0
+      },
+      "size_eligible_at_20_usdt": {
+        "V7.1": 4,
+        "V7.2": 0
+      }
+    },
+    {
+      "coin": "XRP",
+      "setups": {
+        "V7.1": 5,
+        "V7.2": 0
+      },
+      "size_eligible_at_20_usdt": {
+        "V7.1": 5,
+        "V7.2": 0
+      }
+    },
+    {
+      "coin": "DOGE",
+      "setups": {
+        "V7.1": 2,
+        "V7.2": 1
+      },
+      "size_eligible_at_20_usdt": {
+        "V7.1": 2,
+        "V7.2": 1
+      }
+    }
+  ],
+  "raw_setups": 16,
+  "note": "Setup counts only; NOT executed trades, returns or proof of improvement. Historical arrival times unavailable."
+}

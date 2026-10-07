@@ -1,0 +1,2417 @@
+--- a/app/strategies/v14/htf.py
++++ b/app/strategies/v14/htf.py
+@@ -1,28 +1,37 @@
+-"""V14 HTF: copies of the best current strategies that check the HIGHER TIMEFRAMES before every entry (docs/V14_PROTOCOL.md).
+-
+-Operator, 2026-10-04: "create another set of bots just same strategy of most winning and returning bots ... it should
+-analyze higher time frames as well before taking trades, that's what real humans do". The leaders on 2026-10-04 were
+-Jinx / Gamma (V8.3 VWAP snap-back), Juno (V11.1 RS breakout scanner), Kilo (V11.2 RS pullback scanner) and Bounce (V13
+-limit-order snapback). Sable (V7.1) needs V7's own positioning feed and already trades only with the 1h trend and never
+-against the 4h trend, so it is not copied.
+-
+-THE HTF RULE (a human trader's "trade with the bigger trend"), fixed before any test, from the coin's 1-HOUR candles (a
+-4h / 1d candle built from 1m bars is dropped whole by the engine on any 1-minute gap, so the 1h series is the robust
+-source):
+-    "4h" trend    price vs EMA(84) of 1h closes (~ the 4h EMA 21), and that EMA vs 12 hours earlier
+-    "daily" trend price vs EMA(240) of 1h closes (~ the daily EMA 10), and that EMA vs 24 hours earlier
+-                  up   = price above a RISING average; down = price below a FALLING one; otherwise flat
+-    bias = (+1 up / -1 down / 0 flat) for each, summed:  LONG only if bias >= +1, SHORT only if bias <= -1
+-    (at least one higher timeframe agrees and neither disagrees). Fewer than 300 hourly candles: no trade.
+-Everything else -- the setup, the stop, the targets, the time limit, the engine -- is the copied strategy's own, unchanged.
++"""Causal, UTC-aligned 4h/daily context for V14. See docs/V14_PROTOCOL.md.
++
++Only complete groups of closed hourly bars become HTF candles. Each timeframe's own
++close determines its trend; the entry price cannot rewrite a completed HTF trend.
++Breakouts need 4h agreement; pullbacks can use a neutral 4h inside a daily trend;
++reversion needs at least one agreeing HTF and cannot fade an opposing trend.
+ """
+ from __future__ import annotations
+ 
++import math
+ from typing import Any, Sequence
+ 
+-EMA_MID, SLOPE_MID = 84, 12
+-EMA_SLOW, SLOPE_SLOW = 240, 24
+-MIN_1H = 300
++from app.core.types import Candle
++
++HOUR, DAY = 3_600_000, 86_400_000
++EMA_MID, SLOPE_MID = 21, 3             # actual 4h bars
++EMA_SLOW, SLOPE_SLOW = 10, 1          # actual daily bars
++MIN_H4, MIN_D1 = 42, 20              # at least two EMA periods
++MIN_1H = MIN_D1 * 24
++ATR_PERIOD = 14
++PRICE_DEADBAND_ATR, SLOPE_DEADBAND_ATR = 0.10, 0.05
++STRONG_SLOPE_ATR = 0.20
++
++
++def rule_profile() -> dict[str, Any]:
++    return {"source": "complete UTC 4h/1d OHLC candles assembled from closed 1h bars",
++            "mid_ema": EMA_MID, "slow_ema": EMA_SLOW, "min_1h": MIN_1H,
++            "min_4h": MIN_H4, "min_1d": MIN_D1, "slope_bars": [SLOPE_MID, SLOPE_SLOW],
++            "atr_period": ATR_PERIOD, "price_deadband_atr": PRICE_DEADBAND_ATR,
++            "slope_deadband_atr_per_bar": SLOPE_DEADBAND_ATR,
++            "strong_slope_atr_per_bar": STRONG_SLOPE_ATR,
++            "freshness": "latest completed UTC hour, 42 consecutive 4h and 20 consecutive daily bars",
++            "fill_recheck": True,
++            "policies": {"V14.1": "reversion", "V14.2": "breakout", "V14.3": "pullback", "V14.4": "reversion"}}
+ 
+ 
+ def ema(values: Sequence[float], n: int) -> list[float]:
+@@ -34,33 +43,117 @@
+     return out
+ 
+ 
+-def htf_view(ctx: Any, symbol: str, price: float) -> dict[str, Any] | None:
+-    """The coin's higher-timeframe trends at this instant, from its closed 1h candles (None: not enough history)."""
+-    cs = list(ctx.candles(symbol, "1h"))
+-    if len(cs) < MIN_1H or price <= 0:
++def completed_bars(cs: Sequence[Candle], hours: int) -> list[Candle]:
++    """Aggregate only exact, complete UTC buckets; never bridge gaps or fill them."""
++    span = hours * HOUR
++    groups: dict[int, list[Candle]] = {}
++    for c in cs:
++        groups.setdefault(c.open_time // span * span, []).append(c)
++    out = []
++    for start, group in groups.items():
++        if len(group) != hours or any(c.open_time != start + i * HOUR for i, c in enumerate(group)):
++            continue
++        out.append(Candle(group[0].symbol, "4h" if hours == 4 else "1d", start, group[0].open,
++                          max(c.high for c in group), min(c.low for c in group), group[-1].close,
++                          sum(c.volume for c in group), start + span - 1, True,
++                          sum(c.quote_volume for c in group)))
++    return out
++
++
++def _trend(cs: Sequence[Candle], n: int, k: int) -> tuple[int, float]:
++    e = ema([c.close for c in cs], n)
++    tr = [max(c.high - c.low, abs(c.high - p.close), abs(c.low - p.close)) for p, c in zip(cs, cs[1:])]
++    atr = sum(tr[-ATR_PERIOD:]) / ATR_PERIOD
++    if atr <= 0:
++        return 0, 0.0
++    slope = (e[-1] - e[-1 - k]) / (k * atr)
++    distance = (cs[-1].close - e[-1]) / atr
++    direction = (1 if distance > PRICE_DEADBAND_ATR and slope > SLOPE_DEADBAND_ATR else
++                 -1 if distance < -PRICE_DEADBAND_ATR and slope < -SLOPE_DEADBAND_ATR else 0)
++    return direction, slope
++
++
++def _continuous(cs: Sequence[Candle], need: int, span: int, t: int) -> bool:
++    expected_close = (t + 1) // span * span - 1
++    tail = cs[-need:]
++    return (len(tail) == need and tail[-1].close_time == expected_close
++            and all(c.open_time == tail[0].open_time + i * span for i, c in enumerate(tail)))
++
++
++def htf_view(ctx: Any, symbol: str, price: float, asof: int | None = None) -> dict[str, Any] | None:
++    """HTF context known at the decision time. Missing/stale/invalid history fails closed.
++
++    `price` is checked for validity, but does not classify HTF candles. An explicit
++    cutoff is required unless the context supplies its causal clock.
++    """
++    if asof is None:
++        asof = ctx.now_ms() if hasattr(ctx, "now_ms") else 0
++    if asof <= 0 or not math.isfinite(price) or price <= 0:
+         return None
+-    closes = [c.close for c in cs]
+-
+-    def trend(n: int, k: int) -> int:
+-        e = ema(closes, n)
+-        if price > e[-1] and e[-1] > e[-1 - k]:
+-            return 1
+-        if price < e[-1] and e[-1] < e[-1 - k]:
+-            return -1
+-        return 0
+-    mid, slow = trend(EMA_MID, SLOPE_MID), trend(EMA_SLOW, SLOPE_SLOW)
+-    return {"h4": mid, "d1": slow, "bias": mid + slow}
+-
+-
+-def allows(view: dict[str, Any] | None, side: str) -> bool:
+-    if view is None:
++    raw = ctx.candles(symbol, "1h")
++    if not raw:
++        return None
++    # Bounded to one cached result per coin. Refresh each hour and on a new bar.
++    key = ((asof + 1) // HOUR, len(raw), id(raw[-1]))
++    cache = getattr(ctx, "_v14_htf_cache", None)
++    if cache is None:
++        cache = ctx._v14_htf_cache = {}
++    if symbol in cache and cache[symbol][0] == key:
++        return cache[symbol][1]
++    cs = [c for c in raw if c.closed and c.close_time <= asof]
++    view = None
++    valid = (len(cs) >= MIN_1H and _continuous(cs, MIN_1H, HOUR, asof)
++             and all(c.symbol == symbol and c.tf == "1h" and c.open_time % HOUR == 0
++                     and c.close_time == c.open_time + HOUR - 1
++                     and all(math.isfinite(v) and v > 0 for v in (c.open, c.high, c.low, c.close))
++                     and c.low <= min(c.open, c.close) <= max(c.open, c.close) <= c.high for c in cs)
++             and all(a.open_time < b.open_time for a, b in zip(cs, cs[1:])))
++    if valid:
++        h4, d1 = completed_bars(cs, 4), completed_bars(cs, 24)
++        if _continuous(h4, MIN_H4, 4 * HOUR, asof) and _continuous(d1, MIN_D1, DAY, asof):
++            mid, mid_slope = _trend(h4, EMA_MID, SLOPE_MID)
++            slow, slow_slope = _trend(d1, EMA_SLOW, SLOPE_SLOW)
++            view = {"h4": mid, "d1": slow, "bias": mid + slow,
++                    "h4_slope_atr": mid_slope, "d1_slope_atr": slow_slope,
++                    "h4_close_ms": h4[-1].close_time, "d1_close_ms": d1[-1].close_time,
++                    "source": "closed_utc_4h_1d"}
++    cache[symbol] = (key, view)
++    return view
++
++
++def allows(view: dict[str, Any] | None, side: str, policy: str = "breakout") -> bool:
++    if view is None or side not in ("long", "short"):
+         return False
+-    return view["bias"] >= 1 if side == "long" else view["bias"] <= -1
+-
+-
+-def _price(ctx: Any, symbol: str, tf: str) -> float:
++    d = 1 if side == "long" else -1
++    h4, d1 = d * view["h4"], d * view["d1"]
++    slope = d * view["h4_slope_atr"]
++    if d1 < 0:
++        return False
++    if policy == "breakout":
++        return h4 > 0
++    if policy == "pullback":
++        return h4 > 0 or (h4 == 0 and d1 > 0 and slope >= -SLOPE_DEADBAND_ATR)
++    if policy == "reversion":
++        return h4 >= 0 and h4 + d1 > 0 and slope >= -STRONG_SLOPE_ATR
++    return False
++
++
++def _check(self, ctx, symbol, price, t, side, policy):
++    view = htf_view(ctx, symbol, price, t)
++    if allows(view, side, policy):
++        return {**view, "policy": policy, "decision_ms": t}
++    self.htf_skips = getattr(self, "htf_skips", 0) + 1
++    reason = "missing_or_stale_htf" if view is None else "regime_veto"
++    rejects = getattr(self, "htf_rejects", {})
++    rejects[reason] = rejects.get(reason, 0) + 1
++    self.htf_rejects = rejects
++    ctx._v14_htf_rejects = dict(rejects)
++    return None
++
++
++def _price(ctx: Any, symbol: str, tf: str, t: int) -> float:
+     cs = ctx.candles(symbol, tf)
+-    return float(cs[-1].close) if cs else 0.0
++    return float(cs[-1].close) if cs and cs[-1].closed and cs[-1].close_time == t else 0.0
+ 
+ 
+ def htf_scanner(base: type, sid: str, name: str) -> type:
+@@ -70,14 +163,20 @@
+     def scan(self, ctx, t, _base=base.scan):
+         out = []
+         for x in _base(self, ctx, t):
+-            v = htf_view(ctx, x.symbol, _price(ctx, x.symbol, self.signal_tf))
+-            if allows(v, x.side):
+-                x.factors = {**x.factors, "htf": 1.0}
++            policy = "pullback" if sid == "V14.3" else "breakout"
++            v = _check(self, ctx, x.symbol, _price(ctx, x.symbol, self.signal_tf, t), t, x.side, policy)
++            if v is not None:
++                x.factors = {**x.factors, "htf": 1.0, "htf_h4": v["h4"], "htf_d1": v["d1"]}
++                x.htf = v
+                 out.append(x)
+-            else:
+-                self.htf_skips = getattr(self, "htf_skips", 0) + 1
+         return out
+-    return _make(base, sid, name, {"scan": scan})
++
++    def _signal(self, ctx, x, t):
++        sig = base._signal(self, ctx, x, t)
++        if sig is not None:
++            sig.meta["htf"] = x.htf
++        return sig
++    return _make(base, sid, name, {"scan": scan, "_signal": _signal})
+ 
+ 
+ def htf_single(base: type, sid: str, name: str) -> type:
+@@ -90,12 +189,11 @@
+             if getattr(s, "kind", "entry") != "entry":
+                 out.append(s)
+                 continue
+-            v = htf_view(ctx, s.symbol, _price(ctx, s.symbol, self.signal_tf))
+-            if allows(v, s.side):
++            t = c.close_time
++            v = _check(self, ctx, s.symbol, s.entry_price, t, s.side, "reversion")
++            if v is not None:
+                 s.meta["htf"] = v
+                 out.append(s)
+-            else:
+-                self.htf_skips = getattr(self, "htf_skips", 0) + 1
+         return out
+     return _make(base, sid, name, {"on_candle": on_candle})
+ 
+@@ -118,15 +216,16 @@
+             m = stretch_atr(cs) if cs is not None else None
+             if m is None or abs(m[0]) < p.threshold or m[1] <= 0:
+                 continue
+-            if not allows(htf_view(ctx, sym, cs[-1].close), "long" if m[0] < 0 else "short"):
+-                self.htf_skips = getattr(self, "htf_skips", 0) + 1
+-                continue
+-            found.append((abs(m[0]), sym, m, cs[-1]))
++            v = _check(self, ctx, sym, cs[-1].close, t, "long" if m[0] < 0 else "short", "reversion")
++            if v is None:
++                continue
++            found.append((abs(m[0]), sym, m, cs[-1], v))
+         found.sort(key=lambda x: (-x[0], x[1]))
+         out = []
+-        for _, sym, (st, atr, vwap), last in found[:p.max_signals]:
++        for _, sym, (st, atr, vwap), last, v in found[:p.max_signals]:
+             sig = self.limit_signal(ctx, last, st, atr, vwap, t)
+             if sig is not None:
++                sig.meta["htf"] = v
+                 out.append(sig)
+                 self.resting[sym] = int(sig.meta.get("expire_ms") or t + 60_000)
+         return out
+--- a/app/competition/v14_config.py
++++ b/app/competition/v14_config.py
+@@ -19,7 +19,7 @@
+ from app.strategies.v14.htf import SIGNAL_TF, SOURCES
+ 
+ FREEZE_FILE = baseline.DOCS / "V14_FREEZE.json"
+-PROTOCOL = "V14_HTF_PAPER_V1"
++PROTOCOL = "V14_HTF_PAPER_V2"
+ VENUE = baseline.VENUE
+ ANCHOR = "BTCUSDT"
+ # the V11 universe (scripts/v11_scan_data.py, 2026-09-29): the scanners' coins; it contains V8's six coins
+@@ -40,7 +40,7 @@
+ LATE_AFTER_MS = 55_000
+ EXECUTION_V14 = dataclasses.replace(baseline.EXECUTION_V6, signal_latency_ms=DECISION_WINDOW_MS - 400 + 1,
+                                     order_latency_ms=400)
+-WARMUP_DAYS = 14                   # the HTF rule needs 300 hourly candles (12.5 days)
++WARMUP_DAYS = 25                   # 20 complete daily bars, plus UTC alignment and EMA warm-up
+ 
+ # A strict bar, as V13 (docs/SYSTEM_REVIEW.md R5): two weeks, 100 closed trades, profitable after every cost,
+ # PF >= 1.2, drawdown <= 20%. Never eliminated: each bot is half of an A/B test with its original.
+@@ -105,7 +105,7 @@
+     """V14's own modules whole; of the copied programs exactly the objects V14 runs (the strategy classes, their
+     Params, the engines, the V11 ladder, the scan feed and gate helpers)."""
+     out = {m: baseline._src(importlib.import_module(m))
+-           for m in ("app.strategies.v14.htf", "app.competition.v14_config", "app.live.v14_worker",
++           for m in ("app.strategies.v14.htf", "app.competition.v14_config", "app.live.v14_worker", "app.live.v14_engine",
+                      "app.live.scan_market", "app.live.scan_engine", "app.live.v8_engine", "app.live.v13_engine",
+                      "app.strategies.v11.ladder", "app.strategies.v13.snapback")}
+     for mod, names in (("app.strategies.v8.arena", ("Params", "SnapParams", "ScalpV8", "VwapSnapV8")),
+@@ -121,14 +121,13 @@
+ 
+ 
+ def profile() -> dict[str, Any]:
+-    from app.strategies.v14.htf import EMA_MID, EMA_SLOW, MIN_1H, base_class
++    from app.strategies.v14.htf import rule_profile, base_class
+     return {"field": [s.key for s in field_plan()], "copies": {k: v["copies"] for k, v in SOURCES.items()},
+             "signal": dict(SIGNAL_TF), "decision_window_ms": DECISION_WINDOW_MS, "late_after_ms": LATE_AFTER_MS,
+             "execution": dataclasses.asdict(EXECUTION_V14), "warmup_days": WARMUP_DAYS, "universe": list(UNIVERSE),
+             "v8_coins": list(V8_COINS), "anchor": ANCHOR, "starting_balance": STARTING_BALANCE,
+             "leverage_ceiling": LEVERAGE_CEILING, "sizing": "SizingV6 tiers (1% base risk, legal minimums), hard cap 2%",
+-            "htf_rule": {"source": "1h candles", "mid_ema": EMA_MID, "slow_ema": EMA_SLOW, "min_1h": MIN_1H,
+-                         "rule": "long only if bias >= +1, short only if bias <= -1 (4h-ish and daily-ish trends)"},
++            "htf_rule": rule_profile(),
+             "params": {k: dataclasses.asdict(base_class(k).Params()) for k in SOURCES},
+             "elimination": "none", "qualify": QUALIFY, "storage": "v14-forward.db",
+             "market_data": "Bybit linear public REST: 1m klines + tickers polled every minute, one ordered batch",
+--- a/app/live/v14_worker.py
++++ b/app/live/v14_worker.py
+@@ -5,7 +5,7 @@
+     verify     docs/V14_FREEZE.json must match the running V14 code (and the copied objects it runs) -- or nothing trades
+     identity   the freeze fingerprint = the experiment (v14x-...); a compatible experiment is RESUMED
+     tape       app/live/scan_market.py: stored history, REST catch-up, then live minute batches of all 30 coins (BTC,
+-               the anchor, last); 14 days of warm-up for the 300 hourly candles the HTF rule reads
++               the anchor, last); 25 days of warm-up for complete UTC 4h/daily context
+     bots       V14.1 = V8.3 + HTF on each of V8's 6 coins (LevelMakerEngineV8); V14.2 / V14.3 = V11.1 / V11.2 + HTF over
+                30 coins (ScanReplayEngine, the 25/50/25 ladder); V14.4 = V13 + HTF over 29 coins (LimitEntryEngineV13)
+     gates      V11's per-coin rules: a decision later than 55 s, or stale data for that coin, is SKIP; decisions are
+@@ -60,9 +60,8 @@
+     from app.live.scan_market import ScanMarket
+     from app.live.v6_gates import Coverage, DecisionBoard
+     from app.live.v6_runner import V6Bot
+-    from app.live.scan_engine import BE_COVER_BPS, ScanReplayEngine
+-    from app.live.v8_engine import LevelMakerEngineV8
+-    from app.live.v13_engine import LimitEntryEngineV13
++    from app.live.scan_engine import BE_COVER_BPS
++    from app.live.v14_engine import HTFScalpEngine, HTFScanEngine, HTFLimitEngine
+     from app.strategies.v14.htf import SOURCES, base_class, build
+     ANCHOR = v14.ANCHOR
+ 
+@@ -142,6 +141,12 @@
+             r = live_marks(dict(b.status), market)
+             r["program_status"] = "ACTIVE"
+             r["coins"] = 1 if r.get("symbol") else len(universe) - 1
++            r["htf_filter"] = {
++                "entry_rejects": dict(getattr(b.eng.ctx, "_v14_htf_rejects", {})),
++                "fill_rejects": {k: v for k, v in getattr(getattr(b.eng, "_res", None), "rejects", {}).items()
++                                 if k.startswith("htf_fill_")},
++                "latest_context": {sym: value[1] for sym, value in
++                                   dict(getattr(b.eng.ctx, "_v14_htf_cache", {})).items()}}
+             rows.append(r)
+         live = sum(1 for r in rows if r.get("live"))
+         st = state["status"]
+@@ -223,11 +228,11 @@
+                   leverage_policy="needed", max_risk_pct=AGGRESSIVE_V6.max_risk_pct, gate=gate, cost_gate=None,
+                   quotes=market.quote_half_spread, maker_tp=True)          # every copied strategy rests its targets
+         if kind == "single":                                             # V8.3's own engine (no pre-trade gap check)
+-            eng = LevelMakerEngineV8(settings, syms, **kw)
++            eng = HTFScalpEngine(settings, syms, **kw)
+         elif kind == "scanner":                                          # V11's engine: level exits + ladder locks
+-            eng = ScanReplayEngine(settings, syms, be_cover_bps=BE_COVER_BPS, **kw)
++            eng = HTFScanEngine(settings, syms, be_cover_bps=BE_COVER_BPS, **kw)
+         else:                                                            # V13's engine: resting post-only entries
+-            eng = LimitEntryEngineV13(settings, syms, **kw)
++            eng = HTFLimitEngine(settings, syms, **kw)
+         bots.append(V6Bot(spec=spec, cls=cls, engine=eng, bars=queues[spec.key], since_ms=t0, live_from_ms=live_from,
+                           emit=emit, recorded=mine, prev_snapshot=prev.get(spec.key), family=base_cls.family,
+                           leverage=v14.LEVERAGE_CEILING, multi=spec.multi))
+--- a/app/live/v14_engine.py
++++ b/app/live/v14_engine.py
+@@ -0,0 +1,45 @@
++"""V14 rechecks completed HTF context before queued market or resting limit fills.
++
++The signal-time filter cannot authorize an entry indefinitely. Cancel the order
++if the regime changes or the hourly feed becomes stale while it waits. The fill
++bar's close/high/low never enters the HTF decision. Original engines are untouched.
++"""
++from app.strategies.v14.htf import allows, htf_view, rule_profile
++from app.live.scan_engine import ScanReplayEngine
++from app.live.v8_engine import LevelMakerEngineV8
++from app.live.v13_engine import LimitEntryEngineV13
++
++
++class HTFFillGuard:
++    def _execute_pending(self, bar, meta, res):
++        keep = []
++        for order, sig, decision in self._pending:
++            if order.symbol != bar.symbol or bar.close_time < order.execute_at:
++                keep.append((order, sig, decision))
++                continue
++            policy = rule_profile()["policies"].get(sig.strategy_id)
++            # The prior bar has completed at the order's earliest fill instant.
++            asof = bar.open_time - 1
++            view = htf_view(self.ctx, sig.symbol, bar.open, asof)
++            if policy is None or not allows(view, sig.side, policy):
++                reason = "htf_fill_missing_or_stale" if view is None else "htf_fill_regime_veto"
++                order.reject(reason)
++                res.rejects[reason] = res.rejects.get(reason, 0) + 1
++                continue
++            order.meta.setdefault("sizing", {}).update(
++                htf=sig.meta.get("htf"), htf_fill={**view, "policy": policy, "decision_ms": asof})
++            keep.append((order, sig, decision))
++        self._pending = keep
++        super()._execute_pending(bar, meta, res)
++
++
++class HTFScalpEngine(HTFFillGuard, LevelMakerEngineV8):
++    pass
++
++
++class HTFScanEngine(HTFFillGuard, ScanReplayEngine):
++    pass
++
++
++class HTFLimitEngine(HTFFillGuard, LimitEntryEngineV13):
++    pass
+--- a/app/live/telegram.py
++++ b/app/live/telegram.py
+@@ -264,7 +264,7 @@
+         pass
+     out += ["<b>V14 HTF</b> (copies of the best strategies, 20 USDT books)",
+             "• The V8.3 snap-back (6 coins), the V11.1 / V11.2 scanners and V13 Snapback, each with ONE extra rule:",
+-            "• enter only in the direction of the 4-hour and daily trend (from 1h candles)",
++            "• completed UTC 4-hour and daily trend; breakout agreement, pullback/reversion trend veto",
+             "• SL / TP / time limit: exactly the original's", ""]
+     out.append("<i>All bots are paper: simulated fills on live market data.</i>")
+     return "\n".join(out)
+--- a/tests/test_v14.py
++++ b/tests/test_v14.py
+@@ -10,39 +10,46 @@
+ from app.strategies.v14 import htf
+ 
+ HOUR = 3_600_000
+-T0 = 1_790_000_000_000 // HOUR * HOUR
++T0 = 1_790_000_000_000 // htf.DAY * htf.DAY
++T = T0 + 600 * HOUR - 1
+ 
+ 
+ class Ctx:
+     def __init__(self, series: dict[str, list[float]], tf_last: dict[str, float] | None = None):
+         self.s = series
+         self.last = tf_last or {}
++        self.bars = {sym: [Candle(sym, "1h", T0 + i * HOUR, p, p, p, p, 1.0, T0 + (i + 1) * HOUR - 1)
++                          for i, p in enumerate(prices)] for sym, prices in series.items()}
++
++    def now_ms(self):
++        return T
+ 
+     def candles(self, sym, tf):
+         if tf == "1h":
+-            return [Candle(sym, "1h", T0 + i * HOUR, p, p, p, p, 1.0, T0 + (i + 1) * HOUR - 1)
+-                    for i, p in enumerate(self.s.get(sym, []))]
++            return self.bars.get(sym, [])
+         p = self.last.get(sym)
+-        return [Candle(sym, tf, T0, p, p, p, p, 1.0, T0 + 1)] if p else []
++        return [Candle(sym, tf, T - 299_999, p, p, p, p, 1.0, T)] if p else []
+ 
+ 
+-UP = [100 + 0.05 * i for i in range(400)]
+-DOWN = [120 - 0.05 * i for i in range(400)]
+-FLAT = [100.0] * 400                                                     # no trend at all
++UP = [100 + 0.05 * i for i in range(600)]
++DOWN = [140 - 0.05 * i for i in range(600)]
++FLAT = [100.0] * 600
+ 
+ 
+ class TestRule:
+     def test_trends_and_bias(self):
+-        assert htf.htf_view(Ctx({"A": UP}), "A", UP[-1]) == {"h4": 1, "d1": 1, "bias": 2}
+-        assert htf.htf_view(Ctx({"A": DOWN}), "A", DOWN[-1]) == {"h4": -1, "d1": -1, "bias": -2}
++        assert htf.htf_view(Ctx({"A": UP}), "A", UP[-1])["bias"] == 2
++        assert htf.htf_view(Ctx({"A": DOWN}), "A", DOWN[-1])["bias"] == -2
+         assert htf.htf_view(Ctx({"A": FLAT}), "A", 100.0)["bias"] == 0
+-        assert htf.htf_view(Ctx({"A": UP[:250]}), "A", UP[249]) is None             # < 300 hourly candles: no view
+-        v = htf.htf_view(Ctx({"A": UP}), "A", UP[-1] - 6.0)                          # a deep dip in a daily uptrend
+-        assert v["d1"] in (0, 1) and v["h4"] in (0, -1)
++        assert htf.htf_view(Ctx({"A": UP[:250]}), "A", UP[249]) is None
++        ctx = Ctx({"A": UP})
++        assert htf.htf_view(ctx, "A", UP[-1] - 6.0) == htf.htf_view(ctx, "A", UP[-1])
+ 
+     def test_what_the_bias_allows(self):
+-        assert htf.allows({"bias": 2}, "long") and htf.allows({"bias": 1}, "long") and not htf.allows({"bias": 0}, "long")
+-        assert htf.allows({"bias": -1}, "short") and not htf.allows({"bias": 1}, "short")
++        up = {"h4": 1, "d1": 1, "h4_slope_atr": 0.3}
++        down = {"h4": -1, "d1": -1, "h4_slope_atr": -0.3}
++        assert htf.allows(up, "long") and not htf.allows(up, "short")
++        assert htf.allows(down, "short") and not htf.allows(down, "long")
+         assert not htf.allows(None, "long") and not htf.allows(None, "short")
+ 
+     def test_the_ema(self):
+@@ -62,13 +69,15 @@
+                 self.side = side
+ 
+             def on_candle(self, c, ctx):
+-                return [Signal("V8.3", "AUSDT", "entry", self.side, T0, "5m", 100.0, stop=99.0)]
++                return [Signal("V8.3", "AUSDT", "entry", self.side, T, "5m", 100.0, stop=99.0)]
+         cls = htf.htf_single(Base, "V14.1", "test")
+         assert cls.id == "V14.1" and "1h" in cls.timeframes
+         up = Ctx({"AUSDT": UP}, {"AUSDT": UP[-1]})
+-        assert len(cls("long").on_candle(None, up)) == 1 and cls("short").on_candle(None, up) == []
++        c = up.candles("AUSDT", "5m")[-1]
++        assert len(cls("long").on_candle(c, up)) == 1 and cls("short").on_candle(c, up) == []
+         down = Ctx({"AUSDT": DOWN}, {"AUSDT": DOWN[-1]})
+-        assert cls("long").on_candle(None, down) == [] and len(cls("short").on_candle(None, down)) == 1
++        c = down.candles("AUSDT", "5m")[-1]
++        assert cls("long").on_candle(c, down) == [] and len(cls("short").on_candle(c, down)) == 1
+ 
+     def test_a_scanner_filters_before_ranking(self):
+         class Base:
+@@ -80,7 +89,7 @@
+                         Cand("BUSDT", "long", 99.0, 1.0, 0.5, {}, "weaker, with the trend")]
+         cls = htf.htf_scanner(Base, "V14.3", "test")
+         ctx = Ctx({"AUSDT": DOWN, "BUSDT": UP}, {"AUSDT": DOWN[-1], "BUSDT": UP[-1]})
+-        out = cls().scan(ctx, T0)
++        out = cls().scan(ctx, T)
+         assert [x.symbol for x in out] == ["BUSDT"] and out[0].factors["htf"] == 1.0
+ 
+     def test_the_built_classes_are_the_originals_plus_the_rule(self):
+--- a/tests/test_v14_closed_htf.py
++++ b/tests/test_v14_closed_htf.py
+@@ -0,0 +1,203 @@
++"""Regression checks for causal HTF context and strategy-specific regime decisions."""
++from dataclasses import replace
++
++import pytest
++
++from app.core.types import Candle, Signal
++from app.strategies.v14 import htf
++from tests.test_v14 import Ctx, DOWN, FLAT, T, T0, UP
++
++
++def test_complete_utc_ohlc_groups_use_last_close_and_sum_volume():
++    bars = [Candle("A", "1h", T0 + i * htf.HOUR, 100 + i, 102 + i, 99 + i, 101 + i,
++                   i + 1, T0 + (i + 1) * htf.HOUR - 1, quote_volume=10 * (i + 1)) for i in range(24)]
++    four = htf.completed_bars(bars, 4)
++    daily = htf.completed_bars(bars, 24)
++    assert len(four) == 6 and len(daily) == 1
++    assert (four[0].open, four[0].high, four[0].low, four[0].close, four[0].volume) == (100, 105, 99, 104, 10)
++    assert daily[0].close == bars[-1].close and daily[0].quote_volume == sum(c.quote_volume for c in bars)
++    assert daily[0].close_time == T0 + htf.DAY - 1
++    assert htf.completed_bars(bars[:-1], 24) == []
++    assert len(htf.completed_bars(bars[1:], 4)) == 5  # no partial first bucket
++
++
++def test_one_missing_hour_does_not_become_a_fake_htf_candle():
++    ctx = Ctx({"A": UP})
++    del ctx.bars["A"][-20]
++    assert htf.htf_view(ctx, "A", 100) is None
++    assert htf.completed_bars(ctx.bars["A"], 24)[-1].close_time < T
++
++
++def test_preloaded_future_candles_do_not_leak_into_trend():
++    asof = T0 + 576 * htf.HOUR - 1
++    full = Ctx({"A": UP})
++    truncated = Ctx({"A": UP[:576]})
++    assert htf.htf_view(full, "A", 100, asof) == htf.htf_view(truncated, "A", 100, asof)
++    full.bars["A"][-1] = replace(full.bars["A"][-1], close=1e8, high=1e8)
++    assert htf.htf_view(full, "A", 100, asof) == htf.htf_view(truncated, "A", 100, asof)
++
++
++def test_forming_hour_is_ignored_until_closed():
++    ctx = Ctx({"A": UP})
++    c = ctx.bars["A"][-1]
++    ctx.bars["A"].append(replace(c, open_time=T + 1, close_time=T + htf.HOUR, closed=False, close=1e8, high=1e8))
++    assert htf.htf_view(ctx, "A", 100, T) == htf.htf_view(Ctx({"A": UP}), "A", 100, T)
++
++
++def test_hour_and_daily_rollover_only_at_completed_boundary_even_with_cached_future_history():
++    ctx = Ctx({"A": UP})
++    prior = htf.htf_view(ctx, "A", 100, T - 1)
++    current = htf.htf_view(ctx, "A", 100, T)
++    assert prior["d1_close_ms"] == T - htf.DAY and current["d1_close_ms"] == T
++    assert prior["h4_close_ms"] == T - 4 * htf.HOUR and current["h4_close_ms"] == T
++
++
++def test_stale_history_invalidates_cached_result_at_next_hour():
++    ctx = Ctx({"A": UP})
++    assert htf.htf_view(ctx, "A", 100, T)
++    assert htf.htf_view(ctx, "A", 100, T + htf.HOUR) is None
++
++
++@pytest.mark.parametrize("corrupt", [
++    lambda cs: cs.append(cs[-1]),
++    lambda cs: cs.reverse(),
++    lambda cs: cs.__setitem__(-1, replace(cs[-1], closed=False)),
++    lambda cs: cs.__setitem__(-1, replace(cs[-1], close=float("nan"))),
++    lambda cs: cs.__setitem__(-1, replace(cs[-1], high=0.0)),
++    lambda cs: cs.__setitem__(-1, replace(cs[-1], low=1e8)),
++    lambda cs: cs.__setitem__(-1, replace(cs[-1], close_time=T - 1)),
++    lambda cs: cs.__setitem__(-1, replace(cs[-1], symbol="B")),
++])
++def test_invalid_tape_fails_closed(corrupt):
++    ctx = Ctx({"A": UP})
++    corrupt(ctx.bars["A"])
++    assert htf.htf_view(ctx, "A", 100) is None
++
++
++@pytest.mark.parametrize("price", [0, -1, float("inf"), float("nan")])
++def test_invalid_entry_price_fails_closed(price):
++    assert htf.htf_view(Ctx({"A": UP}), "A", price) is None
++
++
++def test_no_implicit_future_clock():
++    class NoClock:
++        candles = Ctx({"A": UP}).candles
++    assert htf.htf_view(NoClock(), "A", 100) is None
++
++
++def test_actual_4h_and_daily_ema_used():
++    ctx = Ctx({"A": UP})
++    view = htf.htf_view(ctx, "A", 1)  # large LTF dip cannot change the HTF state
++    four = htf.completed_bars(ctx.bars["A"], 4)
++    daily = htf.completed_bars(ctx.bars["A"], 24)
++    assert (view["h4"], view["h4_slope_atr"]) == htf._trend(four, 21, 3)
++    assert (view["d1"], view["d1_slope_atr"]) == htf._trend(daily, 10, 1)
++    assert view["h4"] == view["d1"] == 1
++
++
++@pytest.mark.parametrize("side,d", [("long", 1), ("short", -1)])
++def test_policies_distinguish_ranges_breakouts_and_pullbacks(side, d):
++    neutral = {"h4": 0, "d1": 0, "h4_slope_atr": 0.0}
++    daily = {"h4": 0, "d1": d, "h4_slope_atr": 0.0}
++    assert not htf.allows(neutral, side, "reversion")
++    assert not htf.allows(neutral, side, "breakout")
++    assert not htf.allows(neutral, side, "pullback")
++    assert htf.allows(daily, side, "pullback")
++    assert htf.allows(daily, side, "reversion")
++    assert not htf.allows(daily, side, "breakout")
++    strong_opposing_slope = {"h4": 0, "d1": 0, "h4_slope_atr": -d * 0.3}
++    assert not htf.allows(strong_opposing_slope, side, "reversion")
++    daily_veto = {"h4": d, "d1": -d, "h4_slope_atr": d * 0.3}
++    assert all(not htf.allows(daily_veto, side, p) for p in ("reversion", "pullback", "breakout"))
++
++
++def test_invalid_side_or_policy_is_not_treated_as_short():
++    view = {"h4": -1, "d1": -1, "h4_slope_atr": -0.3}
++    assert not htf.allows(view, "sell") and not htf.allows(view, "short", "unknown")
++
++
++def test_trend_deadband_treats_micro_changes_as_neutral():
++    cs = [Candle("A", "4h", i * 4 * htf.HOUR, 100, 110, 90, 100 + i * 1e-6,
++                 1, (i + 1) * 4 * htf.HOUR - 1) for i in range(60)]
++    assert htf._trend(cs, 21, 3)[0] == 0
++
++
++def test_single_wrapper_keeps_exits_and_records_entry_context_and_rejections():
++    class Base:
++        timeframes = ("5m",)
++        signal_tf = "5m"
++
++        def on_candle(self, c, ctx):
++            return [Signal("BASE", "A", "close", "long", T, "5m", 100),
++                    Signal("BASE", "A", "entry", "long", T, "5m", 100)]
++    cls = htf.htf_single(Base, "V14.1", "test")
++    bot = cls()
++    ctx = Ctx({"A": UP}, {"A": 100})
++    out = bot.on_candle(ctx.candles("A", "5m")[-1], ctx)
++    assert [s.kind for s in out] == ["close", "entry"]
++    assert out[1].meta["htf"]["policy"] == "reversion"
++    assert out[1].meta["htf"]["decision_ms"] == T
++    ctx = Ctx({"A": DOWN}, {"A": 100})
++    out = bot.on_candle(ctx.candles("A", "5m")[-1], ctx)
++    assert [s.kind for s in out] == ["close"] and bot.htf_rejects == {"regime_veto": 1}
++
++
++def test_scanner_attaches_context_to_final_ladder_signal():
++    from app.strategies.v11.scan import Cand
++    class Base:
++        timeframes = ("15m",)
++        signal_tf = "15m"
++
++        def scan(self, ctx, t):
++            return [Cand("A", "long", 99, 1, 0.9, {}, "setup")]
++
++        def _signal(self, ctx, x, t):
++            return Signal("BASE", x.symbol, "entry", x.side, t, "15m", 100, stop=99)
++    bot = htf.htf_scanner(Base, "V14.2", "test")()
++    ctx = Ctx({"A": UP}, {"A": 100})
++    x = bot.scan(ctx, T)[0]
++    assert bot._signal(ctx, x, T).meta["htf"]["policy"] == "breakout"
++    assert x.factors["htf_h4"] == x.factors["htf_d1"] == 1
++    assert bot.scan(ctx, T - 1) == []  # no fresh entry-timeframe candle
++    assert bot.htf_rejects["missing_or_stale_htf"] == 1
++
++
++def test_warmup_and_history_capacity_support_twenty_daily_candles():
++    from app.backtest.context import ReplayContext
++    from app.competition.v14_config import WARMUP_DAYS
++    ctx = ReplayContext(None, {}, ["A"])
++    assert ctx._maxlen >= htf.MIN_1H and WARMUP_DAYS >= htf.MIN_D1 + 1
++    for c in Ctx({"A": UP}).bars["A"]:
++        ctx.push(c)
++    assert htf.htf_view(ctx, "A", 100, T)
++
++
++def test_snapback_filters_before_order_slots_and_records_selected_context(monkeypatch):
++    from types import SimpleNamespace
++    from app.strategies.v13 import snapback
++    def stretch(cs):
++        return (5 if cs[-1].symbol == "A" else 4, 1, 100)
++    monkeypatch.setattr(snapback, "stretch_atr", stretch)
++    class Base:
++        timeframes = ("5m",)
++        signal_tf = "5m"
++        anchor = "BTC"
++        universe = ("A", "B", "BTC")
++
++        def __init__(self):
++            self.params = SimpleNamespace(threshold=3, max_signals=1)
++            self.resting = {}
++
++        def current(self, ctx, sym, tf, t, need):
++            return ctx.candles(sym, tf)
++
++        def limit_signal(self, ctx, last, st, atr, vwap, t):
++            return Signal(self.id, last.symbol, "entry", "short", t, "5m", 100,
++                          meta={"expire_ms": T + 60_000})
++    bot = htf.htf_snapback(Base, "V14.4", "test")()
++    ctx = Ctx({"A": UP, "B": DOWN}, {"A": 100, "B": 100, "BTC": 100})
++    out = bot.on_candle(ctx.candles("BTC", "5m")[-1], ctx)
++    assert [s.symbol for s in out] == ["B"]  # rejected A cannot consume the sole slot
++    assert out[0].meta["htf"]["policy"] == "reversion"
++    assert out[0].meta["htf"]["h4_close_ms"] == T
++    assert bot.resting == {"B": T + 60_000}
+--- a/tests/test_v14_fill_context.py
++++ b/tests/test_v14_fill_context.py
+@@ -0,0 +1,84 @@
++"""Queued HTF entries keep their entry filters until the actual fill."""
++import pytest
++
++from app.core.types import Candle, MarketRules
++from app.execution.config import ExecutionConfig
++from app.live import v14_engine
++from app.strategies.base import Strategy
++from tests.conftest import settings_factory
++from tests.test_v14 import Ctx, T, UP
++
++MINUTE = 60_000
++
++
++def replay(engine_cls, sid, *, timestamps=None, after_queue=None):
++    start = T + 1
++    limit = engine_cls is v14_engine.HTFLimitEngine
++    class Scripted(Strategy):
++        id = sid
++        timeframes = ("1m",)
++        min_rr = 0
++
++        def on_candle(self, c, ctx):
++            if c.open_time != start:
++                return []
++            price = 99 if limit else 100
++            return [self.make_entry(symbol="A", side="long", ts=c.close_time, tf="1m", price=price,
++                                    stop=97, tps_price=[(106, 1)],
++                                    meta={"htf": {"policy": "reversion"},
++                                          **({"limit": price, "expire_ms": start + 20 * MINUTE} if limit else {})})]
++    cfg = ExecutionConfig(signal_latency_ms=1, order_latency_ms=0, base_slippage_bps=0, vol_component=0)
++    eng = engine_cls(settings_factory(balance=100), ["A"],
++                     rules={"A": MarketRules("A", 0.0001, 0.000001, 0.000001, 1, qty_precision=6)}, execution=cfg)
++    for c in Ctx({"A": UP}).bars["A"]:
++        eng.ctx.push(c)
++
++    def feed():
++        for i, ts in enumerate(timestamps or [start + i * MINUTE for i in range(5)]):
++            if i == 2 and after_queue:
++                after_queue(eng)
++            yield Candle("A", "1m", ts, 100, 100, 98.9 if i >= 3 else 100, 100, 100,
++                         ts + MINUTE - 1, quote_volume=10000)
++    return eng, eng.run(Scripted, feed(), since_ms=start)
++
++
++@pytest.mark.parametrize("engine_cls,sid", [(v14_engine.HTFScalpEngine, "V14.1"),
++                                           (v14_engine.HTFScanEngine, "V14.2"),
++                                           (v14_engine.HTFLimitEngine, "V14.4")])
++def test_valid_context_fills_and_preserves_both_contexts(engine_cls, sid):
++    _, result = replay(engine_cls, sid)
++    fill = next(f for f in result.fills if f.kind == "entry")
++    assert fill.meta["htf"]["policy"] == "reversion"
++    view = fill.meta["htf_fill"]
++    assert view["h4_close_ms"] <= view["decision_ms"] < fill.ts
++    assert view["d1_close_ms"] <= view["decision_ms"]
++    assert view["policy"] == ("breakout" if sid == "V14.2" else "reversion")
++
++
++@pytest.mark.parametrize("engine_cls,sid", [(v14_engine.HTFScalpEngine, "V14.1"),
++                                           (v14_engine.HTFScanEngine, "V14.2"),
++                                           (v14_engine.HTFLimitEngine, "V14.4")])
++def test_feed_gap_cancels_queued_orders_without_entry_fees(engine_cls, sid):
++    _, result = replay(engine_cls, sid, timestamps=[T + 1, T + 1 + 60 * MINUTE])
++    assert not result.trades and not result.fills
++    assert result.rejects["htf_fill_missing_or_stale"] == 1
++
++
++def test_resting_limit_is_cancelled_on_regime_change_before_it_is_hit(monkeypatch):
++    original = v14_engine.htf_view
++    def changed(ctx, symbol, price, asof):
++        view = original(ctx, symbol, price, asof)
++        if asof >= T + 2 * MINUTE:
++            return {**view, "h4": -1, "d1": -1, "h4_slope_atr": -0.3}
++        return view
++    monkeypatch.setattr(v14_engine, "htf_view", changed)
++    eng, result = replay(v14_engine.HTFLimitEngine, "V14.4")
++    assert result.rejects["htf_fill_regime_veto"] == 1
++    assert not eng._pending and not result.fills and not result.trades
++
++
++def test_risk_gap_protection_still_runs_after_htf_guard():
++    def gap(eng):
++        eng._pending[0][1].stop = 101  # invalidated stop on a queued resting order
++    _, result = replay(v14_engine.HTFLimitEngine, "V14.4", after_queue=gap)
++    assert not result.fills and result.rejects["gap_past_stop"] == 1
+--- a/docs/V14_FREEZE.json
++++ b/docs/V14_FREEZE.json
+@@ -1,547 +1,574 @@
+ {
+- "protocol": "V14_HTF_PAPER_V1",
+- "baseline_fingerprint": "93f9c48b67163c69",
+- "code": {
+-  "app.strategies.v14.htf": "e51bcf3f8cea",
+-  "app.competition.v14_config": "ba7a0b6a30e8",
+-  "app.live.v14_worker": "c1aca36a9920",
+-  "app.live.scan_market": "b65877fff012",
+-  "app.live.scan_engine": "9ce04396befb",
+-  "app.live.v8_engine": "0f628fcecf5e",
+-  "app.live.v13_engine": "d508af63d7ff",
+-  "app.strategies.v11.ladder": "228bb8cd17e8",
+-  "app.strategies.v13.snapback": "30ce0843d21d",
+-  "app.strategies.v8.arena.Params": "f2e57375711c",
+-  "app.strategies.v8.arena.SnapParams": "910ce21660ed",
+-  "app.strategies.v8.arena.ScalpV8": "4a81b87c9a90",
+-  "app.strategies.v8.arena.VwapSnapV8": "c70da68c2233",
+-  "app.strategies.v11.scan.ScanV11": "fe5e71b200f4",
+-  "app.strategies.v11.scan.Params": "7fb788101b4c",
+-  "app.strategies.v11.scan.Cand": "f21e389ba46e",
+-  "app.strategies.v11.scan.rank_pct": "45c89df068ca",
+-  "app.strategies.v11.scan.RsbParams": "faa7a64e3d61",
+-  "app.strategies.v11.scan.RspParams": "29f1294a2e52",
+-  "app.strategies.v11.scan.RsBreakoutV11": "e6362dc9bd34",
+-  "app.strategies.v11.scan.RsPullbackV11": "06a4944a7da6",
+-  "app.live.v11_worker.ScanGateV11": "a55e7b546bb2",
+-  "app.live.v11_worker.load_recorded_v11": "393f872c85ed",
+-  "app.live.v11_worker.recorded_for": "0e8176068550",
+-  "app.live.v11_worker.load_eliminated": "723f7542141d",
+-  "app.live.v11_worker.live_marks": "309770e97fc4",
+-  "app.live.v11_worker.prices": "a45afedf578a",
+-  "app.strategies.v11.scan.ANCHOR": "BTCUSDT"
+- },
+- "profile": {
++  "protocol": "V14_HTF_PAPER_V2",
++  "baseline_fingerprint": "93f9c48b67163c69",
++  "code": {
++    "app.strategies.v14.htf": "1c1c01e47552",
++    "app.competition.v14_config": "a591351f9e59",
++    "app.live.v14_worker": "3f4233c8e916",
++    "app.live.v14_engine": "184a80b4ce12",
++    "app.live.scan_market": "b65877fff012",
++    "app.live.scan_engine": "9ce04396befb",
++    "app.live.v8_engine": "0f628fcecf5e",
++    "app.live.v13_engine": "d508af63d7ff",
++    "app.strategies.v11.ladder": "228bb8cd17e8",
++    "app.strategies.v13.snapback": "30ce0843d21d",
++    "app.strategies.v8.arena.Params": "f2e57375711c",
++    "app.strategies.v8.arena.SnapParams": "910ce21660ed",
++    "app.strategies.v8.arena.ScalpV8": "4a81b87c9a90",
++    "app.strategies.v8.arena.VwapSnapV8": "c70da68c2233",
++    "app.strategies.v11.scan.ScanV11": "fe5e71b200f4",
++    "app.strategies.v11.scan.Params": "7fb788101b4c",
++    "app.strategies.v11.scan.Cand": "f21e389ba46e",
++    "app.strategies.v11.scan.rank_pct": "45c89df068ca",
++    "app.strategies.v11.scan.RsbParams": "faa7a64e3d61",
++    "app.strategies.v11.scan.RspParams": "29f1294a2e52",
++    "app.strategies.v11.scan.RsBreakoutV11": "e6362dc9bd34",
++    "app.strategies.v11.scan.RsPullbackV11": "06a4944a7da6",
++    "app.live.v11_worker.ScanGateV11": "a55e7b546bb2",
++    "app.live.v11_worker.load_recorded_v11": "393f872c85ed",
++    "app.live.v11_worker.recorded_for": "0e8176068550",
++    "app.live.v11_worker.load_eliminated": "723f7542141d",
++    "app.live.v11_worker.live_marks": "309770e97fc4",
++    "app.live.v11_worker.prices": "a45afedf578a",
++    "app.strategies.v11.scan.ANCHOR": "BTCUSDT"
++  },
++  "profile": {
++    "field": [
++      "V14.1-ETH-5M",
++      "V14.1-SOL-5M",
++      "V14.1-XRP-5M",
++      "V14.1-DOGE-5M",
++      "V14.1-ARB-5M",
++      "V14.1-ENA-5M",
++      "V14.2-SCAN",
++      "V14.3-SCAN",
++      "V14.4-SNAP"
++    ],
++    "copies": {
++      "V14.1": "V8.3",
++      "V14.2": "V11.1",
++      "V14.3": "V11.2",
++      "V14.4": "V13.1"
++    },
++    "signal": {
++      "V14.1": "5m",
++      "V14.2": "15m",
++      "V14.3": "15m",
++      "V14.4": "5m"
++    },
++    "decision_window_ms": 60000,
++    "late_after_ms": 55000,
++    "execution": {
++      "level": 2,
++      "base_slippage_bps": 0.1,
++      "vol_component": 0.02,
++      "size_component": 0.0,
++      "slippage_mult": 1.0,
++      "force_taker": false,
++      "signal_latency_ms": 59601,
++      "order_latency_ms": 400
++    },
++    "warmup_days": 25,
++    "universe": [
++      "BTCUSDT",
++      "ETHUSDT",
++      "SOLUSDT",
++      "ZECUSDT",
++      "XRPUSDT",
++      "HYPEUSDT",
++      "NEARUSDT",
++      "DOGEUSDT",
++      "ENAUSDT",
++      "SUIUSDT",
++      "ADAUSDT",
++      "ARBUSDT",
++      "UNIUSDT",
++      "1000PEPEUSDT",
++      "PUMPFUNUSDT",
++      "TAOUSDT",
++      "LINKUSDT",
++      "AKEUSDT",
++      "WLDUSDT",
++      "BNBUSDT",
++      "USELESSUSDT",
++      "ONDOUSDT",
++      "AAVEUSDT",
++      "LITUSDT",
++      "TRUMPUSDT",
++      "AVAXUSDT",
++      "XMRUSDT",
++      "FARTCOINUSDT",
++      "LTCUSDT",
++      "XPLUSDT"
++    ],
++    "v8_coins": [
++      "ETH",
++      "SOL",
++      "XRP",
++      "DOGE",
++      "ARB",
++      "ENA"
++    ],
++    "anchor": "BTCUSDT",
++    "starting_balance": 20.0,
++    "leverage_ceiling": 20,
++    "sizing": "SizingV6 tiers (1% base risk, legal minimums), hard cap 2%",
++    "htf_rule": {
++      "source": "complete UTC 4h/1d OHLC candles assembled from closed 1h bars",
++      "mid_ema": 21,
++      "slow_ema": 10,
++      "min_1h": 480,
++      "min_4h": 42,
++      "min_1d": 20,
++      "slope_bars": [
++        3,
++        1
++      ],
++      "atr_period": 14,
++      "price_deadband_atr": 0.1,
++      "slope_deadband_atr_per_bar": 0.05,
++      "strong_slope_atr_per_bar": 0.2,
++      "freshness": "latest completed UTC hour, 42 consecutive 4h and 20 consecutive daily bars",
++      "fill_recheck": true,
++      "policies": {
++        "V14.1": "reversion",
++        "V14.2": "breakout",
++        "V14.3": "pullback",
++        "V14.4": "reversion"
++      }
++    },
++    "params": {
++      "V14.1": {
++        "target_r": 1.5,
++        "min_stop_pct": 0.012,
++        "max_stop_pct": 0.012,
++        "stop_buffer_atr": 0.2,
++        "max_hold_min": 180.0,
++        "cooldown_bars": 1,
++        "hold_to_day_close": false
++      },
++      "V14.2": {
++        "target_r": 2.0,
++        "min_stop_pct": 0.012,
++        "max_stop_pct": 0.03,
++        "stop_buffer_atr": 0.25,
++        "max_hold_min": 240.0,
++        "cooldown_bars": 1,
++        "min_score": 0.6743,
++        "max_signals": 8
++      },
++      "V14.3": {
++        "target_r": 2.0,
++        "min_stop_pct": 0.015,
++        "max_stop_pct": 0.03,
++        "stop_buffer_atr": 0.25,
++        "max_hold_min": 240.0,
++        "cooldown_bars": 1,
++        "min_score": 0.6111,
++        "max_signals": 8
++      },
++      "V14.4": {
++        "target_r": 0.75,
++        "min_stop_pct": 0.01,
++        "max_stop_pct": 0.03,
++        "stop_buffer_atr": 0.25,
++        "max_hold_min": 240.0,
++        "cooldown_bars": 0,
++        "min_score": 0.0,
++        "max_signals": 4,
++        "threshold": 1.1,
++        "offset_atr": 0.5,
++        "expiry_min": 15.0,
++        "stop_atr": 2.5
++      }
++    },
++    "elimination": "none",
++    "qualify": {
++      "min_days": 14.0,
++      "min_trades": 100,
++      "min_net": 0.0,
++      "min_profit_factor": 1.2,
++      "max_drawdown": 0.2
++    },
++    "storage": "v14-forward.db",
++    "market_data": "Bybit linear public REST: 1m klines + tickers polled every minute, one ordered batch",
++    "jev": {
++      "twins": false
++    }
++  },
++  "frozen_at": "2026-10-04T11:08:33Z",
++  "rules": {
++    "BTCUSDT": {
++      "symbol": "BTCUSDT",
++      "tick": 0.1,
++      "step": 0.001,
++      "min_qty": 0.001,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 3,
++      "qty_precision": 5
++    },
++    "ETHUSDT": {
++      "symbol": "ETHUSDT",
++      "tick": 0.01,
++      "step": 0.01,
++      "min_qty": 0.01,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 4,
++      "qty_precision": 4
++    },
++    "SOLUSDT": {
++      "symbol": "SOLUSDT",
++      "tick": 0.01,
++      "step": 0.1,
++      "min_qty": 0.1,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 4,
++      "qty_precision": 3
++    },
++    "ZECUSDT": {
++      "symbol": "ZECUSDT",
++      "tick": 0.01,
++      "step": 0.01,
++      "min_qty": 0.01,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 4,
++      "qty_precision": 4
++    },
++    "XRPUSDT": {
++      "symbol": "XRPUSDT",
++      "tick": 0.0001,
++      "step": 0.1,
++      "min_qty": 0.1,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 6,
++      "qty_precision": 3
++    },
++    "HYPEUSDT": {
++      "symbol": "HYPEUSDT",
++      "tick": 0.01,
++      "step": 0.01,
++      "min_qty": 0.01,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 4,
++      "qty_precision": 4
++    },
++    "NEARUSDT": {
++      "symbol": "NEARUSDT",
++      "tick": 0.001,
++      "step": 0.1,
++      "min_qty": 0.1,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 5,
++      "qty_precision": 3
++    },
++    "DOGEUSDT": {
++      "symbol": "DOGEUSDT",
++      "tick": 1e-05,
++      "step": 1.0,
++      "min_qty": 1.0,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 7,
++      "qty_precision": 2
++    },
++    "ENAUSDT": {
++      "symbol": "ENAUSDT",
++      "tick": 1e-05,
++      "step": 1.0,
++      "min_qty": 1.0,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 7,
++      "qty_precision": 2
++    },
++    "SUIUSDT": {
++      "symbol": "SUIUSDT",
++      "tick": 0.0001,
++      "step": 10.0,
++      "min_qty": 10.0,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 6,
++      "qty_precision": 2
++    },
++    "ADAUSDT": {
++      "symbol": "ADAUSDT",
++      "tick": 0.0001,
++      "step": 1.0,
++      "min_qty": 1.0,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 6,
++      "qty_precision": 2
++    },
++    "ARBUSDT": {
++      "symbol": "ARBUSDT",
++      "tick": 1e-05,
++      "step": 0.1,
++      "min_qty": 0.1,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 7,
++      "qty_precision": 3
++    },
++    "UNIUSDT": {
++      "symbol": "UNIUSDT",
++      "tick": 0.001,
++      "step": 0.1,
++      "min_qty": 0.1,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 5,
++      "qty_precision": 3
++    },
++    "1000PEPEUSDT": {
++      "symbol": "1000PEPEUSDT",
++      "tick": 1e-06,
++      "step": 100.0,
++      "min_qty": 100.0,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 8,
++      "qty_precision": 2
++    },
++    "PUMPFUNUSDT": {
++      "symbol": "PUMPFUNUSDT",
++      "tick": 1e-06,
++      "step": 100.0,
++      "min_qty": 100.0,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 8,
++      "qty_precision": 2
++    },
++    "TAOUSDT": {
++      "symbol": "TAOUSDT",
++      "tick": 0.01,
++      "step": 0.001,
++      "min_qty": 0.001,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 4,
++      "qty_precision": 5
++    },
++    "LINKUSDT": {
++      "symbol": "LINKUSDT",
++      "tick": 0.001,
++      "step": 0.1,
++      "min_qty": 0.1,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 5,
++      "qty_precision": 3
++    },
++    "AKEUSDT": {
++      "symbol": "AKEUSDT",
++      "tick": 1e-06,
++      "step": 100.0,
++      "min_qty": 100.0,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 8,
++      "qty_precision": 2
++    },
++    "WLDUSDT": {
++      "symbol": "WLDUSDT",
++      "tick": 0.0001,
++      "step": 0.1,
++      "min_qty": 0.1,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 6,
++      "qty_precision": 3
++    },
++    "BNBUSDT": {
++      "symbol": "BNBUSDT",
++      "tick": 0.1,
++      "step": 0.01,
++      "min_qty": 0.01,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 3,
++      "qty_precision": 4
++    },
++    "USELESSUSDT": {
++      "symbol": "USELESSUSDT",
++      "tick": 1e-05,
++      "step": 1.0,
++      "min_qty": 1.0,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 7,
++      "qty_precision": 2
++    },
++    "ONDOUSDT": {
++      "symbol": "ONDOUSDT",
++      "tick": 0.0001,
++      "step": 1.0,
++      "min_qty": 1.0,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 6,
++      "qty_precision": 2
++    },
++    "AAVEUSDT": {
++      "symbol": "AAVEUSDT",
++      "tick": 0.01,
++      "step": 0.01,
++      "min_qty": 0.01,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 4,
++      "qty_precision": 4
++    },
++    "LITUSDT": {
++      "symbol": "LITUSDT",
++      "tick": 0.001,
++      "step": 0.1,
++      "min_qty": 0.1,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 5,
++      "qty_precision": 3
++    },
++    "TRUMPUSDT": {
++      "symbol": "TRUMPUSDT",
++      "tick": 0.001,
++      "step": 0.1,
++      "min_qty": 0.1,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 5,
++      "qty_precision": 3
++    },
++    "AVAXUSDT": {
++      "symbol": "AVAXUSDT",
++      "tick": 0.001,
++      "step": 0.1,
++      "min_qty": 0.1,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 5,
++      "qty_precision": 3
++    },
++    "XMRUSDT": {
++      "symbol": "XMRUSDT",
++      "tick": 0.01,
++      "step": 0.01,
++      "min_qty": 0.01,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 4,
++      "qty_precision": 4
++    },
++    "FARTCOINUSDT": {
++      "symbol": "FARTCOINUSDT",
++      "tick": 1e-05,
++      "step": 1.0,
++      "min_qty": 1.0,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 7,
++      "qty_precision": 2
++    },
++    "LTCUSDT": {
++      "symbol": "LTCUSDT",
++      "tick": 0.01,
++      "step": 0.1,
++      "min_qty": 0.1,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 4,
++      "qty_precision": 3
++    },
++    "XPLUSDT": {
++      "symbol": "XPLUSDT",
++      "tick": 1e-05,
++      "step": 1.0,
++      "min_qty": 1.0,
++      "min_notional": 5.0,
++      "maint_margin_rate": 0.025,
++      "price_precision": 7,
++      "qty_precision": 2
++    }
++  },
++  "funding_interval_min": {
++    "1000PEPEUSDT": 480,
++    "AAVEUSDT": 480,
++    "ADAUSDT": 480,
++    "AKEUSDT": 240,
++    "ARBUSDT": 480,
++    "AVAXUSDT": 480,
++    "BNBUSDT": 480,
++    "BTCUSDT": 480,
++    "DOGEUSDT": 480,
++    "ENAUSDT": 240,
++    "ETHUSDT": 480,
++    "FARTCOINUSDT": 240,
++    "HYPEUSDT": 480,
++    "LINKUSDT": 480,
++    "LITUSDT": 240,
++    "LTCUSDT": 480,
++    "NEARUSDT": 480,
++    "ONDOUSDT": 240,
++    "PUMPFUNUSDT": 240,
++    "SOLUSDT": 480,
++    "SUIUSDT": 480,
++    "TAOUSDT": 240,
++    "TRUMPUSDT": 240,
++    "UNIUSDT": 480,
++    "USELESSUSDT": 240,
++    "WLDUSDT": 480,
++    "XMRUSDT": 480,
++    "XPLUSDT": 240,
++    "XRPUSDT": 480,
++    "ZECUSDT": 480
++  },
+   "field": [
+-   "V14.1-ETH-5M",
+-   "V14.1-SOL-5M",
+-   "V14.1-XRP-5M",
+-   "V14.1-DOGE-5M",
+-   "V14.1-ARB-5M",
+-   "V14.1-ENA-5M",
+-   "V14.2-SCAN",
+-   "V14.3-SCAN",
+-   "V14.4-SNAP"
++    "V14.1-ETH-5M",
++    "V14.1-SOL-5M",
++    "V14.1-XRP-5M",
++    "V14.1-DOGE-5M",
++    "V14.1-ARB-5M",
++    "V14.1-ENA-5M",
++    "V14.2-SCAN",
++    "V14.3-SCAN",
++    "V14.4-SNAP"
+   ],
+-  "copies": {
+-   "V14.1": "V8.3",
+-   "V14.2": "V11.1",
+-   "V14.3": "V11.2",
+-   "V14.4": "V13.1"
++  "studies": [
++    "docs/V14_HTF_STUDY.json",
++    "docs/ALTDATA_STUDY.json"
++  ],
++  "study_verdicts": {
++    "V14.1": "NO CONSISTENT IMPROVEMENT VS OLD",
++    "V14.2": "NO CONSISTENT IMPROVEMENT VS OLD",
++    "V14.3": "NO CONSISTENT IMPROVEMENT VS OLD",
++    "V14.4": "NO CONSISTENT IMPROVEMENT VS OLD"
+   },
+-  "signal": {
+-   "V14.1": "5m",
+-   "V14.2": "15m",
+-   "V14.3": "15m",
+-   "V14.4": "5m"
++  "note": "each bot = a copied strategy + the HTF rule; judged against its running original on LIVE paper data",
++  "fingerprint": "4e7678149e0d3d7e",
++  "execution_revision": {
++    "supersedes": "4e87586fd10a17c6",
++    "baseline": "93f9c48b67163c69",
++    "updated_at": "2026-10-04T18:24:16.405286+00:00",
++    "reason": "execution and loss-limit correction; historical study verdicts retained",
++    "archive": "snapshots/2026-10-04-execution-audit/docs/V14_FREEZE.json",
++    "rules": "existing instrument rules retained; no universe reselection"
+   },
+-  "decision_window_ms": 60000,
+-  "late_after_ms": 55000,
+-  "execution": {
+-   "level": 2,
+-   "base_slippage_bps": 0.1,
+-   "vol_component": 0.02,
+-   "size_component": 0.0,
+-   "slippage_mult": 1.0,
+-   "force_taker": false,
+-   "signal_latency_ms": 59601,
+-   "order_latency_ms": 400
+-  },
+-  "warmup_days": 14,
+-  "universe": [
+-   "BTCUSDT",
+-   "ETHUSDT",
+-   "SOLUSDT",
+-   "ZECUSDT",
+-   "XRPUSDT",
+-   "HYPEUSDT",
+-   "NEARUSDT",
+-   "DOGEUSDT",
+-   "ENAUSDT",
+-   "SUIUSDT",
+-   "ADAUSDT",
+-   "ARBUSDT",
+-   "UNIUSDT",
+-   "1000PEPEUSDT",
+-   "PUMPFUNUSDT",
+-   "TAOUSDT",
+-   "LINKUSDT",
+-   "AKEUSDT",
+-   "WLDUSDT",
+-   "BNBUSDT",
+-   "USELESSUSDT",
+-   "ONDOUSDT",
+-   "AAVEUSDT",
+-   "LITUSDT",
+-   "TRUMPUSDT",
+-   "AVAXUSDT",
+-   "XMRUSDT",
+-   "FARTCOINUSDT",
+-   "LTCUSDT",
+-   "XPLUSDT"
+-  ],
+-  "v8_coins": [
+-   "ETH",
+-   "SOL",
+-   "XRP",
+-   "DOGE",
+-   "ARB",
+-   "ENA"
+-  ],
+-  "anchor": "BTCUSDT",
+-  "starting_balance": 20.0,
+-  "leverage_ceiling": 20,
+-  "sizing": "SizingV6 tiers (1% base risk, legal minimums), hard cap 2%",
+-  "htf_rule": {
+-   "source": "1h candles",
+-   "mid_ema": 84,
+-   "slow_ema": 240,
+-   "min_1h": 300,
+-   "rule": "long only if bias >= +1, short only if bias <= -1 (4h-ish and daily-ish trends)"
+-  },
+-  "params": {
+-   "V14.1": {
+-    "target_r": 1.5,
+-    "min_stop_pct": 0.012,
+-    "max_stop_pct": 0.012,
+-    "stop_buffer_atr": 0.2,
+-    "max_hold_min": 180.0,
+-    "cooldown_bars": 1,
+-    "hold_to_day_close": false
+-   },
+-   "V14.2": {
+-    "target_r": 2.0,
+-    "min_stop_pct": 0.012,
+-    "max_stop_pct": 0.03,
+-    "stop_buffer_atr": 0.25,
+-    "max_hold_min": 240.0,
+-    "cooldown_bars": 1,
+-    "min_score": 0.6743,
+-    "max_signals": 8
+-   },
+-   "V14.3": {
+-    "target_r": 2.0,
+-    "min_stop_pct": 0.015,
+-    "max_stop_pct": 0.03,
+-    "stop_buffer_atr": 0.25,
+-    "max_hold_min": 240.0,
+-    "cooldown_bars": 1,
+-    "min_score": 0.6111,
+-    "max_signals": 8
+-   },
+-   "V14.4": {
+-    "target_r": 0.75,
+-    "min_stop_pct": 0.01,
+-    "max_stop_pct": 0.03,
+-    "stop_buffer_atr": 0.25,
+-    "max_hold_min": 240.0,
+-    "cooldown_bars": 0,
+-    "min_score": 0.0,
+-    "max_signals": 4,
+-    "threshold": 1.1,
+-    "offset_atr": 0.5,
+-    "expiry_min": 15.0,
+-    "stop_atr": 2.5
+-   }
+-  },
+-  "elimination": "none",
+-  "qualify": {
+-   "min_days": 14.0,
+-   "min_trades": 100,
+-   "min_net": 0.0,
+-   "min_profit_factor": 1.2,
+-   "max_drawdown": 0.2
+-  },
+-  "storage": "v14-forward.db",
+-  "market_data": "Bybit linear public REST: 1m klines + tickers polled every minute, one ordered batch",
+-  "jev": {
+-   "twins": false
++  "htf_revision": {
++    "date": "2026-10-05",
++    "supersedes": "e366dfe8d9071f55",
++    "archive": "snapshots/2026-10-05-htf-audit",
++    "notes": "Completed UTC 4h/daily candles, causal cutoffs, strategy-specific filters, fill-time recheck; original verdicts apply only to the archived rule.",
++    "study": "docs/V14_HTF_REVISION_STUDY.json",
++    "consistent_improvement": false,
++    "paper_only": true
+   }
+- },
+- "frozen_at": "2026-10-04T11:08:33Z",
+- "rules": {
+-  "BTCUSDT": {
+-   "symbol": "BTCUSDT",
+-   "tick": 0.1,
+-   "step": 0.001,
+-   "min_qty": 0.001,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 3,
+-   "qty_precision": 5
+-  },
+-  "ETHUSDT": {
+-   "symbol": "ETHUSDT",
+-   "tick": 0.01,
+-   "step": 0.01,
+-   "min_qty": 0.01,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 4,
+-   "qty_precision": 4
+-  },
+-  "SOLUSDT": {
+-   "symbol": "SOLUSDT",
+-   "tick": 0.01,
+-   "step": 0.1,
+-   "min_qty": 0.1,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 4,
+-   "qty_precision": 3
+-  },
+-  "ZECUSDT": {
+-   "symbol": "ZECUSDT",
+-   "tick": 0.01,
+-   "step": 0.01,
+-   "min_qty": 0.01,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 4,
+-   "qty_precision": 4
+-  },
+-  "XRPUSDT": {
+-   "symbol": "XRPUSDT",
+-   "tick": 0.0001,
+-   "step": 0.1,
+-   "min_qty": 0.1,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 6,
+-   "qty_precision": 3
+-  },
+-  "HYPEUSDT": {
+-   "symbol": "HYPEUSDT",
+-   "tick": 0.01,
+-   "step": 0.01,
+-   "min_qty": 0.01,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 4,
+-   "qty_precision": 4
+-  },
+-  "NEARUSDT": {
+-   "symbol": "NEARUSDT",
+-   "tick": 0.001,
+-   "step": 0.1,
+-   "min_qty": 0.1,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 5,
+-   "qty_precision": 3
+-  },
+-  "DOGEUSDT": {
+-   "symbol": "DOGEUSDT",
+-   "tick": 1e-05,
+-   "step": 1.0,
+-   "min_qty": 1.0,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 7,
+-   "qty_precision": 2
+-  },
+-  "ENAUSDT": {
+-   "symbol": "ENAUSDT",
+-   "tick": 1e-05,
+-   "step": 1.0,
+-   "min_qty": 1.0,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 7,
+-   "qty_precision": 2
+-  },
+-  "SUIUSDT": {
+-   "symbol": "SUIUSDT",
+-   "tick": 0.0001,
+-   "step": 10.0,
+-   "min_qty": 10.0,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 6,
+-   "qty_precision": 2
+-  },
+-  "ADAUSDT": {
+-   "symbol": "ADAUSDT",
+-   "tick": 0.0001,
+-   "step": 1.0,
+-   "min_qty": 1.0,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 6,
+-   "qty_precision": 2
+-  },
+-  "ARBUSDT": {
+-   "symbol": "ARBUSDT",
+-   "tick": 1e-05,
+-   "step": 0.1,
+-   "min_qty": 0.1,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 7,
+-   "qty_precision": 3
+-  },
+-  "UNIUSDT": {
+-   "symbol": "UNIUSDT",
+-   "tick": 0.001,
+-   "step": 0.1,
+-   "min_qty": 0.1,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 5,
+-   "qty_precision": 3
+-  },
+-  "1000PEPEUSDT": {
+-   "symbol": "1000PEPEUSDT",
+-   "tick": 1e-06,
+-   "step": 100.0,
+-   "min_qty": 100.0,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 8,
+-   "qty_precision": 2
+-  },
+-  "PUMPFUNUSDT": {
+-   "symbol": "PUMPFUNUSDT",
+-   "tick": 1e-06,
+-   "step": 100.0,
+-   "min_qty": 100.0,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 8,
+-   "qty_precision": 2
+-  },
+-  "TAOUSDT": {
+-   "symbol": "TAOUSDT",
+-   "tick": 0.01,
+-   "step": 0.001,
+-   "min_qty": 0.001,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 4,
+-   "qty_precision": 5
+-  },
+-  "LINKUSDT": {
+-   "symbol": "LINKUSDT",
+-   "tick": 0.001,
+-   "step": 0.1,
+-   "min_qty": 0.1,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 5,
+-   "qty_precision": 3
+-  },
+-  "AKEUSDT": {
+-   "symbol": "AKEUSDT",
+-   "tick": 1e-06,
+-   "step": 100.0,
+-   "min_qty": 100.0,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 8,
+-   "qty_precision": 2
+-  },
+-  "WLDUSDT": {
+-   "symbol": "WLDUSDT",
+-   "tick": 0.0001,
+-   "step": 0.1,
+-   "min_qty": 0.1,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 6,
+-   "qty_precision": 3
+-  },
+-  "BNBUSDT": {
+-   "symbol": "BNBUSDT",
+-   "tick": 0.1,
+-   "step": 0.01,
+-   "min_qty": 0.01,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 3,
+-   "qty_precision": 4
+-  },
+-  "USELESSUSDT": {
+-   "symbol": "USELESSUSDT",
+-   "tick": 1e-05,
+-   "step": 1.0,
+-   "min_qty": 1.0,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 7,
+-   "qty_precision": 2
+-  },
+-  "ONDOUSDT": {
+-   "symbol": "ONDOUSDT",
+-   "tick": 0.0001,
+-   "step": 1.0,
+-   "min_qty": 1.0,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 6,
+-   "qty_precision": 2
+-  },
+-  "AAVEUSDT": {
+-   "symbol": "AAVEUSDT",
+-   "tick": 0.01,
+-   "step": 0.01,
+-   "min_qty": 0.01,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 4,
+-   "qty_precision": 4
+-  },
+-  "LITUSDT": {
+-   "symbol": "LITUSDT",
+-   "tick": 0.001,
+-   "step": 0.1,
+-   "min_qty": 0.1,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 5,
+-   "qty_precision": 3
+-  },
+-  "TRUMPUSDT": {
+-   "symbol": "TRUMPUSDT",
+-   "tick": 0.001,
+-   "step": 0.1,
+-   "min_qty": 0.1,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 5,
+-   "qty_precision": 3
+-  },
+-  "AVAXUSDT": {
+-   "symbol": "AVAXUSDT",
+-   "tick": 0.001,
+-   "step": 0.1,
+-   "min_qty": 0.1,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 5,
+-   "qty_precision": 3
+-  },
+-  "XMRUSDT": {
+-   "symbol": "XMRUSDT",
+-   "tick": 0.01,
+-   "step": 0.01,
+-   "min_qty": 0.01,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 4,
+-   "qty_precision": 4
+-  },
+-  "FARTCOINUSDT": {
+-   "symbol": "FARTCOINUSDT",
+-   "tick": 1e-05,
+-   "step": 1.0,
+-   "min_qty": 1.0,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 7,
+-   "qty_precision": 2
+-  },
+-  "LTCUSDT": {
+-   "symbol": "LTCUSDT",
+-   "tick": 0.01,
+-   "step": 0.1,
+-   "min_qty": 0.1,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 4,
+-   "qty_precision": 3
+-  },
+-  "XPLUSDT": {
+-   "symbol": "XPLUSDT",
+-   "tick": 1e-05,
+-   "step": 1.0,
+-   "min_qty": 1.0,
+-   "min_notional": 5.0,
+-   "maint_margin_rate": 0.025,
+-   "price_precision": 7,
+-   "qty_precision": 2
+-  }
+- },
+- "funding_interval_min": {
+-  "1000PEPEUSDT": 480,
+-  "AAVEUSDT": 480,
+-  "ADAUSDT": 480,
+-  "AKEUSDT": 240,
+-  "ARBUSDT": 480,
+-  "AVAXUSDT": 480,
+-  "BNBUSDT": 480,
+-  "BTCUSDT": 480,
+-  "DOGEUSDT": 480,
+-  "ENAUSDT": 240,
+-  "ETHUSDT": 480,
+-  "FARTCOINUSDT": 240,
+-  "HYPEUSDT": 480,
+-  "LINKUSDT": 480,
+-  "LITUSDT": 240,
+-  "LTCUSDT": 480,
+-  "NEARUSDT": 480,
+-  "ONDOUSDT": 240,
+-  "PUMPFUNUSDT": 240,
+-  "SOLUSDT": 480,
+-  "SUIUSDT": 480,
+-  "TAOUSDT": 240,
+-  "TRUMPUSDT": 240,
+-  "UNIUSDT": 480,
+-  "USELESSUSDT": 240,
+-  "WLDUSDT": 480,
+-  "XMRUSDT": 480,
+-  "XPLUSDT": 240,
+-  "XRPUSDT": 480,
+-  "ZECUSDT": 480
+- },
+- "field": [
+-  "V14.1-ETH-5M",
+-  "V14.1-SOL-5M",
+-  "V14.1-XRP-5M",
+-  "V14.1-DOGE-5M",
+-  "V14.1-ARB-5M",
+-  "V14.1-ENA-5M",
+-  "V14.2-SCAN",
+-  "V14.3-SCAN",
+-  "V14.4-SNAP"
+- ],
+- "studies": [
+-  "docs/V14_HTF_STUDY.json",
+-  "docs/ALTDATA_STUDY.json"
+- ],
+- "study_verdicts": {
+-  "V14.1": "HTF DOES NOT HELP",
+-  "V14.2": "HTF DOES NOT HELP",
+-  "V14.3": "HTF DOES NOT HELP",
+-  "V14.4": "HTF HELPS"
+- },
+- "note": "each bot = a copied strategy + the HTF rule; judged against its running original on LIVE paper data",
+- "fingerprint": "e366dfe8d9071f55",
+- "execution_revision": {
+-  "supersedes": "4e87586fd10a17c6",
+-  "baseline": "93f9c48b67163c69",
+-  "updated_at": "2026-10-04T18:24:16.405286+00:00",
+-  "reason": "execution and loss-limit correction; historical study verdicts retained",
+-  "archive": "snapshots/2026-10-04-execution-audit/docs/V14_FREEZE.json",
+-  "rules": "existing instrument rules retained; no universe reselection"
+- }
+ }
+--- a/docs/V14_PROTOCOL.md
++++ b/docs/V14_PROTOCOL.md
+@@ -23,27 +23,44 @@
+ Each V14 bot is the original strategy with its own class, parameters, stop, targets, time limit and engine, plus one
+ rule. Each runs next to its original as an A/B test.
+ 
+-## The HTF rule (`app/strategies/v14/htf.py`, fixed before any test)
++## Revised HTF rule (2026-10-05, `V14_HTF_PAPER_V2`)
+ 
+-The rule is a human trader's "trade with the bigger trend". It reads the coin's **1-hour candles**. The engine builds
+-4h and 1d candles from 1m bars and drops the whole candle on any 1-minute gap, so 1h is the robust source.
++The old rule used hourly EMA(84/240) proxies and compared both with the lower-timeframe entry price. Those are not
++EMA(21/10) on actual 4h/daily closes. A dip at entry could erase an otherwise completed bullish HTF trend. It also
++lacked an explicit decision cutoff and accepted missing/stale hourly history by candle count alone.
+ 
+-**The two trends:**
+-- **"4h" trend:** price vs EMA(84) of 1h closes (about the 4h EMA 21), and that EMA vs 12 hours earlier.
+-- **"Daily" trend:** price vs EMA(240) of 1h closes (about the daily EMA 10), and that EMA vs 24 hours earlier.
++The revised rule assembles **actual OHLC 4h and daily candles** from exact groups of 4/24 closed hourly candles,
++aligned to UTC. Incomplete groups are discarded. Bars closing after the decision and forming bars are excluded.
++The latest completed UTC hour must be present, with 42 consecutive complete 4h bars and 20 consecutive daily bars.
++No price imputation bridges a gap. An old missing hour can therefore block entries until enough continuous history
++has rebuilt; this is intentional and is counted as `missing_or_stale_htf`.
+ 
+-**Each trend scores +1, −1 or 0:**
+-- **up (+1):** price is above a **rising** average;
+-- **down (−1):** price is below a **falling** average;
+-- **flat (0):** anything else.
++Each timeframe compares **its own last completed close** with its own EMA: 21 periods on 4h, 10 on daily. EMA slope
++is measured over 3/1 HTF bars. Price distance and slope are normalized by that timeframe's trailing ATR14 (simple
++mean true range). Up/down requires a distance beyond 0.10 ATR and slope beyond 0.05 ATR per bar. Anything else is
++neutral, including transitions; neutral alone is not evidence of a tradable range. The entry price cannot rewrite
++the HTF state. These small deadbands are engineering defaults, not parameters fitted to the historical results.
+ 
+-**The bias is the sum of the two scores:**
+-- **Long** only if bias ≥ +1: at least one higher timeframe agrees, and neither disagrees.
+-- **Short** only if bias ≤ −1.
+-- With fewer than 300 hourly candles, there is no trade.
++| Family | Long rule (short is symmetric) |
++|---|---|
++| V14.2 breakout | 4h up; daily cannot be down |
++| V14.3 pullback | Daily cannot be down; 4h up, or neutral 4h inside daily up with slope >= -0.05 ATR/bar |
++| V14.1 / V14.4 reversion | Neither HTF down; at least one up; 4h slope >= -0.20 ATR/bar |
+ 
+-**Filtering happens before ranking.** The scanners drop counter-trend set-ups before choosing their best candidates,
+-so a filtered coin never takes a slot from one that passes.
++The copied strategy still supplies the lower-timeframe setup, entry confirmation, stop, targets and position rules.
++An initial prototype allowed both-neutral reversion entries; its VWAP discovery-half result was worse and total
++losses increased. That prototype and its six-coin results are archived under `snapshots/2026-10-05-htf-audit`.
++The final rule retains directional context. This revision is exploratory; prior study data is not an unseen holdout.
++
++**Filtering happens before ranking.** Every accepted signal carries its HTF closes and policy. The V14 engines also
++recheck the regime before executing a queued market or resting limit order, using only candles completed before
++the fill bar opens. A changed regime or stale feed cancels the order. Signal and fill contexts are preserved in the
++entry fill metadata. Existing exits remain active regardless of the entry filter.
++
++The HTF view is cached per coin/hour and refreshed on a new hourly candle. Histories are bounded by the existing
++600-hour context capacity. Warm-up increases to 25 days. A new freeze identity separates V2 paper results from V1.
++Closed-candle handling matters because Bybit reports the last traded price as `closePrice` for an unclosed kline.
++See [Bybit's official kline documentation](https://bybit-exchange.github.io/docs/v5/market/kline).
+ 
+ ## Pre-registered study (`scripts/v14_htf_study.py`, `docs/V14_HTF_STUDY.json`)
+ 
+@@ -53,7 +70,7 @@
+ - **"HTF HELPS"** only if the HTF version's net R per trade beats the original in **both** halves.
+ - **Either way the bots run forward** on paper, each labelled with its verdict.
+ 
+-### Result (2026-10-04)
++### Historical V1 result (2026-10-04; does not evaluate the revised rule)
+ 
+ 85 days after warm-up.
+ 
+@@ -72,7 +89,22 @@
+ - **For Snapback,** "buy a stretched dip only when the 4h / daily trend is up" turned it positive in both halves. But
+   it leaves only 36 trades in 85 days, far too few to call it an edge. Live data will tell.
+ 
+-All nine bots run forward, as pre-registered. Freeze `4e87586fd10a17c6`.
++All nine original V1 bots ran forward as pre-registered. The table above predates the execution corrections and
++the HTF revision. Its study script also did not pass a funding schedule despite its description; do not interpret
++those historical values as funding-inclusive results for V2.
++
++## V2 validation
++
++`scripts/v14_htf_revision_study.py` compares the copied strategy alone (BASE), archived hourly-proxy filter (OLD),
++and final completed-candle filter with fill checks (NEW). All arms use the same 25-day warm-up, fees, recorded
++funding, sizing, execution engine costs, 60.001-second latency and daily book resets. Reset and final closing trades
++and their costs are included. Funding is attributed to each position and included in reported net R and net USDT.
++`net_profit_factor` uses net USDT, while legacy `pf` uses R. Final results and source hashes are saved in
++`docs/V14_HTF_REVISION_STUDY.json`; the audit explains the outcome in `docs/HTF_LOGIC_AUDIT.md`.
++
++A consistent improvement requires better mean net R in both chronological halves. This criterion does not establish
++profitability, a statistically proven edge, or future returns. The same historical sample was used in prior studies;
++forward qualification remains necessary. Prior V1 verdicts are not inherited by the V2 freeze.
+ 
+ ## Program
+ 
+@@ -81,7 +113,7 @@
+ | Files | `app/competition/v14_config.py`, `app/live/v14_worker.py`, `scripts/v14_freeze.py`, `docs/V14_FREEZE.json` |
+ | Database | `v14-forward.db` |
+ | Switch | `V14_FORWARD_ENABLED` |
+-| Warm-up | 14 days |
++| Warm-up | 25 days |
+ | Field | 9 CONTROL bots, no Jev twins |
+ | Names | each bot is named after its original + " HTF" (for example "Jinx HTF", "Bounce HTF") |
+ | QUALIFIED | ≥ 14 days, ≥ 100 trades, net > 0, PF ≥ 1.2, max drawdown ≤ 20% |
+--- a/docs/HTF_LOGIC_AUDIT.md
++++ b/docs/HTF_LOGIC_AUDIT.md
+@@ -0,0 +1,56 @@
++# Higher-timeframe logic audit
++
++Completed 2026-10-05. V14 only; local paper implementation.
++
++Correctness defects are repaired. The historical replay does **not** show a consistent performance improvement across this bot set. The revised aggregate result is worse than the archived filter.
++
++## Findings and changes
++
++- Hourly EMA(84/240) proxies were labelled 4h/daily. The revised filter builds exact UTC OHLC candles from 4/24 completed hours and evaluates EMA21/10 on their actual closes.
++- Entry prices determined both HTF trends, causing pullbacks to change the bigger-picture classification. Only each HTF's completed close now determines that timeframe's state.
++- A candle count alone admitted stale or discontinuous history. Explicit decision cutoffs exclude future and forming candles. Invalid, duplicate, unordered, missing or stale history blocks new entries.
++- One generic bias rule treated all setups alike. Breakouts require 4h agreement; pullbacks allow a neutral 4h inside an agreeing daily trend. Reversion requires at least one agreeing HTF and no opposing HTF. ATR-scaled deadbands reduce tiny trend flips.
++- Queued orders relied on an earlier filter decision. Dedicated V14 engines recheck the regime before market/limit execution. A stale feed or regime veto cancels an entry. Signal and fill contexts are stored in fill metadata; original exits and risk checks still operate.
++- Warm-up is 25 days; the existing 600-hour buffer supports 20 complete daily bars. V14 status now includes entry/fill rejection counts and the latest HTF context. Views are cached per coin/hour.
++
++[Rule specification](V14_PROTOCOL.md) and [Bybit's closed-kline semantics](https://bybit-exchange.github.io/docs/v5/market/kline).
++
++## Controlled replay
++
++27 runs: the nine bots in BASE (copy alone), OLD (archived HTF proxy), and NEW (revised HTF plus fill checks). Shared execution engines, 20 USDT daily-rebased books, sizing, fees, recorded funding, 60.001-second latency and 25-day warm-up. Reset/final closes and their costs are included. Net R includes position-attributed funding. These sums are replay P/L across daily resets, not returns on a compounded live account.
++
++| Family | BASE net USDT | OLD net USDT | NEW net USDT | OLD / NEW trades | OLD / NEW mean net R |
++|---|---:|---:|---:|---:|---:|
++| V14.1 VWAP (six coins) | -50.55 | -27.10 | -30.58 | 1299 / 1410 | -0.1124 / -0.1136 |
++| V14.2 RS breakout | -3.27 | -4.27 | -3.64 | 410 / 299 | -0.0621 / -0.0733 |
++| V14.3 RS pullback | -4.28 | -2.41 | -1.92 | 675 / 606 | -0.0218 / -0.0202 |
++| V14.4 Limit snapback | -6.71 | +0.46 | +0.88 | 38 / 146 | +0.0775 / +0.0404 |
++
++| Family | OLD halves (mean net R) | NEW halves (mean net R) | Consistent improvement? |
++|---|---:|---:|---|
++| V14.1 | -0.1076 / -0.1173 | -0.1308 / -0.0982 | No |
++| V14.2 | -0.0361 / -0.1117 | -0.0504 / -0.1225 | No |
++| V14.3 | -0.0570 / +0.0185 | -0.0623 / +0.0291 | No |
++| V14.4 | -0.0207 / +0.1756 | -0.0659 / +0.1804 | No |
++
++OLD aggregate net: -33.3216 USDT; 2422 closed trades.
++
++NEW aggregate net: -35.2563 USDT; 2461 closed trades.
++
++Measurement: 2026-07-22 through 2026-10-02 UTC (end exclusive), 72 days.
++
++Pullback improves overall net and mean R, but its first half worsens. Breakout loses less mostly because it trades less; its mean R worsens in both halves. Snapback's total profit grows with a larger sample, but mean R declines and its first half loses money. VWAP worsens overall. No family meets the criterion of improved mean net R in both halves. The copied VWAP/breakout strategies are also negative without either filter; these HTF repairs do not establish an edge in the underlying setups.
++
++The first prototype permitted both-neutral reversion entries. Its VWAP discovery-half result worsened, so that behavior was removed. This was an exploratory revision, not an untouched pre-registration. The halves use previously studied data; neither is an unseen holdout. No EMA/ATR parameter grid was optimized. Forward evidence is still required.
++
++No NEW runs encountered missing/stale HTF history or a fill-time regime rejection in this complete cached dataset. Gap/rollover/order-cancellation behavior is covered by targeted regression tests; the measured P/L differences here come from the signal filter.
++
++Raw trades, funding coverage, source and dataset SHA256 hashes: `V14_HTF_REVISION_STUDY.json`. Original V1 sources, freeze and study: `../snapshots/2026-10-05-htf-audit/`. BASE/OLD arms were reused from the initial comparison with unchanged common execution inputs; all nine NEW arms were rerun after the final production rule and engines were complete.
++
++## Validation and deployment
++
++Full suite: 1,466 passed, 4 skipped (`data/htf-revision-tests.log`). Latest focused tests: 46 passed, including one additional snapback ranking regression. Coverage includes UTC OHLC construction, hour/day boundaries, future/forming bars, stale/malformed/gapped history, true HTF EMA inputs, symmetric policies, preserved exits, pre-ranking filters, fill metadata, queued-order cancellation and retained risk checks.
++
++All eight arena freezes verify. Only V14's protocol/identity changes for this HTF task. V2 verdicts do not inherit V1's positive snapback label. Revised bots remain paper-only and are not qualified by this replay. No running service or remote deployment was restarted.
++
++V14 manifest `4e7678149e0d3d7e`; experiment `v14x-d9a3940c4814`.
+--- a/scripts/v14_htf_study.py
++++ b/scripts/v14_htf_study.py
+@@ -1,4 +1,7 @@
+-"""V14 HTF study: does checking the higher timeframes before each entry improve the copied strategies?
++"""Historical V1 study definition and shared tape/statistics helpers.
++
++The CLI now delegates to v14_htf_revision_study.py. The historical evaluator
++below describes V1 and must not overwrite V14_HTF_STUDY.json with V2 results.
+ 
+     python scripts/v14_htf_study.py            (needs the research store: research/ingest.py)
+ 
+@@ -148,4 +151,5 @@
+ 
+ 
+ if __name__ == "__main__":
+-    main()
++    from scripts.v14_htf_revision_study import main as revision_main
++    revision_main()
+--- a/scripts/v14_htf_revision_study.py
++++ b/scripts/v14_htf_revision_study.py
+@@ -0,0 +1,171 @@
++"""Compare BASE, archived hourly-proxy HTF, and revised closed-candle HTF.
++
++Correctness revision on 2026-10-05: no EMA/ATR parameter search. An initial
++range-permitting reversion prototype failed the discovery-half VWAP comparison
++and increased total losses, so reversion retains a directional-context requirement
++(archived in snapshots/2026-10-05-htf-audit). This is an exploratory revision.
++Same 25-day warm-up,
++engine, sizing, fees, recorded funding, 60.001s latency, daily book resets in
++all arms. Include reset/end closes and their costs. Compare net R in both
++chronological halves and net USDT, reporting counts separately. The second
++half is a stability check on previously studied data, not an unseen holdout.
++"""
++from __future__ import annotations
++
++import argparse
++import dataclasses
++import hashlib
++import importlib.util
++import json
++import sys
++import time
++from collections import deque
++from concurrent.futures import ProcessPoolExecutor, as_completed
++from pathlib import Path
++
++PROJECT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(PROJECT))
++from scripts.v14_htf_study import DB, DAY, V8_COINS, summarize, tape, window
++
++ARCHIVE = PROJECT / "snapshots/2026-10-05-htf-audit"
++OUT = PROJECT / "docs/V14_HTF_REVISION_STUDY.json"
++WARMUP_DAYS = 25
++
++
++def revision():
++    return hashlib.sha256(b"".join((PROJECT / p).read_bytes() for p in
++                          ("app/strategies/v14/htf.py", "app/live/v14_engine.py"))).hexdigest()
++
++
++def old_module():
++    path = ARCHIVE / "app/strategies/v14/htf.py"
++    spec = importlib.util.spec_from_file_location("v14_legacy_htf", path)
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    return module
++
++
++def run(args):
++    import duckdb
++    from app.backtest.funding import FundingSchedule
++    from app.competition import v14_config as cfg
++    from app.competition.v6_config import AGGRESSIVE_V6, FEES_V6, SizingV6, settings_v6
++    from app.core.types import MarketRules
++    from app.live.scan_engine import BE_COVER_BPS, ScanReplayEngine
++    from app.live.v8_engine import LevelMakerEngineV8
++    from app.live.v13_engine import LimitEntryEngineV13
++    from app.live.v14_engine import HTFScalpEngine, HTFScanEngine, HTFLimitEngine
++    from app.strategies.v14 import htf
++
++    sid, mode, coin = args
++    universe = [coin] if sid == "V14.1" else list(cfg.UNIVERSE)
++    start, end = window(universe)
++    since = start + WARMUP_DAYS * DAY
++    rules = {s: MarketRules(**r) for s, r in cfg.load_freeze()["rules"].items() if s in universe}
++    con = duckdb.connect(str(DB), read_only=True)
++    funding = {s: [(int(t), float(r)) for t, r in con.execute(
++        "SELECT ts, rate FROM funding WHERE symbol = ? AND ts >= ? AND ts <= ? ORDER BY ts", [s, start, end]).fetchall()]
++        for s in universe}
++    con.close()
++    settings = dataclasses.replace(settings_v6(), strategy_halt_pct=1.0, daily_halt_pct=1.0)
++    kw = dict(rules=rules, seed=7, fees=FEES_V6, fee_source="schedule", funding=FundingSchedule(funding),
++              sizing=SizingV6(rules, jev=False), leverage_policy="needed", max_risk_pct=AGGRESSIVE_V6.max_risk_pct,
++              execution=cfg.EXECUTION_V14, maker_tp=True)
++    kind = htf.SOURCES[sid]["kind"]
++    if kind == "single":
++        eng = (HTFScalpEngine if mode == "NEW" else LevelMakerEngineV8)(settings, universe, **kw)
++    elif kind == "scanner":
++        eng = (HTFScanEngine if mode == "NEW" else ScanReplayEngine)(settings, universe, be_cover_bps=BE_COVER_BPS, **kw)
++    else:
++        eng = (HTFLimitEngine if mode == "NEW" else LimitEntryEngineV13)(settings, universe, **kw)
++    eng.portfolio.closed_trades = deque(maxlen=None)
++    module = old_module() if mode == "OLD" else htf
++    cls = module.build(sid, universe, htf=mode != "BASE")
++    instances = []
++    class Observed(cls):
++        def __init__(self):
++            super().__init__()
++            instances.append(self)
++    anchor = None if kind == "single" else cfg.ANCHOR
++    result = eng.run(Observed, tape(universe, anchor, start, end), since_ms=since, leverage=20,
++                     signal_tf=htf.SIGNAL_TF[sid], only_symbol=coin if kind == "single" else None,
++                     reset_at=list(range(since + DAY, end, DAY)))
++    trades = [t for t in result.trades if t.entry_ts >= since]
++    paid, risk = {}, {}
++    for f in result.fills:
++        if f.kind == "funding":
++            paid[f.position_id] = paid.get(f.position_id, 0.0) + f.realized_pnl
++        elif f.kind == "entry":
++            risk[f.position_id] = f.qty * abs(f.price - f.meta["stop"])
++    return {"sid": sid, "mode": mode, "coin": coin, "since": since, "end": end, "revision": revision(),
++            "rejects": result.rejects, "htf_skips": getattr(instances[0], "htf_skips", 0),
++            "htf_rejects": getattr(instances[0], "htf_rejects", {}),
++            "funding_coverage": {s: {"events": len(v), "first": v[0][0] if v else None,
++                                        "last": v[-1][0] if v else None} for s, v in funding.items()},
++            "trades": [{"ts": t.entry_ts, "r": (t.net + paid.get(t.position_id, 0.0)) / risk[t.position_id],
++                        "net": t.net + paid.get(t.position_id, 0.0), "exit": t.exit_kind,
++                        "fees": t.fees, "funding": paid.get(t.position_id, 0.0)} for t in trades]}
++
++
++def report(rows):
++    results, verdicts = {}, {}
++    for sid in sorted({r["sid"] for r in rows}):
++        part = [r for r in rows if r["sid"] == sid]
++        since, end = min(r["since"] for r in part), max(r["end"] for r in part)
++        mid = since + (end - since) // 2
++        results[sid] = {}
++        for mode in ("BASE", "OLD", "NEW"):
++            trades = [t for r in part if r["mode"] == mode for t in r["trades"]]
++            stats = summarize(trades, mid, (end - since) / DAY)
++            gains = sum(max(0, t["net"]) for t in trades)
++            losses = -sum(min(0, t["net"]) for t in trades)
++            stats.update(net_profit_factor=round(gains / losses, 4) if losses else None,
++                         fees_usdt=sum(t["fees"] for t in trades), funding_usdt=sum(t["funding"] for t in trades))
++            results[sid][mode] = stats
++        new = results[sid]["NEW"]
++        old = results[sid]["OLD"]
++        helps = all(new.get(k) is not None and old.get(k) is not None and new[k] > old[k]
++                    for k in ("net_r_half1", "net_r_half2"))
++        verdicts[sid] = "IMPROVES BOTH HALVES VS OLD" if helps else "NO CONSISTENT IMPROVEMENT VS OLD"
++    paths = ("app/strategies/v14/htf.py", "app/competition/v14_config.py", "scripts/v14_htf_revision_study.py",
++             "app/backtest/replay.py", "app/live/scan_engine.py", "app/live/v8_engine.py", "app/live/v13_engine.py",
++             "app/live/v14_engine.py", "scripts/v14_htf_study.py")
++    with DB.open("rb") as source:
++        dataset_hash = hashlib.file_digest(source, "sha256").hexdigest()
++    return {"built": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()), "method": __doc__,
++            "source_sha256": {p: hashlib.sha256((PROJECT / p).read_bytes()).hexdigest() for p in paths},
++            "old_htf_sha256": hashlib.sha256((ARCHIVE / paths[0]).read_bytes()).hexdigest(),
++            "dataset": {"path": str(DB.relative_to(PROJECT)), "sha256": dataset_hash},
++            "results": results, "verdicts": verdicts, "runs": rows}
++
++
++def main():
++    parser = argparse.ArgumentParser()
++    parser.add_argument("--workers", type=int, default=4)
++    parser.add_argument("--sid", choices=("V14.1", "V14.2", "V14.3", "V14.4"))
++    parser.add_argument("--resume", action="store_true", help="Reuse completed BASE/OLD runs and identical NEW revision")
++    args = parser.parse_args()
++    jobs = [(sid, mode, coin) for sid in ("V14.1", "V14.2", "V14.3", "V14.4") if args.sid in (None, sid)
++            for coin in (V8_COINS if sid == "V14.1" else (None,)) for mode in ("BASE", "OLD", "NEW")]
++    checkpoint = OUT.with_suffix(".partial.json")
++    prior = json.loads(checkpoint.read_text()) if args.resume and checkpoint.exists() else []
++    rows = [r for r in prior if (r["sid"], r["mode"], r["coin"]) in jobs
++            and (r["mode"] != "NEW" or r.get("revision") == revision())]
++    done = {(r["sid"], r["mode"], r["coin"]) for r in rows}
++    todo = [job for job in jobs if job not in done]
++    started = time.time()
++    with ProcessPoolExecutor(max_workers=args.workers) as pool:
++        pending = {pool.submit(run, job): job for job in todo}
++        for future in as_completed(pending):
++            rows.append(future.result())
++            print(f"{len(rows)}/{len(jobs)} {pending[future]} {len(rows[-1]['trades'])} trades; {time.time()-started:.0f}s", flush=True)
++            OUT.with_suffix(".partial.json").write_text(json.dumps(rows))
++    out = report(rows)
++    target = OUT if not args.sid else OUT.with_name(f"V14_HTF_REVISION_STUDY_{args.sid}.json")
++    target.write_text(json.dumps(out, indent=1))
++    print(json.dumps({"results": out["results"], "verdicts": out["verdicts"]}, indent=2), flush=True)
++    print(f"Wrote {target}; {time.time()-started:.0f}s", flush=True)
++
++
++if __name__ == "__main__":
++    main()
+--- a/scripts/write_v14_htf_audit.py
++++ b/scripts/write_v14_htf_audit.py
+@@ -0,0 +1,134 @@
++"""Validate completed revision runs, attach their verdicts, and write the HTF audit."""
++from __future__ import annotations
++
++import difflib
++import hashlib
++import json
++import sys
++from datetime import datetime, timezone
++from pathlib import Path
++
++PROJECT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(PROJECT))
++
++from app.competition import v14_config as cfg
++from scripts.v14_htf_revision_study import ARCHIVE, OUT, report, revision
++
++
++def main():
++    old_report = json.loads(OUT.read_text())
++    rows = old_report["runs"]
++    assert len(rows) == 27 and len({(r["sid"], r["mode"], r["coin"]) for r in rows}) == 27
++    assert all(r.get("revision") == revision() for r in rows if r["mode"] == "NEW")
++    for path, sha in old_report["source_sha256"].items():
++        if path.startswith("app/"):
++            assert hashlib.sha256((PROJECT / path).read_bytes()).hexdigest() == sha, path
++    results = report(rows)
++    assert results["results"] == old_report["results"]  # metadata changes cannot change the reported outcome
++    OUT.write_text(json.dumps(results, indent=1) + "\n")
++
++    manifest = cfg.load_freeze()
++    assert cfg.verify_freeze(manifest) == []
++    manifest["study_verdicts"] = results["verdicts"]
++    manifest["htf_revision"].update(study="docs/V14_HTF_REVISION_STUDY.json",
++                                    consistent_improvement=False, paper_only=True)
++    cfg.FREEZE_FILE.write_text(json.dumps(manifest, indent=2) + "\n")
++    assert cfg.verify_freeze(manifest) == []
++
++    lines = ["# Higher-timeframe logic audit", "", "Completed 2026-10-05. V14 only; local paper implementation.", "",
++             "Correctness defects are repaired. The historical replay does **not** show a consistent performance "
++             "improvement across this bot set. The revised aggregate result is worse than the archived filter.", "",
++             "## Findings and changes", "",
++             "- Hourly EMA(84/240) proxies were labelled 4h/daily. The revised filter builds exact UTC OHLC candles "
++             "from 4/24 completed hours and evaluates EMA21/10 on their actual closes.",
++             "- Entry prices determined both HTF trends, causing pullbacks to change the bigger-picture classification. "
++             "Only each HTF's completed close now determines that timeframe's state.",
++             "- A candle count alone admitted stale or discontinuous history. Explicit decision cutoffs exclude future "
++             "and forming candles. Invalid, duplicate, unordered, missing or stale history blocks new entries.",
++             "- One generic bias rule treated all setups alike. Breakouts require 4h agreement; pullbacks allow a "
++             "neutral 4h inside an agreeing daily trend. Reversion requires at least one agreeing HTF and no opposing "
++             "HTF. ATR-scaled deadbands reduce tiny trend flips.",
++             "- Queued orders relied on an earlier filter decision. Dedicated V14 engines recheck the regime before "
++             "market/limit execution. A stale feed or regime veto cancels an entry. Signal and fill contexts are "
++             "stored in fill metadata; original exits and risk checks still operate.",
++             "- Warm-up is 25 days; the existing 600-hour buffer supports 20 complete daily bars. V14 status now "
++             "includes entry/fill rejection counts and the latest HTF context. Views are cached per coin/hour.", "",
++             "[Rule specification](V14_PROTOCOL.md) and "
++             "[Bybit's closed-kline semantics](https://bybit-exchange.github.io/docs/v5/market/kline).", "",
++             "## Controlled replay", "",
++             "27 runs: the nine bots in BASE (copy alone), OLD (archived HTF proxy), and NEW (revised HTF plus fill "
++             "checks). Shared execution engines, 20 USDT daily-rebased books, sizing, fees, recorded funding, "
++             "60.001-second latency and 25-day warm-up. Reset/final closes and their costs are included. Net R "
++             "includes position-attributed funding. These sums are replay P/L across daily resets, not returns on "
++             "a compounded live account.", "",
++             "| Family | BASE net USDT | OLD net USDT | NEW net USDT | OLD / NEW trades | OLD / NEW mean net R |",
++             "|---|---:|---:|---:|---:|---:|"]
++    labels = {"V14.1": "VWAP (six coins)", "V14.2": "RS breakout", "V14.3": "RS pullback", "V14.4": "Limit snapback"}
++    for sid, arms in results["results"].items():
++        b, o, n = (arms[k] for k in ("BASE", "OLD", "NEW"))
++        lines.append(f"| {sid} {labels[sid]} | {b['net_usdt']:+.2f} | {o['net_usdt']:+.2f} | {n['net_usdt']:+.2f} | "
++                     f"{o['trades']} / {n['trades']} | {o['net_r']:+.4f} / {n['net_r']:+.4f} |")
++    lines += ["", "| Family | OLD halves (mean net R) | NEW halves (mean net R) | Consistent improvement? |",
++              "|---|---:|---:|---|"]
++    for sid, arms in results["results"].items():
++        o, n = arms["OLD"], arms["NEW"]
++        lines.append(f"| {sid} | {o['net_r_half1']:+.4f} / {o['net_r_half2']:+.4f} | "
++                     f"{n['net_r_half1']:+.4f} / {n['net_r_half2']:+.4f} | No |")
++    for mode in ("OLD", "NEW"):
++        trades = [t for r in rows if r["mode"] == mode for t in r["trades"]]
++        lines.append(f"\n{mode} aggregate net: {sum(t['net'] for t in trades):+.4f} USDT; {len(trades)} closed trades.")
++    first = rows[0]
++    date = lambda t: datetime.fromtimestamp(t / 1000, timezone.utc).strftime("%Y-%m-%d")
++    lines += ["", f"Measurement: {date(first['since'])} through {date(first['end'])} UTC (end exclusive), 72 days.", "",
++              "Pullback improves overall net and mean R, but its first half worsens. Breakout loses less mostly "
++              "because it trades less; its mean R worsens in both halves. Snapback's total profit grows with a "
++              "larger sample, but mean R declines and its first half loses money. VWAP worsens overall. No family "
++              "meets the criterion of improved mean net R in both halves. The copied VWAP/breakout strategies are "
++              "also negative without either filter; these HTF repairs do not establish an edge in the underlying setups.", "",
++              "The first prototype permitted both-neutral reversion entries. Its VWAP discovery-half result "
++              "worsened, so that behavior was removed. This was an exploratory revision, not an untouched "
++              "pre-registration. The halves use previously studied data; neither is an unseen holdout. No EMA/ATR "
++              "parameter grid was optimized. Forward evidence is still required.", "",
++              "No NEW runs encountered missing/stale HTF history or a fill-time regime rejection in this complete "
++              "cached dataset. Gap/rollover/order-cancellation behavior is covered by targeted regression tests; "
++              "the measured P/L differences here come from the signal filter.", "",
++              "Raw trades, funding coverage, source and dataset SHA256 hashes: `V14_HTF_REVISION_STUDY.json`. "
++              "Original V1 sources, freeze and study: `../snapshots/2026-10-05-htf-audit/`. BASE/OLD arms were reused "
++              "from the initial comparison with unchanged common execution inputs; all nine NEW arms were rerun "
++              "after the final production rule and engines were complete.", "",
++              "## Validation and deployment", "",
++              "Full suite: 1,466 passed, 4 skipped (`data/htf-revision-tests.log`). Latest focused tests: 46 passed, "
++              "including one additional snapback ranking regression. Coverage includes UTC OHLC construction, "
++              "hour/day boundaries, future/forming bars, stale/malformed/gapped history, true HTF EMA inputs, "
++              "symmetric policies, preserved exits, pre-ranking filters, fill metadata, queued-order cancellation "
++              "and retained risk checks.", "",
++              "All eight arena freezes verify. Only V14's protocol/identity changes for this HTF task. V2 verdicts "
++              "do not inherit V1's positive snapback label. Revised bots remain paper-only and are not qualified "
++              "by this replay. No running service or remote deployment was restarted.", "",
++              f"V14 manifest `{manifest['fingerprint']}`; experiment `{cfg.experiment_identity(manifest)[0]}`.", ""]
++    (PROJECT / "docs/HTF_LOGIC_AUDIT.md").write_text("\n".join(lines), encoding="utf-8")
++
++    prototype = ARCHIVE / "prototype-comparison.json"
++    p = json.loads(prototype.read_text())
++    p["provenance_warning"] = ("Exploratory pre-final-rule results. Its original source hashes were generated "
++                               "while code was being revised and do not validate executed prototype code. "
++                               "Use the final V14_HTF_REVISION_STUDY.json for validated production results.")
++    prototype.write_text(json.dumps(p, indent=1) + "\n")
++
++    paths = ["app/strategies/v14/htf.py", "app/competition/v14_config.py", "app/live/v14_worker.py",
++             "app/live/v14_engine.py", "app/live/telegram.py", "tests/test_v14.py", "tests/test_v14_closed_htf.py",
++             "tests/test_v14_fill_context.py", "docs/V14_FREEZE.json", "docs/V14_PROTOCOL.md", "docs/HTF_LOGIC_AUDIT.md",
++             "scripts/v14_htf_study.py", "scripts/v14_htf_revision_study.py", "scripts/write_v14_htf_audit.py"]
++    patch = []
++    for path in paths:
++        before = ARCHIVE / ("v14_htf_study.py" if path == "scripts/v14_htf_study.py" else path)
++        previous = before.read_text(encoding="utf-8").splitlines(keepends=True) if before.exists() else []
++        current = (PROJECT / path).read_text(encoding="utf-8").splitlines(keepends=True)
++        patch.extend(difflib.unified_diff(previous, current, fromfile="a/" + path, tofile="b/" + path))
++    (ARCHIVE / "changes.patch").write_text("".join(patch), encoding="utf-8")
++    print(json.dumps({"audit": "docs/HTF_LOGIC_AUDIT.md", "verdicts": manifest["study_verdicts"],
++                      "freeze": manifest["fingerprint"], "source_hashes_match": True}, indent=2))
++
++
++if __name__ == "__main__":
++    main()

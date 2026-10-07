@@ -1,0 +1,976 @@
+{
+ "built": "2026-10-06 19:03 UTC",
+ "rules": "V9 stock bots: find what makes the trades lose, remove it, and tune stops, targets, holds and session windows\n(operator, 2026-10-07: \"try different settings with the stops, tps and sessions, find the losing factor, terminate\nit and improve this\").\n\n    python scripts/v9_signal_study.py capture --data-dir <dir with stocks/>   every setup + its context, 2 years\n    python scripts/v9_signal_study.py grid    --data-dir <dir>                exits x filters, chosen on year 1 only\n    python scripts/v9_signal_study.py verify  --data-dir <dir>                the chosen bots through the real engine\n\nPRE-REGISTERED (2026-10-07, before the grid or any filter was evaluated)\n\nSetups and context\n- Every setup the three V9 families find, 2024-10-01 .. 2026-10-01, captured with the live setup code.\n- Captured between the open + 5 minutes and the close - 15 minutes, so session windows can be tested.\n- Context recorded at the decision, from closed 5m bars only:\n  - minutes since the open;\n  - the day's direction (price vs the session's opening price) and the side of the session VWAP;\n  - the 15m and 1h trends;\n  - ATR(5m) as a share of price;\n  - relative volume (the bar vs the median of the 20 before it);\n  - the overnight gap.\n\nExit simulation (signal level, every setup independently)\n- Entry at the next 1m bar's open + 1 bp; the stop, target, time limit or session end on the 1m path.\n- A stop and a target in the same bar count as the stop. A bar that opens beyond the stop fills at its open.\n- Exits pay 1 bp, plus 0.4 bp of fees on the round trip.\n\nGrid (480 exit configs)\n- Minimum stop 0.25 / 0.5 / 0.75 / 1.0%.\n- Stop buffer 0.2 / 0.5 / 1.0 ATR(5m).\n- Maximum stop 1 / 2%.\n- Target 0.75 / 1 / 1.5 / 2 / 3 R.\n- Time limit 30 / 45 / 90 / 180 minutes. The session end always closes the trade.\n\nSelection (YEAR 1 ONLY; year 2 is never looked at until the end)\n1. Exit: per family, the config with the highest year-1 total net R among those keeping >= 50% of the live config's\n   year-1 setups (inside the live entry window).\n2. Filters, each tested alone on that exit:\n   - session windows: skip the first 30 / 60 minutes, morning only, afternoon only, no lunch (2-4 h after the open);\n   - with the day's direction; on the right side of the VWAP; 15m and 1h trends both agreeing;\n   - relative volume >= 1.2; ATR below / above the year-1 median; overnight gap <= 1%.\n   A filter is kept if it raises year-1 net R per trade by >= 0.02 and keeps >= 50% of the setups. The kept filters\n   are combined. If the combination keeps under 35% of the base setups, the weakest filter is dropped until it keeps\n   enough.\n3. Year 2 (holdout):\n   - the chosen bot is replayed through the REAL engine for both years (one position at a time, live sizing and costs);\n   - it counts as FIXED only if year 2 is profitable: net > 0, profit factor >= 1.1, net R per trade > 0.\n",
+ "grid": {
+  "setups": 104146,
+  "families": {
+   "V9.1": {
+    "exit": {
+     "min_stop": 0.01,
+     "buffer": 1.0,
+     "max_stop": 0.01,
+     "target": 2.0,
+     "hold": 30
+    },
+    "atr_median": 0.0019210323375610117,
+    "filters_kept": [],
+    "live_year1": {
+     "n": 12338,
+     "net_r": -0.0752,
+     "total_r": -927.6,
+     "pf": 0.808
+    },
+    "exit_year1": {
+     "n": 11371,
+     "net_r": -0.021,
+     "total_r": -238.5,
+     "pf": 0.822
+    },
+    "filters_tried_year1": {
+     "SKIP30": {
+      "n": 11200,
+      "net_r": -0.0199,
+      "total_r": -222.4,
+      "pf": 0.83
+     },
+     "SKIP60": {
+      "n": 10737,
+      "net_r": -0.0208,
+      "total_r": -223.1,
+      "pf": 0.821
+     },
+     "MORNING": {
+      "n": 3693,
+      "net_r": -0.0214,
+      "total_r": -79.2,
+      "pf": 0.834
+     },
+     "AFTERNOON": {
+      "n": 7888,
+      "net_r": -0.0215,
+      "total_r": -169.8,
+      "pf": 0.809
+     },
+     "NO_LUNCH": {
+      "n": 6123,
+      "net_r": -0.0297,
+      "total_r": -181.9,
+      "pf": 0.761
+     },
+     "TREND_DAY": {
+      "n": 8255,
+      "net_r": -0.0186,
+      "total_r": -153.2,
+      "pf": 0.84
+     },
+     "VWAP_SIDE": {
+      "n": 8619,
+      "net_r": -0.0193,
+      "total_r": -166.3,
+      "pf": 0.834
+     },
+     "ALIGNED": {
+      "n": 9286,
+      "net_r": -0.0235,
+      "total_r": -218.0,
+      "pf": 0.801
+     },
+     "RELVOL": {
+      "n": 2717,
+      "net_r": -0.0271,
+      "total_r": -73.7,
+      "pf": 0.774
+     },
+     "ATR_LOW": {
+      "n": 6559,
+      "net_r": -0.0223,
+      "total_r": -146.0,
+      "pf": 0.75
+     },
+     "ATR_HIGH": {
+      "n": 4812,
+      "net_r": -0.0192,
+      "total_r": -92.5,
+      "pf": 0.878
+     },
+     "SMALL_GAP": {
+      "n": 8524,
+      "net_r": -0.0212,
+      "total_r": -180.7,
+      "pf": 0.806
+     }
+    },
+    "final_year1": {
+     "n": 11371,
+     "net_r": -0.021,
+     "total_r": -238.5,
+     "pf": 0.822
+    },
+    "final_year2_signal_level": {
+     "n": 11373,
+     "net_r": -0.0267,
+     "total_r": -304.1,
+     "pf": 0.779
+    },
+    "live_year2_signal_level": {
+     "n": 12213,
+     "net_r": -0.0708,
+     "total_r": -864.8,
+     "pf": 0.817
+    },
+    "best_by_dimension_year1": {
+     "min_stop": {
+      "0.0025": {
+       "n": 11371,
+       "net_r": -0.0554,
+       "total_r": -629.7,
+       "pf": 0.785
+      },
+      "0.005": {
+       "n": 11371,
+       "net_r": -0.0384,
+       "total_r": -436.4,
+       "pf": 0.81
+      },
+      "0.0075": {
+       "n": 12052,
+       "net_r": -0.026,
+       "total_r": -313.0,
+       "pf": 0.838
+      },
+      "0.01": {
+       "n": 11371,
+       "net_r": -0.021,
+       "total_r": -238.5,
+       "pf": 0.822
+      }
+     },
+     "buffer": {
+      "0.2": {
+       "n": 12338,
+       "net_r": -0.0222,
+       "total_r": -273.8,
+       "pf": 0.854
+      },
+      "0.5": {
+       "n": 12052,
+       "net_r": -0.0202,
+       "total_r": -244.0,
+       "pf": 0.862
+      },
+      "1.0": {
+       "n": 11371,
+       "net_r": -0.021,
+       "total_r": -238.5,
+       "pf": 0.822
+      }
+     },
+     "max_stop": {
+      "0.01": {
+       "n": 11371,
+       "net_r": -0.021,
+       "total_r": -238.5,
+       "pf": 0.822
+      },
+      "0.02": {
+       "n": 12835,
+       "net_r": -0.0222,
+       "total_r": -285.6,
+       "pf": 0.825
+      }
+     },
+     "target": {
+      "0.75": {
+       "n": 11371,
+       "net_r": -0.0221,
+       "total_r": -251.3,
+       "pf": 0.812
+      },
+      "1.0": {
+       "n": 11371,
+       "net_r": -0.0214,
+       "total_r": -243.0,
+       "pf": 0.818
+      },
+      "1.5": {
+       "n": 11371,
+       "net_r": -0.0211,
+       "total_r": -240.0,
+       "pf": 0.821
+      },
+      "2.0": {
+       "n": 11371,
+       "net_r": -0.021,
+       "total_r": -238.5,
+       "pf": 0.822
+      },
+      "3.0": {
+       "n": 11371,
+       "net_r": -0.0211,
+       "total_r": -240.2,
+       "pf": 0.821
+      }
+     },
+     "hold": {
+      "30": {
+       "n": 11371,
+       "net_r": -0.021,
+       "total_r": -238.5,
+       "pf": 0.822
+      },
+      "45": {
+       "n": 12052,
+       "net_r": -0.0202,
+       "total_r": -244.0,
+       "pf": 0.862
+      },
+      "90": {
+       "n": 11371,
+       "net_r": -0.0286,
+       "total_r": -324.7,
+       "pf": 0.852
+      },
+      "180": {
+       "n": 11371,
+       "net_r": -0.0347,
+       "total_r": -394.4,
+       "pf": 0.854
+      }
+     }
+    }
+   },
+   "V9.2": {
+    "exit": {
+     "min_stop": 0.01,
+     "buffer": 1.0,
+     "max_stop": 0.01,
+     "target": 3.0,
+     "hold": 30
+    },
+    "atr_median": 0.001956676599498725,
+    "filters_kept": [],
+    "live_year1": {
+     "n": 9669,
+     "net_r": -0.0728,
+     "total_r": -703.6,
+     "pf": 0.802
+    },
+    "exit_year1": {
+     "n": 8666,
+     "net_r": -0.0213,
+     "total_r": -184.9,
+     "pf": 0.817
+    },
+    "filters_tried_year1": {
+     "SKIP30": {
+      "n": 8598,
+      "net_r": -0.0219,
+      "total_r": -188.1,
+      "pf": 0.811
+     },
+     "SKIP60": {
+      "n": 8270,
+      "net_r": -0.0224,
+      "total_r": -185.4,
+      "pf": 0.805
+     },
+     "MORNING": {
+      "n": 2545,
+      "net_r": -0.0269,
+      "total_r": -68.4,
+      "pf": 0.795
+     },
+     "AFTERNOON": {
+      "n": 6272,
+      "net_r": -0.0199,
+      "total_r": -125.1,
+      "pf": 0.82
+     },
+     "NO_LUNCH": {
+      "n": 4876,
+      "net_r": -0.0194,
+      "total_r": -94.6,
+      "pf": 0.835
+     },
+     "TREND_DAY": {
+      "n": 6233,
+      "net_r": -0.0214,
+      "total_r": -133.1,
+      "pf": 0.818
+     },
+     "VWAP_SIDE": {
+      "n": 7239,
+      "net_r": -0.0221,
+      "total_r": -160.0,
+      "pf": 0.812
+     },
+     "ALIGNED": {
+      "n": 4763,
+      "net_r": -0.0219,
+      "total_r": -104.1,
+      "pf": 0.81
+     },
+     "RELVOL": {
+      "n": 5587,
+      "net_r": -0.0197,
+      "total_r": -110.3,
+      "pf": 0.83
+     },
+     "ATR_LOW": {
+      "n": 5420,
+      "net_r": -0.0242,
+      "total_r": -131.3,
+      "pf": 0.733
+     },
+     "ATR_HIGH": {
+      "n": 3247,
+      "net_r": -0.0164,
+      "total_r": -53.4,
+      "pf": 0.897
+     },
+     "SMALL_GAP": {
+      "n": 6531,
+      "net_r": -0.0218,
+      "total_r": -142.4,
+      "pf": 0.798
+     }
+    },
+    "final_year1": {
+     "n": 8666,
+     "net_r": -0.0213,
+     "total_r": -184.9,
+     "pf": 0.817
+    },
+    "final_year2_signal_level": {
+     "n": 8263,
+     "net_r": -0.0291,
+     "total_r": -240.9,
+     "pf": 0.762
+    },
+    "live_year2_signal_level": {
+     "n": 9206,
+     "net_r": -0.0738,
+     "total_r": -679.0,
+     "pf": 0.798
+    },
+    "best_by_dimension_year1": {
+     "min_stop": {
+      "0.0025": {
+       "n": 8666,
+       "net_r": -0.0555,
+       "total_r": -481.3,
+       "pf": 0.77
+      },
+      "0.005": {
+       "n": 8666,
+       "net_r": -0.0393,
+       "total_r": -340.7,
+       "pf": 0.798
+      },
+      "0.0075": {
+       "n": 8666,
+       "net_r": -0.0283,
+       "total_r": -245.1,
+       "pf": 0.812
+      },
+      "0.01": {
+       "n": 8666,
+       "net_r": -0.0213,
+       "total_r": -184.9,
+       "pf": 0.817
+      }
+     },
+     "buffer": {
+      "0.2": {
+       "n": 10694,
+       "net_r": -0.0178,
+       "total_r": -190.3,
+       "pf": 0.872
+      },
+      "0.5": {
+       "n": 10623,
+       "net_r": -0.0185,
+       "total_r": -196.7,
+       "pf": 0.863
+      },
+      "1.0": {
+       "n": 8666,
+       "net_r": -0.0213,
+       "total_r": -184.9,
+       "pf": 0.817
+      }
+     },
+     "max_stop": {
+      "0.01": {
+       "n": 8666,
+       "net_r": -0.0213,
+       "total_r": -184.9,
+       "pf": 0.817
+      },
+      "0.02": {
+       "n": 10466,
+       "net_r": -0.0181,
+       "total_r": -189.6,
+       "pf": 0.86
+      }
+     },
+     "target": {
+      "0.75": {
+       "n": 8666,
+       "net_r": -0.0214,
+       "total_r": -185.2,
+       "pf": 0.816
+      },
+      "1.0": {
+       "n": 8666,
+       "net_r": -0.0216,
+       "total_r": -187.0,
+       "pf": 0.814
+      },
+      "1.5": {
+       "n": 8666,
+       "net_r": -0.0216,
+       "total_r": -187.5,
+       "pf": 0.814
+      },
+      "2.0": {
+       "n": 8666,
+       "net_r": -0.0215,
+       "total_r": -186.5,
+       "pf": 0.815
+      },
+      "3.0": {
+       "n": 8666,
+       "net_r": -0.0213,
+       "total_r": -184.9,
+       "pf": 0.817
+      }
+     },
+     "hold": {
+      "30": {
+       "n": 8666,
+       "net_r": -0.0213,
+       "total_r": -184.9,
+       "pf": 0.817
+      },
+      "45": {
+       "n": 8666,
+       "net_r": -0.0255,
+       "total_r": -221.0,
+       "pf": 0.819
+      },
+      "90": {
+       "n": 8666,
+       "net_r": -0.0342,
+       "total_r": -296.4,
+       "pf": 0.82
+      },
+      "180": {
+       "n": 8666,
+       "net_r": -0.0423,
+       "total_r": -366.4,
+       "pf": 0.821
+      }
+     }
+    }
+   },
+   "V9.3": {
+    "exit": {
+     "min_stop": 0.01,
+     "buffer": 0.5,
+     "max_stop": 0.02,
+     "target": 1.0,
+     "hold": 180
+    },
+    "atr_median": 0.002056215422460672,
+    "filters_kept": [],
+    "live_year1": {
+     "n": 21490,
+     "net_r": -0.0779,
+     "total_r": -1674.3,
+     "pf": 0.824
+    },
+    "exit_year1": {
+     "n": 22424,
+     "net_r": -0.0193,
+     "total_r": -433.6,
+     "pf": 0.928
+    },
+    "filters_tried_year1": {
+     "SKIP30": {
+      "n": 21041,
+      "net_r": -0.0174,
+      "total_r": -366.0,
+      "pf": 0.934
+     },
+     "SKIP60": {
+      "n": 19007,
+      "net_r": -0.017,
+      "total_r": -322.2,
+      "pf": 0.934
+     },
+     "MORNING": {
+      "n": 9597,
+      "net_r": -0.0271,
+      "total_r": -260.3,
+      "pf": 0.913
+     },
+     "AFTERNOON": {
+      "n": 13112,
+      "net_r": -0.0135,
+      "total_r": -177.3,
+      "pf": 0.944
+     },
+     "NO_LUNCH": {
+      "n": 14219,
+      "net_r": -0.0227,
+      "total_r": -323.0,
+      "pf": 0.916
+     },
+     "TREND_DAY": {
+      "n": 5541,
+      "net_r": -0.0105,
+      "total_r": -57.9,
+      "pf": 0.96
+     },
+     "VWAP_SIDE": {
+      "n": 5098,
+      "net_r": -0.0143,
+      "total_r": -73.0,
+      "pf": 0.951
+     },
+     "ALIGNED": {
+      "n": 3136,
+      "net_r": -0.0568,
+      "total_r": -178.0,
+      "pf": 0.796
+     },
+     "RELVOL": {
+      "n": 6557,
+      "net_r": -0.0217,
+      "total_r": -142.1,
+      "pf": 0.92
+     },
+     "ATR_LOW": {
+      "n": 11323,
+      "net_r": -0.0138,
+      "total_r": -156.4,
+      "pf": 0.924
+     },
+     "ATR_HIGH": {
+      "n": 11101,
+      "net_r": -0.025,
+      "total_r": -277.2,
+      "pf": 0.93
+     },
+     "SMALL_GAP": {
+      "n": 15793,
+      "net_r": -0.0259,
+      "total_r": -409.8,
+      "pf": 0.893
+     }
+    },
+    "final_year1": {
+     "n": 22424,
+     "net_r": -0.0193,
+     "total_r": -433.6,
+     "pf": 0.928
+    },
+    "final_year2_signal_level": {
+     "n": 22934,
+     "net_r": -0.0316,
+     "total_r": -725.8,
+     "pf": 0.887
+    },
+    "live_year2_signal_level": {
+     "n": 22123,
+     "net_r": -0.0898,
+     "total_r": -1986.3,
+     "pf": 0.8
+    },
+    "best_by_dimension_year1": {
+     "min_stop": {
+      "0.0025": {
+       "n": 19797,
+       "net_r": -0.0518,
+       "total_r": -1026.3,
+       "pf": 0.901
+      },
+      "0.005": {
+       "n": 19797,
+       "net_r": -0.0381,
+       "total_r": -754.3,
+       "pf": 0.907
+      },
+      "0.0075": {
+       "n": 22485,
+       "net_r": -0.0244,
+       "total_r": -548.5,
+       "pf": 0.929
+      },
+      "0.01": {
+       "n": 22424,
+       "net_r": -0.0193,
+       "total_r": -433.6,
+       "pf": 0.928
+      }
+     },
+     "buffer": {
+      "0.2": {
+       "n": 22485,
+       "net_r": -0.0196,
+       "total_r": -441.7,
+       "pf": 0.928
+      },
+      "0.5": {
+       "n": 22424,
+       "net_r": -0.0193,
+       "total_r": -433.6,
+       "pf": 0.928
+      },
+      "1.0": {
+       "n": 19797,
+       "net_r": -0.0232,
+       "total_r": -459.0,
+       "pf": 0.908
+      }
+     },
+     "max_stop": {
+      "0.01": {
+       "n": 20959,
+       "net_r": -0.0212,
+       "total_r": -443.6,
+       "pf": 0.919
+      },
+      "0.02": {
+       "n": 22424,
+       "net_r": -0.0193,
+       "total_r": -433.6,
+       "pf": 0.928
+      }
+     },
+     "target": {
+      "0.75": {
+       "n": 22485,
+       "net_r": -0.0202,
+       "total_r": -454.1,
+       "pf": 0.923
+      },
+      "1.0": {
+       "n": 22424,
+       "net_r": -0.0193,
+       "total_r": -433.6,
+       "pf": 0.928
+      },
+      "1.5": {
+       "n": 19797,
+       "net_r": -0.0268,
+       "total_r": -531.3,
+       "pf": 0.8
+      },
+      "2.0": {
+       "n": 19797,
+       "net_r": -0.0264,
+       "total_r": -521.8,
+       "pf": 0.803
+      },
+      "3.0": {
+       "n": 19797,
+       "net_r": -0.0265,
+       "total_r": -524.9,
+       "pf": 0.802
+      }
+     },
+     "hold": {
+      "30": {
+       "n": 19797,
+       "net_r": -0.0264,
+       "total_r": -521.8,
+       "pf": 0.803
+      },
+      "45": {
+       "n": 22485,
+       "net_r": -0.0232,
+       "total_r": -521.7,
+       "pf": 0.869
+      },
+      "90": {
+       "n": 22424,
+       "net_r": -0.0241,
+       "total_r": -539.7,
+       "pf": 0.894
+      },
+      "180": {
+       "n": 22424,
+       "net_r": -0.0193,
+       "total_r": -433.6,
+       "pf": 0.928
+      }
+     }
+    }
+   }
+  }
+ },
+ "verify": {
+  "built": "2026-10-06 19:09 UTC",
+  "families": {
+   "V9.1": {
+    "live": {
+     "year1": {
+      "trades": 5686,
+      "net_usd": -2842.46,
+      "net_r": -0.067,
+      "pf": 0.832,
+      "per_day": 1.56
+     },
+     "year2": {
+      "trades": 5873,
+      "net_usd": -2659.06,
+      "net_r": -0.0636,
+      "pf": 0.845,
+      "per_day": 1.61
+     }
+    },
+    "final": {
+     "year1": {
+      "trades": 5294,
+      "net_usd": -731.14,
+      "net_r": -0.0183,
+      "pf": 0.847,
+      "per_day": 1.45
+     },
+     "year2": {
+      "trades": 5251,
+      "net_usd": -753.13,
+      "net_r": -0.023,
+      "pf": 0.832,
+      "per_day": 1.44
+     }
+    },
+    "verdict": "NOT FIXED"
+   },
+   "V9.2": {
+    "live": {
+     "year1": {
+      "trades": 5695,
+      "net_usd": -1748.21,
+      "net_r": -0.0423,
+      "pf": 0.886,
+      "per_day": 1.56
+     },
+     "year2": {
+      "trades": 5603,
+      "net_usd": -2391.32,
+      "net_r": -0.0617,
+      "pf": 0.842,
+      "per_day": 1.54
+     }
+    },
+    "final": {
+     "year1": {
+      "trades": 4634,
+      "net_usd": -320.59,
+      "net_r": -0.0095,
+      "pf": 0.918,
+      "per_day": 1.27
+     },
+     "year2": {
+      "trades": 4449,
+      "net_usd": -673.57,
+      "net_r": -0.0206,
+      "pf": 0.822,
+      "per_day": 1.22
+     }
+    },
+    "verdict": "NOT FIXED"
+   },
+   "V9.3": {
+    "live": {
+     "year1": {
+      "trades": 9896,
+      "net_usd": -5691.35,
+      "net_r": -0.0912,
+      "pf": 0.826,
+      "per_day": 2.71
+     },
+     "year2": {
+      "trades": 10038,
+      "net_usd": -5926.64,
+      "net_r": -0.0911,
+      "pf": 0.819,
+      "per_day": 2.75
+     }
+    },
+    "final": {
+     "year1": {
+      "trades": 3052,
+      "net_usd": -567.43,
+      "net_r": -0.0265,
+      "pf": 0.927,
+      "per_day": 0.84
+     },
+     "year2": {
+      "trades": 3146,
+      "net_usd": -1167.3,
+      "net_r": -0.056,
+      "pf": 0.852,
+      "per_day": 0.86
+     }
+    },
+    "verdict": "NOT FIXED"
+   }
+  },
+  "bots": {
+   "V9.1-SPY": {
+    "trades": 805,
+    "net_y1": -18.17,
+    "net_y2": -34.97
+   },
+   "V9.1-QQQ": {
+    "trades": 894,
+    "net_y1": -61.4,
+    "net_y2": -39.71
+   },
+   "V9.1-AAPL": {
+    "trades": 1311,
+    "net_y1": -80.34,
+    "net_y2": -33.71
+   },
+   "V9.1-NVDA": {
+    "trades": 1176,
+    "net_y1": -168.81,
+    "net_y2": -56.69
+   },
+   "V9.1-TSLA": {
+    "trades": 950,
+    "net_y1": -64.76,
+    "net_y2": -107.44
+   },
+   "V9.1-AMD": {
+    "trades": 954,
+    "net_y1": -39.07,
+    "net_y2": -93.62
+   },
+   "V9.1-MSFT": {
+    "trades": 1208,
+    "net_y1": -57.28,
+    "net_y2": -47.03
+   },
+   "V9.1-META": {
+    "trades": 719,
+    "net_y1": -43.54,
+    "net_y2": -99.64
+   },
+   "V9.1-AMZN": {
+    "trades": 1260,
+    "net_y1": -75.0,
+    "net_y2": -119.72
+   },
+   "V9.1-GOOGL": {
+    "trades": 1268,
+    "net_y1": -122.77,
+    "net_y2": -120.59
+   },
+   "V9.2-SPY": {
+    "trades": 763,
+    "net_y1": 6.13,
+    "net_y2": -17.44
+   },
+   "V9.2-QQQ": {
+    "trades": 891,
+    "net_y1": -101.38,
+    "net_y2": -33.07
+   },
+   "V9.2-AAPL": {
+    "trades": 1132,
+    "net_y1": 56.19,
+    "net_y2": -14.1
+   },
+   "V9.2-NVDA": {
+    "trades": 889,
+    "net_y1": 0.26,
+    "net_y2": -150.57
+   },
+   "V9.2-TSLA": {
+    "trades": 794,
+    "net_y1": -83.02,
+    "net_y2": -92.18
+   },
+   "V9.2-AMD": {
+    "trades": 726,
+    "net_y1": -17.74,
+    "net_y2": -93.03
+   },
+   "V9.2-MSFT": {
+    "trades": 1036,
+    "net_y1": 33.53,
+    "net_y2": -65.7
+   },
+   "V9.2-META": {
+    "trades": 692,
+    "net_y1": -49.65,
+    "net_y2": -70.85
+   },
+   "V9.2-AMZN": {
+    "trades": 1105,
+    "net_y1": -138.31,
+    "net_y2": -65.93
+   },
+   "V9.2-GOOGL": {
+    "trades": 1055,
+    "net_y1": -26.59,
+    "net_y2": -70.7
+   },
+   "V9.3-SPY": {
+    "trades": 409,
+    "net_y1": 2.92,
+    "net_y2": -45.12
+   },
+   "V9.3-QQQ": {
+    "trades": 440,
+    "net_y1": 0.38,
+    "net_y2": -52.08
+   },
+   "V9.3-AAPL": {
+    "trades": 623,
+    "net_y1": -62.89,
+    "net_y2": 67.22
+   },
+   "V9.3-NVDA": {
+    "trades": 747,
+    "net_y1": -81.2,
+    "net_y2": -61.66
+   },
+   "V9.3-TSLA": {
+    "trades": 786,
+    "net_y1": -144.02,
+    "net_y2": -447.12
+   },
+   "V9.3-AMD": {
+    "trades": 796,
+    "net_y1": -148.71,
+    "net_y2": -168.3
+   },
+   "V9.3-MSFT": {
+    "trades": 569,
+    "net_y1": -56.54,
+    "net_y2": -90.05
+   },
+   "V9.3-META": {
+    "trades": 528,
+    "net_y1": 86.82,
+    "net_y2": -44.28
+   },
+   "V9.3-AMZN": {
+    "trades": 659,
+    "net_y1": -95.18,
+    "net_y2": -290.9
+   },
+   "V9.3-GOOGL": {
+    "trades": 641,
+    "net_y1": -69.0,
+    "net_y2": -35.01
+   }
+  }
+ }
+}

@@ -1,0 +1,428 @@
+{
+ "window": {
+  "sessions": 10,
+  "from": "2026-09-14",
+  "to": "2026-09-25"
+ },
+ "bots": [
+  {
+   "bot": "V9.1-SPY-5M",
+   "signals": 27,
+   "trades": 27,
+   "per_session": 2.7,
+   "min_session": 0,
+   "max_session": 8,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.04,
+   "refused": {}
+  },
+  {
+   "bot": "V9.2-SPY-5M",
+   "signals": 30,
+   "trades": 28,
+   "per_session": 2.8,
+   "min_session": 0,
+   "max_session": 7,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.04,
+   "refused": {
+    "max_positions": 2
+   }
+  },
+  {
+   "bot": "V9.3-SPY-5M",
+   "signals": 62,
+   "trades": 60,
+   "per_session": 6.0,
+   "min_session": 0,
+   "max_session": 13,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.04,
+   "refused": {
+    "max_positions": 2
+   }
+  },
+  {
+   "bot": "V9.1-QQQ-5M",
+   "signals": 39,
+   "trades": 39,
+   "per_session": 3.9,
+   "min_session": 0,
+   "max_session": 10,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 1.85,
+   "refused": {}
+  },
+  {
+   "bot": "V9.2-QQQ-5M",
+   "signals": 43,
+   "trades": 38,
+   "per_session": 3.8,
+   "min_session": 1,
+   "max_session": 6,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 1.85,
+   "refused": {
+    "max_positions": 5
+   }
+  },
+  {
+   "bot": "V9.3-QQQ-5M",
+   "signals": 73,
+   "trades": 69,
+   "per_session": 6.9,
+   "min_session": 0,
+   "max_session": 16,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 1.85,
+   "refused": {
+    "max_positions": 4
+   }
+  },
+  {
+   "bot": "V9.1-AAPL-5M",
+   "signals": 44,
+   "trades": 36,
+   "per_session": 3.6,
+   "min_session": 0,
+   "max_session": 7,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.0,
+   "refused": {
+    "max_positions": 8
+   }
+  },
+  {
+   "bot": "V9.2-AAPL-5M",
+   "signals": 39,
+   "trades": 29,
+   "per_session": 2.9,
+   "min_session": 1,
+   "max_session": 6,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.0,
+   "refused": {
+    "max_positions": 10
+   }
+  },
+  {
+   "bot": "V9.3-AAPL-5M",
+   "signals": 90,
+   "trades": 73,
+   "per_session": 7.3,
+   "min_session": 3,
+   "max_session": 14,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.0,
+   "refused": {
+    "max_positions": 17
+   }
+  },
+  {
+   "bot": "V9.1-NVDA-5M",
+   "signals": 42,
+   "trades": 36,
+   "per_session": 3.6,
+   "min_session": 0,
+   "max_session": 12,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.01,
+   "refused": {
+    "max_positions": 6
+   }
+  },
+  {
+   "bot": "V9.2-NVDA-5M",
+   "signals": 36,
+   "trades": 30,
+   "per_session": 3.0,
+   "min_session": 0,
+   "max_session": 7,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.01,
+   "refused": {
+    "max_positions": 6
+   }
+  },
+  {
+   "bot": "V9.3-NVDA-5M",
+   "signals": 62,
+   "trades": 54,
+   "per_session": 5.4,
+   "min_session": 2,
+   "max_session": 11,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.01,
+   "refused": {
+    "max_positions": 8
+   }
+  },
+  {
+   "bot": "V9.1-TSLA-5M",
+   "signals": 55,
+   "trades": 38,
+   "per_session": 3.8,
+   "min_session": 1,
+   "max_session": 8,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.13,
+   "refused": {
+    "max_positions": 17
+   }
+  },
+  {
+   "bot": "V9.2-TSLA-5M",
+   "signals": 33,
+   "trades": 24,
+   "per_session": 2.4,
+   "min_session": 0,
+   "max_session": 4,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.13,
+   "refused": {
+    "max_positions": 9
+   }
+  },
+  {
+   "bot": "V9.3-TSLA-5M",
+   "signals": 102,
+   "trades": 51,
+   "per_session": 5.1,
+   "min_session": 2,
+   "max_session": 10,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.13,
+   "refused": {
+    "max_positions": 51
+   }
+  },
+  {
+   "bot": "V9.1-AMD-5M",
+   "signals": 68,
+   "trades": 38,
+   "per_session": 3.8,
+   "min_session": 0,
+   "max_session": 9,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 6.45,
+   "refused": {
+    "max_positions": 30
+   }
+  },
+  {
+   "bot": "V9.2-AMD-5M",
+   "signals": 25,
+   "trades": 19,
+   "per_session": 1.9,
+   "min_session": 1,
+   "max_session": 3,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 6.45,
+   "refused": {
+    "max_positions": 6
+   }
+  },
+  {
+   "bot": "V9.3-AMD-5M",
+   "signals": 64,
+   "trades": 42,
+   "per_session": 4.2,
+   "min_session": 1,
+   "max_session": 7,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 6.45,
+   "refused": {
+    "max_positions": 22
+   }
+  },
+  {
+   "bot": "V9.1-MSFT-5M",
+   "signals": 62,
+   "trades": 47,
+   "per_session": 4.7,
+   "min_session": 0,
+   "max_session": 12,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.66,
+   "refused": {
+    "max_positions": 15
+   }
+  },
+  {
+   "bot": "V9.2-MSFT-5M",
+   "signals": 34,
+   "trades": 31,
+   "per_session": 3.1,
+   "min_session": 1,
+   "max_session": 6,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.66,
+   "refused": {
+    "max_positions": 3
+   }
+  },
+  {
+   "bot": "V9.3-MSFT-5M",
+   "signals": 121,
+   "trades": 94,
+   "per_session": 9.4,
+   "min_session": 4,
+   "max_session": 14,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.66,
+   "refused": {
+    "max_positions": 27
+   }
+  },
+  {
+   "bot": "V9.1-META-5M",
+   "signals": 41,
+   "trades": 24,
+   "per_session": 2.4,
+   "min_session": 0,
+   "max_session": 5,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.47,
+   "refused": {
+    "max_positions": 17
+   }
+  },
+  {
+   "bot": "V9.2-META-5M",
+   "signals": 35,
+   "trades": 20,
+   "per_session": 2.0,
+   "min_session": 0,
+   "max_session": 4,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.47,
+   "refused": {
+    "max_positions": 15
+   }
+  },
+  {
+   "bot": "V9.3-META-5M",
+   "signals": 84,
+   "trades": 56,
+   "per_session": 5.6,
+   "min_session": 0,
+   "max_session": 10,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.47,
+   "refused": {
+    "max_positions": 28
+   }
+  },
+  {
+   "bot": "V9.1-AMZN-5M",
+   "signals": 36,
+   "trades": 27,
+   "per_session": 2.7,
+   "min_session": 0,
+   "max_session": 8,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 1.16,
+   "refused": {
+    "max_positions": 9
+   }
+  },
+  {
+   "bot": "V9.2-AMZN-5M",
+   "signals": 37,
+   "trades": 25,
+   "per_session": 2.5,
+   "min_session": 0,
+   "max_session": 5,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 1.16,
+   "refused": {
+    "max_positions": 12
+   }
+  },
+  {
+   "bot": "V9.3-AMZN-5M",
+   "signals": 67,
+   "trades": 51,
+   "per_session": 5.1,
+   "min_session": 3,
+   "max_session": 9,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 1.16,
+   "refused": {
+    "max_positions": 16
+   }
+  },
+  {
+   "bot": "V9.1-GOOGL-5M",
+   "signals": 38,
+   "trades": 30,
+   "per_session": 3.0,
+   "min_session": 0,
+   "max_session": 6,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.15,
+   "refused": {
+    "max_positions": 8
+   }
+  },
+  {
+   "bot": "V9.2-GOOGL-5M",
+   "signals": 21,
+   "trades": 19,
+   "per_session": 1.9,
+   "min_session": 0,
+   "max_session": 4,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.15,
+   "refused": {
+    "max_positions": 2
+   }
+  },
+  {
+   "bot": "V9.3-GOOGL-5M",
+   "signals": 89,
+   "trades": 72,
+   "per_session": 7.2,
+   "min_session": 2,
+   "max_session": 12,
+   "held_overnight": 0,
+   "bars": 7410,
+   "flat_filled_pct": 0.15,
+   "refused": {
+    "max_positions": 17
+   }
+  }
+ ],
+ "median_per_session": 3.8,
+ "held_overnight": 0,
+ "note": "executed-trade COUNTS only (not returns); recent Alpaca IEX 1m bars through the live engine"
+}

@@ -1,0 +1,253 @@
+{
+ "protocol": "V5_HOURLY_DAILY_PROTOCOL_V1",
+ "written_at": "2026-09-24T12:27:05Z",
+ "role": "TEST (PSEUDO-HOLDOUT: V1-V4 used parts of this period; it is NOT untouched data)",
+ "window": {
+  "months": [
+   "2023-06",
+   "2023-07",
+   "2023-08",
+   "2023-09",
+   "2023-10",
+   "2023-11",
+   "2023-12",
+   "2024-01",
+   "2024-02",
+   "2024-03",
+   "2024-04",
+   "2024-05",
+   "2024-06",
+   "2024-07",
+   "2024-08",
+   "2024-09",
+   "2024-10",
+   "2024-11",
+   "2024-12",
+   "2025-01",
+   "2025-02"
+  ],
+  "trade_from": "2023-09-01",
+  "trade_to": "2025-02-28",
+  "warm_up_from": "2023-06",
+  "subperiods": [
+   [
+    "2023-09-01",
+    "2024-02-29"
+   ],
+   [
+    "2024-03-01",
+    "2024-08-31"
+   ],
+   [
+    "2024-09-01",
+    "2025-02-28"
+   ]
+  ]
+ },
+ "data_rule": "no PSEUDO-HOLDOUT month's price, funding or positioning data was downloaded before this file existed",
+ "fingerprints": {
+  "strategy:v3_base": "33d10d257921",
+  "strategy:base": "7be736c53f9f",
+  "strategy:V5.1": "f4f72abc0a7d",
+  "strategy:V5.2": "3b421c29aec3",
+  "strategy:V5.3": "01e8ea7e986d",
+  "strategy:V5.4": "2fd17a549cf2",
+  "strategy:V5.5": "dfc5fbb80b56",
+  "strategy:V5.6": "0d541d70e47a",
+  "strategy:V5.7": "f54c7f2faec3",
+  "strategy:V5.8": "9decbe7ce090",
+  "jev:prompt": "85b5d6019280fff2",
+  "jev:policy": "d57140c8d63d45e6",
+  "jev:state_version": "JEV_STATE_V5",
+  "jev:prompt_version": "JEV_PROMPT_V5",
+  "jev:state_builder": "cb256942dc82",
+  "universe_rule": "c01f7c75cc3b",
+  "source:v5_features": "476efb11f523",
+  "source:v5_arena": "2b12fa3a2434",
+  "source:v5_analyzer": "3acb63746779",
+  "source:v5_run": "cfc2431290ee"
+ },
+ "config_fingerprint": "69d328e7e7fc7d61",
+ "universe": [
+  "YGGUSDT",
+  "XRPUSDT",
+  "LPTUSDT",
+  "SHIB1000USDT",
+  "OPUSDT",
+  "RUNEUSDT",
+  "DOGEUSDT",
+  "APTUSDT",
+  "APEUSDT",
+  "ARBUSDT"
+ ],
+ "universe_fingerprint": "1c7963695f75",
+ "scoring_period": {
+  "from": "2023-08-02",
+  "to": "2023-08-31"
+ },
+ "gates": {
+  "raw_edge": {
+   "min_trades": {
+    "HOURLY": 100,
+    "SWING": 40
+   },
+   "max_p_mean_le_0": 0.05,
+   "min_positive_subperiods": 2,
+   "min_coin_share": 0.5,
+   "coin_min_trades": 10,
+   "drop_top_share": 0.05
+  },
+  "economic": {
+   "max_p_mean_le_0": 0.1,
+   "min_positive_subperiods": 2
+  },
+  "bot": {
+   "min_trades": 30,
+   "min_trades_per_day": {
+    "HOURLY": 0.25,
+    "SWING": 0.14285714285714285
+   },
+   "min_profit_factor": 1.1,
+   "max_p_mean_le_0": 0.1,
+   "max_drawdown_pct": 0.3,
+   "max_liquidations": 0,
+   "max_top3_share": 0.6,
+   "max_skip_rate": 0.8,
+   "random_percentile": 0.9,
+   "min_delta_vs_control": 0.5,
+   "min_auc_low": 0.5,
+   "max_error_rate": 0.02,
+   "catastrophic_drawdown": 0.3
+  }
+ },
+ "dev_run_id": "v5-1d32b2c190",
+ "dev_config_fingerprint": "3ae0ac8c90549002",
+ "dev_dataset_fingerprint": "71af0ed7551e66bf",
+ "dev_advanced_set": "NONE",
+ "dev_passed": [],
+ "survivors": [],
+ "stages_on_test": "Stage 1 for every family x class (baseline exits; replication of the raw-edge test). Stages 2-3 only for the DEVELOPMENT economic survivors listed here, with their frozen DEVELOPMENT exits; nothing is selected on TEST. There are none, so only Stage 1 runs.",
+ "advanced": "a bot is ADVANCED only if it passes every gate in DEVELOPMENT (run dev_run_id) AND in this TEST",
+ "expected": "ADVANCED SET = NONE with certainty: no V5 family x class passed the DEVELOPMENT raw-edge gate",
+ "diagnostic_near_misses": [
+  {
+   "strategy_id": "V5.2",
+   "family": "FUNDING_OI_CROWDING_REVERSAL",
+   "horizon": "SWING",
+   "dev_gross_r": 0.0572,
+   "dev_p_mean_le_0": 0.245,
+   "dev_trades": 241,
+   "dev_subperiod_gross_r": [
+    0.0913,
+    0.238,
+    -0.1776
+   ],
+   "dev_side_split": {
+    "short": {
+     "n": 209,
+     "gross_r": 0.0238,
+     "net_r": -0.0161
+    },
+    "long": {
+     "n": 32,
+     "gross_r": 0.2752,
+     "net_r": 0.2509
+    }
+   },
+   "failed_checks": [
+    "significant",
+    "without_top_5pct"
+   ]
+  },
+  {
+   "strategy_id": "V5.4",
+   "family": "TREND_PULLBACK_POSITIONING",
+   "horizon": "HOURLY",
+   "dev_gross_r": 0.0657,
+   "dev_p_mean_le_0": 0.066,
+   "dev_trades": 1172,
+   "dev_subperiod_gross_r": [
+    -0.033,
+    0.1972,
+    -0.01
+   ],
+   "dev_side_split": {
+    "short": {
+     "n": 1064,
+     "gross_r": 0.0884,
+     "net_r": 0.0239
+    },
+    "long": {
+     "n": 108,
+     "gross_r": -0.1581,
+     "net_r": -0.2195
+    }
+   },
+   "failed_checks": [
+    "significant",
+    "subperiods",
+    "without_top_5pct"
+   ]
+  },
+  {
+   "strategy_id": "V5.4",
+   "family": "TREND_PULLBACK_POSITIONING",
+   "horizon": "SWING",
+   "dev_gross_r": 0.0731,
+   "dev_p_mean_le_0": 0.202,
+   "dev_trades": 250,
+   "dev_subperiod_gross_r": [
+    0.2339,
+    0.2647,
+    -0.0855
+   ],
+   "dev_side_split": {
+    "short": {
+     "n": 232,
+     "gross_r": 0.0821,
+     "net_r": 0.0383
+    },
+    "long": {
+     "n": 18,
+     "gross_r": -0.0424,
+     "net_r": -0.0937
+    }
+   },
+   "failed_checks": [
+    "significant",
+    "without_top_5pct"
+   ]
+  },
+  {
+   "strategy_id": "V5.8",
+   "family": "MOMENTUM_CONTINUATION_OI",
+   "horizon": "HOURLY",
+   "dev_gross_r": 0.129,
+   "dev_p_mean_le_0": 0.1295,
+   "dev_trades": 207,
+   "dev_subperiod_gross_r": [
+    0.0525,
+    0.286,
+    0.0909
+   ],
+   "dev_side_split": {
+    "long": {
+     "n": 126,
+     "gross_r": 0.215,
+     "net_r": 0.1573
+    },
+    "short": {
+     "n": 81,
+     "gross_r": -0.0048,
+     "net_r": -0.0726
+    }
+   },
+   "failed_checks": [
+    "significant",
+    "without_top_5pct"
+   ]
+  }
+ ],
+ "diagnostic_rule": "Each DEVELOPMENT near-miss is DIRECTIONALLY REPLICATED if its TEST pooled gross R (100 USDT twins) is > 0 on >= the class trade minimum, and REPLICATED only if it passes the whole TEST raw-edge gate. Neither can promote a V5 bot: a replicated near-miss is at most a V6 hypothesis that must then be tested on FORWARD data only. Pre-registered expectation for V5.4 HOURLY: its DEVELOPMENT gross came from shorts (a falling altcoin market); if it is market beta rather than selection, its shorts lose in the mostly rising 2023-09 .. 2025-02 market.",
+ "if_it_fails": "V5 is not patched: a failed pseudo-holdout is answered by a V6 hypothesis"
+}
