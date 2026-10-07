@@ -1,0 +1,1 @@
+import{c as e}from"./useSelector-AEVHKF6w.js";import{t}from"./index-ChL9nqKR.js";var n=e(),r=({error:e})=>(0,n.jsx)(t,{children:(0,n.jsx)(`p`,{role:`alert`,className:`text-loss`,children:e instanceof Error?e.message:`Something went wrong.`})});export{r as errorComponent};

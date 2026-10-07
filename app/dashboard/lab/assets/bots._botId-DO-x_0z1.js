@@ -1,0 +1,1 @@
+import{c as e}from"./useSelector-AEVHKF6w.js";import{h as t,t as n}from"./index-ChL9nqKR.js";var r=e();function i(){return(0,r.jsxs)(n,{children:[(0,r.jsx)(`p`,{className:`text-muted-foreground`,children:`This bot doesn't exist.`}),(0,r.jsx)(t,{to:`/bots`,className:`text-primary`,children:`Back to bots`})]})}export{i as t};

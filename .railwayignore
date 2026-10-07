@@ -11,3 +11,4 @@ __pycache__/
 .git/
 snapshots/
 research/
+lab_ui/node_modules/

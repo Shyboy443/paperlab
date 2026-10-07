@@ -40,13 +40,15 @@ class BasicAuthMiddleware:
     """Pure ASGI middleware: Basic auth + CSRF header on POST."""
 
     def __init__(self, app: Any, password: str, allow_no_auth: bool,
-                 exempt: tuple[str, ...] = ("/api/health", "/", "/favicon.ico"),
-                 exempt_prefixes: tuple[str, ...] = ("/static/", "/public/", "/api/public/")):
+                 exempt: tuple[str, ...] = ("/api/health", "/", "/favicon.ico", "/lab"),
+                 exempt_prefixes: tuple[str, ...] = ("/static/", "/public/", "/api/public/", "/lab/")):
         # The dashboard shell (HTML/JS/CSS) carries no data and is served openly; the page asks for the
         # password once and sends it as Basic auth on every /api call (no native browser prompt).
         #
         # `/public/` and `/api/public/` are the read-only inspection surface: no password, so an
-        # outside reviewer can look at the real Competition UI. They are safe to exempt because
+        # outside reviewer can look at the real Competition UI. `/lab` is the shell of the newer dashboard (lab_ui/):
+        # like the inspection page it holds no data and reads only /api/public/*; its analyzer calls /api/lab/*,
+        # which is NOT exempt. They are safe to exempt because
         # api_public defines GET routes only and rebuilds every payload from an allow-list. The
         # POST rule below still applies to them, and every mutating route lives elsewhere and stays
         # behind this check.
@@ -419,6 +421,10 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
     app.include_router(api_stock_trend.router)
     from app.core import api_video_breakout
     app.include_router(api_video_breakout.router)
+    from app.core import api_lab                    # /lab dashboard shell + the private cost analyzer
+    from app.ai.analyzer import Analyzer
+    app.state.analyzer = Analyzer.from_env()
+    app.include_router(api_lab.router)
 
     @app.get('/public/video-breakout', include_in_schema=False)
     def video_breakout_page():
