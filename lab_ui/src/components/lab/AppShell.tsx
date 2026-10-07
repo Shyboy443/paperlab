@@ -88,7 +88,8 @@ function NameToggle({ compact = false }: { compact?: boolean }) {
 
 function HealthBadge() {
   const { data } = useQuery(healthQuery());
-  const problems = data?.programs.filter((p) => p.problem || !["LIVE", "WARMING_UP"].includes(p.status)) ?? [];
+  // MARKET_CLOSED is the stock program waiting for the US session: normal, not a problem.
+  const problems = data?.programs.filter((p) => p.problem || !["LIVE", "WARMING_UP", "MARKET_CLOSED"].includes(p.status)) ?? [];
   const label = !data ? "Checking system…" : data.ok && problems.length === 0 ? "All systems live" : data.ok ? `${problems.length} program issue${problems.length > 1 ? "s" : ""}` : "System problem";
   return (
     <div className="mb-1 flex items-center gap-2 text-foreground" title={data?.programs.map((p) => `${p.id}: ${p.status}${p.problem ? ` (${p.problem})` : ""}`).join("\n")}>

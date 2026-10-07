@@ -1,0 +1,1 @@
+import{c as e}from"./useSelector-AEVHKF6w.js";import{t}from"./index-BGz2ECqI.js";var n=e(),r=()=>(0,n.jsx)(t,{children:(0,n.jsx)(`p`,{children:`Nothing here.`})});export{r as notFoundComponent};
