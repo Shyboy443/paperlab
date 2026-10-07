@@ -401,6 +401,8 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
     # Read-only cross-origin GETs on /api/public/* and /public/* only (external front ends, e.g. Lovable); added after
     # the auth middleware so it wraps it and answers preflights. Private routes stay same-origin (app/core/cors.py).
     from app.core.cors import PublicCORS
+    from app.core.public_cache import PublicCache
+    app.add_middleware(PublicCache)        # shared 10 s cache of the public program feeds (inside CORS: per-origin headers)
     app.add_middleware(PublicCORS)
     app.include_router(api.router)
     app.include_router(api_competition.router)
