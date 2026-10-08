@@ -35,19 +35,24 @@ any code a freeze pins starts a new experiment. Old results are never silently m
 
 | Program | What it is | Market | Docs |
 |---|---|---|---|
-| **V6 forward arena** | Six hourly / 4-hour strategies that read Bybit positioning (funding, open interest, premium, account ratio), each with a Jev AI twin | Bybit perps: ARB, ENA, XRP, DOGE | [V6_PROTOCOL](docs/V6_PROTOCOL.md) |
-| **V7 active challenger** | 15-minute trend and positioning strategies | Bybit perps: same coins | [V7_PROTOCOL](docs/V7_PROTOCOL.md) |
-| **V8.3 scalpers** | 5-minute VWAP snap-back. Each bot has a plain control, a Jev twin and a take-profit-ladder twin | Bybit perps: ETH, SOL, XRP, DOGE, ARB, ENA | [V8_PROTOCOL](docs/V8_PROTOCOL.md) |
-| **V9 stocks** | The V8 scalp families on US stocks and ETFs, regular sessions only | Alpaca IEX data (paper) | [V9_PROTOCOL](docs/V9_PROTOCOL.md) |
+| **V6 forward arena** | Hourly strategies that read Bybit positioning (funding, open interest, premium, account ratio), each with a Jev AI twin. **In the arena since 2026-10-08: only V6.6 and V6.2**, the two families that made money over the two-year backtest | Bybit perps: ARB, ENA, XRP, DOGE | [V6_PROTOCOL](docs/V6_PROTOCOL.md) |
+| ~~V7 active challenger~~ | 15-minute trend and positioning strategies. *Switched off 2026-10-08* | Bybit perps: same coins | [V7_PROTOCOL](docs/V7_PROTOCOL.md) |
+| ~~V8.3 scalpers~~ | 5-minute VWAP snap-back with Jev and ladder twins. *Switched off 2026-10-08* | Bybit perps: ETH, SOL, XRP, DOGE, ARB, ENA | [V8_PROTOCOL](docs/V8_PROTOCOL.md) |
+| ~~V9 stocks~~ | The V8 scalp families on US stocks and ETFs. *Switched off 2026-10-08* | Alpaca IEX data (paper) | [V9_PROTOCOL](docs/V9_PROTOCOL.md) |
 | **V10 scout** | News and Reddit attention research. It never trades | Data only | [V10_PROTOCOL](docs/V10_PROTOCOL.md) |
-| **V11 scanners** | Four scanners, each one book over 30 coins, with a 25/50/25 take-profit ladder | Bybit perps: 30 coins | [V11_PROTOCOL](docs/V11_PROTOCOL.md) |
-| **V12 Bizzy** | Daily breakout, ported from beebots' "Bizzy Bee" | ETH, SOL, HYPE | [V12_PROTOCOL](docs/V12_PROTOCOL.md) |
-| **V13 Bounce** | Maker (post-only limit order) snap-back to the 24-hour VWAP | 29 coins | [V13_PROTOCOL](docs/V13_PROTOCOL.md) |
-| **V14 HTF** | Copies of the leading bots that only trade with the 4-hour and daily trend | V8 / V11 / V13 universes | [V14_PROTOCOL](docs/V14_PROTOCOL.md) |
+| ~~V11 scanners~~ | Four scanners over 30 coins with a 25/50/25 take-profit ladder. *Switched off 2026-10-08* | Bybit perps: 30 coins | [V11_PROTOCOL](docs/V11_PROTOCOL.md) |
+| ~~V12 Bizzy~~ | Daily breakout, ported from beebots' "Bizzy Bee". *Switched off 2026-10-08* | ETH, SOL, HYPE | [V12_PROTOCOL](docs/V12_PROTOCOL.md) |
+| ~~V13 Bounce~~ | Maker snap-back to the 24-hour VWAP. *Switched off 2026-10-08* | 29 coins | [V13_PROTOCOL](docs/V13_PROTOCOL.md) |
+| ~~V14 HTF~~ | Copies of leading bots that only trade with the 4h / daily trend. *Switched off 2026-10-08* | V8 / V11 / V13 universes | [V14_PROTOCOL](docs/V14_PROTOCOL.md) |
+| V15 day traders (research) | Five stock day-trading families (opening range, stocks in play, breakout, noise band, last half hour). **None passed**: the two-year study failed all five and V15.1's holdout year lost. Not running | Alpaca IEX (study only) | [V15_DAYTRADE_STUDY](docs/V15_DAYTRADE_STUDY.json), [V15_HOLDOUT](docs/V15_HOLDOUT.json) |
 | **Stock trend** | Five-stock small-account monthly trend portfolio with an SMA200 market filter | Alpaca | [STOCK_TREND_LIVE](docs/STOCK_TREND_LIVE.md) |
 | **Autonomous research** | Continuous template search over every Binance USDT spot pair and perpetual, with paper probation books | Binance (public data) | [AUTONOMOUS_RESEARCH](docs/AUTONOMOUS_RESEARCH.md) |
 | **Video breakout** | A Bitcoin 4-hour breakout taken from a YouTube video, rules frozen before evaluation | BTC | [VIDEO_BREAKOUT](docs/VIDEO_BREAKOUT.md) |
 | V1-V5 | The original Binance testnet bake-off and four research arenas. Now frozen history | | [LEGACY_V1_BAKEOFF](docs/LEGACY_V1_BAKEOFF.md), `docs/V2..V5_*` |
+
+Switched-off programs keep their databases on the server as history; `app/core/programs.py` is the one list. V6's
+other families (V6.1, V6.3, V6.4, V6.5) still compute inside V6's frozen experiment but are out of every list, feed and
+Telegram message, because removing them from the field would restart the winners' experiment.
 
 Each bot is named after a League of Legends champion and has a persona (`app/core/bot_names.py`). Twins share the
 name ("Lux AI", "Lux Ladder"), and V14 copies carry their original's ("Lulu HTF"). The home screen shows the six best

@@ -1,0 +1,244 @@
+{
+ "built": "2026-10-08 08:07 UTC",
+ "rules": "V15 holdout: does V15.1 (opening-candle trend) hold up on a year the study never touched?\n\n    BT_START=2023-10-01 BT_END=2024-10-01 BT_MID=2024-04-01         python scripts/backtest_2y.py fetch9 --data-dir /data/bt_hold          (the holdout tape, once)\n    BT_START=2023-10-01 BT_END=2024-10-01 BT_MID=2024-04-01         python scripts/v15_holdout.py --data-dir /data/bt_hold --workers 10\n\nWHY A HOLDOUT. The pre-registered two-year study (scripts/v15_daytrade_study.py, docs/V15_DAYTRADE_STUDY.json)\nfailed every family. V15.1 made money in both years (+569 / +444 USD over 10 bots) but missed the bar (profit factor\n1.06 / 1.05, 5 of 10 symbols positive). On five symbols it was positive in BOTH years: AMZN, GOOGL, MSFT, NVDA, TSLA.\nChoosing those five after seeing both years is selection on the data, so it proves nothing by itself. This test\ndecides it on data neither year contains.\n\nPRE-REGISTERED (2026-10-08, written and committed before the holdout tape was fetched)\n\n- Candidate: V15.1 exactly as in app/strategies/v15/daytrade.py (no parameter changed), on AMZN, GOOGL, MSFT, NVDA,\n  TSLA. The other five symbols are run too, for context only; they do not count.\n- Holdout: 2023-10-01 .. 2024-10-01 Alpaca IEX 1m, regular sessions, 30 days of warm-up. The same engine, sizing,\n  fees, execution, 3x cap and daily 1000 USD book reset as the study.\n- PASS only if, over the five bots: net USD > 0, mean net R per trade > 0, profit factor >= 1.10, and at least 3 of\n  the 5 symbols net positive.\n- PASS: V15.1 goes live as a PAPER day-trading program on those five symbols. FAIL: no day trader goes live.\n",
+ "candidate": {
+  "all": {
+   "trades": 1090,
+   "net_usd": -354.98,
+   "net_r": -0.0442,
+   "win": 0.316,
+   "pf": 0.931,
+   "fees": 60.42,
+   "exits": {
+    "stop": 676,
+    "time": 402,
+    "tp": 12
+   },
+   "long": 540
+  },
+  "year1": {
+   "trades": 542,
+   "net_usd": -28.93,
+   "net_r": -0.0223,
+   "win": 0.33,
+   "pf": 0.988,
+   "fees": 29.91,
+   "exits": {
+    "stop": 323,
+    "time": 213,
+    "tp": 6
+   },
+   "long": 277
+  },
+  "year2": {
+   "trades": 548,
+   "net_usd": -326.05,
+   "net_r": -0.0658,
+   "win": 0.301,
+   "pf": 0.88,
+   "fees": 30.52,
+   "exits": {
+    "stop": 353,
+    "time": 189,
+    "tp": 6
+   },
+   "long": 263
+  }
+ },
+ "context": {
+  "all": {
+   "trades": 1039,
+   "net_usd": -164.88,
+   "net_r": -0.0001,
+   "win": 0.261,
+   "pf": 0.962,
+   "fees": 71.46,
+   "exits": {
+    "stop": 716,
+    "time": 305,
+    "tp": 18
+   },
+   "long": 547
+  },
+  "year1": {
+   "trades": 516,
+   "net_usd": -412.57,
+   "net_r": -0.1361,
+   "win": 0.262,
+   "pf": 0.815,
+   "fees": 36.46,
+   "exits": {
+    "stop": 360,
+    "time": 153,
+    "tp": 3
+   },
+   "long": 281
+  },
+  "year2": {
+   "trades": 523,
+   "net_usd": 247.69,
+   "net_r": 0.134,
+   "win": 0.26,
+   "pf": 1.115,
+   "fees": 34.99,
+   "exits": {
+    "stop": 356,
+    "time": 152,
+    "tp": 15
+   },
+   "long": 266
+  }
+ },
+ "bots": {
+  "NVDA": {
+   "trades": 186,
+   "net_usd": -39.29,
+   "net_r": -0.047,
+   "win": 0.269,
+   "pf": 0.956,
+   "fees": 8.34,
+   "exits": {
+    "stop": 126,
+    "time": 57,
+    "tp": 3
+   },
+   "long": 97
+  },
+  "QQQ": {
+   "trades": 202,
+   "net_usd": 115.35,
+   "net_r": 0.1187,
+   "win": 0.233,
+   "pf": 1.149,
+   "fees": 18.3,
+   "exits": {
+    "stop": 154,
+    "time": 44,
+    "tp": 4
+   },
+   "long": 106
+  },
+  "SPY": {
+   "trades": 175,
+   "net_usd": 1.61,
+   "net_r": -0.0342,
+   "win": 0.194,
+   "pf": 1.003,
+   "fees": 15.76,
+   "exits": {
+    "stop": 139,
+    "time": 31,
+    "tp": 5
+   },
+   "long": 96
+  },
+  "GOOGL": {
+   "trades": 226,
+   "net_usd": -168.82,
+   "net_r": -0.0762,
+   "win": 0.341,
+   "pf": 0.85,
+   "fees": 14.78,
+   "exits": {
+    "stop": 130,
+    "time": 93,
+    "tp": 3
+   },
+   "long": 132
+  },
+  "AMZN": {
+   "trades": 227,
+   "net_usd": -312.1,
+   "net_r": -0.2176,
+   "win": 0.264,
+   "pf": 0.75,
+   "fees": 14.59,
+   "exits": {
+    "stop": 152,
+    "time": 74,
+    "tp": 1
+   },
+   "long": 102
+  },
+  "AMD": {
+   "trades": 219,
+   "net_usd": -195.88,
+   "net_r": -0.137,
+   "win": 0.283,
+   "pf": 0.825,
+   "fees": 8.98,
+   "exits": {
+    "stop": 145,
+    "time": 72,
+    "tp": 2
+   },
+   "long": 110
+  },
+  "TSLA": {
+   "trades": 228,
+   "net_usd": -96.86,
+   "net_r": -0.1002,
+   "win": 0.338,
+   "pf": 0.905,
+   "fees": 7.17,
+   "exits": {
+    "stop": 141,
+    "time": 86,
+    "tp": 1
+   },
+   "long": 109
+  },
+  "MSFT": {
+   "trades": 223,
+   "net_usd": 262.08,
+   "net_r": 0.2244,
+   "win": 0.359,
+   "pf": 1.291,
+   "fees": 15.54,
+   "exits": {
+    "stop": 127,
+    "time": 92,
+    "tp": 4
+   },
+   "long": 100
+  },
+  "AAPL": {
+   "trades": 228,
+   "net_usd": -320.15,
+   "net_r": -0.186,
+   "win": 0.263,
+   "pf": 0.721,
+   "fees": 17.21,
+   "exits": {
+    "stop": 146,
+    "time": 78,
+    "tp": 4
+   },
+   "long": 120
+  },
+  "META": {
+   "trades": 215,
+   "net_usd": 234.18,
+   "net_r": 0.2525,
+   "win": 0.316,
+   "pf": 1.269,
+   "fees": 11.21,
+   "exits": {
+    "stop": 132,
+    "time": 80,
+    "tp": 3
+   },
+   "long": 115
+  }
+ },
+ "verdict": {
+  "pass": false,
+  "checks": {
+   "net_usd": false,
+   "net_r": false,
+   "profit_factor_1_10": false,
+   "three_of_five_positive": false
+  },
+  "symbols_positive": 1
+ }
+}
