@@ -64,11 +64,17 @@ async def signal_data(client, folder, now):
         if seed['anchor']<=d<=day:names.update(ss)
     names.update(members_at(m,day));names=sorted(names)
     bars={s:{} for s in names}
+    # Alpaca's free data plan serves SIP only with a 15-minute delay: a request whose end lies within 15 minutes of
+    # now is refused ("subscription does not permit querying recent SIP data"). That paused the live strategy at
+    # 20:22 UTC on 2026-10-07. The closed session's bar is complete 20 minutes after the close, so stop 16 minutes
+    # short of now; after midnight UTC the end is simply the day after the session.
+    end=min(datetime.combine(date.fromisoformat(day)+timedelta(days=1),datetime.min.time(),timezone.utc),
+            now.astimezone(timezone.utc)-timedelta(minutes=16)).strftime('%Y-%m-%dT%H:%M:%SZ')
     for offset in range(0,len(names),50):
         token=None;seen=set()
         while True:
             q={'symbols':','.join(names[offset:offset+50]),'timeframe':'1Day','start':'2023-01-01T00:00:00Z',
-               'end':str(date.fromisoformat(day)+timedelta(days=1))+'T00:00:00Z',
+               'end':end,
                'adjustment':'all','feed':'sip','limit':10000,'sort':'asc'}
             if token:q['page_token']=token
             result=await client.request('GET','/v2/stocks/bars?'+urllib.parse.urlencode(q),data=True)

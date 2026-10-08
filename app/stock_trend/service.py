@@ -26,7 +26,7 @@ class StockTrendService:
             self.note('rule_updated','Five-stock variant installed paused; prior intents and holdings retained')
         self.save();self.signal=None;self.error=None;self.status='PAUSED';self.heartbeat=None
         self.account=None;self.positions=[];self.task=None;self.lock=asyncio.Lock();self.closing=False
-        self.next_data=0;self.sessions=[];self.tick_error=None
+        self.next_data=0;self.sessions=[];self.tick_error=None;self.data_failing=False
         self.last_plan=None
         from .paper_check import PaperCheck
         self.paper_check=PaperCheck(self)
@@ -270,10 +270,19 @@ class StockTrendService:
             self.next_data=time.time()+300
             self.status='UPDATING_DAILY_DATA'
             c=self.providers.client('alpaca',net)
-            try:self.signal,self.sessions=await signal_data(c,self.path.parent/'stock-trend-data',now)
+            try:
+                self.signal,self.sessions=await signal_data(c,self.path.parent/'stock-trend-data',now)
+                self.error=None;self.data_failing=False
+            except asyncio.CancelledError:raise
+            except Exception as exc:
+                # A failed daily-data download is not an execution incident: nothing was sent to the broker. Keep the
+                # strategy armed and the last signal, and retry in a minute. The open-time check below refuses to
+                # trade on a stale signal, so a refresh that keeps failing skips the session instead of trading it.
+                self.error=self.providers.redact(f'Daily data refresh failed: {type(exc).__name__}: {exc}')
+                self.next_data=time.time()+60
+                if not self.data_failing:self.note('data_refresh_failed',self.error)
+                self.data_failing=True
             finally:await c.close()
-
-            self.error=None
         if not self.config.get('account_id'):
             self.status='ALLOCATION_TOO_SMALL' if not capacity(self.config['allocation_usd'])['can_open'] else 'PAUSED'
             return
@@ -296,6 +305,7 @@ class StockTrendService:
                 if failed:raise Blocked('The last basket did not fill completely; review broker orders before resuming')
                 if self.pending():
                     await self.submit_pending(c,now);self.status='EXECUTING';return
+                if not self.sessions:self.status='WAITING_FOR_DATA';return        # no calendar yet (refresh failing)
                 clock=await c.request('GET','/v2/clock')
                 actual=stamp(clock['timestamp'])
                 session=next((s for s in self.sessions if s['date']==actual.astimezone(session_dt(self.sessions[-1],'open').tzinfo).date().isoformat()),None)
@@ -303,7 +313,12 @@ class StockTrendService:
                     self.status='WAIT_NEXT_OPEN';return
                 prior=[s for s in self.sessions if s['date']<session['date']]
                 if not self.signal or not prior or self.signal['date']!=prior[-1]['date']:
-                    raise Blocked('Signal must use the immediately preceding completed session')
+                    # Never trade a stale signal, but do not disarm either: skip this session (no orders) and try
+                    # again at the next open once the daily data has refreshed.
+                    if self.status!='SIGNAL_STALE':
+                        self.note('session_skipped',f'{session["date"]}: signal is not from the preceding session; no orders')
+                    self.status='SIGNAL_STALE';self.error='Signal must use the immediately preceding completed session'
+                    return
                 previous=self.db.execute("SELECT v FROM state WHERE k='last_session'").fetchone()
                 if previous and json.loads(previous[0])==session['date']:self.status='SESSION_COMPLETE';return
                 # Check the complete selected basket before any order.

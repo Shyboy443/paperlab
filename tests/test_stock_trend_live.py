@@ -348,3 +348,40 @@ async def test_opening_quote_delay_waits_without_orders_or_arming_late(tmp_path)
     s.next_data=s.next_balance=float('inf');await s.tick(NOW)
     assert s.status=='WAITING_FOR_QUOTES' and s.config['active'] and not s.providers.b.posts
     await s.close()
+
+
+class DataClient:
+    """Calendar for one session; records the first daily-bars request, then stops the download."""
+    def __init__(self):self.paths=[]
+    async def request(self,method,path,body=None,data=False):
+        if path.startswith('/v2/calendar'):return [{'date':'2026-10-07','open':'09:30','close':'16:00'}]
+        if path.startswith('/v2/stocks/bars'):self.paths.append(path);raise RuntimeError('stop after the first request')
+        raise AssertionError(path)
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('now,end',[
+    (datetime(2026,10,7,20,22,22,tzinfo=timezone.utc),'2026-10-07T20:06:22Z'),     # the 2026-10-07 403: 22 min after the close
+    (datetime(2026,10,8,1,30,tzinfo=timezone.utc),'2026-10-08T00:00:00Z')])         # after midnight UTC: the old end
+async def test_daily_bars_stay_outside_the_free_plans_sip_delay(tmp_path,monkeypatch,now,end):
+    from urllib.parse import parse_qs,urlsplit
+    from app.stock_trend import data
+    members='date,tickers\n2025-12-01,"'+','.join(f'T{i:03}' for i in range(500))+'"\n'
+    monkeypatch.setattr(data,'fetch_members',lambda:members)
+    c=DataClient()
+    with pytest.raises(RuntimeError):await data.signal_data(c,tmp_path,now)
+    q=parse_qs(urlsplit(c.paths[0]).query)
+    assert q['end']==[end] and q['feed']==['sip']
+    assert (now-datetime.fromisoformat(q['end'][0].replace('Z','+00:00'))).total_seconds()>=15*60
+
+@pytest.mark.asyncio
+async def test_failed_data_refresh_or_stale_signal_never_disarms_or_trades(tmp_path,monkeypatch):
+    from app.stock_trend import service as svc_mod
+    async def refused(*a,**k):raise AlpacaError(403,'subscription does not permit querying recent SIP data')
+    monkeypatch.setattr(svc_mod,'signal_data',refused)
+    s=service(tmp_path);await s.arm('testnet',1000)
+    s.next_data=0;s.next_balance=float('inf');await s.tick(NOW)         # NOW = 13:30:15, inside the opening window
+    assert s.config['active'] and not s.providers.b.posts                 # still armed, nothing sent
+    assert s.status=='SIGNAL_STALE' and s.next_data>0
+    events=[r['event'] for r in s.summary()['journal']]
+    assert 'data_refresh_failed' in events and 'session_skipped' in events and 'paused_on_error' not in events
+    await s.close()
