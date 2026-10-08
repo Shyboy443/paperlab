@@ -25,14 +25,18 @@ def _row(key, net, trades, status="ACTIVE", start=20.0, coin="ENA", sid=None):
             "role": control_of(key)[1], "curve": [], "open_positions": []}
 
 
-def _build(payloads):
-    saved = rv.program_payloads                       # restored: later test files build the real roster
+def _build(payloads, retire=False):
+    """The roster over fake programs. `retire=False` tests the stage mechanics on any program; `retire=True` also
+    applies the 2026-10-08 retirement (app/core/programs.py)."""
+    saved = rv.program_payloads, rv.bot_retired       # restored: later test files build the real roster
     rv.program_payloads = lambda state: {p: ({"experiment": {"experiment_id": p + "x"}, "leaderboard": rows}, NoStore())
                                          for p, rows in payloads.items()}
+    if not retire:
+        rv.bot_retired = lambda program, key: False
     try:
         return rv.build(None, now_ms=1)
     finally:
-        rv.program_payloads = saved
+        rv.program_payloads, rv.bot_retired = saved
 
 
 def test_names_are_unique_stable_and_shared_by_twins():
@@ -100,10 +104,13 @@ def test_after_a_restart_newer_bots_in_profit_fill_the_free_places():
 def test_the_v6_backtest_winners_are_always_on_screen():
     out = _build({"v6": [_row("V6.6-ARB-1H", 0.0, 0, coin="ARB", sid="V6.6"), _row("V6.6-XRP-1H", 0.0, 0, coin="XRP", sid="V6.6"),
                          _row("V6.2-XRP-1H", 0.0, 0, coin="XRP", sid="V6.2"), _row("V6.1-XRP-4H", 0.0, 0, coin="XRP", sid="V6.1"),
-                         _row("V6.6-XRP-1H+JEV", 0.0, 0, coin="XRP", sid="V6.6")]})
+                         _row("V6.6-XRP-1H+JEV", 0.0, 0, coin="XRP", sid="V6.6")],
+                  "v8": [_row("V8.3-ETH-5M", 5.0, 40)]}, retire=True)
     assert [x["key"] for x in out["ready"]] == ["V6.6-XRP-1H", "V6.6-ARB-1H"]        # best two-year backtest first
     assert out["ready"][0]["ready"] and out["ready"][0]["backtest"]["return_pct"] > out["ready"][1]["backtest"]["return_pct"]
-    assert {r["key"] for r in out["retired"]} == {"V6.2-XRP-1H", "V6.1-XRP-4H", "V6.6-XRP-1H+JEV"}
+    # V6.1 and the whole of V8 are out of the arena since 2026-10-08, however well they did
+    assert {r["key"] for r in out["retired"]} == {"V6.2-XRP-1H", "V6.6-XRP-1H+JEV"}
+    assert out["kpis"]["bots_total"] == 4 and "v8" not in out["kpis"]["programs"]
 
 
 def test_the_roster_route_is_get_only():

@@ -194,7 +194,7 @@ class TestWiring:
         from app.core import bot_names, roster_view
         from app.live.v6_service import V6ForwardService
         svc = V6ForwardService(str(tmp_path / "v12.db"), env={"V12_FORWARD_ENABLED": "true"}, program="V12")
-        assert svc.enabled and svc.cfg["jev"] is True
+        assert svc.retired and not svc.enabled and svc.cfg["jev"] is True  # retired 2026-10-08 (app/core/programs.py): never starts
         names = bot_names.assign([("v12", "V12.1-DAY"), ("v11", "V11.1-SCAN")])
         bizzy = names[("v12", "V12.1-DAY")]                     # a champion, like every bot
         assert bizzy in bot_names.NAMES

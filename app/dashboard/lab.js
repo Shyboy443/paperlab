@@ -40,7 +40,7 @@ function navButton(id, label, onclick) {
 // ---- Programs -------------------------------------------------------------------------------------------------
 // Verdicts follow the studies in docs/ (2-year backtest, V9/V11/V12/V13 studies).
 const LAB_PROGRAMS = [
-  { id: 'v6', name: 'V6 Forward Arena', desc: 'Hourly and 4-hour strategies that read Bybit positioning: funding, open interest, premium. V6.2 and V6.6 are the only families profitable over the 2-year backtest.', market: 'Bybit perps', tf: '1h / 4h', verdict: 'edge' },
+  { id: 'v6', name: 'V6 Forward Arena', desc: 'Hourly strategies that read Bybit positioning: funding, open interest, premium. Only the two families that made money over the 2-year backtest remain: V6.6 trend follower and V6.2 momentum rider. They trade about once every 10-15 days per bot.', market: 'Bybit perps', tf: '1h', verdict: 'edge' },
   { id: 'v7', name: 'V7 Active Challenger', desc: '15-minute trend and positioning strategies.', market: 'Bybit perps', tf: '15m', verdict: 'no-edge' },
   { id: 'v8', name: 'V8.3 Scalpers', desc: '5-minute VWAP snap-back with control, Jev and ladder twins.', market: 'Bybit perps', tf: '5m', verdict: 'no-edge' },
   { id: 'v9', name: 'V9 Stocks', desc: 'V8 scalp families on US stocks and ETFs, regular sessions only.', market: 'Alpaca IEX', tf: '5m', verdict: 'no-edge' },
@@ -49,6 +49,17 @@ const LAB_PROGRAMS = [
   { id: 'v13', name: 'V13 Snapback', desc: 'Maker snap-back to the 24-hour VWAP. The study failed on its test window.', market: '29 coins', tf: '15m', verdict: 'no-edge' },
   { id: 'v14', name: 'V14 HTF', desc: 'Copies of the leading bots that only trade with the 4h and daily trend.', market: 'Mixed', tf: '5m / 15m', verdict: 'research' },
   { id: 'video', name: 'Video breakout', desc: 'BTC 4-hour breakout taken from a trading video.', market: 'BTC', tf: '4h', verdict: 'research' },
+];
+// Switched off on 2026-10-08 (app/core/programs.py): average return per bot over the 2-year backtest.
+const LAB_RETIRED = [
+  ['V6.1 / V6.3 / V6.4 / V6.5', '-1.8% / -20.7% / -7.7% / -0.5%', 'lost, or barely traded (V6.5: 3 trades in 2 years); still computed inside the frozen V6 experiment, hidden'],
+  ['V7 15-minute trend', '-23.5% / -20.3%', 'lost to fees and spread'],
+  ['V8.3 scalpers', '-28.8%', 'lost to fees and spread'],
+  ['V9 stock scalpers', '-25.3% / -21.4% / -26.5%', 'no edge on stocks; replaced by day-trading research'],
+  ['V11 scanners', '-25% to -32%', 'lost to fees and spread'],
+  ['V12 Bizzy', '-63.5%', 'the day breakout loses after Bybit costs'],
+  ['V13 Snapback', '-16.7%', 'maker reversion failed its test window'],
+  ['V14 HTF copies', '-22% to -29%', 'the higher-timeframe filter did not rescue the copies'],
 ];
 const LAB_VERDICT = { edge: ['Shows an edge', 'up'], 'no-edge': ['No edge after costs', 'down'], research: ['Still researching', 'warn'] };
 
@@ -106,6 +117,13 @@ const ProgramsView = {
           h('span', { class: 'num ' + ((Number(best.return) || 0) >= 0 ? 'up' : 'down'), text: labPct(Number(best.return) || 0) }))));
     }
     grid.append(list);
+    grid.append(h('div', { class: 'card prog-retired' },
+      h('h2', { text: 'Switched off on 2026-10-08' }),
+      h('p', { class: 'sub', text: 'Every bot was replayed over two years with real fees. These families lost money, so they no longer trade; their history stays on the server.' }),
+      h('div', { class: 'tablewrap' }, h('table', { class: 'tbl' },
+        h('thead', {}, h('tr', {}, h('th', { text: 'Family' }), h('th', { class: 'num', text: '2-year return per bot' }), h('th', { text: 'Why' }))),
+        h('tbody', {}, LAB_RETIRED.map(([f, r, why]) => h('tr', {}, h('td', { text: f }), h('td', { class: 'num down', text: r }),
+          h('td', { class: 'wrapall', text: why }))))))));
   },
 };
 

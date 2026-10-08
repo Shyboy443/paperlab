@@ -21,6 +21,7 @@ import time
 from typing import Any, Mapping
 
 from app.core.bot_names import assign, control_of, describe
+from app.core.programs import bot_retired, program_retired
 
 log = logging.getLogger("paperlab.roster")
 
@@ -176,6 +177,8 @@ def build(state: Any, now_ms: int | None = None) -> dict[str, Any]:
     for prog, (p, st) in payloads.items():
         eid = p["experiment"]["experiment_id"]
         for r in p.get("leaderboard") or []:
+            if bot_retired(prog, str(r.get("key") or "")):        # out of the arena (app/core/programs.py)
+                continue
             rows.append({"program": prog, "program_label": PROGRAMS[prog], "experiment_id": eid,
                          "currency": CURRENCY.get(prog, "USDT"), **describe(prog, r, names),
                          "key": r.get("key"), "role": r.get("role") or "CONTROL", "strategy_id": r.get("strategy_id"),
@@ -287,7 +290,8 @@ def build(state: Any, now_ms: int | None = None) -> dict[str, Any]:
                      "roster_funding": usd(stage, "funding"), "roster_trades_24h": sum(x["trades_24h"] for x in stage),
                      "positions_open": sum(len(x["positions"]) for x in stage),
                      "all_net": usd(rows, "net"), "all_trades": sum(x["trades"] for x in rows),
-                     "programs": {p: PROGRAMS[p] for p in [*payloads, *(["video"] if breakout else [])]}},
+                     "programs": {p: PROGRAMS[p] for p in [*payloads, *(["video"] if breakout else [])]
+                                  if not program_retired(p)}},
             "rule": {"min_trades": CONTENDER_MIN_TRADES, "size": ROSTER_SIZE,
                      "text": f"On stage: bots in profit after every cost with at least {CONTENDER_MIN_TRADES} closed "
                              f"trades, best {ROSTER_SIZE} by return; free places go to newer bots in profit "

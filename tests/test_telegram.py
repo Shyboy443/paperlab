@@ -136,7 +136,8 @@ def test_the_chart_renders_a_png_from_stored_bars(tmp_path):
     assert short[:4] == b"\x89PNG"
 
 
-def test_replays_counterfactuals_and_filtered_programs_are_not_sent(tmp_path):
+def test_replays_counterfactuals_and_filtered_programs_are_not_sent(tmp_path, monkeypatch):
+    monkeypatch.setattr("app.core.programs.bot_retired", lambda p, k: False)   # the filter itself, on any program
     n = _notifier(tmp_path, env={"TELEGRAM_PROGRAMS": "v11,v12"})
     n.on_event("v11", {**OPEN, "rederived": True})
     n.on_event("v11", {**CLOSED, "counterfactual": True})
@@ -195,7 +196,8 @@ def test_the_vault_provider_takes_a_token_without_a_chat_id():
     assert Providers(env={}).keys("telegram", "data") is None
 
 
-def test_per_program_filter_v11_bizzy_and_v8_controls_only(tmp_path):
+def test_per_program_filter_v11_bizzy_and_v8_controls_only(tmp_path, monkeypatch):
+    monkeypatch.setattr("app.core.programs.bot_retired", lambda p, k: False)   # the filter itself, on any program
     assert tg.parse_filter("v11, v12 ,v8:CONTROL") == {"v11": set(), "v12": set(), "v8": {"CONTROL"}}
     assert tg.parse_filter("") is None
     n = _notifier(tmp_path, env={"TELEGRAM_FILTER": "v11,v12,v8:CONTROL"})

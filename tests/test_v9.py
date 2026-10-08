@@ -245,7 +245,7 @@ class TestWiring:
     def test_service_knows_v9_and_it_is_off_by_default(self, tmp_path):
         from app.live.v6_service import V6ForwardService
         svc = V6ForwardService(str(tmp_path / "v9.db"), env={}, program="V9")
-        assert svc.enabled is False and svc.cfg["jev"] is True and svc.health()["status"] == "DISABLED"
+        assert svc.enabled is False and svc.cfg["jev"] is True and svc.health()["status"] == "RETIRED"   # since 2026-10-08
         assert V6ForwardService(str(tmp_path / "v9.db"), env={"V9_FORWARD_JEV": "false"}, program="V9").cfg["jev"] is False
 
     def test_public_routes_are_get_only_and_take_stock_tickers(self):

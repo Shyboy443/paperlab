@@ -357,6 +357,9 @@ class TelegramNotifier:
         if kind not in ("open", "tp", "closed") or data.get("rederived") or data.get("counterfactual"):
             return
         role = str(data.get("role") or "CONTROL").upper()
+        from app.core.programs import bot_retired
+        if bot_retired(program, str(data.get("bot_key") or "")):          # out of the arena (app/core/programs.py)
+            return
         if self.rules is not None:
             if program not in self.rules or (self.rules[program] and role not in self.rules[program]):
                 return

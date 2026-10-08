@@ -26,7 +26,13 @@ const ARENA_PROGRAMS = {
   v7: { label: 'V7', sub: '15m trend · 6 h max hold', tf: '15m', step: 900_000, quote: 'USDT', ccy: 'USDT', book: '20 USDT' },
   v6: { label: 'V6', sub: '1h / 4h swing', tf: '1h', step: 3_600_000, quote: 'USDT', ccy: 'USDT', book: '20 USDT' },
 };
-const progOf = (p) => ARENA_PROGRAMS[p] || ARENA_PROGRAMS.v8;
+// Switched off on 2026-10-08 after the two-year backtest; only V6.2 / V6.6 stay in V6 (app/core/programs.py).
+const ARENA_RETIRED = ['v7', 'v8', 'v9', 'v11', 'v12', 'v13', 'v14'];
+const ARENA_RETIRED_V6 = ['V6.1', 'V6.3', 'V6.4', 'V6.5'];
+for (const p of ARENA_RETIRED) delete ARENA_PROGRAMS[p];
+const arenaBotRetired = (prog, key) => ARENA_RETIRED.includes(prog)
+  || (prog === 'v6' && ARENA_RETIRED_V6.includes(String(key || '').split('-')[0]));
+const progOf = (p) => ARENA_PROGRAMS[p] || ARENA_PROGRAMS.v6;
 const STATUS_KIND = { ACTIVE: 'muted', QUALIFIED: 'up', ELIMINATED: 'down' };
 // what each V11 scanner looks for (app/strategies/v11/scan.py)
 const SCAN_BLURB = {
@@ -244,7 +250,7 @@ class PositionBoxes {
 
 const Arena = {
   base: '/api/public/competition',
-  prog: 'v11', data: { video: null, v6: null, v7: null, v8: null, v9: null, v11: null, v12: null, v13: null, v14: null }, feed: { video: [], v6: [], v7: [], v8: [], v9: [], v11: [], v12: [], v13: [], v14: [] },
+  prog: 'v6', data: { video: null, v6: null, v7: null, v8: null, v9: null, v11: null, v12: null, v13: null, v14: null }, feed: { video: [], v6: [], v7: [], v8: [], v9: [], v11: [], v12: [], v13: [], v14: [] },
   seen: new Set(), coin: '', tf: '', view: 'dashboard', filter: 'all', botKey: '', bot: null, chartBot: {}, botCoin: {}, focus: null,
   charts: [], timer: null, clock: null, reloadTimer: null, drawTimer: null, loading: false,
 
@@ -320,6 +326,7 @@ const Arena = {
     if (typeof LivePrices !== 'undefined') LivePrices.schedule();
   },
   onEvent(prog, d) {
+    if (d && arenaBotRetired(prog, d.bot_key)) return;            // out of the arena
     this.addEvents(prog, [d], false);
     if (['open', 'closed', 'eliminated', 'system'].includes(d.type) && prog === this.prog) this.reloadSoon(1500);
     if (prog === this.prog && this.visible()) this.renderFeed();

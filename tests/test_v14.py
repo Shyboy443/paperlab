@@ -138,7 +138,7 @@ class TestWiring:
         from app.live.telegram import settings_text
         from app.live.v6_service import V6ForwardService
         svc = V6ForwardService(str(tmp_path / "v14.db"), env={"V14_FORWARD_ENABLED": "true"}, program="V14")
-        assert svc.enabled and svc.cfg["jev"] is False
+        assert svc.retired and not svc.enabled and svc.cfg["jev"] is False  # retired 2026-10-08 (app/core/programs.py): never starts
         ctl = [("v8", "V8.3-ARB-5M"), ("v11", "V11.2-SCAN"), ("v14", "V14.1-ARB-5M"), ("v14", "V14.3-SCAN")]
         names = bot_names.assign(ctl)
         assert names[("v14", "V14.1-ARB-5M")] == names[("v8", "V8.3-ARB-5M")] + " HTF"

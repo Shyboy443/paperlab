@@ -391,7 +391,7 @@ class TestRunnerAndView:
         from app.core import api_public
         from app.live.v6_service import V6ForwardService
         assert V6ForwardService(str(tmp_path / "x.db"), env={}, program="V11").enabled is False
-        assert V6ForwardService(str(tmp_path / "x.db"), env={"V11_FORWARD_ENABLED": "true"}, program="V11").enabled
+        assert not V6ForwardService(str(tmp_path / "x.db"), env={"V11_FORWARD_ENABLED": "true"}, program="V11").enabled  # retired 2026-10-08 (app/core/programs.py): never starts
         routes = [r for r in api_public.router.routes if r.path.endswith("/v11")]
         assert len(routes) == 1 and set(routes[0].methods) <= {"GET", "HEAD"}
 

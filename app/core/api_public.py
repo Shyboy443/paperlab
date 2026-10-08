@@ -587,10 +587,34 @@ async def v6_forward(request: Request) -> dict[str, Any]:
     from app.core.v6_view import v6_payload
     from app.live.v6_golive import annotate
     svc = _svc(request)
-    out = await asyncio.to_thread(v6_payload, svc.storage, getattr(request.app.state, "v6", None))
+    out = _drop_retired_v6(await asyncio.to_thread(v6_payload, svc.storage, getattr(request.app.state, "v6", None)))
     for r in out.get("leaderboard") or []:
         annotate(r)                   # which V6.2 / V6.6 bots the operator may take live, and their backtest
     return {**out, "read_only": True}
+
+
+def _drop_retired_v6(out: dict[str, Any]) -> dict[str, Any]:
+    """V6's unproven families keep running inside its frozen experiment but are out of the arena (app/core/programs.py):
+    drop their rows, positions, pairs and activity, and recount the headline numbers from the bots that remain."""
+    from app.core.programs import RETIRED_V6_FAMILIES, bot_retired
+    out = dict(out)
+    lb = [r for r in out.get("leaderboard") or [] if not bot_retired("v6", str(r.get("key") or ""))]
+    out["leaderboard"] = lb
+    for k, field in (("positions", "bot_key"), ("activity", "bot_key"), ("pairs", "control_key")):
+        out[k] = [x for x in out.get(k) or [] if not bot_retired("v6", str(x.get(field) or x.get("key") or ""))]
+    out["families"] = [f for f in out.get("families") or []           # "V6.1 HOURLY", "V6.1 SWING", ...
+                       if str(f.get("family") or "").split(" ")[0] not in RETIRED_V6_FAMILIES]
+    hero = dict(out.get("hero") or {})
+    hero.update(bots=len(lb), active_bots=len(lb), positions_open=len(out["positions"]),
+                controls=sum(1 for r in lb if (r.get("role") or "CONTROL") == "CONTROL"),
+                jev_bots=sum(1 for r in lb if r.get("role") == "JEV"),
+                trades_24h=sum(int(r.get("trades_24h") or 0) for r in lb),
+                total_virtual_equity=round(sum(float(r.get("equity_now") or 0) for r in lb), 4),
+                start_equity_total=round(sum(float(r.get("start_equity") or 0) for r in lb), 4),
+                net_pnl=round(sum(float(r.get("net_now") or 0) for r in lb), 6))
+    out["hero"] = hero
+    out["retired_families"] = sorted(RETIRED_V6_FAMILIES)
+    return out
 
 
 @router.get("/v7")

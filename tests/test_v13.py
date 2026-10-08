@@ -220,7 +220,7 @@ class TestFieldAndWiring:
         from app.core.api_public import router
         from app.live.v6_service import V6ForwardService
         svc = V6ForwardService(str(tmp_path / "v13.db"), env={"V13_FORWARD_ENABLED": "true"}, program="V13")
-        assert svc.enabled and svc.cfg["jev"] is False
+        assert svc.retired and not svc.enabled and svc.cfg["jev"] is False  # retired 2026-10-08 (app/core/programs.py): never starts
         names = bot_names.assign([("v13", "V13.1-SNAP"), ("v11", "V11.1-SCAN")])
         bounce = names[("v13", "V13.1-SNAP")]                   # a champion, like every bot
         assert bounce in bot_names.NAMES

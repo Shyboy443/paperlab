@@ -41,13 +41,17 @@ class V6ForwardService:
         if program not in ("V6", "V7", "V8", "V9", "V11", "V12", "V13", "V14"):
             raise ValueError("unknown forward program")
         self.program = program
-        self.enabled = _flag(e.get(program + "_FORWARD_ENABLED"), False)
+        from app.core.programs import program_retired
+        # A retired program never starts, whatever its env switch says (app/core/programs.py).
+        self.retired = program_retired(program)
+        self.enabled = _flag(e.get(program + "_FORWARD_ENABLED"), False) and not self.retired
         jev = {"V6": _flag(e.get("V6_FORWARD_JEV"), True), "V8": _flag(e.get("V8_FORWARD_JEV"), True),
                "V9": _flag(e.get("V9_FORWARD_JEV"), True), "V11": _flag(e.get("V11_FORWARD_JEV"), True),
                "V12": _flag(e.get("V12_FORWARD_JEV"), True)}.get(program, False)
         self.cfg = {"db": db_path, "jev": jev, "program": program}
         self.bus = bus
-        self.status: dict[str, Any] = {"status": "DISABLED" if not self.enabled else "STARTING"}
+        self.status: dict[str, Any] = {"status": "RETIRED" if self.retired else "DISABLED" if not self.enabled
+                                       else "STARTING"}
         self.started_at = 0.0
         self.restarts = 0
         self._proc: Any = None
