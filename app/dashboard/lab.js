@@ -56,12 +56,8 @@ const LAB_PROGRAMS = [
 const LAB_RETIRED = [
   ['V6.1 / V6.3 / V6.4 / V6.5', '-1.8% / -20.7% / -7.7% / -0.5%', 'lost, or barely traded (V6.5: 3 trades in 2 years); still computed inside the frozen V6 experiment, hidden'],
   ['V7 15-minute trend', '-23.5% / -20.3%', 'lost to fees and spread'],
-  ['V8.3 scalpers', '-28.8%', 'lost to fees and spread'],
   ['V9 stock scalpers', '-25.3% / -21.4% / -26.5%', 'no edge on stocks; replaced by day-trading research'],
-  ['V11 scanners', '-25% to -32%', 'lost to fees and spread'],
   ['V12 Bizzy', '-63.5%', 'the day breakout loses after Bybit costs'],
-  ['V13 Snapback', '-16.7%', 'maker reversion failed its test window'],
-  ['V14 HTF copies', '-22% to -29%', 'the higher-timeframe filter did not rescue the copies'],
 ];
 const LAB_VERDICT = { edge: ['Shows an edge', 'up'], 'no-edge': ['No edge after costs', 'down'], research: ['Still researching', 'warn'] };
 

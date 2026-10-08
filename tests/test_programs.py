@@ -7,12 +7,14 @@ from app.live.v6_service import V6ForwardService
 
 
 def test_only_v6_2_and_v6_6_stay_in_the_arena():
-    assert not program_retired("v6") and all(program_retired(p) for p in ("v7", "V8", "v9", "v11", "v12", "v13", "v14"))
+    assert not program_retired("v6") and all(program_retired(p) for p in ("v7", "v9", "v12"))
+    assert not any(program_retired(p) for p in ("V8", "v11", "v13", "v14"))       # scalpers back on 2026-10-09
     for key in ("V6.6-XRP-1H", "V6.6-XRP-1H+JEV", "V6.2-DOGE-1H"):
         assert not bot_retired("v6", key)
     for key in ("V6.1-ARB-1H", "V6.1-ARB-4H", "V6.3-ENA-1H+JEV", "V6.4-XRP-1H", "V6.5-DOGE-1H"):
         assert bot_retired("v6", key)
-    assert bot_retired("v8", "V8.3-ETH-5M") and not bot_retired("video", "BTC-4H-BREAKOUT")
+    assert bot_retired("v12", "V12.1-ETH-15M") and not bot_retired("v8", "V8.3-ETH-5M")
+    assert not bot_retired("video", "BTC-4H-BREAKOUT")
 
 
 def test_a_retired_program_never_starts_whatever_its_switch(tmp_path):
@@ -45,7 +47,7 @@ def test_telegram_ignores_retired_bots():
     import queue
     tg.q, tg.rules, tg.programs, tg.roles, tg.stats = queue.Queue(), None, None, None, {"dropped": 0}
     tg.on_event("v6", {"type": "open", "bot_key": "V6.1-ARB-1H", "role": "CONTROL"})
-    tg.on_event("v8", {"type": "open", "bot_key": "V8.3-ETH-5M", "role": "CONTROL"})
+    tg.on_event("v12", {"type": "open", "bot_key": "V12.1-ETH-15M", "role": "CONTROL"})
     assert tg.q.empty()
     tg.on_event("v6", {"type": "open", "bot_key": "V6.6-XRP-1H", "role": "CONTROL"})
     assert tg.q.qsize() == 1

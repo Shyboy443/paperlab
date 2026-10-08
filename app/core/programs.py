@@ -14,7 +14,10 @@ with their Jev twins -- and switch off everything that lost or barely traded.
 from __future__ import annotations
 
 RETIRED_ON = "2026-10-08"
-RETIRED_PROGRAMS = frozenset({"v7", "v8", "v9", "v11", "v12", "v13", "v14"})
+# 2026-10-09 the operator turned the scalpers back on as paper bots ("scalper bots are not doing anything at all, fix
+# that"): V8 / V11 / V13 / V14 run again, still labelled no edge after costs. V7, V9 and V12 stay off.
+REACTIVATED = frozenset({"v8", "v11", "v13", "v14"})
+RETIRED_PROGRAMS = frozenset({"v7", "v9", "v12"})
 RETIRED_V6_FAMILIES = frozenset({"V6.1", "V6.3", "V6.4", "V6.5"})
 WHY = ("Switched off on 2026-10-08: the two-year backtest lost money (V6.2 and V6.6 were the only families that made "
        "money).")

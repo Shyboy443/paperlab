@@ -29,7 +29,7 @@ const ARENA_PROGRAMS = {
   v6: { label: 'V6', sub: '1h / 4h swing', tf: '1h', step: 3_600_000, quote: 'USDT', ccy: 'USDT', book: '20 USDT' },
 };
 // Switched off on 2026-10-08 after the two-year backtest; only V6.2 / V6.6 stay in V6 (app/core/programs.py).
-const ARENA_RETIRED = ['v7', 'v8', 'v9', 'v11', 'v12', 'v13', 'v14'];
+const ARENA_RETIRED = ['v7', 'v9', 'v12'];               // V8 / V11 / V13 / V14 back on since 2026-10-09
 const ARENA_RETIRED_V6 = ['V6.1', 'V6.3', 'V6.4', 'V6.5'];
 for (const p of ARENA_RETIRED) delete ARENA_PROGRAMS[p];
 const arenaBotRetired = (prog, key) => ARENA_RETIRED.includes(prog)
