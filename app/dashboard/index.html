@@ -253,10 +253,26 @@
           the paper bake-off</b> — only the selected book reaches the exchange either way.</p>
         <div id="solo-msg" class="msg"></div>
         <ul id="live-checks" class="checks"></ul>
-        <div class="btn-row">
-          <input id="live-word" type="text" placeholder="type GO LIVE" autocomplete="off" spellcheck="false">
-          <button id="live-arm" class="btn danger" type="button" disabled>Arm live trading</button>
-          <button id="live-disarm" class="btn" type="button" hidden>Disarm (flatten + back to paper)</button>
+        <div id="live-stepper" class="stepper" hidden>
+          <div class="stepper-steps">
+            <div class="step done"><span class="num">1</span><span class="lbl">Pick strategy</span></div>
+            <div class="step done"><span class="num">2</span><span class="lbl">All checks green</span></div>
+            <div class="step done"><span class="num">3</span><span class="lbl">Connect exchange</span></div>
+            <div class="step active"><span class="num">4</span><span class="lbl">Hold to arm</span></div>
+          </div>
+          <div class="hold-wrap">
+            <button id="live-arm" class="hold-btn" type="button" disabled>
+              <svg class="hold-ring" viewBox="0 0 100 100" aria-hidden="true">
+                <circle class="hold-ring-track" cx="50" cy="50" r="46" />
+                <circle class="hold-ring-fill" cx="50" cy="50" r="46" />
+              </svg>
+              <span class="hold-label">
+                <span class="hold-action">Hold to arm live trading</span>
+                <span class="hold-progress" id="live-hold-progress">3s</span>
+              </span>
+            </button>
+          </div>
+          <div id="live-hold-hint" class="hold-hint">Press and hold for 3 seconds. Release early to cancel.</div>
         </div>
         <div id="live-msg" class="msg"></div>
       </div>

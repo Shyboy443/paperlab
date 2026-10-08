@@ -175,6 +175,46 @@ tr.winner { background: rgba(248, 81, 73, .06); }
 .checks .nm { min-width: 92px; color: var(--text); }
 .checks .why { color: var(--warn); flex: 1 1 100%; padding-left: 20px; }
 
+/* ---- ARM LIVE: stepper + hold-to-arm button (PR1) --------------------------------- */
+.stepper { margin-top: 14px; padding: 12px 12px 14px; border: 1px solid var(--line);
+  border-radius: 6px; background: linear-gradient(180deg, oklch(0.86 0.17 150 / 4%), transparent 50%), var(--panel-2); }
+.stepper-steps { display: flex; align-items: center; gap: 6px; margin-bottom: 14px; }
+.stepper-steps .step { display: inline-flex; align-items: center; gap: 6px; font: 500 11.5px var(--sans);
+  color: var(--muted); padding: 4px 10px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); white-space: nowrap; }
+.stepper-steps .step .num { font: 700 11px var(--mono); width: 16px; height: 16px; border-radius: 50%;
+  display: inline-grid; place-items: center; background: var(--line); color: var(--muted); }
+.stepper-steps .step.done { color: var(--up); border-color: color-mix(in oklab, var(--up) 45%, transparent);
+  background: color-mix(in oklab, var(--up) 8%, transparent); }
+.stepper-steps .step.done .num { background: var(--up); color: var(--primary-fg); }
+.stepper-steps .step.active { color: var(--text); border-color: var(--primary);
+  background: color-mix(in oklab, var(--primary) 12%, transparent); box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 18%, transparent); }
+.stepper-steps .step.active .num { background: var(--primary); color: var(--primary-fg); }
+.hold-wrap { display: grid; place-items: center; padding: 8px 0 6px; }
+.hold-btn { position: relative; display: grid; place-items: center; width: 200px; height: 200px;
+  border-radius: 50%; border: 1px solid var(--line); background: var(--surface);
+  color: var(--text); cursor: pointer; transition: transform .12s ease, border-color .15s ease, background .15s ease, box-shadow .2s ease;
+  font: inherit; padding: 0; }
+.hold-btn:hover:not(:disabled) { border-color: color-mix(in oklab, var(--down) 50%, var(--line));
+  background: color-mix(in oklab, var(--down) 8%, var(--surface)); }
+.hold-btn:disabled { cursor: not-allowed; opacity: .55; }
+.hold-btn:active:not(:disabled) { transform: scale(.98); }
+.hold-btn[data-armed="true"] { border-color: var(--up); background: color-mix(in oklab, var(--up) 14%, var(--surface));
+  box-shadow: 0 0 0 6px color-mix(in oklab, var(--up) 18%, transparent), 0 0 28px var(--glow); }
+.hold-ring { position: absolute; inset: 6px; width: calc(100% - 12px); height: calc(100% - 12px);
+  transform: rotate(-90deg); pointer-events: none; }
+.hold-ring-track { fill: none; stroke: var(--line); stroke-width: 3; }
+.hold-ring-fill { fill: none; stroke: var(--down); stroke-width: 4; stroke-linecap: round;
+  stroke-dasharray: 289.03; /* 2 * PI * 46 */
+  stroke-dashoffset: 289.03; transition: stroke-dashoffset .08s linear, stroke .15s ease; }
+.hold-btn[data-pressing="true"] .hold-ring-fill { stroke: var(--down); }
+.hold-btn[data-pressing="true"][data-progress="100"] .hold-ring-fill { stroke: var(--up); }
+.hold-label { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; z-index: 1;
+  text-align: center; padding: 0 24px; pointer-events: none; }
+.hold-action { font: 700 13px var(--sans); letter-spacing: .04em; color: var(--text); line-height: 1.25; }
+.hold-progress { font: 600 12px var(--mono); color: var(--muted); }
+.hold-hint { text-align: center; font-size: 11.5px; color: var(--muted); margin-top: 4px; }
+@media (max-width: 640px) { .hold-btn { width: 168px; height: 168px; } }
+
 /* ---- tiles, bars, kv ---------------------------------------------------------------------------------- */
 .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 8px; }
 .tile { background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }

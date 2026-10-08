@@ -519,10 +519,12 @@ const Tape = {
 
 // ---- Controls tab ------------------------------------------------------------------------------------
 const EXPORTS = ['fills', 'signals', 'orders', 'equity', 'events', 'strategy_daily', 'analysis_notes'];
-/** ARM LIVE panel. Deliberately awkward: the phrase must be typed, every precondition must be green, and
- *  the confirm dialog restates what is about to happen. Nothing here ever arms without a human click. */
+/** ARM LIVE panel. Pre-flight checks must be green and a strategy chosen; then the operator holds a
+ *  3s button (the physical commitment is the confirmation -- no typed phrase, no modal). */
+const HOLD_MS = 3000;       // real hold duration before arming
+const RING_LEN = 289.03;    // 2*PI*46
 const Live = {
-  status: null,
+  status: null, hold: { active: false, started: 0, raf: 0, triggered: false },
   pick() { const el = $('#solo-pick'); return el && el.value ? el.value : ''; },
   async load() {
     // Evaluate the checks against the strategy selected for live trading, not "everything enabled" -
@@ -569,25 +571,84 @@ const Live = {
         + ' · available ' + fmtMoney(s.wallet.available));
       $('#cred-msg').className = 'msg ok';
     }
-    const word = $('#live-word'), arm = $('#live-arm'), msg = $('#live-msg');
-    word.hidden = arm.hidden = !!s.live;
+    // The stepper + hold button: shown only when not yet armed. The arm button stays disabled until
+    // every check is green and a strategy is picked -- same gating as before, no typed phrase.
+    const stepper = $('#live-stepper');
+    stepper.hidden = !!s.live;
     $('#live-disarm').hidden = !s.live;
-    const typed = word.value.trim().toUpperCase() === (s.phrase || 'GO LIVE');
-    arm.disabled = !s.ready || !typed || !this.pick();
-    word.placeholder = 'type ' + (s.phrase || 'GO LIVE');
-    // A disabled button that does nothing when clicked is indistinguishable from a broken one, so say why.
-    if (!s.live && arm.disabled && !msg.classList.contains('bad')) {
+    const arm = $('#live-arm');
+    arm.disabled = !s.ready || !this.pick();
+    const msg = $('#live-msg'), progress = $('#live-hold-progress');
+    if (progress) setText(progress, HOLD_MS / 1000 + 's');
+    if (!s.live && arm.disabled) {
       const bad = (s.checks || []).filter((c) => !c.ok).map((c) => c.id);
       setText(msg, bad.length ? 'cannot arm yet — ' + bad.join(', ') + ' (see the red rows above)'
-        : 'type ' + (s.phrase || 'GO LIVE') + ' to enable the button');
+        : 'pick a strategy to enable the arm button');
       msg.className = 'msg warn';
+    } else if (!s.live) {
+      setText(msg, 'all checks pass — hold the button for ' + (HOLD_MS / 1000) + ' seconds to arm');
+      msg.className = 'msg ok';
     }
-    arm.title = arm.disabled ? 'blocked: ' + ((s.checks || []).filter((c) => !c.ok).map((c) => c.id).join(', ')
-      || 'type the phrase') : 'send real orders';
+    arm.title = arm.disabled ? 'blocked: ' + (((s.checks || []).filter((c) => !c.ok).map((c) => c.id).join(', ')) || 'pick a strategy')
+      : 'press and hold to arm live trading';
+  },
+  /** Tick the ring + label while a hold is in progress. requestAnimationFrame so it tracks the actual
+   *  elapsed time and stops cleanly on release. */
+  holdTick(btn) {
+    const H = this.hold;
+    if (!H.active) return;
+    const elapsed = Date.now() - H.started;
+    const pct = Math.min(1, elapsed / HOLD_MS);
+    btn.dataset.progress = Math.round(pct * 100);
+    const ring = btn.querySelector('.hold-ring-fill');
+    ring.style.strokeDashoffset = String(RING_LEN * (1 - pct));
+    const remaining = Math.max(0, Math.ceil((HOLD_MS - elapsed) / 100) / 10).toFixed(1);
+    setText($('#live-hold-progress'), remaining + 's');
+    if (pct >= 1) { H.triggered = true; this.holdEnd(btn, true); return; }
+    H.raf = requestAnimationFrame(() => this.holdTick(btn));
+  },
+  holdStart(btn) {
+    if (btn.disabled) return;
+    this.hold = { active: true, started: Date.now(), raf: 0, triggered: false };
+    btn.dataset.pressing = 'true'; btn.dataset.progress = '0';
+    btn.querySelector('.hold-ring-fill').style.strokeDashoffset = String(RING_LEN);
+    setText($('#live-hold-progress'), (HOLD_MS / 1000).toFixed(1) + 's');
+    this.hold.raf = requestAnimationFrame(() => this.holdTick(btn));
+  },
+  holdEnd(btn, completed) {
+    cancelAnimationFrame(this.hold.raf);
+    btn.dataset.pressing = 'false';
+    btn.querySelector('.hold-ring-fill').style.strokeDashoffset = String(RING_LEN);
+    if (completed && this.hold.triggered) {
+      btn.dataset.armed = 'true';
+      setText(btn.querySelector('.hold-action'), 'Arming…');
+      this.hold = { active: false, started: 0, raf: 0, triggered: false };
+      this.commit();
+      setTimeout(() => { btn.dataset.armed = 'false'; this.paint(); }, 1500);
+    } else {
+      this.hold = { active: false, started: 0, raf: 0, triggered: false };
+      setText($('#live-hold-progress'), (HOLD_MS / 1000) + 's');
+    }
+  },
+  async commit() {
+    const s = this.status || {}, msg = $('#live-msg'), sid = this.pick();
+    try {
+      const r = await post('/api/live/arm', { strategies: [sid] });
+      setText(msg, 'ARMED — real orders are live' + (r.wallet ? ' — wallet ' + fmtMoney(r.wallet.wallet) : ''));
+      msg.className = 'msg bad'; await this.load(); Poll.tick();
+    } catch (e) { setText(msg, e.message); msg.className = 'msg bad'; }
   },
   init() {
-    const word = $('#live-word'), msg = $('#live-msg');
-    word.addEventListener('input', () => this.paint());
+    const arm = $('#live-arm');
+    // Pointer events cover mouse + touch + pen; we also honour Space for keyboard a11y.
+    const onDown = (e) => { e.preventDefault(); this.holdStart(arm); };
+    const onUp = () => { if (this.hold.active) this.holdEnd(arm, false); };
+    arm.addEventListener('pointerdown', onDown);
+    document.addEventListener('pointerup', onUp);
+    document.addEventListener('pointercancel', onUp);
+    arm.addEventListener('keydown', (e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); this.holdStart(arm); } });
+    arm.addEventListener('keyup', (e) => { if (e.key === ' ' || e.key === 'Enter') onUp(); });
+    const msg = $('#live-msg');
     $('#cred-save').addEventListener('click', async () => {
       const k = $('#cred-key'), sec = $('#cred-secret'), cmsg = $('#cred-msg');
       setText(cmsg, 'verifying against the exchange…'); cmsg.className = 'msg';
@@ -619,20 +680,6 @@ const Live = {
         await post('/api/live/credentials/clear', {});
         setText(cmsg, 'disconnected'); cmsg.className = 'msg'; await this.load();
       } catch (e) { setText(cmsg, e.message); cmsg.className = 'msg bad'; }
-    });
-    $('#live-arm').addEventListener('click', async () => {
-      const s = this.status || {};
-      const ok = await confirmDialog('Send ' + this.pick() + ' orders for real?',
-        this.pick() + ' will place REAL orders on ' + (s.venue || 'the exchange') + ' with REAL funds, '
-        + 'sized by the risk settings. Every other strategy keeps paper trading and never reaches the '
-        + 'exchange. You can disarm at any time, and KILL ALL still flattens everything.',
-        { kind: 'warn', okText: 'Arm live trading' });
-      if (!ok) return;
-      try {
-        const r = await post('/api/live/arm', { phrase: word.value.trim(), strategies: [this.pick()] });
-        setText(msg, 'ARMED — real orders are live' + (r.wallet ? ' — wallet ' + fmtMoney(r.wallet.wallet) : ''));
-        msg.className = 'msg bad'; word.value = ''; await this.load(); Poll.tick();
-      } catch (e) { setText(msg, e.message); msg.className = 'msg bad'; }
     });
     $('#live-disarm').addEventListener('click', async () => {
       if (!(await confirmDialog('Back to paper?', 'Flattens the exchange and returns to simulated fills.',
