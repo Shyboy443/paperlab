@@ -151,6 +151,7 @@ const Roster = {
     const snaps = (d.scanners || []).filter((x) => x.program === 'v13');
     const htfs = (d.scanners || []).filter((x) => x.program === 'v14');
     const breakouts = (d.scanners || []).filter((x) => x.program === 'video');
+    const conds = (d.scanners || []).filter((x) => x.program === 'v16');
     const scanners = scan.length ? [h('div', { class: 'rs-section' }, h('h2', { text: 'The scanners · 30 coins each' }),
       h('span', { class: 'sub', text: 'always on screen · each bot trades up to 8 coins at once · TP1 closes 25% (stop → past entry + fees) · TP2 50% (stop → TP1) · TP3 the last 25%' })),
     h('div', { class: 'rs-cards' }, scan.map((x) => this.card(x)))] : [];
@@ -160,6 +161,9 @@ const Roster = {
     if (snaps.length) scanners.push(h('div', { class: 'rs-section' }, h('h2', { text: 'Bounce · limit-order snapback' }),
       h('span', { class: 'sub', text: 'always on screen · rests post-only LIMIT orders where 29 coins stretch far from their 24 h average, so it pays the maker fee instead of the taker fee · up to 4 coins at once · unproven: its pre-registered back-test FAILED (every setting lost on the second half)' })),
     h('div', { class: 'rs-cards' }, snaps.map((x) => this.card(x))));
+    if (conds.length) scanners.push(h('div', { class: 'rs-section' }, h('h2', { text: 'Conditional bots · only in choppy markets' }),
+      h('span', { class: 'sub', text: 'always on screen · the coin-by-coin study’s survivors: V6.6 on BTC and V6.1 on UNI, entering only while Bitcoin is choppy (neither above a rising nor below a falling 50-day average) · profitable on year 1, year 2 and an untouched holdout year, but only 3 of 30 coins passed (luck expects 1.5): a labelled experiment · 1,000 USDT paper books' })),
+    h('div', { class: 'rs-cards' }, conds.map((x) => this.card(x))));
     if (htfs.length) scanners.push(h('div', { class: 'rs-section' }, h('h2', { text: 'HTF copies · the best strategies, higher timeframes first' }),
       h('span', { class: 'sub', text: 'always on screen · the leading strategies (V8.3 snap-back, V11.1 / V11.2 scanners, V13 Snapback) re-run with one extra rule: enter only in the direction of the 4h and daily trend · each runs next to its original as an A/B test' })),
     h('div', { class: 'rs-cards' }, htfs.map((x) => this.card(x))));

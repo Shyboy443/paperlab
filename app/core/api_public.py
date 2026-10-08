@@ -766,6 +766,19 @@ async def v13_forward(request: Request) -> dict[str, Any]:
     return {**result, "read_only": True}
 
 
+@router.get("/v16")
+async def v16_forward(request: Request) -> dict[str, Any]:
+    """V16 CONDITIONAL: the coin-by-coin study's two CHOP-only bots (labelled experiments). Paper only, read-only."""
+    import asyncio
+    from app.core.v6_view import v6_payload
+    st = getattr(request.app.state, "v16_storage", None)
+    if st is None:
+        return {"ok": False, "error": "V16 is not running", "read_only": True}
+    out = await asyncio.to_thread(v6_payload, st, getattr(request.app.state, "v16", None))
+    return {**out, "experiment_label": "LABELLED EXPERIMENT: 3 of 30 coins passed, luck expects 1.5",
+            "read_only": True}
+
+
 @router.get("/v14")
 async def v14_forward(request: Request) -> dict[str, Any]:
     """V14 HTF: copies of the best strategies that check the higher timeframes before every entry. Read-only."""
@@ -812,7 +825,8 @@ async def arena_bot(request: Request, program: str, key: str) -> dict[str, Any]:
           "v11": getattr(request.app.state, "v11_storage", None),
           "v12": getattr(request.app.state, "v12_storage", None),
           "v13": getattr(request.app.state, "v13_storage", None),
-          "v14": getattr(request.app.state, "v14_storage", None)}.get(program)
+          "v14": getattr(request.app.state, "v14_storage", None),
+          "v16": getattr(request.app.state, "v16_storage", None)}.get(program)
     if st is None:
         return {"ok": False, "error": "unknown or stopped program"}
     return {**(await asyncio.to_thread(v6_bot, st, key, getattr(request.app.state, program, None))), "read_only": True}
@@ -833,7 +847,8 @@ async def arena_candles(request: Request, program: str, symbol: str = Query(...,
               "v11": lambda: getattr(request.app.state, "v11_storage", None),
               "v12": lambda: getattr(request.app.state, "v12_storage", None),
               "v13": lambda: getattr(request.app.state, "v13_storage", None),
-              "v14": lambda: getattr(request.app.state, "v14_storage", None)}
+              "v14": lambda: getattr(request.app.state, "v14_storage", None),
+              "v16": lambda: getattr(request.app.state, "v16_storage", None)}
     if program not in stores:
         return {"ok": False, "error": "unknown program"}
     st = stores[program]()

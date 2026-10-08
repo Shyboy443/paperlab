@@ -28,9 +28,9 @@ log = logging.getLogger("paperlab.roster")
 CONTENDER_MIN_TRADES = 3
 ROSTER_SIZE = 6
 CACHE_S = 15.0
-PROGRAMS = {"video": "Video breakout", "v14": "V14 HTF", "v13": "V13 Snapback", "v12": "V12 Bizzy", "v11": "V11 Scan", "v8": "V8 Scalp", "v9": "V9 Stocks", "v7": "V7", "v6": "V6"}
+PROGRAMS = {"video": "Video breakout", "v16": "V16 Conditional", "v14": "V14 HTF", "v13": "V13 Snapback", "v12": "V12 Bizzy", "v11": "V11 Scan", "v8": "V8 Scalp", "v9": "V9 Stocks", "v7": "V7", "v6": "V6"}
 CURRENCY = {"v9": "USD"}
-PINNED = ("video", "v11", "v12", "v13", "v14")              # always on screen, in their own section
+PINNED = ("video", "v11", "v12", "v13", "v14", "v16")              # always on screen, in their own section
 POSITION_KEYS = ("symbol", "side", "qty", "entry", "mark", "upnl", "stop", "target", "entry_ts", "time_stop_ts", "tps")
 
 _cache: dict[str, Any] = {"at": 0.0, "payload": None}
@@ -52,7 +52,8 @@ def _sources(state: Any) -> dict[str, tuple[Any, Any]]:
             "v11": (getattr(state, "v11_storage", None), getattr(state, "v11", None)),
             "v12": (getattr(state, "v12_storage", None), getattr(state, "v12", None)),
             "v13": (getattr(state, "v13_storage", None), getattr(state, "v13", None)),
-            "v14": (getattr(state, "v14_storage", None), getattr(state, "v14", None))}
+            "v14": (getattr(state, "v14_storage", None), getattr(state, "v14", None)),
+            "v16": (getattr(state, "v16_storage", None), getattr(state, "v16", None))}
 
 
 def program_payloads(state: Any) -> dict[str, tuple[dict[str, Any], Any]]:

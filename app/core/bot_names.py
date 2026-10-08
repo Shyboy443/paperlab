@@ -71,6 +71,9 @@ def control_of(key: str) -> tuple[str, str]:
     return key, "CONTROL"
 
 
+LATE = frozenset({"v16"})
+
+
 def _fnv1a(text: str) -> int:
     """32-bit FNV-1a over UTF-16 code units: the same number the Lovable dashboard's JavaScript hash gives."""
     h = 2166136261
@@ -87,7 +90,8 @@ def assign(controls: Iterable[tuple[str, str]]) -> dict[tuple[str, str], str]:
     take part in the claiming (as the Lovable app's did), but are shown as "<the original's name> HTF"."""
     taken: set[str] = set()
     out: dict[tuple[str, str], str] = {}
-    for prog, key in sorted(set(controls), key=lambda pk: f"{pk[0]}--{pk[1]}"):
+    # Programs added after the Lovable naming (LATE) claim names last, so they never move an existing bot's champion.
+    for prog, key in sorted(set(controls), key=lambda pk: (pk[0] in LATE, f"{pk[0]}--{pk[1]}")):
         i = _fnv1a(f"{prog}--{key}") % len(NAMES)
         for step in range(len(NAMES)):
             name = NAMES[(i + step) % len(NAMES)]

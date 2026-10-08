@@ -1,0 +1,72 @@
+{
+ "protocol": "V16_CONDITIONAL_PAPER_V1",
+ "baseline_fingerprint": "93f9c48b67163c69",
+ "code": {
+  "app.competition.v16_config": "5a883ed8618c",
+  "app.live.v16_worker": "624341cc2991"
+ },
+ "field": [
+  [
+   "V6.6",
+   "BTC",
+   "CHOP"
+  ],
+  [
+   "V6.1",
+   "UNI",
+   "CHOP"
+  ]
+ ],
+ "starting_balance": 1000.0,
+ "condition": {
+  "sma_days": 50,
+  "slope_days": 5,
+  "source": "BTCUSDT daily close, UTC"
+ },
+ "breadth_set": [
+  "BTCUSDT",
+  "ETHUSDT",
+  "SOLUSDT",
+  "XRPUSDT",
+  "ZECUSDT",
+  "HYPEUSDT",
+  "DOGEUSDT",
+  "ENAUSDT",
+  "NEARUSDT",
+  "ADAUSDT",
+  "ARBUSDT",
+  "SUIUSDT",
+  "1000PEPEUSDT",
+  "PUMPFUNUSDT",
+  "UNIUSDT",
+  "LINKUSDT"
+ ],
+ "rules": {
+  "BTCUSDT": {
+   "symbol": "BTCUSDT",
+   "tick": 0.1,
+   "step": 0.001,
+   "min_qty": 0.001,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 3,
+   "qty_precision": 5
+  },
+  "UNIUSDT": {
+   "symbol": "UNIUSDT",
+   "tick": 0.001,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 5,
+   "qty_precision": 3
+  }
+ },
+ "funding_interval_min": {
+  "BTCUSDT": 480,
+  "UNIUSDT": 480
+ },
+ "study": "docs/V16_COIN_STUDY.json",
+ "fingerprint": "b1b04f22fb609497"
+}

@@ -274,11 +274,20 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         realtime.v14 = v14
         v14.start()
         log.info("V14 HTF paper: %s", v14.health()["status"])
+        # V16 CONDITIONAL: the coin-by-coin study's two CHOP-only survivors (BTC V6.6, UNI V6.1), paper, own database.
+        v16_storage = Storage(str(settings.db_path.with_name("v16-forward.db")))
+        v16 = V6ForwardService(str(settings.db_path.with_name("v16-forward.db")), bus=realtime.bus, program="V16")
+        app.state.v16 = v16
+        app.state.v16_storage = v16_storage
+        realtime.v16 = v16
+        v16.start()
+        log.info("V16 conditional paper: %s", v16.health()["status"])
         # TELEGRAM: every live paper trade, TP hit and close to the operator's bot (token from the encrypted vault).
         from app.core.roster_view import roster_payload
         from app.live.telegram import TelegramNotifier
         from app.live.trade_chart import chart_for_open
-        program_svc = {"v6": v6, "v7": v7, "v8": v8, "v9": v9, "v11": v11, "v12": v12, "v13": v13, "v14": v14}
+        program_svc = {"v6": v6, "v7": v7, "v8": v8, "v9": v9, "v11": v11, "v12": v12, "v13": v13, "v14": v14,
+                       "v16": v16}
         program_db = {p: str(settings.db_path if p == "v6" else settings.db_path.with_name(f"{p}-forward.db"))
                       for p in program_svc}
 
@@ -307,7 +316,7 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
                                     chart=lambda program, ev, name: chart_for_open(program_db[program], program, ev, name)
                                     if program in program_db else None)
         app.state.telegram = telegram
-        for svc in (v6, v7, v8, v9, v11, v12, v13, v14):
+        for svc in (v6, v7, v8, v9, v11, v12, v13, v14, v16):
             svc.listeners.append(telegram.on_event)
         telegram.start()
         log.info("telegram notifications: %s", {k: v for k, v in telegram.health().items() if k in ("configured", "linked")})
@@ -389,6 +398,8 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
             v13_storage.close()
             await asyncio.to_thread(v14.stop)
             v14_storage.close()
+            await asyncio.to_thread(v16.stop)
+            v16_storage.close()
             await asyncio.to_thread(scout.stop)
             await realtime.stop()
             await engine.stop()

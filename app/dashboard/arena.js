@@ -17,6 +17,7 @@
 // quote: the symbol suffix (crypto perps are COINUSDT, stocks are the bare ticker); ccy / book: how money is shown
 const ARENA_PROGRAMS = {
   video: { label: 'Video breakout', sub: 'Bitcoin · 7-day high / 3-day low', tf: '4h', step: 14_400_000, quote: 'USDT', ccy: 'USDT', book: 'configured USDT' },
+  v16: { label: 'V16 Conditional', sub: 'BTC & UNI · only in choppy markets · labelled experiment', tf: '1h', step: 3_600_000, quote: 'USDT', ccy: 'USDT', book: '1,000 USDT' },
   v14: { label: 'V14 HTF', sub: 'best strategies · higher-timeframe trend first', tf: '5m', step: 300_000, quote: 'USDT', ccy: 'USDT', book: '20 USDT', scan: true },
   v13: { label: 'V13 Snapback', sub: '29 coins · limit-order reversion', tf: '5m', step: 300_000, quote: 'USDT', ccy: 'USDT', book: '20 USDT', scan: true },
   v12: { label: 'V12 Bizzy', sub: 'beebots · one day breakout a day', tf: '15m', step: 60_000, quote: 'USDT', ccy: 'USDT', book: '20 USDT', scan: true },

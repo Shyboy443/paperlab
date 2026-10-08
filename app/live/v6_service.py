@@ -38,13 +38,14 @@ def _flag(v: str | None, default: bool) -> bool:
 class V6ForwardService:
     def __init__(self, db_path: str, bus: Any = None, env: Mapping[str, str] | None = None, *, program: str = "V6"):
         e = os.environ if env is None else env
-        if program not in ("V6", "V7", "V8", "V9", "V11", "V12", "V13", "V14"):
+        if program not in ("V6", "V7", "V8", "V9", "V11", "V12", "V13", "V14", "V16"):
             raise ValueError("unknown forward program")
         self.program = program
         from app.core.programs import program_retired
         # A retired program never starts, whatever its env switch says (app/core/programs.py).
         self.retired = program_retired(program)
-        self.enabled = _flag(e.get(program + "_FORWARD_ENABLED"), False) and not self.retired
+        # V16 (two conditional paper bots, operator 2026-10-08) runs unless V16_FORWARD_ENABLED=false.
+        self.enabled = _flag(e.get(program + "_FORWARD_ENABLED"), program == "V16") and not self.retired
         jev = {"V6": _flag(e.get("V6_FORWARD_JEV"), True), "V8": _flag(e.get("V8_FORWARD_JEV"), True),
                "V9": _flag(e.get("V9_FORWARD_JEV"), True), "V11": _flag(e.get("V11_FORWARD_JEV"), True),
                "V12": _flag(e.get("V12_FORWARD_JEV"), True)}.get(program, False)
@@ -83,6 +84,8 @@ class V6ForwardService:
             from app.live.v13_worker import worker_main
         elif self.program == "V14":              # HTF copies of the best strategies, on the same ordered tape
             from app.live.v14_worker import worker_main
+        elif self.program == "V16":              # the two conditional (CHOP-only) paper bots
+            from app.live.v16_worker import worker_main
         else:
             from app.live.v6_worker import worker_main
         ctx = mp.get_context("spawn")
@@ -159,7 +162,7 @@ class V6ForwardService:
         self._publish("v6_state", payload, replay=False)
 
     def _publish(self, channel: str, data: dict[str, Any], public: bool = True, replay: bool = True) -> None:
-        if self.program in ("V7", "V8", "V9", "V11", "V12", "V13", "V14"):
+        if self.program in ("V7", "V8", "V9", "V11", "V12", "V13", "V14", "V16"):
             channel = channel.replace("v6", self.program.lower(), 1)
         if self.bus is not None:
             try:
