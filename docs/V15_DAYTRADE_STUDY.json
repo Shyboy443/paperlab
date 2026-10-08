@@ -1,0 +1,2382 @@
+{
+ "built": "2026-10-08 07:55 UTC",
+ "rules": "V15 day traders: do any day-trading families make money on US stocks over two years, after costs? (operator,\n2026-10-08: \"improve the bots ... also add some day trading bots\"; chosen market: US stocks.)\n\n    python scripts/v15_daytrade_study.py --data-dir /data/bt2y --workers 8     (on the server: the two-year archive)\n\nPRE-REGISTERED (2026-10-08, before any family was run; one shot -- no parameter is changed after the results)\n\nFamilies (app/strategies/v15/daytrade.py, exactly as written there):\n- V15.1 opening-candle trend, V15.2 stocks in play, V15.3 30-minute breakout, V15.4 noise-band momentum,\n  V15.5 last-half-hour momentum. Each at most one trade per symbol per session, flat by the close.\n\nData\n- The Alpaca IEX 1m tape of scripts/backtest_2y.py (fetch9), regular sessions, the 10 V9 symbols:\n  SPY, QQQ, AAPL, NVDA, TSLA, AMD, MSFT, META, AMZN, GOOGL.\n- Window: 2024-10-01 .. 2026-10-01 with 30 days of warm-up. Year 1 ends at 2025-10-01.\n\nBook\n- 1000 USD, reset every day. Halts off. The live V9 sizing (1% risk), fees (0.2 bp a side), execution (60 s decision\n  latency, the IEX half-spread capped at 1 bp, stops at the crossed level plus friction, opening gaps at the open) and\n  3x cap, through the same StockReplayEngine the live stock bots use. Nothing held overnight.\n\nVerdict, per family over its 10 bots (summed):\n- PASS only if net USD > 0 AND mean net R per trade > 0 in BOTH years, profit factor >= 1.10 over the two years,\n  at least 6 of the 10 symbols net positive over the two years, and at least 100 trades in total.\n- A passing family goes live (paper) on all 10 symbols. A failing family does not go live; nothing is re-tuned.\n",
+ "sessions": 501,
+ "results": {
+  "V15.1": {
+   "all": {
+    "trades": 4183,
+    "net_usd": 1013.27,
+    "net_r": 0.0503,
+    "win": 0.322,
+    "pf": 1.058,
+    "fees": 237.43,
+    "exits": {
+     "reset": 2,
+     "stop": 2619,
+     "time": 1506,
+     "tp": 56
+    },
+    "long": 2034
+   },
+   "year1": {
+    "trades": 2112,
+    "net_usd": 569.33,
+    "net_r": 0.0542,
+    "win": 0.32,
+    "pf": 1.063,
+    "fees": 125.2,
+    "exits": {
+     "reset": 2,
+     "stop": 1332,
+     "time": 744,
+     "tp": 34
+    },
+    "long": 1048
+   },
+   "year2": {
+    "trades": 2071,
+    "net_usd": 443.94,
+    "net_r": 0.0464,
+    "win": 0.323,
+    "pf": 1.053,
+    "fees": 112.23,
+    "exits": {
+     "stop": 1287,
+     "time": 762,
+     "tp": 22
+    },
+    "long": 986
+   }
+  },
+  "V15.2": {
+   "all": {
+    "trades": 596,
+    "net_usd": 611.63,
+    "net_r": 0.1222,
+    "win": 0.2,
+    "pf": 1.215,
+    "fees": 44.23,
+    "exits": {
+     "stop": 468,
+     "time": 128
+    },
+    "long": 288
+   },
+   "year1": {
+    "trades": 302,
+    "net_usd": 130.61,
+    "net_r": -0.0167,
+    "win": 0.192,
+    "pf": 1.089,
+    "fees": 22.58,
+    "exits": {
+     "stop": 241,
+     "time": 61
+    },
+    "long": 142
+   },
+   "year2": {
+    "trades": 294,
+    "net_usd": 481.02,
+    "net_r": 0.2649,
+    "win": 0.207,
+    "pf": 1.35,
+    "fees": 21.65,
+    "exits": {
+     "stop": 227,
+     "time": 67
+    },
+    "long": 146
+   }
+  },
+  "V15.3": {
+   "all": {
+    "trades": 3102,
+    "net_usd": -141.31,
+    "net_r": -0.0039,
+    "win": 0.474,
+    "pf": 0.981,
+    "fees": 109.92,
+    "exits": {
+     "reset": 6,
+     "stop": 746,
+     "time": 2350
+    },
+    "long": 1657
+   },
+   "year1": {
+    "trades": 1669,
+    "net_usd": -2.51,
+    "net_r": -0.0001,
+    "win": 0.472,
+    "pf": 0.999,
+    "fees": 61.97,
+    "exits": {
+     "reset": 6,
+     "stop": 422,
+     "time": 1241
+    },
+    "long": 914
+   },
+   "year2": {
+    "trades": 1433,
+    "net_usd": -138.8,
+    "net_r": -0.0084,
+    "win": 0.477,
+    "pf": 0.956,
+    "fees": 47.95,
+    "exits": {
+     "stop": 324,
+     "time": 1109
+    },
+    "long": 743
+   }
+  },
+  "V15.4": {
+   "all": {
+    "trades": 2277,
+    "net_usd": -813.58,
+    "net_r": -0.044,
+    "win": 0.253,
+    "pf": 0.91,
+    "fees": 157.28,
+    "exits": {
+     "reset": 1,
+     "stop": 1610,
+     "time": 666
+    },
+    "long": 1163
+   },
+   "year1": {
+    "trades": 1107,
+    "net_usd": -738.99,
+    "net_r": -0.0984,
+    "win": 0.251,
+    "pf": 0.84,
+    "fees": 77.96,
+    "exits": {
+     "reset": 1,
+     "stop": 788,
+     "time": 318
+    },
+    "long": 562
+   },
+   "year2": {
+    "trades": 1170,
+    "net_usd": -74.58,
+    "net_r": 0.0074,
+    "win": 0.254,
+    "pf": 0.983,
+    "fees": 79.32,
+    "exits": {
+     "stop": 822,
+     "time": 348
+    },
+    "long": 601
+   }
+  },
+  "V15.5": {
+   "all": {
+    "trades": 4575,
+    "net_usd": -991.3,
+    "net_r": -0.0245,
+    "win": 0.467,
+    "pf": 0.904,
+    "fees": 287.11,
+    "exits": {
+     "stop": 736,
+     "time": 3839
+    },
+    "long": 2393
+   },
+   "year1": {
+    "trades": 2263,
+    "net_usd": -642.76,
+    "net_r": -0.0384,
+    "win": 0.467,
+    "pf": 0.878,
+    "fees": 144.94,
+    "exits": {
+     "stop": 375,
+     "time": 1888
+    },
+    "long": 1198
+   },
+   "year2": {
+    "trades": 2312,
+    "net_usd": -348.54,
+    "net_r": -0.011,
+    "win": 0.468,
+    "pf": 0.931,
+    "fees": 142.17,
+    "exits": {
+     "stop": 361,
+     "time": 1951
+    },
+    "long": 1195
+   }
+  }
+ },
+ "verdict": {
+  "V15.1": {
+   "pass": false,
+   "checks": {
+    "both_years_net_usd": true,
+    "both_years_net_r": true,
+    "profit_factor_1_10": false,
+    "six_symbols_positive": false,
+    "100_trades": true
+   },
+   "symbols_positive": 5,
+   "trades_per_symbol_session": 0.835
+  },
+  "V15.2": {
+   "pass": false,
+   "checks": {
+    "both_years_net_usd": true,
+    "both_years_net_r": false,
+    "profit_factor_1_10": true,
+    "six_symbols_positive": false,
+    "100_trades": true
+   },
+   "symbols_positive": 5,
+   "trades_per_symbol_session": 0.119
+  },
+  "V15.3": {
+   "pass": false,
+   "checks": {
+    "both_years_net_usd": false,
+    "both_years_net_r": false,
+    "profit_factor_1_10": false,
+    "six_symbols_positive": false,
+    "100_trades": true
+   },
+   "symbols_positive": 4,
+   "trades_per_symbol_session": 0.619
+  },
+  "V15.4": {
+   "pass": false,
+   "checks": {
+    "both_years_net_usd": false,
+    "both_years_net_r": false,
+    "profit_factor_1_10": false,
+    "six_symbols_positive": false,
+    "100_trades": true
+   },
+   "symbols_positive": 4,
+   "trades_per_symbol_session": 0.454
+  },
+  "V15.5": {
+   "pass": false,
+   "checks": {
+    "both_years_net_usd": false,
+    "both_years_net_r": false,
+    "profit_factor_1_10": false,
+    "six_symbols_positive": false,
+    "100_trades": true
+   },
+   "symbols_positive": 1,
+   "trades_per_symbol_session": 0.913
+  }
+ },
+ "bots": {
+  "V15.1-META": {
+   "all": {
+    "trades": 353,
+    "net_usd": -170.48,
+    "net_r": -0.1186,
+    "win": 0.263,
+    "pf": 0.885,
+    "fees": 17.71,
+    "exits": {
+     "stop": 248,
+     "time": 100,
+     "tp": 5
+    },
+    "long": 164
+   },
+   "year1": {
+    "trades": 181,
+    "net_usd": -37.69,
+    "net_r": -0.0664,
+    "win": 0.282,
+    "pf": 0.949,
+    "fees": 9.13,
+    "exits": {
+     "stop": 122,
+     "time": 57,
+     "tp": 2
+    },
+    "long": 87
+   },
+   "year2": {
+    "trades": 172,
+    "net_usd": -132.79,
+    "net_r": -0.1735,
+    "win": 0.244,
+    "pf": 0.82,
+    "fees": 8.58,
+    "exits": {
+     "stop": 126,
+     "time": 43,
+     "tp": 3
+    },
+    "long": 77
+   }
+  },
+  "V15.1-SPY": {
+   "all": {
+    "trades": 370,
+    "net_usd": -55.48,
+    "net_r": -0.015,
+    "win": 0.262,
+    "pf": 0.947,
+    "fees": 31.54,
+    "exits": {
+     "stop": 269,
+     "time": 95,
+     "tp": 6
+    },
+    "long": 189
+   },
+   "year1": {
+    "trades": 178,
+    "net_usd": 10.34,
+    "net_r": 0.0229,
+    "win": 0.253,
+    "pf": 1.02,
+    "fees": 15.73,
+    "exits": {
+     "stop": 131,
+     "time": 43,
+     "tp": 4
+    },
+    "long": 86
+   },
+   "year2": {
+    "trades": 192,
+    "net_usd": -65.82,
+    "net_r": -0.0501,
+    "win": 0.271,
+    "pf": 0.875,
+    "fees": 15.81,
+    "exits": {
+     "stop": 138,
+     "time": 52,
+     "tp": 2
+    },
+    "long": 103
+   }
+  },
+  "V15.1-QQQ": {
+   "all": {
+    "trades": 407,
+    "net_usd": -24.25,
+    "net_r": 0.0282,
+    "win": 0.305,
+    "pf": 0.983,
+    "fees": 32.77,
+    "exits": {
+     "stop": 277,
+     "time": 121,
+     "tp": 9
+    },
+    "long": 196
+   },
+   "year1": {
+    "trades": 197,
+    "net_usd": 27.16,
+    "net_r": 0.0466,
+    "win": 0.294,
+    "pf": 1.038,
+    "fees": 16.56,
+    "exits": {
+     "stop": 137,
+     "time": 56,
+     "tp": 4
+    },
+    "long": 94
+   },
+   "year2": {
+    "trades": 210,
+    "net_usd": -51.41,
+    "net_r": 0.0109,
+    "win": 0.314,
+    "pf": 0.932,
+    "fees": 16.21,
+    "exits": {
+     "stop": 140,
+     "time": 65,
+     "tp": 5
+    },
+    "long": 102
+   }
+  },
+  "V15.1-AMD": {
+   "all": {
+    "trades": 392,
+    "net_usd": -69.25,
+    "net_r": 0.036,
+    "win": 0.276,
+    "pf": 0.964,
+    "fees": 15.21,
+    "exits": {
+     "reset": 1,
+     "stop": 255,
+     "time": 130,
+     "tp": 6
+    },
+    "long": 208
+   },
+   "year1": {
+    "trades": 227,
+    "net_usd": 54.81,
+    "net_r": 0.058,
+    "win": 0.326,
+    "pf": 1.051,
+    "fees": 9.82,
+    "exits": {
+     "reset": 1,
+     "stop": 136,
+     "time": 87,
+     "tp": 3
+    },
+    "long": 115
+   },
+   "year2": {
+    "trades": 165,
+    "net_usd": -124.06,
+    "net_r": 0.0057,
+    "win": 0.206,
+    "pf": 0.851,
+    "fees": 5.39,
+    "exits": {
+     "stop": 119,
+     "time": 43,
+     "tp": 3
+    },
+    "long": 93
+   }
+  },
+  "V15.1-TSLA": {
+   "all": {
+    "trades": 396,
+    "net_usd": 376.59,
+    "net_r": 0.1356,
+    "win": 0.328,
+    "pf": 1.241,
+    "fees": 13.19,
+    "exits": {
+     "stop": 247,
+     "time": 144,
+     "tp": 5
+    },
+    "long": 197
+   },
+   "year1": {
+    "trades": 196,
+    "net_usd": 114.7,
+    "net_r": 0.0744,
+    "win": 0.301,
+    "pf": 1.141,
+    "fees": 6.02,
+    "exits": {
+     "stop": 126,
+     "time": 66,
+     "tp": 4
+    },
+    "long": 104
+   },
+   "year2": {
+    "trades": 200,
+    "net_usd": 261.89,
+    "net_r": 0.1955,
+    "win": 0.355,
+    "pf": 1.349,
+    "fees": 7.17,
+    "exits": {
+     "stop": 121,
+     "time": 78,
+     "tp": 1
+    },
+    "long": 93
+   }
+  },
+  "V15.1-MSFT": {
+   "all": {
+    "trades": 439,
+    "net_usd": 206.98,
+    "net_r": 0.1012,
+    "win": 0.358,
+    "pf": 1.121,
+    "fees": 27.18,
+    "exits": {
+     "stop": 257,
+     "time": 173,
+     "tp": 9
+    },
+    "long": 212
+   },
+   "year1": {
+    "trades": 225,
+    "net_usd": 109.07,
+    "net_r": 0.134,
+    "win": 0.373,
+    "pf": 1.125,
+    "fees": 15.02,
+    "exits": {
+     "stop": 131,
+     "time": 86,
+     "tp": 8
+    },
+    "long": 114
+   },
+   "year2": {
+    "trades": 214,
+    "net_usd": 97.91,
+    "net_r": 0.0667,
+    "win": 0.341,
+    "pf": 1.116,
+    "fees": 12.17,
+    "exits": {
+     "stop": 126,
+     "time": 87,
+     "tp": 1
+    },
+    "long": 98
+   }
+  },
+  "V15.1-GOOGL": {
+   "all": {
+    "trades": 451,
+    "net_usd": 233.01,
+    "net_r": 0.1125,
+    "win": 0.353,
+    "pf": 1.117,
+    "fees": 24.81,
+    "exits": {
+     "stop": 263,
+     "time": 185,
+     "tp": 3
+    },
+    "long": 229
+   },
+   "year1": {
+    "trades": 226,
+    "net_usd": 72.01,
+    "net_r": 0.074,
+    "win": 0.336,
+    "pf": 1.067,
+    "fees": 13.72,
+    "exits": {
+     "stop": 139,
+     "time": 85,
+     "tp": 2
+    },
+    "long": 122
+   },
+   "year2": {
+    "trades": 225,
+    "net_usd": 161.0,
+    "net_r": 0.1511,
+    "win": 0.369,
+    "pf": 1.177,
+    "fees": 11.09,
+    "exits": {
+     "stop": 124,
+     "time": 100,
+     "tp": 1
+    },
+    "long": 107
+   }
+  },
+  "V15.1-NVDA": {
+   "all": {
+    "trades": 461,
+    "net_usd": 303.89,
+    "net_r": 0.0833,
+    "win": 0.334,
+    "pf": 1.139,
+    "fees": 21.72,
+    "exits": {
+     "stop": 281,
+     "time": 177,
+     "tp": 3
+    },
+    "long": 220
+   },
+   "year1": {
+    "trades": 225,
+    "net_usd": 185.2,
+    "net_r": 0.1399,
+    "win": 0.347,
+    "pf": 1.175,
+    "fees": 10.54,
+    "exits": {
+     "stop": 131,
+     "time": 92,
+     "tp": 2
+    },
+    "long": 107
+   },
+   "year2": {
+    "trades": 236,
+    "net_usd": 118.69,
+    "net_r": 0.0294,
+    "win": 0.322,
+    "pf": 1.106,
+    "fees": 11.19,
+    "exits": {
+     "stop": 150,
+     "time": 85,
+     "tp": 1
+    },
+    "long": 113
+   }
+  },
+  "V15.1-AMZN": {
+   "all": {
+    "trades": 440,
+    "net_usd": 431.73,
+    "net_r": 0.195,
+    "win": 0.373,
+    "pf": 1.225,
+    "fees": 25.12,
+    "exits": {
+     "stop": 247,
+     "time": 184,
+     "tp": 9
+    },
+    "long": 191
+   },
+   "year1": {
+    "trades": 222,
+    "net_usd": 175.92,
+    "net_r": 0.1375,
+    "win": 0.351,
+    "pf": 1.175,
+    "fees": 13.65,
+    "exits": {
+     "stop": 133,
+     "time": 85,
+     "tp": 4
+    },
+    "long": 97
+   },
+   "year2": {
+    "trades": 218,
+    "net_usd": 255.82,
+    "net_r": 0.2535,
+    "win": 0.394,
+    "pf": 1.279,
+    "fees": 11.47,
+    "exits": {
+     "stop": 114,
+     "time": 99,
+     "tp": 5
+    },
+    "long": 94
+   }
+  },
+  "V15.1-AAPL": {
+   "all": {
+    "trades": 474,
+    "net_usd": -219.48,
+    "net_r": -0.0858,
+    "win": 0.335,
+    "pf": 0.897,
+    "fees": 28.19,
+    "exits": {
+     "reset": 1,
+     "stop": 275,
+     "time": 197,
+     "tp": 1
+    },
+    "long": 228
+   },
+   "year1": {
+    "trades": 235,
+    "net_usd": -142.18,
+    "net_r": -0.0994,
+    "win": 0.311,
+    "pf": 0.876,
+    "fees": 15.03,
+    "exits": {
+     "reset": 1,
+     "stop": 146,
+     "time": 87,
+     "tp": 1
+    },
+    "long": 122
+   },
+   "year2": {
+    "trades": 239,
+    "net_usd": -77.31,
+    "net_r": -0.0724,
+    "win": 0.36,
+    "pf": 0.922,
+    "fees": 13.16,
+    "exits": {
+     "stop": 129,
+     "time": 110
+    },
+    "long": 106
+   }
+  },
+  "V15.2-SPY": {
+   "all": {
+    "trades": 51,
+    "net_usd": -85.04,
+    "net_r": -0.5106,
+    "win": 0.176,
+    "pf": 0.362,
+    "fees": 4.18,
+    "exits": {
+     "stop": 42,
+     "time": 9
+    },
+    "long": 24
+   },
+   "year1": {
+    "trades": 26,
+    "net_usd": -66.29,
+    "net_r": -0.7064,
+    "win": 0.115,
+    "pf": 0.177,
+    "fees": 2.33,
+    "exits": {
+     "stop": 23,
+     "time": 3
+    },
+    "long": 13
+   },
+   "year2": {
+    "trades": 25,
+    "net_usd": -18.75,
+    "net_r": -0.3069,
+    "win": 0.24,
+    "pf": 0.644,
+    "fees": 1.85,
+    "exits": {
+     "stop": 19,
+     "time": 6
+    },
+    "long": 11
+   }
+  },
+  "V15.2-QQQ": {
+   "all": {
+    "trades": 54,
+    "net_usd": -4.96,
+    "net_r": 0.1081,
+    "win": 0.241,
+    "pf": 0.969,
+    "fees": 4.2,
+    "exits": {
+     "stop": 41,
+     "time": 13
+    },
+    "long": 28
+   },
+   "year1": {
+    "trades": 30,
+    "net_usd": -30.58,
+    "net_r": -0.2199,
+    "win": 0.2,
+    "pf": 0.669,
+    "fees": 2.34,
+    "exits": {
+     "stop": 24,
+     "time": 6
+    },
+    "long": 15
+   },
+   "year2": {
+    "trades": 24,
+    "net_usd": 25.62,
+    "net_r": 0.5181,
+    "win": 0.292,
+    "pf": 1.385,
+    "fees": 1.86,
+    "exits": {
+     "stop": 17,
+     "time": 7
+    },
+    "long": 13
+   }
+  },
+  "V15.2-AAPL": {
+   "all": {
+    "trades": 62,
+    "net_usd": 58.87,
+    "net_r": -0.0904,
+    "win": 0.145,
+    "pf": 1.191,
+    "fees": 4.95,
+    "exits": {
+     "stop": 52,
+     "time": 10
+    },
+    "long": 27
+   },
+   "year1": {
+    "trades": 35,
+    "net_usd": 140.18,
+    "net_r": 0.3522,
+    "win": 0.171,
+    "pf": 1.791,
+    "fees": 2.75,
+    "exits": {
+     "stop": 28,
+     "time": 7
+    },
+    "long": 19
+   },
+   "year2": {
+    "trades": 27,
+    "net_usd": -81.31,
+    "net_r": -0.6641,
+    "win": 0.111,
+    "pf": 0.383,
+    "fees": 2.2,
+    "exits": {
+     "stop": 24,
+     "time": 3
+    },
+    "long": 8
+   }
+  },
+  "V15.2-TSLA": {
+   "all": {
+    "trades": 67,
+    "net_usd": 405.74,
+    "net_r": 0.6749,
+    "win": 0.254,
+    "pf": 2.127,
+    "fees": 4.07,
+    "exits": {
+     "stop": 50,
+     "time": 17
+    },
+    "long": 30
+   },
+   "year1": {
+    "trades": 34,
+    "net_usd": 56.18,
+    "net_r": 0.0453,
+    "win": 0.176,
+    "pf": 1.289,
+    "fees": 1.84,
+    "exits": {
+     "stop": 28,
+     "time": 6
+    },
+    "long": 13
+   },
+   "year2": {
+    "trades": 33,
+    "net_usd": 349.56,
+    "net_r": 1.3236,
+    "win": 0.333,
+    "pf": 3.115,
+    "fees": 2.23,
+    "exits": {
+     "stop": 22,
+     "time": 11
+    },
+    "long": 17
+   }
+  },
+  "V15.2-NVDA": {
+   "all": {
+    "trades": 55,
+    "net_usd": -5.95,
+    "net_r": 0.0033,
+    "win": 0.182,
+    "pf": 0.982,
+    "fees": 4.35,
+    "exits": {
+     "stop": 44,
+     "time": 11
+    },
+    "long": 28
+   },
+   "year1": {
+    "trades": 28,
+    "net_usd": 28.91,
+    "net_r": 0.2155,
+    "win": 0.179,
+    "pf": 1.173,
+    "fees": 2.14,
+    "exits": {
+     "stop": 22,
+     "time": 6
+    },
+    "long": 13
+   },
+   "year2": {
+    "trades": 27,
+    "net_usd": -34.86,
+    "net_r": -0.2168,
+    "win": 0.185,
+    "pf": 0.792,
+    "fees": 2.21,
+    "exits": {
+     "stop": 22,
+     "time": 5
+    },
+    "long": 15
+   }
+  },
+  "V15.2-AMD": {
+   "all": {
+    "trades": 72,
+    "net_usd": -129.91,
+    "net_r": -0.3144,
+    "win": 0.125,
+    "pf": 0.72,
+    "fees": 4.88,
+    "exits": {
+     "stop": 61,
+     "time": 11
+    },
+    "long": 38
+   },
+   "year1": {
+    "trades": 36,
+    "net_usd": -120.77,
+    "net_r": -0.4203,
+    "win": 0.111,
+    "pf": 0.531,
+    "fees": 2.77,
+    "exits": {
+     "stop": 32,
+     "time": 4
+    },
+    "long": 14
+   },
+   "year2": {
+    "trades": 36,
+    "net_usd": -9.14,
+    "net_r": -0.2084,
+    "win": 0.139,
+    "pf": 0.956,
+    "fees": 2.12,
+    "exits": {
+     "stop": 29,
+     "time": 7
+    },
+    "long": 24
+   }
+  },
+  "V15.2-MSFT": {
+   "all": {
+    "trades": 52,
+    "net_usd": 147.66,
+    "net_r": 0.4083,
+    "win": 0.269,
+    "pf": 1.798,
+    "fees": 3.56,
+    "exits": {
+     "stop": 37,
+     "time": 15
+    },
+    "long": 28
+   },
+   "year1": {
+    "trades": 22,
+    "net_usd": 20.5,
+    "net_r": 0.3205,
+    "win": 0.318,
+    "pf": 1.294,
+    "fees": 1.53,
+    "exits": {
+     "stop": 15,
+     "time": 7
+    },
+    "long": 11
+   },
+   "year2": {
+    "trades": 30,
+    "net_usd": 127.16,
+    "net_r": 0.4727,
+    "win": 0.233,
+    "pf": 2.102,
+    "fees": 2.03,
+    "exits": {
+     "stop": 22,
+     "time": 8
+    },
+    "long": 17
+   }
+  },
+  "V15.2-AMZN": {
+   "all": {
+    "trades": 64,
+    "net_usd": 140.29,
+    "net_r": 0.2813,
+    "win": 0.234,
+    "pf": 1.454,
+    "fees": 5.31,
+    "exits": {
+     "stop": 46,
+     "time": 18
+    },
+    "long": 31
+   },
+   "year1": {
+    "trades": 35,
+    "net_usd": 108.17,
+    "net_r": 0.3513,
+    "win": 0.257,
+    "pf": 1.647,
+    "fees": 2.72,
+    "exits": {
+     "stop": 25,
+     "time": 10
+    },
+    "long": 18
+   },
+   "year2": {
+    "trades": 29,
+    "net_usd": 32.11,
+    "net_r": 0.1969,
+    "win": 0.207,
+    "pf": 1.226,
+    "fees": 2.6,
+    "exits": {
+     "stop": 21,
+     "time": 8
+    },
+    "long": 13
+   }
+  },
+  "V15.2-META": {
+   "all": {
+    "trades": 59,
+    "net_usd": 91.37,
+    "net_r": 0.5595,
+    "win": 0.153,
+    "pf": 1.321,
+    "fees": 3.97,
+    "exits": {
+     "stop": 50,
+     "time": 9
+    },
+    "long": 18
+   },
+   "year1": {
+    "trades": 25,
+    "net_usd": -86.33,
+    "net_r": -0.7243,
+    "win": 0.12,
+    "pf": 0.281,
+    "fees": 1.51,
+    "exits": {
+     "stop": 22,
+     "time": 3
+    },
+    "long": 9
+   },
+   "year2": {
+    "trades": 34,
+    "net_usd": 177.7,
+    "net_r": 1.5034,
+    "win": 0.176,
+    "pf": 2.08,
+    "fees": 2.46,
+    "exits": {
+     "stop": 28,
+     "time": 6
+    },
+    "long": 9
+   }
+  },
+  "V15.2-GOOGL": {
+   "all": {
+    "trades": 60,
+    "net_usd": -6.42,
+    "net_r": 0.0606,
+    "win": 0.233,
+    "pf": 0.979,
+    "fees": 4.75,
+    "exits": {
+     "stop": 45,
+     "time": 15
+    },
+    "long": 36
+   },
+   "year1": {
+    "trades": 31,
+    "net_usd": 80.64,
+    "net_r": 0.4491,
+    "win": 0.29,
+    "pf": 1.566,
+    "fees": 2.64,
+    "exits": {
+     "stop": 22,
+     "time": 9
+    },
+    "long": 17
+   },
+   "year2": {
+    "trades": 29,
+    "net_usd": -87.06,
+    "net_r": -0.3546,
+    "win": 0.172,
+    "pf": 0.463,
+    "fees": 2.11,
+    "exits": {
+     "stop": 23,
+     "time": 6
+    },
+    "long": 19
+   }
+  },
+  "V15.3-TSLA": {
+   "all": {
+    "trades": 127,
+    "net_usd": -50.78,
+    "net_r": -0.041,
+    "win": 0.449,
+    "pf": 0.844,
+    "fees": 2.29,
+    "exits": {
+     "stop": 39,
+     "time": 88
+    },
+    "long": 59
+   },
+   "year1": {
+    "trades": 56,
+    "net_usd": -58.35,
+    "net_r": -0.1512,
+    "win": 0.393,
+    "pf": 0.637,
+    "fees": 0.98,
+    "exits": {
+     "stop": 20,
+     "time": 36
+    },
+    "long": 26
+   },
+   "year2": {
+    "trades": 71,
+    "net_usd": 7.56,
+    "net_r": 0.0459,
+    "win": 0.493,
+    "pf": 1.046,
+    "fees": 1.31,
+    "exits": {
+     "stop": 19,
+     "time": 52
+    },
+    "long": 33
+   }
+  },
+  "V15.3-META": {
+   "all": {
+    "trades": 128,
+    "net_usd": 26.4,
+    "net_r": 0.0175,
+    "win": 0.523,
+    "pf": 1.094,
+    "fees": 3.53,
+    "exits": {
+     "stop": 31,
+     "time": 97
+    },
+    "long": 55
+   },
+   "year1": {
+    "trades": 68,
+    "net_usd": 84.21,
+    "net_r": 0.1588,
+    "win": 0.544,
+    "pf": 1.652,
+    "fees": 1.88,
+    "exits": {
+     "stop": 15,
+     "time": 53
+    },
+    "long": 33
+   },
+   "year2": {
+    "trades": 60,
+    "net_usd": -57.81,
+    "net_r": -0.1426,
+    "win": 0.5,
+    "pf": 0.618,
+    "fees": 1.65,
+    "exits": {
+     "stop": 16,
+     "time": 44
+    },
+    "long": 22
+   }
+  },
+  "V15.3-AMD": {
+   "all": {
+    "trades": 175,
+    "net_usd": -179.25,
+    "net_r": -0.1381,
+    "win": 0.406,
+    "pf": 0.685,
+    "fees": 3.58,
+    "exits": {
+     "stop": 57,
+     "time": 118
+    },
+    "long": 93
+   },
+   "year1": {
+    "trades": 132,
+    "net_usd": -81.5,
+    "net_r": -0.0716,
+    "win": 0.455,
+    "pf": 0.793,
+    "fees": 2.8,
+    "exits": {
+     "stop": 36,
+     "time": 96
+    },
+    "long": 70
+   },
+   "year2": {
+    "trades": 43,
+    "net_usd": -97.76,
+    "net_r": -0.3422,
+    "win": 0.256,
+    "pf": 0.442,
+    "fees": 0.78,
+    "exits": {
+     "stop": 21,
+     "time": 22
+    },
+    "long": 23
+   }
+  },
+  "V15.3-QQQ": {
+   "all": {
+    "trades": 420,
+    "net_usd": 23.43,
+    "net_r": 0.0067,
+    "win": 0.498,
+    "pf": 1.021,
+    "fees": 21.72,
+    "exits": {
+     "reset": 1,
+     "stop": 126,
+     "time": 293
+    },
+    "long": 220
+   },
+   "year1": {
+    "trades": 228,
+    "net_usd": 73.8,
+    "net_r": 0.04,
+    "win": 0.526,
+    "pf": 1.123,
+    "fees": 12.79,
+    "exits": {
+     "reset": 1,
+     "stop": 69,
+     "time": 158
+    },
+    "long": 125
+   },
+   "year2": {
+    "trades": 192,
+    "net_usd": -50.37,
+    "net_r": -0.0329,
+    "win": 0.464,
+    "pf": 0.898,
+    "fees": 8.93,
+    "exits": {
+     "stop": 57,
+     "time": 135
+    },
+    "long": 95
+   }
+  },
+  "V15.3-SPY": {
+   "all": {
+    "trades": 468,
+    "net_usd": 123.1,
+    "net_r": 0.0491,
+    "win": 0.466,
+    "pf": 1.105,
+    "fees": 32.17,
+    "exits": {
+     "reset": 1,
+     "stop": 168,
+     "time": 299
+    },
+    "long": 255
+   },
+   "year1": {
+    "trades": 233,
+    "net_usd": 133.74,
+    "net_r": 0.0964,
+    "win": 0.468,
+    "pf": 1.223,
+    "fees": 16.54,
+    "exits": {
+     "reset": 1,
+     "stop": 91,
+     "time": 141
+    },
+    "long": 131
+   },
+   "year2": {
+    "trades": 235,
+    "net_usd": -10.65,
+    "net_r": 0.0023,
+    "win": 0.464,
+    "pf": 0.982,
+    "fees": 15.63,
+    "exits": {
+     "stop": 77,
+     "time": 158
+    },
+    "long": 124
+   }
+  },
+  "V15.3-NVDA": {
+   "all": {
+    "trades": 318,
+    "net_usd": -82.58,
+    "net_r": -0.0319,
+    "win": 0.494,
+    "pf": 0.889,
+    "fees": 6.9,
+    "exits": {
+     "reset": 1,
+     "stop": 64,
+     "time": 253
+    },
+    "long": 174
+   },
+   "year1": {
+    "trades": 150,
+    "net_usd": -59.31,
+    "net_r": -0.0411,
+    "win": 0.467,
+    "pf": 0.829,
+    "fees": 3.25,
+    "exits": {
+     "reset": 1,
+     "stop": 25,
+     "time": 124
+    },
+    "long": 89
+   },
+   "year2": {
+    "trades": 168,
+    "net_usd": -23.27,
+    "net_r": -0.0237,
+    "win": 0.518,
+    "pf": 0.941,
+    "fees": 3.65,
+    "exits": {
+     "stop": 39,
+     "time": 129
+    },
+    "long": 85
+   }
+  },
+  "V15.3-AAPL": {
+   "all": {
+    "trades": 397,
+    "net_usd": -8.73,
+    "net_r": -0.009,
+    "win": 0.453,
+    "pf": 0.99,
+    "fees": 10.99,
+    "exits": {
+     "reset": 1,
+     "stop": 71,
+     "time": 325
+    },
+    "long": 228
+   },
+   "year1": {
+    "trades": 208,
+    "net_usd": -130.16,
+    "net_r": -0.0921,
+    "win": 0.409,
+    "pf": 0.765,
+    "fees": 6.18,
+    "exits": {
+     "reset": 1,
+     "stop": 50,
+     "time": 157
+    },
+    "long": 123
+   },
+   "year2": {
+    "trades": 189,
+    "net_usd": 121.43,
+    "net_r": 0.0824,
+    "win": 0.503,
+    "pf": 1.41,
+    "fees": 4.8,
+    "exits": {
+     "stop": 21,
+     "time": 168
+    },
+    "long": 105
+   }
+  },
+  "V15.3-MSFT": {
+   "all": {
+    "trades": 326,
+    "net_usd": -117.78,
+    "net_r": -0.0437,
+    "win": 0.469,
+    "pf": 0.835,
+    "fees": 10.12,
+    "exits": {
+     "reset": 1,
+     "stop": 67,
+     "time": 258
+    },
+    "long": 185
+   },
+   "year1": {
+    "trades": 188,
+    "net_usd": -15.19,
+    "net_r": -0.0015,
+    "win": 0.495,
+    "pf": 0.964,
+    "fees": 6.55,
+    "exits": {
+     "reset": 1,
+     "stop": 41,
+     "time": 146
+    },
+    "long": 107
+   },
+   "year2": {
+    "trades": 138,
+    "net_usd": -102.59,
+    "net_r": -0.101,
+    "win": 0.435,
+    "pf": 0.655,
+    "fees": 3.57,
+    "exits": {
+     "stop": 26,
+     "time": 112
+    },
+    "long": 78
+   }
+  },
+  "V15.3-GOOGL": {
+   "all": {
+    "trades": 345,
+    "net_usd": 186.52,
+    "net_r": 0.0787,
+    "win": 0.522,
+    "pf": 1.284,
+    "fees": 8.47,
+    "exits": {
+     "reset": 1,
+     "stop": 52,
+     "time": 292
+    },
+    "long": 189
+   },
+   "year1": {
+    "trades": 199,
+    "net_usd": 101.5,
+    "net_r": 0.0611,
+    "win": 0.503,
+    "pf": 1.239,
+    "fees": 5.32,
+    "exits": {
+     "reset": 1,
+     "stop": 30,
+     "time": 168
+    },
+    "long": 109
+   },
+   "year2": {
+    "trades": 146,
+    "net_usd": 85.02,
+    "net_r": 0.1027,
+    "win": 0.548,
+    "pf": 1.366,
+    "fees": 3.15,
+    "exits": {
+     "stop": 22,
+     "time": 124
+    },
+    "long": 80
+   }
+  },
+  "V15.3-AMZN": {
+   "all": {
+    "trades": 398,
+    "net_usd": -61.65,
+    "net_r": -0.0253,
+    "win": 0.447,
+    "pf": 0.932,
+    "fees": 10.16,
+    "exits": {
+     "stop": 71,
+     "time": 327
+    },
+    "long": 199
+   },
+   "year1": {
+    "trades": 207,
+    "net_usd": -51.28,
+    "net_r": -0.0538,
+    "win": 0.44,
+    "pf": 0.902,
+    "fees": 5.68,
+    "exits": {
+     "stop": 45,
+     "time": 162
+    },
+    "long": 101
+   },
+   "year2": {
+    "trades": 191,
+    "net_usd": -10.37,
+    "net_r": 0.0057,
+    "win": 0.455,
+    "pf": 0.973,
+    "fees": 4.48,
+    "exits": {
+     "stop": 26,
+     "time": 165
+    },
+    "long": 98
+   }
+  },
+  "V15.4-SPY": {
+   "all": {
+    "trades": 223,
+    "net_usd": -193.71,
+    "net_r": -0.2058,
+    "win": 0.283,
+    "pf": 0.642,
+    "fees": 17.52,
+    "exits": {
+     "stop": 151,
+     "time": 72
+    },
+    "long": 118
+   },
+   "year1": {
+    "trades": 108,
+    "net_usd": -66.78,
+    "net_r": -0.0892,
+    "win": 0.324,
+    "pf": 0.742,
+    "fees": 8.39,
+    "exits": {
+     "stop": 70,
+     "time": 38
+    },
+    "long": 55
+   },
+   "year2": {
+    "trades": 115,
+    "net_usd": -126.93,
+    "net_r": -0.3153,
+    "win": 0.243,
+    "pf": 0.55,
+    "fees": 9.13,
+    "exits": {
+     "stop": 81,
+     "time": 34
+    },
+    "long": 63
+   }
+  },
+  "V15.4-QQQ": {
+   "all": {
+    "trades": 226,
+    "net_usd": -187.09,
+    "net_r": -0.1972,
+    "win": 0.261,
+    "pf": 0.724,
+    "fees": 16.84,
+    "exits": {
+     "stop": 162,
+     "time": 64
+    },
+    "long": 121
+   },
+   "year1": {
+    "trades": 107,
+    "net_usd": -114.81,
+    "net_r": -0.2501,
+    "win": 0.28,
+    "pf": 0.638,
+    "fees": 7.68,
+    "exits": {
+     "stop": 73,
+     "time": 34
+    },
+    "long": 59
+   },
+   "year2": {
+    "trades": 119,
+    "net_usd": -72.28,
+    "net_r": -0.1497,
+    "win": 0.244,
+    "pf": 0.8,
+    "fees": 9.16,
+    "exits": {
+     "stop": 89,
+     "time": 30
+    },
+    "long": 62
+   }
+  },
+  "V15.4-AAPL": {
+   "all": {
+    "trades": 225,
+    "net_usd": 232.19,
+    "net_r": 0.1757,
+    "win": 0.267,
+    "pf": 1.248,
+    "fees": 17.92,
+    "exits": {
+     "stop": 153,
+     "time": 72
+    },
+    "long": 123
+   },
+   "year1": {
+    "trades": 106,
+    "net_usd": 121.8,
+    "net_r": 0.282,
+    "win": 0.255,
+    "pf": 1.259,
+    "fees": 8.92,
+    "exits": {
+     "stop": 72,
+     "time": 34
+    },
+    "long": 57
+   },
+   "year2": {
+    "trades": 119,
+    "net_usd": 110.39,
+    "net_r": 0.0811,
+    "win": 0.277,
+    "pf": 1.236,
+    "fees": 9.0,
+    "exits": {
+     "stop": 81,
+     "time": 38
+    },
+    "long": 66
+   }
+  },
+  "V15.4-NVDA": {
+   "all": {
+    "trades": 235,
+    "net_usd": 22.12,
+    "net_r": 0.0338,
+    "win": 0.251,
+    "pf": 1.02,
+    "fees": 15.91,
+    "exits": {
+     "stop": 168,
+     "time": 67
+    },
+    "long": 122
+   },
+   "year1": {
+    "trades": 119,
+    "net_usd": 32.17,
+    "net_r": 0.1143,
+    "win": 0.269,
+    "pf": 1.055,
+    "fees": 8.26,
+    "exits": {
+     "stop": 83,
+     "time": 36
+    },
+    "long": 58
+   },
+   "year2": {
+    "trades": 116,
+    "net_usd": -10.05,
+    "net_r": -0.0488,
+    "win": 0.233,
+    "pf": 0.981,
+    "fees": 7.64,
+    "exits": {
+     "stop": 85,
+     "time": 31
+    },
+    "long": 64
+   }
+  },
+  "V15.4-MSFT": {
+   "all": {
+    "trades": 216,
+    "net_usd": -315.33,
+    "net_r": -0.2614,
+    "win": 0.208,
+    "pf": 0.623,
+    "fees": 15.47,
+    "exits": {
+     "stop": 164,
+     "time": 52
+    },
+    "long": 110
+   },
+   "year1": {
+    "trades": 103,
+    "net_usd": -170.55,
+    "net_r": -0.3806,
+    "win": 0.204,
+    "pf": 0.568,
+    "fees": 7.93,
+    "exits": {
+     "stop": 79,
+     "time": 24
+    },
+    "long": 54
+   },
+   "year2": {
+    "trades": 113,
+    "net_usd": -144.77,
+    "net_r": -0.1526,
+    "win": 0.212,
+    "pf": 0.673,
+    "fees": 7.54,
+    "exits": {
+     "stop": 85,
+     "time": 28
+    },
+    "long": 56
+   }
+  },
+  "V15.4-TSLA": {
+   "all": {
+    "trades": 244,
+    "net_usd": -50.24,
+    "net_r": 0.0278,
+    "win": 0.266,
+    "pf": 0.953,
+    "fees": 12.77,
+    "exits": {
+     "stop": 168,
+     "time": 76
+    },
+    "long": 117
+   },
+   "year1": {
+    "trades": 118,
+    "net_usd": -165.64,
+    "net_r": -0.1854,
+    "win": 0.22,
+    "pf": 0.711,
+    "fees": 5.76,
+    "exits": {
+     "stop": 89,
+     "time": 29
+    },
+    "long": 58
+   },
+   "year2": {
+    "trades": 126,
+    "net_usd": 115.4,
+    "net_r": 0.2274,
+    "win": 0.31,
+    "pf": 1.228,
+    "fees": 7.0,
+    "exits": {
+     "stop": 79,
+     "time": 47
+    },
+    "long": 59
+   }
+  },
+  "V15.4-AMD": {
+   "all": {
+    "trades": 231,
+    "net_usd": 78.33,
+    "net_r": 0.0808,
+    "win": 0.268,
+    "pf": 1.073,
+    "fees": 13.57,
+    "exits": {
+     "reset": 1,
+     "stop": 164,
+     "time": 66
+    },
+    "long": 121
+   },
+   "year1": {
+    "trades": 119,
+    "net_usd": -71.06,
+    "net_r": -0.0782,
+    "win": 0.252,
+    "pf": 0.884,
+    "fees": 7.83,
+    "exits": {
+     "reset": 1,
+     "stop": 87,
+     "time": 31
+    },
+    "long": 62
+   },
+   "year2": {
+    "trades": 112,
+    "net_usd": 149.38,
+    "net_r": 0.2497,
+    "win": 0.286,
+    "pf": 1.327,
+    "fees": 5.75,
+    "exits": {
+     "stop": 77,
+     "time": 35
+    },
+    "long": 59
+   }
+  },
+  "V15.4-META": {
+   "all": {
+    "trades": 231,
+    "net_usd": 106.68,
+    "net_r": 0.1779,
+    "win": 0.229,
+    "pf": 1.126,
+    "fees": 14.53,
+    "exits": {
+     "stop": 165,
+     "time": 66
+    },
+    "long": 105
+   },
+   "year1": {
+    "trades": 111,
+    "net_usd": 83.71,
+    "net_r": 0.1943,
+    "win": 0.27,
+    "pf": 1.216,
+    "fees": 6.9,
+    "exits": {
+     "stop": 76,
+     "time": 35
+    },
+    "long": 50
+   },
+   "year2": {
+    "trades": 120,
+    "net_usd": 22.98,
+    "net_r": 0.1628,
+    "win": 0.192,
+    "pf": 1.05,
+    "fees": 7.63,
+    "exits": {
+     "stop": 89,
+     "time": 31
+    },
+    "long": 55
+   }
+  },
+  "V15.4-AMZN": {
+   "all": {
+    "trades": 236,
+    "net_usd": -309.44,
+    "net_r": -0.2472,
+    "win": 0.233,
+    "pf": 0.707,
+    "fees": 17.35,
+    "exits": {
+     "stop": 172,
+     "time": 64
+    },
+    "long": 117
+   },
+   "year1": {
+    "trades": 112,
+    "net_usd": -200.42,
+    "net_r": -0.3786,
+    "win": 0.214,
+    "pf": 0.624,
+    "fees": 8.54,
+    "exits": {
+     "stop": 85,
+     "time": 27
+    },
+    "long": 57
+   },
+   "year2": {
+    "trades": 124,
+    "net_usd": -109.02,
+    "net_r": -0.1284,
+    "win": 0.25,
+    "pf": 0.791,
+    "fees": 8.8,
+    "exits": {
+     "stop": 87,
+     "time": 37
+    },
+    "long": 60
+   }
+  },
+  "V15.4-GOOGL": {
+   "all": {
+    "trades": 210,
+    "net_usd": -197.09,
+    "net_r": -0.0431,
+    "win": 0.257,
+    "pf": 0.78,
+    "fees": 15.41,
+    "exits": {
+     "stop": 143,
+     "time": 67
+    },
+    "long": 109
+   },
+   "year1": {
+    "trades": 104,
+    "net_usd": -187.41,
+    "net_r": -0.2384,
+    "win": 0.221,
+    "pf": 0.604,
+    "fees": 7.74,
+    "exits": {
+     "stop": 74,
+     "time": 30
+    },
+    "long": 52
+   },
+   "year2": {
+    "trades": 106,
+    "net_usd": -9.68,
+    "net_r": 0.1486,
+    "win": 0.292,
+    "pf": 0.977,
+    "fees": 7.66,
+    "exits": {
+     "stop": 69,
+     "time": 37
+    },
+    "long": 57
+   }
+  },
+  "V15.5-SPY": {
+   "all": {
+    "trades": 411,
+    "net_usd": -81.84,
+    "net_r": -0.0355,
+    "win": 0.462,
+    "pf": 0.8,
+    "fees": 21.05,
+    "exits": {
+     "stop": 16,
+     "time": 395
+    },
+    "long": 235
+   },
+   "year1": {
+    "trades": 204,
+    "net_usd": -60.24,
+    "net_r": -0.0441,
+    "win": 0.485,
+    "pf": 0.766,
+    "fees": 11.96,
+    "exits": {
+     "stop": 14,
+     "time": 190
+    },
+    "long": 116
+   },
+   "year2": {
+    "trades": 207,
+    "net_usd": -21.59,
+    "net_r": -0.0271,
+    "win": 0.44,
+    "pf": 0.857,
+    "fees": 9.09,
+    "exits": {
+     "stop": 2,
+     "time": 205
+    },
+    "long": 119
+   }
+  },
+  "V15.5-QQQ": {
+   "all": {
+    "trades": 441,
+    "net_usd": -90.48,
+    "net_r": -0.0185,
+    "win": 0.485,
+    "pf": 0.836,
+    "fees": 24.33,
+    "exits": {
+     "stop": 27,
+     "time": 414
+    },
+    "long": 241
+   },
+   "year1": {
+    "trades": 218,
+    "net_usd": -83.32,
+    "net_r": -0.0486,
+    "win": 0.482,
+    "pf": 0.735,
+    "fees": 12.31,
+    "exits": {
+     "stop": 20,
+     "time": 198
+    },
+    "long": 118
+   },
+   "year2": {
+    "trades": 223,
+    "net_usd": -7.16,
+    "net_r": 0.0108,
+    "win": 0.489,
+    "pf": 0.97,
+    "fees": 12.02,
+    "exits": {
+     "stop": 7,
+     "time": 216
+    },
+    "long": 123
+   }
+  },
+  "V15.5-AAPL": {
+   "all": {
+    "trades": 447,
+    "net_usd": -202.49,
+    "net_r": -0.0561,
+    "win": 0.45,
+    "pf": 0.805,
+    "fees": 30.42,
+    "exits": {
+     "stop": 57,
+     "time": 390
+    },
+    "long": 244
+   },
+   "year1": {
+    "trades": 221,
+    "net_usd": 6.69,
+    "net_r": 0.0009,
+    "win": 0.471,
+    "pf": 1.014,
+    "fees": 15.1,
+    "exits": {
+     "stop": 24,
+     "time": 197
+    },
+    "long": 121
+   },
+   "year2": {
+    "trades": 226,
+    "net_usd": -209.17,
+    "net_r": -0.1118,
+    "win": 0.429,
+    "pf": 0.637,
+    "fees": 15.31,
+    "exits": {
+     "stop": 33,
+     "time": 193
+    },
+    "long": 123
+   }
+  },
+  "V15.5-AMD": {
+   "all": {
+    "trades": 474,
+    "net_usd": 7.49,
+    "net_r": 0.0135,
+    "win": 0.462,
+    "pf": 1.005,
+    "fees": 32.25,
+    "exits": {
+     "stop": 133,
+     "time": 341
+    },
+    "long": 248
+   },
+   "year1": {
+    "trades": 236,
+    "net_usd": -161.97,
+    "net_r": -0.097,
+    "win": 0.445,
+    "pf": 0.794,
+    "fees": 16.85,
+    "exits": {
+     "stop": 61,
+     "time": 175
+    },
+    "long": 114
+   },
+   "year2": {
+    "trades": 238,
+    "net_usd": 169.46,
+    "net_r": 0.1232,
+    "win": 0.479,
+    "pf": 1.246,
+    "fees": 15.4,
+    "exits": {
+     "stop": 72,
+     "time": 166
+    },
+    "long": 134
+   }
+  },
+  "V15.5-NVDA": {
+   "all": {
+    "trades": 468,
+    "net_usd": -135.02,
+    "net_r": -0.0332,
+    "win": 0.472,
+    "pf": 0.904,
+    "fees": 32.5,
+    "exits": {
+     "stop": 107,
+     "time": 361
+    },
+    "long": 252
+   },
+   "year1": {
+    "trades": 234,
+    "net_usd": -136.63,
+    "net_r": -0.0709,
+    "win": 0.466,
+    "pf": 0.817,
+    "fees": 16.34,
+    "exits": {
+     "stop": 59,
+     "time": 175
+    },
+    "long": 125
+   },
+   "year2": {
+    "trades": 234,
+    "net_usd": 1.61,
+    "net_r": 0.0045,
+    "win": 0.479,
+    "pf": 1.002,
+    "fees": 16.17,
+    "exits": {
+     "stop": 48,
+     "time": 186
+    },
+    "long": 127
+   }
+  },
+  "V15.5-TSLA": {
+   "all": {
+    "trades": 474,
+    "net_usd": -77.26,
+    "net_r": -0.0073,
+    "win": 0.451,
+    "pf": 0.947,
+    "fees": 29.54,
+    "exits": {
+     "stop": 140,
+     "time": 334
+    },
+    "long": 248
+   },
+   "year1": {
+    "trades": 234,
+    "net_usd": 52.27,
+    "net_r": 0.0356,
+    "win": 0.457,
+    "pf": 1.069,
+    "fees": 14.69,
+    "exits": {
+     "stop": 76,
+     "time": 158
+    },
+    "long": 127
+   },
+   "year2": {
+    "trades": 240,
+    "net_usd": -129.53,
+    "net_r": -0.0492,
+    "win": 0.446,
+    "pf": 0.814,
+    "fees": 14.85,
+    "exits": {
+     "stop": 64,
+     "time": 176
+    },
+    "long": 121
+   }
+  },
+  "V15.5-MSFT": {
+   "all": {
+    "trades": 453,
+    "net_usd": -135.62,
+    "net_r": -0.0431,
+    "win": 0.466,
+    "pf": 0.843,
+    "fees": 27.54,
+    "exits": {
+     "stop": 49,
+     "time": 404
+    },
+    "long": 225
+   },
+   "year1": {
+    "trades": 218,
+    "net_usd": -114.59,
+    "net_r": -0.0678,
+    "win": 0.431,
+    "pf": 0.728,
+    "fees": 13.1,
+    "exits": {
+     "stop": 22,
+     "time": 196
+    },
+    "long": 113
+   },
+   "year2": {
+    "trades": 235,
+    "net_usd": -21.03,
+    "net_r": -0.0202,
+    "win": 0.498,
+    "pf": 0.953,
+    "fees": 14.44,
+    "exits": {
+     "stop": 27,
+     "time": 208
+    },
+    "long": 112
+   }
+  },
+  "V15.5-META": {
+   "all": {
+    "trades": 469,
+    "net_usd": -112.87,
+    "net_r": -0.0194,
+    "win": 0.48,
+    "pf": 0.884,
+    "fees": 25.16,
+    "exits": {
+     "stop": 83,
+     "time": 386
+    },
+    "long": 240
+   },
+   "year1": {
+    "trades": 232,
+    "net_usd": -122.84,
+    "net_r": -0.0707,
+    "win": 0.453,
+    "pf": 0.745,
+    "fees": 11.98,
+    "exits": {
+     "stop": 39,
+     "time": 193
+    },
+    "long": 126
+   },
+   "year2": {
+    "trades": 237,
+    "net_usd": 9.98,
+    "net_r": 0.0307,
+    "win": 0.506,
+    "pf": 1.02,
+    "fees": 13.17,
+    "exits": {
+     "stop": 44,
+     "time": 193
+    },
+    "long": 114
+   }
+  },
+  "V15.5-AMZN": {
+   "all": {
+    "trades": 464,
+    "net_usd": -84.46,
+    "net_r": -0.027,
+    "win": 0.481,
+    "pf": 0.916,
+    "fees": 32.23,
+    "exits": {
+     "stop": 61,
+     "time": 403
+    },
+    "long": 222
+   },
+   "year1": {
+    "trades": 231,
+    "net_usd": -29.97,
+    "net_r": -0.0249,
+    "win": 0.485,
+    "pf": 0.938,
+    "fees": 16.0,
+    "exits": {
+     "stop": 28,
+     "time": 203
+    },
+    "long": 114
+   },
+   "year2": {
+    "trades": 233,
+    "net_usd": -54.5,
+    "net_r": -0.029,
+    "win": 0.476,
+    "pf": 0.897,
+    "fees": 16.23,
+    "exits": {
+     "stop": 33,
+     "time": 200
+    },
+    "long": 108
+   }
+  },
+  "V15.5-GOOGL": {
+   "all": {
+    "trades": 474,
+    "net_usd": -78.76,
+    "net_r": -0.0223,
+    "win": 0.462,
+    "pf": 0.929,
+    "fees": 32.09,
+    "exits": {
+     "stop": 63,
+     "time": 411
+    },
+    "long": 238
+   },
+   "year1": {
+    "trades": 235,
+    "net_usd": 7.85,
+    "net_r": 0.0027,
+    "win": 0.494,
+    "pf": 1.014,
+    "fees": 16.61,
+    "exits": {
+     "stop": 32,
+     "time": 203
+    },
+    "long": 124
+   },
+   "year2": {
+    "trades": 239,
+    "net_usd": -86.61,
+    "net_r": -0.047,
+    "win": 0.431,
+    "pf": 0.842,
+    "fees": 15.48,
+    "exits": {
+     "stop": 31,
+     "time": 208
+    },
+    "long": 114
+   }
+  }
+ }
+}
