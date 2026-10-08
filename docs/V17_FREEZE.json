@@ -1,0 +1,171 @@
+{
+ "protocol": "V17_SWING_PAPER_V1",
+ "baseline_fingerprint": "93f9c48b67163c69",
+ "code": {
+  "app.competition.v17_config": "5b9db16420e7",
+  "app.live.v17_worker": "e8a01c307518",
+  "app.strategies.v17.swing": "9dae9797f95c",
+  "app.strategies.v18.trend": "2b50652483d6"
+ },
+ "field": {
+  "families": [
+   "V17.3",
+   "V17.4",
+   "V18.4"
+  ],
+  "coins": [
+   "BTC",
+   "ETH",
+   "SOL",
+   "XRP",
+   "DOGE",
+   "ADA",
+   "LINK",
+   "AVAX",
+   "LTC",
+   "BNB"
+  ]
+ },
+ "starting_balance": 1000.0,
+ "daily_bars": {
+  "source": "Bybit linear public daily klines, UTC",
+  "history_days": 400
+ },
+ "breadth_set": [
+  "BTCUSDT",
+  "ETHUSDT",
+  "SOLUSDT",
+  "XRPUSDT",
+  "ZECUSDT",
+  "HYPEUSDT",
+  "DOGEUSDT",
+  "ENAUSDT",
+  "NEARUSDT",
+  "ADAUSDT",
+  "ARBUSDT",
+  "SUIUSDT",
+  "1000PEPEUSDT",
+  "PUMPFUNUSDT",
+  "UNIUSDT",
+  "LINKUSDT"
+ ],
+ "rules": {
+  "BTCUSDT": {
+   "symbol": "BTCUSDT",
+   "tick": 0.1,
+   "step": 0.001,
+   "min_qty": 0.001,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 3,
+   "qty_precision": 5
+  },
+  "ETHUSDT": {
+   "symbol": "ETHUSDT",
+   "tick": 0.01,
+   "step": 0.01,
+   "min_qty": 0.01,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 4,
+   "qty_precision": 4
+  },
+  "SOLUSDT": {
+   "symbol": "SOLUSDT",
+   "tick": 0.01,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 4,
+   "qty_precision": 3
+  },
+  "XRPUSDT": {
+   "symbol": "XRPUSDT",
+   "tick": 0.0001,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 6,
+   "qty_precision": 3
+  },
+  "DOGEUSDT": {
+   "symbol": "DOGEUSDT",
+   "tick": 1e-05,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 7,
+   "qty_precision": 2
+  },
+  "ADAUSDT": {
+   "symbol": "ADAUSDT",
+   "tick": 0.0001,
+   "step": 1.0,
+   "min_qty": 1.0,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 6,
+   "qty_precision": 2
+  },
+  "LINKUSDT": {
+   "symbol": "LINKUSDT",
+   "tick": 0.001,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 5,
+   "qty_precision": 3
+  },
+  "AVAXUSDT": {
+   "symbol": "AVAXUSDT",
+   "tick": 0.001,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 5,
+   "qty_precision": 3
+  },
+  "LTCUSDT": {
+   "symbol": "LTCUSDT",
+   "tick": 0.01,
+   "step": 0.1,
+   "min_qty": 0.1,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 4,
+   "qty_precision": 3
+  },
+  "BNBUSDT": {
+   "symbol": "BNBUSDT",
+   "tick": 0.1,
+   "step": 0.01,
+   "min_qty": 0.01,
+   "min_notional": 5.0,
+   "maint_margin_rate": 0.025,
+   "price_precision": 3,
+   "qty_precision": 4
+  }
+ },
+ "funding_interval_min": {
+  "BTCUSDT": 480,
+  "ETHUSDT": 480,
+  "SOLUSDT": 480,
+  "XRPUSDT": 480,
+  "DOGEUSDT": 480,
+  "ADAUSDT": 480,
+  "LINKUSDT": 480,
+  "AVAXUSDT": 480,
+  "LTCUSDT": 480,
+  "BNBUSDT": 480
+ },
+ "studies": [
+  "docs/V17_SWING_STUDY.json",
+  "docs/V18_TREND_STUDY.json"
+ ],
+ "fingerprint": "244540d9fd7b75fb"
+}

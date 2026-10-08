@@ -7,7 +7,7 @@ import json
 import time
 from typing import Any
 
-TF_MS = {"1m": 60_000, "5m": 300_000, "15m": 900_000, "1h": 3_600_000}
+TF_MS = {"1m": 60_000, "5m": 300_000, "15m": 900_000, "1h": 3_600_000, "4h": 14_400_000}
 
 
 def ladder_rungs(program: str | None, bot_key: str) -> tuple[float, ...] | None:

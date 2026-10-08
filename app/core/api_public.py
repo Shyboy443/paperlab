@@ -779,6 +779,18 @@ async def v16_forward(request: Request) -> dict[str, Any]:
             "read_only": True}
 
 
+@router.get("/v17")
+async def v17_forward(request: Request) -> dict[str, Any]:
+    """V17 SWING: the long-hold families that passed the V17 / V18 studies, on the 10 majors. Paper only, read-only."""
+    import asyncio
+    from app.core.v6_view import v6_payload
+    st = getattr(request.app.state, "v17_storage", None)
+    if st is None:
+        return {"ok": False, "error": "V17 is not running", "read_only": True}
+    out = await asyncio.to_thread(v6_payload, st, getattr(request.app.state, "v17", None))
+    return {**out, "read_only": True}
+
+
 @router.get("/v14")
 async def v14_forward(request: Request) -> dict[str, Any]:
     """V14 HTF: copies of the best strategies that check the higher timeframes before every entry. Read-only."""
@@ -826,7 +838,8 @@ async def arena_bot(request: Request, program: str, key: str) -> dict[str, Any]:
           "v12": getattr(request.app.state, "v12_storage", None),
           "v13": getattr(request.app.state, "v13_storage", None),
           "v14": getattr(request.app.state, "v14_storage", None),
-          "v16": getattr(request.app.state, "v16_storage", None)}.get(program)
+          "v16": getattr(request.app.state, "v16_storage", None),
+          "v17": getattr(request.app.state, "v17_storage", None)}.get(program)
     if st is None:
         return {"ok": False, "error": "unknown or stopped program"}
     return {**(await asyncio.to_thread(v6_bot, st, key, getattr(request.app.state, program, None))), "read_only": True}
@@ -848,7 +861,8 @@ async def arena_candles(request: Request, program: str, symbol: str = Query(...,
               "v12": lambda: getattr(request.app.state, "v12_storage", None),
               "v13": lambda: getattr(request.app.state, "v13_storage", None),
               "v14": lambda: getattr(request.app.state, "v14_storage", None),
-              "v16": lambda: getattr(request.app.state, "v16_storage", None)}
+              "v16": lambda: getattr(request.app.state, "v16_storage", None),
+              "v17": lambda: getattr(request.app.state, "v17_storage", None)}
     if program not in stores:
         return {"ok": False, "error": "unknown program"}
     st = stores[program]()

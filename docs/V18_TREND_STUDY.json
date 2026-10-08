@@ -1,0 +1,4383 @@
+{
+ "built": "2026-10-08 16:39 UTC",
+ "rules": "V18 trend study: five new long-hold families, a fresh untouched holdout for V17's four passing families, the\nfamilies on 20 coins none of them was judged on, and a portfolio rule for the correlated drawdown.\n(operator, 2026-10-08: \"needs better improved strategies, keep going\", after V17 passed 4 of 5 swing families.)\n\n    BT_START=2024-10-01 BT_END=2026-10-01 BT_MID=2025-10-01 python scripts/v18_trend_study.py run --data-dir /data/bt2y\n    BT_START=2023-10-01 BT_END=2024-10-01 BT_MID=2024-04-01 python scripts/v18_trend_study.py run --data-dir /data/bt_hold_crypto\n    BT_START=2022-01-01 BT_END=2023-07-01 BT_MID=2022-10-01 python scripts/v18_trend_study.py run --data-dir /data/bt_hold2\n    python scripts/v18_trend_study.py analyze --main /data/bt2y --hold /data/bt_hold_crypto --hold2 /data/bt_hold2\n\nPRE-REGISTERED (2026-10-08, written before any V18 run and before any run of anything on HOLD2; one shot, nothing is\nre-tuned after the results)\n\nFamilies: V17.1 Donchian 20/10, V17.2 trend MA, V17.3 7/3 breakout, V17.4 weekly momentum (unchanged from the V17\nstudy) and V18.1 Turtle 55/20, V18.2 Donchian + BTC regime gate, V18.3 multi-horizon momentum vote, V18.4 Donchian\nchandelier, V18.5 trend pullback -- exactly as in app/strategies/v17/swing.py and app/strategies/v18/trend.py.\n\nCoins: the 10 MAJORS judged in V17 (BTC ETH SOL XRP DOGE ADA LINK AVAX LTC BNB) and the 20 OTHER coins of the /data/bt2y\nuniverse (breadth check; a coin without data in a window simply has no trades there).\n\nBook and costs exactly as V17: one continuous 1000 USDT book per coin and family and window, 1% risk per trade (V6\nsizing), V6 execution and taker fees, real funding on every open position, halts off, 92 days of warm-up.\n\nWindows: DEV 2024-10..2025-10 and TEST 2025-10..2026-10 (one book), HOLD1 2023-10..2024-10 (used by V16/V17 already)\nand HOLD2 2022-01-01..2023-07-01 -- the 2022 bear market (LUNA, FTX). HOLD2 data was fetched for this study and no\nstrategy of this lab has ever been run on it.\n\nVerdicts (sums over the 10 majors unless stated):\n- V18 family PASS only if net > 0 in DEV, TEST, HOLD1 and HOLD2; profit factor >= 1.20 over all four; >= 6 of 10 majors\n  net positive over all four; >= 100 trades; still net positive with the fees paid twice.\n- V17 family CONFIRMED only if its HOLD2 net > 0 (its first truly out-of-sample year).\n- BROAD (reported for every family): net > 0 over all four windows summed over the 20 OTHER coins.\n- Portfolio: book A = every PASSING or CONFIRMED family on the 10 majors in one shared account at 0.25% risk per bot;\n  book B = book A, but a new entry is skipped while 12 or more of its positions are already open on the same side.\n  For each window the average daily return, max drawdown and worst day are reported. Book B becomes the live design\n  only if its max drawdown is lower than book A's in at least 2 of the 3 windows (main, HOLD1, HOLD2) and its return\n  in HOLD2 is not more than 25% below book A's; otherwise book A.\nFamilies that pass become paper bots; the others do not run.\n",
+ "families": {
+  "V17.1": {
+   "verdict": "NOT CONFIRMED",
+   "checks": {
+    "dev_net": true,
+    "test_net": true,
+    "hold1_net": true,
+    "hold2_net": false,
+    "pf_1_20": true,
+    "six_coins": true,
+    "100_trades": true,
+    "double_fees_positive": true
+   },
+   "coins_positive": 9,
+   "dev": {
+    "trades": 128,
+    "net": 560.48,
+    "fees": 13.68,
+    "pf": 1.806,
+    "win": 0.297,
+    "avg_hold_h": 406.6
+   },
+   "test": {
+    "trades": 114,
+    "net": 341.56,
+    "fees": 14.73,
+    "pf": 1.615,
+    "win": 0.386,
+    "avg_hold_h": 461.0
+   },
+   "hold1": {
+    "trades": 124,
+    "net": 780.99,
+    "fees": 15.61,
+    "pf": 2.173,
+    "win": 0.387,
+    "avg_hold_h": 436.2
+   },
+   "hold2": {
+    "trades": 189,
+    "net": -30.36,
+    "fees": 18.34,
+    "pf": 0.968,
+    "win": 0.317,
+    "avg_hold_h": 430.0
+   },
+   "all": {
+    "trades": 555,
+    "net": 1652.67,
+    "fees": 62.36,
+    "pf": 1.575,
+    "win": 0.342,
+    "avg_hold_h": 432.4
+   },
+   "net_with_double_fees": 1590.31,
+   "broad": true,
+   "other_coins_net": 2088.61,
+   "coins": {
+    "ADAUSDT": {
+     "dev": {
+      "trades": 13,
+      "net": 74.71,
+      "fees": 1.29,
+      "pf": 2.013,
+      "win": 0.231,
+      "avg_hold_h": 357.6
+     },
+     "test": {
+      "trades": 13,
+      "net": -25.77,
+      "fees": 1.32,
+      "pf": 0.674,
+      "win": 0.308,
+      "avg_hold_h": 333.8
+     },
+     "hold1": {
+      "trades": 14,
+      "net": 158.89,
+      "fees": 1.96,
+      "pf": 2.907,
+      "win": 0.429,
+      "avg_hold_h": 405.8
+     },
+     "hold2": {
+      "trades": 17,
+      "net": 32.99,
+      "fees": 1.52,
+      "pf": 1.498,
+      "win": 0.412,
+      "avg_hold_h": 493.3
+     },
+     "all": {
+      "trades": 57,
+      "net": 240.81,
+      "fees": 6.08,
+      "pf": 1.796,
+      "win": 0.351,
+      "avg_hold_h": 404.5
+     }
+    },
+    "AVAXUSDT": {
+     "dev": {
+      "trades": 12,
+      "net": -10.49,
+      "fees": 0.97,
+      "pf": 0.833,
+      "win": 0.333,
+      "avg_hold_h": 399.2
+     },
+     "test": {
+      "trades": 11,
+      "net": 63.81,
+      "fees": 1.12,
+      "pf": 2.024,
+      "win": 0.364,
+      "avg_hold_h": 553.9
+     },
+     "hold1": {
+      "trades": 14,
+      "net": 224.99,
+      "fees": 1.52,
+      "pf": 4.062,
+      "win": 0.429,
+      "avg_hold_h": 413.3
+     },
+     "hold2": {
+      "trades": 15,
+      "net": 75.87,
+      "fees": 1.28,
+      "pf": 2.236,
+      "win": 0.333,
+      "avg_hold_h": 564.0
+     },
+     "all": {
+      "trades": 52,
+      "net": 354.18,
+      "fees": 4.89,
+      "pf": 2.362,
+      "win": 0.365,
+      "avg_hold_h": 483.3
+     }
+    },
+    "BNBUSDT": {
+     "dev": {
+      "trades": 14,
+      "net": -18.98,
+      "fees": 2.11,
+      "pf": 0.817,
+      "win": 0.214,
+      "avg_hold_h": 340.4
+     },
+     "test": {
+      "trades": 12,
+      "net": 45.92,
+      "fees": 2.03,
+      "pf": 1.681,
+      "win": 0.333,
+      "avg_hold_h": 446.5
+     },
+     "hold1": {
+      "trades": 12,
+      "net": 81.51,
+      "fees": 2.1,
+      "pf": 2.109,
+      "win": 0.25,
+      "avg_hold_h": 494.4
+     },
+     "hold2": {
+      "trades": 19,
+      "net": 2.53,
+      "fees": 2.42,
+      "pf": 1.026,
+      "win": 0.368,
+      "avg_hold_h": 398.0
+     },
+     "all": {
+      "trades": 57,
+      "net": 110.98,
+      "fees": 8.67,
+      "pf": 1.325,
+      "win": 0.298,
+      "avg_hold_h": 414.3
+     }
+    },
+    "BTCUSDT": {
+     "dev": {
+      "trades": 12,
+      "net": 43.18,
+      "fees": 1.66,
+      "pf": 1.818,
+      "win": 0.333,
+      "avg_hold_h": 429.2
+     },
+     "test": {
+      "trades": 8,
+      "net": 95.01,
+      "fees": 1.26,
+      "pf": 6.339,
+      "win": 0.625,
+      "avg_hold_h": 713.1
+     },
+     "hold1": {
+      "trades": 12,
+      "net": 83.23,
+      "fees": 1.59,
+      "pf": 2.676,
+      "win": 0.417,
+      "avg_hold_h": 482.9
+     },
+     "hold2": {
+      "trades": 21,
+      "net": 60.13,
+      "fees": 2.61,
+      "pf": 1.644,
+      "win": 0.381,
+      "avg_hold_h": 380.7
+     },
+     "all": {
+      "trades": 53,
+      "net": 281.56,
+      "fees": 7.12,
+      "pf": 2.317,
+      "win": 0.415,
+      "avg_hold_h": 465.0
+     }
+    },
+    "DOGEUSDT": {
+     "dev": {
+      "trades": 12,
+      "net": 144.12,
+      "fees": 1.19,
+      "pf": 3.783,
+      "win": 0.333,
+      "avg_hold_h": 469.3
+     },
+     "test": {
+      "trades": 8,
+      "net": 44.5,
+      "fees": 1.13,
+      "pf": 2.594,
+      "win": 0.625,
+      "avg_hold_h": 726.6
+     },
+     "hold1": {
+      "trades": 11,
+      "net": 136.75,
+      "fees": 1.62,
+      "pf": 3.428,
+      "win": 0.455,
+      "avg_hold_h": 479.5
+     },
+     "hold2": {
+      "trades": 18,
+      "net": -49.44,
+      "fees": 1.51,
+      "pf": 0.514,
+      "win": 0.278,
+      "avg_hold_h": 450.1
+     },
+     "all": {
+      "trades": 49,
+      "net": 275.93,
+      "fees": 5.45,
+      "pf": 2.161,
+      "win": 0.388,
+      "avg_hold_h": 506.6
+     }
+    },
+    "ETHUSDT": {
+     "dev": {
+      "trades": 11,
+      "net": 23.73,
+      "fees": 1.0,
+      "pf": 1.505,
+      "win": 0.455,
+      "avg_hold_h": 549.7
+     },
+     "test": {
+      "trades": 11,
+      "net": 73.34,
+      "fees": 1.18,
+      "pf": 2.966,
+      "win": 0.364,
+      "avg_hold_h": 470.7
+     },
+     "hold1": {
+      "trades": 10,
+      "net": 81.11,
+      "fees": 1.26,
+      "pf": 3.138,
+      "win": 0.5,
+      "avg_hold_h": 557.9
+     },
+     "hold2": {
+      "trades": 19,
+      "net": 24.87,
+      "fees": 2.0,
+      "pf": 1.312,
+      "win": 0.316,
+      "avg_hold_h": 435.4
+     },
+     "all": {
+      "trades": 51,
+      "net": 203.05,
+      "fees": 5.44,
+      "pf": 2.005,
+      "win": 0.392,
+      "avg_hold_h": 491.7
+     }
+    },
+    "LINKUSDT": {
+     "dev": {
+      "trades": 15,
+      "net": -7.9,
+      "fees": 1.31,
+      "pf": 0.901,
+      "win": 0.267,
+      "avg_hold_h": 367.1
+     },
+     "test": {
+      "trades": 11,
+      "net": 21.6,
+      "fees": 1.16,
+      "pf": 1.492,
+      "win": 0.545,
+      "avg_hold_h": 409.2
+     },
+     "hold1": {
+      "trades": 12,
+      "net": 32.97,
+      "fees": 1.22,
+      "pf": 1.582,
+      "win": 0.5,
+      "avg_hold_h": 395.0
+     },
+     "hold2": {
+      "trades": 17,
+      "net": -35.02,
+      "fees": 1.43,
+      "pf": 0.649,
+      "win": 0.294,
+      "avg_hold_h": 508.6
+     },
+     "all": {
+      "trades": 55,
+      "net": 11.66,
+      "fees": 5.11,
+      "pf": 1.042,
+      "win": 0.382,
+      "avg_hold_h": 425.3
+     }
+    },
+    "LTCUSDT": {
+     "dev": {
+      "trades": 13,
+      "net": -18.91,
+      "fees": 1.22,
+      "pf": 0.659,
+      "win": 0.308,
+      "avg_hold_h": 385.6
+     },
+     "test": {
+      "trades": 13,
+      "net": 9.17,
+      "fees": 1.6,
+      "pf": 1.156,
+      "win": 0.308,
+      "avg_hold_h": 387.0
+     },
+     "hold1": {
+      "trades": 14,
+      "net": -97.73,
+      "fees": 1.64,
+      "pf": 0.062,
+      "win": 0.143,
+      "avg_hold_h": 233.9
+     },
+     "hold2": {
+      "trades": 22,
+      "net": -68.74,
+      "fees": 1.82,
+      "pf": 0.383,
+      "win": 0.227,
+      "avg_hold_h": 429.3
+     },
+     "all": {
+      "trades": 62,
+      "net": -176.21,
+      "fees": 6.28,
+      "pf": 0.466,
+      "win": 0.242,
+      "avg_hold_h": 367.2
+     }
+    },
+    "SOLUSDT": {
+     "dev": {
+      "trades": 13,
+      "net": -19.98,
+      "fees": 0.97,
+      "pf": 0.656,
+      "win": 0.308,
+      "avg_hold_h": 432.1
+     },
+     "test": {
+      "trades": 12,
+      "net": 65.65,
+      "fees": 1.33,
+      "pf": 2.18,
+      "win": 0.333,
+      "avg_hold_h": 499.6
+     },
+     "hold1": {
+      "trades": 13,
+      "net": 116.83,
+      "fees": 1.22,
+      "pf": 2.951,
+      "win": 0.385,
+      "avg_hold_h": 506.5
+     },
+     "hold2": {
+      "trades": 23,
+      "net": -52.09,
+      "fees": 1.79,
+      "pf": 0.637,
+      "win": 0.304,
+      "avg_hold_h": 305.6
+     },
+     "all": {
+      "trades": 61,
+      "net": 110.41,
+      "fees": 5.31,
+      "pf": 1.348,
+      "win": 0.328,
+      "avg_hold_h": 413.5
+     }
+    },
+    "XRPUSDT": {
+     "dev": {
+      "trades": 13,
+      "net": 350.99,
+      "fees": 1.96,
+      "pf": 4.181,
+      "win": 0.231,
+      "avg_hold_h": 375.1
+     },
+     "test": {
+      "trades": 15,
+      "net": -51.67,
+      "fees": 2.6,
+      "pf": 0.51,
+      "win": 0.267,
+      "avg_hold_h": 303.0
+     },
+     "hold1": {
+      "trades": 12,
+      "net": -37.56,
+      "fees": 1.5,
+      "pf": 0.47,
+      "win": 0.417,
+      "avg_hold_h": 452.9
+     },
+     "hold2": {
+      "trades": 18,
+      "net": -21.46,
+      "fees": 1.95,
+      "pf": 0.793,
+      "win": 0.278,
+      "avg_hold_h": 410.0
+     },
+     "all": {
+      "trades": 58,
+      "net": 240.3,
+      "fees": 8.01,
+      "pf": 1.616,
+      "win": 0.293,
+      "avg_hold_h": 383.4
+     }
+    }
+   }
+  },
+  "V17.2": {
+   "verdict": "NOT CONFIRMED",
+   "checks": {
+    "dev_net": true,
+    "test_net": true,
+    "hold1_net": true,
+    "hold2_net": false,
+    "pf_1_20": true,
+    "six_coins": true,
+    "100_trades": true,
+    "double_fees_positive": true
+   },
+   "coins_positive": 9,
+   "dev": {
+    "trades": 138,
+    "net": 318.0,
+    "fees": 9.39,
+    "pf": 1.908,
+    "win": 0.319,
+    "avg_hold_h": 270.9
+   },
+   "test": {
+    "trades": 132,
+    "net": 177.92,
+    "fees": 10.35,
+    "pf": 1.552,
+    "win": 0.318,
+    "avg_hold_h": 328.5
+   },
+   "hold1": {
+    "trades": 137,
+    "net": 475.29,
+    "fees": 10.17,
+    "pf": 2.441,
+    "win": 0.328,
+    "avg_hold_h": 313.9
+   },
+   "hold2": {
+    "trades": 168,
+    "net": -106.7,
+    "fees": 10.68,
+    "pf": 0.775,
+    "win": 0.28,
+    "avg_hold_h": 321.8
+   },
+   "all": {
+    "trades": 575,
+    "net": 864.51,
+    "fees": 40.59,
+    "pf": 1.586,
+    "win": 0.31,
+    "avg_hold_h": 309.2
+   },
+   "net_with_double_fees": 823.92,
+   "broad": true,
+   "other_coins_net": 1546.6,
+   "coins": {
+    "ADAUSDT": {
+     "dev": {
+      "trades": 15,
+      "net": 16.46,
+      "fees": 0.95,
+      "pf": 1.354,
+      "win": 0.267,
+      "avg_hold_h": 224.7
+     },
+     "test": {
+      "trades": 15,
+      "net": 14.72,
+      "fees": 0.93,
+      "pf": 1.459,
+      "win": 0.333,
+      "avg_hold_h": 316.2
+     },
+     "hold1": {
+      "trades": 13,
+      "net": 82.6,
+      "fees": 1.15,
+      "pf": 3.14,
+      "win": 0.385,
+      "avg_hold_h": 390.4
+     },
+     "hold2": {
+      "trades": 16,
+      "net": 1.82,
+      "fees": 0.94,
+      "pf": 1.05,
+      "win": 0.375,
+      "avg_hold_h": 401.2
+     },
+     "all": {
+      "trades": 59,
+      "net": 115.6,
+      "fees": 3.97,
+      "pf": 1.753,
+      "win": 0.339,
+      "avg_hold_h": 332.4
+     }
+    },
+    "AVAXUSDT": {
+     "dev": {
+      "trades": 17,
+      "net": -21.06,
+      "fees": 0.91,
+      "pf": 0.583,
+      "win": 0.235,
+      "avg_hold_h": 204.0
+     },
+     "test": {
+      "trades": 14,
+      "net": 31.49,
+      "fees": 0.98,
+      "pf": 1.938,
+      "win": 0.286,
+      "avg_hold_h": 295.4
+     },
+     "hold1": {
+      "trades": 13,
+      "net": 156.4,
+      "fees": 0.92,
+      "pf": 6.873,
+      "win": 0.308,
+      "avg_hold_h": 352.0
+     },
+     "hold2": {
+      "trades": 13,
+      "net": -4.14,
+      "fees": 0.7,
+      "pf": 0.89,
+      "win": 0.308,
+      "avg_hold_h": 376.6
+     },
+     "all": {
+      "trades": 57,
+      "net": 162.7,
+      "fees": 3.51,
+      "pf": 2.096,
+      "win": 0.281,
+      "avg_hold_h": 299.5
+     }
+    },
+    "BNBUSDT": {
+     "dev": {
+      "trades": 17,
+      "net": 1.77,
+      "fees": 1.58,
+      "pf": 1.057,
+      "win": 0.235,
+      "avg_hold_h": 236.2
+     },
+     "test": {
+      "trades": 17,
+      "net": 1.71,
+      "fees": 1.67,
+      "pf": 1.029,
+      "win": 0.176,
+      "avg_hold_h": 244.9
+     },
+     "hold1": {
+      "trades": 17,
+      "net": 49.52,
+      "fees": 1.64,
+      "pf": 2.168,
+      "win": 0.294,
+      "avg_hold_h": 280.9
+     },
+     "hold2": {
+      "trades": 23,
+      "net": -14.84,
+      "fees": 1.92,
+      "pf": 0.785,
+      "win": 0.304,
+      "avg_hold_h": 254.0
+     },
+     "all": {
+      "trades": 74,
+      "net": 38.16,
+      "fees": 6.82,
+      "pf": 1.189,
+      "win": 0.257,
+      "avg_hold_h": 254.0
+     }
+    },
+    "BTCUSDT": {
+     "dev": {
+      "trades": 11,
+      "net": 8.37,
+      "fees": 1.12,
+      "pf": 1.376,
+      "win": 0.364,
+      "avg_hold_h": 309.4
+     },
+     "test": {
+      "trades": 10,
+      "net": 9.96,
+      "fees": 0.84,
+      "pf": 1.535,
+      "win": 0.4,
+      "avg_hold_h": 335.7
+     },
+     "hold1": {
+      "trades": 9,
+      "net": 20.48,
+      "fees": 0.67,
+      "pf": 1.934,
+      "win": 0.444,
+      "avg_hold_h": 423.3
+     },
+     "hold2": {
+      "trades": 21,
+      "net": -24.64,
+      "fees": 1.53,
+      "pf": 0.577,
+      "win": 0.238,
+      "avg_hold_h": 300.6
+     },
+     "all": {
+      "trades": 51,
+      "net": 14.17,
+      "fees": 4.16,
+      "pf": 1.117,
+      "win": 0.333,
+      "avg_hold_h": 331.0
+     }
+    },
+    "DOGEUSDT": {
+     "dev": {
+      "trades": 12,
+      "net": 90.73,
+      "fees": 0.77,
+      "pf": 3.719,
+      "win": 0.333,
+      "avg_hold_h": 312.7
+     },
+     "test": {
+      "trades": 9,
+      "net": 16.75,
+      "fees": 0.6,
+      "pf": 1.805,
+      "win": 0.444,
+      "avg_hold_h": 503.5
+     },
+     "hold1": {
+      "trades": 11,
+      "net": 35.4,
+      "fees": 0.81,
+      "pf": 2.312,
+      "win": 0.364,
+      "avg_hold_h": 320.3
+     },
+     "hold2": {
+      "trades": 18,
+      "net": -53.7,
+      "fees": 1.02,
+      "pf": 0.177,
+      "win": 0.222,
+      "avg_hold_h": 252.5
+     },
+     "all": {
+      "trades": 50,
+      "net": 89.18,
+      "fees": 3.2,
+      "pf": 1.609,
+      "win": 0.32,
+      "avg_hold_h": 327.0
+     }
+    },
+    "ETHUSDT": {
+     "dev": {
+      "trades": 14,
+      "net": 0.28,
+      "fees": 0.58,
+      "pf": 1.01,
+      "win": 0.357,
+      "avg_hold_h": 352.5
+     },
+     "test": {
+      "trades": 11,
+      "net": 41.91,
+      "fees": 0.71,
+      "pf": 5.003,
+      "win": 0.455,
+      "avg_hold_h": 434.1
+     },
+     "hold1": {
+      "trades": 13,
+      "net": 13.42,
+      "fees": 0.77,
+      "pf": 1.48,
+      "win": 0.462,
+      "avg_hold_h": 397.1
+     },
+     "hold2": {
+      "trades": 13,
+      "net": 35.52,
+      "fees": 0.7,
+      "pf": 2.486,
+      "win": 0.385,
+      "avg_hold_h": 464.8
+     },
+     "all": {
+      "trades": 51,
+      "net": 91.14,
+      "fees": 2.76,
+      "pf": 2.004,
+      "win": 0.412,
+      "avg_hold_h": 410.1
+     }
+    },
+    "LINKUSDT": {
+     "dev": {
+      "trades": 15,
+      "net": 12.2,
+      "fees": 0.95,
+      "pf": 1.265,
+      "win": 0.333,
+      "avg_hold_h": 245.4
+     },
+     "test": {
+      "trades": 10,
+      "net": 61.38,
+      "fees": 0.76,
+      "pf": 6.22,
+      "win": 0.5,
+      "avg_hold_h": 431.2
+     },
+     "hold1": {
+      "trades": 15,
+      "net": 31.13,
+      "fees": 0.94,
+      "pf": 1.911,
+      "win": 0.333,
+      "avg_hold_h": 314.9
+     },
+     "hold2": {
+      "trades": 15,
+      "net": -12.23,
+      "fees": 0.95,
+      "pf": 0.677,
+      "win": 0.267,
+      "avg_hold_h": 289.3
+     },
+     "all": {
+      "trades": 55,
+      "net": 92.48,
+      "fees": 3.6,
+      "pf": 1.712,
+      "win": 0.345,
+      "avg_hold_h": 310.1
+     }
+    },
+    "LTCUSDT": {
+     "dev": {
+      "trades": 11,
+      "net": 14.2,
+      "fees": 0.74,
+      "pf": 1.539,
+      "win": 0.364,
+      "avg_hold_h": 293.8
+     },
+     "test": {
+      "trades": 16,
+      "net": -11.42,
+      "fees": 1.43,
+      "pf": 0.82,
+      "win": 0.25,
+      "avg_hold_h": 246.9
+     },
+     "hold1": {
+      "trades": 17,
+      "net": -15.8,
+      "fees": 1.23,
+      "pf": 0.536,
+      "win": 0.235,
+      "avg_hold_h": 197.6
+     },
+     "hold2": {
+      "trades": 22,
+      "net": -36.28,
+      "fees": 1.21,
+      "pf": 0.488,
+      "win": 0.182,
+      "avg_hold_h": 286.3
+     },
+     "all": {
+      "trades": 66,
+      "net": -49.3,
+      "fees": 4.61,
+      "pf": 0.747,
+      "win": 0.242,
+      "avg_hold_h": 255.1
+     }
+    },
+    "SOLUSDT": {
+     "dev": {
+      "trades": 14,
+      "net": -2.76,
+      "fees": 0.58,
+      "pf": 0.867,
+      "win": 0.429,
+      "avg_hold_h": 274.4
+     },
+     "test": {
+      "trades": 14,
+      "net": 23.09,
+      "fees": 0.92,
+      "pf": 1.9,
+      "win": 0.357,
+      "avg_hold_h": 316.2
+     },
+     "hold1": {
+      "trades": 12,
+      "net": 148.17,
+      "fees": 0.76,
+      "pf": 7.112,
+      "win": 0.417,
+      "avg_hold_h": 398.6
+     },
+     "hold2": {
+      "trades": 11,
+      "net": 7.03,
+      "fees": 0.57,
+      "pf": 1.267,
+      "win": 0.364,
+      "avg_hold_h": 389.4
+     },
+     "all": {
+      "trades": 51,
+      "net": 175.53,
+      "fees": 2.83,
+      "pf": 2.81,
+      "win": 0.392,
+      "avg_hold_h": 339.9
+     }
+    },
+    "XRPUSDT": {
+     "dev": {
+      "trades": 12,
+      "net": 197.81,
+      "fees": 1.21,
+      "pf": 5.43,
+      "win": 0.333,
+      "avg_hold_h": 307.0
+     },
+     "test": {
+      "trades": 16,
+      "net": -11.69,
+      "fees": 1.5,
+      "pf": 0.748,
+      "win": 0.188,
+      "avg_hold_h": 310.0
+     },
+     "hold1": {
+      "trades": 17,
+      "net": -46.04,
+      "fees": 1.28,
+      "pf": 0.129,
+      "win": 0.176,
+      "avg_hold_h": 189.4
+     },
+     "hold2": {
+      "trades": 16,
+      "net": -5.24,
+      "fees": 1.15,
+      "pf": 0.892,
+      "win": 0.25,
+      "avg_hold_h": 318.2
+     },
+     "all": {
+      "trades": 61,
+      "net": 134.84,
+      "fees": 5.14,
+      "pf": 1.7,
+      "win": 0.23,
+      "avg_hold_h": 277.9
+     }
+    }
+   }
+  },
+  "V17.3": {
+   "verdict": "CONFIRMED",
+   "checks": {
+    "dev_net": true,
+    "test_net": true,
+    "hold1_net": true,
+    "hold2_net": true,
+    "pf_1_20": true,
+    "six_coins": true,
+    "100_trades": true,
+    "double_fees_positive": true
+   },
+   "coins_positive": 9,
+   "dev": {
+    "trades": 132,
+    "net": 636.52,
+    "fees": 9.01,
+    "pf": 3.47,
+    "win": 0.424,
+    "avg_hold_h": 226.7
+   },
+   "test": {
+    "trades": 135,
+    "net": 22.85,
+    "fees": 11.17,
+    "pf": 1.07,
+    "win": 0.348,
+    "avg_hold_h": 174.7
+   },
+   "hold1": {
+    "trades": 159,
+    "net": 281.38,
+    "fees": 11.3,
+    "pf": 1.745,
+    "win": 0.421,
+    "avg_hold_h": 216.5
+   },
+   "hold2": {
+    "trades": 181,
+    "net": 138.1,
+    "fees": 11.45,
+    "pf": 1.347,
+    "win": 0.337,
+    "avg_hold_h": 189.4
+   },
+   "all": {
+    "trades": 607,
+    "net": 1078.86,
+    "fees": 42.93,
+    "pf": 1.794,
+    "win": 0.381,
+    "avg_hold_h": 201.4
+   },
+   "net_with_double_fees": 1035.93,
+   "broad": true,
+   "other_coins_net": 1537.07,
+   "coins": {
+    "ADAUSDT": {
+     "dev": {
+      "trades": 12,
+      "net": 105.44,
+      "fees": 0.78,
+      "pf": 5.497,
+      "win": 0.583,
+      "avg_hold_h": 184.0
+     },
+     "test": {
+      "trades": 16,
+      "net": -17.41,
+      "fees": 1.1,
+      "pf": 0.548,
+      "win": 0.375,
+      "avg_hold_h": 164.7
+     },
+     "hold1": {
+      "trades": 15,
+      "net": 38.85,
+      "fees": 1.2,
+      "pf": 2.021,
+      "win": 0.467,
+      "avg_hold_h": 201.7
+     },
+     "hold2": {
+      "trades": 19,
+      "net": -8.74,
+      "fees": 1.23,
+      "pf": 0.817,
+      "win": 0.263,
+      "avg_hold_h": 172.8
+     },
+     "all": {
+      "trades": 62,
+      "net": 118.14,
+      "fees": 4.3,
+      "pf": 1.799,
+      "win": 0.403,
+      "avg_hold_h": 179.9
+     }
+    },
+    "AVAXUSDT": {
+     "dev": {
+      "trades": 14,
+      "net": 35.16,
+      "fees": 0.77,
+      "pf": 2.065,
+      "win": 0.214,
+      "avg_hold_h": 225.7
+     },
+     "test": {
+      "trades": 14,
+      "net": -1.73,
+      "fees": 1.0,
+      "pf": 0.959,
+      "win": 0.286,
+      "avg_hold_h": 182.0
+     },
+     "hold1": {
+      "trades": 14,
+      "net": 73.17,
+      "fees": 0.85,
+      "pf": 4.177,
+      "win": 0.571,
+      "avg_hold_h": 260.2
+     },
+     "hold2": {
+      "trades": 17,
+      "net": 10.62,
+      "fees": 1.0,
+      "pf": 1.243,
+      "win": 0.353,
+      "avg_hold_h": 174.1
+     },
+     "all": {
+      "trades": 59,
+      "net": 117.22,
+      "fees": 3.62,
+      "pf": 1.828,
+      "win": 0.356,
+      "avg_hold_h": 208.6
+     }
+    },
+    "BNBUSDT": {
+     "dev": {
+      "trades": 15,
+      "net": 22.63,
+      "fees": 1.43,
+      "pf": 1.958,
+      "win": 0.267,
+      "avg_hold_h": 277.3
+     },
+     "test": {
+      "trades": 16,
+      "net": -33.8,
+      "fees": 1.77,
+      "pf": 0.352,
+      "win": 0.25,
+      "avg_hold_h": 166.5
+     },
+     "hold1": {
+      "trades": 19,
+      "net": 25.86,
+      "fees": 1.83,
+      "pf": 1.797,
+      "win": 0.579,
+      "avg_hold_h": 217.0
+     },
+     "hold2": {
+      "trades": 17,
+      "net": 20.89,
+      "fees": 1.3,
+      "pf": 1.724,
+      "win": 0.294,
+      "avg_hold_h": 217.1
+     },
+     "all": {
+      "trades": 67,
+      "net": 35.58,
+      "fees": 6.32,
+      "pf": 1.259,
+      "win": 0.358,
+      "avg_hold_h": 218.5
+     }
+    },
+    "BTCUSDT": {
+     "dev": {
+      "trades": 9,
+      "net": 10.65,
+      "fees": 0.95,
+      "pf": 1.705,
+      "win": 0.444,
+      "avg_hold_h": 207.1
+     },
+     "test": {
+      "trades": 9,
+      "net": 13.29,
+      "fees": 0.8,
+      "pf": 2.354,
+      "win": 0.444,
+      "avg_hold_h": 216.0
+     },
+     "hold1": {
+      "trades": 14,
+      "net": 45.94,
+      "fees": 1.03,
+      "pf": 2.679,
+      "win": 0.429,
+      "avg_hold_h": 260.3
+     },
+     "hold2": {
+      "trades": 17,
+      "net": 56.33,
+      "fees": 1.21,
+      "pf": 4.387,
+      "win": 0.412,
+      "avg_hold_h": 210.3
+     },
+     "all": {
+      "trades": 49,
+      "net": 126.2,
+      "fees": 3.98,
+      "pf": 2.832,
+      "win": 0.429,
+      "avg_hold_h": 225.0
+     }
+    },
+    "DOGEUSDT": {
+     "dev": {
+      "trades": 12,
+      "net": 67.54,
+      "fees": 0.76,
+      "pf": 5.278,
+      "win": 0.583,
+      "avg_hold_h": 231.3
+     },
+     "test": {
+      "trades": 12,
+      "net": 1.99,
+      "fees": 0.97,
+      "pf": 1.057,
+      "win": 0.333,
+      "avg_hold_h": 122.0
+     },
+     "hold1": {
+      "trades": 13,
+      "net": 53.19,
+      "fees": 0.99,
+      "pf": 2.919,
+      "win": 0.462,
+      "avg_hold_h": 264.0
+     },
+     "hold2": {
+      "trades": 18,
+      "net": 37.53,
+      "fees": 1.16,
+      "pf": 1.773,
+      "win": 0.278,
+      "avg_hold_h": 183.7
+     },
+     "all": {
+      "trades": 55,
+      "net": 160.25,
+      "fees": 3.89,
+      "pf": 2.263,
+      "win": 0.4,
+      "avg_hold_h": 199.6
+     }
+    },
+    "ETHUSDT": {
+     "dev": {
+      "trades": 13,
+      "net": 16.31,
+      "fees": 0.62,
+      "pf": 1.568,
+      "win": 0.462,
+      "avg_hold_h": 233.9
+     },
+     "test": {
+      "trades": 15,
+      "net": -4.62,
+      "fees": 0.88,
+      "pf": 0.795,
+      "win": 0.2,
+      "avg_hold_h": 158.6
+     },
+     "hold1": {
+      "trades": 14,
+      "net": 30.56,
+      "fees": 0.78,
+      "pf": 2.423,
+      "win": 0.5,
+      "avg_hold_h": 248.7
+     },
+     "hold2": {
+      "trades": 20,
+      "net": 17.73,
+      "fees": 1.16,
+      "pf": 1.569,
+      "win": 0.35,
+      "avg_hold_h": 190.6
+     },
+     "all": {
+      "trades": 62,
+      "net": 59.98,
+      "fees": 3.44,
+      "pf": 1.578,
+      "win": 0.371,
+      "avg_hold_h": 205.1
+     }
+    },
+    "LINKUSDT": {
+     "dev": {
+      "trades": 13,
+      "net": 41.34,
+      "fees": 0.79,
+      "pf": 2.695,
+      "win": 0.538,
+      "avg_hold_h": 226.1
+     },
+     "test": {
+      "trades": 13,
+      "net": 21.79,
+      "fees": 1.04,
+      "pf": 1.655,
+      "win": 0.462,
+      "avg_hold_h": 221.2
+     },
+     "hold1": {
+      "trades": 17,
+      "net": 18.7,
+      "fees": 1.02,
+      "pf": 1.343,
+      "win": 0.353,
+      "avg_hold_h": 175.5
+     },
+     "hold2": {
+      "trades": 16,
+      "net": -12.67,
+      "fees": 1.0,
+      "pf": 0.661,
+      "win": 0.375,
+      "avg_hold_h": 188.0
+     },
+     "all": {
+      "trades": 59,
+      "net": 69.16,
+      "fees": 3.85,
+      "pf": 1.462,
+      "win": 0.424,
+      "avg_hold_h": 200.1
+     }
+    },
+    "LTCUSDT": {
+     "dev": {
+      "trades": 16,
+      "net": 0.97,
+      "fees": 0.98,
+      "pf": 1.029,
+      "win": 0.25,
+      "avg_hold_h": 173.5
+     },
+     "test": {
+      "trades": 16,
+      "net": 3.19,
+      "fees": 1.38,
+      "pf": 1.107,
+      "win": 0.375,
+      "avg_hold_h": 164.0
+     },
+     "hold1": {
+      "trades": 20,
+      "net": -56.43,
+      "fees": 1.43,
+      "pf": 0.056,
+      "win": 0.25,
+      "avg_hold_h": 143.3
+     },
+     "hold2": {
+      "trades": 23,
+      "net": 2.81,
+      "fees": 1.26,
+      "pf": 1.054,
+      "win": 0.348,
+      "avg_hold_h": 164.8
+     },
+     "all": {
+      "trades": 75,
+      "net": -49.46,
+      "fees": 5.05,
+      "pf": 0.717,
+      "win": 0.307,
+      "avg_hold_h": 160.8
+     }
+    },
+    "SOLUSDT": {
+     "dev": {
+      "trades": 15,
+      "net": 13.08,
+      "fees": 0.62,
+      "pf": 1.734,
+      "win": 0.6,
+      "avg_hold_h": 241.7
+     },
+     "test": {
+      "trades": 11,
+      "net": 24.38,
+      "fees": 0.73,
+      "pf": 2.333,
+      "win": 0.545,
+      "avg_hold_h": 221.4
+     },
+     "hold1": {
+      "trades": 16,
+      "net": 86.14,
+      "fees": 0.81,
+      "pf": 5.811,
+      "win": 0.438,
+      "avg_hold_h": 261.7
+     },
+     "hold2": {
+      "trades": 17,
+      "net": -2.72,
+      "fees": 0.88,
+      "pf": 0.944,
+      "win": 0.294,
+      "avg_hold_h": 194.6
+     },
+     "all": {
+      "trades": 59,
+      "net": 120.89,
+      "fees": 3.04,
+      "pf": 2.176,
+      "win": 0.458,
+      "avg_hold_h": 229.8
+     }
+    },
+    "XRPUSDT": {
+     "dev": {
+      "trades": 13,
+      "net": 323.4,
+      "fees": 1.33,
+      "pf": 8.639,
+      "win": 0.385,
+      "avg_hold_h": 259.8
+     },
+     "test": {
+      "trades": 13,
+      "net": 15.78,
+      "fees": 1.51,
+      "pf": 1.362,
+      "win": 0.308,
+      "avg_hold_h": 155.4
+     },
+     "hold1": {
+      "trades": 17,
+      "net": -34.6,
+      "fees": 1.36,
+      "pf": 0.542,
+      "win": 0.235,
+      "avg_hold_h": 178.9
+     },
+     "hold2": {
+      "trades": 17,
+      "net": 16.32,
+      "fees": 1.25,
+      "pf": 1.378,
+      "win": 0.412,
+      "avg_hold_h": 208.4
+     },
+     "all": {
+      "trades": 60,
+      "net": 320.9,
+      "fees": 5.45,
+      "pf": 2.568,
+      "win": 0.333,
+      "avg_hold_h": 199.7
+     }
+    }
+   }
+  },
+  "V17.4": {
+   "verdict": "CONFIRMED",
+   "checks": {
+    "dev_net": true,
+    "test_net": true,
+    "hold1_net": true,
+    "hold2_net": true,
+    "pf_1_20": true,
+    "six_coins": true,
+    "100_trades": true,
+    "double_fees_positive": true
+   },
+   "coins_positive": 10,
+   "dev": {
+    "trades": 83,
+    "net": 373.18,
+    "fees": 4.75,
+    "pf": 2.661,
+    "win": 0.494,
+    "avg_hold_h": 703.1
+   },
+   "test": {
+    "trades": 128,
+    "net": 29.84,
+    "fees": 7.81,
+    "pf": 1.084,
+    "win": 0.336,
+    "avg_hold_h": 525.6
+   },
+   "hold1": {
+    "trades": 135,
+    "net": 332.12,
+    "fees": 8.33,
+    "pf": 2.0,
+    "win": 0.393,
+    "avg_hold_h": 495.9
+   },
+   "hold2": {
+    "trades": 134,
+    "net": 32.25,
+    "fees": 6.85,
+    "pf": 1.089,
+    "win": 0.381,
+    "avg_hold_h": 609.8
+   },
+   "all": {
+    "trades": 480,
+    "net": 767.4,
+    "fees": 27.74,
+    "pf": 1.602,
+    "win": 0.392,
+    "avg_hold_h": 571.5
+   },
+   "net_with_double_fees": 739.66,
+   "broad": true,
+   "other_coins_net": 609.88,
+   "coins": {
+    "ADAUSDT": {
+     "dev": {
+      "trades": 7,
+      "net": 13.87,
+      "fees": 0.38,
+      "pf": 1.737,
+      "win": 0.429,
+      "avg_hold_h": 795.4
+     },
+     "test": {
+      "trades": 13,
+      "net": -21.2,
+      "fees": 0.67,
+      "pf": 0.536,
+      "win": 0.308,
+      "avg_hold_h": 379.2
+     },
+     "hold1": {
+      "trades": 12,
+      "net": 36.25,
+      "fees": 0.75,
+      "pf": 2.146,
+      "win": 0.5,
+      "avg_hold_h": 606.0
+     },
+     "hold2": {
+      "trades": 13,
+      "net": -18.3,
+      "fees": 0.66,
+      "pf": 0.653,
+      "win": 0.308,
+      "avg_hold_h": 655.0
+     },
+     "all": {
+      "trades": 45,
+      "net": 10.62,
+      "fees": 2.47,
+      "pf": 1.071,
+      "win": 0.378,
+      "avg_hold_h": 584.1
+     }
+    },
+    "AVAXUSDT": {
+     "dev": {
+      "trades": 7,
+      "net": -16.46,
+      "fees": 0.33,
+      "pf": 0.514,
+      "win": 0.429,
+      "avg_hold_h": 662.0
+     },
+     "test": {
+      "trades": 16,
+      "net": -2.15,
+      "fees": 0.81,
+      "pf": 0.948,
+      "win": 0.312,
+      "avg_hold_h": 409.5
+     },
+     "hold1": {
+      "trades": 9,
+      "net": 68.21,
+      "fees": 0.5,
+      "pf": 3.884,
+      "win": 0.556,
+      "avg_hold_h": 597.8
+     },
+     "hold2": {
+      "trades": 7,
+      "net": -11.92,
+      "fees": 0.35,
+      "pf": 0.54,
+      "win": 0.429,
+      "avg_hold_h": 654.3
+     },
+     "all": {
+      "trades": 39,
+      "net": 37.69,
+      "fees": 2.0,
+      "pf": 1.302,
+      "win": 0.41,
+      "avg_hold_h": 542.2
+     }
+    },
+    "BNBUSDT": {
+     "dev": {
+      "trades": 15,
+      "net": 43.01,
+      "fees": 1.07,
+      "pf": 3.868,
+      "win": 0.6,
+      "avg_hold_h": 611.2
+     },
+     "test": {
+      "trades": 12,
+      "net": 11.87,
+      "fees": 0.97,
+      "pf": 1.342,
+      "win": 0.417,
+      "avg_hold_h": 656.9
+     },
+     "hold1": {
+      "trades": 21,
+      "net": 32.42,
+      "fees": 1.46,
+      "pf": 1.577,
+      "win": 0.333,
+      "avg_hold_h": 401.8
+     },
+     "hold2": {
+      "trades": 16,
+      "net": 28.77,
+      "fees": 1.0,
+      "pf": 1.793,
+      "win": 0.5,
+      "avg_hold_h": 737.9
+     },
+     "all": {
+      "trades": 64,
+      "net": 116.06,
+      "fees": 4.51,
+      "pf": 1.816,
+      "win": 0.453,
+      "avg_hold_h": 582.7
+     }
+    },
+    "BTCUSDT": {
+     "dev": {
+      "trades": 3,
+      "net": 14.39,
+      "fees": 0.34,
+      "pf": 1.844,
+      "win": 0.333,
+      "avg_hold_h": 967.1
+     },
+     "test": {
+      "trades": 9,
+      "net": 14.53,
+      "fees": 0.72,
+      "pf": 1.798,
+      "win": 0.444,
+      "avg_hold_h": 500.4
+     },
+     "hold1": {
+      "trades": 10,
+      "net": 8.64,
+      "fees": 0.65,
+      "pf": 1.266,
+      "win": 0.3,
+      "avg_hold_h": 558.5
+     },
+     "hold2": {
+      "trades": 19,
+      "net": 54.51,
+      "fees": 1.01,
+      "pf": 2.609,
+      "win": 0.368,
+      "avg_hold_h": 555.1
+     },
+     "all": {
+      "trades": 41,
+      "net": 92.07,
+      "fees": 2.72,
+      "pf": 1.906,
+      "win": 0.366,
+      "avg_hold_h": 574.0
+     }
+    },
+    "DOGEUSDT": {
+     "dev": {
+      "trades": 6,
+      "net": 29.1,
+      "fees": 0.35,
+      "pf": 1.915,
+      "win": 0.5,
+      "avg_hold_h": 658.3
+     },
+     "test": {
+      "trades": 14,
+      "net": -7.27,
+      "fees": 0.81,
+      "pf": 0.854,
+      "win": 0.286,
+      "avg_hold_h": 549.5
+     },
+     "hold1": {
+      "trades": 14,
+      "net": 63.72,
+      "fees": 1.03,
+      "pf": 2.696,
+      "win": 0.429,
+      "avg_hold_h": 424.4
+     },
+     "hold2": {
+      "trades": 11,
+      "net": -35.37,
+      "fees": 0.56,
+      "pf": 0.256,
+      "win": 0.364,
+      "avg_hold_h": 481.7
+     },
+     "all": {
+      "trades": 45,
+      "net": 50.19,
+      "fees": 2.74,
+      "pf": 1.301,
+      "win": 0.378,
+      "avg_hold_h": 508.5
+     }
+    },
+    "ETHUSDT": {
+     "dev": {
+      "trades": 11,
+      "net": 57.54,
+      "fees": 0.41,
+      "pf": 14.225,
+      "win": 0.727,
+      "avg_hold_h": 658.9
+     },
+     "test": {
+      "trades": 8,
+      "net": 28.89,
+      "fees": 0.34,
+      "pf": 3.802,
+      "win": 0.75,
+      "avg_hold_h": 824.6
+     },
+     "hold1": {
+      "trades": 14,
+      "net": 18.73,
+      "fees": 0.7,
+      "pf": 1.537,
+      "win": 0.214,
+      "avg_hold_h": 501.7
+     },
+     "hold2": {
+      "trades": 16,
+      "net": 9.42,
+      "fees": 0.76,
+      "pf": 1.255,
+      "win": 0.438,
+      "avg_hold_h": 556.6
+     },
+     "all": {
+      "trades": 49,
+      "net": 114.58,
+      "fees": 2.21,
+      "pf": 2.323,
+      "win": 0.49,
+      "avg_hold_h": 607.6
+     }
+    },
+    "LINKUSDT": {
+     "dev": {
+      "trades": 9,
+      "net": 45.67,
+      "fees": 0.47,
+      "pf": 2.576,
+      "win": 0.333,
+      "avg_hold_h": 705.5
+     },
+     "test": {
+      "trades": 15,
+      "net": 6.48,
+      "fees": 0.85,
+      "pf": 1.19,
+      "win": 0.333,
+      "avg_hold_h": 433.0
+     },
+     "hold1": {
+      "trades": 10,
+      "net": 35.96,
+      "fees": 0.53,
+      "pf": 2.903,
+      "win": 0.5,
+      "avg_hold_h": 650.4
+     },
+     "hold2": {
+      "trades": 13,
+      "net": 4.1,
+      "fees": 0.61,
+      "pf": 1.125,
+      "win": 0.385,
+      "avg_hold_h": 558.9
+     },
+     "all": {
+      "trades": 47,
+      "net": 92.21,
+      "fees": 2.46,
+      "pf": 1.803,
+      "win": 0.383,
+      "avg_hold_h": 566.3
+     }
+    },
+    "LTCUSDT": {
+     "dev": {
+      "trades": 9,
+      "net": 7.46,
+      "fees": 0.44,
+      "pf": 1.444,
+      "win": 0.444,
+      "avg_hold_h": 737.7
+     },
+     "test": {
+      "trades": 16,
+      "net": -2.58,
+      "fees": 1.12,
+      "pf": 0.949,
+      "win": 0.188,
+      "avg_hold_h": 453.8
+     },
+     "hold1": {
+      "trades": 21,
+      "net": -8.94,
+      "fees": 1.23,
+      "pf": 0.763,
+      "win": 0.429,
+      "avg_hold_h": 368.5
+     },
+     "hold2": {
+      "trades": 13,
+      "net": 12.57,
+      "fees": 0.57,
+      "pf": 1.418,
+      "win": 0.385,
+      "avg_hold_h": 886.8
+     },
+     "all": {
+      "trades": 59,
+      "net": 8.5,
+      "fees": 3.36,
+      "pf": 1.063,
+      "win": 0.356,
+      "avg_hold_h": 562.2
+     }
+    },
+    "SOLUSDT": {
+     "dev": {
+      "trades": 7,
+      "net": 19.62,
+      "fees": 0.29,
+      "pf": 1.772,
+      "win": 0.429,
+      "avg_hold_h": 771.0
+     },
+     "test": {
+      "trades": 12,
+      "net": 9.64,
+      "fees": 0.57,
+      "pf": 1.384,
+      "win": 0.333,
+      "avg_hold_h": 635.3
+     },
+     "hold1": {
+      "trades": 7,
+      "net": 82.87,
+      "fees": 0.35,
+      "pf": 4.719,
+      "win": 0.286,
+      "avg_hold_h": 650.1
+     },
+     "hold2": {
+      "trades": 8,
+      "net": -17.0,
+      "fees": 0.36,
+      "pf": 0.169,
+      "win": 0.25,
+      "avg_hold_h": 429.4
+     },
+     "all": {
+      "trades": 34,
+      "net": 95.13,
+      "fees": 1.56,
+      "pf": 2.02,
+      "win": 0.324,
+      "avg_hold_h": 617.8
+     }
+    },
+    "XRPUSDT": {
+     "dev": {
+      "trades": 9,
+      "net": 159.0,
+      "fees": 0.65,
+      "pf": 5.885,
+      "win": 0.444,
+      "avg_hold_h": 722.6
+     },
+     "test": {
+      "trades": 13,
+      "net": -8.37,
+      "fees": 0.96,
+      "pf": 0.818,
+      "win": 0.231,
+      "avg_hold_h": 595.5
+     },
+     "hold1": {
+      "trades": 17,
+      "net": -5.75,
+      "fees": 1.13,
+      "pf": 0.844,
+      "win": 0.412,
+      "avg_hold_h": 501.1
+     },
+     "hold2": {
+      "trades": 18,
+      "net": 5.47,
+      "fees": 0.98,
+      "pf": 1.121,
+      "win": 0.333,
+      "avg_hold_h": 546.2
+     },
+     "all": {
+      "trades": 57,
+      "net": 150.35,
+      "fees": 3.72,
+      "pf": 1.937,
+      "win": 0.351,
+      "avg_hold_h": 571.9
+     }
+    }
+   }
+  },
+  "V18.1": {
+   "verdict": "FAIL",
+   "checks": {
+    "dev_net": true,
+    "test_net": true,
+    "hold1_net": true,
+    "hold2_net": false,
+    "pf_1_20": true,
+    "six_coins": true,
+    "100_trades": true,
+    "double_fees_positive": true
+   },
+   "coins_positive": 8,
+   "dev": {
+    "trades": 66,
+    "net": 497.9,
+    "fees": 7.7,
+    "pf": 2.133,
+    "win": 0.288,
+    "avg_hold_h": 550.2
+   },
+   "test": {
+    "trades": 59,
+    "net": 381.72,
+    "fees": 8.02,
+    "pf": 2.55,
+    "win": 0.525,
+    "avg_hold_h": 664.2
+   },
+   "hold1": {
+    "trades": 72,
+    "net": 386.03,
+    "fees": 8.98,
+    "pf": 1.702,
+    "win": 0.208,
+    "avg_hold_h": 487.5
+   },
+   "hold2": {
+    "trades": 109,
+    "net": -219.03,
+    "fees": 10.84,
+    "pf": 0.704,
+    "win": 0.257,
+    "avg_hold_h": 499.4
+   },
+   "all": {
+    "trades": 306,
+    "net": 1046.62,
+    "fees": 35.54,
+    "pf": 1.53,
+    "win": 0.304,
+    "avg_hold_h": 539.3
+   },
+   "net_with_double_fees": 1011.08,
+   "broad": true,
+   "other_coins_net": 1873.37,
+   "coins": {
+    "ADAUSDT": {
+     "dev": {
+      "trades": 7,
+      "net": 46.7,
+      "fees": 0.71,
+      "pf": 1.831,
+      "win": 0.143,
+      "avg_hold_h": 379.0
+     },
+     "test": {
+      "trades": 6,
+      "net": -13.52,
+      "fees": 0.6,
+      "pf": 0.619,
+      "win": 0.333,
+      "avg_hold_h": 411.4
+     },
+     "hold1": {
+      "trades": 6,
+      "net": 125.6,
+      "fees": 0.86,
+      "pf": 3.573,
+      "win": 0.333,
+      "avg_hold_h": 595.4
+     },
+     "hold2": {
+      "trades": 11,
+      "net": -3.31,
+      "fees": 1.06,
+      "pf": 0.95,
+      "win": 0.455,
+      "avg_hold_h": 633.9
+     },
+     "all": {
+      "trades": 30,
+      "net": 155.47,
+      "fees": 3.23,
+      "pf": 1.752,
+      "win": 0.333,
+      "avg_hold_h": 522.2
+     }
+    },
+    "AVAXUSDT": {
+     "dev": {
+      "trades": 7,
+      "net": -13.21,
+      "fees": 0.6,
+      "pf": 0.7,
+      "win": 0.286,
+      "avg_hold_h": 613.3
+     },
+     "test": {
+      "trades": 4,
+      "net": 81.0,
+      "fees": 0.41,
+      "pf": 12.171,
+      "win": 0.75,
+      "avg_hold_h": 969.0
+     },
+     "hold1": {
+      "trades": 5,
+      "net": 191.98,
+      "fees": 0.62,
+      "pf": 9.303,
+      "win": 0.4,
+      "avg_hold_h": 677.7
+     },
+     "hold2": {
+      "trades": 9,
+      "net": 14.6,
+      "fees": 0.8,
+      "pf": 1.281,
+      "win": 0.333,
+      "avg_hold_h": 620.9
+     },
+     "all": {
+      "trades": 25,
+      "net": 274.38,
+      "fees": 2.44,
+      "pf": 3.172,
+      "win": 0.4,
+      "avg_hold_h": 685.8
+     }
+    },
+    "BNBUSDT": {
+     "dev": {
+      "trades": 7,
+      "net": -9.59,
+      "fees": 1.33,
+      "pf": 0.869,
+      "win": 0.143,
+      "avg_hold_h": 365.1
+     },
+     "test": {
+      "trades": 7,
+      "net": 33.38,
+      "fees": 1.2,
+      "pf": 1.944,
+      "win": 0.286,
+      "avg_hold_h": 635.9
+     },
+     "hold1": {
+      "trades": 9,
+      "net": 2.41,
+      "fees": 1.43,
+      "pf": 1.032,
+      "win": 0.222,
+      "avg_hold_h": 464.9
+     },
+     "hold2": {
+      "trades": 15,
+      "net": -53.85,
+      "fees": 1.83,
+      "pf": 0.567,
+      "win": 0.133,
+      "avg_hold_h": 314.8
+     },
+     "all": {
+      "trades": 38,
+      "net": -27.65,
+      "fees": 5.79,
+      "pf": 0.91,
+      "win": 0.184,
+      "avg_hold_h": 418.8
+     }
+    },
+    "BTCUSDT": {
+     "dev": {
+      "trades": 5,
+      "net": 61.57,
+      "fees": 0.61,
+      "pf": 5.693,
+      "win": 0.4,
+      "avg_hold_h": 593.2
+     },
+     "test": {
+      "trades": 7,
+      "net": 65.18,
+      "fees": 0.91,
+      "pf": 6.297,
+      "win": 0.571,
+      "avg_hold_h": 761.8
+     },
+     "hold1": {
+      "trades": 8,
+      "net": 77.37,
+      "fees": 1.08,
+      "pf": 2.691,
+      "win": 0.25,
+      "avg_hold_h": 472.4
+     },
+     "hold2": {
+      "trades": 12,
+      "net": 1.03,
+      "fees": 1.62,
+      "pf": 1.015,
+      "win": 0.25,
+      "avg_hold_h": 535.2
+     },
+     "all": {
+      "trades": 32,
+      "net": 205.14,
+      "fees": 4.22,
+      "pf": 2.483,
+      "win": 0.344,
+      "avg_hold_h": 578.1
+     }
+    },
+    "DOGEUSDT": {
+     "dev": {
+      "trades": 7,
+      "net": 112.72,
+      "fees": 0.8,
+      "pf": 3.147,
+      "win": 0.143,
+      "avg_hold_h": 554.8
+     },
+     "test": {
+      "trades": 5,
+      "net": 55.52,
+      "fees": 0.73,
+      "pf": 3.266,
+      "win": 0.6,
+      "avg_hold_h": 982.5
+     },
+     "hold1": {
+      "trades": 9,
+      "net": -32.19,
+      "fees": 0.94,
+      "pf": 0.633,
+      "win": 0.111,
+      "avg_hold_h": 351.1
+     },
+     "hold2": {
+      "trades": 9,
+      "net": -27.57,
+      "fees": 0.85,
+      "pf": 0.551,
+      "win": 0.333,
+      "avg_hold_h": 438.4
+     },
+     "all": {
+      "trades": 30,
+      "net": 108.49,
+      "fees": 3.32,
+      "pf": 1.48,
+      "win": 0.267,
+      "avg_hold_h": 530.1
+     }
+    },
+    "ETHUSDT": {
+     "dev": {
+      "trades": 6,
+      "net": 51.99,
+      "fees": 0.55,
+      "pf": 4.422,
+      "win": 0.667,
+      "avg_hold_h": 902.6
+     },
+     "test": {
+      "trades": 6,
+      "net": 55.07,
+      "fees": 0.63,
+      "pf": 3.858,
+      "win": 0.5,
+      "avg_hold_h": 649.8
+     },
+     "hold1": {
+      "trades": 6,
+      "net": 11.38,
+      "fees": 0.75,
+      "pf": 1.391,
+      "win": 0.5,
+      "avg_hold_h": 837.5
+     },
+     "hold2": {
+      "trades": 12,
+      "net": -20.86,
+      "fees": 1.18,
+      "pf": 0.698,
+      "win": 0.25,
+      "avg_hold_h": 655.1
+     },
+     "all": {
+      "trades": 30,
+      "net": 97.59,
+      "fees": 3.13,
+      "pf": 1.736,
+      "win": 0.433,
+      "avg_hold_h": 740.0
+     }
+    },
+    "LINKUSDT": {
+     "dev": {
+      "trades": 7,
+      "net": 11.8,
+      "fees": 0.68,
+      "pf": 1.223,
+      "win": 0.286,
+      "avg_hold_h": 547.8
+     },
+     "test": {
+      "trades": 5,
+      "net": 37.55,
+      "fees": 0.64,
+      "pf": 4.288,
+      "win": 0.8,
+      "avg_hold_h": 587.9
+     },
+     "hold1": {
+      "trades": 7,
+      "net": 20.1,
+      "fees": 0.74,
+      "pf": 1.373,
+      "win": 0.143,
+      "avg_hold_h": 618.0
+     },
+     "hold2": {
+      "trades": 9,
+      "net": -54.87,
+      "fees": 0.87,
+      "pf": 0.31,
+      "win": 0.111,
+      "avg_hold_h": 291.9
+     },
+     "all": {
+      "trades": 28,
+      "net": 14.58,
+      "fees": 2.93,
+      "pf": 1.074,
+      "win": 0.286,
+      "avg_hold_h": 490.2
+     }
+    },
+    "LTCUSDT": {
+     "dev": {
+      "trades": 6,
+      "net": -17.69,
+      "fees": 0.69,
+      "pf": 0.402,
+      "win": 0.333,
+      "avg_hold_h": 515.2
+     },
+     "test": {
+      "trades": 8,
+      "net": -7.52,
+      "fees": 1.09,
+      "pf": 0.851,
+      "win": 0.375,
+      "avg_hold_h": 472.6
+     },
+     "hold1": {
+      "trades": 9,
+      "net": -84.39,
+      "fees": 1.06,
+      "pf": 0.0,
+      "win": 0.0,
+      "avg_hold_h": 201.2
+     },
+     "hold2": {
+      "trades": 15,
+      "net": -84.62,
+      "fees": 1.23,
+      "pf": 0.259,
+      "win": 0.133,
+      "avg_hold_h": 333.2
+     },
+     "all": {
+      "trades": 38,
+      "net": -194.23,
+      "fees": 4.07,
+      "pf": 0.303,
+      "win": 0.184,
+      "avg_hold_h": 360.0
+     }
+    },
+    "SOLUSDT": {
+     "dev": {
+      "trades": 8,
+      "net": -32.41,
+      "fees": 0.7,
+      "pf": 0.341,
+      "win": 0.25,
+      "avg_hold_h": 550.9
+     },
+     "test": {
+      "trades": 5,
+      "net": 56.82,
+      "fees": 0.6,
+      "pf": 6.721,
+      "win": 0.8,
+      "avg_hold_h": 756.1
+     },
+     "hold1": {
+      "trades": 6,
+      "net": 125.29,
+      "fees": 0.58,
+      "pf": 4.187,
+      "win": 0.167,
+      "avg_hold_h": 592.0
+     },
+     "hold2": {
+      "trades": 11,
+      "net": 11.26,
+      "fees": 0.8,
+      "pf": 1.182,
+      "win": 0.364,
+      "avg_hold_h": 675.5
+     },
+     "all": {
+      "trades": 30,
+      "net": 160.95,
+      "fees": 2.68,
+      "pf": 2.005,
+      "win": 0.367,
+      "avg_hold_h": 639.0
+     }
+    },
+    "XRPUSDT": {
+     "dev": {
+      "trades": 6,
+      "net": 286.02,
+      "fees": 1.04,
+      "pf": 6.321,
+      "win": 0.333,
+      "avg_hold_h": 535.7
+     },
+     "test": {
+      "trades": 6,
+      "net": 18.24,
+      "fees": 1.2,
+      "pf": 1.452,
+      "win": 0.5,
+      "avg_hold_h": 624.5
+     },
+     "hold1": {
+      "trades": 7,
+      "net": -51.51,
+      "fees": 0.91,
+      "pf": 0.173,
+      "win": 0.143,
+      "avg_hold_h": 329.0
+     },
+     "hold2": {
+      "trades": 6,
+      "net": -0.85,
+      "fees": 0.59,
+      "pf": 0.98,
+      "win": 0.333,
+      "avg_hold_h": 643.7
+     },
+     "all": {
+      "trades": 25,
+      "net": 251.91,
+      "fees": 3.73,
+      "pf": 2.261,
+      "win": 0.32,
+      "avg_hold_h": 525.0
+     }
+    }
+   }
+  },
+  "V18.2": {
+   "verdict": "FAIL",
+   "checks": {
+    "dev_net": true,
+    "test_net": true,
+    "hold1_net": true,
+    "hold2_net": false,
+    "pf_1_20": true,
+    "six_coins": true,
+    "100_trades": true,
+    "double_fees_positive": true
+   },
+   "coins_positive": 9,
+   "dev": {
+    "trades": 107,
+    "net": 597.46,
+    "fees": 12.03,
+    "pf": 1.953,
+    "win": 0.318,
+    "avg_hold_h": 419.4
+   },
+   "test": {
+    "trades": 101,
+    "net": 371.74,
+    "fees": 13.28,
+    "pf": 1.79,
+    "win": 0.436,
+    "avg_hold_h": 480.3
+   },
+   "hold1": {
+    "trades": 105,
+    "net": 704.76,
+    "fees": 13.27,
+    "pf": 2.095,
+    "win": 0.295,
+    "avg_hold_h": 407.0
+   },
+   "hold2": {
+    "trades": 166,
+    "net": -27.16,
+    "fees": 15.8,
+    "pf": 0.969,
+    "win": 0.325,
+    "avg_hold_h": 423.8
+   },
+   "all": {
+    "trades": 479,
+    "net": 1646.8,
+    "fees": 54.39,
+    "pf": 1.632,
+    "win": 0.34,
+    "avg_hold_h": 431.1
+   },
+   "net_with_double_fees": 1592.41,
+   "broad": true,
+   "other_coins_net": 1765.79,
+   "coins": {
+    "ADAUSDT": {
+     "dev": {
+      "trades": 10,
+      "net": 76.01,
+      "fees": 1.02,
+      "pf": 2.083,
+      "win": 0.2,
+      "avg_hold_h": 405.8
+     },
+     "test": {
+      "trades": 12,
+      "net": -24.36,
+      "fees": 1.21,
+      "pf": 0.666,
+      "win": 0.333,
+      "avg_hold_h": 350.8
+     },
+     "hold1": {
+      "trades": 11,
+      "net": 148.29,
+      "fees": 1.53,
+      "pf": 2.765,
+      "win": 0.273,
+      "avg_hold_h": 389.4
+     },
+     "hold2": {
+      "trades": 16,
+      "net": 27.27,
+      "fees": 1.44,
+      "pf": 1.38,
+      "win": 0.438,
+      "avg_hold_h": 473.6
+     },
+     "all": {
+      "trades": 49,
+      "net": 227.22,
+      "fees": 5.21,
+      "pf": 1.76,
+      "win": 0.327,
+      "avg_hold_h": 410.8
+     }
+    },
+    "AVAXUSDT": {
+     "dev": {
+      "trades": 9,
+      "net": -10.58,
+      "fees": 0.75,
+      "pf": 0.786,
+      "win": 0.333,
+      "avg_hold_h": 469.3
+     },
+     "test": {
+      "trades": 10,
+      "net": 53.94,
+      "fees": 1.05,
+      "pf": 1.889,
+      "win": 0.4,
+      "avg_hold_h": 556.5
+     },
+     "hold1": {
+      "trades": 12,
+      "net": 188.09,
+      "fees": 1.34,
+      "pf": 3.171,
+      "win": 0.25,
+      "avg_hold_h": 321.8
+     },
+     "hold2": {
+      "trades": 14,
+      "net": 70.52,
+      "fees": 1.16,
+      "pf": 2.146,
+      "win": 0.286,
+      "avg_hold_h": 523.0
+     },
+     "all": {
+      "trades": 45,
+      "net": 301.98,
+      "fees": 4.3,
+      "pf": 2.169,
+      "win": 0.311,
+      "avg_hold_h": 466.1
+     }
+    },
+    "BNBUSDT": {
+     "dev": {
+      "trades": 12,
+      "net": -1.59,
+      "fees": 1.84,
+      "pf": 0.982,
+      "win": 0.25,
+      "avg_hold_h": 346.7
+     },
+     "test": {
+      "trades": 11,
+      "net": 57.77,
+      "fees": 1.88,
+      "pf": 1.973,
+      "win": 0.364,
+      "avg_hold_h": 443.1
+     },
+     "hold1": {
+      "trades": 11,
+      "net": 91.19,
+      "fees": 1.86,
+      "pf": 2.445,
+      "win": 0.273,
+      "avg_hold_h": 525.3
+     },
+     "hold2": {
+      "trades": 17,
+      "net": 12.37,
+      "fees": 2.17,
+      "pf": 1.162,
+      "win": 0.412,
+      "avg_hold_h": 416.0
+     },
+     "all": {
+      "trades": 51,
+      "net": 159.75,
+      "fees": 7.77,
+      "pf": 1.561,
+      "win": 0.333,
+      "avg_hold_h": 429.1
+     }
+    },
+    "BTCUSDT": {
+     "dev": {
+      "trades": 11,
+      "net": 50.04,
+      "fees": 1.66,
+      "pf": 2.066,
+      "win": 0.364,
+      "avg_hold_h": 434.8
+     },
+     "test": {
+      "trades": 8,
+      "net": 82.35,
+      "fees": 1.19,
+      "pf": 5.321,
+      "win": 0.625,
+      "avg_hold_h": 708.6
+     },
+     "hold1": {
+      "trades": 12,
+      "net": 76.98,
+      "fees": 1.59,
+      "pf": 2.542,
+      "win": 0.333,
+      "avg_hold_h": 461.9
+     },
+     "hold2": {
+      "trades": 19,
+      "net": 44.24,
+      "fees": 2.27,
+      "pf": 1.477,
+      "win": 0.368,
+      "avg_hold_h": 373.3
+     },
+     "all": {
+      "trades": 50,
+      "net": 253.61,
+      "fees": 6.7,
+      "pf": 2.215,
+      "win": 0.4,
+      "avg_hold_h": 461.8
+     }
+    },
+    "DOGEUSDT": {
+     "dev": {
+      "trades": 10,
+      "net": 137.7,
+      "fees": 1.11,
+      "pf": 3.614,
+      "win": 0.4,
+      "avg_hold_h": 442.4
+     },
+     "test": {
+      "trades": 7,
+      "net": 55.98,
+      "fees": 0.95,
+      "pf": 4.467,
+      "win": 0.714,
+      "avg_hold_h": 737.1
+     },
+     "hold1": {
+      "trades": 9,
+      "net": 131.79,
+      "fees": 1.33,
+      "pf": 3.627,
+      "win": 0.333,
+      "avg_hold_h": 404.1
+     },
+     "hold2": {
+      "trades": 17,
+      "net": -46.14,
+      "fees": 1.43,
+      "pf": 0.532,
+      "win": 0.294,
+      "avg_hold_h": 456.5
+     },
+     "all": {
+      "trades": 43,
+      "net": 279.32,
+      "fees": 4.81,
+      "pf": 2.284,
+      "win": 0.395,
+      "avg_hold_h": 488.0
+     }
+    },
+    "ETHUSDT": {
+     "dev": {
+      "trades": 10,
+      "net": 29.29,
+      "fees": 0.97,
+      "pf": 1.706,
+      "win": 0.5,
+      "avg_hold_h": 560.1
+     },
+     "test": {
+      "trades": 9,
+      "net": 74.33,
+      "fees": 1.09,
+      "pf": 3.518,
+      "win": 0.444,
+      "avg_hold_h": 528.9
+     },
+     "hold1": {
+      "trades": 9,
+      "net": 84.95,
+      "fees": 1.08,
+      "pf": 4.037,
+      "win": 0.444,
+      "avg_hold_h": 572.6
+     },
+     "hold2": {
+      "trades": 18,
+      "net": 19.88,
+      "fees": 1.76,
+      "pf": 1.268,
+      "win": 0.278,
+      "avg_hold_h": 441.2
+     },
+     "all": {
+      "trades": 46,
+      "net": 208.44,
+      "fees": 4.9,
+      "pf": 2.203,
+      "win": 0.391,
+      "avg_hold_h": 509.9
+     }
+    },
+    "LINKUSDT": {
+     "dev": {
+      "trades": 12,
+      "net": 10.5,
+      "fees": 1.05,
+      "pf": 1.169,
+      "win": 0.333,
+      "avg_hold_h": 396.3
+     },
+     "test": {
+      "trades": 9,
+      "net": 41.04,
+      "fees": 1.0,
+      "pf": 2.585,
+      "win": 0.667,
+      "avg_hold_h": 485.3
+     },
+     "hold1": {
+      "trades": 10,
+      "net": 23.65,
+      "fees": 1.02,
+      "pf": 1.434,
+      "win": 0.4,
+      "avg_hold_h": 363.2
+     },
+     "hold2": {
+      "trades": 14,
+      "net": -19.38,
+      "fees": 1.22,
+      "pf": 0.735,
+      "win": 0.357,
+      "avg_hold_h": 530.5
+     },
+     "all": {
+      "trades": 45,
+      "net": 55.81,
+      "fees": 4.3,
+      "pf": 1.259,
+      "win": 0.422,
+      "avg_hold_h": 448.5
+     }
+    },
+    "LTCUSDT": {
+     "dev": {
+      "trades": 11,
+      "net": -8.98,
+      "fees": 1.02,
+      "pf": 0.803,
+      "win": 0.364,
+      "avg_hold_h": 410.0
+     },
+     "test": {
+      "trades": 12,
+      "net": -3.54,
+      "fees": 1.51,
+      "pf": 0.93,
+      "win": 0.333,
+      "avg_hold_h": 374.2
+     },
+     "hold1": {
+      "trades": 10,
+      "net": -86.92,
+      "fees": 1.23,
+      "pf": 0.0,
+      "win": 0.0,
+      "avg_hold_h": 225.8
+     },
+     "hold2": {
+      "trades": 20,
+      "net": -72.29,
+      "fees": 1.61,
+      "pf": 0.359,
+      "win": 0.2,
+      "avg_hold_h": 402.3
+     },
+     "all": {
+      "trades": 53,
+      "net": -171.72,
+      "fees": 5.36,
+      "pf": 0.42,
+      "win": 0.226,
+      "avg_hold_h": 364.2
+     }
+    },
+    "SOLUSDT": {
+     "dev": {
+      "trades": 11,
+      "net": -19.94,
+      "fees": 0.86,
+      "pf": 0.653,
+      "win": 0.273,
+      "avg_hold_h": 436.4
+     },
+     "test": {
+      "trades": 10,
+      "net": 72.49,
+      "fees": 1.19,
+      "pf": 2.486,
+      "win": 0.4,
+      "avg_hold_h": 550.2
+     },
+     "hold1": {
+      "trades": 12,
+      "net": 106.09,
+      "fees": 1.18,
+      "pf": 2.541,
+      "win": 0.417,
+      "avg_hold_h": 464.5
+     },
+     "hold2": {
+      "trades": 19,
+      "net": -31.95,
+      "fees": 1.5,
+      "pf": 0.72,
+      "win": 0.316,
+      "avg_hold_h": 309.5
+     },
+     "all": {
+      "trades": 52,
+      "net": 126.69,
+      "fees": 4.73,
+      "pf": 1.438,
+      "win": 0.346,
+      "avg_hold_h": 418.4
+     }
+    },
+    "XRPUSDT": {
+     "dev": {
+      "trades": 11,
+      "net": 335.01,
+      "fees": 1.75,
+      "pf": 3.919,
+      "win": 0.182,
+      "avg_hold_h": 323.5
+     },
+     "test": {
+      "trades": 13,
+      "net": -38.25,
+      "fees": 2.21,
+      "pf": 0.563,
+      "win": 0.308,
+      "avg_hold_h": 300.9
+     },
+     "hold1": {
+      "trades": 9,
+      "net": -59.34,
+      "fees": 1.1,
+      "pf": 0.173,
+      "win": 0.222,
+      "avg_hold_h": 334.8
+     },
+     "hold2": {
+      "trades": 12,
+      "net": -31.69,
+      "fees": 1.24,
+      "pf": 0.639,
+      "win": 0.333,
+      "avg_hold_h": 352.8
+     },
+     "all": {
+      "trades": 45,
+      "net": 205.72,
+      "fees": 6.3,
+      "pf": 1.569,
+      "win": 0.267,
+      "avg_hold_h": 327.1
+     }
+    }
+   }
+  },
+  "V18.3": {
+   "verdict": "FAIL",
+   "checks": {
+    "dev_net": true,
+    "test_net": true,
+    "hold1_net": true,
+    "hold2_net": false,
+    "pf_1_20": true,
+    "six_coins": true,
+    "100_trades": true,
+    "double_fees_positive": true
+   },
+   "coins_positive": 9,
+   "dev": {
+    "trades": 191,
+    "net": 406.29,
+    "fees": 10.38,
+    "pf": 2.659,
+    "win": 0.335,
+    "avg_hold_h": 251.7
+   },
+   "test": {
+    "trades": 301,
+    "net": 201.97,
+    "fees": 19.06,
+    "pf": 1.541,
+    "win": 0.312,
+    "avg_hold_h": 201.0
+   },
+   "hold1": {
+    "trades": 230,
+    "net": 496.32,
+    "fees": 13.57,
+    "pf": 2.812,
+    "win": 0.309,
+    "avg_hold_h": 242.2
+   },
+   "hold2": {
+    "trades": 383,
+    "net": -104.97,
+    "fees": 19.92,
+    "pf": 0.813,
+    "win": 0.269,
+    "avg_hold_h": 185.3
+   },
+   "all": {
+    "trades": 1105,
+    "net": 999.62,
+    "fees": 62.93,
+    "pf": 1.687,
+    "win": 0.3,
+    "avg_hold_h": 212.9
+   },
+   "net_with_double_fees": 936.69,
+   "broad": true,
+   "other_coins_net": 774.51,
+   "coins": {
+    "ADAUSDT": {
+     "dev": {
+      "trades": 25,
+      "net": 58.07,
+      "fees": 1.37,
+      "pf": 2.563,
+      "win": 0.32,
+      "avg_hold_h": 192.9
+     },
+     "test": {
+      "trades": 26,
+      "net": 25.79,
+      "fees": 1.44,
+      "pf": 1.904,
+      "win": 0.346,
+      "avg_hold_h": 242.7
+     },
+     "hold1": {
+      "trades": 22,
+      "net": 50.6,
+      "fees": 1.41,
+      "pf": 3.384,
+      "win": 0.364,
+      "avg_hold_h": 269.4
+     },
+     "hold2": {
+      "trades": 33,
+      "net": 15.84,
+      "fees": 1.78,
+      "pf": 1.329,
+      "win": 0.394,
+      "avg_hold_h": 266.1
+     },
+     "all": {
+      "trades": 106,
+      "net": 150.31,
+      "fees": 6.01,
+      "pf": 2.112,
+      "win": 0.358,
+      "avg_hold_h": 243.8
+     }
+    },
+    "AVAXUSDT": {
+     "dev": {
+      "trades": 12,
+      "net": 15.59,
+      "fees": 0.56,
+      "pf": 1.937,
+      "win": 0.417,
+      "avg_hold_h": 276.0
+     },
+     "test": {
+      "trades": 44,
+      "net": -8.19,
+      "fees": 2.42,
+      "pf": 0.868,
+      "win": 0.227,
+      "avg_hold_h": 123.8
+     },
+     "hold1": {
+      "trades": 11,
+      "net": 171.31,
+      "fees": 0.65,
+      "pf": 21.807,
+      "win": 0.545,
+      "avg_hold_h": 344.7
+     },
+     "hold2": {
+      "trades": 12,
+      "net": 9.62,
+      "fees": 0.64,
+      "pf": 1.676,
+      "win": 0.333,
+      "avg_hold_h": 340.0
+     },
+     "all": {
+      "trades": 79,
+      "net": 188.32,
+      "fees": 4.26,
+      "pf": 2.864,
+      "win": 0.316,
+      "avg_hold_h": 210.5
+     }
+    },
+    "BNBUSDT": {
+     "dev": {
+      "trades": 31,
+      "net": 22.82,
+      "fees": 2.3,
+      "pf": 1.717,
+      "win": 0.355,
+      "avg_hold_h": 254.7
+     },
+     "test": {
+      "trades": 28,
+      "net": 50.38,
+      "fees": 2.2,
+      "pf": 3.151,
+      "win": 0.429,
+      "avg_hold_h": 243.4
+     },
+     "hold1": {
+      "trades": 38,
+      "net": 51.85,
+      "fees": 2.62,
+      "pf": 2.445,
+      "win": 0.237,
+      "avg_hold_h": 187.5
+     },
+     "hold2": {
+      "trades": 65,
+      "net": -8.78,
+      "fees": 4.12,
+      "pf": 0.889,
+      "win": 0.292,
+      "avg_hold_h": 146.2
+     },
+     "all": {
+      "trades": 162,
+      "net": 116.26,
+      "fees": 11.24,
+      "pf": 1.684,
+      "win": 0.315,
+      "avg_hold_h": 193.4
+     }
+    },
+    "BTCUSDT": {
+     "dev": {
+      "trades": 4,
+      "net": 36.08,
+      "fees": 0.41,
+      "pf": 15.832,
+      "win": 0.5,
+      "avg_hold_h": 564.0
+     },
+     "test": {
+      "trades": 16,
+      "net": 4.48,
+      "fees": 1.34,
+      "pf": 1.139,
+      "win": 0.312,
+      "avg_hold_h": 283.3
+     },
+     "hold1": {
+      "trades": 17,
+      "net": 25.46,
+      "fees": 1.04,
+      "pf": 2.111,
+      "win": 0.294,
+      "avg_hold_h": 312.0
+     },
+     "hold2": {
+      "trades": 47,
+      "net": 11.89,
+      "fees": 2.35,
+      "pf": 1.192,
+      "win": 0.362,
+      "avg_hold_h": 214.9
+     },
+     "all": {
+      "trades": 84,
+      "net": 77.91,
+      "fees": 5.15,
+      "pf": 1.652,
+      "win": 0.345,
+      "avg_hold_h": 264.2
+     }
+    },
+    "DOGEUSDT": {
+     "dev": {
+      "trades": 9,
+      "net": 89.06,
+      "fees": 0.52,
+      "pf": 7.049,
+      "win": 0.444,
+      "avg_hold_h": 346.6
+     },
+     "test": {
+      "trades": 21,
+      "net": 35.85,
+      "fees": 1.35,
+      "pf": 2.957,
+      "win": 0.429,
+      "avg_hold_h": 306.3
+     },
+     "hold1": {
+      "trades": 17,
+      "net": 113.79,
+      "fees": 1.17,
+      "pf": 8.326,
+      "win": 0.529,
+      "avg_hold_h": 278.1
+     },
+     "hold2": {
+      "trades": 36,
+      "net": -9.8,
+      "fees": 1.87,
+      "pf": 0.801,
+      "win": 0.306,
+      "avg_hold_h": 157.5
+     },
+     "all": {
+      "trades": 83,
+      "net": 228.89,
+      "fees": 4.91,
+      "pf": 3.337,
+      "win": 0.398,
+      "avg_hold_h": 240.3
+     }
+    },
+    "ETHUSDT": {
+     "dev": {
+      "trades": 26,
+      "net": 19.95,
+      "fees": 0.99,
+      "pf": 1.763,
+      "win": 0.346,
+      "avg_hold_h": 243.7
+     },
+     "test": {
+      "trades": 35,
+      "net": 24.7,
+      "fees": 1.71,
+      "pf": 1.766,
+      "win": 0.257,
+      "avg_hold_h": 163.2
+     },
+     "hold1": {
+      "trades": 26,
+      "net": 17.84,
+      "fees": 1.24,
+      "pf": 1.681,
+      "win": 0.269,
+      "avg_hold_h": 237.1
+     },
+     "hold2": {
+      "trades": 40,
+      "net": -16.74,
+      "fees": 1.93,
+      "pf": 0.738,
+      "win": 0.15,
+      "avg_hold_h": 193.6
+     },
+     "all": {
+      "trades": 127,
+      "net": 45.75,
+      "fees": 5.87,
+      "pf": 1.308,
+      "win": 0.244,
+      "avg_hold_h": 204.4
+     }
+    },
+    "LINKUSDT": {
+     "dev": {
+      "trades": 18,
+      "net": 15.69,
+      "fees": 0.88,
+      "pf": 1.587,
+      "win": 0.389,
+      "avg_hold_h": 238.6
+     },
+     "test": {
+      "trades": 33,
+      "net": -1.56,
+      "fees": 1.93,
+      "pf": 0.97,
+      "win": 0.242,
+      "avg_hold_h": 170.1
+     },
+     "hold1": {
+      "trades": 19,
+      "net": 32.04,
+      "fees": 0.97,
+      "pf": 2.284,
+      "win": 0.421,
+      "avg_hold_h": 294.3
+     },
+     "hold2": {
+      "trades": 35,
+      "net": -39.7,
+      "fees": 1.67,
+      "pf": 0.414,
+      "win": 0.2,
+      "avg_hold_h": 152.8
+     },
+     "all": {
+      "trades": 105,
+      "net": 6.46,
+      "fees": 5.45,
+      "pf": 1.038,
+      "win": 0.286,
+      "avg_hold_h": 198.6
+     }
+    },
+    "LTCUSDT": {
+     "dev": {
+      "trades": 22,
+      "net": 10.79,
+      "fees": 0.98,
+      "pf": 1.399,
+      "win": 0.273,
+      "avg_hold_h": 252.0
+     },
+     "test": {
+      "trades": 33,
+      "net": 31.36,
+      "fees": 2.38,
+      "pf": 1.617,
+      "win": 0.242,
+      "avg_hold_h": 195.5
+     },
+     "hold1": {
+      "trades": 35,
+      "net": -26.4,
+      "fees": 1.96,
+      "pf": 0.485,
+      "win": 0.257,
+      "avg_hold_h": 173.1
+     },
+     "hold2": {
+      "trades": 44,
+      "net": -28.4,
+      "fees": 1.86,
+      "pf": 0.584,
+      "win": 0.182,
+      "avg_hold_h": 182.5
+     },
+     "all": {
+      "trades": 134,
+      "net": -12.65,
+      "fees": 7.19,
+      "pf": 0.936,
+      "win": 0.231,
+      "avg_hold_h": 194.7
+     }
+    },
+    "SOLUSDT": {
+     "dev": {
+      "trades": 20,
+      "net": 9.74,
+      "fees": 0.68,
+      "pf": 1.62,
+      "win": 0.3,
+      "avg_hold_h": 253.2
+     },
+     "test": {
+      "trades": 31,
+      "net": 9.19,
+      "fees": 1.71,
+      "pf": 1.256,
+      "win": 0.387,
+      "avg_hold_h": 194.2
+     },
+     "hold1": {
+      "trades": 12,
+      "net": 99.85,
+      "fees": 0.47,
+      "pf": 8.642,
+      "win": 0.417,
+      "avg_hold_h": 430.0
+     },
+     "hold2": {
+      "trades": 17,
+      "net": -27.3,
+      "fees": 0.79,
+      "pf": 0.202,
+      "win": 0.176,
+      "avg_hold_h": 168.0
+     },
+     "all": {
+      "trades": 80,
+      "net": 91.47,
+      "fees": 3.64,
+      "pf": 1.924,
+      "win": 0.325,
+      "avg_hold_h": 238.7
+     }
+    },
+    "XRPUSDT": {
+     "dev": {
+      "trades": 24,
+      "net": 128.51,
+      "fees": 1.69,
+      "pf": 3.757,
+      "win": 0.25,
+      "avg_hold_h": 226.1
+     },
+     "test": {
+      "trades": 34,
+      "net": 29.97,
+      "fees": 2.57,
+      "pf": 1.778,
+      "win": 0.353,
+      "avg_hold_h": 211.0
+     },
+     "hold1": {
+      "trades": 33,
+      "net": -40.02,
+      "fees": 2.06,
+      "pf": 0.267,
+      "win": 0.152,
+      "avg_hold_h": 177.8
+     },
+     "hold2": {
+      "trades": 54,
+      "net": -11.59,
+      "fees": 2.91,
+      "pf": 0.848,
+      "win": 0.278,
+      "avg_hold_h": 164.0
+     },
+     "all": {
+      "trades": 145,
+      "net": 106.88,
+      "fees": 9.22,
+      "pf": 1.495,
+      "win": 0.262,
+      "avg_hold_h": 188.4
+     }
+    }
+   }
+  },
+  "V18.4": {
+   "verdict": "PASS",
+   "checks": {
+    "dev_net": true,
+    "test_net": true,
+    "hold1_net": true,
+    "hold2_net": true,
+    "pf_1_20": true,
+    "six_coins": true,
+    "100_trades": true,
+    "double_fees_positive": true
+   },
+   "coins_positive": 8,
+   "dev": {
+    "trades": 121,
+    "net": 368.88,
+    "fees": 12.51,
+    "pf": 1.62,
+    "win": 0.397,
+    "avg_hold_h": 414.5
+   },
+   "test": {
+    "trades": 115,
+    "net": 346.99,
+    "fees": 14.2,
+    "pf": 1.671,
+    "win": 0.409,
+    "avg_hold_h": 472.5
+   },
+   "hold1": {
+    "trades": 129,
+    "net": 700.5,
+    "fees": 16.01,
+    "pf": 2.061,
+    "win": 0.411,
+    "avg_hold_h": 371.2
+   },
+   "hold2": {
+    "trades": 190,
+    "net": 21.91,
+    "fees": 18.39,
+    "pf": 1.024,
+    "win": 0.337,
+    "avg_hold_h": 425.9
+   },
+   "all": {
+    "trades": 555,
+    "net": 1438.27,
+    "fees": 61.11,
+    "pf": 1.535,
+    "win": 0.382,
+    "avg_hold_h": 420.4
+   },
+   "net_with_double_fees": 1377.16,
+   "broad": true,
+   "other_coins_net": 529.69,
+   "coins": {
+    "ADAUSDT": {
+     "dev": {
+      "trades": 13,
+      "net": 45.55,
+      "fees": 1.14,
+      "pf": 1.812,
+      "win": 0.462,
+      "avg_hold_h": 366.7
+     },
+     "test": {
+      "trades": 14,
+      "net": -33.65,
+      "fees": 1.36,
+      "pf": 0.587,
+      "win": 0.286,
+      "avg_hold_h": 348.9
+     },
+     "hold1": {
+      "trades": 14,
+      "net": 122.35,
+      "fees": 1.89,
+      "pf": 2.481,
+      "win": 0.429,
+      "avg_hold_h": 395.6
+     },
+     "hold2": {
+      "trades": 17,
+      "net": 1.49,
+      "fees": 1.41,
+      "pf": 1.019,
+      "win": 0.412,
+      "avg_hold_h": 534.6
+     },
+     "all": {
+      "trades": 58,
+      "net": 135.74,
+      "fees": 5.79,
+      "pf": 1.457,
+      "win": 0.397,
+      "avg_hold_h": 418.6
+     }
+    },
+    "AVAXUSDT": {
+     "dev": {
+      "trades": 11,
+      "net": 3.76,
+      "fees": 0.89,
+      "pf": 1.069,
+      "win": 0.455,
+      "avg_hold_h": 433.3
+     },
+     "test": {
+      "trades": 12,
+      "net": 45.3,
+      "fees": 1.26,
+      "pf": 1.749,
+      "win": 0.5,
+      "avg_hold_h": 457.4
+     },
+     "hold1": {
+      "trades": 14,
+      "net": 243.37,
+      "fees": 1.55,
+      "pf": 4.769,
+      "win": 0.571,
+      "avg_hold_h": 401.0
+     },
+     "hold2": {
+      "trades": 16,
+      "net": 58.84,
+      "fees": 1.32,
+      "pf": 1.897,
+      "win": 0.312,
+      "avg_hold_h": 511.8
+     },
+     "all": {
+      "trades": 53,
+      "net": 351.27,
+      "fees": 5.02,
+      "pf": 2.432,
+      "win": 0.453,
+      "avg_hold_h": 453.9
+     }
+    },
+    "BNBUSDT": {
+     "dev": {
+      "trades": 14,
+      "net": -46.77,
+      "fees": 2.08,
+      "pf": 0.503,
+      "win": 0.286,
+      "avg_hold_h": 273.2
+     },
+     "test": {
+      "trades": 11,
+      "net": 76.87,
+      "fees": 1.74,
+      "pf": 2.643,
+      "win": 0.364,
+      "avg_hold_h": 665.3
+     },
+     "hold1": {
+      "trades": 14,
+      "net": 72.64,
+      "fees": 2.31,
+      "pf": 1.954,
+      "win": 0.357,
+      "avg_hold_h": 324.0
+     },
+     "hold2": {
+      "trades": 19,
+      "net": 15.94,
+      "fees": 2.45,
+      "pf": 1.172,
+      "win": 0.421,
+      "avg_hold_h": 399.5
+     },
+     "all": {
+      "trades": 58,
+      "net": 118.68,
+      "fees": 8.58,
+      "pf": 1.383,
+      "win": 0.362,
+      "avg_hold_h": 401.2
+     }
+    },
+    "BTCUSDT": {
+     "dev": {
+      "trades": 11,
+      "net": 37.13,
+      "fees": 1.53,
+      "pf": 1.761,
+      "win": 0.364,
+      "avg_hold_h": 445.1
+     },
+     "test": {
+      "trades": 8,
+      "net": 99.46,
+      "fees": 1.27,
+      "pf": 11.668,
+      "win": 0.625,
+      "avg_hold_h": 672.0
+     },
+     "hold1": {
+      "trades": 14,
+      "net": 28.39,
+      "fees": 1.65,
+      "pf": 1.479,
+      "win": 0.357,
+      "avg_hold_h": 382.0
+     },
+     "hold2": {
+      "trades": 20,
+      "net": 83.94,
+      "fees": 2.51,
+      "pf": 2.034,
+      "win": 0.4,
+      "avg_hold_h": 442.4
+     },
+     "all": {
+      "trades": 53,
+      "net": 248.92,
+      "fees": 6.96,
+      "pf": 2.254,
+      "win": 0.415,
+      "avg_hold_h": 461.6
+     }
+    },
+    "DOGEUSDT": {
+     "dev": {
+      "trades": 12,
+      "net": 151.56,
+      "fees": 1.15,
+      "pf": 3.969,
+      "win": 0.417,
+      "avg_hold_h": 453.3
+     },
+     "test": {
+      "trades": 8,
+      "net": 70.14,
+      "fees": 1.14,
+      "pf": 3.918,
+      "win": 0.625,
+      "avg_hold_h": 668.0
+     },
+     "hold1": {
+      "trades": 11,
+      "net": 143.01,
+      "fees": 1.63,
+      "pf": 3.329,
+      "win": 0.455,
+      "avg_hold_h": 450.1
+     },
+     "hold2": {
+      "trades": 20,
+      "net": -16.45,
+      "fees": 1.79,
+      "pf": 0.818,
+      "win": 0.4,
+      "avg_hold_h": 333.4
+     },
+     "all": {
+      "trades": 51,
+      "net": 348.26,
+      "fees": 5.71,
+      "pf": 2.535,
+      "win": 0.451,
+      "avg_hold_h": 439.3
+     }
+    },
+    "ETHUSDT": {
+     "dev": {
+      "trades": 11,
+      "net": 38.72,
+      "fees": 1.06,
+      "pf": 1.67,
+      "win": 0.364,
+      "avg_hold_h": 479.0
+     },
+     "test": {
+      "trades": 11,
+      "net": 51.57,
+      "fees": 1.12,
+      "pf": 2.312,
+      "win": 0.364,
+      "avg_hold_h": 519.4
+     },
+     "hold1": {
+      "trades": 11,
+      "net": 64.83,
+      "fees": 1.33,
+      "pf": 2.444,
+      "win": 0.455,
+      "avg_hold_h": 458.8
+     },
+     "hold2": {
+      "trades": 19,
+      "net": 17.94,
+      "fees": 1.98,
+      "pf": 1.184,
+      "win": 0.368,
+      "avg_hold_h": 441.5
+     },
+     "all": {
+      "trades": 52,
+      "net": 173.07,
+      "fees": 5.49,
+      "pf": 1.723,
+      "win": 0.385,
+      "avg_hold_h": 469.6
+     }
+    },
+    "LINKUSDT": {
+     "dev": {
+      "trades": 13,
+      "net": 3.64,
+      "fees": 1.14,
+      "pf": 1.058,
+      "win": 0.385,
+      "avg_hold_h": 425.7
+     },
+     "test": {
+      "trades": 10,
+      "net": 25.86,
+      "fees": 1.02,
+      "pf": 1.602,
+      "win": 0.6,
+      "avg_hold_h": 480.6
+     },
+     "hold1": {
+      "trades": 10,
+      "net": 43.61,
+      "fees": 1.03,
+      "pf": 2.088,
+      "win": 0.6,
+      "avg_hold_h": 468.0
+     },
+     "hold2": {
+      "trades": 16,
+      "net": -17.19,
+      "fees": 1.35,
+      "pf": 0.794,
+      "win": 0.25,
+      "avg_hold_h": 538.4
+     },
+     "all": {
+      "trades": 49,
+      "net": 55.91,
+      "fees": 4.54,
+      "pf": 1.243,
+      "win": 0.429,
+      "avg_hold_h": 482.3
+     }
+    },
+    "LTCUSDT": {
+     "dev": {
+      "trades": 10,
+      "net": 39.18,
+      "fees": 0.99,
+      "pf": 2.017,
+      "win": 0.5,
+      "avg_hold_h": 562.3
+     },
+     "test": {
+      "trades": 13,
+      "net": 3.74,
+      "fees": 1.69,
+      "pf": 1.055,
+      "win": 0.308,
+      "avg_hold_h": 406.0
+     },
+     "hold1": {
+      "trades": 14,
+      "net": -83.5,
+      "fees": 1.67,
+      "pf": 0.125,
+      "win": 0.214,
+      "avg_hold_h": 244.8
+     },
+     "hold2": {
+      "trades": 22,
+      "net": -47.78,
+      "fees": 1.86,
+      "pf": 0.534,
+      "win": 0.273,
+      "avg_hold_h": 444.7
+     },
+     "all": {
+      "trades": 59,
+      "net": -88.37,
+      "fees": 6.22,
+      "pf": 0.71,
+      "win": 0.305,
+      "avg_hold_h": 408.7
+     }
+    },
+    "SOLUSDT": {
+     "dev": {
+      "trades": 12,
+      "net": -4.34,
+      "fees": 0.89,
+      "pf": 0.886,
+      "win": 0.5,
+      "avg_hold_h": 398.4
+     },
+     "test": {
+      "trades": 13,
+      "net": 20.17,
+      "fees": 1.45,
+      "pf": 1.344,
+      "win": 0.385,
+      "avg_hold_h": 480.1
+     },
+     "hold1": {
+      "trades": 13,
+      "net": 129.92,
+      "fees": 1.24,
+      "pf": 3.572,
+      "win": 0.385,
+      "avg_hold_h": 450.0
+     },
+     "hold2": {
+      "trades": 23,
+      "net": -42.49,
+      "fees": 1.79,
+      "pf": 0.67,
+      "win": 0.261,
+      "avg_hold_h": 293.1
+     },
+     "all": {
+      "trades": 61,
+      "net": 103.27,
+      "fees": 5.37,
+      "pf": 1.374,
+      "win": 0.361,
+      "avg_hold_h": 387.1
+     }
+    },
+    "XRPUSDT": {
+     "dev": {
+      "trades": 14,
+      "net": 100.45,
+      "fees": 1.63,
+      "pf": 2.088,
+      "win": 0.286,
+      "avg_hold_h": 374.9
+     },
+     "test": {
+      "trades": 15,
+      "net": -12.49,
+      "fees": 2.15,
+      "pf": 0.856,
+      "win": 0.267,
+      "avg_hold_h": 259.3
+     },
+     "hold1": {
+      "trades": 14,
+      "net": -64.12,
+      "fees": 1.72,
+      "pf": 0.249,
+      "win": 0.357,
+      "avg_hold_h": 206.4
+     },
+     "hold2": {
+      "trades": 18,
+      "net": -32.31,
+      "fees": 1.93,
+      "pf": 0.668,
+      "win": 0.278,
+      "avg_hold_h": 389.9
+     },
+     "all": {
+      "trades": 61,
+      "net": -8.48,
+      "fees": 7.43,
+      "pf": 0.977,
+      "win": 0.295,
+      "avg_hold_h": 312.2
+     }
+    }
+   }
+  },
+  "V18.5": {
+   "verdict": "FAIL",
+   "checks": {
+    "dev_net": true,
+    "test_net": true,
+    "hold1_net": false,
+    "hold2_net": true,
+    "pf_1_20": true,
+    "six_coins": true,
+    "100_trades": true,
+    "double_fees_positive": true
+   },
+   "coins_positive": 8,
+   "dev": {
+    "trades": 66,
+    "net": 4.16,
+    "fees": 4.59,
+    "pf": 1.026,
+    "win": 0.439,
+    "avg_hold_h": 186.9
+   },
+   "test": {
+    "trades": 76,
+    "net": 158.72,
+    "fees": 6.29,
+    "pf": 2.085,
+    "win": 0.487,
+    "avg_hold_h": 186.7
+   },
+   "hold1": {
+    "trades": 60,
+    "net": -4.99,
+    "fees": 4.55,
+    "pf": 0.972,
+    "win": 0.417,
+    "avg_hold_h": 186.9
+   },
+   "hold2": {
+    "trades": 89,
+    "net": 65.3,
+    "fees": 6.09,
+    "pf": 1.294,
+    "win": 0.494,
+    "avg_hold_h": 193.3
+   },
+   "all": {
+    "trades": 291,
+    "net": 223.19,
+    "fees": 21.51,
+    "pf": 1.314,
+    "win": 0.464,
+    "avg_hold_h": 188.8
+   },
+   "net_with_double_fees": 201.68,
+   "broad": true,
+   "other_coins_net": 594.4,
+   "coins": {
+    "ADAUSDT": {
+     "dev": {
+      "trades": 5,
+      "net": -9.1,
+      "fees": 0.35,
+      "pf": 0.41,
+      "win": 0.2,
+      "avg_hold_h": 169.6
+     },
+     "test": {
+      "trades": 7,
+      "net": -1.89,
+      "fees": 0.49,
+      "pf": 0.92,
+      "win": 0.286,
+      "avg_hold_h": 142.8
+     },
+     "hold1": {
+      "trades": 6,
+      "net": 4.54,
+      "fees": 0.48,
+      "pf": 1.146,
+      "win": 0.333,
+      "avg_hold_h": 170.2
+     },
+     "hold2": {
+      "trades": 7,
+      "net": -11.89,
+      "fees": 0.56,
+      "pf": 0.575,
+      "win": 0.429,
+      "avg_hold_h": 210.9
+     },
+     "all": {
+      "trades": 25,
+      "net": -18.33,
+      "fees": 1.88,
+      "pf": 0.813,
+      "win": 0.32,
+      "avg_hold_h": 173.8
+     }
+    },
+    "AVAXUSDT": {
+     "dev": {
+      "trades": 4,
+      "net": 8.61,
+      "fees": 0.2,
+      "pf": 2.28,
+      "win": 0.5,
+      "avg_hold_h": 226.0
+     },
+     "test": {
+      "trades": 10,
+      "net": 37.42,
+      "fees": 0.84,
+      "pf": 2.909,
+      "win": 0.6,
+      "avg_hold_h": 193.2
+     },
+     "hold1": {
+      "trades": 4,
+      "net": -7.33,
+      "fees": 0.29,
+      "pf": 0.482,
+      "win": 0.25,
+      "avg_hold_h": 121.0
+     },
+     "hold2": {
+      "trades": 7,
+      "net": 38.63,
+      "fees": 0.45,
+      "pf": 6.448,
+      "win": 0.714,
+      "avg_hold_h": 214.3
+     },
+     "all": {
+      "trades": 25,
+      "net": 77.32,
+      "fees": 1.78,
+      "pf": 2.625,
+      "win": 0.56,
+      "avg_hold_h": 192.8
+     }
+    },
+    "BNBUSDT": {
+     "dev": {
+      "trades": 8,
+      "net": 0.03,
+      "fees": 0.78,
+      "pf": 1.002,
+      "win": 0.625,
+      "avg_hold_h": 222.3
+     },
+     "test": {
+      "trades": 7,
+      "net": 13.73,
+      "fees": 0.7,
+      "pf": 2.735,
+      "win": 0.571,
+      "avg_hold_h": 201.1
+     },
+     "hold1": {
+      "trades": 4,
+      "net": 2.36,
+      "fees": 0.29,
+      "pf": 1.444,
+      "win": 0.75,
+      "avg_hold_h": 198.0
+     },
+     "hold2": {
+      "trades": 11,
+      "net": 39.44,
+      "fees": 0.95,
+      "pf": 4.271,
+      "win": 0.727,
+      "avg_hold_h": 217.1
+     },
+     "all": {
+      "trades": 30,
+      "net": 55.56,
+      "fees": 2.71,
+      "pf": 2.381,
+      "win": 0.667,
+      "avg_hold_h": 212.2
+     }
+    },
+    "BTCUSDT": {
+     "dev": {
+      "trades": 7,
+      "net": 21.68,
+      "fees": 0.72,
+      "pf": 3.932,
+      "win": 0.571,
+      "avg_hold_h": 193.7
+     },
+     "test": {
+      "trades": 7,
+      "net": 14.31,
+      "fees": 0.61,
+      "pf": 2.274,
+      "win": 0.429,
+      "avg_hold_h": 164.0
+     },
+     "hold1": {
+      "trades": 6,
+      "net": 12.56,
+      "fees": 0.4,
+      "pf": 2.941,
+      "win": 0.667,
+      "avg_hold_h": 186.0
+     },
+     "hold2": {
+      "trades": 8,
+      "net": 0.14,
+      "fees": 0.57,
+      "pf": 1.01,
+      "win": 0.5,
+      "avg_hold_h": 184.9
+     },
+     "all": {
+      "trades": 28,
+      "net": 48.69,
+      "fees": 2.3,
+      "pf": 2.23,
+      "win": 0.536,
+      "avg_hold_h": 182.1
+     }
+    },
+    "DOGEUSDT": {
+     "dev": {
+      "trades": 3,
+      "net": -2.42,
+      "fees": 0.19,
+      "pf": 0.769,
+      "win": 0.667,
+      "avg_hold_h": 212.4
+     },
+     "test": {
+      "trades": 6,
+      "net": 22.57,
+      "fees": 0.52,
+      "pf": 8.211,
+      "win": 0.833,
+      "avg_hold_h": 240.0
+     },
+     "hold1": {
+      "trades": 5,
+      "net": -0.79,
+      "fees": 0.45,
+      "pf": 0.942,
+      "win": 0.4,
+      "avg_hold_h": 200.8
+     },
+     "hold2": {
+      "trades": 10,
+      "net": -5.03,
+      "fees": 0.64,
+      "pf": 0.83,
+      "win": 0.6,
+      "avg_hold_h": 182.6
+     },
+     "all": {
+      "trades": 24,
+      "net": 14.33,
+      "fees": 1.79,
+      "pf": 1.254,
+      "win": 0.625,
+      "avg_hold_h": 204.5
+     }
+    },
+    "ETHUSDT": {
+     "dev": {
+      "trades": 6,
+      "net": 1.47,
+      "fees": 0.28,
+      "pf": 1.193,
+      "win": 0.667,
+      "avg_hold_h": 188.0
+     },
+     "test": {
+      "trades": 8,
+      "net": 42.76,
+      "fees": 0.6,
+      "pf": 8.464,
+      "win": 0.5,
+      "avg_hold_h": 212.0
+     },
+     "hold1": {
+      "trades": 5,
+      "net": -4.89,
+      "fees": 0.33,
+      "pf": 0.493,
+      "win": 0.6,
+      "avg_hold_h": 197.5
+     },
+     "hold2": {
+      "trades": 12,
+      "net": -11.19,
+      "fees": 0.81,
+      "pf": 0.691,
+      "win": 0.417,
+      "avg_hold_h": 224.5
+     },
+     "all": {
+      "trades": 31,
+      "net": 28.16,
+      "fees": 2.02,
+      "pf": 1.476,
+      "win": 0.516,
+      "avg_hold_h": 209.9
+     }
+    },
+    "LINKUSDT": {
+     "dev": {
+      "trades": 8,
+      "net": -19.38,
+      "fees": 0.5,
+      "pf": 0.43,
+      "win": 0.125,
+      "avg_hold_h": 143.5
+     },
+     "test": {
+      "trades": 11,
+      "net": 1.29,
+      "fees": 0.82,
+      "pf": 1.041,
+      "win": 0.364,
+      "avg_hold_h": 162.9
+     },
+     "hold1": {
+      "trades": 7,
+      "net": 44.48,
+      "fees": 0.52,
+      "pf": 3.228,
+      "win": 0.571,
+      "avg_hold_h": 226.9
+     },
+     "hold2": {
+      "trades": 8,
+      "net": 0.21,
+      "fees": 0.56,
+      "pf": 1.011,
+      "win": 0.25,
+      "avg_hold_h": 174.0
+     },
+     "all": {
+      "trades": 34,
+      "net": 26.61,
+      "fees": 2.41,
+      "pf": 1.253,
+      "win": 0.324,
+      "avg_hold_h": 174.1
+     }
+    },
+    "LTCUSDT": {
+     "dev": {
+      "trades": 7,
+      "net": -16.02,
+      "fees": 0.52,
+      "pf": 0.258,
+      "win": 0.286,
+      "avg_hold_h": 164.0
+     },
+     "test": {
+      "trades": 6,
+      "net": 27.13,
+      "fees": 0.55,
+      "pf": 4.722,
+      "win": 0.667,
+      "avg_hold_h": 218.7
+     },
+     "hold1": {
+      "trades": 8,
+      "net": -21.67,
+      "fees": 0.66,
+      "pf": 0.191,
+      "win": 0.125,
+      "avg_hold_h": 167.3
+     },
+     "hold2": {
+      "trades": 7,
+      "net": 22.54,
+      "fees": 0.4,
+      "pf": 2.875,
+      "win": 0.429,
+      "avg_hold_h": 207.4
+     },
+     "all": {
+      "trades": 28,
+      "net": 11.97,
+      "fees": 2.12,
+      "pf": 1.177,
+      "win": 0.357,
+      "avg_hold_h": 187.5
+     }
+    },
+    "SOLUSDT": {
+     "dev": {
+      "trades": 10,
+      "net": 31.3,
+      "fees": 0.45,
+      "pf": 7.169,
+      "win": 0.7,
+      "avg_hold_h": 228.8
+     },
+     "test": {
+      "trades": 8,
+      "net": 1.37,
+      "fees": 0.61,
+      "pf": 1.072,
+      "win": 0.5,
+      "avg_hold_h": 181.5
+     },
+     "hold1": {
+      "trades": 6,
+      "net": -7.32,
+      "fees": 0.28,
+      "pf": 0.497,
+      "win": 0.333,
+      "avg_hold_h": 190.6
+     },
+     "hold2": {
+      "trades": 10,
+      "net": -12.81,
+      "fees": 0.48,
+      "pf": 0.641,
+      "win": 0.3,
+      "avg_hold_h": 127.2
+     },
+     "all": {
+      "trades": 34,
+      "net": 12.54,
+      "fees": 1.82,
+      "pf": 1.169,
+      "win": 0.471,
+      "avg_hold_h": 181.0
+     }
+    },
+    "XRPUSDT": {
+     "dev": {
+      "trades": 8,
+      "net": -12.01,
+      "fees": 0.59,
+      "pf": 0.695,
+      "win": 0.125,
+      "avg_hold_h": 137.9
+     },
+     "test": {
+      "trades": 6,
+      "net": 0.04,
+      "fees": 0.54,
+      "pf": 1.002,
+      "win": 0.167,
+      "avg_hold_h": 168.6
+     },
+     "hold1": {
+      "trades": 9,
+      "net": -26.94,
+      "fees": 0.86,
+      "pf": 0.319,
+      "win": 0.333,
+      "avg_hold_h": 193.2
+     },
+     "hold2": {
+      "trades": 9,
+      "net": 5.25,
+      "fees": 0.69,
+      "pf": 1.191,
+      "win": 0.556,
+      "avg_hold_h": 191.2
+     },
+     "all": {
+      "trades": 32,
+      "net": -33.67,
+      "fees": 2.68,
+      "pf": 0.727,
+      "win": 0.312,
+      "avg_hold_h": 174.2
+     }
+    }
+   }
+  }
+ },
+ "live_families": [
+  "V17.3",
+  "V17.4",
+  "V18.4"
+ ],
+ "books": {
+  "A": {
+   "main": {
+    "days": 728,
+    "avg_daily_pct": 0.0542,
+    "total_pct": 48.3,
+    "max_dd_pct": 21.1,
+    "worst_day_pct": -11.21,
+    "skipped_trades": 0,
+    "bots": 30
+   },
+   "hold1": {
+    "days": 366,
+    "avg_daily_pct": 0.08,
+    "total_pct": 34.0,
+    "max_dd_pct": 18.5,
+    "worst_day_pct": -11.23,
+    "skipped_trades": 0,
+    "bots": 30
+   },
+   "hold2": {
+    "days": 544,
+    "avg_daily_pct": 0.005,
+    "total_pct": 2.8,
+    "max_dd_pct": 12.8,
+    "worst_day_pct": -4.92,
+    "skipped_trades": 0,
+    "bots": 30
+   }
+  },
+  "B": {
+   "main": {
+    "days": 728,
+    "avg_daily_pct": 0.028,
+    "total_pct": 22.6,
+    "max_dd_pct": 11.5,
+    "worst_day_pct": -4.95,
+    "skipped_trades": 196,
+    "bots": 30
+   },
+   "hold1": {
+    "days": 366,
+    "avg_daily_pct": 0.0265,
+    "total_pct": 10.2,
+    "max_dd_pct": 9.6,
+    "worst_day_pct": -3.27,
+    "skipped_trades": 118,
+    "bots": 30
+   },
+   "hold2": {
+    "days": 544,
+    "avg_daily_pct": 0.0014,
+    "total_pct": 0.8,
+    "max_dd_pct": 7.2,
+    "worst_day_pct": -2.3,
+    "skipped_trades": 126,
+    "bots": 30
+   }
+  }
+ },
+ "chosen_book": "A"
+}

@@ -112,6 +112,7 @@ class Realtime:
         self.v13: Any = None               # the V13 Snapback (limit-order reversion) service
         self.v14: Any = None               # the V14 HTF (higher-timeframe copies) service
         self.v16: Any = None               # the V16 conditional (CHOP-only) service
+        self.v17: Any = None               # the V17 swing / trend service
         self.display_prices: Any = None    # UI only; never read by a trading engine
         self.state: StatePublisher | None = None
         self.tasks: list[asyncio.Task] = []
@@ -262,7 +263,7 @@ class Realtime:
                 out["shadow"] = self.shadow.health()
             except Exception as exc:
                 out["shadow"] = {"status": "ERROR", "detail": str(exc)[:120]}
-        for name in ("v6", "v7", "v8", "v9", "v11", "v12", "v13", "v14", "v16"):
+        for name in ("v6", "v7", "v8", "v9", "v11", "v12", "v13", "v14", "v16", "v17"):
             svc = getattr(self, name, None)
             if svc is None:
                 continue

@@ -71,7 +71,7 @@ def control_of(key: str) -> tuple[str, str]:
     return key, "CONTROL"
 
 
-LATE = frozenset({"v16"})
+LATE = frozenset({"v16", "v17"})
 
 
 def _fnv1a(text: str) -> int:

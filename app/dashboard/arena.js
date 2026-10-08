@@ -17,6 +17,7 @@
 // quote: the symbol suffix (crypto perps are COINUSDT, stocks are the bare ticker); ccy / book: how money is shown
 const ARENA_PROGRAMS = {
   video: { label: 'Video breakout', sub: 'Bitcoin · 7-day high / 3-day low', tf: '4h', step: 14_400_000, quote: 'USDT', ccy: 'USDT', book: 'configured USDT' },
+  v17: { label: 'V17 Swing', sub: '10 majors · trend & breakout swings held for days to weeks', tf: '4h', step: 14_400_000, quote: 'USDT', ccy: 'USDT', book: '1,000 USDT' },
   v16: { label: 'V16 Conditional', sub: 'BTC & UNI · only in choppy markets · labelled experiment', tf: '1h', step: 3_600_000, quote: 'USDT', ccy: 'USDT', book: '1,000 USDT' },
   v14: { label: 'V14 HTF', sub: 'best strategies · higher-timeframe trend first', tf: '5m', step: 300_000, quote: 'USDT', ccy: 'USDT', book: '20 USDT', scan: true },
   v13: { label: 'V13 Snapback', sub: '29 coins · limit-order reversion', tf: '5m', step: 300_000, quote: 'USDT', ccy: 'USDT', book: '20 USDT', scan: true },
@@ -455,7 +456,7 @@ const Arena = {
     const pick = h('div', { class: 'chips' },
       coins.map((c) => h('button', { type: 'button', class: 'chip' + (c === this.coin ? ' on' : ''), text: c, onclick: () => choose(c) })), menu,
       h('span', { class: 'chip-gap' }),
-      (this.prog === 'video' ? ['4h'] : ['1m', '5m', '15m', '1h']).map((t) => h('button', { type: 'button', class: 'chip' + (t === tf ? ' on' : ''), text: t, onclick: () => { this.tf = t; this.render(); } })));
+      (this.prog === 'video' ? ['4h'] : this.prog === 'v17' ? ['1h', '4h'] : ['1m', '5m', '15m', '1h']).map((t) => h('button', { type: 'button', class: 'chip' + (t === tf ? ' on' : ''), text: t, onclick: () => { this.tf = t; this.render(); } })));
     const who = opts.botKey ? null : h('div', { class: 'chips chart-bots' });
     const card = h('div', { class: 'card', id: opts.id || 'arena-candles' },
       h('div', { class: 'card-head' }, h('h2', { text: this.coin + (progOf(this.prog).quote ? ' / ' + progOf(this.prog).quote : '') }),

@@ -48,6 +48,7 @@ const LAB_PROGRAMS = [
   { id: 'v12', name: 'V12 Bizzy', desc: 'Daily breakout ported from Bizzy Bee. The backtest loses after Bybit costs.', market: 'ETH, SOL, HYPE', tf: '1d', verdict: 'no-edge' },
   { id: 'v13', name: 'V13 Snapback', desc: 'Maker snap-back to the 24-hour VWAP. The study failed on its test window.', market: '29 coins', tf: '15m', verdict: 'no-edge' },
   { id: 'v14', name: 'V14 HTF', desc: 'Copies of the leading bots that only trade with the 4h and daily trend.', market: 'Mixed', tf: '5m / 15m', verdict: 'research' },
+  { id: 'v17', name: 'V17 Swing', desc: 'Long-hold trend strategies on 10 major coins: the 7-day-high breakout, weekly 28-day momentum and a Donchian breakout with a trailing exit. Of 9 swing families tested, only these 3 made money in every window, including the untouched 2022 bear market (where they only just broke even). Holds of 8 to 24 days, so fees barely matter.', market: '10 majors', tf: '4h / 1d', verdict: 'edge' },
   { id: 'v16', name: 'V16 Conditional', desc: 'The coin-by-coin study's survivors that only trade when the market is choppy: BTC on V6.6 and UNI on V6.1. Profitable on year 1, year 2 and an untouched holdout year, but only 3 of 30 coins passed and luck expects 1.5, so this is a labelled experiment.', market: 'BTC, UNI', tf: '1h', verdict: 'research' },
   { id: 'video', name: 'Video breakout', desc: 'BTC 4-hour breakout taken from a trading video.', market: 'BTC', tf: '4h', verdict: 'research' },
 ];
