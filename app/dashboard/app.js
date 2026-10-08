@@ -41,12 +41,26 @@ function showLogin(msg) {
 }
 async function tryLogin(pw) {
   Auth.set(pw);
+  // hide the modal first so a render error below can't leave it stuck
+  $('#login').hidden = true;
   try {
     const st = await api('/api/state?curves=1');
-    $('#login').hidden = true;
     Poll.accept(st);
     Poll.start();
-  } catch (e) { setText($('#login-err'), e.status === 401 ? 'wrong password' : e.message); }
+  } catch (e) {
+    // a non-401 error after we hid the modal is a server bug, not a wrong password:
+    // keep the modal hidden so the operator can see the dashboard with whatever rendered,
+    // and surface the error in the side rail instead of the (now-hidden) login card
+    if (e.status === 401) {
+      Auth.clear();
+      setText($('#login-err'), 'wrong password');
+      $('#login').hidden = false;
+    } else {
+      console.error('[login] post-auth error', e);
+      setText($('#login-err'), e.message || 'post-auth error');
+      // leave modal hidden; the operator is authenticated, the server is just being slow
+    }
+  }
 }
 
 // ---- live state: pushed, never polled ----------------------------------------------------------
