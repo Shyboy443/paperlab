@@ -39,13 +39,18 @@ def complete_sentences(text: str) -> str:
 
 
 class DeskLLM:
+    provider = "openrouter"
+
     def __init__(self, api_key: str | None, model: str = DEFAULT_MODEL, max_tokens: int = 2000,
                  max_calls_per_day: int = 400, timeout_s: float = 120.0, transport: Transport | None = None,
-                 clock: Callable[[], float] = time.time):
+                 clock: Callable[[], float] = time.time, model_deep: str | None = None,
+                 max_usd_per_day: float = 4.0):
         """The usage counters can be persisted with `attach_store` so a restart does not reset the daily cap."""
         key = (api_key or "").strip()
         self._secret: Callable[[], str] = lambda: key
         self.model = model
+        self.model_deep = model_deep or model         # Charts, the Skeptic and operator chats
+        self.max_usd_per_day = float(max_usd_per_day)
         self.max_tokens = int(max_tokens)
         self.max_calls_per_day = int(max_calls_per_day)
         self.timeout_s = timeout_s
@@ -82,7 +87,9 @@ class DeskLLM:
     def from_env(cls, env: Mapping[str, str] | None = None) -> "DeskLLM":
         env = os.environ if env is None else env
         return cls(env.get("OPENROUTER_API_KEY"), (env.get("DESK_MODEL") or DEFAULT_MODEL).strip(),
-                   int(env.get("DESK_MAX_TOKENS") or 2000), int(env.get("DESK_MAX_CALLS_PER_DAY") or 400))
+                   int(env.get("DESK_MAX_TOKENS") or 2000), int(env.get("DESK_MAX_CALLS_PER_DAY") or 400),
+                   model_deep=(env.get("DESK_MODEL_DEEP") or "").strip() or None,
+                   max_usd_per_day=float(env.get("DESK_MAX_USD_PER_DAY") or 4.0))
 
     def __repr__(self) -> str:
         return f"DeskLLM(model={self.model!r}, configured={self.configured})"
@@ -95,9 +102,10 @@ class DeskLLM:
 
     def health(self) -> dict[str, Any]:
         self._roll()
-        return {"configured": self.configured, "model": self.model, "calls_today": self.calls_today,
+        return {"configured": self.configured, "provider": self.provider, "model": self.model,
+                "model_deep": self.model_deep, "calls_today": self.calls_today,
                 "max_calls_per_day": self.max_calls_per_day, "cost_today_usd": round(self.cost_today, 4),
-                "cost_total_usd": round(self.cost_total, 4)}
+                "max_usd_per_day": self.max_usd_per_day, "cost_total_usd": round(self.cost_total, 4)}
 
     def _roll(self) -> None:
         day = int(self._clock() // 86400)
@@ -110,6 +118,8 @@ class DeskLLM:
         with self._lock:
             if self.calls_today >= self.max_calls_per_day:
                 raise LLMError(f"daily AI budget used ({self.max_calls_per_day} calls); the desk resumes tomorrow (UTC)")
+            if self.cost_today >= self.max_usd_per_day:
+                raise LLMError(f"daily AI spend limit reached (${self.max_usd_per_day:.2f}); the desk resumes tomorrow (UTC)")
             self.calls_today += 1
         self._persist()
 
@@ -146,13 +156,13 @@ class DeskLLM:
 
     def chat(self, system: str, messages: Sequence[dict[str, Any]], tools: Sequence[dict[str, Any]] | None = None,
              run_tool: ToolRunner | None = None, max_rounds: int = 3, json_mode: bool = False,
-             max_tokens: int | None = None) -> dict[str, Any]:
+             max_tokens: int | None = None, deep: bool = False) -> dict[str, Any]:
         """One agent turn. With tools, tool calls are executed by `run_tool` and fed back for up to `max_rounds`.
         Returns {"text", "tool_calls": [{name, args}], "cost_usd"}."""
         msgs: list[dict[str, Any]] = [{"role": "system", "content": system}, *messages]
         used, cost0, continued = [], self.cost_total, 0
         for _ in range(max_rounds + 1):
-            payload: dict[str, Any] = {"model": self.model, "messages": msgs, "max_tokens": max_tokens or self.max_tokens,
+            payload: dict[str, Any] = {"model": self.model_deep if deep else self.model, "messages": msgs, "max_tokens": max_tokens or self.max_tokens,
                                        "temperature": 0.3, "usage": {"include": True}}
             if tools:
                 payload["tools"] = list(tools)

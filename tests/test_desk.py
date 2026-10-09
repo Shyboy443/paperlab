@@ -620,3 +620,74 @@ def test_a_session_without_plans_saves_its_verdict_in_the_same_format(tmp_path, 
     desk = DeskService(str(tmp_path / "e.db"), env={"DESK_ENABLED": "false"}, market=FakeMarket(), llm=Nothing())
     assert desk.run_session("test")["verdict"] == "ALL:SKIP"
     desk.ledger.close()
+
+
+# -- Claude (operator's Anthropic key) --------------------------------------------------------------------------------
+from types import SimpleNamespace as NS
+
+
+class FakeAnthropic:
+    """Stands in for anthropic.Anthropic: records every messages.create call and replays scripted responses."""
+
+    def __init__(self, responses, fail=None):
+        self.calls, self.responses, self.fail = [], list(responses), fail
+        self.messages = NS(create=self.create)
+
+    def create(self, **params):
+        if self.fail:
+            raise self.fail
+        self.calls.append(params)
+        return self.responses.pop(0)
+
+
+def resp(blocks, stop="end_turn", tin=1000, tout=500):
+    return NS(content=blocks, stop_reason=stop, usage=NS(input_tokens=tin, output_tokens=tout))
+
+
+def test_claude_runs_tools_keeps_blocks_and_prices_by_model():
+    from app.desk.claude import ClaudeLLM
+    thinking = NS(type="thinking", thinking="", signature="sig")
+    use = NS(type="tool_use", id="tu1", name="scan_coin", input={"coin": "ETH"})
+    fake = FakeAnthropic([resp([thinking, use], stop="tool_use"), resp([NS(type="text", text="ETH holds 2484.")])])
+    llm = ClaudeLLM("sk-ant-test-" + "x" * 30, client_factory=lambda key: fake)
+    seen = []
+    out = llm.chat("sys", [{"role": "user", "content": "q"}, {"role": "user", "content": "more"}], tools=TOOLS_FOR_TEST,
+                   run_tool=lambda n, a: seen.append((n, a)) or {"price": 2490}, deep=True)
+    assert out["text"] == "ETH holds 2484." and seen == [("scan_coin", {"coin": "ETH"})]
+    first, second = fake.calls
+    assert first["model"] == "claude-sonnet-5-5" and first["messages"] == [{"role": "user", "content": "q\n\nmore"}]
+    assert first["tools"][0]["input_schema"]["properties"]["coin"]["type"] == "string"
+    assert second["messages"][1] == {"role": "assistant", "content": [thinking, use]}          # blocks passed back as-is
+    assert second["messages"][2]["content"][0]["tool_use_id"] == "tu1"
+    assert "temperature" not in first                                                          # rejected by 5.5 models
+    assert out["cost_usd"] == pytest.approx(2 * (1000 * 2.0 + 500 * 10.0) / 1e6)
+    fake.responses.append(resp([NS(type="text", text="ok")]))
+    llm.chat("sys", [{"role": "user", "content": "q"}])                                     # not deep: the fast model
+    assert fake.calls[-1]["model"] == "claude-haiku-5-5"
+
+
+TOOLS_FOR_TEST = [{"type": "function", "function": {"name": "scan_coin", "description": "x",
+                                                     "parameters": {"type": "object", "properties": {"coin": {"type": "string"}}}}}]
+
+
+def test_claude_daily_usd_cap_and_secret_safe_errors():
+    from app.desk.claude import ClaudeLLM
+    secret = "sk-ant-api03-" + "s" * 40
+    fake = FakeAnthropic([resp([NS(type="text", text="a")], tin=1_000_000, tout=0)] * 3)
+    llm = ClaudeLLM(secret, client_factory=lambda key: fake, max_usd_per_day=1.0, model_deep="claude-sonnet-5-5")
+    llm.chat("s", [{"role": "user", "content": "x"}], deep=True)                    # $2 spent
+    with pytest.raises(LLMError, match="spend limit"):
+        llm.chat("s", [{"role": "user", "content": "x"}])
+    boom = ClaudeLLM(secret, client_factory=lambda key: FakeAnthropic([], fail=RuntimeError(f"bad key {secret}")))
+    with pytest.raises(LLMError) as e:
+        boom.chat("s", [{"role": "user", "content": "x"}])
+    assert secret not in str(e.value) and secret not in repr(boom)
+
+
+def test_make_llm_prefers_the_operators_anthropic_key():
+    from app.desk.claude import ClaudeLLM, make_llm
+    assert isinstance(make_llm({"ANTHROPIC_API_KEY": "k" * 30, "OPENROUTER_API_KEY": "o"}), ClaudeLLM)
+    other = make_llm({"OPENROUTER_API_KEY": "o" * 30})
+    assert not isinstance(other, ClaudeLLM) and other.provider == "openrouter"
+    c = make_llm({"ANTHROPIC_API_KEY": "k" * 30})
+    assert c.model == "claude-haiku-5-5" and c.model_deep == "claude-sonnet-5-5" and c.max_usd_per_day == 4.0

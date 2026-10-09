@@ -111,6 +111,9 @@ Email is not available, because no mail account is configured.
 
 | Variable | Default | Meaning |
 |---|---|---|
+| `ANTHROPIC_API_KEY` | (none) | The operator's own Claude API key. When it is set, the desk calls Claude directly (`app/desk/claude.py`) instead of OpenRouter. It is server-side only, held in a closure, and never logged, stored or sent to the browser. |
+| `DESK_MODEL_DEEP` | `claude-sonnet-5-5` (Anthropic) | The model for Charts, the Skeptic and operator chats. `DESK_MODEL` (Anthropic default `claude-haiku-5-5`) covers Scout, News, Sentiment and the Chief. |
+| `DESK_MAX_USD_PER_DAY` | 4 | A hard daily AI spend limit, computed from reported token usage; the desk pauses until the next UTC day. |
 | `OPENROUTER_API_KEY` | (none) | Server-side only, held in a closure. It is never logged, stored, or sent to the browser. |
 | `DESK_MODEL` | `anthropic/claude-haiku-5.5` | OpenRouter model used by every agent. Haiku 5.5 does tool calling and structured JSON at about 1/40 of Opus 5.5's price. |
 | `DESK_MAX_TOKENS` | 1200 | Answer length per agent call. |

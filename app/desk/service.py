@@ -26,6 +26,7 @@ from app.desk import agents as A
 from app.desk import news as N
 from app.desk import sentiment as S
 from app.desk.ledger import Ledger, LedgerError
+from app.desk.claude import make_llm
 from app.desk.llm import DeskLLM, LLMError
 from app.desk.market import DEFAULT_UNIVERSE, Market
 
@@ -124,7 +125,7 @@ class DeskService:
         self.clock = clock
         self.ledger = Ledger(db_path, clock=clock)
         self.market = market or Market(clock=clock)
-        self.llm = llm or DeskLLM.from_env(e)
+        self.llm = llm or make_llm(e)
         self.bus = bus
         self.social = social
         self.telegram = telegram
@@ -422,7 +423,8 @@ class DeskService:
     def _agent(self, agent: str, data: Any, ask: str, json_mode: bool = False, min_rr: float = 2.0,
                max_plans: int = 1) -> str:
         out = self.llm.chat(A.system_prompt(agent, min_rr, max_plans=max_plans),
-                            [{"role": "user", "content": A.data_block(data) + "\n\n" + ask}], json_mode=json_mode)
+                            [{"role": "user", "content": A.data_block(data) + "\n\n" + ask}], json_mode=json_mode,
+                            deep=agent in ("charts", "charts_reply", "skeptic"))
         return out["text"] or "(no answer)"
 
     def _charts(self, data: Any, min_rr: float, ask: str, role: str = "charts", max_plans: int = 1) -> str:
@@ -430,7 +432,7 @@ class DeskService:
         tools = [t for t in A.TOOLS + A.ACTION_TOOLS if t["function"]["name"] in ("scan_coin", "check_plan")]
         out = self.llm.chat(A.system_prompt(role, min_rr, max_plans=max_plans),
                             [{"role": "user", "content": A.data_block(data) + "\n\n" + ask}],
-                            tools=tools, run_tool=lambda n, a: self.run_tool(n, a, "charts"), max_rounds=8)
+                            tools=tools, run_tool=lambda n, a: self.run_tool(n, a, "charts"), max_rounds=8, deep=True)
         return out["text"] or ""
 
     def _check(self, plan: Any, row_by: dict[str, Any], held: list[str], min_rr: float) -> dict[str, Any]:
@@ -524,7 +526,7 @@ class DeskService:
             out = self.llm.chat(A.system_prompt(agent, dm=True), history or self._history(channel, agent), tools=tools,
                                 run_tool=lambda name, args: {"ok": False, "error": "answer yourself; no further hand-offs"}
                                 if name == "ask_agent" and not colleagues else self.run_tool(name, args, agent, channel),
-                                max_rounds=5)
+                                max_rounds=5, deep=True)
             return out["text"] or "(no answer)", {"tools": [c["name"] for c in out["tool_calls"]], "cost_usd": out["cost_usd"]}
         except LLMError as exc:
             return f"I can't answer right now: {exc}", None

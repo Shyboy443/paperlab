@@ -68,9 +68,9 @@ const Desk = {
       h('div', {}, h('h2', { text: 'Trading Desk' }),
         h('p', { class: 'sub', text: 'Six AI agents debate the market every ' + (st.schedule_hours || 4) + 'h and paper-trade a ' + this.money((d.ledger || {}).start_balance) + ' book · ' + (st.mode || '') + ' mode · paper money only' })),
       h('div', { class: 'dk-head-r' },
-        pill(llm.configured ? 'AI ' + (llm.model || '').split('/').pop() : 'AI KEY MISSING', llm.configured ? 'up' : 'down'),
+        pill(llm.configured ? 'AI ' + (llm.model || '').split('/').pop() + (llm.model_deep && llm.model_deep !== llm.model ? ' + ' + llm.model_deep.split('/').pop() : '') + (llm.provider === 'anthropic' ? ' · Anthropic' : '') : 'AI KEY MISSING', llm.configured ? 'up' : 'down'),
         h('span', { class: 'sub', id: 'desk-next' }),
-        h('span', { class: 'sub', text: (llm.calls_today ?? 0) + '/' + (llm.max_calls_per_day ?? '?') + ' AI calls today' + (isNum(llm.cost_today_usd) && llm.cost_today_usd > 0 ? ' · $' + llm.cost_today_usd.toFixed(2) : '') }),
+        h('span', { class: 'sub', text: (llm.calls_today ?? 0) + '/' + (llm.max_calls_per_day ?? '?') + ' AI calls today' + (isNum(llm.cost_today_usd) ? ' · $' + llm.cost_today_usd.toFixed(2) + (isNum(llm.max_usd_per_day) ? ' of $' + llm.max_usd_per_day.toFixed(2) : '') : '') }),
         this.priv() ? h('button', { class: 'btn', text: hl.running ? 'Running…' : 'Run session now', disabled: !!hl.running, onclick: () => this.runNow() }) : null));
     const tabs = h('div', { class: 'dk-tabs' }, ...[['chat', 'Group chat'], ['ledger', 'Ledger'], ['decisions', 'Decisions'], ...(this.priv() ? [['settings', 'Settings']] : [])]
       .map(([k, label]) => h('button', { class: 'chip' + (this.tab === k && !this.agent ? ' on' : ''), text: label, onclick: () => { this.tab = k; this.agent = null; this.render(); } })));
