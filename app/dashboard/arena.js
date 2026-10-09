@@ -739,7 +739,28 @@ const Arena = {
         tile('growth', '', '', '')),
       scan && SCAN_BLURB[r.strategy_id] ? h('p', { class: 'sub', text: SCAN_BLURB[r.strategy_id] }) : null,
       this.prog === 'video' && typeof BreakoutUI !== 'undefined' ? BreakoutUI.details(d) : null,
-      candles, h('h3', { text: 'closed trades' }), h('div', { class: 'tablewrap' }, t));
+      candles, h('div', { class: 'card-head' }, h('h3', { text: 'closed trades' }),
+        this.prog !== 'video' ? h('a', { class: 'btn ghost', title: 'every closed trade of this bot as a spreadsheet (opens in Excel)',
+          href: '/api/public/competition/' + this.prog + '/trades.csv?key=' + encodeURIComponent(this.botKey)
+            + '&name=' + encodeURIComponent(typeof Roster !== 'undefined' ? Roster.label(this.prog, this.botKey) : ''),
+          download: '', text: '⬇ Export to Excel' }) : null,
+        this.prog !== 'video' ? h('button', { type: 'button', class: 'btn ghost', title: "copy this bot's name, strategy rules and parameters",
+          text: '⧉ Copy logic', onclick: (ev) => this.copyLogic(ev.currentTarget) }) : null),
+      h('div', { class: 'tablewrap' }, t));
+  },
+  /** Copy the bot's logic card (its name, program, strategy rules and parameters) to the clipboard. */
+  async copyLogic(btn) {
+    const name = typeof Roster !== 'undefined' ? Roster.label(this.prog, this.botKey) : this.botKey;
+    try {
+      const r = await getJSON('/api/public/competition/' + this.prog + '/logic?key=' + encodeURIComponent(this.botKey) + '&name=' + encodeURIComponent(name));
+      try { await navigator.clipboard.writeText(r.text); }
+      catch (e) {                                   // older browsers / no clipboard permission: a hidden textarea
+        const ta = h('textarea', { style: 'position:fixed;opacity:0' }); ta.value = r.text; document.body.append(ta); ta.select();
+        document.execCommand('copy'); ta.remove();
+      }
+      const old = btn.textContent; btn.textContent = '✓ Copied'; setTimeout(() => { btn.textContent = old; }, 1500);
+      toast('Copied the logic of ' + name);
+    } catch (e) { toast('could not copy: ' + e.message, 'err'); }
   },
   /** V11: what the scanners are, the universe, and the study's honest verdict. */
   scanCard(d) {

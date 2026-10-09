@@ -727,3 +727,31 @@ def test_a_key_check_error_stays_readable_when_the_secret_is_empty():
             return None
     r = asyncio.run(Providers(env={}, client_factory=lambda ex, net: Bad())._balance_with("anthropic", "data", (key, "")))
     assert r["error"] == "RuntimeError: invalid x-api-key ***"
+
+
+# -- bot page: Export to Excel and Copy logic ---------------------------------------------------------------------------
+def test_trades_export_is_excel_ready():
+    from app.core.api_public import trades_csv
+    out = trades_csv([{"entry_ts": 1_791_540_000_000, "exit_ts": 1_791_547_200_000, "symbol": "XRPUSDT", "side": "short",
+                       "entry_price": 1.3875, "exit_price": 1.38, "qty": 240, "net": 1.2, "fees": 0.1, "r": 0.5,
+                       "exit_kind": "target"}])
+    head, row = out.lstrip("\ufeff").split("\r\n")[:2]
+    assert out.startswith("\ufeff") and head.startswith("Opened (UTC),Closed (UTC),Hold (h),Coin,Side")
+    assert row.startswith("2026-10-09 10:00:00,2026-10-09 12:00:00,2.0,XRPUSDT,short,1.3875,1.38,240,333.0")
+
+
+def test_bot_logic_names_the_bot_and_its_strategy():
+    from app.core.bot_logic import logic_text, strategy_id
+    assert strategy_id("V17-BTC-V17.3") == "V17.3" and strategy_id("V16-BTC-V6.6-CHOP") == "V6.6"
+    t = logic_text("v17", "V17-BTC-V17.3", "Kog'Maw")
+    assert t.startswith("Bot: Kog'Maw (V17-BTC-V17.3)") and "7-day high" in t and "stop_atr=3.0" in t
+    assert "needs_book" not in t                       # engine settings stay out
+    t14 = logic_text("v14", "V14.1-ETH-5M", "Jinx HTF")
+    assert "copy of V8.3" in t14 and "Original strategy" in t14
+    assert "not found" in logic_text("v6", "nonsense", "x")
+
+
+def test_the_new_bot_routes_are_read_only():
+    from app.core import api_public
+    rs = [r for r in api_public.router.routes if r.path.endswith(("/trades.csv", "/logic"))]
+    assert len(rs) == 2 and all(set(r.methods) <= {"GET", "HEAD"} for r in rs)

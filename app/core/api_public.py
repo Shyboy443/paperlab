@@ -826,6 +826,79 @@ async def roster(request: Request) -> dict[str, Any]:
     return {**(await asyncio.to_thread(roster_payload, request.app.state)), "read_only": True}
 
 
+EXPORT_COLUMNS = (("Opened (UTC)", "entry_ts"), ("Closed (UTC)", "exit_ts"), ("Hold (h)", None), ("Coin", "symbol"),
+                  ("Side", "side"), ("Entry", "entry_price"), ("Exit", "exit_price"), ("Qty", "qty"), ("Notional", None),
+                  ("Gross P&L", "gross"), ("Fees", "fees"), ("Slippage", "slippage"), ("Funding", "funding"), ("Net P&L", "net"),
+                  ("R", "r"), ("Exit reason", "exit_kind"), ("Risk %", "risk_pct"), ("Tier", "tier"), ("Jev level", "jev_level"),
+                  ("Counterfactual", "counterfactual"), ("Re-derived", "rederived"))
+
+
+def trades_csv(trades: list[dict[str, Any]]) -> str:
+    """A bot's closed trades as CSV for Excel: UTC times, every cost column, oldest first."""
+    import csv
+    import io
+    import time as _t
+
+    def when(ms: Any) -> str:
+        return _t.strftime("%Y-%m-%d %H:%M:%S", _t.gmtime(int(ms) / 1000)) if ms else ""
+    buf = io.StringIO()
+    w = csv.writer(buf, lineterminator="\r\n")
+    w.writerow([c for c, _ in EXPORT_COLUMNS])
+    for t in sorted(trades, key=lambda x: x.get("entry_ts") or 0):
+        row = []
+        for col, k in EXPORT_COLUMNS:
+            if col == "Hold (h)":
+                v = round((t["exit_ts"] - t["entry_ts"]) / 3_600_000, 2) if t.get("exit_ts") and t.get("entry_ts") else ""
+            elif col == "Notional":
+                v = round(float(t["qty"]) * float(t["entry_price"]), 4) if t.get("qty") and t.get("entry_price") else ""
+            elif k in ("entry_ts", "exit_ts"):
+                v = when(t.get(k))
+            else:
+                v = t.get(k)
+                v = "" if v is None else v
+            row.append(v)
+        w.writerow(row)
+    return "\ufeff" + buf.getvalue()                  # the BOM makes Excel read it as UTF-8
+
+
+@router.get("/{program}/trades.csv")
+async def arena_bot_trades_csv(request: Request, program: str, key: str = Query(..., min_length=1, max_length=80),
+                               name: str = Query("", max_length=40)):
+    """Every closed trade of one forward bot as a CSV file that opens in Excel. Read-only."""
+    import asyncio
+    import re
+    from fastapi.responses import Response
+    from app.core.v6_view import current_experiment
+    st = _arena_storage(request, program)
+    if st is None:
+        return {"ok": False, "error": "unknown or stopped program"}
+    exp = await asyncio.to_thread(current_experiment, st, getattr(request.app.state, program, None))
+    if exp is None:
+        return {"ok": False, "error": "no experiment"}
+    trades = await asyncio.to_thread(st.fwd6_trades, exp["experiment_id"], counterfactual=None, bot_key=key)
+    label = re.sub(r"[^A-Za-z0-9._-]+", "-", f"{program}-{name + '-' if name else ''}{key}").strip("-")[:90]
+    return Response(trades_csv(trades), media_type="text/csv; charset=utf-8",
+                    headers={"Content-Disposition": f'attachment; filename="{label}-trades.csv"', "Cache-Control": "no-store"})
+
+
+@router.get("/{program}/logic")
+async def arena_bot_logic(program: str, key: str = Query(..., min_length=1, max_length=80),
+                          name: str = Query("", max_length=40)) -> dict[str, Any]:
+    """A bot's trading logic as plain text (name, program, strategy rules, parameters) for the Copy logic button."""
+    import asyncio
+    from app.core.bot_logic import logic_text
+    return {"ok": True, "text": await asyncio.to_thread(logic_text, program, key, name), "read_only": True}
+
+
+def _arena_storage(request: Request, program: str) -> Any:
+    return {"v6": _svc(request).storage if program == "v6" else None, "v7": getattr(request.app.state, "v7_storage", None),
+            "v8": getattr(request.app.state, "v8_storage", None), "v9": getattr(request.app.state, "v9_storage", None),
+            "v11": getattr(request.app.state, "v11_storage", None), "v12": getattr(request.app.state, "v12_storage", None),
+            "v13": getattr(request.app.state, "v13_storage", None), "v14": getattr(request.app.state, "v14_storage", None),
+            "v16": getattr(request.app.state, "v16_storage", None),
+            "v17": getattr(request.app.state, "v17_storage", None)}.get(program)
+
+
 @router.get("/{program}/bot/{key:path}")
 async def arena_bot(request: Request, program: str, key: str) -> dict[str, Any]:
     """One forward bot of V6, V7, V8, V9 or V11: book, closed trades, decisions. Read-only."""
