@@ -350,25 +350,56 @@ class DeskService:
         except Exception:
             return []
 
-    # -- direct messages ------------------------------------------------------------------------------------------------
-    def dm(self, agent: str, text: str) -> dict[str, Any]:
-        if agent not in A.AGENTS:
-            raise ValueError("unknown agent")
+    # -- talking to the agents -----------------------------------------------------------------------------------------
+    def _history(self, channel: str, agent: str, limit: int = 16) -> list[dict[str, Any]]:
+        """The channel's recent messages as a conversation from `agent`'s point of view."""
+        out = []
+        for m in self.ledger.messages(channel, limit=limit):
+            if m["author"] == agent:
+                out.append({"role": "assistant", "content": m["text"]})
+            else:
+                who = "Operator" if m["author"] == "you" else A.AGENTS.get(m["author"], {}).get("name", m["author"])
+                out.append({"role": "user", "content": f"{who}: {m['text']}"})
+        while out and out[0]["role"] != "user":
+            out.pop(0)
+        return out
+
+    def _reply(self, agent: str, channel: str) -> tuple[str, Any]:
+        try:
+            out = self.llm.chat(A.system_prompt(agent, dm=True), self._history(channel, agent), tools=A.TOOLS + A.ACTION_TOOLS,
+                                run_tool=lambda name, args: self.run_tool(name, args, agent), max_rounds=5)
+            return out["text"] or "(no answer)", {"tools": [c["name"] for c in out["tool_calls"]], "cost_usd": out["cost_usd"]}
+        except LLMError as exc:
+            return f"I can't answer right now: {exc}", None
+        except Exception as exc:                       # the operator always gets an answer, never a silent 500
+            log.exception("desk reply failed")
+            return f"I hit an error while working on that ({type(exc).__name__}). Nothing was changed after the error.", None
+
+    @staticmethod
+    def _clean(text: str) -> str:
         text = (text or "").strip()
         if not text or len(text) > 2000:
             raise ValueError("message must be 1-2000 characters")
+        return text
+
+    def chat(self, text: str, agent: str | None = None) -> dict[str, Any]:
+        """The operator writes in the GROUP chat; the @mentioned agent (or the Chief) answers there and can act."""
+        text = self._clean(text)
+        agent = agent if agent in A.AGENTS else (A.mention(text) or "chief")
+        self.post("you", "chat", text)
+        reply, data = self._reply(agent, "group")
+        return self.post(agent, "chat", reply, data)
+
+    def dm(self, agent: str, text: str) -> dict[str, Any]:
+        if agent not in A.AGENTS:
+            raise ValueError("unknown agent")
+        text = self._clean(text)
         channel = "dm:" + agent
         self.post("you", "dm", text, channel=channel)
-        history = [{"role": "assistant" if m["author"] == agent else "user", "content": m["text"]}
-                   for m in self.ledger.messages(channel, limit=12)]
-        try:
-            out = self.llm.chat(A.system_prompt(agent, dm=True), history, tools=A.TOOLS, run_tool=self.run_tool)
-            reply, data = out["text"] or "(no answer)", {"tools": out["tool_calls"], "cost_usd": out["cost_usd"]}
-        except LLMError as exc:
-            reply, data = f"I can't answer right now: {exc}", None
+        reply, data = self._reply(agent, channel)
         return self.post(agent, "dm", reply, data, channel=channel)
 
-    def run_tool(self, name: str, args: dict[str, Any]) -> Any:
+    def run_tool(self, name: str, args: dict[str, Any], agent: str = "chief") -> Any:
         coin = str(args.get("coin") or "").upper().replace("USDT", "")
         if name == "scan_coin":
             return A.compact_scan(self.market.scan_coin(coin))
@@ -381,6 +412,52 @@ class DeskService:
             return S.sentiment([coin], self._social)
         if name == "ledger":
             return self.report()
+        if name == "check_plan":
+            plan = A.parse_plan(json.dumps(args))
+            if plan is None or plan.coin is None:
+                return {"ok": False, "problems": ["unreadable plan"]}
+            _, price = self.market.price(plan.coin)
+            ok, problems, facts = A.validate_plan(plan, self.market.scan_coin(plan.coin), price,
+                                                  A.MIN_RR[self.settings["mode"]])
+            return {"ok": ok, "problems": problems, "facts": facts, "price": price}
+        if name == "run_session":
+            return self.start_session(f"asked via {A.AGENTS[agent]['name']}")
+        if name == "open_trade":
+            _, price = self.market.price(coin)
+            entry = args.get("entry")
+            entry = "market" if entry is None or str(entry).strip().lower() == "market" else float(entry)
+            candles = self.market.candles(coin, "1h", 60)[1]
+            try:
+                t = self.ledger.open(coin, str(args.get("side") or "").lower(), entry, float(args["stop"]), float(args["target"]),
+                                     reason=f"operator request via {A.AGENTS[agent]['name']}: {args.get('reason') or ''}",
+                                     price=price, chart=[[c["t"], c["o"], c["h"], c["l"], c["c"]] for c in candles])
+            except (LedgerError, KeyError, TypeError, ValueError) as exc:
+                return {"ok": False, "error": str(exc)}
+            self.post(agent, "trade", f"Opened paper trade #{t['id']} on the operator's request", {"trade": t})
+            self._alert(self._trade_html(t, "opened"))
+            return {"ok": True, "trade": t}
+        if name == "close_trade":
+            t = self.ledger.trade(int(args.get("trade_id") or 0))
+            if t is None:
+                return {"ok": False, "error": "no such trade"}
+            try:
+                price = self.market.price(t["coin"])[1] if t["status"] == "open" else 0.0
+                done = self.ledger.close_now(t["id"], price, "manual (operator)")
+            except (LedgerError, RuntimeError) as exc:
+                return {"ok": False, "error": str(exc)}
+            what = "Cancelled" if done["status"] == "cancelled" else f"Closed at {done['exit']:g}: {done['pnl']:+.2f} USD"
+            self.post(agent, "trade", f"{what} -- paper trade #{t['id']} {t['coin']} on the operator's request", {"trade": done})
+            if done["status"] == "closed":
+                self._alert(self._trade_html(done, "closed"))
+            return {"ok": True, "trade": done}
+        if name == "update_settings":
+            body = {k: args[k] for k in ("mode", "schedule_hours", "universe", "risk_pct", "enabled") if k in args}
+            try:
+                new = self.update_settings(body)
+            except (ValueError, TypeError) as exc:
+                return {"ok": False, "error": str(exc)}
+            self.post(agent, "chat", "Settings changed on the operator's request: " + ", ".join(f"{k} = {new[k]}" for k in body))
+            return {"ok": True, "settings": {k: new[k] for k in ("mode", "schedule_hours", "universe", "risk_pct", "enabled")}}
         return {"error": "unknown tool"}
 
     # -- ledger ---------------------------------------------------------------------------------------------------------

@@ -20,7 +20,8 @@ const Desk = {
   deactivate() { clearInterval(this.timer); clearInterval(this.clock); this.timer = this.clock = null; },
   async refresh() {
     try { this.data = await api('/api/public/desk?limit=200'); } catch (e) { this.data = { error: e.message }; }
-    if (!this.agent && this.tab !== 'settings') this.render();       // never wipe a message or a form being typed
+    const typing = document.activeElement && document.activeElement.classList.contains('dk-input') && document.activeElement.value;
+    if (!this.agent && this.tab !== 'settings' && !typing) this.render();   // never wipe a message or a form being typed
   },
   onEvent(d) {
     const m = d && d.message;
@@ -71,7 +72,7 @@ const Desk = {
     root.replaceChildren(head, h('div', { class: 'dk-grid' }, this.side(), h('div', { class: 'dk-main' }, tabs, body)));
     this.tick();
     const log = document.getElementById('dk-log');
-    if (log) log.scrollTop = log.scrollHeight;
+    if (log) { log.scrollTop = log.scrollHeight; requestAnimationFrame(() => { log.scrollTop = log.scrollHeight; }); }
   },
   side() {
     const ag = (this.data || {}).agents || {};
@@ -79,14 +80,35 @@ const Desk = {
       ...Object.entries(ag).map(([id, a]) => h('button', {
         class: 'dk-agent' + (this.agent === id ? ' on' : ''), title: this.priv() ? 'Message ' + a.name + ' directly' : a.role,
         onclick: () => this.openAgent(id) }, this.avatar(id), h('span', {}, h('b', { text: a.name }), h('small', { text: a.role })))),
-      h('p', { class: 'sub dk-note', text: this.priv() ? 'Click an agent to message it directly. Agents fetch live data with tools.' : 'Watching read-only. Log in to the dashboard to message an agent.' }));
+      h('p', { class: 'sub dk-note', text: this.priv() ? 'Write in the group chat (@name to pick an agent), or click an agent for a private chat. Agents fetch live data and can do tasks: run a session, open or close paper trades, change settings.' : 'Watching read-only. Use “Log in to chat” to talk to the agents and give them tasks.' }));
   },
 
   // -- chat ---------------------------------------------------------------------------------------------------------------
   chatView() {
     const msgs = (this.data || {}).messages || [];
     return h('div', { class: 'card dk-chat' }, h('div', { class: 'dk-log', id: 'dk-log' },
-      ...(msgs.length ? msgs.map((m) => this.msg(m)) : [h('p', { class: 'sub', text: 'No session yet. The first one runs at the next scheduled slot.' })])));
+      ...(msgs.length ? msgs.map((m) => this.msg(m)) : [h('p', { class: 'sub', text: 'No session yet. The first one runs at the next scheduled slot.' })])),
+      this.composer());
+  },
+  composer() {
+    if (!this.priv()) {
+      return h('div', { class: 'dk-compose dk-login' }, h('span', { class: 'sub', text: 'Want to talk to the desk or give it tasks?' }),
+        h('a', { class: 'btn', href: '/#desk', text: 'Log in to chat' }));
+    }
+    const input = h('textarea', { class: 'dk-input', rows: 2, maxlength: 2000,
+      placeholder: 'Message the desk… @Charts plan SOL · @Chief run a session · "open a long on ETH" · "close #2" · "switch to aggressive"' });
+    const send = async () => {
+      const text = input.value.trim();
+      if (!text || this.sending) return;
+      this.sending = true; input.value = ''; input.disabled = true;
+      const typing = h('p', { class: 'sub dk-typing', text: 'the desk is working on it…' });
+      const log = document.getElementById('dk-log'); if (log) { log.append(typing); log.scrollTop = log.scrollHeight; }
+      try { await post('/api/desk/chat', { text }); } catch (e) { toast(e.message, 'err'); input.value = text; }
+      this.sending = false; input.disabled = false;
+      await this.refresh(); setTimeout(() => { const i = document.querySelector('#desk-root .dk-input'); if (i) i.focus(); }, 0);
+    };
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
+    return h('div', { class: 'dk-compose' }, input, h('button', { class: 'btn', text: 'Send', onclick: send }));
   },
   appendMsg(m) { const log = document.getElementById('dk-log'); if (!log) return; log.append(this.msg(m)); log.scrollTop = log.scrollHeight; },
   msg(m) {
@@ -96,6 +118,7 @@ const Desk = {
     if (data.checks && data.checks.problems && data.checks.problems.length === 0 && data.checks.facts) extras.push(h('div', { class: 'dk-ok', text: '✔ desk checks passed · R:R ' + data.checks.facts.rr + ' · stop ' + (data.checks.facts.stop_atr1h ?? '?') + '× 1h ATR' }));
     if (data.verdict) extras.push(pill('VERDICT ' + data.verdict, { BUY: 'up', WAIT: 'warn', SKIP: 'down' }[data.verdict] || 'ghost'));
     if (data.trade && (m.kind === 'trade')) extras.push(this.tradeCard(data.trade));
+    if (data.tools && data.tools.length) extras.push(h('div', { class: 'dk-tools sub', text: '⚙ used ' + [...new Set(data.tools)].join(', ').replace(/_/g, ' ') }));
     const cls = 'dk-msg' + (m.author === 'chief' && (m.kind === 'decision' || m.kind === 'recap') ? ' dk-decision' : '') + (m.kind === 'error' ? ' dk-err' : '') + (m.author === 'you' ? ' dk-you' : '');
     return h('div', { class: cls, style: `--agent:${a.color}` }, this.avatar(m.author),
       h('div', { class: 'dk-bubble' }, h('div', { class: 'dk-meta' }, h('b', { text: a.name }), h('span', { class: 'sub', text: fmtTime(m.ts) + (m.kind === 'decision' && data.decision ? ' · ' + data.decision.split(' -- ')[0] : '') })),
@@ -149,14 +172,14 @@ const Desk = {
 
   // -- direct messages -----------------------------------------------------------------------------------------------
   async openAgent(id) {
-    if (!this.priv()) { this.agent = null; this.tab = 'chat'; this.render(); const a = this.who(id); toast(a.name + ': ' + a.role); return; }
+    if (!this.priv()) { const a = this.who(id); toast(a.name + ': ' + a.role + '. Log in (button under the chat) to message ' + a.name + '.'); return; }
     this.agent = id;
     try { this.dms[id] = (await api('/api/desk/dm/' + encodeURIComponent(id))).messages; } catch (e) { toast(e.message, 'err'); }
     this.render();
   },
   dmView() {
     const a = this.who(this.agent), msgs = this.dms[this.agent] || [];
-    const input = h('textarea', { class: 'dk-input', rows: 2, maxlength: 2000, placeholder: 'Ask ' + a.name + ' something… (Enter to send)' });
+    const input = h('textarea', { class: 'dk-input', rows: 2, maxlength: 2000, placeholder: 'Ask ' + a.name + ' something or give it a task… (Enter to send)' });
     const send = async () => {
       const text = input.value.trim();
       if (!text || this.sending) return;

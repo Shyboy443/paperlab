@@ -17,7 +17,9 @@ from typing import Any, Callable, Mapping, Sequence
 from app.ai.jev.client import sanitize, urllib_transport
 
 URL = "https://openrouter.ai/api/v1/chat/completions"
-DEFAULT_MODEL = "anthropic/claude-opus-5.5"
+# Haiku 5.5: tool calling + structured output at ~1/40 of Opus 5.5's price (operator, 2026-10-09: "don't use opus for
+# the desk, it costs a lot"). DESK_MODEL overrides it.
+DEFAULT_MODEL = "anthropic/claude-haiku-5.5"
 STATUS = {401: "OpenRouter rejected the server's key.", 402: "Out of OpenRouter credits.",
           404: "The desk model is not available on OpenRouter (check DESK_MODEL).", 429: "OpenRouter is rate-limiting; try later."}
 

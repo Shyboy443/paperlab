@@ -285,3 +285,91 @@ def test_a_full_session_with_fakes(tmp_path, monkeypatch, verdict, trades):
     log = desk.ledger.session(row["id"])["log_md"]
     assert "## Skeptic" in log and ("TRADE: LONG SOL" if trades else "NO TRADE") in log
     desk.ledger.close()
+
+
+# -- talking to the desk and giving it tasks ------------------------------------------------------------------------------
+class ToolLLM:
+    """Calls the scripted tools through run_tool (as a real model's tool calls would) and reports what came back."""
+    configured = True
+    cost_total = 0.0
+
+    def __init__(self, script):
+        self.script = script
+        self.systems = []
+
+    def health(self):
+        return {"model": "fake"}
+
+    def chat(self, system, messages, tools=None, run_tool=None, **kw):
+        self.systems.append(system.split("\n")[0])
+        results = [run_tool(name, args) for name, args in self.script] if run_tool else []
+        return {"text": "done: " + json.dumps(results, default=str)[:300], "tool_calls": [{"name": n, "args": a} for n, a in self.script],
+                "cost_usd": 0.0}
+
+
+def desk_with(tmp_path, script):
+    return DeskService(str(tmp_path / "d.db"), env={"DESK_ENABLED": "false"}, market=FakeMarket(), llm=ToolLLM(script))
+
+
+def test_close_now_and_cancel(ledger):
+    t = ledger.open("SOL", "long", "market", 98, 105, price=100)
+    done = ledger.close_now(t["id"], 101.0)
+    assert done["status"] == "closed" and done["exit_reason"] == "manual" and done["pnl"] > 0
+    p = ledger.open("ETH", "long", 99.0, 97.0, 104.0)
+    assert ledger.close_now(p["id"], 0)["status"] == "cancelled"
+    with pytest.raises(LedgerError):
+        ledger.close_now(t["id"], 101.0)                                 # already closed
+
+
+def test_group_chat_routes_to_the_mentioned_agent_and_it_can_open_a_trade(tmp_path):
+    desk = desk_with(tmp_path, [("open_trade", {"coin": "SOL", "side": "long", "entry": "market", "stop": 98.1,
+                                                "target": 104.5, "reason": "operator asked"})])
+    reply = desk.chat("@Charts open a long on SOL with a stop under support")
+    assert reply["author"] == "charts" and reply["data"]["tools"] == ["open_trade"]
+    assert desk.llm.systems[0].startswith("You are Charts")
+    trades = desk.ledger.trades(("open",))
+    assert len(trades) == 1 and trades[0]["coin"] == "SOL" and "operator request via Charts" in trades[0]["reason"]
+    kinds = [(m["author"], m["kind"]) for m in desk.ledger.messages("group")]
+    assert kinds == [("you", "chat"), ("charts", "trade"), ("charts", "chat")]
+    desk.ledger.close()
+
+
+def test_chief_answers_by_default_and_tasks_respect_the_ledger_rules(tmp_path):
+    desk = desk_with(tmp_path, [("open_trade", {"coin": "SOL", "side": "long", "entry": "market", "stop": 105, "target": 110})])
+    desk.chat("open a long on SOL")
+    assert desk.llm.systems[0].startswith("You are Chief")
+    assert desk.ledger.trades(("open",)) == []                           # stop above entry: refused by the ledger
+    desk.ledger.close()
+
+
+def test_close_trade_and_settings_tasks(tmp_path):
+    desk = desk_with(tmp_path, [])
+    t = desk.ledger.open("SOL", "long", "market", 98, 105, price=100)
+    out = desk.run_tool("close_trade", {"trade_id": t["id"]}, "chief")
+    assert out["ok"] and out["trade"]["status"] == "closed" and out["trade"]["exit"] == 100.0
+    out = desk.run_tool("update_settings", {"mode": "aggressive", "schedule_hours": 2}, "chief")
+    assert out["ok"] and desk.settings["mode"] == "aggressive" and desk.settings["schedule_hours"] == 2
+    assert not desk.run_tool("update_settings", {"risk_pct": 50}, "chief")["ok"]
+    assert desk.run_tool("check_plan", {"coin": "SOL", "side": "long", "entry": "market", "stop": 98.1, "stop_level": 98.37,
+                                        "target": 104.5}, "charts")["ok"]
+    desk.ledger.close()
+
+
+def test_dm_is_private_and_can_act(tmp_path):
+    published = []
+
+    class Bus:
+        def publish(self, ch, data, public=False, replay=True):
+            published.append(public)
+    desk = desk_with(tmp_path, [("ledger", {})])
+    desk.bus = Bus()
+    msg = desk.dm("skeptic", "how is the book doing?")
+    assert msg["channel"] == "dm:skeptic" and msg["data"]["tools"] == ["ledger"]
+    assert published == [False, False] and desk.ledger.messages("group") == []
+    desk.ledger.close()
+
+
+def test_the_desk_defaults_to_a_cheap_model():
+    from app.desk.llm import DEFAULT_MODEL
+    assert "haiku" in DEFAULT_MODEL and "opus" not in DEFAULT_MODEL
+    assert DeskLLM.from_env({"OPENROUTER_API_KEY": "k"}).model == DEFAULT_MODEL

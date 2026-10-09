@@ -205,6 +205,22 @@ class Ledger:
                             (self.now_ms(), why[:200], trade_id))
             self.db.commit()
 
+    def close_now(self, trade_id: int, price: float, why: str = "manual") -> dict[str, Any]:
+        """Close an open trade at `price` now (a market exit), or cancel it if it is still a pending limit."""
+        t = self.trade(int(trade_id))
+        if t is None:
+            raise LedgerError(f"no trade #{trade_id}")
+        if t["status"] == "pending":
+            self.cancel(t["id"], why)
+            return self.trade(t["id"])
+        if t["status"] != "open":
+            raise LedgerError(f"trade #{trade_id} is {t['status']}")
+        if not price or price <= 0:
+            raise LedgerError("a close needs the current price")
+        out = self._close(t, self.now_ms(), float(price), why)
+        self.snapshot()
+        return out
+
     def _close(self, t: dict[str, Any], ts: int, exit_px: float, why: str) -> dict[str, Any]:
         fee = float(self.rule("fee_pct")) / 100.0
         sign = 1 if t["side"] == "long" else -1

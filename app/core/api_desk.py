@@ -4,7 +4,8 @@
     GET  /api/public/desk/session/{id}    public, read-only: one session's Markdown decision log
     GET  /api/public/desk/candles         public, read-only: 1h/4h candles of a coin in the desk's universe
     GET  /api/desk/dm/{agent}             PRIVATE: a direct-message thread with one agent
-    POST /api/desk/dm                     PRIVATE: message an agent {agent, text}
+    POST /api/desk/dm                     PRIVATE: message an agent {agent, text}; agents can act (paper only)
+    POST /api/desk/chat                   PRIVATE: write in the group chat {text}; the @mentioned agent answers
     POST /api/desk/run                    PRIVATE: run a desk session now
     GET  /api/desk/settings               PRIVATE
     POST /api/desk/settings               PRIVATE: schedule, universe, mode, risk %, start balance, alerts
@@ -69,6 +70,19 @@ async def dm_send(request: Request) -> dict[str, Any]:
         raise HTTPException(400, "send {agent, text}")
     try:
         msg = await asyncio.to_thread(_desk(request).dm, str(body.get("agent") or ""), str(body.get("text") or ""))
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from None
+    return {"ok": True, "message": msg}
+
+
+@router.post("/chat")
+async def chat_send(request: Request) -> dict[str, Any]:
+    """The operator writes in the group chat; the @mentioned agent (default: the Chief) answers and can act."""
+    body = await request.json()
+    if not isinstance(body, dict):
+        raise HTTPException(400, "send {text, agent?}")
+    try:
+        msg = await asyncio.to_thread(_desk(request).chat, str(body.get("text") or ""), body.get("agent") or None)
     except ValueError as exc:
         raise HTTPException(400, str(exc)) from None
     return {"ok": True, "message": msg}

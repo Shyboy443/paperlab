@@ -4,8 +4,9 @@ Six AI agents trade crypto on paper in one shared group chat, like a trading flo
 has no exchange account, key or order path, and nothing in it can place a real order.
 
 - Public, read-only: `/public/competition/desk`. Watch the chat live, plus the ledger and the decision logs.
-- Private dashboard: **Trading Desk** in the sidebar. Everything public, plus direct messages to any agent,
-  **Run session now** and **Settings**.
+- Private dashboard: **Trading Desk** in the sidebar. Everything public, plus a chat box in the group chat, direct
+  messages to any agent, **Run session now** and **Settings**. The public page's **Log in to chat** button leads
+  there.
 
 ## The agents
 
@@ -22,6 +23,23 @@ Each agent is one OpenRouter chat call with its own system prompt (`app/desk/age
 first and hands it to each agent as a DATA block. Every agent is told to quote only numbers from that block, and the
 Scout's table shows the raw numbers next to its message. Direct messages use real tool calls (`scan_coin`,
 `scan_universe`, `news`, `sentiment`, `ledger`), so an agent fetches live data when you ask it something.
+
+## Talking to the desk and giving it tasks
+
+In the private dashboard, write in the group chat. `@Charts`, `@Skeptic` and so on pick an agent; without a
+mention, the Chief answers. Or click an agent for a private chat. Every agent has tools:
+
+- **Data:** `scan_coin`, `scan_universe`, `news`, `sentiment`, `ledger`.
+- **Plan check:** `check_plan` runs the same code checks as a session.
+- **Actions, paper money only:**
+  - `run_session`;
+  - `open_trade`, sized and capped by the ledger rules;
+  - `close_trade`, at market, or cancelling a pending limit;
+  - `update_settings`: mode, schedule, coins, risk %, scheduled sessions on or off.
+
+An agent acts only when your latest message explicitly asks it to, for example "open a long on SOL", "close #3",
+"switch to aggressive" or "run a session". Every action is posted in the group chat, and trades send the usual
+Telegram alerts. Group-chat messages are visible on the public page; direct messages are private.
 
 ## A session (every 4 h by default, 2 minutes after the UTC 4 h candle closes)
 
@@ -81,12 +99,12 @@ Email is not available, because no mail account is configured.
 | Variable | Default | Meaning |
 |---|---|---|
 | `OPENROUTER_API_KEY` | (none) | Server-side only, held in a closure. It is never logged, stored, or sent to the browser. |
-| `DESK_MODEL` | `anthropic/claude-opus-5.5` | OpenRouter model used by every agent. |
+| `DESK_MODEL` | `anthropic/claude-haiku-5.5` | OpenRouter model used by every agent. Haiku 5.5 does tool calling and structured JSON at about 1/40 of Opus 5.5's price. |
 | `DESK_MAX_TOKENS` | 1200 | Answer length per agent call. |
 | `DESK_MAX_CALLS_PER_DAY` | 120 | A hard daily cap on AI calls (sessions + DMs). The desk pauses until the next UTC day. |
 | `DESK_ENABLED` | true | Turns the scheduler off. The routes still answer. |
 
-A session makes 6 to 7 AI calls, and each session's AI cost is shown in the Decisions tab.
+A session makes 6 to 7 AI calls, about $0.005 per session on Haiku 5.5. Each session's AI cost is shown in the Decisions tab. The daily cap and the cost totals are stored in `desk.db`, so a restart does not reset them.
 
 ## API
 
@@ -96,6 +114,7 @@ A session makes 6 to 7 AI calls, and each session's AI cost is shown in the Deci
   - `/api/public/desk/candles?coin=&tf=1h|4h`
 - Private, behind the dashboard login; POSTs also need `X-PaperLab: 1`:
   - `GET /api/desk/dm/{agent}`
+  - `POST /api/desk/chat {text}`
   - `POST /api/desk/dm {agent, text}`
   - `POST /api/desk/run`
   - `GET` / `POST /api/desk/settings`

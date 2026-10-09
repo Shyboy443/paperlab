@@ -49,7 +49,11 @@ VERDICT: WAIT  (not now; say what would change your mind)
 VERDICT: SKIP  (reject it) -- and if you SKIP for a clear deal-breaker, add a line before the verdict: DEAL-BREAKER: <one sentence>
 If there is no plan, say why waiting is right and end with VERDICT: SKIP.""",
     "chief": """Your job: you ran this session. In a short message, summarise each colleague's key point in one line each (Scout, News, Sentiment, Charts, Skeptic), then announce the DECISION exactly as given in the DATA (you cannot change it) and explain it in one or two sentences.""",
-    "dm": """A user is messaging you directly. Answer their question in your role, using your tools to fetch real data when numbers are needed. Never invent numbers; if a tool fails, say so.""",
+    "dm": """The desk's operator is talking to you (directly, or by @mentioning you in the group chat). Answer in your role and DO the tasks they ask, with your tools:
+- data: scan_coin, scan_universe, news, sentiment, ledger -- call them whenever numbers are needed; never invent numbers;
+- check_plan: run the desk's code checks on a trade plan before proposing it;
+- actions (paper money only): run_session, open_trade, close_trade, update_settings.
+Take an action ONLY when the operator's latest message explicitly asks for it (e.g. "open a long on SOL", "close #3", "switch to aggressive", "run a session"); otherwise suggest it and ask. For open_trade, base the stop and target on real levels from scan_coin and say what you set. After any action, confirm exactly what the tool reported (trade id, prices, risk) or the error it gave. If a tool fails, say so plainly.""",
 }
 
 WORDS = {"scout": 150, "news": 140, "sentiment": 130, "charts": 120, "skeptic": 170, "chief": 170, "dm": 180}
@@ -219,6 +223,41 @@ TOOLS = [
     {"type": "function", "function": {"name": "ledger", "description": "The desk's paper ledger: equity, open and closed trades.",
                                       "parameters": {"type": "object", "properties": {}}}},
 ]
+
+
+ACTION_TOOLS = [
+    {"type": "function", "function": {"name": "check_plan", "description": "Run the desk's code checks (real swing level, stop just beyond it, not a round number, reward:risk) on a plan.",
+                                      "parameters": {"type": "object", "properties": {
+                                          "coin": {"type": "string"}, "side": {"type": "string", "enum": ["long", "short"]},
+                                          "entry": {"description": "a price, or the string market"}, "stop": {"type": "number"},
+                                          "stop_level": {"type": "number"}, "target": {"type": "number"}},
+                                          "required": ["coin", "side", "entry", "stop", "stop_level", "target"]}}},
+    {"type": "function", "function": {"name": "run_session", "description": "Start a full desk session now (all six agents, may open a trade).",
+                                      "parameters": {"type": "object", "properties": {}}}},
+    {"type": "function", "function": {"name": "open_trade", "description": "Open a PAPER trade in the desk ledger (sized to the risk rule, max 3 open, one per coin). Only when the operator explicitly asks.",
+                                      "parameters": {"type": "object", "properties": {
+                                          "coin": {"type": "string"}, "side": {"type": "string", "enum": ["long", "short"]},
+                                          "entry": {"description": "a limit price, or the string market"}, "stop": {"type": "number"},
+                                          "target": {"type": "number"}, "reason": {"type": "string"}},
+                                          "required": ["coin", "side", "entry", "stop", "target"]}}},
+    {"type": "function", "function": {"name": "close_trade", "description": "Close an open PAPER trade at the market price now, or cancel a pending limit. Only when the operator explicitly asks.",
+                                      "parameters": {"type": "object", "properties": {"trade_id": {"type": "integer"}}, "required": ["trade_id"]}}},
+    {"type": "function", "function": {"name": "update_settings", "description": "Change desk settings when the operator explicitly asks: mode (cautious/aggressive), schedule_hours (1,2,4,6,8,12,24), universe (list of tickers), risk_pct (0.25-5), enabled (scheduled sessions on/off).",
+                                      "parameters": {"type": "object", "properties": {
+                                          "mode": {"type": "string", "enum": ["cautious", "aggressive"]}, "schedule_hours": {"type": "integer"},
+                                          "universe": {"type": "array", "items": {"type": "string"}}, "risk_pct": {"type": "number"},
+                                          "enabled": {"type": "boolean"}}}}},
+]
+
+
+def mention(text: str) -> str | None:
+    """The agent an operator message @mentions first (by id or name), if any."""
+    for m in re.finditer(r"@(\w+)", text or ""):
+        word = m.group(1).lower()
+        for aid, a in AGENTS.items():
+            if word in (aid, a["name"].lower()):
+                return aid
+    return None
 
 
 def decision_log(session: dict[str, Any], messages: Sequence[dict[str, Any]]) -> str:
