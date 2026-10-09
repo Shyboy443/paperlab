@@ -1,4 +1,5 @@
-FROM python:3.12-slim
+# The same official image via AWS ECR Public (Docker Hub rate-limits shared builders: 429 Too Many Requests)
+FROM public.ecr.aws/docker/library/python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
