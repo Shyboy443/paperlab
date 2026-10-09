@@ -341,6 +341,18 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         app.state.scout = scout
         scout.start()
         log.info("V10 scout: %s", scout.health()["state"])
+        # TRADING DESK: six AI agents (OpenRouter) in one group chat, paper ledger only (app/desk).
+        from app.desk.service import DeskService
+
+        def desk_social(coin: str) -> list:
+            rows = scout.store.items(coin, 30, int(time.time() * 1000) - 86_400_000)
+            tones = scout.store.tones([r["id"] for r in rows])
+            return [{**r, "tone": tones.get((r["id"], coin))} for r in rows]
+        desk = DeskService(str(settings.db_path.with_name("desk.db")), bus=realtime.bus, social=desk_social,
+                           telegram=lambda: getattr(app.state, "telegram", None))
+        app.state.desk = desk
+        desk.start()
+        log.info("Trading desk: %s", desk.health()["llm"]["model"])
         from app.autoresearch.service import ResearchService
         research = ResearchService(settings.db_path.with_name("autonomous-research.db"))
         app.state.research = research
@@ -410,6 +422,7 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
             v16_storage.close()
             await asyncio.to_thread(v17.stop)
             v17_storage.close()
+            await asyncio.to_thread(desk.stop)
             await asyncio.to_thread(scout.stop)
             await realtime.stop()
             await engine.stop()
@@ -441,6 +454,9 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
     app.include_router(api_stock_trend.router)
     from app.core import api_video_breakout
     app.include_router(api_video_breakout.router)
+    from app.core import api_desk                   # the Trading Desk (AI agents, paper ledger)
+    app.include_router(api_desk.public_router)
+    app.include_router(api_desk.router)
     from app.core import api_lab                    # the private cost analyzer (+ /lab -> /public/competition)
     from app.ai.analyzer import Analyzer
     app.state.analyzer = Analyzer.from_env()

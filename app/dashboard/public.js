@@ -9,6 +9,7 @@
      /public/competition/bots       Bots
      /public/competition/markets    Markets
      /public/competition/programs   Programs (lab.js)
+     /public/competition/desk       Trading Desk (desk.js)
      /public/competition/analyzer   Cost analyzer (lab.js; asks for the dashboard password)
      /public/competition/system     System (research history links to the server-rendered report)
    Older paths from the research-era page land on the Dashboard. */
@@ -53,6 +54,7 @@ const NAV = [
   { id: 'markets', path: 'markets', label: 'Markets', panel: 'home', view: 'markets' },
   { id: 'programs', path: 'programs', label: 'Programs', panel: 'programs' },
   { id: 'analyzer', path: 'analyzer', label: 'Cost analyzer', panel: 'analyzer' },
+  { id: 'desk', path: 'desk', label: 'Trading Desk', panel: 'desk' },
   { id: 'scout', path: 'scout', label: 'Scout', panel: 'scout' },
   { id: 'system', path: 'system', label: 'System', panel: 'system' },
 ];
@@ -85,6 +87,7 @@ const Nav = {
     if (n.panel === 'analyzer') AnalyzerView.load();
     window.scrollTo(0, 0);
     if (n.panel === 'scout') Scout.load(); else Scout.deactivate();
+    if (n.panel === 'desk') Desk.load(); else Desk.deactivate();
   },
 };
 

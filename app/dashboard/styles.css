@@ -1308,3 +1308,73 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
   .rs-kpi { padding: 14px; }
   .rs-kpi b { font-size: 20px; }
 }
+
+/* ===== TRADING DESK (desk.js): six AI agents in one group chat, paper ledger ===== */
+#desk-root .card, #desk-root .tile { animation: none; }
+#desk-root .dk-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+#desk-root .dk-head h2 { margin: 0; font-size: 1.5rem; letter-spacing: -0.02em; }
+#desk-root .dk-head-r { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+#desk-root .dk-grid { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: var(--gap); align-items: start; }
+#desk-root .dk-side { position: sticky; top: 12px; display: flex; flex-direction: column; gap: 6px; }
+#desk-root .dk-side h3 { margin: 0 0 4px; font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+#desk-root .dk-agent { display: flex; gap: 10px; align-items: center; text-align: left; background: transparent; border: 1px solid transparent;
+  border-radius: 10px; padding: 7px 8px; color: var(--text); cursor: pointer; font: inherit; }
+#desk-root .dk-agent:hover, #desk-root .dk-agent.on { background: var(--raised); border-color: var(--line); }
+#desk-root .dk-agent span { display: flex; flex-direction: column; line-height: 1.25; }
+#desk-root .dk-agent small { color: var(--muted); font-size: .72rem; }
+#desk-root .dk-note { margin-top: 8px; font-size: .75rem; }
+#desk-root .dk-av { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font: 700 .72rem var(--mono);
+  color: oklch(0.15 0.02 250); box-shadow: 0 0 0 2px var(--panel), 0 0 0 3px oklch(1 0 0 / 12%); }
+#desk-root .dk-tabs { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+#desk-root .dk-chat { padding: 0; overflow: hidden; }
+#desk-root .dk-log { max-height: 68vh; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+#desk-root .dk-msg { display: flex; gap: 10px; align-items: flex-start; }
+#desk-root .dk-bubble { flex: 1 1 auto; min-width: 0; background: var(--panel-2); border: 1px solid var(--line); border-left: 3px solid var(--agent);
+  border-radius: 4px 12px 12px 12px; padding: 8px 12px; }
+#desk-root .dk-bubble { overflow-x: auto; }
+#desk-root .dk-decision .dk-bubble { background: linear-gradient(135deg, oklch(0.82 0.14 80 / 12%), var(--panel-2) 60%); border-color: oklch(0.82 0.14 80 / 45%);
+  box-shadow: 0 0 24px oklch(0.82 0.14 80 / 10%); }
+#desk-root .dk-err .dk-bubble { border-left-color: var(--down); }
+#desk-root .dk-you { flex-direction: row-reverse; }
+#desk-root .dk-you .dk-bubble { border-left: 1px solid var(--line); border-right: 3px solid var(--primary); border-radius: 12px 4px 12px 12px; }
+#desk-root .dk-meta { display: flex; gap: 8px; align-items: baseline; margin-bottom: 3px; }
+#desk-root .dk-meta b { color: var(--agent); }
+#desk-root .dk-text { white-space: pre-wrap; line-height: 1.5; overflow-wrap: anywhere; }
+#desk-root .dk-ok { margin-top: 6px; font: .78rem var(--mono); color: var(--up); }
+#desk-root .dk-bubble > .pill { margin-top: 6px; }
+#desk-root .dk-table { width: 100%; border-collapse: collapse; font-size: .8rem; margin-top: 8px; }
+#desk-root .dk-table th { text-align: left; color: var(--muted); font-weight: 500; padding: 4px 6px; border-bottom: 1px solid var(--line); }
+#desk-root .dk-table td { padding: 5px 6px; border-bottom: 1px solid var(--line); }
+#desk-root .dk-table td.num { font-family: var(--mono); text-align: right; }
+#desk-root .dk-click { cursor: pointer; } #desk-root .dk-click:hover { background: var(--raised); }
+#desk-root .dk-trade { margin-top: 10px; border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: var(--surface); max-width: 520px; }
+#desk-root .dk-trade.long { border-top: 2px solid var(--up); } #desk-root .dk-trade.short { border-top: 2px solid var(--down); }
+#desk-root .dk-trade-h { display: flex; justify-content: space-between; align-items: center; }
+#desk-root .dk-trade-n { display: flex; gap: 16px; flex-wrap: wrap; margin: 6px 0; }
+#desk-root .dk-trade-n span { display: flex; flex-direction: column; } #desk-root .dk-trade-n small { color: var(--muted); font-size: .7rem; }
+#desk-root .dk-trade-n b { font-family: var(--mono); font-size: .85rem; }
+#desk-root .dk-svg { width: 100%; height: auto; display: block; }
+#desk-root .dk-c-up { stroke: var(--up); fill: var(--up); } #desk-root .dk-c-dn { stroke: var(--down); fill: var(--down); }
+#desk-root .dk-l-entry { stroke: var(--text); fill: var(--text); stroke-dasharray: 4 3; }
+#desk-root .dk-l-stop { stroke: var(--down); fill: var(--down); stroke-dasharray: 4 3; }
+#desk-root .dk-l-target { stroke: var(--up); fill: var(--up); stroke-dasharray: 4 3; }
+#desk-root .dk-l-txt { stroke: none; font: 9px var(--mono); }
+#desk-root .dk-curve path { fill: none; stroke-width: 2; } #desk-root .dk-eq-up { stroke: var(--up); } #desk-root .dk-eq-dn { stroke: var(--down); }
+#desk-root .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: var(--gap); }
+#desk-root .dk-main > div > .card + .card, #desk-root .dk-main > div > .tiles + .card { margin-top: var(--gap); }
+#desk-root .dk-dm-h { display: flex; gap: 10px; align-items: center; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+#desk-root .dk-compose { display: flex; gap: 8px; padding: 10px; border-top: 1px solid var(--line); }
+#desk-root .dk-input { flex: 1; resize: vertical; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 8px; font: inherit; }
+#desk-root .dk-dec { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--gap); align-items: start; }
+#desk-root .dk-logview h3 { margin-top: 0; } #desk-root .dk-logview h4 { margin: 14px 0 4px; color: var(--primary); }
+#desk-root .dk-settings { display: grid; gap: 12px; max-width: 640px; }
+#desk-root .dk-field { display: grid; gap: 4px; } #desk-root .dk-field > span { font-size: .85rem; }
+#desk-root .dk-field input[type=text], #desk-root .dk-field input[type=number], #desk-root .dk-field select {
+  background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 7px 9px; font: inherit; }
+@media (max-width: 860px) {
+  #desk-root .dk-grid, #desk-root .dk-dec { grid-template-columns: minmax(0, 1fr); }
+  #desk-root .dk-side { position: static; flex-direction: row; overflow-x: auto; }
+  #desk-root .dk-side h3, #desk-root .dk-agent small, #desk-root .dk-note { display: none; }
+  #desk-root .dk-agent { flex: 0 0 auto; }
+  #desk-root .dk-log { max-height: none; }
+}

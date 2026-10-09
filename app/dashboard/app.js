@@ -142,6 +142,7 @@ const NAV = {
   markets: { label: 'Markets', items: [{ id: 'markets', label: 'Markets', panel: 'home', view: 'markets' }] },
   programs: { label: 'Programs', items: [{ id: 'programs', label: 'Programs', panel: 'programs' }] },
   analyzer: { label: 'Cost analyzer', items: [{ id: 'analyzer', label: 'Cost analyzer', panel: 'analyzer' }] },
+  desk: { label: 'Trading Desk', items: [{ id: 'desk', label: 'Trading Desk', panel: 'desk' }] },
   scout: { label: 'Scout', items: [{ id: 'scout', label: 'Scout', panel: 'scout' }] },
   system: { label: 'System', items: [
     { id: 'system', label: 'System', panel: 'system' },
@@ -199,6 +200,7 @@ const Nav = {
     if (item.panel === 'research') Home.load(); else Home.deactivate();
     if (item.panel === 'mirror') LiveMirror.load();
     if (item.panel === 'scout') Scout.load(); else Scout.deactivate();
+    if (item.panel === 'desk') Desk.load(); else Desk.deactivate();
     if (item.panel === 'traders') { Traders.botId = (extra && extra.traderId) || ''; Traders.load(); }
     if (item.panel === 'v4') V4View.load();
     if (item.panel === 'v5') V5View.load();
