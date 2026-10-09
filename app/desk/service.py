@@ -112,6 +112,8 @@ class DeskService:
         self._thread: threading.Thread | None = None
         self.running: str | None = None              # the session id in progress
         self.last_error: str | None = None
+        if hasattr(self.llm, "attach_store"):          # the daily AI cap survives restarts and deploys
+            self.llm.attach_store(lambda: self.ledger.kv("llm_usage"), lambda v: self.ledger.set_kv("llm_usage", v))
         if self.ledger.kv("settings") is None:
             self.ledger.set_kv("settings", DEFAULT_SETTINGS)
 

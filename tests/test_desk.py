@@ -196,6 +196,23 @@ def test_daily_call_budget():
         llm.chat("s", [])
 
 
+def test_the_daily_budget_survives_a_restart():
+    store = {}
+    ok = lambda *a: (200, {}, json.dumps({"choices": [{"message": {"content": "hi"}}], "usage": {"cost": 0.05}}).encode())
+    first = DeskLLM("k" * 20, max_calls_per_day=2, transport=ok, clock=lambda: 86400 * 5 + 10)
+    first.attach_store(lambda: store.get("u"), lambda v: store.__setitem__("u", v))
+    first.chat("s", [])
+    again = DeskLLM("k" * 20, max_calls_per_day=2, transport=ok, clock=lambda: 86400 * 5 + 20)
+    again.attach_store(lambda: store.get("u"), lambda v: store.__setitem__("u", v))
+    assert again.health()["calls_today"] == 1 and again.health()["cost_total_usd"] == 0.05
+    again.chat("s", [])
+    with pytest.raises(LLMError, match="budget"):
+        again.chat("s", [])
+    tomorrow = DeskLLM("k" * 20, max_calls_per_day=2, transport=ok, clock=lambda: 86400 * 6 + 1)
+    tomorrow.attach_store(lambda: store.get("u"), lambda v: store.__setitem__("u", v))
+    assert tomorrow.health()["calls_today"] == 0 and tomorrow.health()["cost_total_usd"] == 0.1
+
+
 def test_public_desk_routes_are_get_only():
     from app.core import api_desk
     routes = [r for r in api_desk.public_router.routes]

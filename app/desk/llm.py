@@ -33,6 +33,7 @@ class DeskLLM:
     def __init__(self, api_key: str | None, model: str = DEFAULT_MODEL, max_tokens: int = 1200,
                  max_calls_per_day: int = 120, timeout_s: float = 120.0, transport: Transport | None = None,
                  clock: Callable[[], float] = time.time):
+        """The usage counters can be persisted with `attach_store` so a restart does not reset the daily cap."""
         key = (api_key or "").strip()
         self._secret: Callable[[], str] = lambda: key
         self.model = model
@@ -46,6 +47,27 @@ class DeskLLM:
         self.calls_today = 0
         self.cost_today = 0.0
         self.cost_total = 0.0
+        self._save: Callable[[dict[str, Any]], None] | None = None
+
+    def attach_store(self, load: Callable[[], Any], save: Callable[[dict[str, Any]], None]) -> None:
+        """Restore today's usage from `load()` and write it back through `save` after every call."""
+        d = load() or {}
+        with self._lock:
+            self._day = int(d.get("day", -1))
+            self.calls_today = int(d.get("calls_today", 0))
+            self.cost_today = float(d.get("cost_today", 0.0))
+            self.cost_total = float(d.get("cost_total", 0.0))
+        self._save = save
+
+    def _persist(self) -> None:
+        if self._save:
+            with self._lock:
+                snap = {"day": self._day, "calls_today": self.calls_today, "cost_today": self.cost_today,
+                        "cost_total": self.cost_total}
+            try:
+                self._save(snap)
+            except Exception:
+                pass
 
     @classmethod
     def from_env(cls, env: Mapping[str, str] | None = None) -> "DeskLLM":
@@ -80,6 +102,7 @@ class DeskLLM:
             if self.calls_today >= self.max_calls_per_day:
                 raise LLMError(f"daily AI budget used ({self.max_calls_per_day} calls); the desk resumes tomorrow (UTC)")
             self.calls_today += 1
+        self._persist()
 
     def _post(self, payload: dict[str, Any]) -> dict[str, Any]:
         if not self.configured:
@@ -109,6 +132,7 @@ class DeskLLM:
         with self._lock:
             self.cost_today += cost
             self.cost_total += cost
+        self._persist()
         return data
 
     def chat(self, system: str, messages: Sequence[dict[str, Any]], tools: Sequence[dict[str, Any]] | None = None,
