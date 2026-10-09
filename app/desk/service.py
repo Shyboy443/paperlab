@@ -244,7 +244,9 @@ class DeskService:
                 f_news = ex.submit(N.news, st["universe"])
                 f_sent = ex.submit(S.sentiment, focus, self._social)
                 feed, sent = f_news.result(), f_sent.result()
-            news_data = {"coins_in_focus": focus, **N.for_coins(feed, focus)}
+            moves = {r["coin"]: {"price": A.compact_scan(r)["price"], "change_24h_pct": round(r["change_24h_pct"] or 0, 2),
+                                 "rel_volume_1h": round(r["h1"]["rel_volume"] or 0, 2)} for r in top}
+            news_data = {"coins_in_focus": focus, "moves": moves, **N.for_coins(feed, focus)}
             sent_data = {"coins_in_focus": focus, **sent}
             with ThreadPoolExecutor(2) as ex:
                 f1 = ex.submit(self._agent, "news", news_data, "Why are the coins in focus moving?")
@@ -289,7 +291,8 @@ class DeskService:
                 say("charts", "plan", text, {"plan": plan.raw, "checks": checks})
             # 5. Skeptic
             sk_data = {"plan": plan.raw if plan else None, "code_checks": checks,
-                       "coin_data": A.compact_scan(row_by[plan.coin]) if plan and plan.coin in row_by else None,
+                       "coin_data": A.compact_scan(row_by[plan.coin]) if plan and plan.coin in row_by
+                       else scan_data["top3_by_relative_volume"],
                        "news_take": news_take, "sentiment_take": sent_take,
                        "headlines": news_data["by_coin"].get(plan.coin) if plan and plan.coin else news_data["market"]}
             sk = self._agent("skeptic", sk_data, "Tear the plan apart, then give your verdict.")

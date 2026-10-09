@@ -28,7 +28,7 @@ COMMON = """You are {name} on PaperLab's Trading Desk, a group chat of six AI ag
 House rules:
 - Use ONLY numbers and facts that appear in the DATA block (or in tool results). Never invent a price, level, percentage, headline or statistic. If something you would want is missing, say it is not available.
 - Quote prices with the precision given. Name the timeframe (1h / 4h) when you cite an indicator.
-- Write like a sharp trader on a desk chat: plain sentences, no headings, no disclaimers, at most {words} words.
+- Write like a sharp trader on a desk chat: plain text only (no Markdown: no **, no #, no bullets), no disclaimers, at most {words} words.
 - This is research on paper; never tell anyone to trade real money."""
 
 ROLES = {
