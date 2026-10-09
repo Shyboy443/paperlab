@@ -291,7 +291,7 @@ const Desk = {
     return h('div', { class: 'dk-dec' }, h('div', { class: 'card' }, h('h3', { text: 'Sessions' }), rows.length ? h('table', { class: 'dk-table' },
       h('thead', {}, h('tr', {}, ...['started', 'coin', 'Skeptic', 'decision', 'AI cost'].map((x) => h('th', { text: x })))),
       h('tbody', {}, ...rows.map((s) => h('tr', { class: 'dk-click', onclick: () => open(s.id) }, h('td', { text: new Date(s.started_ts).toLocaleString('en-GB', { hour12: false }) }),
-        h('td', { text: s.coin || DASH }), h('td', {}, s.verdict ? h('div', { class: 'dk-pills' }, ...String(s.verdict).split(',').map((x) => { const [c, v] = x.includes(':') ? x.split(':') : ['', x]; return this.verdictPill(c, v); })) : DASH),
+        h('td', { text: s.coin || DASH }), h('td', {}, s.verdict ? h('div', { class: 'dk-pills' }, ...String(s.verdict).split(',').map((x) => { const [c, v] = x.includes(':') ? x.split(':') : ['', x]; return this.verdictPill(c === 'ALL' ? '' : c, v === 'NONE' ? null : v); })) : DASH),
         h('td', { class: (s.decision || '').startsWith('TRADE') ? 'up' : 'sub', text: (s.decision || s.status || '').slice(0, 90) }),
         h('td', { class: 'num', text: isNum(s.cost_usd) ? '$' + s.cost_usd.toFixed(3) : DASH }))))) : h('p', { class: 'sub', text: 'No sessions yet.' })), box);
   },

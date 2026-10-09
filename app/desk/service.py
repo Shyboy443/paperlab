@@ -325,6 +325,18 @@ class DeskService:
                                         max_plans=max_plans)
                 plans = A.parse_plans(plan_text)
             checks = {pl.coin: self._check(pl, row_by, held, min_rr) for pl in plans or []}
+            unread = A.unreadable_plans(plan_text)
+            failing = {c: ch["problems"] for c, ch in checks.items() if not ch.get("ok")}
+            if failing or unread:                      # one fix-and-retest turn before the Skeptic sees anything
+                fix = self._charts({**chart_data, "your_plans": [pl.raw for pl in plans or []], "failed_checks": failing,
+                                    "unreadable_plan_entries": unread}, min_rr,
+                                   "Some plans failed the desk checks or were missing fields (every plan needs coin, side, "
+                                   "entry, stop, stop_level and target). Fix each one and re-test it with check_plan now, "
+                                   'or drop it. Reply with ONLY the final {"plans": [...]} JSON.', max_plans=max_plans)
+                fixed = A.parse_plans(fix)
+                if fixed is not None:
+                    plans, plan_text = fixed, fix
+                    checks = {pl.coin: self._check(pl, row_by, held, min_rr) for pl in plans}
             say("charts", "plan", self._plans_text(plans, checks, plan_text),
                 {"plans": [pl.raw for pl in plans or []], "checks": checks})
 
@@ -385,7 +397,8 @@ class DeskService:
                 say("chief", "trade", f"Opened paper trade #{trade['id']}", {"trade": trade})
                 self._alert(self._trade_html(trade, "opened"))
             row.update(status="done", coin=",".join(t_["coin"] for t_ in trades) or (",".join(pl.coin for pl in plans or []) or None),
-                       verdict=",".join(f"{c}:{v[0]}" for c, v in verdicts.items() if v[0]) or None, decision=decision,
+                       verdict=",".join(f"{c}:{v[0] or 'NONE'}" for c, v in verdicts.items())
+                       or f"ALL:{A.parse_verdict(sk)[0] or 'NONE'}", decision=decision,
                        trade_id=trades[0]["id"] if trades else None)
             return row
         except LLMError as exc:

@@ -574,3 +574,49 @@ def test_charts_gets_one_more_turn_when_it_stops_without_a_plan(tmp_path, monkey
     row = desk.run_session("test")
     assert row["trade_id"] and "TRADE: LONG SOL" in row["decision"]
     desk.ledger.close()
+
+
+def test_a_plan_missing_a_field_gets_a_fix_turn_and_can_still_trade(tmp_path, monkeypatch):
+    from app.desk import news as N, sentiment as S
+    monkeypatch.setattr(N, "news", lambda universe, **k: {"items": [], "sources": {}})
+    monkeypatch.setattr(N, "read_articles", lambda items, **k: [dict(i, article="") for i in items])
+    monkeypatch.setattr(S, "sentiment", lambda coins, social=None, **k: {"coins": {x: {"positioning": {}} for x in coins},
+                                                                         "coingecko_trending": []})
+    good = {"coin": "SOL", "side": "long", "entry": "market", "stop": 98.1, "stop_level": 98.37, "target": 104.5, "why": "x"}
+
+    class NoTarget(FakeLLM):
+        calls = 0
+
+        def chat(self, system, messages, **kw):
+            head = system.split("\n")[0]
+            ask = messages[-1]["content"]
+            if "Charts" in head and "failed the desk checks" in ask:
+                return {"text": json.dumps({"plans": [good]}), "tool_calls": [], "cost_usd": 0.0}
+            if "Charts" in head and "attacked" not in system:
+                bad = {k: v for k, v in good.items() if k != "target"}
+                return {"text": json.dumps({"plans": [bad]}), "tool_calls": [], "cost_usd": 0.0}
+            return super().chat(system, messages, **kw)
+    desk = DeskService(str(tmp_path / "n.db"), env={"DESK_ENABLED": "false"}, market=FakeMarket(), llm=NoTarget("BUY"))
+    row = desk.run_session("test")
+    assert row["trade_id"] and row["verdict"] == "SOL:BUY"
+    desk.ledger.close()
+
+
+def test_a_session_without_plans_saves_its_verdict_in_the_same_format(tmp_path, monkeypatch):
+    from app.desk import news as N, sentiment as S
+    monkeypatch.setattr(N, "news", lambda universe, **k: {"items": [], "sources": {}})
+    monkeypatch.setattr(N, "read_articles", lambda items, **k: [dict(i, article="") for i in items])
+    monkeypatch.setattr(S, "sentiment", lambda coins, social=None, **k: {"coins": {x: {"positioning": {}} for x in coins},
+                                                                         "coingecko_trending": []})
+
+    class Nothing(FakeLLM):
+        def chat(self, system, messages, **kw):
+            head = system.split("\n")[0]
+            if "Charts" in head:
+                return {"text": json.dumps({"plans": [], "why": "quiet"}), "tool_calls": [], "cost_usd": 0.0}
+            if "Skeptic" in head:
+                return {"text": "Nothing to trade.\nVERDICT: SKIP", "tool_calls": [], "cost_usd": 0.0}
+            return super().chat(system, messages, **kw)
+    desk = DeskService(str(tmp_path / "e.db"), env={"DESK_ENABLED": "false"}, market=FakeMarket(), llm=Nothing())
+    assert desk.run_session("test")["verdict"] == "ALL:SKIP"
+    desk.ledger.close()

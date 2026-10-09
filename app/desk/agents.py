@@ -28,6 +28,7 @@ COMMON = """You are {name} on PaperLab's Trading Desk, a group chat of six AI ag
 House rules:
 - Use ONLY numbers and facts that appear in the DATA block (or in tool results). Never invent a price, level, percentage, headline or statistic. If something you would want is missing, say it is not available.
 - Quote prices with the precision given. Name the timeframe (1h / 4h) when you cite an indicator.
+- Report only what has happened: never say something "is being re-run", "will be checked" or "is coming" unless the DATA shows it.
 - Write like a sharp trader on a desk chat: plain text only (no Markdown: no **, no #, no bullets), no disclaimers, at most {words} words.
 - This is a team: when a colleague's message is in the DATA (scout_said, colleagues, skeptic_said, ...), react to it by name -- agree, push back or add to it ("Scout's right that...", "Charts, your stop...").
 - This is research on paper; never tell anyone to trade real money."""
@@ -218,6 +219,17 @@ def parse_plans(text: str) -> list[Plan] | None:
             seen.add(pl.coin)
             out.append(pl)
     return out
+
+
+def unreadable_plans(text: str) -> list[dict[str, Any]]:
+    """Plan entries in Charts' JSON that cannot be used (a missing or non-numeric field)."""
+    m = re.search(r"\{.*\}", text or "", re.S)
+    try:
+        d = json.loads(m.group(0)) if m else {}
+    except ValueError:
+        return []
+    items = d.get("plans") if isinstance(d, dict) and isinstance(d.get("plans"), list) else []
+    return [i for i in items if isinstance(i, dict) and i.get("coin") and parse_plan(json.dumps(i)) is None]
 
 
 def parse_verdicts(text: str, coins: Sequence[str]) -> dict[str, tuple[str | None, str | None]]:
