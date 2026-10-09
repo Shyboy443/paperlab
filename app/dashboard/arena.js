@@ -742,15 +742,20 @@ const Arena = {
       candles, h('div', { class: 'card-head' }, h('h3', { text: 'closed trades' }),
         this.prog !== 'video' ? h('a', { class: 'btn ghost', title: 'every closed trade of this bot as a spreadsheet (opens in Excel)',
           href: '/api/public/competition/' + this.prog + '/trades.csv?key=' + encodeURIComponent(this.botKey)
-            + '&name=' + encodeURIComponent(typeof Roster !== 'undefined' ? Roster.label(this.prog, this.botKey) : ''),
+            + '&name=' + encodeURIComponent(this.botName()),
           download: '', text: '⬇ Export to Excel' }) : null,
         this.prog !== 'video' ? h('button', { type: 'button', class: 'btn ghost', title: "copy this bot's name, strategy rules and parameters",
           text: '⧉ Copy logic', onclick: (ev) => this.copyLogic(ev.currentTarget) }) : null),
       h('div', { class: 'tablewrap' }, t));
   },
+  /** The bot's champion name alone (the roster label is 'Name · KEY'). */
+  botName() {
+    const label = typeof Roster !== 'undefined' ? Roster.label(this.prog, this.botKey) : '';
+    return String(label || '').split(' · ')[0].trim();
+  },
   /** Copy the bot's logic card (its name, program, strategy rules and parameters) to the clipboard. */
   async copyLogic(btn) {
-    const name = typeof Roster !== 'undefined' ? Roster.label(this.prog, this.botKey) : this.botKey;
+    const name = this.botName() || this.botKey;
     try {
       const r = await getJSON('/api/public/competition/' + this.prog + '/logic?key=' + encodeURIComponent(this.botKey) + '&name=' + encodeURIComponent(name));
       try { await navigator.clipboard.writeText(r.text); }
