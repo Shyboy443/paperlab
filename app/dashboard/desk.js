@@ -7,7 +7,7 @@
 'use strict';
 
 const Desk = {
-  data: null, tab: 'chat', agent: null, dms: {}, timer: null, clock: null, wired: false, sending: false, logs: {},
+  data: null, tab: 'chat', agent: null, dms: {}, timer: null, clock: null, wired: false, logs: {}, busy: {}, drafts: {},
   root() { return document.getElementById('desk-root'); },
   priv() { return !document.body.classList.contains('public'); },
   async load() {
@@ -19,7 +19,9 @@ const Desk = {
   },
   deactivate() { clearInterval(this.timer); clearInterval(this.clock); this.timer = this.clock = null; },
   async refresh() {
-    try { this.data = await api('/api/public/desk?limit=200'); } catch (e) { this.data = { error: e.message }; }
+    const pending = ((this.data || {}).messages || []).filter((m) => m.pending);
+    try { this.data = await api('/api/public/desk?limit=200'); this.data.messages = this.data.messages.concat(pending); }
+    catch (e) { if (!this.data) this.data = { error: e.message }; }
     const typing = document.activeElement && document.activeElement.classList.contains('dk-input') && document.activeElement.value;
     if (!this.agent && this.tab !== 'settings' && !typing) this.render();   // never wipe a message or a form being typed
   },
@@ -47,6 +49,11 @@ const Desk = {
   },
   who(id) { return ((this.data || {}).agents || {})[id] || { name: id === 'you' ? 'You' : id, color: '#8a94a6', initials: id === 'you' ? 'ME' : '?' }; },
   avatar(id) { const a = this.who(id); return h('span', { class: 'dk-av', style: `background:${a.color}`, text: a.initials }); },
+  when(ts) {
+    if (!ts) return '';
+    const d = new Date(ts), today = new Date().toDateString() === d.toDateString();
+    return today ? fmtTime(ts) : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) + ' ' + fmtTime(ts);
+  },
   money(v) { return isNum(v) ? (v < 0 ? '-' : '') + '$' + Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : DASH; },
   px(v) { return isNum(v) ? (Math.abs(v) >= 1000 ? v.toLocaleString('en-US', { maximumFractionDigits: 2 }) : String(+v.toPrecision(6))) : DASH; },
 
@@ -79,7 +86,7 @@ const Desk = {
     return h('aside', { class: 'dk-side card' }, h('h3', { text: 'The desk' }),
       ...Object.entries(ag).map(([id, a]) => h('button', {
         class: 'dk-agent' + (this.agent === id ? ' on' : ''), title: this.priv() ? 'Message ' + a.name + ' directly' : a.role,
-        onclick: () => this.openAgent(id) }, this.avatar(id), h('span', {}, h('b', { text: a.name }), h('small', { text: a.role })))),
+        onclick: () => this.openAgent(id) }, this.avatar(id), h('span', {}, h('b', { text: a.name + (this.busy[id] ? ' …' : '') }), h('small', { text: this.busy[id] ? 'working on your message' : a.role })))),
       h('p', { class: 'sub dk-note', text: this.priv() ? 'Write in the group chat (@name to pick an agent), or click an agent for a private chat. Agents fetch live data and can do tasks: run a session, open or close paper trades, change settings.' : 'Watching read-only. Use “Log in to chat” to talk to the agents and give them tasks.' }));
   },
 
@@ -97,18 +104,22 @@ const Desk = {
     }
     const input = h('textarea', { class: 'dk-input', rows: 2, maxlength: 2000,
       placeholder: 'Message the desk… @Charts plan SOL · @Chief run a session · "open a long on ETH" · "close #2" · "switch to aggressive"' });
-    const send = async () => {
+    input.value = this.drafts.group || '';
+    input.addEventListener('input', () => { this.drafts.group = input.value; });
+    const send = () => {
       const text = input.value.trim();
-      if (!text || this.sending) return;
-      this.sending = true; input.value = ''; input.disabled = true;
-      const typing = h('p', { class: 'sub dk-typing', text: 'the desk is working on it…' });
-      const log = document.getElementById('dk-log'); if (log) { log.append(typing); log.scrollTop = log.scrollHeight; }
-      try { await post('/api/desk/chat', { text }); } catch (e) { toast(e.message, 'err'); input.value = text; }
-      this.sending = false; input.disabled = false;
-      await this.refresh(); setTimeout(() => { const i = document.querySelector('#desk-root .dk-input'); if (i) i.focus(); }, 0);
+      if (!text) return;
+      input.value = ''; this.drafts.group = '';
+      const pending = { id: 'p' + Date.now(), author: 'you', kind: 'chat', text, ts: Date.now(), channel: 'group', pending: true };
+      this.data.messages.push(pending); this.busy.group = (this.busy.group || 0) + 1;
+      this.render();
+      post('/api/desk/chat', { text })
+        .catch((e) => toast(e.message, 'err'))
+        .finally(() => { this.busy.group -= 1; this.data.messages = this.data.messages.filter((m) => m !== pending); this.refresh(); });
     };
     input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
-    return h('div', { class: 'dk-compose' }, input, h('button', { class: 'btn', text: 'Send', onclick: send }));
+    const note = this.busy.group ? h('span', { class: 'sub dk-typing', text: 'the desk is answering ' + this.busy.group + ' message' + (this.busy.group > 1 ? 's' : '') + '… you can keep typing or switch chats' }) : null;
+    return h('div', {}, note ? h('div', { class: 'dk-note-row' }, note) : null, h('div', { class: 'dk-compose' }, input, h('button', { class: 'btn', text: 'Send', onclick: send })));
   },
   appendMsg(m) { const log = document.getElementById('dk-log'); if (!log) return; log.append(this.msg(m)); log.scrollTop = log.scrollHeight; },
   msg(m) {
@@ -121,7 +132,7 @@ const Desk = {
     if (data.tools && data.tools.length) extras.push(h('div', { class: 'dk-tools sub', text: '⚙ used ' + [...new Set(data.tools)].join(', ').replace(/_/g, ' ') }));
     const cls = 'dk-msg' + (m.author === 'chief' && (m.kind === 'decision' || m.kind === 'recap') ? ' dk-decision' : '') + (m.kind === 'error' ? ' dk-err' : '') + (m.author === 'you' ? ' dk-you' : '');
     return h('div', { class: cls, style: `--agent:${a.color}` }, this.avatar(m.author),
-      h('div', { class: 'dk-bubble' }, h('div', { class: 'dk-meta' }, h('b', { text: a.name }), h('span', { class: 'sub', text: fmtTime(m.ts) + (m.kind === 'decision' && data.decision ? ' · ' + data.decision.split(' -- ')[0] : '') })),
+      h('div', { class: 'dk-bubble' }, h('div', { class: 'dk-meta' }, h('b', { text: a.name }), h('span', { class: 'sub', text: this.when(m.ts) + (m.kind === 'decision' && data.decision ? ' · ' + data.decision.split(' -- ')[0] : '') })),
         h('div', { class: 'dk-text', text: m.text }), ...extras));
   },
   scanTable(rows) {
@@ -174,22 +185,37 @@ const Desk = {
   async openAgent(id) {
     if (!this.priv()) { const a = this.who(id); toast(a.name + ': ' + a.role + '. Log in (button under the chat) to message ' + a.name + '.'); return; }
     this.agent = id;
-    try { this.dms[id] = (await api('/api/desk/dm/' + encodeURIComponent(id))).messages; } catch (e) { toast(e.message, 'err'); }
-    this.render();
+    this.render();                                            // show the cached thread at once
+    try {
+      const msgs = (await api('/api/desk/dm/' + encodeURIComponent(id))).messages;
+      const local = (this.dms[id] || []).filter((m) => m.pending);
+      this.dms[id] = msgs.concat(local);
+      if (this.agent === id) this.render();
+    } catch (e) { toast(e.message, 'err'); }
   },
   dmView() {
     const a = this.who(this.agent), msgs = this.dms[this.agent] || [];
     const input = h('textarea', { class: 'dk-input', rows: 2, maxlength: 2000, placeholder: 'Ask ' + a.name + ' something or give it a task… (Enter to send)' });
-    const send = async () => {
+    const agent = this.agent;
+    input.value = this.drafts[agent] || '';
+    input.addEventListener('input', () => { this.drafts[agent] = input.value; });
+    const send = () => {
       const text = input.value.trim();
-      if (!text || this.sending) return;
-      this.sending = true; input.value = '';
-      (this.dms[this.agent] = this.dms[this.agent] || []).push({ id: 'tmp' + Date.now(), author: 'you', text, ts: Date.now(), channel: 'dm:' + this.agent });
-      this.dms[this.agent].push({ id: 'typing', author: this.agent, text: a.name + ' is checking the data…', ts: Date.now(), kind: 'typing' });
+      if (!text) return;
+      input.value = ''; this.drafts[agent] = '';
+      const mine = { id: 'p' + Date.now(), author: 'you', text, ts: Date.now(), channel: 'dm:' + agent, pending: true };
+      const typing = { id: 't' + Date.now(), author: agent, text: a.name + ' is working on it…', ts: Date.now(), kind: 'typing', pending: true };
+      (this.dms[agent] = this.dms[agent] || []).push(mine, typing);
+      this.busy[agent] = (this.busy[agent] || 0) + 1;
       this.render();
-      try { await post('/api/desk/dm', { agent: this.agent, text }); this.dms[this.agent] = (await api('/api/desk/dm/' + encodeURIComponent(this.agent))).messages; }
-      catch (e) { toast(e.message, 'err'); this.dms[this.agent] = this.dms[this.agent].filter((m) => m.id !== 'typing'); }
-      this.sending = false; this.render();
+      post('/api/desk/dm', { agent, text })
+        .catch((e) => toast(a.name + ': ' + e.message, 'err'))
+        .finally(async () => {
+          this.busy[agent] -= 1;
+          try { this.dms[agent] = (await api('/api/desk/dm/' + encodeURIComponent(agent))).messages.concat((this.dms[agent] || []).filter((m) => m.pending && m !== mine && m !== typing)); }
+          catch (e) { this.dms[agent] = (this.dms[agent] || []).filter((m) => m !== typing); }
+          if (this.agent === agent) this.render(); else { this.render(); toast(a.name + ' replied'); }
+        });
     };
     input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
     setTimeout(() => input.focus(), 0);
@@ -210,7 +236,8 @@ const Desk = {
       tile('return', fmtPct(L.return_pct), signClass(L.return_pct)), tile('win rate', isNum(L.win_rate) ? (L.win_rate * 100).toFixed(0) + '%' : DASH, '', (L.closed_count || 0) + ' closed'),
       tile('avg R', isNum(L.avg_r) ? (L.avg_r >= 0 ? '+' : '') + L.avg_r.toFixed(2) + 'R' : DASH, signClass(L.avg_r)),
       tile('open', String((L.open || []).length) + ' / ' + ((L.rules || {}).max_open ?? 3), '', 'risk ' + ((L.rules || {}).risk_pct ?? '?') + '% · fee ' + ((L.rules || {}).fee_pct ?? '?') + '%/side'));
-    const curve = this.curve([[0, L.start_balance], ...(L.equity_curve || []).map((p) => [p.ts, p.equity]), [Date.now(), L.equity]].filter((p) => isNum(p[1])));
+    const first = (L.equity_curve || [])[0];
+    const curve = this.curve([[first ? first.ts - 3_600_000 : Date.now() - 3_600_000, L.start_balance], ...(L.equity_curve || []).map((p) => [p.ts, p.equity]), [Date.now(), L.equity]].filter((p) => isNum(p[1])));
     const row = (t, closed) => h('tr', {}, h('td', { text: '#' + t.id }), h('td', { text: t.coin }), h('td', { class: t.side === 'long' ? 'up' : 'down', text: t.side }),
       h('td', { class: 'num', text: this.px(t.entry ?? t.entry_req) }), h('td', { class: 'num', text: this.px(t.stop) }), h('td', { class: 'num', text: this.px(t.target) }),
       closed ? h('td', { class: 'num', text: this.px(t.exit) + ' (' + (t.exit_reason || '') + ')' }) : h('td', { class: 'num', text: this.px(t.mark) }),
@@ -226,7 +253,9 @@ const Desk = {
     const svg = document.createElementNS(ns, 'svg'); svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('class', 'dk-svg dk-curve');
     if (pts.length < 2) return svg;
     const vs = pts.map((p) => p[1]), lo = Math.min(...vs), hi = Math.max(...vs);
-    const d = pts.map((p, i) => (i ? 'L' : 'M') + (i * (W / (pts.length - 1))).toFixed(1) + ' ' + (6 + (H - 12) * (1 - (p[1] - lo) / ((hi - lo) || 1))).toFixed(1)).join(' ');
+    const t0 = pts[0][0], t1 = pts[pts.length - 1][0];
+    const x = (t, i) => (t1 > t0 ? (t - t0) / (t1 - t0) : i / (pts.length - 1)) * W;   // by time, not by index
+    const d = pts.map((p, i) => (i ? 'L' : 'M') + x(p[0], i).toFixed(1) + ' ' + (6 + (H - 12) * (1 - (p[1] - lo) / ((hi - lo) || 1))).toFixed(1)).join(' ');
     const path = document.createElementNS(ns, 'path'); path.setAttribute('d', d); path.setAttribute('class', vs[vs.length - 1] >= vs[0] ? 'dk-eq-up' : 'dk-eq-dn');
     svg.append(path);
     return svg;

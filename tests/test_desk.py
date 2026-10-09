@@ -256,6 +256,8 @@ class FakeLLM:
         if "Charts" in system.split("\n")[0]:
             text = json.dumps({"coin": "SOL", "side": "long", "entry": "market", "stop": 98.1, "stop_level": 98.37,
                                "target": 104.5, "why": "breakout over 103.4 on 2.5x volume"})
+            if "the Skeptic has attacked your plan" in system:
+                text = "Skeptic, the volume is real; I keep it.\n" + text
         elif "Skeptic" in system.split("\n")[0]:
             text = f"Volume is real but RSI 55 leaves room.\nVERDICT: {self.verdict}"
         else:
@@ -267,6 +269,7 @@ class FakeLLM:
 def test_a_full_session_with_fakes(tmp_path, monkeypatch, verdict, trades):
     from app.desk import news as N, sentiment as S
     monkeypatch.setattr(N, "news", lambda universe, **k: {"items": [], "sources": {}})
+    monkeypatch.setattr(N, "read_articles", lambda items, **k: [dict(i, article="") for i in items])
     monkeypatch.setattr(S, "sentiment", lambda coins, social=None, **k: {"coins": {x: {"positioning": {}} for x in coins},
                                                                          "coingecko_trending": []})
     published = []
@@ -280,7 +283,9 @@ def test_a_full_session_with_fakes(tmp_path, monkeypatch, verdict, trades):
     assert row["status"] == "done" and row["verdict"] == verdict
     assert len(desk.ledger.trades(("open",))) == trades
     authors = [m["author"] for m in desk.ledger.messages("group")]
-    assert authors[:6] == ["chief", "scout", "news", "sentiment", "charts", "skeptic"] and "chief" == authors[6]
+    assert authors[:9] == ["chief", "scout", "news", "sentiment", "charts", "skeptic", "charts", "skeptic", "chief"]
+    kinds = [m["kind"] for m in desk.ledger.messages("group")]
+    assert kinds[6] == "reply" and "Final plan" in desk.ledger.messages("group")[6]["text"]
     assert all(p for ch, p in published if ch == "desk")
     log = desk.ledger.session(row["id"])["log_md"]
     assert "## Skeptic" in log and ("TRADE: LONG SOL" if trades else "NO TRADE") in log
@@ -373,3 +378,72 @@ def test_the_desk_defaults_to_a_cheap_model():
     from app.desk.llm import DEFAULT_MODEL
     assert "haiku" in DEFAULT_MODEL and "opus" not in DEFAULT_MODEL
     assert DeskLLM.from_env({"OPENROUTER_API_KEY": "k"}).model == DEFAULT_MODEL
+
+
+# -- audit fixes ---------------------------------------------------------------------------------------------------------
+def test_sessions_use_the_mode_setting(tmp_path, monkeypatch):
+    from app.desk import news as N, sentiment as S
+    monkeypatch.setattr(N, "news", lambda universe, **k: {"items": [], "sources": {}})
+    monkeypatch.setattr(N, "read_articles", lambda items, **k: [dict(i, article="") for i in items])
+    monkeypatch.setattr(S, "sentiment", lambda coins, social=None, **k: {"coins": {x: {"positioning": {}} for x in coins},
+                                                                         "coingecko_trending": []})
+    desk = DeskService(str(tmp_path / "d.db"), env={"DESK_ENABLED": "false"}, market=FakeMarket(), llm=FakeLLM("WAIT"))
+    desk.update_settings({"mode": "aggressive"})
+    row = desk.run_session("test")
+    assert row["mode"] == "aggressive" and "aggressive mode" in desk.ledger.messages("group")[0]["text"]
+    assert row["trade_id"]                                  # aggressive: a WAIT without a deal-breaker still trades
+    desk.ledger.close()
+
+
+def test_the_cost_counter_counts_the_session_history(tmp_path):
+    lg = Ledger(str(tmp_path / "d.db"))
+    lg.save_session({"id": "a", "started_ts": int(__import__("time").time() * 1000), "cost_usd": 0.19})
+    lg.close()
+    llm = DeskLLM("k" * 20, transport=lambda *a: (200, {}, b"{}"))
+    desk = DeskService(str(tmp_path / "d.db"), env={"DESK_ENABLED": "false"}, market=FakeMarket(), llm=llm)
+    h = llm.health()
+    assert h["cost_total_usd"] >= 0.19 and h["cost_today_usd"] >= 0.19 and h["calls_today"] >= 7
+    desk.ledger.close()
+
+
+def test_a_cut_off_reply_ends_at_a_full_sentence():
+    from app.desk.llm import complete_sentences
+    assert complete_sentences("BTC holds. ETH is weak and SOL leads the board. Both trade below their") == \
+        "BTC holds. ETH is weak and SOL leads the board."
+    assert complete_sentences("no full stop here").endswith("…")
+    body = {"choices": [{"message": {"content": "Done. Then cut"}, "finish_reason": "length"}]}
+    llm = DeskLLM("k" * 20, transport=lambda *a: (200, {}, json.dumps(body).encode()))
+    assert llm.chat("s", [])["text"] in ("Done.", "Done. Then cut …")
+
+
+def test_levels_are_measured_from_the_live_price():
+    from app.desk.market import Market
+    import time as _t
+    now = int(_t.time() * 1000) // 3_600_000 * 3_600_000
+
+    def kl(n, step, last):
+        out, p = [], 100.0
+        for i in range(n):
+            t = last - (n - i) * step
+            hi = p + (3 if i % 10 == 5 else 1)
+            out.append([t, p, hi, p - 1, p, 10.0, t + step - 1])
+            p += 0.02
+        return out
+
+    def fetch(url):
+        if "interval=1m" in url:
+            return [[now - 60_000, 90.0, 90.0, 90.0, 90.0, 1.0, now]]       # live price far below every swing
+        step = 3_600_000 if "interval=1h" in url else 14_400_000
+        return kl(201, step, now)
+    r = Market(fetch=fetch).scan_coin("SOL")
+    assert r["price"] == 90.0
+    for f in (r["h1"], r["h4"]):
+        assert all(x < 90.0 for x in f["levels"]["support"]) and all(x > 90.0 for x in f["levels"]["resistance"])
+
+
+def test_agents_can_ask_each_other_in_chat(tmp_path):
+    desk = desk_with(tmp_path, [("ask_agent", {"agent": "skeptic", "question": "what could go wrong with a SOL long?"})])
+    desk.chat("team, should we go long SOL?")
+    msgs = desk.ledger.messages("group")
+    assert [m["author"] for m in msgs] == ["you", "skeptic", "chief"]
+    assert msgs[1]["text"].startswith("@Chief ") and msgs[2]["data"]["tools"] == ["ask_agent"]

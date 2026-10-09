@@ -29,17 +29,19 @@ House rules:
 - Use ONLY numbers and facts that appear in the DATA block (or in tool results). Never invent a price, level, percentage, headline or statistic. If something you would want is missing, say it is not available.
 - Quote prices with the precision given. Name the timeframe (1h / 4h) when you cite an indicator.
 - Write like a sharp trader on a desk chat: plain text only (no Markdown: no **, no #, no bullets), no disclaimers, at most {words} words.
+- This is a team: when a colleague's message is in the DATA (scout_said, colleagues, skeptic_said, ...), react to it by name -- agree, push back or add to it ("Scout's right that...", "Charts, your stop...").
 - This is research on paper; never tell anyone to trade real money."""
 
 ROLES = {
     "scout": """Your job: from the scan, post the top 3 movers by unusual volume. For each: coin, price, 24h change, 1h and 4h relative volume, RSI, trend, and any flags. One line per coin, then one sentence on which looks most interesting and why. Relative volume below 1.5 is NOT unusual: if no coin is above it, say the market is quiet.""",
     "news": """Your job: explain WHY the coins in focus are moving, using only the headlines in the DATA block (cite the outlet). If no headline explains a coin's move, say so plainly ("no news; likely flow/technical"). Mention any market-wide headline that matters.""",
     "sentiment": """Your job: read the crowd for the coins in focus from the positioning numbers (funding rate, % of accounts long and its 24h change, open-interest change), CoinGecko trending rank and any posts in the DATA block. Say whether the crowd is crowded long, crowded short or neutral, and whether that supports or fights a move. Ignore hype; spam/paid-signal posts were already removed.""",
-    "charts": """Your job: propose ONE trade plan for the best candidate among the coins in focus, or say there is no setup.
+    "charts": """Your job: propose ONE trade plan for the best setup on ANY coin in the DATA (coins_in_focus or other_coins), or say there is no setup. Read what Scout, News and Sentiment said and use it.
 Rules for a plan:
 - entry: "market" or a limit price near the current price;
 - stop: just beyond a REAL swing level listed in the DATA (1h or 4h support for a long, resistance for a short) -- name that level as stop_level -- and NOT on a round number (round numbers are listed);
-- target: at or before the next real level in the trade's direction; reward:risk must be at least {min_rr} measured from entry to stop and target.
+- target: a real level in the trade's direction -- the next one or a FURTHER one (4h levels make good swing targets); reward:risk must be at least {min_rr} measured from entry to stop and target;
+- ALWAYS run check_plan before you answer and fix the plan until it passes; never quote a reward:risk you did not get from check_plan.
 Answer with ONLY a JSON object, no prose around it:
 {{"coin": "SOL", "side": "long", "entry": "market", "stop": 0, "stop_level": 0, "target": 0, "timeframe": "4h", "why": "one or two sentences with the numbers"}}
 or, if nothing qualifies: {{"coin": null, "why": "the reason, with numbers"}}""",
@@ -48,19 +50,23 @@ VERDICT: BUY   (take the plan as written, long or short)
 VERDICT: WAIT  (not now; say what would change your mind)
 VERDICT: SKIP  (reject it) -- and if you SKIP for a clear deal-breaker, add a line before the verdict: DEAL-BREAKER: <one sentence>
 If there is no plan, say why waiting is right and end with VERDICT: SKIP.""",
-    "chief": """Your job: you ran this session. In a short message, summarise each colleague's key point in one line each (Scout, News, Sentiment, Charts, Skeptic), then announce the DECISION exactly as given in the DATA (you cannot change it) and explain it in one or two sentences.""",
+    "chief": """Your job: you ran this session. In a short message, summarise each colleague's key point in one line each (Scout, News, Sentiment, Charts, Skeptic -- including how the Charts/Skeptic debate ended), then announce the DECISION exactly as given in the DATA (you cannot change it) and explain it in one or two sentences. Finish your last sentence.""",
+    "charts_reply": """Your job now: the Skeptic has attacked your plan. Answer the Skeptic by name in under 90 words: concede the points that are right, defend the ones that are wrong with numbers from the DATA, or revise the plan (re-test every change with check_plan). Then end with the final plan as a JSON object on its own -- the same plan, a revised one, or {{"coin": null, "why": "..."}} to withdraw it.""",
     "dm": """The desk's operator is talking to you (directly, or by @mentioning you in the group chat). Answer in your role and DO the tasks they ask, with your tools:
 - data: scan_coin, scan_universe, news, sentiment, ledger -- call them whenever numbers are needed; never invent numbers;
 - check_plan: run the desk's code checks on a trade plan before proposing it;
-- actions (paper money only): run_session, open_trade, close_trade, update_settings.
+- actions (paper money only): run_session, open_trade, close_trade, update_settings;
+- colleagues: ask_agent asks another desk agent (Scout, News, Sentiment, Charts, Skeptic, Chief) and their answer is posted in this chat -- use it when the operator wants the team's view, or when a question belongs to a colleague (levels -> Charts, headlines -> News, crowd -> Sentiment, risks -> Skeptic), then build on what they said.
 Take an action ONLY when the operator's latest message explicitly asks for it (e.g. "open a long on SOL", "close #3", "switch to aggressive", "run a session"); otherwise suggest it and ask. For open_trade, base the stop and target on real levels from scan_coin and say what you set. After any action, confirm exactly what the tool reported (trade id, prices, risk) or the error it gave. If a tool fails, say so plainly.""",
 }
 
-WORDS = {"scout": 150, "news": 140, "sentiment": 130, "charts": 120, "skeptic": 170, "chief": 170, "dm": 180}
+WORDS = {"scout": 150, "news": 160, "sentiment": 130, "charts": 120, "charts_reply": 110, "skeptic": 170, "chief": 190,
+         "dm": 180}
 
 
 def system_prompt(agent: str, min_rr: float = 2.0, dm: bool = False) -> str:
-    a = AGENTS[agent]
+    """`agent` is an agent id, or a session role of one ("charts_reply" is Charts answering the Skeptic)."""
+    a = AGENTS[agent.split("_")[0]]
     role = ROLES["dm"] + "\nYour role on the desk: " + a["role"] + "." if dm else ROLES[agent].format(min_rr=min_rr)
     return COMMON.format(name=a["name"], words=WORDS["dm" if dm else agent]) + "\n\n" + role
 
@@ -247,6 +253,14 @@ ACTION_TOOLS = [
                                           "mode": {"type": "string", "enum": ["cautious", "aggressive"]}, "schedule_hours": {"type": "integer"},
                                           "universe": {"type": "array", "items": {"type": "string"}}, "risk_pct": {"type": "number"},
                                           "enabled": {"type": "boolean"}}}}},
+]
+
+
+COLLAB_TOOLS = [
+    {"type": "function", "function": {"name": "ask_agent", "description": "Ask a colleague on the desk a question; their answer is posted in this chat and returned to you.",
+                                      "parameters": {"type": "object", "properties": {
+                                          "agent": {"type": "string", "enum": list(AGENTS)}, "question": {"type": "string"}},
+                                          "required": ["agent", "question"]}}},
 ]
 
 

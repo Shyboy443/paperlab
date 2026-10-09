@@ -1367,6 +1367,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
 #desk-root .dk-tools { margin-top: 6px; font: .72rem var(--mono); }
 #desk-root .dk-login { align-items: center; justify-content: space-between; }
 #desk-root .dk-typing { font-style: italic; }
+#desk-root .dk-note-row { padding: 6px 12px 0; }
 #desk-root .dk-input { flex: 1; resize: vertical; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 8px; font: inherit; }
 #desk-root .dk-dec { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--gap); align-items: start; }
 #desk-root .dk-logview h3 { margin-top: 0; } #desk-root .dk-logview h4 { margin: 14px 0 4px; color: var(--primary); }

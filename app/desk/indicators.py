@@ -117,4 +117,5 @@ def frame_summary(candles: Sequence[Candle]) -> dict[str, Any]:
     r = rsi(closes)
     return {"ok": True, "close": closes[-1], "rsi14": r, "ema20": e20, "ema50": e50, "trend": trend,
             "atr14": atr(candles), "rel_volume": relative_volume(candles), "levels": nearest_levels(closes[-1], hi, lo, 4),
+            "swing_highs": hi, "swing_lows": lo,
             "change_pct": 100 * (closes[-1] / closes[-2] - 1)}

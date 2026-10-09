@@ -112,10 +112,25 @@ class DeskService:
         self._thread: threading.Thread | None = None
         self.running: str | None = None              # the session id in progress
         self.last_error: str | None = None
+        self._news: tuple[float, dict[str, Any]] | None = None
         if hasattr(self.llm, "attach_store"):          # the daily AI cap survives restarts and deploys
-            self.llm.attach_store(lambda: self.ledger.kv("llm_usage"), lambda v: self.ledger.set_kv("llm_usage", v))
+            self.llm.attach_store(self._usage, lambda v: self.ledger.set_kv("llm_usage", v))
         if self.ledger.kv("settings") is None:
             self.ledger.set_kv("settings", DEFAULT_SETTINGS)
+
+    def _usage(self) -> dict[str, Any]:
+        """Stored AI usage, never below what the session history shows (sessions log their own cost)."""
+        u = dict(self.ledger.kv("llm_usage") or {})
+        day = int(self.clock() // 86400)
+        rows = self.ledger.sessions(5000)
+        total = sum(r.get("cost_usd") or 0.0 for r in rows)
+        today = [r for r in rows if (r.get("started_ts") or 0) // 86_400_000 == day]
+        if int(u.get("day", -1)) != day:
+            u = {"day": day, "calls_today": 0, "cost_today": 0.0, "cost_total": float(u.get("cost_total", 0.0))}
+        u["cost_total"] = max(float(u.get("cost_total", 0.0)), total)
+        u["cost_today"] = max(float(u.get("cost_today", 0.0)), sum(r.get("cost_usd") or 0.0 for r in today))
+        u["calls_today"] = max(int(u.get("calls_today", 0)), 7 * len(today))
+        return u
 
     # -- settings -------------------------------------------------------------------------------------------------------
     @property
@@ -241,65 +256,76 @@ class DeskService:
                                    "change_24h_pct": round(r["change_24h_pct"] or 0, 2)} for r in ok[3:]]}
             t = self._agent("scout", scan_data, "Post the top 3 movers.")
             say("scout", "take", t, {"table": scan_data["top3_by_relative_volume"]})
-            # 3. News + Sentiment in parallel
+            # 3. News + Sentiment in parallel; both hear the Scout, and News reads the articles, not just headlines
+            scout_take = t
             with ThreadPoolExecutor(2) as ex:
-                f_news = ex.submit(N.news, st["universe"])
+                f_news = ex.submit(self.news_feed)
                 f_sent = ex.submit(S.sentiment, focus, self._social)
                 feed, sent = f_news.result(), f_sent.result()
             moves = {r["coin"]: {"price": A.compact_scan(r)["price"], "change_24h_pct": round(r["change_24h_pct"] or 0, 2),
                                  "rel_volume_1h": round(r["h1"]["rel_volume"] or 0, 2)} for r in top}
-            news_data = {"coins_in_focus": focus, "moves": moves, **N.for_coins(feed, focus)}
-            sent_data = {"coins_in_focus": focus, **sent}
+            picked = N.for_coins(feed, focus, per_coin=4, general=3)
+            read = N.read_articles([i for c in focus for i in picked["by_coin"][c][:3]] + picked["market"][:2], limit=11)
+            arts = {i["url"]: i.get("article") or "" for i in read}
+
+            def enrich(items: list) -> list:
+                return [{**i, "article": arts.get(i["url"], "")} for i in items]
+            news_data = {"coins_in_focus": focus, "moves": moves, "scout_said": scout_take,
+                         "by_coin": {c: enrich(v) for c, v in picked["by_coin"].items()}, "market": enrich(picked["market"])}
+            sent_data = {"coins_in_focus": focus, "scout_said": scout_take, **sent}
             with ThreadPoolExecutor(2) as ex:
-                f1 = ex.submit(self._agent, "news", news_data, "Why are the coins in focus moving?")
-                f2 = ex.submit(self._agent, "sentiment", sent_data, "What is the crowd doing in the coins in focus?")
+                f1 = ex.submit(self._agent, "news", news_data,
+                               "Why are the coins in focus moving? Read the articles, and react to what Scout said.")
+                f2 = ex.submit(self._agent, "sentiment", sent_data,
+                               "What is the crowd doing in the coins in focus? React to what Scout said.")
                 news_take, sent_take = f1.result(), f2.result()
             say("news", "take", news_take, {"headlines": sum((len(v) for v in news_data["by_coin"].values()), 0),
-                                            "sources": feed.get("sources")})
+                                            "articles_read": sum(1 for v in arts.values() if v), "sources": feed.get("sources")})
             say("sentiment", "take", sent_take, {"positioning": {c: v["positioning"] for c, v in sent["coins"].items()},
                                                  "trending": sent.get("coingecko_trending")})
-            # 4. Charts
+            # 4. Charts: the best setup on ANY coin of the universe, tested with the desk's own checks before posting
             held = [t_["coin"] for t_ in self.ledger.trades(("open", "pending"))]
-            chart_data = {"coins_in_focus": scan_data["top3_by_relative_volume"], "mode": mode, "min_reward_risk": min_rr,
+            row_by = {r["coin"]: r for r in ok}
+            chart_data = {"coins_in_focus": scan_data["top3_by_relative_volume"],
+                          "other_coins": [A.compact_scan(r) for r in ok[3:]], "mode": mode, "min_reward_risk": min_rr,
                           "coins_already_held_cannot_trade": held,
-                          "colleagues": {"scout": msgs[1]["text"], "news": news_take, "sentiment": sent_take}}
-            plan_text = self._agent("charts", chart_data, "Your plan as JSON.", json_mode=True, min_rr=min_rr)
+                          "colleagues": {"scout": scout_take, "news": news_take, "sentiment": sent_take}}
+            plan_text = self._charts(chart_data, min_rr, "Find the best plan on any coin above. Test it with check_plan "
+                                     "(adjust and re-test if it fails), then answer with ONLY the JSON object.")
             plan = A.parse_plan(plan_text)
-            if plan is None:
-                plan_text = self._agent("charts", chart_data, "Your previous answer was not valid JSON. Answer with ONLY the JSON object.",
-                                        json_mode=True, min_rr=min_rr)
-                plan = A.parse_plan(plan_text)
-            checks: dict[str, Any] = {"ok": False, "problems": [], "facts": {}}
-            row_by = {r["coin"]: r for r in top}
-            if plan is None:
-                say("charts", "plan", "I could not produce a readable plan this session.", {"raw": plan_text[:600]})
-            elif plan.coin is None:
-                say("charts", "plan", "No setup. " + plan.why, {"plan": plan.raw})
-            elif plan.coin not in row_by:
-                checks["problems"] = [f"{plan.coin} is not one of the coins in focus"]
-                say("charts", "plan", plan.why or "(plan)", {"plan": plan.raw, "checks": checks})
-            else:
-                if plan.coin in held:
-                    checks["problems"].append(f"the desk already holds {plan.coin}")
-                _, price = self.market.price(plan.coin)
-                ok_, problems, facts = A.validate_plan(plan, row_by[plan.coin], price, min_rr)
-                checks = {"ok": ok_ and not checks["problems"], "problems": checks["problems"] + problems,
-                          "facts": facts, "price": price}
-                entry_txt = "market" if plan.entry == "market" else f"limit {plan.entry:g}"
-                text = (f"{plan.coin} {plan.side.upper()} · entry {entry_txt} · stop {plan.stop:g} (beyond {plan.stop_level:g}) "
-                        f"· target {plan.target:g} · R:R {facts.get('rr', '?')}. {plan.why}")
-                if checks["problems"]:
-                    text += "\n⚠️ Desk checks failed: " + "; ".join(checks["problems"])
-                say("charts", "plan", text, {"plan": plan.raw, "checks": checks})
-            # 5. Skeptic
-            sk_data = {"plan": plan.raw if plan else None, "code_checks": checks,
-                       "coin_data": A.compact_scan(row_by[plan.coin]) if plan and plan.coin in row_by
-                       else scan_data["top3_by_relative_volume"],
+            checks = self._check(plan, row_by, held, min_rr)
+            say("charts", "plan", self._plan_text(plan, checks, plan_text), {"plan": plan.raw if plan else None, "checks": checks})
+
+            # 5. Skeptic -> Charts answers -> Skeptic's final verdict
+            def coin_data(pl: Any) -> Any:
+                return A.compact_scan(row_by[pl.coin]) if pl and pl.coin in row_by else scan_data["top3_by_relative_volume"]
+            sk_data = {"plan": plan.raw if plan else None, "code_checks": checks, "coin_data": coin_data(plan),
                        "news_take": news_take, "sentiment_take": sent_take,
-                       "headlines": news_data["by_coin"].get(plan.coin) if plan and plan.coin else news_data["market"]}
-            sk = self._agent("skeptic", sk_data, "Tear the plan apart, then give your verdict.")
+                       "headlines": news_data["by_coin"].get(plan.coin) if plan and plan.coin in news_data["by_coin"]
+                       else news_data["market"]}
+            sk = self._agent("skeptic", sk_data, "Tear Charts' plan apart (address Charts by name), then give your verdict.")
             verdict, breaker = A.parse_verdict(sk)
             say("skeptic", "verdict", sk, {"verdict": verdict, "deal_breaker": breaker})
+            if plan and plan.coin:
+                reply = self._charts({**chart_data, "your_plan": plan.raw, "code_checks": checks, "skeptic_said": sk}, min_rr,
+                                     "Skeptic answered. Reply to Skeptic by name in under 90 words: concede, defend or revise. "
+                                     "Re-test any change with check_plan. End with the final plan JSON (the same one, a "
+                                     'revised one, or {"coin": null, "why": "..."} to withdraw).', role="charts_reply")
+                revised = A.parse_plan(reply)
+                if revised is not None:
+                    plan = revised
+                    checks = self._check(plan, row_by, held, min_rr)
+                said = re.sub(r"\{.*\}", "", reply, flags=re.S).strip() or "(plan below)"
+                said += ("\nFinal plan: " + self._plan_text(plan, checks, "")) if plan and plan.coin else "\nPlan withdrawn."
+                say("charts", "reply", said, {"plan": plan.raw if plan else None, "checks": checks})
+                sk2 = self._agent("skeptic", {"plan_now": plan.raw if plan else None, "code_checks": checks,
+                                              "coin_data": coin_data(plan), "your_first_take": sk, "charts_reply": said},
+                                  "Charts answered you. Give your FINAL verdict on the plan as it stands now: two or three "
+                                  "sentences to Charts, then the VERDICT line.")
+                v2, b2 = A.parse_verdict(sk2)
+                if v2:
+                    verdict, breaker = v2, b2
+                say("skeptic", "verdict", sk2, {"verdict": verdict, "deal_breaker": breaker, "final": True})
             # 6. Chief
             go, why = A.decide(mode, bool(plan and plan.coin and checks.get("ok")), verdict, breaker)
             trade = None
@@ -344,6 +370,45 @@ class DeskService:
                             json_mode=json_mode)
         return out["text"] or "(no answer)"
 
+    def _charts(self, data: Any, min_rr: float, ask: str, role: str = "charts") -> str:
+        """Charts with its two session tools (scan_coin, check_plan), so it tests a plan before posting it."""
+        tools = [t for t in A.TOOLS + A.ACTION_TOOLS if t["function"]["name"] in ("scan_coin", "check_plan")]
+        out = self.llm.chat(A.system_prompt(role, min_rr), [{"role": "user", "content": A.data_block(data) + "\n\n" + ask}],
+                            tools=tools, run_tool=lambda n, a: self.run_tool(n, a, "charts"), max_rounds=4)
+        return out["text"] or ""
+
+    def _check(self, plan: Any, row_by: dict[str, Any], held: list[str], min_rr: float) -> dict[str, Any]:
+        if plan is None or plan.coin is None:
+            return {"ok": False, "problems": [], "facts": {}}
+        if plan.coin not in row_by:
+            return {"ok": False, "problems": [f"{plan.coin} is not in the desk's universe scan"], "facts": {}}
+        problems = [f"the desk already holds {plan.coin}"] if plan.coin in held else []
+        _, price = self.market.price(plan.coin)
+        ok_, more, facts = A.validate_plan(plan, row_by[plan.coin], price, min_rr)
+        return {"ok": ok_ and not problems, "problems": problems + more, "facts": facts, "price": price}
+
+    @staticmethod
+    def _plan_text(plan: Any, checks: dict[str, Any], raw: str) -> str:
+        if plan is None:
+            return "I could not produce a readable plan this session." + (f" ({raw[:200]})" if raw else "")
+        if plan.coin is None:
+            return "No setup. " + plan.why
+        entry_txt = "market" if plan.entry == "market" else f"limit {plan.entry:g}"
+        text = (f"{plan.coin} {plan.side.upper()} · entry {entry_txt} · stop {plan.stop:g} (beyond {plan.stop_level:g}) "
+                f"· target {plan.target:g} · R:R {checks.get('facts', {}).get('rr', '?')}. {plan.why}")
+        if checks.get("problems"):
+            text += "\n⚠️ Desk checks failed: " + "; ".join(checks["problems"])
+        return text
+
+    def news_feed(self) -> dict[str, Any]:
+        """The RSS feed, cached for 10 minutes (sessions and chat tools share it)."""
+        now = self.clock()
+        if self._news and now - self._news[0] < 600:
+            return self._news[1]
+        feed = N.news(self.settings["universe"])
+        self._news = (now, feed)
+        return feed
+
     def _social(self, coin: str) -> list[dict[str, Any]]:
         try:
             return list(self.social(coin)) if self.social else []
@@ -364,10 +429,14 @@ class DeskService:
             out.pop(0)
         return out
 
-    def _reply(self, agent: str, channel: str) -> tuple[str, Any]:
+    def _reply(self, agent: str, channel: str, history: list[dict[str, Any]] | None = None,
+               colleagues: bool = True) -> tuple[str, Any]:
+        tools = A.TOOLS + A.ACTION_TOOLS + (A.COLLAB_TOOLS if colleagues else [])
         try:
-            out = self.llm.chat(A.system_prompt(agent, dm=True), self._history(channel, agent), tools=A.TOOLS + A.ACTION_TOOLS,
-                                run_tool=lambda name, args: self.run_tool(name, args, agent), max_rounds=5)
+            out = self.llm.chat(A.system_prompt(agent, dm=True), history or self._history(channel, agent), tools=tools,
+                                run_tool=lambda name, args: {"ok": False, "error": "answer yourself; no further hand-offs"}
+                                if name == "ask_agent" and not colleagues else self.run_tool(name, args, agent, channel),
+                                max_rounds=5)
             return out["text"] or "(no answer)", {"tools": [c["name"] for c in out["tool_calls"]], "cost_usd": out["cost_usd"]}
         except LLMError as exc:
             return f"I can't answer right now: {exc}", None
@@ -399,15 +468,28 @@ class DeskService:
         reply, data = self._reply(agent, channel)
         return self.post(agent, "dm", reply, data, channel=channel)
 
-    def run_tool(self, name: str, args: dict[str, Any], agent: str = "chief") -> Any:
+    def run_tool(self, name: str, args: dict[str, Any], agent: str = "chief", channel: str = "group") -> Any:
         coin = str(args.get("coin") or "").upper().replace("USDT", "")
+        if name == "ask_agent":
+            other = str(args.get("agent") or "").lower()
+            question = str(args.get("question") or "").strip()[:1500]
+            if other not in A.AGENTS or other == agent or not question:
+                return {"ok": False, "error": "ask a different desk agent a non-empty question"}
+            asker = A.AGENTS[agent]["name"]
+            history = self._history(channel, other, limit=10) + [{"role": "user", "content": f"{asker} asks you: {question}"}]
+            text, data = self._reply(other, channel, history=history, colleagues=False)
+            self.post(other, "chat", f"@{asker} {text}", data, channel=channel)
+            return {"ok": True, "agent": A.AGENTS[other]["name"], "answer": text}
         if name == "scan_coin":
             return A.compact_scan(self.market.scan_coin(coin))
         if name == "scan_universe":
             return [A.compact_scan(r) for r in self.market.scan(self.settings["universe"])[:5]]
         if name == "news":
-            feed = N.news(self.settings["universe"])
-            return N.for_coins(feed, [coin]) if coin else {"market": feed["items"][:10]}
+            feed = self.news_feed()
+            if not coin:
+                return {"market": N.read_articles(feed["items"][:6], limit=6)}
+            got = N.for_coins(feed, [coin], per_coin=5)
+            return {"by_coin": {coin: N.read_articles(got["by_coin"][coin], limit=5)}}
         if name == "sentiment":
             return S.sentiment([coin], self._social)
         if name == "ledger":

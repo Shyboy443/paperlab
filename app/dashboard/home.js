@@ -260,7 +260,7 @@ const Traders = {
         { h: 'drift R', cell: (r) => num(r[1].drift_r, fR), num: true }, { h: 'reached +1R', cell: (r) => fDD(r[1].reached_1r), num: true }], hz);
       body.append(h('div', { class: 'tiles six' }, tile('signal horizon', d.timeframe || DASH, '', (act.signals ?? 0) + ' setups · ' + fmtNum(act.signals_per_day, 2) + '/day'),
         tile('average hold', isNum(act.avg_hold_h) ? act.avg_hold_h.toFixed(1) + ' h' : DASH, '', 'median ' + fmtNum(act.median_hold_h, 1) + ' h'),
-        tile('funding', fU(m.funding_net), signClass(m.funding_net), 'paid ' + fU(-(m.funding_paid || 0)) + ' · received ' + fU(m.funding_received)),
+        tile('funding', fU(m.funding_net), signClass(m.funding_net), 'paid ' + fU(-Math.abs(m.funding_paid || 0)) + ' · received ' + fU(m.funding_received)),
         tile('total fees', fU(-(m.fees || 0)), '', 'maker ' + fU(-(m.maker_fees || 0)) + ' · taker ' + fU(-(m.taker_fees || 0))),
         tile('label', cause(a.label), a.label === 'ACTIVE_POSITIVE_EDGE' ? 'up' : '', (a.flags || []).map(cause).join(' · ') || 'family ' + cause(a.family_verdict)),
         tile('MIN_NOTIONAL refused', String(act.min_notional_refused ?? 0), '', fDD(act.min_notional_share) + ' of setups · never enlarged')),
@@ -299,7 +299,7 @@ const Traders = {
     const cols = [{ h: 'entry', cell: (x) => new Date(x.entry_ts).toISOString().slice(0, 16).replace('T', ' ') },
       { h: 'side', cell: (x) => pill(x.side, x.side) }, { h: 'hold', cell: (x) => fmtDur(x.hold_s || 0), num: true },
       { h: 'gross', cell: (x) => num(x.gross, fU), num: true }, { h: 'costs', cell: (x) => fU(-((x.fees || 0) + (x.slippage || 0))), num: true },
-      { h: 'funding', cell: (x) => (v5 ? fU(-(x.funding_paid || 0)) + ' / ' + fU(x.funding_received || 0) : num(x.funding, fU)), num: true },
+      { h: 'funding', cell: (x) => (v5 ? fU(-Math.abs(x.funding_paid || 0)) + ' / ' + fU(x.funding_received || 0) : num(x.funding, fU)), num: true },
       { h: 'net', cell: (x) => num(x.net, fU), num: true }, { h: 'R', cell: (x) => num(x.r, fR), num: true },
       { h: 'exit', cell: (x) => x.exit_kind || DASH }, { h: 'size', cell: (x) => x.jev_level || x.tier || DASH }];
     if (v5) cols.push({ h: 'setup', cell: (x) => truncate(x.setup || DASH, 48) },
@@ -401,7 +401,7 @@ const V5View = {
   waterfall(c) {
     if (!c) return h('p', { class: 'sub', text: 'no trades' });
     const rows = [['gross (price move only)', c.gross], ['maker fees', -(c.maker_fees || 0)], ['taker fees', -(c.taker_fees || 0)],
-      ['slippage & spread', -(c.slippage || 0)], ['funding paid', -(c.funding_paid || 0)], ['funding received', c.funding_received], ['NET', c.net]];
+      ['slippage & spread', -(c.slippage || 0)], ['funding paid', -Math.abs(c.funding_paid || 0)], ['funding received', c.funding_received], ['NET', c.net]];
     const t = h('table', { class: 'tbl' });
     renderTable(t, [{ h: 'step', cell: (r) => r[0] }, { h: 'USDT', cell: (r) => num(r[1], fU), num: true }], rows);
     return h('div', { class: 'tablewrap' }, t);

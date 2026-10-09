@@ -115,6 +115,8 @@ const Roster = {
     return s + (ccy === 'USD' ? '$' : '') + Math.abs(v).toFixed(d);
   },
   pct(v, d = 2) { return isNum(v) ? (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v * 100).toFixed(d) + '%' : DASH; },
+  /** The gap to the leader: never a negative 'behind' (a bot at or above the leader's return is level / ahead). */
+  behindText(v) { return !isNum(v) ? '' : v > 0 ? Math.abs(v * 100).toFixed(1) + '% behind' : v < 0 ? Math.abs(v * 100).toFixed(1) + '% ahead' : 'level with the leader'; },
   ago(ms) { return ms ? aAge(Date.now() - ms) + ' ago' : ''; },
   open(x) {
     Arena.prog = x.program; Arena.coin = ''; Arena.tf = '';
@@ -181,9 +183,9 @@ const Roster = {
   card(x) {
     const c = this.color(x), ccy = x.currency;
     const lead = x.program === 'video' ? x.status.toLowerCase().replaceAll('_', ' ') : x.ready ? 'backtest ' + this.pct((x.backtest || {}).return_pct / 100, 1) + ' · 2 years'
-      : x.pinned ? (x.rank === 1 ? 'best scanner' : this.pct(x.behind, 1).replace('+', '') + ' behind')
+      : x.pinned ? (x.rank === 1 ? 'best scanner' : this.behindText(x.behind))
       : x.rising ? 'new · ' + x.trades + (x.trades === 1 ? ' trade' : ' trades')
-      : x.rank === 1 ? (x.chasing ? 'closest' : 'leading') : this.pct(x.behind, 1).replace('+', '') + ' behind';
+      : x.rank === 1 ? (x.chasing ? 'closest' : 'leading') : this.behindText(x.behind);
     const pos = (x.positions || [])[0];
     let posBox;
     if ((x.positions || []).length > 1) {            // a scanner holding several coins: one line each

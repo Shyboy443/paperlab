@@ -122,6 +122,48 @@ def news(universe: Sequence[str], fetch: Callable[[str], str] | None = None, now
     return {"items": out, "sources": status, "as_of_ms": now_ms}
 
 
+def article_text(html_text: str, limit: int = 900) -> str:
+    """The readable gist of a news page: its description meta tag plus the first real paragraphs (scripts, styles,
+    navigation and cookie banners dropped)."""
+    t = re.sub(r"(?is)<(script|style|noscript|nav|header|footer|aside|form)\b[^>]*>.*?</\1>", " ", html_text)
+    desc = ""
+    for pat in (r"""<meta[^>]+property=["']og:description["'][^>]+content=["']([^"']+)""",
+                r"""<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)""",
+                r"""<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["'](?:og:)?description"""):
+        m = re.search(pat, t, re.I)
+        if m:
+            desc = _strip(m.group(1), 400)
+            break
+    paras = []
+    for m in re.finditer(r"(?is)<p[^>]*>(.*?)</p>", t):
+        p = _strip(m.group(1), 600)
+        if len(p) >= 80 and not re.search(r"cookie|subscribe|newsletter|sign up|all rights reserved|disclaimer", p, re.I):
+            paras.append(p)
+        if sum(len(x) for x in paras) > limit:
+            break
+    body = " ".join(paras)
+    text = (desc + " " + body).strip() if body and desc and desc[:60] not in body else (body or desc)
+    return text[:limit]
+
+
+def read_articles(items: Sequence[dict[str, Any]], fetch: Callable[[str], str] | None = None, limit: int = 9,
+                  timeout_each: float = 8.0) -> list[dict[str, Any]]:
+    """The first `limit` items with their article text added (`article`), fetched in parallel. A page that cannot be
+    read keeps its headline and summary only (`article` empty, `read_error` set)."""
+    fetch = fetch or (lambda u: http_text(u, timeout_each))
+    picked = [dict(i) for i in items[:limit]]
+
+    def one(it: dict[str, Any]) -> dict[str, Any]:
+        if not it.get("url"):
+            return {**it, "article": "", "read_error": "no link"}
+        try:
+            return {**it, "article": article_text(fetch(it["url"]))}
+        except Exception as exc:
+            return {**it, "article": "", "read_error": type(exc).__name__}
+    with ThreadPoolExecutor(6) as ex:
+        return list(ex.map(one, picked))
+
+
 def for_coins(feed: dict[str, Any], coins: Sequence[str], per_coin: int = 6, general: int = 5) -> dict[str, Any]:
     """The headlines that name each coin, plus the newest market-wide ones (no coin tag)."""
     items = feed.get("items") or []

@@ -129,6 +129,8 @@ class Market:
         if not (f1.get("ok") and f4.get("ok")):
             return {"coin": coin, "ok": False, "reason": f1.get("reason") or f4.get("reason")}
         _, live = self.price(coin)
+        for f in (f1, f4):                             # levels relative to the live price: support is always below it
+            f["levels"] = ind.nearest_levels(live, f.pop("swing_highs"), f.pop("swing_lows"), 4)
         day = h1[-24:]
         change_24h = 100 * (live / day[0]["o"] - 1) if day else None
         flags = []

@@ -31,8 +31,15 @@ class LLMError(RuntimeError):
     pass
 
 
+def complete_sentences(text: str) -> str:
+    """A reply the token limit cut mid-sentence, trimmed back to its last full sentence (or marked as cut)."""
+    import re
+    m = list(re.finditer(r"[.!?](?=\s|$)", text))
+    return text[:m[-1].end()].strip() if m and m[-1].end() > len(text) * 0.5 else text.rstrip() + " …"
+
+
 class DeskLLM:
-    def __init__(self, api_key: str | None, model: str = DEFAULT_MODEL, max_tokens: int = 1200,
+    def __init__(self, api_key: str | None, model: str = DEFAULT_MODEL, max_tokens: int = 2000,
                  max_calls_per_day: int = 120, timeout_s: float = 120.0, transport: Transport | None = None,
                  clock: Callable[[], float] = time.time):
         """The usage counters can be persisted with `attach_store` so a restart does not reset the daily cap."""
@@ -75,7 +82,7 @@ class DeskLLM:
     def from_env(cls, env: Mapping[str, str] | None = None) -> "DeskLLM":
         env = os.environ if env is None else env
         return cls(env.get("OPENROUTER_API_KEY"), (env.get("DESK_MODEL") or DEFAULT_MODEL).strip(),
-                   int(env.get("DESK_MAX_TOKENS") or 1200), int(env.get("DESK_MAX_CALLS_PER_DAY") or 120))
+                   int(env.get("DESK_MAX_TOKENS") or 2000), int(env.get("DESK_MAX_CALLS_PER_DAY") or 120))
 
     def __repr__(self) -> str:
         return f"DeskLLM(model={self.model!r}, configured={self.configured})"
@@ -152,11 +159,14 @@ class DeskLLM:
             if json_mode:
                 payload["response_format"] = {"type": "json_object"}
             data = self._post(payload)
-            choice = ((data.get("choices") or [{}])[0]).get("message") or {}
+            first = (data.get("choices") or [{}])[0]
+            choice = first.get("message") or {}
             calls = choice.get("tool_calls") or []
             if not calls or not run_tool:
-                return {"text": (choice.get("content") or "").strip(), "tool_calls": used,
-                        "cost_usd": round(self.cost_total - cost0, 5)}
+                text = (choice.get("content") or "").strip()
+                if first.get("finish_reason") == "length":
+                    text = complete_sentences(text)
+                return {"text": text, "tool_calls": used, "cost_usd": round(self.cost_total - cost0, 5)}
             msgs.append({"role": "assistant", "content": choice.get("content") or "", "tool_calls": calls})
             for call in calls:
                 fn = call.get("function") or {}
