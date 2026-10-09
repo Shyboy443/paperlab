@@ -102,9 +102,40 @@ class Market:
             return out
         raise RuntimeError(f"no market data for {coin} {tf} ({last_err})")
 
-    def price(self, coin: str) -> tuple[str, float]:
-        src, rows = self.candles(coin, "1m", limit=2, closed_only=False)
-        return src, rows[-1]["c"]
+    def ticker(self, coin: str, fresh: bool = False) -> dict[str, Any]:
+        """Live last price and rolling 24 h change from ONE source (Binance, then Bybit, then OKX), cached 10 s."""
+        key = ("ticker", coin)
+        hit = self._cache.get(key)
+        if hit and not fresh and self.clock() - hit[0] < 10:
+            return hit[1]
+        c = coin.upper()
+        last_err = None
+        for name, url, read in (
+                ("binance", f"https://data-api.binance.vision/api/v3/ticker/24hr?symbol={c}USDT",
+                 lambda d: (float(d["lastPrice"]), float(d["priceChangePercent"]))),
+                ("bybit", f"https://api.bybit.com/v5/market/tickers?category=spot&symbol={c}USDT",
+                 lambda d: (float(d["result"]["list"][0]["lastPrice"]), 100 * float(d["result"]["list"][0]["price24hPcnt"]))),
+                ("okx", f"https://www.okx.com/api/v5/market/ticker?instId={c}-USDT",
+                 lambda d: (float(d["data"][0]["last"]), 100 * (float(d["data"][0]["last"]) / float(d["data"][0]["open24h"]) - 1)))):
+            try:
+                price, chg = read(self.fetch(url))
+            except Exception as exc:
+                last_err = f"{name}: {type(exc).__name__}"
+                self.errors[name] = last_err
+                continue
+            out = {"source": name, "price": price, "change_24h_pct": chg, "ts": int(self.clock() * 1000)}
+            self._cache[key] = (self.clock(), out)
+            return out
+        raise RuntimeError(f"no live price for {coin} ({last_err})")
+
+    def price(self, coin: str, fresh: bool = False) -> tuple[str, float]:
+        """(source, live last price)."""
+        try:
+            t = self.ticker(coin, fresh)
+            return t["source"], t["price"]
+        except RuntimeError:
+            src, rows = self.candles(coin, "1m", limit=2, closed_only=False)
+            return src, rows[-1]["c"]
 
     def minutes(self, coin: str, start_ms: int, end_ms: int) -> tuple[str, list[dict]]:
         """Closed 1m candles with start_ms <= t < end_ms (paged backwards, at most 10 pages)."""
@@ -128,11 +159,15 @@ class Market:
         f1, f4 = ind.frame_summary(h1), ind.frame_summary(h4)
         if not (f1.get("ok") and f4.get("ok")):
             return {"coin": coin, "ok": False, "reason": f1.get("reason") or f4.get("reason")}
-        _, live = self.price(coin)
+        try:
+            tk = self.ticker(coin)
+            live, change_24h = tk["price"], tk["change_24h_pct"]
+        except RuntimeError:
+            tk, live, change_24h = None, self.price(coin)[1], None
         for f in (f1, f4):                             # levels relative to the live price: support is always below it
             f["levels"] = ind.nearest_levels(live, f.pop("swing_highs"), f.pop("swing_lows"), 4)
-        day = h1[-24:]
-        change_24h = 100 * (live / day[0]["o"] - 1) if day else None
+        if change_24h is None and len(h1) >= 24:          # fallback: from the hourly open 24 h ago
+            change_24h = 100 * (live / h1[-24]["o"] - 1)
         flags = []
         if (f1["rel_volume"] or 0) >= 2.0:
             flags.append("volume_spike_1h")

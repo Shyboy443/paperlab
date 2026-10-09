@@ -35,7 +35,7 @@ HOUR_MS = 3_600_000
 DEFAULT_SETTINGS: dict[str, Any] = {
     "enabled": True, "schedule_hours": 4, "universe": list(DEFAULT_UNIVERSE), "mode": "cautious", "risk_pct": 2.0,
     "start_balance": 1000.0, "notify": {"in_app": True, "telegram": True, "email": False}, "recap_hour": 21,
-    "tz": "Asia/Colombo", "max_plans": 3, "max_open": 3,
+    "tz": "Asia/Colombo", "max_plans": 3, "max_open": 3, "max_total_risk_pct": 6.0, "max_same_side": 3,
 }
 SCHEDULES = (1, 2, 4, 6, 8, 12, 24)
 
@@ -88,6 +88,16 @@ def validate_settings(body: Mapping[str, Any], current: Mapping[str, Any], has_t
         if not 1 <= v <= 6:
             raise ValueError("max_open must be 1-6")
         out["max_open"] = v
+    if "max_total_risk_pct" in body:
+        v = float(body["max_total_risk_pct"])
+        if not 1 <= v <= 20:
+            raise ValueError("max_total_risk_pct must be 1-20")
+        out["max_total_risk_pct"] = v
+    if "max_same_side" in body:
+        v = int(body["max_same_side"])
+        if not 1 <= v <= 6:
+            raise ValueError("max_same_side must be 1-6")
+        out["max_same_side"] = v
     if "recap_hour" in body:
         v = int(body["recap_hour"])
         if not 0 <= v <= 23:
@@ -321,7 +331,7 @@ class DeskService:
                                      if pl.coin in news_data["by_coin"]} or news_data["market"]}
             sk = self._agent("skeptic", sk_data, "Tear each of Charts' plans apart (address Charts by name), then give one "
                              "verdict line per plan.")
-            verdicts = A.parse_verdicts(sk, [pl.coin for pl in plans or []])
+            verdicts = self._need_verdicts(sk, sk_data, [pl.coin for pl in plans or []])
             say("skeptic", "verdict", sk, {"verdicts": verdicts})
             if plans:
                 reply = self._charts({**chart_data, "your_plans": [pl.raw for pl in plans], "code_checks": checks,
@@ -341,8 +351,8 @@ class DeskService:
                                                   "coin_data": coin_data(plans), "your_first_take": sk, "charts_reply": said},
                                       "Charts answered you. Give your FINAL verdict on each plan as it stands now: a "
                                       "sentence or two to Charts, then one VERDICT line per plan.")
-                    final = A.parse_verdicts(sk2, [pl.coin for pl in plans])
-                    verdicts = {c: (final[c] if final.get(c, (None,))[0] else verdicts.get(c, (None, None))) for c in final}
+                    verdicts = self._need_verdicts(sk2, {"plans_now": [pl.raw for pl in plans], "your_final_take": sk2},
+                                                   [pl.coin for pl in plans])      # missing -> no verdict -> no trade
                     say("skeptic", "verdict", sk2, {"verdicts": verdicts, "final": True})
             # 6. Chief: a trade per plan that passes the gate, within the ledger's limits
             trades, lines = [], []
@@ -353,8 +363,8 @@ class DeskService:
                     try:
                         candles = self.market.candles(pl.coin, "1h", 60)[1]
                         trades.append(self.ledger.open(pl.coin, pl.side, pl.entry, pl.stop, pl.target,
-                                                       reason=f"session {sid}: {pl.why}", session_id=sid,
-                                                       price=checks[pl.coin]["price"],
+                                                       reason=f"session {sid}: {pl.why or self._why(pl, msgs)}",
+                                                       session_id=sid, price=self.market.price(pl.coin, fresh=True)[1],
                                                        chart=[[c["t"], c["o"], c["h"], c["l"], c["c"]] for c in candles]))
                     except (LedgerError, RuntimeError) as exc:
                         go, why = False, f"the ledger refused: {exc}"
@@ -424,6 +434,26 @@ class DeskService:
         if checks.get("problems"):
             text += "\n⚠️ Desk checks failed: " + "; ".join(checks["problems"])
         return text
+
+    def _need_verdicts(self, text: str, data: Any, coins: list[str]) -> dict[str, tuple[str | None, str | None]]:
+        """Per-coin verdicts; if any coin has none, the Skeptic is asked once for just the verdict lines. A coin still
+        without a verdict stays None, which the gate treats as no trade."""
+        got = A.parse_verdicts(text, coins)
+        missing = [c for c, (v, _) in got.items() if v is None]
+        if missing:
+            again = self._agent("skeptic", {**(data if isinstance(data, dict) else {"data": data}), "your_message": text},
+                                "You did not give a verdict line for: " + ", ".join(missing) + ". Reply with ONLY the "
+                                "lines VERDICT <COIN>: BUY|WAIT|SKIP (and DEAL-BREAKER <COIN>: ... where it applies).")
+            more = A.parse_verdicts(again, missing)
+            got.update({c: more[c] for c in missing if more[c][0]})
+        return got
+
+    @staticmethod
+    def _why(plan: Any, msgs: list[dict[str, Any]]) -> str:
+        for m in reversed(msgs):
+            if m["author"] == "charts" and plan.coin in m["text"]:
+                return m["text"].split("\n")[0][:300]
+        return "Charts' plan"
 
     def _plans_text(self, plans: Any, checks: dict[str, Any], raw: str) -> str:
         if plans is None:
@@ -647,10 +677,20 @@ class DeskService:
         return {"enabled": self.enabled, "running": self.running, "next_session_ms": self.next_session_ms(),
                 "last_error": self.last_error, "llm": self.llm.health(), "data_errors": dict(self.market.errors)}
 
+    @staticmethod
+    def _lean(obj: Any) -> Any:
+        """Drop the stored candle snapshots: the page loads a trade's chart only when it is opened."""
+        if isinstance(obj, dict):
+            return {k: DeskService._lean(v) for k, v in obj.items() if k != "chart"}
+        if isinstance(obj, list):
+            return [DeskService._lean(v) for v in obj]
+        return obj
+
     def public_state(self, limit: int = 150) -> dict[str, Any]:
         st = self.settings
-        return {"ok": True, "paper_only": True, "agents": A.AGENTS, "messages": self.ledger.messages("group", limit),
-                "sessions": self.ledger.sessions(30), "ledger": self.report(), "health": self.health(),
+        return {"ok": True, "paper_only": True, "agents": A.AGENTS, "messages": self._lean(self.ledger.messages("group", limit)),
+                "sessions": self.ledger.sessions(30), "ledger": self._lean(self.report()), "health": self.health(),
                 "settings": {k: st[k] for k in ("enabled", "schedule_hours", "universe", "mode", "risk_pct",
-                                                "start_balance", "recap_hour", "tz", "max_plans", "max_open")}
+                                                "start_balance", "recap_hour", "tz", "max_plans", "max_open",
+                                                "max_total_risk_pct", "max_same_side")}
                 | {"notify": st["notify"]}}

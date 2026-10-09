@@ -20,7 +20,8 @@ import time
 from dataclasses import dataclass
 from typing import Any, Callable, Iterable, Sequence
 
-DEFAULTS = {"start_balance": 1000.0, "risk_pct": 2.0, "fee_pct": 0.1, "max_open": 3, "limit_ttl_h": 24}
+DEFAULTS = {"start_balance": 1000.0, "risk_pct": 2.0, "fee_pct": 0.1, "max_open": 3, "limit_ttl_h": 24,
+            "max_total_risk_pct": 6.0, "max_same_side": 3}
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS desk_kv (k TEXT PRIMARY KEY, v TEXT);
@@ -188,6 +189,17 @@ class Ledger:
                                int(self.rule("max_open")))
             if sz.qty <= 0:
                 raise LedgerError("position size is zero")
+            open_risk = sum(float(t["risk_usd"] or 0) for t in active)
+            cap = eq * float(self.rule("max_total_risk_pct")) / 100.0
+            if open_risk + sz.risk_usd > cap + 1e-9:
+                raise LedgerError(f"total open risk would be {open_risk + sz.risk_usd:.2f} USD, over the "
+                                  f"{self.rule('max_total_risk_pct')}% cap ({cap:.2f} USD)")
+            same = sum(1 for t in active if t["side"] == side)
+            if same >= int(self.rule("max_same_side")):
+                raise LedgerError(f"already {same} {side} trades open (max {self.rule('max_same_side')} on one side)")
+            used = sum(float(t["qty"]) * float(t["entry"] or t["entry_req"]) for t in active)
+            if used + sz.notional > eq * 1.0005:
+                raise LedgerError("not enough free equity for this position without leverage")
             now = self.now_ms()
             fee_in = sz.qty * px * float(self.rule("fee_pct")) / 100.0 if market else 0.0
             cur = self.db.execute(

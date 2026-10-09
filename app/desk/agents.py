@@ -38,14 +38,14 @@ ROLES = {
     "sentiment": """Your job: read the crowd for the coins in focus from the positioning numbers (funding rate, % of accounts long and its 24h change, open-interest change), CoinGecko trending rank and any posts in the DATA block. Say whether the crowd is crowded long, crowded short or neutral, and whether that supports or fights a move. Ignore hype; spam/paid-signal posts were already removed.""",
     "charts": """Your job: propose up to {max_plans} trade plans, each on a DIFFERENT coin, for the best setups on ANY coin in the DATA (coins_in_focus or other_coins), best first -- or say there is no setup. Read what Scout, News and Sentiment said and use it. Look at every coin: a clean trend pullback, a breakdown or a bounce off a real level all count.
 Rules for a plan:
-- entry: "market" or a limit price near the current price;
-- stop: just beyond a REAL swing level listed in the DATA (1h or 4h support for a long, resistance for a short) -- name that level as stop_level -- at least one 1h ATR away from the entry (so normal noise does not hit it), and NOT on a round number (round numbers are listed);
+- entry: "market" ONLY if the setup is valid right now; if your thesis needs a retest, bounce or rejection at a level first, use a LIMIT entry at that level (it waits up to 24 h);
+- stop: just beyond a REAL swing level (a clear gap past it, not on it) listed in the DATA (1h or 4h support for a long, resistance for a short) -- name that level as stop_level -- at least one 1h ATR away from the entry (so normal noise does not hit it), and NOT on a round number (round numbers are listed);
 - target: a real level in the trade's direction -- the next one or a FURTHER one (4h levels make good swing targets); reward:risk must be at least {min_rr} measured from entry to stop and target;
 - ALWAYS run check_plan on every plan before you answer and fix it until it passes; drop plans that cannot pass; never quote a reward:risk you did not get from check_plan.
 Answer with ONLY a JSON object, no prose around it:
 {{"plans": [{{"coin": "SOL", "side": "long", "entry": "market", "stop": 0, "stop_level": 0, "target": 0, "timeframe": "4h", "why": "one or two sentences with the numbers"}}]}}
 or, if nothing qualifies: {{"plans": [], "why": "the reason, with numbers"}}""",
-    "skeptic": """Your job: argue hard against each plan. Look for: news risk, a crowded trade, a stop inside noise (compare stop distance with ATR), a target past a real level, trading against the 4h trend, low volume, overbought/oversold traps. Be specific with numbers from the DATA, and judge each plan on its own merits -- a weak plan does not sink a good one. End with exactly one verdict line PER PLAN, using its coin:
+    "skeptic": """Your job: argue hard against each plan. Look for: a market entry that contradicts the plan's own reasoning (it says "wait for a rejection" but buys now), news risk, a crowded trade, a stop inside noise (compare stop distance with ATR), a target past a real level, trading against the 4h trend, low volume, overbought/oversold traps. Be specific with numbers from the DATA, and judge each plan on its own merits -- a weak plan does not sink a good one. You MUST end with exactly one verdict line PER PLAN, using its coin (a plan without a verdict line is skipped):
 VERDICT SOL: BUY   (take this plan as written, long or short)
 VERDICT SOL: WAIT  (not now; say what would change your mind)
 VERDICT SOL: SKIP  (reject it) -- and if you SKIP for a clear deal-breaker, add the line DEAL-BREAKER SOL: <one sentence> before it
@@ -170,8 +170,12 @@ def validate_plan(plan: Plan, row: dict[str, Any], price: float, min_rr: float) 
     else:
         lvl = real[0]
         gap = (lvl - plan.stop) if long_ else (plan.stop - lvl)
+        min_gap = max(0.1 * atr1, 0.0005 * price)
         if gap <= 0:
             problems.append(f"the stop must sit beyond the level {lvl} ({'below' if long_ else 'above'} it)")
+        elif gap < min_gap:
+            problems.append(f"the stop is only {gap:.6g} beyond the level {lvl}; it needs at least {min_gap:.6g} "
+                            "(0.1 x 1h ATR) so a touch of the level does not stop it out")
         elif atr1 and gap > 0.75 * atr1:
             problems.append(f"the stop is {gap:.6g} beyond the level, more than 0.75 x 1h ATR -- not 'just beyond'")
     if atr1 and abs(entry - plan.stop) < atr1 * 0.999:

@@ -150,7 +150,7 @@ class DeskLLM:
         """One agent turn. With tools, tool calls are executed by `run_tool` and fed back for up to `max_rounds`.
         Returns {"text", "tool_calls": [{name, args}], "cost_usd"}."""
         msgs: list[dict[str, Any]] = [{"role": "system", "content": system}, *messages]
-        used, cost0 = [], self.cost_total
+        used, cost0, continued = [], self.cost_total, 0
         for _ in range(max_rounds + 1):
             payload: dict[str, Any] = {"model": self.model, "messages": msgs, "max_tokens": max_tokens or self.max_tokens,
                                        "temperature": 0.3, "usage": {"include": True}}
@@ -164,7 +164,16 @@ class DeskLLM:
             calls = choice.get("tool_calls") or []
             if not calls or not run_tool:
                 text = (choice.get("content") or "").strip()
-                if first.get("finish_reason") == "length":
+                if first.get("finish_reason") == "length" and continued < 1:
+                    continued += 1                     # one continuation instead of a cut-off message
+                    msgs.append({"role": "assistant", "content": text})
+                    msgs.append({"role": "user", "content": "Continue exactly where you stopped. Do not repeat anything."})
+                    more = self._post({**payload, "messages": msgs})
+                    tail = (((more.get("choices") or [{}])[0]).get("message") or {}).get("content") or ""
+                    text = (text + " " + tail.strip()).strip()
+                    if ((more.get("choices") or [{}])[0]).get("finish_reason") == "length":
+                        text = complete_sentences(text)
+                elif first.get("finish_reason") == "length":
                     text = complete_sentences(text)
                 return {"text": text, "tool_calls": used, "cost_usd": round(self.cost_total - cost0, 5)}
             msgs.append({"role": "assistant", "content": choice.get("content") or "", "tool_calls": calls})

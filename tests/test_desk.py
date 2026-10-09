@@ -230,7 +230,7 @@ class FakeMarket:
     def scan_coin(self, coin):
         return scan_row()
 
-    def price(self, coin):
+    def price(self, coin, fresh=False):
         return "fake", 100.0
 
     def candles(self, coin, tf, limit=60, end_ms=None, closed_only=True):
@@ -411,9 +411,10 @@ def test_a_cut_off_reply_ends_at_a_full_sentence():
     assert complete_sentences("BTC holds. ETH is weak and SOL leads the board. Both trade below their") == \
         "BTC holds. ETH is weak and SOL leads the board."
     assert complete_sentences("no full stop here").endswith("…")
-    body = {"choices": [{"message": {"content": "Done. Then cut"}, "finish_reason": "length"}]}
-    llm = DeskLLM("k" * 20, transport=lambda *a: (200, {}, json.dumps(body).encode()))
-    assert llm.chat("s", [])["text"] in ("Done.", "Done. Then cut …")
+    answers = iter([{"choices": [{"message": {"content": "Done. Then cut"}, "finish_reason": "length"}]},
+                    {"choices": [{"message": {"content": "off here, now finished."}, "finish_reason": "stop"}]}])
+    llm = DeskLLM("k" * 20, transport=lambda *a: (200, {}, json.dumps(next(answers)).encode()))
+    assert llm.chat("s", [])["text"] == "Done. Then cut off here, now finished."      # one continuation call
 
 
 def test_levels_are_measured_from_the_live_price():
@@ -499,3 +500,47 @@ def test_new_settings_validate():
     for bad in ({"max_plans": 4}, {"max_open": 9}):
         with pytest.raises(ValueError):
             validate_settings(bad, DEFAULT_SETTINGS, has_trades=False)
+
+
+# -- second audit -----------------------------------------------------------------------------------------------------
+def test_total_risk_and_one_side_caps(ledger):
+    ledger.set_kv("settings", {"max_open": 6, "max_same_side": 2, "max_total_risk_pct": 6.0})
+    ledger.open("SOL", "short", "market", 102, 90, price=100)
+    ledger.open("ETH", "short", "market", 2550, 2300, price=2500)
+    with pytest.raises(LedgerError, match="on one side"):
+        ledger.open("XRP", "short", "market", 1.5, 1.2, price=1.4)
+    ledger.set_kv("settings", {"max_open": 6, "max_same_side": 6, "max_total_risk_pct": 1.0})   # 10 USD
+    with pytest.raises(LedgerError, match="total open risk"):
+        ledger.open("ADA", "long", "market", 0.23, 0.26, price=0.24)
+
+
+def test_a_stop_sitting_on_its_level_is_rejected():
+    p = A.Plan(coin="SOL", side="long", entry="market", stop=98.36, stop_level=98.37, target=104.5)
+    ok, problems, _ = A.validate_plan(p, scan_row(), 100.0, 1.5)
+    assert not ok and any("beyond the level" in x for x in problems)
+
+
+def test_a_missing_verdict_is_asked_for_once_and_otherwise_means_no_trade(tmp_path):
+    class Answers(FakeLLM):
+        def __init__(self, replies):
+            super().__init__()
+            self.replies = iter(replies)
+
+        def chat(self, system, messages, **kw):
+            return {"text": next(self.replies), "tool_calls": [], "cost_usd": 0.0}
+    desk = DeskService(str(tmp_path / "a.db"), env={"DESK_ENABLED": "false"}, market=FakeMarket(),
+                       llm=Answers(["VERDICT ETH: BUY"]))
+    assert desk._need_verdicts("Charts, ETH looks ok.", {}, ["ETH"]) == {"ETH": ("BUY", None)}
+    desk.llm = Answers(["still no verdict"])
+    assert desk._need_verdicts("Charts, ETH looks ok.", {}, ["ETH"]) == {"ETH": (None, None)}
+    assert not A.decide("aggressive", True, None, None)[0]
+    desk.ledger.close()
+
+
+def test_the_public_feed_leaves_trade_charts_out(tmp_path):
+    desk = desk_with(tmp_path, [])
+    t = desk.ledger.open("SOL", "long", "market", 98, 105, price=100, chart=[[0, 1, 2, 0, 1]] * 60)
+    desk.post("chief", "trade", "opened", {"trade": t})
+    state = json.dumps(desk.public_state())
+    assert '"chart"' not in state and '"SOL"' in state
+    desk.ledger.close()

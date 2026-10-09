@@ -127,13 +127,18 @@ const Desk = {
     const extras = [];
     if (data.table) extras.push(this.scanTable(data.table));
     if (data.checks && data.checks.problems && data.checks.problems.length === 0 && data.checks.facts) extras.push(h('div', { class: 'dk-ok', text: '✔ desk checks passed · R:R ' + data.checks.facts.rr + ' · stop ' + (data.checks.facts.stop_atr1h ?? '?') + '× 1h ATR' }));
-    if (data.verdict) extras.push(pill('VERDICT ' + data.verdict, { BUY: 'up', WAIT: 'warn', SKIP: 'down' }[data.verdict] || 'ghost'));
+    const vs = data.verdicts ? Object.entries(data.verdicts) : data.verdict ? [['', [data.verdict]]] : [];
+    if (vs.length) extras.push(h('div', { class: 'dk-pills' }, ...vs.map(([coin, v]) => this.verdictPill(coin, (v || [])[0]))));
     if (data.trade && (m.kind === 'trade')) extras.push(this.tradeCard(data.trade));
     if (data.tools && data.tools.length) extras.push(h('div', { class: 'dk-tools sub', text: '⚙ used ' + [...new Set(data.tools)].join(', ').replace(/_/g, ' ') }));
     const cls = 'dk-msg' + (m.author === 'chief' && (m.kind === 'decision' || m.kind === 'recap') ? ' dk-decision' : '') + (m.kind === 'error' ? ' dk-err' : '') + (m.author === 'you' ? ' dk-you' : '');
     return h('div', { class: cls, style: `--agent:${a.color}` }, this.avatar(m.author),
       h('div', { class: 'dk-bubble' }, h('div', { class: 'dk-meta' }, h('b', { text: a.name }), h('span', { class: 'sub', text: this.when(m.ts) + (m.kind === 'decision' && data.decision ? ' · ' + data.decision.split(' -- ')[0] : '') })),
         h('div', { class: 'dk-text', text: m.text }), ...extras));
+  },
+  verdictPill(coin, v) {
+    return pill((coin ? coin + ' ' : 'VERDICT ') + (v || 'no verdict'), { BUY: 'up', WAIT: 'warn', SKIP: 'down' }[v] || 'ghost',
+      v ? '' : 'the Skeptic gave no verdict line: no trade');
   },
   scanTable(rows) {
     return h('table', { class: 'dk-table' }, h('thead', {}, h('tr', {}, ...['coin', 'price', '24h', 'rel vol 1h / 4h', 'RSI 1h / 4h', 'trend 1h / 4h', 'flags'].map((t) => h('th', { text: t })))),
@@ -152,9 +157,14 @@ const Desk = {
         h('span', {}, h('small', { text: 'risk' }), h('b', { text: this.money(t.risk_usd) })),
         t.status === 'closed' ? h('span', {}, h('small', { text: 'result' }), h('b', { class: signClass(t.pnl), text: this.money(t.pnl) + ' (' + (t.r >= 0 ? '+' : '') + fmtNum(t.r) + 'R)' })) : null));
     const box = h('div', { class: 'dk-mini' });
-    card.append(box);
-    if (t.chart && t.chart.length) box.append(this.mini(t.chart, t));
-    else api('/api/public/desk/candles?coin=' + encodeURIComponent(t.coin) + '&tf=1h&limit=60').then((r) => box.append(this.mini(r.candles, t))).catch(() => {});
+    const show = h('button', { class: 'chip', text: 'Show chart', onclick: () => {
+      show.remove();
+      box.append(h('p', { class: 'sub', text: 'loading 1h candles…' }));
+      api('/api/public/desk/candles?coin=' + encodeURIComponent(t.coin) + '&tf=1h&limit=60')
+        .then((r) => box.replaceChildren(this.mini(r.candles, t))).catch((e) => box.replaceChildren(h('p', { class: 'sub', text: e.message })));
+    } });
+    if (t.reason) card.append(h('div', { class: 'sub dk-reason', text: t.reason.replace(/^session [^:]+: /, '') }));
+    card.append(show, box);
     return card;
   },
   mini(candles, t) {
@@ -272,7 +282,7 @@ const Desk = {
     return h('div', { class: 'dk-dec' }, h('div', { class: 'card' }, h('h3', { text: 'Sessions' }), rows.length ? h('table', { class: 'dk-table' },
       h('thead', {}, h('tr', {}, ...['started', 'coin', 'Skeptic', 'decision', 'AI cost'].map((x) => h('th', { text: x })))),
       h('tbody', {}, ...rows.map((s) => h('tr', { class: 'dk-click', onclick: () => open(s.id) }, h('td', { text: new Date(s.started_ts).toLocaleString('en-GB', { hour12: false }) }),
-        h('td', { text: s.coin || DASH }), h('td', {}, s.verdict ? pill(s.verdict, { BUY: 'up', WAIT: 'warn', SKIP: 'down' }[s.verdict]) : DASH),
+        h('td', { text: s.coin || DASH }), h('td', {}, s.verdict ? h('div', { class: 'dk-pills' }, ...String(s.verdict).split(',').map((x) => { const [c, v] = x.includes(':') ? x.split(':') : ['', x]; return this.verdictPill(c, v); })) : DASH),
         h('td', { class: (s.decision || '').startsWith('TRADE') ? 'up' : 'sub', text: (s.decision || s.status || '').slice(0, 90) }),
         h('td', { class: 'num', text: isNum(s.cost_usd) ? '$' + s.cost_usd.toFixed(3) : DASH }))))) : h('p', { class: 'sub', text: 'No sessions yet.' })), box);
   },
@@ -298,6 +308,8 @@ const Desk = {
     f.risk = h('input', { type: 'number', min: 0.25, max: 5, step: 0.25, value: s.risk_pct });
     f.plans = h('select', {}, ...[1, 2, 3].map((x) => h('option', { value: x, text: x + (x === 1 ? ' plan' : ' plans') + ' per session', selected: x === (s.max_plans || 3) })));
     f.maxOpen = h('input', { type: 'number', min: 1, max: 6, step: 1, value: s.max_open || 3 });
+    f.totalRisk = h('input', { type: 'number', min: 1, max: 20, step: 0.5, value: s.max_total_risk_pct || 6 });
+    f.sameSide = h('input', { type: 'number', min: 1, max: 6, step: 1, value: s.max_same_side || 3 });
     f.balance = h('input', { type: 'number', min: 100, step: 100, value: s.start_balance });
     f.recap = h('input', { type: 'number', min: 0, max: 23, value: s.recap_hour });
     f.tz = h('input', { type: 'text', value: s.tz || '' });
@@ -306,7 +318,7 @@ const Desk = {
     const save = async () => {
       try {
         await post('/api/desk/settings', { enabled: f.enabled.checked, schedule_hours: +f.schedule.value, universe: f.universe.value, mode: f.mode.value,
-          risk_pct: +f.risk.value, max_plans: +f.plans.value, max_open: +f.maxOpen.value, start_balance: +f.balance.value, recap_hour: +f.recap.value, tz: f.tz.value.trim(),
+          risk_pct: +f.risk.value, max_plans: +f.plans.value, max_open: +f.maxOpen.value, max_total_risk_pct: +f.totalRisk.value, max_same_side: +f.sameSide.value, start_balance: +f.balance.value, recap_hour: +f.recap.value, tz: f.tz.value.trim(),
           notify: { in_app: f.app.checked, telegram: f.tg.checked, email: false } });
         toast('Desk settings saved'); this.refresh();
       } catch (e) { toast(e.message, 'err'); }
@@ -315,7 +327,9 @@ const Desk = {
       field('Scheduled sessions on', f.enabled), field('Schedule', f.schedule, 'aligned to UTC, 2 minutes after the candle closes'),
       field('Coin universe', f.universe, 'USDT pairs, comma separated (max 20)'), field('Mode', f.mode),
       field('Risk per trade (% of equity, fees included)', f.risk), field('Trades Charts may propose each session', f.plans, 'each one is checked and gets its own Skeptic verdict'),
-      field('Max open trades', f.maxOpen, 'each trade is sized to fit equity / this number (no leverage)'), field('Starting balance (USD)', f.balance, 'only before the first trade'),
+      field('Max open trades', f.maxOpen, 'each trade is sized to fit equity / this number (no leverage)'),
+      field('Max total open risk (% of equity)', f.totalRisk, 'the sum of all open trades\u2019 stop-out losses'),
+      field('Max trades in one direction', f.sameSide, 'how many longs (or shorts) may be open at once'), field('Starting balance (USD)', f.balance, 'only before the first trade'),
       field('Daily recap hour (local)', f.recap), field('Time zone', f.tz, 'e.g. Asia/Colombo'),
       field('Telegram alerts (trade open/close + recap)', f.tg), field('In-app alerts', f.app, 'Email alerts are not available: no mail account is configured.'),
       h('button', { class: 'btn', text: 'Save', onclick: save }));
