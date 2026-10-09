@@ -148,7 +148,7 @@ const Desk = {
       && x.author === 'skeptic' && (x.data || {}).final);
   },
   scanTable(rows) {
-    return h('table', { class: 'dk-table' }, h('thead', {}, h('tr', {}, ...['coin', 'price', '24h (rolling)', 'rel vol 1h / 4h', 'RSI 1h / 4h', 'trend 1h / 4h', 'flags'].map((t) => h('th', { text: t })))),
+    return h('table', { class: 'dk-table' }, h('thead', {}, h('tr', {}, ...['coin', 'price', '24h % (Binance rolling)', 'rel vol 1h / 4h', 'RSI 1h / 4h', 'trend 1h / 4h', 'flags'].map((t) => h('th', { text: t })))),
       h('tbody', {}, ...rows.map((r) => h('tr', {}, h('td', { text: r.coin }), h('td', { class: 'num', text: this.px(r.price) }),
         h('td', { class: 'num ' + signClass(r.change_24h_pct), text: fmtPct(r.change_24h_pct) }),
         h('td', { class: 'num', text: fmtNum((r['1h'] || {}).rel_volume) + ' / ' + fmtNum((r['4h'] || {}).rel_volume) }),

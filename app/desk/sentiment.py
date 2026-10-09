@@ -33,7 +33,8 @@ def positioning(coin: str, fetch: Callable[[str], Any] = http_json) -> dict[str,
     out: dict[str, Any] = {"source": "bybit linear perpetual"}
     try:
         t = ((fetch(f"{base}/tickers?category=linear&symbol={sym}").get("result") or {}).get("list") or [{}])[0]
-        out["funding_rate_pct"] = None if _f(t.get("fundingRate")) is None else 100 * _f(t.get("fundingRate"))
+        # Bybit's sign: positive = longs pay shorts, negative = shorts pay longs (per funding interval)
+        out["funding_pct_longs_pay"] = None if _f(t.get("fundingRate")) is None else 100 * _f(t.get("fundingRate"))
         out["open_interest_usd"] = _f(t.get("openInterestValue"))
     except Exception as exc:
         out["tickers_error"] = type(exc).__name__
