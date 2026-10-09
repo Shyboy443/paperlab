@@ -39,7 +39,7 @@ ROLES = {
     "charts": """Your job: propose ONE trade plan for the best setup on ANY coin in the DATA (coins_in_focus or other_coins), or say there is no setup. Read what Scout, News and Sentiment said and use it.
 Rules for a plan:
 - entry: "market" or a limit price near the current price;
-- stop: just beyond a REAL swing level listed in the DATA (1h or 4h support for a long, resistance for a short) -- name that level as stop_level -- and NOT on a round number (round numbers are listed);
+- stop: just beyond a REAL swing level listed in the DATA (1h or 4h support for a long, resistance for a short) -- name that level as stop_level -- at least one 1h ATR away from the entry (so normal noise does not hit it), and NOT on a round number (round numbers are listed);
 - target: a real level in the trade's direction -- the next one or a FURTHER one (4h levels make good swing targets); reward:risk must be at least {min_rr} measured from entry to stop and target;
 - ALWAYS run check_plan before you answer and fix the plan until it passes; never quote a reward:risk you did not get from check_plan.
 Answer with ONLY a JSON object, no prose around it:
@@ -173,6 +173,8 @@ def validate_plan(plan: Plan, row: dict[str, Any], price: float, min_rr: float) 
             problems.append(f"the stop must sit beyond the level {lvl} ({'below' if long_ else 'above'} it)")
         elif atr1 and gap > 0.75 * atr1:
             problems.append(f"the stop is {gap:.6g} beyond the level, more than 0.75 x 1h ATR -- not 'just beyond'")
+    if atr1 and abs(entry - plan.stop) < atr1 * 0.999:
+        problems.append(f"the stop is {abs(entry - plan.stop):.6g} from entry, inside one 1h ATR ({atr1:.6g}): normal noise would hit it")
     if ind.near_round(plan.stop, price):
         problems.append(f"the stop {plan.stop} sits on a round number")
     risk = abs(entry - plan.stop)

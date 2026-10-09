@@ -447,3 +447,11 @@ def test_agents_can_ask_each_other_in_chat(tmp_path):
     msgs = desk.ledger.messages("group")
     assert [m["author"] for m in msgs] == ["you", "skeptic", "chief"]
     assert msgs[1]["text"].startswith("@Chief ") and msgs[2]["data"]["tools"] == ["ask_agent"]
+
+
+def test_a_stop_inside_one_hourly_atr_is_rejected():
+    row = scan_row(100.0)
+    row["h1"]["levels"]["support"] = [99.53]                 # a real level just under the price
+    p = A.Plan(coin="SOL", side="long", entry="market", stop=99.41, stop_level=99.53, target=103.4)
+    ok, problems, _ = A.validate_plan(p, row, 100.0, 1.5)
+    assert not ok and any("inside one 1h ATR" in x for x in problems)
