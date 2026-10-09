@@ -12,6 +12,7 @@ Keys are never returned, logged or stored in the database. They come from, in th
          Alpaca paper      ALPACA_PAPER_API_KEY / ALPACA_PAPER_API_SECRET
          Alpaca live       ALPACA_API_KEY / ALPACA_API_SECRET
          Reddit (data)     REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET   (the V10 scout's read-only app key)
+         Anthropic (AI)    ANTHROPIC_API_KEY                         (the Trading Desk agents' Claude key)
 
 Keys typed into the dashboard are checked against the provider (a read-only account / balance call) before they are
 saved; rejected keys are not kept. (The hosts themselves are defined only in app/config.py.)
@@ -42,6 +43,10 @@ PROVIDERS: dict[tuple[str, str], dict[str, Any]] = {
     # a DATA source for the V10 scout (read-only; never a trading venue)
     ("reddit", "data"): {"mode": None, "exchange": "reddit", "prefix": "REDDIT", "market": "data",
                          "env": ("REDDIT_CLIENT_ID", "REDDIT_CLIENT_SECRET"), "label": "Reddit API (read-only data)"},
+    # AI for the Trading Desk agents (app/desk/claude.py): the operator's own Claude API key; no secret
+    ("anthropic", "data"): {"mode": None, "exchange": "anthropic", "prefix": "ANTHROPIC", "market": "data",
+                            "env": ("ANTHROPIC_API_KEY", "ANTHROPIC_API_KEY_UNUSED"),
+                            "label": "Anthropic Claude API (Trading Desk AI)", "optional_secret": True},
     # NOTIFICATIONS (app/live/telegram.py): the bot token, and optionally the chat id (else /start links the chat)
     ("telegram", "data"): {"mode": None, "exchange": "telegram", "prefix": "TELEGRAM", "market": "data",
                            "env": ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"), "label": "Telegram bot (trade updates)",
@@ -112,6 +117,11 @@ class Providers:
             if keys is None:
                 raise ValueError("Telegram: the bot token is not configured")
             return TelegramCheck(keys[0])
+        if exchange == "anthropic":
+            keys = keys or self.keys(exchange, network)
+            if keys is None:
+                raise ValueError("Anthropic: the API key is not configured")
+            return AnthropicCheck(keys[0])
         if exchange == "reddit":
             from app.scout.sources import RedditClient
             keys = keys or self.keys(exchange, network)
@@ -150,7 +160,8 @@ class Providers:
         except Exception as exc:
             msg = f"{type(exc).__name__}: {exc}"
             for v in keys or ():
-                msg = msg.replace(v, "***")
+                if v:                                  # an empty optional secret must not be "redacted" everywhere
+                    msg = msg.replace(v, "***")
             return {"ok": False, "error": self.redact(msg)}
         finally:
             if client is not None:
@@ -209,6 +220,27 @@ class Providers:
                 row["balance"] = await self.balance(ex, net)
             out.append(row)
         return out
+
+
+class AnthropicCheck:
+    """Checks a Claude API key with a free call (list one model); never sends a message or spends tokens."""
+
+    def __init__(self, key: str):
+        self._key = lambda: key
+
+    async def fetch_balance(self) -> dict[str, Any]:
+        import asyncio
+
+        def check() -> dict[str, Any]:
+            import anthropic
+            page = anthropic.Anthropic(api_key=self._key(), max_retries=1, timeout=20).models.list(limit=1)
+            first = next(iter(page.data), None)
+            return {"wallet": 0, "available": 0, "currency": "",
+                    "access": "key accepted" + (f" (e.g. {first.id})" if first is not None else "")}
+        return await asyncio.to_thread(check)
+
+    async def close(self) -> None:
+        return None
 
 
 class TelegramCheck:

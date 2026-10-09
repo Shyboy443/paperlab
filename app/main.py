@@ -349,7 +349,8 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
             tones = scout.store.tones([r["id"] for r in rows])
             return [{**r, "tone": tones.get((r["id"], coin))} for r in rows]
         desk = DeskService(str(settings.db_path.with_name("desk.db")), bus=realtime.bus, social=desk_social,
-                           telegram=lambda: getattr(app.state, "telegram", None))
+                           telegram=lambda: getattr(app.state, "telegram", None),
+                           anthropic_key=lambda: (mirror.providers.keys("anthropic", "data") or (None,))[0])
         app.state.desk = desk
         desk.start()
         log.info("Trading desk: %s", desk.health()["llm"]["model"])

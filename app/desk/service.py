@@ -119,13 +119,14 @@ class DeskService:
     def __init__(self, db_path: str, bus: Any = None, env: Mapping[str, str] | None = None,
                  social: Callable[[str], list[dict[str, Any]]] | None = None,
                  telegram: Callable[[], Any] | None = None, market: Market | None = None, llm: DeskLLM | None = None,
+                 anthropic_key: Callable[[], str | None] | None = None,
                  clock: Callable[[], float] = time.time):
         e = os.environ if env is None else env
         self.enabled = str(e.get("DESK_ENABLED", "true")).strip().lower() not in ("0", "false", "no", "off")
         self.clock = clock
         self.ledger = Ledger(db_path, clock=clock)
         self.market = market or Market(clock=clock)
-        self.llm = llm or make_llm(e)
+        self.llm = llm or make_llm(e, anthropic_key)
         self.bus = bus
         self.social = social
         self.telegram = telegram

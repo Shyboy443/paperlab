@@ -41,7 +41,8 @@ const LiveMirror = {
         h('div', { class: 'card-head' }, h('h2', { text: p.label }),
           pill(p.keys_configured ? 'KEYS SET' : 'NO KEYS', p.keys_configured ? 'up' : 'ghost')),
         kvList({
-          market: p.exchange === 'telegram' ? 'notifications: every paper trade, TP hit and close (never trades)'
+          market: p.exchange === 'anthropic' ? 'AI for the Trading Desk agents (never trades)'
+            : p.exchange === 'telegram' ? 'notifications: every paper trade, TP hit and close (never trades)'
             : data ? 'data source for the V10 scout (never trades)' : stocks ? 'US stocks & ETFs' : 'crypto USDT perpetuals',
           keys: src,
           [data ? 'access' : 'balance']: p.keys_configured ? (bal.ok ? (data ? bal.access || 'OK' : bal.available + ' ' + (bal.currency || 'USDT') + ' available (equity ' + bal.wallet + ')') : 'error: ' + (bal.error || '?')) : DASH,
@@ -102,7 +103,8 @@ const LiveMirror = {
     if (!p.can_save_keys) {
       return h('p', { class: 'sub', text: 'Key entry needs DASHBOARD_PASSWORD on the server; until then set ' + p.key_env.join(' + ') + ' in Railway variables.' });
     }
-    const [kLabel, sLabel] = p.exchange === 'reddit' ? ['app client ID', 'app secret']
+    const [kLabel, sLabel] = p.exchange === 'anthropic' ? ['Claude API key (sk-ant-…)', 'not needed — leave empty']
+      : p.exchange === 'reddit' ? ['app client ID', 'app secret']
       : p.exchange === 'telegram' ? ['bot token (from @BotFather)', 'chat id (optional: or send /start to your bot)']
         : ['API key', 'API secret'];
     const keyIn = h('input', { type: 'password', placeholder: kLabel, autocomplete: 'off', spellcheck: 'false' });
@@ -112,6 +114,7 @@ const LiveMirror = {
       h('label', { class: 'field' }, h('span', { text: kLabel }), keyIn),
       h('label', { class: 'field' }, h('span', { text: sLabel }), secIn),
       p.exchange === 'reddit' ? h('p', { class: 'sub', text: 'Create a free "script" app at reddit.com/prefs/apps (any name; redirect uri http://localhost:8080). The client ID is the short code under the app name.' }) : null,
+      p.exchange === 'anthropic' ? h('p', { class: 'sub', text: 'Create a key at console.anthropic.com → API keys and paste it here. It is checked with a free call (no tokens spent), then stored encrypted on the server; the Trading Desk switches to Claude (Sonnet 5.5 for Charts, Skeptic and your chats; Haiku 5.5 for the rest) at once. Remove it to fall back to OpenRouter.' }) : null,
       p.exchange === 'telegram' ? h('p', { class: 'sub', text: 'Paste the token @BotFather gave you, save, then open your bot in Telegram and send /start: that chat gets every paper trade (TP hits and closes reply to the trade). Leave the chat id empty unless you know it.' }) : null,
       err,
       h('button', { type: 'button', class: 'btn', text: 'Save & verify', onclick: async (ev) => {

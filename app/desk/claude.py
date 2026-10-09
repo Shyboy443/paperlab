@@ -54,34 +54,69 @@ def to_claude_messages(messages: Sequence[dict[str, Any]]) -> list[dict[str, Any
 
 
 class ClaudeLLM(DeskLLM):
-    provider = "anthropic"
+    """Claude when an Anthropic key is available (looked up on every call, so saving or removing the key in the
+    dashboard takes effect at once), otherwise the OpenRouter client it extends."""
 
-    def __init__(self, api_key: str | None, model: str = DEFAULT_FAST, model_deep: str = DEFAULT_DEEP, **kw: Any):
+    def __init__(self, api_key: str | Callable[[], str | None] | None, model: str = DEFAULT_FAST,
+                 model_deep: str = DEFAULT_DEEP, openrouter_key: str | None = None, or_model: str | None = None,
+                 or_model_deep: str | None = None, **kw: Any):
         self._client_factory: Callable[[str], Any] | None = kw.pop("client_factory", None)
-        super().__init__(api_key, model=model, model_deep=model_deep, **kw)
+        from app.desk.llm import DEFAULT_MODEL as OR_DEFAULT
+        super().__init__(openrouter_key, model=or_model or OR_DEFAULT, model_deep=or_model_deep or or_model or OR_DEFAULT, **kw)
+        fixed = (api_key or "").strip() if not callable(api_key) else None
+        self._akey: Callable[[], str | None] = api_key if callable(api_key) else (lambda: fixed)
+        self.claude_model, self.claude_model_deep = model, model_deep
+
+    def _ak(self) -> str:
+        try:
+            return (self._akey() or "").strip()
+        except Exception:
+            return ""
+
+    @property
+    def provider(self) -> str:                         # type: ignore[override]
+        return "anthropic" if self._ak() else "openrouter"
+
+    @property
+    def configured(self) -> bool:
+        return bool(self._ak() or self._secret())
+
+    def health(self) -> dict[str, Any]:
+        h = super().health()
+        if self._ak():
+            h.update(model=self.claude_model, model_deep=self.claude_model_deep)
+        h["provider"] = self.provider
+        return h
 
     @classmethod
-    def from_env(cls, env: Mapping[str, str] | None = None) -> "ClaudeLLM":
+    def from_env(cls, env: Mapping[str, str] | None = None, anthropic_key: Callable[[], str | None] | None = None) -> "ClaudeLLM":
         env = os.environ if env is None else env
-        return cls(env.get("ANTHROPIC_API_KEY"), (env.get("DESK_MODEL") or DEFAULT_FAST).strip(),
-                   (env.get("DESK_MODEL_DEEP") or DEFAULT_DEEP).strip(), max_tokens=int(env.get("DESK_MAX_TOKENS") or 2000),
+        from_env = (env.get("ANTHROPIC_API_KEY") or "").strip()
+
+        def key() -> str | None:
+            return (anthropic_key() if anthropic_key else None) or from_env or None
+        return cls(key, (env.get("DESK_MODEL_CLAUDE") or DEFAULT_FAST).strip(),
+                   (env.get("DESK_MODEL_DEEP_CLAUDE") or DEFAULT_DEEP).strip(), openrouter_key=env.get("OPENROUTER_API_KEY"),
+                   or_model=(env.get("DESK_MODEL") or "").strip() or None,
+                   or_model_deep=(env.get("DESK_MODEL_DEEP") or "").strip() or None,
+                   max_tokens=int(env.get("DESK_MAX_TOKENS") or 2000),
                    max_calls_per_day=int(env.get("DESK_MAX_CALLS_PER_DAY") or 400),
                    max_usd_per_day=float(env.get("DESK_MAX_USD_PER_DAY") or 4.0))
 
     def __repr__(self) -> str:
-        return f"ClaudeLLM(model={self.model!r}, deep={self.model_deep!r}, configured={self.configured})"
+        return f"ClaudeLLM(provider={self.provider!r}, model={self.claude_model!r}, deep={self.claude_model_deep!r})"
 
     __str__ = __repr__
 
     def _client(self) -> Any:
         if self._client_factory:
-            return self._client_factory(self._secret())
+            return self._client_factory(self._ak())
         import anthropic
-        return anthropic.Anthropic(api_key=self._secret(), max_retries=2, timeout=self.timeout_s)
+        return anthropic.Anthropic(api_key=self._ak(), max_retries=2, timeout=self.timeout_s)
 
     def _create(self, **params: Any) -> Any:
-        if not self.configured:
-            raise LLMError("ANTHROPIC_API_KEY is not set on the server")
+        if not self._ak():
+            raise LLMError("no Anthropic key: add it under Providers & Live")
         self._reserve()
         try:
             resp = self._client().messages.create(**params)
@@ -90,7 +125,7 @@ class ClaudeLLM(DeskLLM):
             msg = {401: "Anthropic rejected the server's key.", 403: "Anthropic refused this request.",
                    404: "That Claude model is not available to this key.", 429: "Anthropic is rate-limiting; try later.",
                    529: "Anthropic is overloaded; try later."}.get(status)
-            raise LLMError(msg or ("Anthropic error: " + sanitize(exc, self._secret()))) from None
+            raise LLMError(msg or ("Anthropic error: " + sanitize(exc, self._ak()))) from None
         u = getattr(resp, "usage", None)
         pin, pout = PRICES.get(params["model"], PRICES[DEFAULT_DEEP])
         if u is not None:
@@ -110,7 +145,10 @@ class ClaudeLLM(DeskLLM):
     def chat(self, system: str, messages: Sequence[dict[str, Any]], tools: Sequence[dict[str, Any]] | None = None,
              run_tool: ToolRunner | None = None, max_rounds: int = 3, json_mode: bool = False,
              max_tokens: int | None = None, deep: bool = False) -> dict[str, Any]:
-        model = self.model_deep if deep else self.model
+        if not self._ak():                             # no Anthropic key (yet): the OpenRouter path
+            return super().chat(system, messages, tools=tools, run_tool=run_tool, max_rounds=max_rounds,
+                                json_mode=json_mode, max_tokens=max_tokens, deep=deep)
+        model = self.claude_model_deep if deep else self.claude_model
         # thinking (on by default for these models) counts toward max_tokens, so leave room for it
         params: dict[str, Any] = {"model": model, "system": system, "max_tokens": max(8000, max_tokens or self.max_tokens),
                                   "messages": to_claude_messages(messages)}
@@ -151,9 +189,7 @@ class ClaudeLLM(DeskLLM):
         return {"text": "(stopped after too many tool calls)", "tool_calls": used, "cost_usd": round(self.cost_total - cost0, 5)}
 
 
-def make_llm(env: Mapping[str, str] | None = None) -> DeskLLM:
-    """Claude directly when the operator's ANTHROPIC_API_KEY is set, otherwise OpenRouter."""
-    env = os.environ if env is None else env
-    if (env.get("ANTHROPIC_API_KEY") or "").strip():
-        return ClaudeLLM.from_env(env)
-    return DeskLLM.from_env(env)
+def make_llm(env: Mapping[str, str] | None = None, anthropic_key: Callable[[], str | None] | None = None) -> DeskLLM:
+    """The desk's AI: Claude with the operator's key (the dashboard vault via `anthropic_key`, else ANTHROPIC_API_KEY),
+    falling back to OpenRouter whenever no Anthropic key is present."""
+    return ClaudeLLM.from_env(os.environ if env is None else env, anthropic_key)

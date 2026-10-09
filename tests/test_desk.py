@@ -684,10 +684,46 @@ def test_claude_daily_usd_cap_and_secret_safe_errors():
     assert secret not in str(e.value) and secret not in repr(boom)
 
 
-def test_make_llm_prefers_the_operators_anthropic_key():
-    from app.desk.claude import ClaudeLLM, make_llm
-    assert isinstance(make_llm({"ANTHROPIC_API_KEY": "k" * 30, "OPENROUTER_API_KEY": "o"}), ClaudeLLM)
-    other = make_llm({"OPENROUTER_API_KEY": "o" * 30})
-    assert not isinstance(other, ClaudeLLM) and other.provider == "openrouter"
-    c = make_llm({"ANTHROPIC_API_KEY": "k" * 30})
-    assert c.model == "claude-haiku-5-5" and c.model_deep == "claude-sonnet-5-5" and c.max_usd_per_day == 4.0
+def test_the_desk_uses_the_dashboard_key_live_and_falls_back_to_openrouter():
+    from app.desk.claude import make_llm
+    vault = {"key": None}
+    llm = make_llm({"OPENROUTER_API_KEY": "o" * 30}, anthropic_key=lambda: vault["key"])
+    assert llm.provider == "openrouter" and llm.health()["model"] == "anthropic/claude-haiku-5.5"
+    vault["key"] = "sk-ant-api03-" + "d" * 30                      # saved under Providers & Live: no restart needed
+    h = llm.health()
+    assert llm.provider == "anthropic" and h["model"] == "claude-haiku-5-5" and h["model_deep"] == "claude-sonnet-5-5"
+    vault["key"] = None                                           # removed again: back to OpenRouter
+    assert llm.provider == "openrouter"
+    env_only = make_llm({"ANTHROPIC_API_KEY": "k" * 30})
+    assert env_only.provider == "anthropic" and env_only.max_usd_per_day == 4.0
+    dash_wins = make_llm({"ANTHROPIC_API_KEY": "env-key-" + "e" * 20}, anthropic_key=lambda: "dash-key-" + "d" * 20)
+    assert dash_wins._ak().startswith("dash-key-")
+    assert "dash-key" not in repr(dash_wins) and "env-key" not in repr(dash_wins)
+
+
+def test_anthropic_is_a_vault_provider_with_no_secret():
+    from app.live.providers import PROVIDERS, Providers
+    p = PROVIDERS[("anthropic", "data")]
+    assert p["optional_secret"] and p["market"] == "data" and p["env"][0] == "ANTHROPIC_API_KEY"
+
+    class Vault:
+        enabled = True
+
+        def get(self, pid):
+            return ("sk-ant-api03-" + "v" * 30, "") if pid == "anthropic:data" else None
+    prov = Providers(env={}, vault=Vault())
+    assert prov.keys("anthropic", "data")[0].startswith("sk-ant-api03-") and prov.source("anthropic", "data") == "dashboard"
+
+def test_a_key_check_error_stays_readable_when_the_secret_is_empty():
+    import asyncio
+    from app.live.providers import Providers
+    key = "sk-ant-api03-" + "z" * 30
+
+    class Bad:
+        async def fetch_balance(self):
+            raise RuntimeError(f"invalid x-api-key {key}")
+
+        async def close(self):
+            return None
+    r = asyncio.run(Providers(env={}, client_factory=lambda ex, net: Bad())._balance_with("anthropic", "data", (key, "")))
+    assert r["error"] == "RuntimeError: invalid x-api-key ***"
