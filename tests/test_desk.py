@@ -544,3 +544,33 @@ def test_the_public_feed_leaves_trade_charts_out(tmp_path):
     state = json.dumps(desk.public_state())
     assert '"chart"' not in state and '"SOL"' in state
     desk.ledger.close()
+
+
+def test_open_trades_show_where_and_when_the_price_came_from(tmp_path):
+    class Live(FakeMarket):
+        def ticker(self, coin, fresh=False):
+            return {"source": "binance", "price": 101.0, "change_24h_pct": 1.0, "ts": 1_800_000_000_000}
+    desk = DeskService(str(tmp_path / "m.db"), env={"DESK_ENABLED": "false"}, market=Live(), llm=FakeLLM())
+    desk.ledger.open("SOL", "long", "market", 98, 105, price=100)
+    row = desk.report()["open"][0]
+    assert row["mark"] == 101.0 and row["mark_source"] == "binance" and row["mark_ts"] == 1_800_000_000_000
+    assert desk.report()["checked_every_s"] == 300
+    desk.ledger.close()
+
+
+def test_charts_gets_one_more_turn_when_it_stops_without_a_plan(tmp_path, monkeypatch):
+    from app.desk import news as N, sentiment as S
+    monkeypatch.setattr(N, "news", lambda universe, **k: {"items": [], "sources": {}})
+    monkeypatch.setattr(N, "read_articles", lambda items, **k: [dict(i, article="") for i in items])
+    monkeypatch.setattr(S, "sentiment", lambda coins, social=None, **k: {"coins": {x: {"positioning": {}} for x in coins},
+                                                                         "coingecko_trending": []})
+
+    class Forgetful(FakeLLM):
+        def chat(self, system, messages, json_mode=False, **kw):
+            if "Charts" in system.split("\n")[0] and not json_mode and "attacked" not in system:
+                return {"text": "I left out the target, so I'm re-running the check.", "tool_calls": [], "cost_usd": 0.0}
+            return super().chat(system, messages, json_mode=json_mode, **kw)
+    desk = DeskService(str(tmp_path / "f.db"), env={"DESK_ENABLED": "false"}, market=FakeMarket(), llm=Forgetful("BUY"))
+    row = desk.run_session("test")
+    assert row["trade_id"] and "TRADE: LONG SOL" in row["decision"]
+    desk.ledger.close()

@@ -32,6 +32,7 @@ from app.desk.market import DEFAULT_UNIVERSE, Market
 log = logging.getLogger("paperlab.desk")
 
 HOUR_MS = 3_600_000
+UPDATE_MS = 300_000
 DEFAULT_SETTINGS: dict[str, Any] = {
     "enabled": True, "schedule_hours": 4, "universe": list(DEFAULT_UNIVERSE), "mode": "cautious", "risk_pct": 2.0,
     "start_balance": 1000.0, "notify": {"in_app": True, "telegram": True, "email": False}, "recap_hour": 21,
@@ -206,9 +207,9 @@ class DeskService:
             if now >= slot + 120_000 and int(self.ledger.kv("last_slot", 0) or 0) < slot:
                 self.ledger.set_kv("last_slot", slot)
                 self.run_session("schedule")
-        hour = now // HOUR_MS
-        if now % HOUR_MS >= 60_000 and int(self.ledger.kv("last_update_hour", 0) or 0) < hour:
-            self.ledger.set_kv("last_update_hour", hour)
+        bucket = now // UPDATE_MS                       # stops / targets / limit fills checked every 5 minutes
+        if now % UPDATE_MS >= 30_000 and int(self.ledger.kv("last_update_bucket", 0) or 0) < bucket:
+            self.ledger.set_kv("last_update_bucket", bucket)
             self.update_ledger()
         self._maybe_recap(now)
 
@@ -317,6 +318,12 @@ class DeskService:
                                      "check_plan (adjust and re-test if it fails), then answer with ONLY the JSON object.",
                                      max_plans=max_plans)
             plans = A.parse_plans(plan_text)
+            if plans is None:                          # Charts stopped mid-way: one last turn for just the JSON
+                plan_text = self._agent("charts", {**chart_data, "your_unfinished_answer": plan_text[:1500]},
+                                        'Finish now: reply with ONLY the final {"plans": [...]} JSON (plans you already '
+                                        'checked, or an empty list with "why").', json_mode=True, min_rr=min_rr,
+                                        max_plans=max_plans)
+                plans = A.parse_plans(plan_text)
             checks = {pl.coin: self._check(pl, row_by, held, min_rr) for pl in plans or []}
             say("charts", "plan", self._plans_text(plans, checks, plan_text),
                 {"plans": [pl.raw for pl in plans or []], "checks": checks})
@@ -399,9 +406,10 @@ class DeskService:
             self.running = None
             self._run_lock.release()
 
-    def _agent(self, agent: str, data: Any, ask: str, json_mode: bool = False, min_rr: float = 2.0) -> str:
-        out = self.llm.chat(A.system_prompt(agent, min_rr), [{"role": "user", "content": A.data_block(data) + "\n\n" + ask}],
-                            json_mode=json_mode)
+    def _agent(self, agent: str, data: Any, ask: str, json_mode: bool = False, min_rr: float = 2.0,
+               max_plans: int = 1) -> str:
+        out = self.llm.chat(A.system_prompt(agent, min_rr, max_plans=max_plans),
+                            [{"role": "user", "content": A.data_block(data) + "\n\n" + ask}], json_mode=json_mode)
         return out["text"] or "(no answer)"
 
     def _charts(self, data: Any, min_rr: float, ask: str, role: str = "charts", max_plans: int = 1) -> str:
@@ -409,7 +417,7 @@ class DeskService:
         tools = [t for t in A.TOOLS + A.ACTION_TOOLS if t["function"]["name"] in ("scan_coin", "check_plan")]
         out = self.llm.chat(A.system_prompt(role, min_rr, max_plans=max_plans),
                             [{"role": "user", "content": A.data_block(data) + "\n\n" + ask}],
-                            tools=tools, run_tool=lambda n, a: self.run_tool(n, a, "charts"), max_rounds=6)
+                            tools=tools, run_tool=lambda n, a: self.run_tool(n, a, "charts"), max_rounds=8)
         return out["text"] or ""
 
     def _check(self, plan: Any, row_by: dict[str, Any], held: list[str], min_rr: float) -> dict[str, Any]:
@@ -631,17 +639,26 @@ class DeskService:
                 self.post("chief", "trade", f"Limit order #{t['id']} {t['coin']} expired unfilled", {"trade": t})
         return changed
 
-    def marks(self) -> dict[str, float]:
+    def marks(self) -> dict[str, dict[str, Any]]:
+        """Live price, its source and when it was taken, for every coin with an open trade."""
         out = {}
         for t in self.ledger.trades(("open",)):
             try:
-                out[t["coin"]] = self.market.price(t["coin"])[1]
+                tk = self.market.ticker(t["coin"])
+                out[t["coin"]] = {"price": tk["price"], "source": tk["source"], "ts": tk["ts"]}
             except Exception:
                 pass
         return out
 
     def report(self) -> dict[str, Any]:
-        return self.ledger.report(self.marks())
+        info = self.marks()
+        rep = self.ledger.report({c: v["price"] for c, v in info.items()})
+        for row in rep["open"]:
+            m = info.get(row["coin"])
+            if m:
+                row["mark_source"], row["mark_ts"] = m["source"], m["ts"]
+        rep["checked_every_s"] = UPDATE_MS // 1000
+        return rep
 
     @staticmethod
     def _trade_html(t: Mapping[str, Any], what: str) -> str:

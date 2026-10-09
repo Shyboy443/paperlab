@@ -128,7 +128,7 @@ const Desk = {
     if (data.table) extras.push(this.scanTable(data.table));
     if (data.checks && data.checks.problems && data.checks.problems.length === 0 && data.checks.facts) extras.push(h('div', { class: 'dk-ok', text: '✔ desk checks passed · R:R ' + data.checks.facts.rr + ' · stop ' + (data.checks.facts.stop_atr1h ?? '?') + '× 1h ATR' }));
     const vs = data.verdicts ? Object.entries(data.verdicts) : data.verdict ? [['', [data.verdict]]] : [];
-    if (vs.length) extras.push(h('div', { class: 'dk-pills' }, ...vs.map(([coin, v]) => this.verdictPill(coin, (v || [])[0]))));
+    if (vs.length) extras.push(h('div', { class: 'dk-pills' }, ...vs.map(([coin, v]) => this.verdictPill(coin, (v || [])[0], !!data.final || !this.hasFinal(m)))));
     if (data.trade && (m.kind === 'trade')) extras.push(this.tradeCard(data.trade));
     if (data.tools && data.tools.length) extras.push(h('div', { class: 'dk-tools sub', text: '⚙ used ' + [...new Set(data.tools)].join(', ').replace(/_/g, ' ') }));
     const cls = 'dk-msg' + (m.author === 'chief' && (m.kind === 'decision' || m.kind === 'recap') ? ' dk-decision' : '') + (m.kind === 'error' ? ' dk-err' : '') + (m.author === 'you' ? ' dk-you' : '');
@@ -136,12 +136,19 @@ const Desk = {
       h('div', { class: 'dk-bubble' }, h('div', { class: 'dk-meta' }, h('b', { text: a.name }), h('span', { class: 'sub', text: this.when(m.ts) + (m.kind === 'decision' && data.decision ? ' · ' + data.decision.split(' -- ')[0] : '') })),
         h('div', { class: 'dk-text', text: m.text }), ...extras));
   },
-  verdictPill(coin, v) {
-    return pill((coin ? coin + ' ' : 'VERDICT ') + (v || 'no verdict'), { BUY: 'up', WAIT: 'warn', SKIP: 'down' }[v] || 'ghost',
-      v ? '' : 'the Skeptic gave no verdict line: no trade');
+  verdictPill(coin, v, final = true) {
+    const label = (coin ? coin + ' ' : 'VERDICT ') + (v || (final ? 'no verdict' : '—'));
+    const tip = v ? (final ? 'the verdict the Chief acted on' : 'first take; the final verdict decides')
+      : final ? 'no verdict line: this plan was not traded' : 'first take had no verdict line; the final verdict decides';
+    return pill(label, { BUY: 'up', WAIT: 'warn', SKIP: 'down' }[v] || 'ghost', tip);
+  },
+  /** Did the Skeptic give a later (final) verdict in the same session? */
+  hasFinal(m) {
+    return ((this.data || {}).messages || []).some((x) => x.session_id && x.session_id === m.session_id && x.id > m.id
+      && x.author === 'skeptic' && (x.data || {}).final);
   },
   scanTable(rows) {
-    return h('table', { class: 'dk-table' }, h('thead', {}, h('tr', {}, ...['coin', 'price', '24h', 'rel vol 1h / 4h', 'RSI 1h / 4h', 'trend 1h / 4h', 'flags'].map((t) => h('th', { text: t })))),
+    return h('table', { class: 'dk-table' }, h('thead', {}, h('tr', {}, ...['coin', 'price', '24h (rolling)', 'rel vol 1h / 4h', 'RSI 1h / 4h', 'trend 1h / 4h', 'flags'].map((t) => h('th', { text: t })))),
       h('tbody', {}, ...rows.map((r) => h('tr', {}, h('td', { text: r.coin }), h('td', { class: 'num', text: this.px(r.price) }),
         h('td', { class: 'num ' + signClass(r.change_24h_pct), text: fmtPct(r.change_24h_pct) }),
         h('td', { class: 'num', text: fmtNum((r['1h'] || {}).rel_volume) + ' / ' + fmtNum((r['4h'] || {}).rel_volume) }),
@@ -250,11 +257,13 @@ const Desk = {
     const curve = this.curve([[first ? first.ts - 3_600_000 : Date.now() - 3_600_000, L.start_balance], ...(L.equity_curve || []).map((p) => [p.ts, p.equity]), [Date.now(), L.equity]].filter((p) => isNum(p[1])));
     const row = (t, closed) => h('tr', {}, h('td', { text: '#' + t.id }), h('td', { text: t.coin }), h('td', { class: t.side === 'long' ? 'up' : 'down', text: t.side }),
       h('td', { class: 'num', text: this.px(t.entry ?? t.entry_req) }), h('td', { class: 'num', text: this.px(t.stop) }), h('td', { class: 'num', text: this.px(t.target) }),
-      closed ? h('td', { class: 'num', text: this.px(t.exit) + ' (' + (t.exit_reason || '') + ')' }) : h('td', { class: 'num', text: this.px(t.mark) }),
+      closed ? h('td', { class: 'num', text: this.px(t.exit) + ' (' + (t.exit_reason || '') + ')' })
+        : h('td', { class: 'num', title: t.mark_ts ? 'price from ' + t.mark_source + ' at ' + fmtTime(t.mark_ts) : '' },
+          this.px(t.mark), t.mark_ts ? h('div', { class: 'sub', text: t.mark_source + ' · ' + fmtTime(t.mark_ts) }) : null),
       h('td', { class: 'num ' + signClass(closed ? t.pnl : t.upnl), text: closed ? this.money(t.pnl) + ' · ' + fmtNum(t.r) + 'R' : (t.status === 'pending' ? 'pending limit' : this.money(t.upnl)) }),
-      h('td', { class: 'sub', text: fmtTime(closed ? t.closed_ts : t.created_ts) }));
+      h('td', { class: 'sub', text: closed ? this.when(t.closed_ts) : 'opened ' + this.when(t.created_ts) + (t.checked_ts ? ' · stops checked ' + fmtTime(t.checked_ts) : '') }));
     const table = (title, rows, closed) => h('div', { class: 'card' }, h('h3', { text: title }), rows.length ? h('table', { class: 'dk-table' },
-      h('thead', {}, h('tr', {}, ...['#', 'coin', 'side', 'entry', 'stop', 'target', closed ? 'exit' : 'mark', closed ? 'P&L' : 'unrealized', 'time'].map((x) => h('th', { text: x })))),
+      h('thead', {}, h('tr', {}, ...['#', 'coin', 'side', 'entry', 'stop', 'target', closed ? 'exit' : 'live price', closed ? 'P&L' : 'unrealized', 'time'].map((x) => h('th', { text: x })))),
       h('tbody', {}, ...rows.map((t) => row(t, closed)))) : h('p', { class: 'sub', text: closed ? 'No closed trades yet.' : 'No open trades.' }));
     return h('div', {}, kpis, h('div', { class: 'card' }, h('h3', { text: 'Equity' }), curve), table('Open positions', L.open || [], false), table('Closed trades', L.closed || [], true));
   },
