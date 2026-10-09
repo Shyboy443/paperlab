@@ -35,7 +35,7 @@ HOUR_MS = 3_600_000
 DEFAULT_SETTINGS: dict[str, Any] = {
     "enabled": True, "schedule_hours": 4, "universe": list(DEFAULT_UNIVERSE), "mode": "cautious", "risk_pct": 2.0,
     "start_balance": 1000.0, "notify": {"in_app": True, "telegram": True, "email": False}, "recap_hour": 21,
-    "tz": "Asia/Colombo",
+    "tz": "Asia/Colombo", "max_plans": 3, "max_open": 3,
 }
 SCHEDULES = (1, 2, 4, 6, 8, 12, 24)
 
@@ -78,6 +78,16 @@ def validate_settings(body: Mapping[str, Any], current: Mapping[str, Any], has_t
         if n.get("email"):
             raise ValueError("email alerts are not set up on this server (no mail account); use Telegram or in-app")
         out["notify"] = {"in_app": bool(n.get("in_app", True)), "telegram": bool(n.get("telegram", True)), "email": False}
+    if "max_plans" in body:
+        v = int(body["max_plans"])
+        if not 1 <= v <= 3:
+            raise ValueError("max_plans must be 1-3")
+        out["max_plans"] = v
+    if "max_open" in body:
+        v = int(body["max_open"])
+        if not 1 <= v <= 6:
+            raise ValueError("max_open must be 1-6")
+        out["max_open"] = v
     if "recap_hour" in body:
         v = int(body["recap_hour"])
         if not 0 <= v <= 23:
@@ -283,69 +293,83 @@ class DeskService:
                                             "articles_read": sum(1 for v in arts.values() if v), "sources": feed.get("sources")})
             say("sentiment", "take", sent_take, {"positioning": {c: v["positioning"] for c, v in sent["coins"].items()},
                                                  "trending": sent.get("coingecko_trending")})
-            # 4. Charts: the best setup on ANY coin of the universe, tested with the desk's own checks before posting
+            # 4. Charts: up to max_plans setups on ANY coins of the universe, each tested with the desk's checks
             held = [t_["coin"] for t_ in self.ledger.trades(("open", "pending"))]
+            free = max(0, int(st["max_open"]) - len(held))
+            max_plans = max(1, min(int(st["max_plans"]), free)) if free else 1
             row_by = {r["coin"]: r for r in ok}
             chart_data = {"coins_in_focus": scan_data["top3_by_relative_volume"],
                           "other_coins": [A.compact_scan(r) for r in ok[3:]], "mode": mode, "min_reward_risk": min_rr,
-                          "coins_already_held_cannot_trade": held,
+                          "max_plans": max_plans, "coins_already_held_cannot_trade": held,
+                          "open_trade_slots_left": free,
                           "colleagues": {"scout": scout_take, "news": news_take, "sentiment": sent_take}}
-            plan_text = self._charts(chart_data, min_rr, "Find the best plan on any coin above. Test it with check_plan "
-                                     "(adjust and re-test if it fails), then answer with ONLY the JSON object.")
-            plan = A.parse_plan(plan_text)
-            checks = self._check(plan, row_by, held, min_rr)
-            say("charts", "plan", self._plan_text(plan, checks, plan_text), {"plan": plan.raw if plan else None, "checks": checks})
+            plan_text = self._charts(chart_data, min_rr, f"Find up to {max_plans} plans on different coins. Test each with "
+                                     "check_plan (adjust and re-test if it fails), then answer with ONLY the JSON object.",
+                                     max_plans=max_plans)
+            plans = A.parse_plans(plan_text)
+            checks = {pl.coin: self._check(pl, row_by, held, min_rr) for pl in plans or []}
+            say("charts", "plan", self._plans_text(plans, checks, plan_text),
+                {"plans": [pl.raw for pl in plans or []], "checks": checks})
 
-            # 5. Skeptic -> Charts answers -> Skeptic's final verdict
-            def coin_data(pl: Any) -> Any:
-                return A.compact_scan(row_by[pl.coin]) if pl and pl.coin in row_by else scan_data["top3_by_relative_volume"]
-            sk_data = {"plan": plan.raw if plan else None, "code_checks": checks, "coin_data": coin_data(plan),
+            # 5. Skeptic -> Charts answers -> Skeptic's final verdict per plan
+            def coin_data(pls: Any) -> Any:
+                got = [A.compact_scan(row_by[pl.coin]) for pl in pls or [] if pl.coin in row_by]
+                return got or scan_data["top3_by_relative_volume"]
+            sk_data = {"plans": [pl.raw for pl in plans or []], "code_checks": checks, "coin_data": coin_data(plans),
                        "news_take": news_take, "sentiment_take": sent_take,
-                       "headlines": news_data["by_coin"].get(plan.coin) if plan and plan.coin in news_data["by_coin"]
-                       else news_data["market"]}
-            sk = self._agent("skeptic", sk_data, "Tear Charts' plan apart (address Charts by name), then give your verdict.")
-            verdict, breaker = A.parse_verdict(sk)
-            say("skeptic", "verdict", sk, {"verdict": verdict, "deal_breaker": breaker})
-            if plan and plan.coin:
-                reply = self._charts({**chart_data, "your_plan": plan.raw, "code_checks": checks, "skeptic_said": sk}, min_rr,
-                                     "Skeptic answered. Reply to Skeptic by name in under 90 words: concede, defend or revise. "
-                                     "Re-test any change with check_plan. End with the final plan JSON (the same one, a "
-                                     'revised one, or {"coin": null, "why": "..."} to withdraw).', role="charts_reply")
-                revised = A.parse_plan(reply)
+                       "headlines": {pl.coin: news_data["by_coin"].get(pl.coin) for pl in plans or []
+                                     if pl.coin in news_data["by_coin"]} or news_data["market"]}
+            sk = self._agent("skeptic", sk_data, "Tear each of Charts' plans apart (address Charts by name), then give one "
+                             "verdict line per plan.")
+            verdicts = A.parse_verdicts(sk, [pl.coin for pl in plans or []])
+            say("skeptic", "verdict", sk, {"verdicts": verdicts})
+            if plans:
+                reply = self._charts({**chart_data, "your_plans": [pl.raw for pl in plans], "code_checks": checks,
+                                      "skeptic_said": sk}, min_rr,
+                                     "Skeptic answered. Reply to Skeptic by name: concede, defend or revise. Re-test any "
+                                     'change with check_plan. End with the final {"plans": [...]} JSON.',
+                                     role="charts_reply", max_plans=max_plans)
+                revised = A.parse_plans(reply)
                 if revised is not None:
-                    plan = revised
-                    checks = self._check(plan, row_by, held, min_rr)
-                said = re.sub(r"\{.*\}", "", reply, flags=re.S).strip() or "(plan below)"
-                said += ("\nFinal plan: " + self._plan_text(plan, checks, "")) if plan and plan.coin else "\nPlan withdrawn."
-                say("charts", "reply", said, {"plan": plan.raw if plan else None, "checks": checks})
-                sk2 = self._agent("skeptic", {"plan_now": plan.raw if plan else None, "code_checks": checks,
-                                              "coin_data": coin_data(plan), "your_first_take": sk, "charts_reply": said},
-                                  "Charts answered you. Give your FINAL verdict on the plan as it stands now: two or three "
-                                  "sentences to Charts, then the VERDICT line.")
-                v2, b2 = A.parse_verdict(sk2)
-                if v2:
-                    verdict, breaker = v2, b2
-                say("skeptic", "verdict", sk2, {"verdict": verdict, "deal_breaker": breaker, "final": True})
-            # 6. Chief
-            go, why = A.decide(mode, bool(plan and plan.coin and checks.get("ok")), verdict, breaker)
-            trade = None
-            if go:
-                try:
-                    candles = self.market.candles(plan.coin, "1h", 60)[1]
-                    trade = self.ledger.open(plan.coin, plan.side, plan.entry, plan.stop, plan.target,
-                                             reason=f"session {sid}: {plan.why}", session_id=sid, price=checks["price"],
-                                             chart=[[c["t"], c["o"], c["h"], c["l"], c["c"]] for c in candles])
-                except (LedgerError, RuntimeError) as exc:
-                    go, why = False, f"the ledger refused: {exc}"
-            decision = (f"TRADE: {plan.side.upper()} {plan.coin}" if go else "NO TRADE") + f" -- {why}"
-            chief_data = {"decision": decision, "colleague_messages": {m["author"]: m["text"] for m in msgs[1:]}}
+                    plans = revised
+                    checks = {pl.coin: self._check(pl, row_by, held, min_rr) for pl in plans}
+                said = re.sub(r"\{.*\}", "", reply, flags=re.S).strip() or "(plans below)"
+                said += ("\nFinal plans:\n" + self._plans_text(plans, checks, "")) if plans else "\nAll plans withdrawn."
+                say("charts", "reply", said, {"plans": [pl.raw for pl in plans], "checks": checks})
+                if plans:
+                    sk2 = self._agent("skeptic", {"plans_now": [pl.raw for pl in plans], "code_checks": checks,
+                                                  "coin_data": coin_data(plans), "your_first_take": sk, "charts_reply": said},
+                                      "Charts answered you. Give your FINAL verdict on each plan as it stands now: a "
+                                      "sentence or two to Charts, then one VERDICT line per plan.")
+                    final = A.parse_verdicts(sk2, [pl.coin for pl in plans])
+                    verdicts = {c: (final[c] if final.get(c, (None,))[0] else verdicts.get(c, (None, None))) for c in final}
+                    say("skeptic", "verdict", sk2, {"verdicts": verdicts, "final": True})
+            # 6. Chief: a trade per plan that passes the gate, within the ledger's limits
+            trades, lines = [], []
+            for pl in plans or []:
+                v, b = verdicts.get(pl.coin, (None, None))
+                go, why = A.decide(mode, bool(checks.get(pl.coin, {}).get("ok")), v, b)
+                if go:
+                    try:
+                        candles = self.market.candles(pl.coin, "1h", 60)[1]
+                        trades.append(self.ledger.open(pl.coin, pl.side, pl.entry, pl.stop, pl.target,
+                                                       reason=f"session {sid}: {pl.why}", session_id=sid,
+                                                       price=checks[pl.coin]["price"],
+                                                       chart=[[c["t"], c["o"], c["h"], c["l"], c["c"]] for c in candles]))
+                    except (LedgerError, RuntimeError) as exc:
+                        go, why = False, f"the ledger refused: {exc}"
+                lines.append((f"TRADE: {pl.side.upper()} {pl.coin}" if go else f"NO TRADE {pl.coin}") + f" -- {why}")
+            decision = "; ".join(lines) if lines else "NO TRADE -- no valid plan"
+            chief_data = {"decision": decision, "trades_opened": len(trades),
+                          "colleague_messages": {f"{m['author']}#{i}": m["text"] for i, m in enumerate(msgs[1:])}}
             chief = self._agent("chief", chief_data, "Write the decision message.")
-            say("chief", "decision", chief, {"decision": decision, "trade": trade})
-            if trade:
+            say("chief", "decision", chief, {"decision": decision, "trades": trades})
+            for trade in trades:
                 say("chief", "trade", f"Opened paper trade #{trade['id']}", {"trade": trade})
                 self._alert(self._trade_html(trade, "opened"))
-            row.update(status="done", coin=plan.coin if plan else None, verdict=verdict, decision=decision,
-                       trade_id=trade["id"] if trade else None)
+            row.update(status="done", coin=",".join(t_["coin"] for t_ in trades) or (",".join(pl.coin for pl in plans or []) or None),
+                       verdict=",".join(f"{c}:{v[0]}" for c, v in verdicts.items() if v[0]) or None, decision=decision,
+                       trade_id=trades[0]["id"] if trades else None)
             return row
         except LLMError as exc:
             say("chief", "error", f"Session stopped: {exc}")
@@ -370,11 +394,12 @@ class DeskService:
                             json_mode=json_mode)
         return out["text"] or "(no answer)"
 
-    def _charts(self, data: Any, min_rr: float, ask: str, role: str = "charts") -> str:
-        """Charts with its two session tools (scan_coin, check_plan), so it tests a plan before posting it."""
+    def _charts(self, data: Any, min_rr: float, ask: str, role: str = "charts", max_plans: int = 1) -> str:
+        """Charts with its two session tools (scan_coin, check_plan), so it tests every plan before posting it."""
         tools = [t for t in A.TOOLS + A.ACTION_TOOLS if t["function"]["name"] in ("scan_coin", "check_plan")]
-        out = self.llm.chat(A.system_prompt(role, min_rr), [{"role": "user", "content": A.data_block(data) + "\n\n" + ask}],
-                            tools=tools, run_tool=lambda n, a: self.run_tool(n, a, "charts"), max_rounds=4)
+        out = self.llm.chat(A.system_prompt(role, min_rr, max_plans=max_plans),
+                            [{"role": "user", "content": A.data_block(data) + "\n\n" + ask}],
+                            tools=tools, run_tool=lambda n, a: self.run_tool(n, a, "charts"), max_rounds=6)
         return out["text"] or ""
 
     def _check(self, plan: Any, row_by: dict[str, Any], held: list[str], min_rr: float) -> dict[str, Any]:
@@ -399,6 +424,18 @@ class DeskService:
         if checks.get("problems"):
             text += "\n⚠️ Desk checks failed: " + "; ".join(checks["problems"])
         return text
+
+    def _plans_text(self, plans: Any, checks: dict[str, Any], raw: str) -> str:
+        if plans is None:
+            return "I could not produce a readable plan this session." + (f" ({raw[:200]})" if raw else "")
+        if not plans:
+            why = ""
+            try:
+                why = str((json.loads(re.search(r"\{.*\}", raw, re.S).group(0)) or {}).get("why") or "")
+            except Exception:
+                pass
+            return "No setup. " + why
+        return "\n".join(f"{i}. " + self._plan_text(pl, checks.get(pl.coin, {}), "") for i, pl in enumerate(plans, 1))
 
     def news_feed(self) -> dict[str, Any]:
         """The RSS feed, cached for 10 minutes (sessions and chat tools share it)."""
@@ -533,13 +570,15 @@ class DeskService:
                 self._alert(self._trade_html(done, "closed"))
             return {"ok": True, "trade": done}
         if name == "update_settings":
-            body = {k: args[k] for k in ("mode", "schedule_hours", "universe", "risk_pct", "enabled") if k in args}
+            body = {k: args[k] for k in ("mode", "schedule_hours", "universe", "risk_pct", "enabled", "max_plans",
+                                         "max_open") if k in args}
             try:
                 new = self.update_settings(body)
             except (ValueError, TypeError) as exc:
                 return {"ok": False, "error": str(exc)}
             self.post(agent, "chat", "Settings changed on the operator's request: " + ", ".join(f"{k} = {new[k]}" for k in body))
-            return {"ok": True, "settings": {k: new[k] for k in ("mode", "schedule_hours", "universe", "risk_pct", "enabled")}}
+            return {"ok": True, "settings": {k: new[k] for k in ("mode", "schedule_hours", "universe", "risk_pct", "enabled",
+                                                                 "max_plans", "max_open")}}
         return {"error": "unknown tool"}
 
     # -- ledger ---------------------------------------------------------------------------------------------------------
@@ -613,4 +652,5 @@ class DeskService:
         return {"ok": True, "paper_only": True, "agents": A.AGENTS, "messages": self.ledger.messages("group", limit),
                 "sessions": self.ledger.sessions(30), "ledger": self.report(), "health": self.health(),
                 "settings": {k: st[k] for k in ("enabled", "schedule_hours", "universe", "mode", "risk_pct",
-                                                "start_balance", "recap_hour", "tz")} | {"notify": st["notify"]}}
+                                                "start_balance", "recap_hour", "tz", "max_plans", "max_open")}
+                | {"notify": st["notify"]}}

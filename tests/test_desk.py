@@ -280,7 +280,7 @@ def test_a_full_session_with_fakes(tmp_path, monkeypatch, verdict, trades):
     desk = DeskService(str(tmp_path / "d.db"), bus=Bus(), env={"DESK_ENABLED": "false"}, market=FakeMarket(),
                        llm=FakeLLM(verdict))
     row = desk.run_session("test")
-    assert row["status"] == "done" and row["verdict"] == verdict
+    assert row["status"] == "done" and row["verdict"] == f"SOL:{verdict}"
     assert len(desk.ledger.trades(("open",))) == trades
     authors = [m["author"] for m in desk.ledger.messages("group")]
     assert authors[:9] == ["chief", "scout", "news", "sentiment", "charts", "skeptic", "charts", "skeptic", "chief"]
@@ -455,3 +455,47 @@ def test_a_stop_inside_one_hourly_atr_is_rejected():
     p = A.Plan(coin="SOL", side="long", entry="market", stop=99.41, stop_level=99.53, target=103.4)
     ok, problems, _ = A.validate_plan(p, row, 100.0, 1.5)
     assert not ok and any("inside one 1h ATR" in x for x in problems)
+
+
+def test_a_session_can_open_several_trades_and_each_plan_gets_its_own_verdict(tmp_path, monkeypatch):
+    from app.desk import news as N, sentiment as S
+    monkeypatch.setattr(N, "news", lambda universe, **k: {"items": [], "sources": {}})
+    monkeypatch.setattr(N, "read_articles", lambda items, **k: [dict(i, article="") for i in items])
+    monkeypatch.setattr(S, "sentiment", lambda coins, social=None, **k: {"coins": {x: {"positioning": {}} for x in coins},
+                                                                         "coingecko_trending": []})
+
+    class TwoCoins(FakeMarket):
+        def scan(self, universe):
+            return [scan_row(), {**scan_row(), "coin": "ETH"}, {**scan_row(), "coin": "ADA"}]
+
+        def scan_coin(self, coin):
+            return {**scan_row(), "coin": coin}
+
+    plan = {"side": "long", "entry": "market", "stop": 98.1, "stop_level": 98.37, "target": 104.5, "why": "x"}
+
+    class MultiLLM(FakeLLM):
+        def chat(self, system, messages, **kw):
+            head = system.split("\n")[0]
+            if "Charts" in head:
+                return {"text": json.dumps({"plans": [{**plan, "coin": c} for c in ("SOL", "ETH", "ADA")]}),
+                        "tool_calls": [], "cost_usd": 0.0}
+            if "Skeptic" in head:
+                return {"text": "Charts, ADA is fine.\nVERDICT SOL: BUY\nVERDICT ETH: WAIT\nDEAL-BREAKER ADA: unlock\nVERDICT ADA: SKIP",
+                        "tool_calls": [], "cost_usd": 0.0}
+            return {"text": "take", "tool_calls": [], "cost_usd": 0.0}
+    desk = DeskService(str(tmp_path / "d.db"), env={"DESK_ENABLED": "false"}, market=TwoCoins(), llm=MultiLLM())
+    desk.update_settings({"mode": "aggressive"})
+    row = desk.run_session("test")
+    opened = sorted(t["coin"] for t in desk.ledger.trades(("open",)))
+    assert opened == ["ETH", "SOL"]                       # aggressive: BUY and WAIT trade, SKIP + deal-breaker does not
+    assert "NO TRADE ADA" in row["decision"] and row["decision"].count("TRADE: LONG") == 2
+    desk.update_settings({"mode": "cautious"})
+    desk.ledger.close()
+
+
+def test_new_settings_validate():
+    s = validate_settings({"max_plans": 2, "max_open": 5}, DEFAULT_SETTINGS, has_trades=True)
+    assert s["max_plans"] == 2 and s["max_open"] == 5
+    for bad in ({"max_plans": 4}, {"max_open": 9}):
+        with pytest.raises(ValueError):
+            validate_settings(bad, DEFAULT_SETTINGS, has_trades=False)

@@ -62,6 +62,19 @@ Telegram alerts. Group-chat messages are visible on the public page; direct mess
 
    On a trade, the Chief calls `ledger.open()`. The session's Markdown decision log is saved in the Decisions tab.
 
+## More trades per day (2026-10-09)
+
+- **Plans per session:** Charts may propose up to `max_plans` (default 3) on different coins. The Skeptic gives one
+  verdict per plan (`VERDICT SOL: BUY`, `DEAL-BREAKER ETH: ...`), and every plan that passes the gate opens its own
+  paper trade, up to `max_open` open trades (default 3, maximum 6; each is sized to fit equity / max_open).
+- **Hourly sessions:** set `schedule_hours` to 1. The daily AI cap defaults to 400 calls; a session with its debate
+  uses about 10.
+- **The checks are unchanged:**
+  - real swing levels;
+  - a stop at least 1 × 1h ATR from entry and off round numbers;
+  - minimum R:R;
+  - 2% risk per trade, fees included.
+
 ## Data (free, no API keys)
 
 | Tool | Source |

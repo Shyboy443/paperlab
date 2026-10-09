@@ -296,6 +296,8 @@ const Desk = {
     f.universe = h('input', { type: 'text', value: (s.universe || []).join(', ') });
     f.mode = h('select', {}, ...[['cautious', 'Cautious: trade only on a Skeptic BUY, min 2:1'], ['aggressive', 'Aggressive: trade unless the Skeptic names a deal-breaker, min 1.5:1']].map(([v, t]) => h('option', { value: v, text: t, selected: v === s.mode })));
     f.risk = h('input', { type: 'number', min: 0.25, max: 5, step: 0.25, value: s.risk_pct });
+    f.plans = h('select', {}, ...[1, 2, 3].map((x) => h('option', { value: x, text: x + (x === 1 ? ' plan' : ' plans') + ' per session', selected: x === (s.max_plans || 3) })));
+    f.maxOpen = h('input', { type: 'number', min: 1, max: 6, step: 1, value: s.max_open || 3 });
     f.balance = h('input', { type: 'number', min: 100, step: 100, value: s.start_balance });
     f.recap = h('input', { type: 'number', min: 0, max: 23, value: s.recap_hour });
     f.tz = h('input', { type: 'text', value: s.tz || '' });
@@ -304,7 +306,7 @@ const Desk = {
     const save = async () => {
       try {
         await post('/api/desk/settings', { enabled: f.enabled.checked, schedule_hours: +f.schedule.value, universe: f.universe.value, mode: f.mode.value,
-          risk_pct: +f.risk.value, start_balance: +f.balance.value, recap_hour: +f.recap.value, tz: f.tz.value.trim(),
+          risk_pct: +f.risk.value, max_plans: +f.plans.value, max_open: +f.maxOpen.value, start_balance: +f.balance.value, recap_hour: +f.recap.value, tz: f.tz.value.trim(),
           notify: { in_app: f.app.checked, telegram: f.tg.checked, email: false } });
         toast('Desk settings saved'); this.refresh();
       } catch (e) { toast(e.message, 'err'); }
@@ -312,7 +314,8 @@ const Desk = {
     return h('div', { class: 'card dk-settings' }, h('h3', { text: 'Desk settings' }),
       field('Scheduled sessions on', f.enabled), field('Schedule', f.schedule, 'aligned to UTC, 2 minutes after the candle closes'),
       field('Coin universe', f.universe, 'USDT pairs, comma separated (max 20)'), field('Mode', f.mode),
-      field('Risk per trade (% of equity, fees included)', f.risk), field('Starting balance (USD)', f.balance, 'only before the first trade'),
+      field('Risk per trade (% of equity, fees included)', f.risk), field('Trades Charts may propose each session', f.plans, 'each one is checked and gets its own Skeptic verdict'),
+      field('Max open trades', f.maxOpen, 'each trade is sized to fit equity / this number (no leverage)'), field('Starting balance (USD)', f.balance, 'only before the first trade'),
       field('Daily recap hour (local)', f.recap), field('Time zone', f.tz, 'e.g. Asia/Colombo'),
       field('Telegram alerts (trade open/close + recap)', f.tg), field('In-app alerts', f.app, 'Email alerts are not available: no mail account is configured.'),
       h('button', { class: 'btn', text: 'Save', onclick: save }));

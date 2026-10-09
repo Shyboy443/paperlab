@@ -40,7 +40,7 @@ def complete_sentences(text: str) -> str:
 
 class DeskLLM:
     def __init__(self, api_key: str | None, model: str = DEFAULT_MODEL, max_tokens: int = 2000,
-                 max_calls_per_day: int = 120, timeout_s: float = 120.0, transport: Transport | None = None,
+                 max_calls_per_day: int = 400, timeout_s: float = 120.0, transport: Transport | None = None,
                  clock: Callable[[], float] = time.time):
         """The usage counters can be persisted with `attach_store` so a restart does not reset the daily cap."""
         key = (api_key or "").strip()
@@ -82,7 +82,7 @@ class DeskLLM:
     def from_env(cls, env: Mapping[str, str] | None = None) -> "DeskLLM":
         env = os.environ if env is None else env
         return cls(env.get("OPENROUTER_API_KEY"), (env.get("DESK_MODEL") or DEFAULT_MODEL).strip(),
-                   int(env.get("DESK_MAX_TOKENS") or 2000), int(env.get("DESK_MAX_CALLS_PER_DAY") or 120))
+                   int(env.get("DESK_MAX_TOKENS") or 2000), int(env.get("DESK_MAX_CALLS_PER_DAY") or 400))
 
     def __repr__(self) -> str:
         return f"DeskLLM(model={self.model!r}, configured={self.configured})"
