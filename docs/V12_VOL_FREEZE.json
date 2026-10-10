@@ -1,0 +1,86 @@
+{
+ "protocol": "RENATA_V12_VOL_FORWARD_V1",
+ "code": "e08c127c84ed2aa9",
+ "books": {
+  "VOL": "E vol-expansion follow H24h +C regime",
+  "VOL-RAW": "E vol-expansion follow H24h"
+ },
+ "primary": "VOL",
+ "configs": {
+  "VOL": {
+   "family": "E",
+   "name": "E vol-expansion follow H24h +C regime",
+   "range_atr": 2.5,
+   "vol_min": 3.0,
+   "hold_h": 24,
+   "mode": "follow",
+   "regime": true
+  },
+  "VOL-RAW": {
+   "family": "E",
+   "name": "E vol-expansion follow H24h",
+   "range_atr": 2.5,
+   "vol_min": 3.0,
+   "hold_h": 24,
+   "mode": "follow"
+  }
+ },
+ "coins": [
+  "1000PEPEUSDT",
+  "AAVEUSDT",
+  "ADAUSDT",
+  "AKEUSDT",
+  "ARBUSDT",
+  "AVAXUSDT",
+  "BNBUSDT",
+  "BTCUSDT",
+  "DOGEUSDT",
+  "ENAUSDT",
+  "ETHUSDT",
+  "FARTCOINUSDT",
+  "HYPEUSDT",
+  "LINKUSDT",
+  "LITUSDT",
+  "LTCUSDT",
+  "NEARUSDT",
+  "ONDOUSDT",
+  "PUMPFUNUSDT",
+  "SOLUSDT",
+  "SUIUSDT",
+  "TAOUSDT",
+  "TRUMPUSDT",
+  "UNIUSDT",
+  "USELESSUSDT",
+  "WLDUSDT",
+  "XMRUSDT",
+  "XPLUSDT",
+  "XRPUSDT",
+  "ZECUSDT"
+ ],
+ "start": 1791676800000,
+ "end": 1807401600000,
+ "half": 1799539200000,
+ "starting_balance": 1000.0,
+ "max_pos": 6,
+ "criteria": {
+  "expectancy_r_gt": 0.0,
+  "t_daily_ge": 2.0,
+  "pf_ge": 1.1,
+  "trades_ge": 150,
+  "expectancy_r_2x_costs_gt": 0.0,
+  "both_halves_positive": true
+ },
+ "costs": {
+  "taker": 0.00055,
+  "slip_majors": 0.0002,
+  "slip_others": 0.0004,
+  "majors": [
+   "BNBUSDT",
+   "BTCUSDT",
+   "DOGEUSDT",
+   "ETHUSDT",
+   "SOLUSDT",
+   "XRPUSDT"
+  ]
+ }
+}

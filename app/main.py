@@ -290,6 +290,20 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         realtime.v17 = v17
         v17.start()
         log.info("V17 swing paper: %s", v17.health()["status"])
+        # RENATA V12-VOL: the pre-registered six-month forward paper test of one V12 research rule (paper only).
+        v12vol = None
+        try:
+            if os.environ.get("V12VOL_FORWARD_ENABLED", "true").strip().lower() in ("0", "false", "no", "off"):
+                raise LookupError("disabled by V12VOL_FORWARD_ENABLED")
+            from app.lab12.forward import V12VolForward
+            v12vol = V12VolForward(settings.db_path.with_name("v12vol-forward.db"))
+            app.state.v12vol = v12vol
+            v12vol.start()
+            log.info("Renata V12-VOL forward paper: %s", v12vol.status)
+        except LookupError as exc:
+            log.info("Renata V12-VOL forward paper off: %s", exc)
+        except Exception:                                   # never block the app (e.g. numpy missing)
+            log.exception("Renata V12-VOL forward paper did not start")
         # TELEGRAM: every live paper trade, TP hit and close to the operator's bot (token from the encrypted vault).
         from app.core.roster_view import roster_payload
         from app.live.telegram import TelegramNotifier
@@ -423,6 +437,8 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
             v16_storage.close()
             await asyncio.to_thread(v17.stop)
             v17_storage.close()
+            if v12vol is not None:
+                v12vol.stop()
             await asyncio.to_thread(desk.stop)
             await asyncio.to_thread(scout.stop)
             await realtime.stop()
@@ -455,6 +471,8 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
     app.include_router(api_stock_trend.router)
     from app.core import api_video_breakout
     app.include_router(api_video_breakout.router)
+    from app.core import api_v12vol                 # Renata V12-VOL forward paper test (read-only)
+    app.include_router(api_v12vol.public_router)
     from app.core import api_desk                   # the Trading Desk (AI agents, paper ledger)
     app.include_router(api_desk.public_router)
     app.include_router(api_desk.router)
@@ -466,6 +484,10 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
     @app.get('/public/video-breakout', include_in_schema=False)
     def video_breakout_page():
         return RedirectResponse('/?p=video&bot=BTC-4H-BREAKOUT#bots/bots', status_code=307)
+
+    @app.get('/public/renata-v12-vol', include_in_schema=False)
+    def renata_v12_vol_page():
+        return FileResponse(DASHBOARD_DIR / 'renata-v12-vol.html', headers={'Cache-Control': 'no-cache'})
 
     @app.get('/public/stock-trend', include_in_schema=False)
     def stock_trend_page():

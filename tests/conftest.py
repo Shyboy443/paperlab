@@ -2,11 +2,15 @@
 from __future__ import annotations
 
 import math
+import os
 import random
 from collections import deque
 from typing import Any, Sequence
 
 import pytest
+
+os.environ.setdefault("DIVERGENCE_ENABLED", "false")
+os.environ.setdefault("V12VOL_FORWARD_ENABLED", "false")   # no Bybit polling thread inside tests
 
 from app.config import Settings, load_settings
 from app.core.indicators import IndicatorCache, last as _last
