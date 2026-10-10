@@ -197,6 +197,17 @@ def select(args: argparse.Namespace) -> int:
         checks = {"pos": (f1.get("expectancy_r") or -1) > 0, "t_2": f1.get("t_daily", 0) >= 2.0,
                   "double_cost_pos": (f2.get("expectancy_r") or -1) > 0}
         report["final"][n] = {**f1, "expectancy_r_2x_costs": f2.get("expectancy_r"), "checks": checks, "pass": all(checks.values())}
+    # Descriptive only (reported, never used to select): every config on every window, so failed hypotheses are visible.
+    keys = ("trades", "expectancy_r", "t_daily", "pf", "win_rate", "portfolio_pct", "max_dd_r")
+    report["descriptive"] = {}
+    for n in names:
+        row = {"DEV": {k: report["dev"][n].get(k) for k in keys} | {"x2": report["dev"][n].get("expectancy_r_2x_costs")}}
+        for lab, w in (("VAL", val), ("FINAL", fin)):
+            if w and n in w["configs"] and len(w["configs"][n]["trades"][1.0]["r"]):
+                m1 = pooled([(w, w["configs"][n]["trades"][1.0])])
+                row[lab] = {k: m1.get(k) for k in keys} | {
+                    "x2": pooled([(w, w["configs"][n]["trades"][2.0])]).get("expectancy_r"), "years": m1.get("years")}
+        report["descriptive"][n] = row
     winners = [n for n, x in report["final"].items() if x.get("pass")]
     report["verdict"] = ("V12 CANDIDATES: " + "; ".join(winners)) if winners else \
         "NO STRATEGY CLEARS ALL THREE STAGES: no Renata V12 is built"
