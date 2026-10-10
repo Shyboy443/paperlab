@@ -64,3 +64,27 @@ def test_select_baseline_takes_two_per_side_and_filters_work():
     assert sorted(select(meta, {"per_side": 2, "z_min": 1.0})) == [0, 1, 3]            # 0.5 / 0.8 ATR are not extremes
     assert sorted(select(meta, {"per_side": 2, "z_min": 1.0, "confirm": True})) == [0, 3]
     assert list(select(meta, {"per_side": 1, "z_min": 1.0})) in ([0, 3], [3, 0])         # the strongest per side
+
+
+# -- limit-entry study ----------------------------------------------------------------------------------------------------
+from scripts.v115_limit_study import fills, simulate_limit  # noqa: E402
+
+
+def test_a_limit_needs_a_trade_through_not_a_touch():
+    touch = path([(0, 0.001, -0.005, 0.0)])                      # the low only touches a limit 0.5% below
+    through = path([(0, 0.001, -0.0051, 0.0)])
+    assert fills(touch, np.array([1.0]), np.array([-0.005]), 15)[0] == -1
+    assert fills(through, np.array([1.0]), np.array([-0.005]), 15)[0] == 0
+    assert fills(path([(0, 0.0051, -0.001, 0.0)]), np.array([-1.0]), np.array([0.005]), 15)[0] == 0   # a short above
+
+
+def test_unfilled_orders_are_not_trades_and_a_fill_pays_the_maker_fee():
+    flat = path([(0, 0.001, -0.001, 0.0)])
+    r, placed = simulate_limit(flat, np.array([1.0]), np.array([0.01]), offset=0.5, ttl=15, hold=30, target="time")
+    assert placed == 1 and len(r) == 0                            # the limit 0.5 ATR below was never reached
+    dip = path([(0, 0.0, -0.006, -0.005)] + [(-0.005, 0.0, -0.005, 0.0)] * 40)
+    r, _ = simulate_limit(dip, np.array([1.0]), np.array([0.01]), offset=0.5, ttl=15, hold=30, target="time")
+    stop = 0.02                                                    # 2 ATR of 1% (inside the 1.5-8% clamp)
+    fill_px = -0.005
+    exit_rel = (1 + 0.0) / (1 + fill_px) - 1                       # back to the reference = +0.5% from the fill
+    assert r[0] == pytest.approx((exit_rel - (TAKER + SLIP)) / stop - MAKER / stop, rel=1e-4)
