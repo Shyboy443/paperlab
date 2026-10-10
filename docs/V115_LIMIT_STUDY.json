@@ -1,0 +1,3862 @@
+{
+ "built": "2026-10-10 09:07 UTC",
+ "rules": "V11.5 LIMIT-ENTRY study: does Renata's 1-hour reversal signal pay once the entry is a resting LIMIT (maker) order?\n(operator, 2026-10-10: \"test Renata's signal with limit order entries\", after docs/V115_REVERSAL_STUDY.json found that\nevery taker variant loses to the 15 bp round trip.)\n\n    python scripts/v115_limit_study.py --dir /data/v115 --out docs/V115_LIMIT_STUDY.json\n\nUses the candidate trades and 120-minute 1m paths built by scripts/v115_reversal_study.py (same windows, same coins).\n\nPRE-REGISTERED (2026-10-10, before any run; selection on DEV only)\n\nEntry: at the decision (the hour close) a post-only LIMIT is placed `offset` x ATR14(1h) better than the decision\nprice (below it for a long, above for a short; offset 0 = at the decision price). It FILLS only if a later minute\ntrades THROUGH it (a long fills when a minute's low is below the limit, a short when the high is above it -- a touch\nis not enough, the queue may not reach us), at the limit price, paying the MAKER fee (2 bp) and no slippage. It is\ncancelled after `ttl` minutes; an unfilled order is no trade and costs nothing.\nStop: 2 x ATR14(1h) (clamped 1.5-8%) from the FILL; the fill minute itself may already stop the trade (stop first).\nExits from the fill: time exit after `hold` minutes (taker 5.5 bp + 2 bp), a fixed 1R or 2R target (maker, resting),\nor the operator's ladder (maker take-profits); stops are taker fills at the stop or the gap open.\nSignals: V11.4's own (2 per side, every hour) and the strength filter (only moves >= 1.5 or >= 2.5 ATR units).\n\nDEV grid: signal {V11.4, z>=1.5, z>=2.5} x offset {0, 0.25, 0.5} x ttl {15, 30} x exit {time, 1R, 2R, ladder} x\nhold {30, 58, 90} -- the best DEV expectancy with >= 150 DEV trades is THE candidate, plus the best with offset 0\n(the plain \"post at the price\" version) for comparison.\nPASS: expectancy (R/trade, costs included) > 0 in TEST, HOLD1 and HOLD2; profit factor over the three >= 1.10;\n>= 150 trades in each; still > 0 with every cost doubled. If nothing passes: Renata stays V11.4.\n",
+ "dev_grid": [
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 33536,
+    "per_day": 91.89,
+    "win_rate": 0.454,
+    "pf": 0.718,
+    "expectancy_r": -0.031,
+    "net_r": -1039.6,
+    "max_dd_r": 1041.5,
+    "fill_rate": 0.957
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 33536,
+    "per_day": 91.89,
+    "win_rate": 0.454,
+    "pf": 0.724,
+    "expectancy_r": -0.0304,
+    "net_r": -1018.5,
+    "max_dd_r": 1020.4,
+    "fill_rate": 0.957
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 33536,
+    "per_day": 91.89,
+    "win_rate": 0.454,
+    "pf": 0.721,
+    "expectancy_r": -0.0307,
+    "net_r": -1028.4,
+    "max_dd_r": 1030.3,
+    "fill_rate": 0.957
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 33536,
+    "per_day": 91.89,
+    "win_rate": 0.456,
+    "pf": 0.726,
+    "expectancy_r": -0.03,
+    "net_r": -1005.6,
+    "max_dd_r": 1007.6,
+    "fill_rate": 0.957
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 33536,
+    "per_day": 91.89,
+    "win_rate": 0.471,
+    "pf": 0.789,
+    "expectancy_r": -0.0303,
+    "net_r": -1017.6,
+    "max_dd_r": 1019.6,
+    "fill_rate": 0.957
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 33536,
+    "per_day": 91.89,
+    "win_rate": 0.472,
+    "pf": 0.796,
+    "expectancy_r": -0.0292,
+    "net_r": -979.1,
+    "max_dd_r": 981.2,
+    "fill_rate": 0.957
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 33536,
+    "per_day": 91.89,
+    "win_rate": 0.471,
+    "pf": 0.792,
+    "expectancy_r": -0.0299,
+    "net_r": -1003.4,
+    "max_dd_r": 1005.5,
+    "fill_rate": 0.957
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 33536,
+    "per_day": 91.89,
+    "win_rate": 0.478,
+    "pf": 0.798,
+    "expectancy_r": -0.0287,
+    "net_r": -962.5,
+    "max_dd_r": 964.3,
+    "fill_rate": 0.957
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 33536,
+    "per_day": 91.89,
+    "win_rate": 0.48,
+    "pf": 0.833,
+    "expectancy_r": -0.0286,
+    "net_r": -959.8,
+    "max_dd_r": 965.4,
+    "fill_rate": 0.957
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 33536,
+    "per_day": 91.89,
+    "win_rate": 0.481,
+    "pf": 0.847,
+    "expectancy_r": -0.0262,
+    "net_r": -878.3,
+    "max_dd_r": 885.4,
+    "fill_rate": 0.957
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 33536,
+    "per_day": 91.89,
+    "win_rate": 0.48,
+    "pf": 0.838,
+    "expectancy_r": -0.0278,
+    "net_r": -931.8,
+    "max_dd_r": 939.8,
+    "fill_rate": 0.957
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 33536,
+    "per_day": 91.89,
+    "win_rate": 0.495,
+    "pf": 0.847,
+    "expectancy_r": -0.0256,
+    "net_r": -859.1,
+    "max_dd_r": 864.9,
+    "fill_rate": 0.957
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 33951,
+    "per_day": 93.03,
+    "win_rate": 0.453,
+    "pf": 0.716,
+    "expectancy_r": -0.0313,
+    "net_r": -1061.3,
+    "max_dd_r": 1063.2,
+    "fill_rate": 0.969
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 33951,
+    "per_day": 93.03,
+    "win_rate": 0.453,
+    "pf": 0.721,
+    "expectancy_r": -0.0306,
+    "net_r": -1039.8,
+    "max_dd_r": 1041.7,
+    "fill_rate": 0.969
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 33951,
+    "per_day": 93.03,
+    "win_rate": 0.453,
+    "pf": 0.719,
+    "expectancy_r": -0.0309,
+    "net_r": -1050.1,
+    "max_dd_r": 1052.0,
+    "fill_rate": 0.969
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 33951,
+    "per_day": 93.03,
+    "win_rate": 0.456,
+    "pf": 0.724,
+    "expectancy_r": -0.0302,
+    "net_r": -1027.0,
+    "max_dd_r": 1028.9,
+    "fill_rate": 0.969
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 33951,
+    "per_day": 93.03,
+    "win_rate": 0.471,
+    "pf": 0.787,
+    "expectancy_r": -0.0306,
+    "net_r": -1037.7,
+    "max_dd_r": 1039.8,
+    "fill_rate": 0.969
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 33951,
+    "per_day": 93.03,
+    "win_rate": 0.471,
+    "pf": 0.795,
+    "expectancy_r": -0.0294,
+    "net_r": -998.7,
+    "max_dd_r": 1000.7,
+    "fill_rate": 0.969
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 33951,
+    "per_day": 93.03,
+    "win_rate": 0.471,
+    "pf": 0.79,
+    "expectancy_r": -0.0302,
+    "net_r": -1023.6,
+    "max_dd_r": 1025.7,
+    "fill_rate": 0.969
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 33951,
+    "per_day": 93.03,
+    "win_rate": 0.477,
+    "pf": 0.796,
+    "expectancy_r": -0.029,
+    "net_r": -983.1,
+    "max_dd_r": 984.9,
+    "fill_rate": 0.969
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 33951,
+    "per_day": 93.03,
+    "win_rate": 0.48,
+    "pf": 0.832,
+    "expectancy_r": -0.0288,
+    "net_r": -979.3,
+    "max_dd_r": 984.6,
+    "fill_rate": 0.969
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 33951,
+    "per_day": 93.03,
+    "win_rate": 0.48,
+    "pf": 0.845,
+    "expectancy_r": -0.0264,
+    "net_r": -897.5,
+    "max_dd_r": 904.2,
+    "fill_rate": 0.969
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 33951,
+    "per_day": 93.03,
+    "win_rate": 0.48,
+    "pf": 0.836,
+    "expectancy_r": -0.028,
+    "net_r": -951.3,
+    "max_dd_r": 958.7,
+    "fill_rate": 0.969
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 33951,
+    "per_day": 93.03,
+    "win_rate": 0.494,
+    "pf": 0.845,
+    "expectancy_r": -0.0259,
+    "net_r": -879.3,
+    "max_dd_r": 885.6,
+    "fill_rate": 0.969
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 14512,
+    "per_day": 39.76,
+    "win_rate": 0.478,
+    "pf": 0.799,
+    "expectancy_r": -0.0234,
+    "net_r": -338.9,
+    "max_dd_r": 340.1,
+    "fill_rate": 0.414
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 14512,
+    "per_day": 39.76,
+    "win_rate": 0.479,
+    "pf": 0.805,
+    "expectancy_r": -0.0227,
+    "net_r": -329.8,
+    "max_dd_r": 331.3,
+    "fill_rate": 0.414
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 14512,
+    "per_day": 39.76,
+    "win_rate": 0.478,
+    "pf": 0.801,
+    "expectancy_r": -0.0231,
+    "net_r": -335.2,
+    "max_dd_r": 336.5,
+    "fill_rate": 0.414
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 14512,
+    "per_day": 39.76,
+    "win_rate": 0.482,
+    "pf": 0.809,
+    "expectancy_r": -0.0222,
+    "net_r": -321.4,
+    "max_dd_r": 322.9,
+    "fill_rate": 0.414
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 14512,
+    "per_day": 39.76,
+    "win_rate": 0.488,
+    "pf": 0.859,
+    "expectancy_r": -0.0214,
+    "net_r": -310.2,
+    "max_dd_r": 315.7,
+    "fill_rate": 0.414
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 14512,
+    "per_day": 39.76,
+    "win_rate": 0.489,
+    "pf": 0.865,
+    "expectancy_r": -0.0205,
+    "net_r": -298.2,
+    "max_dd_r": 305.4,
+    "fill_rate": 0.414
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 14512,
+    "per_day": 39.76,
+    "win_rate": 0.488,
+    "pf": 0.863,
+    "expectancy_r": -0.0208,
+    "net_r": -302.5,
+    "max_dd_r": 308.0,
+    "fill_rate": 0.414
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 14512,
+    "per_day": 39.76,
+    "win_rate": 0.498,
+    "pf": 0.871,
+    "expectancy_r": -0.0193,
+    "net_r": -280.5,
+    "max_dd_r": 287.2,
+    "fill_rate": 0.414
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 14512,
+    "per_day": 39.76,
+    "win_rate": 0.501,
+    "pf": 0.887,
+    "expectancy_r": -0.0207,
+    "net_r": -300.4,
+    "max_dd_r": 311.1,
+    "fill_rate": 0.414
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 14512,
+    "per_day": 39.76,
+    "win_rate": 0.502,
+    "pf": 0.896,
+    "expectancy_r": -0.019,
+    "net_r": -275.4,
+    "max_dd_r": 287.5,
+    "fill_rate": 0.414
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 14512,
+    "per_day": 39.76,
+    "win_rate": 0.501,
+    "pf": 0.896,
+    "expectancy_r": -0.0191,
+    "net_r": -276.7,
+    "max_dd_r": 287.8,
+    "fill_rate": 0.414
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 14512,
+    "per_day": 39.76,
+    "win_rate": 0.522,
+    "pf": 0.903,
+    "expectancy_r": -0.0172,
+    "net_r": -248.9,
+    "max_dd_r": 259.0,
+    "fill_rate": 0.414
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 19053,
+    "per_day": 52.21,
+    "win_rate": 0.475,
+    "pf": 0.781,
+    "expectancy_r": -0.0251,
+    "net_r": -478.5,
+    "max_dd_r": 479.8,
+    "fill_rate": 0.544
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 19053,
+    "per_day": 52.21,
+    "win_rate": 0.475,
+    "pf": 0.786,
+    "expectancy_r": -0.0245,
+    "net_r": -467.3,
+    "max_dd_r": 468.7,
+    "fill_rate": 0.544
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 19053,
+    "per_day": 52.21,
+    "win_rate": 0.475,
+    "pf": 0.783,
+    "expectancy_r": -0.0249,
+    "net_r": -474.8,
+    "max_dd_r": 476.2,
+    "fill_rate": 0.544
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 19053,
+    "per_day": 52.21,
+    "win_rate": 0.477,
+    "pf": 0.789,
+    "expectancy_r": -0.0241,
+    "net_r": -458.8,
+    "max_dd_r": 460.2,
+    "fill_rate": 0.544
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 19053,
+    "per_day": 52.21,
+    "win_rate": 0.488,
+    "pf": 0.851,
+    "expectancy_r": -0.0222,
+    "net_r": -422.4,
+    "max_dd_r": 432.1,
+    "fill_rate": 0.544
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 19053,
+    "per_day": 52.21,
+    "win_rate": 0.488,
+    "pf": 0.857,
+    "expectancy_r": -0.0213,
+    "net_r": -405.2,
+    "max_dd_r": 419.0,
+    "fill_rate": 0.544
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 19053,
+    "per_day": 52.21,
+    "win_rate": 0.488,
+    "pf": 0.854,
+    "expectancy_r": -0.0218,
+    "net_r": -414.6,
+    "max_dd_r": 424.3,
+    "fill_rate": 0.544
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 19053,
+    "per_day": 52.21,
+    "win_rate": 0.496,
+    "pf": 0.862,
+    "expectancy_r": -0.0203,
+    "net_r": -386.2,
+    "max_dd_r": 398.8,
+    "fill_rate": 0.544
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 19053,
+    "per_day": 52.21,
+    "win_rate": 0.496,
+    "pf": 0.875,
+    "expectancy_r": -0.0224,
+    "net_r": -427.4,
+    "max_dd_r": 444.9,
+    "fill_rate": 0.544
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 19053,
+    "per_day": 52.21,
+    "win_rate": 0.497,
+    "pf": 0.884,
+    "expectancy_r": -0.0209,
+    "net_r": -397.4,
+    "max_dd_r": 416.1,
+    "fill_rate": 0.544
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 19053,
+    "per_day": 52.21,
+    "win_rate": 0.496,
+    "pf": 0.881,
+    "expectancy_r": -0.0214,
+    "net_r": -407.5,
+    "max_dd_r": 425.4,
+    "fill_rate": 0.544
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 19053,
+    "per_day": 52.21,
+    "win_rate": 0.515,
+    "pf": 0.891,
+    "expectancy_r": -0.019,
+    "net_r": -362.8,
+    "max_dd_r": 378.3,
+    "fill_rate": 0.544
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 5016,
+    "per_day": 13.74,
+    "win_rate": 0.505,
+    "pf": 0.849,
+    "expectancy_r": -0.0205,
+    "net_r": -102.8,
+    "max_dd_r": 109.8,
+    "fill_rate": 0.143
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 5016,
+    "per_day": 13.74,
+    "win_rate": 0.505,
+    "pf": 0.856,
+    "expectancy_r": -0.0195,
+    "net_r": -97.8,
+    "max_dd_r": 105.3,
+    "fill_rate": 0.143
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 5016,
+    "per_day": 13.74,
+    "win_rate": 0.505,
+    "pf": 0.855,
+    "expectancy_r": -0.0197,
+    "net_r": -98.7,
+    "max_dd_r": 105.6,
+    "fill_rate": 0.143
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 5016,
+    "per_day": 13.74,
+    "win_rate": 0.511,
+    "pf": 0.863,
+    "expectancy_r": -0.0182,
+    "net_r": -91.4,
+    "max_dd_r": 98.3,
+    "fill_rate": 0.143
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 5016,
+    "per_day": 13.74,
+    "win_rate": 0.505,
+    "pf": 0.854,
+    "expectancy_r": -0.0261,
+    "net_r": -130.8,
+    "max_dd_r": 141.1,
+    "fill_rate": 0.143
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 5016,
+    "per_day": 13.74,
+    "win_rate": 0.506,
+    "pf": 0.87,
+    "expectancy_r": -0.0231,
+    "net_r": -116.0,
+    "max_dd_r": 129.4,
+    "fill_rate": 0.143
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 5016,
+    "per_day": 13.74,
+    "win_rate": 0.505,
+    "pf": 0.859,
+    "expectancy_r": -0.0252,
+    "net_r": -126.2,
+    "max_dd_r": 136.5,
+    "fill_rate": 0.143
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 5016,
+    "per_day": 13.74,
+    "win_rate": 0.522,
+    "pf": 0.872,
+    "expectancy_r": -0.0222,
+    "net_r": -111.4,
+    "max_dd_r": 123.2,
+    "fill_rate": 0.143
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 5016,
+    "per_day": 13.74,
+    "win_rate": 0.507,
+    "pf": 0.862,
+    "expectancy_r": -0.0293,
+    "net_r": -147.2,
+    "max_dd_r": 155.7,
+    "fill_rate": 0.143
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 5016,
+    "per_day": 13.74,
+    "win_rate": 0.51,
+    "pf": 0.888,
+    "expectancy_r": -0.0237,
+    "net_r": -118.9,
+    "max_dd_r": 129.7,
+    "fill_rate": 0.143
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 5016,
+    "per_day": 13.74,
+    "win_rate": 0.507,
+    "pf": 0.873,
+    "expectancy_r": -0.027,
+    "net_r": -135.3,
+    "max_dd_r": 143.8,
+    "fill_rate": 0.143
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 5016,
+    "per_day": 13.74,
+    "win_rate": 0.539,
+    "pf": 0.878,
+    "expectancy_r": -0.0247,
+    "net_r": -124.1,
+    "max_dd_r": 134.3,
+    "fill_rate": 0.143
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 9069,
+    "per_day": 24.85,
+    "win_rate": 0.495,
+    "pf": 0.839,
+    "expectancy_r": -0.0206,
+    "net_r": -186.7,
+    "max_dd_r": 194.1,
+    "fill_rate": 0.259
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 9069,
+    "per_day": 24.85,
+    "win_rate": 0.495,
+    "pf": 0.846,
+    "expectancy_r": -0.0196,
+    "net_r": -178.2,
+    "max_dd_r": 186.5,
+    "fill_rate": 0.259
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 9069,
+    "per_day": 24.85,
+    "win_rate": 0.495,
+    "pf": 0.843,
+    "expectancy_r": -0.02,
+    "net_r": -181.0,
+    "max_dd_r": 188.4,
+    "fill_rate": 0.259
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 9069,
+    "per_day": 24.85,
+    "win_rate": 0.499,
+    "pf": 0.848,
+    "expectancy_r": -0.0192,
+    "net_r": -174.0,
+    "max_dd_r": 181.8,
+    "fill_rate": 0.259
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 9069,
+    "per_day": 24.85,
+    "win_rate": 0.504,
+    "pf": 0.862,
+    "expectancy_r": -0.0232,
+    "net_r": -210.0,
+    "max_dd_r": 219.7,
+    "fill_rate": 0.259
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 9069,
+    "per_day": 24.85,
+    "win_rate": 0.505,
+    "pf": 0.875,
+    "expectancy_r": -0.0209,
+    "net_r": -189.9,
+    "max_dd_r": 202.4,
+    "fill_rate": 0.259
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 9069,
+    "per_day": 24.85,
+    "win_rate": 0.504,
+    "pf": 0.867,
+    "expectancy_r": -0.0223,
+    "net_r": -201.9,
+    "max_dd_r": 211.6,
+    "fill_rate": 0.259
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 9069,
+    "per_day": 24.85,
+    "win_rate": 0.517,
+    "pf": 0.875,
+    "expectancy_r": -0.0205,
+    "net_r": -186.1,
+    "max_dd_r": 196.9,
+    "fill_rate": 0.259
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 9069,
+    "per_day": 24.85,
+    "win_rate": 0.507,
+    "pf": 0.886,
+    "expectancy_r": -0.0226,
+    "net_r": -205.4,
+    "max_dd_r": 216.7,
+    "fill_rate": 0.259
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 9069,
+    "per_day": 24.85,
+    "win_rate": 0.51,
+    "pf": 0.905,
+    "expectancy_r": -0.0188,
+    "net_r": -170.4,
+    "max_dd_r": 182.2,
+    "fill_rate": 0.259
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 9069,
+    "per_day": 24.85,
+    "win_rate": 0.507,
+    "pf": 0.895,
+    "expectancy_r": -0.0209,
+    "net_r": -190.0,
+    "max_dd_r": 201.3,
+    "fill_rate": 0.259
+   }
+  },
+  {
+   "signal": "V11.4 (2 per side)",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 9069,
+    "per_day": 24.85,
+    "win_rate": 0.533,
+    "pf": 0.898,
+    "expectancy_r": -0.0196,
+    "net_r": -177.6,
+    "max_dd_r": 188.6,
+    "fill_rate": 0.259
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 2317,
+    "per_day": 6.35,
+    "win_rate": 0.49,
+    "pf": 0.779,
+    "expectancy_r": -0.0317,
+    "net_r": -73.5,
+    "max_dd_r": 77.3,
+    "fill_rate": 0.963
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 2317,
+    "per_day": 6.35,
+    "win_rate": 0.49,
+    "pf": 0.789,
+    "expectancy_r": -0.0302,
+    "net_r": -70.1,
+    "max_dd_r": 74.7,
+    "fill_rate": 0.963
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 2317,
+    "per_day": 6.35,
+    "win_rate": 0.49,
+    "pf": 0.779,
+    "expectancy_r": -0.0317,
+    "net_r": -73.5,
+    "max_dd_r": 77.3,
+    "fill_rate": 0.963
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 2317,
+    "per_day": 6.35,
+    "win_rate": 0.495,
+    "pf": 0.8,
+    "expectancy_r": -0.0283,
+    "net_r": -65.5,
+    "max_dd_r": 71.1,
+    "fill_rate": 0.963
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 2317,
+    "per_day": 6.35,
+    "win_rate": 0.502,
+    "pf": 0.777,
+    "expectancy_r": -0.0421,
+    "net_r": -97.5,
+    "max_dd_r": 100.5,
+    "fill_rate": 0.963
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 2317,
+    "per_day": 6.35,
+    "win_rate": 0.502,
+    "pf": 0.78,
+    "expectancy_r": -0.0414,
+    "net_r": -96.0,
+    "max_dd_r": 101.1,
+    "fill_rate": 0.963
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 2317,
+    "per_day": 6.35,
+    "win_rate": 0.502,
+    "pf": 0.777,
+    "expectancy_r": -0.042,
+    "net_r": -97.3,
+    "max_dd_r": 100.2,
+    "fill_rate": 0.963
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 2317,
+    "per_day": 6.35,
+    "win_rate": 0.518,
+    "pf": 0.794,
+    "expectancy_r": -0.0378,
+    "net_r": -87.5,
+    "max_dd_r": 91.4,
+    "fill_rate": 0.963
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 2317,
+    "per_day": 6.35,
+    "win_rate": 0.5,
+    "pf": 0.775,
+    "expectancy_r": -0.0511,
+    "net_r": -118.4,
+    "max_dd_r": 123.8,
+    "fill_rate": 0.963
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 2317,
+    "per_day": 6.35,
+    "win_rate": 0.502,
+    "pf": 0.788,
+    "expectancy_r": -0.0481,
+    "net_r": -111.4,
+    "max_dd_r": 119.6,
+    "fill_rate": 0.963
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 2317,
+    "per_day": 6.35,
+    "win_rate": 0.5,
+    "pf": 0.777,
+    "expectancy_r": -0.0507,
+    "net_r": -117.4,
+    "max_dd_r": 122.8,
+    "fill_rate": 0.963
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 2317,
+    "per_day": 6.35,
+    "win_rate": 0.528,
+    "pf": 0.797,
+    "expectancy_r": -0.0438,
+    "net_r": -101.5,
+    "max_dd_r": 107.8,
+    "fill_rate": 0.963
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 2339,
+    "per_day": 6.41,
+    "win_rate": 0.488,
+    "pf": 0.773,
+    "expectancy_r": -0.0326,
+    "net_r": -76.2,
+    "max_dd_r": 79.5,
+    "fill_rate": 0.972
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 2339,
+    "per_day": 6.41,
+    "win_rate": 0.488,
+    "pf": 0.783,
+    "expectancy_r": -0.0311,
+    "net_r": -72.7,
+    "max_dd_r": 76.8,
+    "fill_rate": 0.972
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 2339,
+    "per_day": 6.41,
+    "win_rate": 0.488,
+    "pf": 0.773,
+    "expectancy_r": -0.0326,
+    "net_r": -76.2,
+    "max_dd_r": 79.5,
+    "fill_rate": 0.972
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 2339,
+    "per_day": 6.41,
+    "win_rate": 0.493,
+    "pf": 0.794,
+    "expectancy_r": -0.0291,
+    "net_r": -68.1,
+    "max_dd_r": 73.2,
+    "fill_rate": 0.972
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 2339,
+    "per_day": 6.41,
+    "win_rate": 0.501,
+    "pf": 0.776,
+    "expectancy_r": -0.0421,
+    "net_r": -98.6,
+    "max_dd_r": 101.7,
+    "fill_rate": 0.972
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 2339,
+    "per_day": 6.41,
+    "win_rate": 0.501,
+    "pf": 0.779,
+    "expectancy_r": -0.0415,
+    "net_r": -97.1,
+    "max_dd_r": 102.3,
+    "fill_rate": 0.972
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 2339,
+    "per_day": 6.41,
+    "win_rate": 0.501,
+    "pf": 0.777,
+    "expectancy_r": -0.042,
+    "net_r": -98.3,
+    "max_dd_r": 101.4,
+    "fill_rate": 0.972
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 2339,
+    "per_day": 6.41,
+    "win_rate": 0.517,
+    "pf": 0.793,
+    "expectancy_r": -0.0379,
+    "net_r": -88.6,
+    "max_dd_r": 92.6,
+    "fill_rate": 0.972
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 2339,
+    "per_day": 6.41,
+    "win_rate": 0.5,
+    "pf": 0.78,
+    "expectancy_r": -0.0498,
+    "net_r": -116.6,
+    "max_dd_r": 122.3,
+    "fill_rate": 0.972
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 2339,
+    "per_day": 6.41,
+    "win_rate": 0.501,
+    "pf": 0.792,
+    "expectancy_r": -0.0469,
+    "net_r": -109.8,
+    "max_dd_r": 118.3,
+    "fill_rate": 0.972
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 2339,
+    "per_day": 6.41,
+    "win_rate": 0.5,
+    "pf": 0.782,
+    "expectancy_r": -0.0494,
+    "net_r": -115.6,
+    "max_dd_r": 121.3,
+    "fill_rate": 0.972
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 2339,
+    "per_day": 6.41,
+    "win_rate": 0.528,
+    "pf": 0.801,
+    "expectancy_r": -0.0428,
+    "net_r": -100.2,
+    "max_dd_r": 106.7,
+    "fill_rate": 0.972
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 1304,
+    "per_day": 3.57,
+    "win_rate": 0.508,
+    "pf": 0.859,
+    "expectancy_r": -0.0211,
+    "net_r": -27.5,
+    "max_dd_r": 32.9,
+    "fill_rate": 0.542
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 1304,
+    "per_day": 3.57,
+    "win_rate": 0.508,
+    "pf": 0.874,
+    "expectancy_r": -0.0189,
+    "net_r": -24.7,
+    "max_dd_r": 31.6,
+    "fill_rate": 0.542
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 1304,
+    "per_day": 3.57,
+    "win_rate": 0.508,
+    "pf": 0.859,
+    "expectancy_r": -0.0211,
+    "net_r": -27.5,
+    "max_dd_r": 32.9,
+    "fill_rate": 0.542
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 1304,
+    "per_day": 3.57,
+    "win_rate": 0.521,
+    "pf": 0.896,
+    "expectancy_r": -0.0152,
+    "net_r": -19.8,
+    "max_dd_r": 26.2,
+    "fill_rate": 0.542
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 1304,
+    "per_day": 3.57,
+    "win_rate": 0.504,
+    "pf": 0.861,
+    "expectancy_r": -0.0272,
+    "net_r": -35.5,
+    "max_dd_r": 37.4,
+    "fill_rate": 0.542
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 1304,
+    "per_day": 3.57,
+    "win_rate": 0.505,
+    "pf": 0.867,
+    "expectancy_r": -0.0259,
+    "net_r": -33.8,
+    "max_dd_r": 38.0,
+    "fill_rate": 0.542
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 1304,
+    "per_day": 3.57,
+    "win_rate": 0.504,
+    "pf": 0.864,
+    "expectancy_r": -0.0267,
+    "net_r": -34.8,
+    "max_dd_r": 36.7,
+    "fill_rate": 0.542
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 1304,
+    "per_day": 3.57,
+    "win_rate": 0.53,
+    "pf": 0.889,
+    "expectancy_r": -0.0208,
+    "net_r": -27.2,
+    "max_dd_r": 30.4,
+    "fill_rate": 0.542
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 1304,
+    "per_day": 3.57,
+    "win_rate": 0.517,
+    "pf": 0.857,
+    "expectancy_r": -0.0334,
+    "net_r": -43.6,
+    "max_dd_r": 47.5,
+    "fill_rate": 0.542
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 1304,
+    "per_day": 3.57,
+    "win_rate": 0.52,
+    "pf": 0.864,
+    "expectancy_r": -0.0316,
+    "net_r": -41.2,
+    "max_dd_r": 45.8,
+    "fill_rate": 0.542
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 1304,
+    "per_day": 3.57,
+    "win_rate": 0.517,
+    "pf": 0.859,
+    "expectancy_r": -0.0331,
+    "net_r": -43.1,
+    "max_dd_r": 46.5,
+    "fill_rate": 0.542
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 1304,
+    "per_day": 3.57,
+    "win_rate": 0.56,
+    "pf": 0.881,
+    "expectancy_r": -0.0259,
+    "net_r": -33.7,
+    "max_dd_r": 36.3,
+    "fill_rate": 0.542
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 1534,
+    "per_day": 4.2,
+    "win_rate": 0.498,
+    "pf": 0.825,
+    "expectancy_r": -0.0264,
+    "net_r": -40.5,
+    "max_dd_r": 42.1,
+    "fill_rate": 0.638
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 1534,
+    "per_day": 4.2,
+    "win_rate": 0.498,
+    "pf": 0.837,
+    "expectancy_r": -0.0246,
+    "net_r": -37.8,
+    "max_dd_r": 40.6,
+    "fill_rate": 0.638
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 1534,
+    "per_day": 4.2,
+    "win_rate": 0.498,
+    "pf": 0.825,
+    "expectancy_r": -0.0264,
+    "net_r": -40.5,
+    "max_dd_r": 42.1,
+    "fill_rate": 0.638
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 1534,
+    "per_day": 4.2,
+    "win_rate": 0.509,
+    "pf": 0.855,
+    "expectancy_r": -0.0215,
+    "net_r": -33.0,
+    "max_dd_r": 35.3,
+    "fill_rate": 0.638
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 1534,
+    "per_day": 4.2,
+    "win_rate": 0.504,
+    "pf": 0.846,
+    "expectancy_r": -0.0302,
+    "net_r": -46.3,
+    "max_dd_r": 48.8,
+    "fill_rate": 0.638
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 1534,
+    "per_day": 4.2,
+    "win_rate": 0.505,
+    "pf": 0.851,
+    "expectancy_r": -0.0291,
+    "net_r": -44.7,
+    "max_dd_r": 49.1,
+    "fill_rate": 0.638
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 1534,
+    "per_day": 4.2,
+    "win_rate": 0.504,
+    "pf": 0.849,
+    "expectancy_r": -0.0297,
+    "net_r": -45.6,
+    "max_dd_r": 48.3,
+    "fill_rate": 0.638
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 1534,
+    "per_day": 4.2,
+    "win_rate": 0.527,
+    "pf": 0.867,
+    "expectancy_r": -0.025,
+    "net_r": -38.3,
+    "max_dd_r": 41.7,
+    "fill_rate": 0.638
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 1534,
+    "per_day": 4.2,
+    "win_rate": 0.51,
+    "pf": 0.841,
+    "expectancy_r": -0.0372,
+    "net_r": -57.1,
+    "max_dd_r": 62.1,
+    "fill_rate": 0.638
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 1534,
+    "per_day": 4.2,
+    "win_rate": 0.513,
+    "pf": 0.846,
+    "expectancy_r": -0.0357,
+    "net_r": -54.7,
+    "max_dd_r": 59.8,
+    "fill_rate": 0.638
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 1534,
+    "per_day": 4.2,
+    "win_rate": 0.51,
+    "pf": 0.843,
+    "expectancy_r": -0.0368,
+    "net_r": -56.5,
+    "max_dd_r": 61.0,
+    "fill_rate": 0.638
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 1534,
+    "per_day": 4.2,
+    "win_rate": 0.55,
+    "pf": 0.859,
+    "expectancy_r": -0.0307,
+    "net_r": -47.2,
+    "max_dd_r": 50.3,
+    "fill_rate": 0.638
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 660,
+    "per_day": 1.81,
+    "win_rate": 0.555,
+    "pf": 1.042,
+    "expectancy_r": 0.0062,
+    "net_r": 4.1,
+    "max_dd_r": 11.7,
+    "fill_rate": 0.274
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 660,
+    "per_day": 1.81,
+    "win_rate": 0.555,
+    "pf": 1.053,
+    "expectancy_r": 0.0079,
+    "net_r": 5.2,
+    "max_dd_r": 11.0,
+    "fill_rate": 0.274
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 660,
+    "per_day": 1.81,
+    "win_rate": 0.555,
+    "pf": 1.042,
+    "expectancy_r": 0.0062,
+    "net_r": 4.1,
+    "max_dd_r": 11.7,
+    "fill_rate": 0.274
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 660,
+    "per_day": 1.81,
+    "win_rate": 0.573,
+    "pf": 1.098,
+    "expectancy_r": 0.014,
+    "net_r": 9.3,
+    "max_dd_r": 7.4,
+    "fill_rate": 0.274
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 660,
+    "per_day": 1.81,
+    "win_rate": 0.523,
+    "pf": 0.992,
+    "expectancy_r": -0.0017,
+    "net_r": -1.1,
+    "max_dd_r": 21.7,
+    "fill_rate": 0.274
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 660,
+    "per_day": 1.81,
+    "win_rate": 0.526,
+    "pf": 1.012,
+    "expectancy_r": 0.0025,
+    "net_r": 1.7,
+    "max_dd_r": 16.7,
+    "fill_rate": 0.274
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 660,
+    "per_day": 1.81,
+    "win_rate": 0.523,
+    "pf": 0.99,
+    "expectancy_r": -0.002,
+    "net_r": -1.3,
+    "max_dd_r": 21.7,
+    "fill_rate": 0.274
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 660,
+    "per_day": 1.81,
+    "win_rate": 0.556,
+    "pf": 1.002,
+    "expectancy_r": 0.0004,
+    "net_r": 0.3,
+    "max_dd_r": 13.6,
+    "fill_rate": 0.274
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 660,
+    "per_day": 1.81,
+    "win_rate": 0.524,
+    "pf": 0.929,
+    "expectancy_r": -0.0173,
+    "net_r": -11.4,
+    "max_dd_r": 25.4,
+    "fill_rate": 0.274
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 660,
+    "per_day": 1.81,
+    "win_rate": 0.532,
+    "pf": 0.985,
+    "expectancy_r": -0.0036,
+    "net_r": -2.4,
+    "max_dd_r": 19.9,
+    "fill_rate": 0.274
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 660,
+    "per_day": 1.81,
+    "win_rate": 0.524,
+    "pf": 0.926,
+    "expectancy_r": -0.018,
+    "net_r": -11.9,
+    "max_dd_r": 25.3,
+    "fill_rate": 0.274
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 660,
+    "per_day": 1.81,
+    "win_rate": 0.58,
+    "pf": 0.961,
+    "expectancy_r": -0.0085,
+    "net_r": -5.6,
+    "max_dd_r": 19.3,
+    "fill_rate": 0.274
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 962,
+    "per_day": 2.64,
+    "win_rate": 0.537,
+    "pf": 0.94,
+    "expectancy_r": -0.0092,
+    "net_r": -8.8,
+    "max_dd_r": 19.6,
+    "fill_rate": 0.4
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 962,
+    "per_day": 2.64,
+    "win_rate": 0.537,
+    "pf": 0.954,
+    "expectancy_r": -0.007,
+    "net_r": -6.7,
+    "max_dd_r": 19.0,
+    "fill_rate": 0.4
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 962,
+    "per_day": 2.64,
+    "win_rate": 0.537,
+    "pf": 0.943,
+    "expectancy_r": -0.0087,
+    "net_r": -8.4,
+    "max_dd_r": 19.2,
+    "fill_rate": 0.4
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 962,
+    "per_day": 2.64,
+    "win_rate": 0.552,
+    "pf": 0.979,
+    "expectancy_r": -0.0032,
+    "net_r": -3.1,
+    "max_dd_r": 13.6,
+    "fill_rate": 0.4
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 962,
+    "per_day": 2.64,
+    "win_rate": 0.524,
+    "pf": 0.936,
+    "expectancy_r": -0.013,
+    "net_r": -12.5,
+    "max_dd_r": 29.5,
+    "fill_rate": 0.4
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 962,
+    "per_day": 2.64,
+    "win_rate": 0.526,
+    "pf": 0.954,
+    "expectancy_r": -0.0092,
+    "net_r": -8.9,
+    "max_dd_r": 24.3,
+    "fill_rate": 0.4
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 962,
+    "per_day": 2.64,
+    "win_rate": 0.524,
+    "pf": 0.937,
+    "expectancy_r": -0.0128,
+    "net_r": -12.3,
+    "max_dd_r": 29.0,
+    "fill_rate": 0.4
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 962,
+    "per_day": 2.64,
+    "win_rate": 0.55,
+    "pf": 0.95,
+    "expectancy_r": -0.0095,
+    "net_r": -9.1,
+    "max_dd_r": 19.9,
+    "fill_rate": 0.4
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 962,
+    "per_day": 2.64,
+    "win_rate": 0.524,
+    "pf": 0.902,
+    "expectancy_r": -0.0237,
+    "net_r": -22.8,
+    "max_dd_r": 34.5,
+    "fill_rate": 0.4
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 962,
+    "per_day": 2.64,
+    "win_rate": 0.53,
+    "pf": 0.95,
+    "expectancy_r": -0.0118,
+    "net_r": -11.3,
+    "max_dd_r": 26.7,
+    "fill_rate": 0.4
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 962,
+    "per_day": 2.64,
+    "win_rate": 0.524,
+    "pf": 0.903,
+    "expectancy_r": -0.0234,
+    "net_r": -22.5,
+    "max_dd_r": 33.7,
+    "fill_rate": 0.4
+   }
+  },
+  {
+   "signal": "z>=1.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 962,
+    "per_day": 2.64,
+    "win_rate": 0.571,
+    "pf": 0.927,
+    "expectancy_r": -0.0163,
+    "net_r": -15.6,
+    "max_dd_r": 27.6,
+    "fill_rate": 0.4
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.493,
+    "pf": 0.865,
+    "expectancy_r": -0.0237,
+    "net_r": -5.1,
+    "max_dd_r": 9.3,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.493,
+    "pf": 0.889,
+    "expectancy_r": -0.0195,
+    "net_r": -4.2,
+    "max_dd_r": 9.6,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.493,
+    "pf": 0.865,
+    "expectancy_r": -0.0237,
+    "net_r": -5.1,
+    "max_dd_r": 9.3,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.526,
+    "pf": 0.987,
+    "expectancy_r": -0.0021,
+    "net_r": -0.5,
+    "max_dd_r": 5.3,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.512,
+    "pf": 0.926,
+    "expectancy_r": -0.0162,
+    "net_r": -3.5,
+    "max_dd_r": 8.3,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.512,
+    "pf": 0.962,
+    "expectancy_r": -0.0083,
+    "net_r": -1.8,
+    "max_dd_r": 7.1,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.512,
+    "pf": 0.94,
+    "expectancy_r": -0.0131,
+    "net_r": -2.8,
+    "max_dd_r": 8.3,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.549,
+    "pf": 1.0,
+    "expectancy_r": -0.0,
+    "net_r": -0.0,
+    "max_dd_r": 5.4,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.484,
+    "pf": 0.797,
+    "expectancy_r": -0.0548,
+    "net_r": -11.8,
+    "max_dd_r": 17.1,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.493,
+    "pf": 0.861,
+    "expectancy_r": -0.0373,
+    "net_r": -8.0,
+    "max_dd_r": 13.0,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.484,
+    "pf": 0.806,
+    "expectancy_r": -0.0523,
+    "net_r": -11.3,
+    "max_dd_r": 17.1,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.553,
+    "pf": 0.886,
+    "expectancy_r": -0.0272,
+    "net_r": -5.8,
+    "max_dd_r": 9.9,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.493,
+    "pf": 0.865,
+    "expectancy_r": -0.0237,
+    "net_r": -5.1,
+    "max_dd_r": 9.3,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.493,
+    "pf": 0.889,
+    "expectancy_r": -0.0195,
+    "net_r": -4.2,
+    "max_dd_r": 9.6,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.493,
+    "pf": 0.865,
+    "expectancy_r": -0.0237,
+    "net_r": -5.1,
+    "max_dd_r": 9.3,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.526,
+    "pf": 0.987,
+    "expectancy_r": -0.0021,
+    "net_r": -0.5,
+    "max_dd_r": 5.3,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.512,
+    "pf": 0.926,
+    "expectancy_r": -0.0162,
+    "net_r": -3.5,
+    "max_dd_r": 8.3,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.512,
+    "pf": 0.962,
+    "expectancy_r": -0.0083,
+    "net_r": -1.8,
+    "max_dd_r": 7.1,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.512,
+    "pf": 0.94,
+    "expectancy_r": -0.0131,
+    "net_r": -2.8,
+    "max_dd_r": 8.3,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.549,
+    "pf": 1.0,
+    "expectancy_r": -0.0,
+    "net_r": -0.0,
+    "max_dd_r": 5.4,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.484,
+    "pf": 0.797,
+    "expectancy_r": -0.0548,
+    "net_r": -11.8,
+    "max_dd_r": 17.1,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.493,
+    "pf": 0.861,
+    "expectancy_r": -0.0373,
+    "net_r": -8.0,
+    "max_dd_r": 13.0,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.484,
+    "pf": 0.806,
+    "expectancy_r": -0.0523,
+    "net_r": -11.3,
+    "max_dd_r": 17.1,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.0,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 215,
+    "per_day": 0.59,
+    "win_rate": 0.553,
+    "pf": 0.886,
+    "expectancy_r": -0.0272,
+    "net_r": -5.8,
+    "max_dd_r": 9.9,
+    "fill_rate": 0.995
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 127,
+    "per_day": 0.35,
+    "win_rate": 0.449,
+    "pf": 0.826,
+    "expectancy_r": -0.0323,
+    "net_r": -4.1,
+    "max_dd_r": 6.5,
+    "fill_rate": 0.588
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 127,
+    "per_day": 0.35,
+    "win_rate": 0.449,
+    "pf": 0.901,
+    "expectancy_r": -0.0185,
+    "net_r": -2.3,
+    "max_dd_r": 5.4,
+    "fill_rate": 0.588
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 127,
+    "per_day": 0.35,
+    "win_rate": 0.449,
+    "pf": 0.826,
+    "expectancy_r": -0.0323,
+    "net_r": -4.1,
+    "max_dd_r": 6.5,
+    "fill_rate": 0.588
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 127,
+    "per_day": 0.35,
+    "win_rate": 0.504,
+    "pf": 0.978,
+    "expectancy_r": -0.0037,
+    "net_r": -0.5,
+    "max_dd_r": 3.5,
+    "fill_rate": 0.588
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 127,
+    "per_day": 0.35,
+    "win_rate": 0.496,
+    "pf": 0.913,
+    "expectancy_r": -0.0216,
+    "net_r": -2.7,
+    "max_dd_r": 7.2,
+    "fill_rate": 0.588
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 127,
+    "per_day": 0.35,
+    "win_rate": 0.504,
+    "pf": 0.987,
+    "expectancy_r": -0.0032,
+    "net_r": -0.4,
+    "max_dd_r": 6.1,
+    "fill_rate": 0.588
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 127,
+    "per_day": 0.35,
+    "win_rate": 0.496,
+    "pf": 0.931,
+    "expectancy_r": -0.0173,
+    "net_r": -2.2,
+    "max_dd_r": 7.2,
+    "fill_rate": 0.588
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 127,
+    "per_day": 0.35,
+    "win_rate": 0.567,
+    "pf": 1.003,
+    "expectancy_r": 0.0007,
+    "net_r": 0.1,
+    "max_dd_r": 4.1,
+    "fill_rate": 0.588
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 127,
+    "per_day": 0.35,
+    "win_rate": 0.488,
+    "pf": 0.827,
+    "expectancy_r": -0.0525,
+    "net_r": -6.7,
+    "max_dd_r": 10.9,
+    "fill_rate": 0.588
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 127,
+    "per_day": 0.35,
+    "win_rate": 0.504,
+    "pf": 0.878,
+    "expectancy_r": -0.0351,
+    "net_r": -4.5,
+    "max_dd_r": 10.6,
+    "fill_rate": 0.588
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 127,
+    "per_day": 0.35,
+    "win_rate": 0.488,
+    "pf": 0.841,
+    "expectancy_r": -0.0483,
+    "net_r": -6.1,
+    "max_dd_r": 10.8,
+    "fill_rate": 0.588
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 127,
+    "per_day": 0.35,
+    "win_rate": 0.575,
+    "pf": 0.925,
+    "expectancy_r": -0.019,
+    "net_r": -2.4,
+    "max_dd_r": 5.9,
+    "fill_rate": 0.588
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 144,
+    "per_day": 0.39,
+    "win_rate": 0.444,
+    "pf": 0.863,
+    "expectancy_r": -0.0246,
+    "net_r": -3.5,
+    "max_dd_r": 6.6,
+    "fill_rate": 0.667
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 144,
+    "per_day": 0.39,
+    "win_rate": 0.444,
+    "pf": 0.938,
+    "expectancy_r": -0.011,
+    "net_r": -1.6,
+    "max_dd_r": 5.6,
+    "fill_rate": 0.667
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 144,
+    "per_day": 0.39,
+    "win_rate": 0.444,
+    "pf": 0.863,
+    "expectancy_r": -0.0246,
+    "net_r": -3.5,
+    "max_dd_r": 6.6,
+    "fill_rate": 0.667
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 144,
+    "per_day": 0.39,
+    "win_rate": 0.493,
+    "pf": 1.003,
+    "expectancy_r": 0.0005,
+    "net_r": 0.1,
+    "max_dd_r": 3.9,
+    "fill_rate": 0.667
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 144,
+    "per_day": 0.39,
+    "win_rate": 0.5,
+    "pf": 0.941,
+    "expectancy_r": -0.0142,
+    "net_r": -2.0,
+    "max_dd_r": 7.6,
+    "fill_rate": 0.667
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 144,
+    "per_day": 0.39,
+    "win_rate": 0.507,
+    "pf": 1.012,
+    "expectancy_r": 0.0029,
+    "net_r": 0.4,
+    "max_dd_r": 6.5,
+    "fill_rate": 0.667
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 144,
+    "per_day": 0.39,
+    "win_rate": 0.5,
+    "pf": 0.957,
+    "expectancy_r": -0.0104,
+    "net_r": -1.5,
+    "max_dd_r": 7.6,
+    "fill_rate": 0.667
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 144,
+    "per_day": 0.39,
+    "win_rate": 0.562,
+    "pf": 1.019,
+    "expectancy_r": 0.0039,
+    "net_r": 0.6,
+    "max_dd_r": 5.0,
+    "fill_rate": 0.667
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 144,
+    "per_day": 0.39,
+    "win_rate": 0.472,
+    "pf": 0.821,
+    "expectancy_r": -0.0532,
+    "net_r": -7.7,
+    "max_dd_r": 12.2,
+    "fill_rate": 0.667
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 144,
+    "per_day": 0.39,
+    "win_rate": 0.486,
+    "pf": 0.885,
+    "expectancy_r": -0.0324,
+    "net_r": -4.7,
+    "max_dd_r": 11.7,
+    "fill_rate": 0.667
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 144,
+    "per_day": 0.39,
+    "win_rate": 0.472,
+    "pf": 0.833,
+    "expectancy_r": -0.0495,
+    "net_r": -7.1,
+    "max_dd_r": 12.1,
+    "fill_rate": 0.667
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.25,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 144,
+    "per_day": 0.39,
+    "win_rate": 0.556,
+    "pf": 0.923,
+    "expectancy_r": -0.0191,
+    "net_r": -2.8,
+    "max_dd_r": 7.8,
+    "fill_rate": 0.667
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 81,
+    "per_day": 0.22,
+    "win_rate": 0.556,
+    "pf": 1.086,
+    "expectancy_r": 0.0137,
+    "net_r": 1.1,
+    "max_dd_r": 3.1,
+    "fill_rate": 0.375
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 81,
+    "per_day": 0.22,
+    "win_rate": 0.556,
+    "pf": 1.154,
+    "expectancy_r": 0.0244,
+    "net_r": 2.0,
+    "max_dd_r": 3.1,
+    "fill_rate": 0.375
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 81,
+    "per_day": 0.22,
+    "win_rate": 0.556,
+    "pf": 1.086,
+    "expectancy_r": 0.0137,
+    "net_r": 1.1,
+    "max_dd_r": 3.1,
+    "fill_rate": 0.375
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 81,
+    "per_day": 0.22,
+    "win_rate": 0.593,
+    "pf": 1.256,
+    "expectancy_r": 0.0352,
+    "net_r": 2.9,
+    "max_dd_r": 1.5,
+    "fill_rate": 0.375
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 81,
+    "per_day": 0.22,
+    "win_rate": 0.568,
+    "pf": 1.116,
+    "expectancy_r": 0.0264,
+    "net_r": 2.1,
+    "max_dd_r": 4.8,
+    "fill_rate": 0.375
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 81,
+    "per_day": 0.22,
+    "win_rate": 0.58,
+    "pf": 1.309,
+    "expectancy_r": 0.0664,
+    "net_r": 5.4,
+    "max_dd_r": 3.9,
+    "fill_rate": 0.375
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 81,
+    "per_day": 0.22,
+    "win_rate": 0.568,
+    "pf": 1.13,
+    "expectancy_r": 0.0295,
+    "net_r": 2.4,
+    "max_dd_r": 4.8,
+    "fill_rate": 0.375
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 81,
+    "per_day": 0.22,
+    "win_rate": 0.642,
+    "pf": 1.327,
+    "expectancy_r": 0.0591,
+    "net_r": 4.8,
+    "max_dd_r": 2.3,
+    "fill_rate": 0.375
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 81,
+    "per_day": 0.22,
+    "win_rate": 0.519,
+    "pf": 0.813,
+    "expectancy_r": -0.0567,
+    "net_r": -4.6,
+    "max_dd_r": 7.4,
+    "fill_rate": 0.375
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 81,
+    "per_day": 0.22,
+    "win_rate": 0.556,
+    "pf": 1.043,
+    "expectancy_r": 0.0118,
+    "net_r": 1.0,
+    "max_dd_r": 4.7,
+    "fill_rate": 0.375
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 81,
+    "per_day": 0.22,
+    "win_rate": 0.519,
+    "pf": 0.824,
+    "expectancy_r": -0.0533,
+    "net_r": -4.3,
+    "max_dd_r": 7.4,
+    "fill_rate": 0.375
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 15,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 81,
+    "per_day": 0.22,
+    "win_rate": 0.63,
+    "pf": 0.986,
+    "expectancy_r": -0.0035,
+    "net_r": -0.3,
+    "max_dd_r": 3.5,
+    "fill_rate": 0.375
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "time",
+   "dev": {
+    "trades": 100,
+    "per_day": 0.27,
+    "win_rate": 0.53,
+    "pf": 0.954,
+    "expectancy_r": -0.008,
+    "net_r": -0.8,
+    "max_dd_r": 4.5,
+    "fill_rate": 0.463
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "1R",
+   "dev": {
+    "trades": 100,
+    "per_day": 0.27,
+    "win_rate": 0.53,
+    "pf": 1.004,
+    "expectancy_r": 0.0007,
+    "net_r": 0.1,
+    "max_dd_r": 4.4,
+    "fill_rate": 0.463
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "2R",
+   "dev": {
+    "trades": 100,
+    "per_day": 0.27,
+    "win_rate": 0.53,
+    "pf": 0.954,
+    "expectancy_r": -0.008,
+    "net_r": -0.8,
+    "max_dd_r": 4.5,
+    "fill_rate": 0.463
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 30,
+   "exit": "ladder",
+   "dev": {
+    "trades": 100,
+    "per_day": 0.27,
+    "win_rate": 0.56,
+    "pf": 1.051,
+    "expectancy_r": 0.008,
+    "net_r": 0.8,
+    "max_dd_r": 4.1,
+    "fill_rate": 0.463
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "time",
+   "dev": {
+    "trades": 100,
+    "per_day": 0.27,
+    "win_rate": 0.56,
+    "pf": 0.995,
+    "expectancy_r": -0.0012,
+    "net_r": -0.1,
+    "max_dd_r": 4.8,
+    "fill_rate": 0.463
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "1R",
+   "dev": {
+    "trades": 100,
+    "per_day": 0.27,
+    "win_rate": 0.57,
+    "pf": 1.137,
+    "expectancy_r": 0.0312,
+    "net_r": 3.1,
+    "max_dd_r": 4.3,
+    "fill_rate": 0.463
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "2R",
+   "dev": {
+    "trades": 100,
+    "per_day": 0.27,
+    "win_rate": 0.56,
+    "pf": 1.005,
+    "expectancy_r": 0.0013,
+    "net_r": 0.1,
+    "max_dd_r": 4.8,
+    "fill_rate": 0.463
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 58,
+   "exit": "ladder",
+   "dev": {
+    "trades": 100,
+    "per_day": 0.27,
+    "win_rate": 0.62,
+    "pf": 1.138,
+    "expectancy_r": 0.0277,
+    "net_r": 2.8,
+    "max_dd_r": 5.0,
+    "fill_rate": 0.463
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "time",
+   "dev": {
+    "trades": 100,
+    "per_day": 0.27,
+    "win_rate": 0.5,
+    "pf": 0.771,
+    "expectancy_r": -0.0699,
+    "net_r": -7.0,
+    "max_dd_r": 8.6,
+    "fill_rate": 0.463
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "1R",
+   "dev": {
+    "trades": 100,
+    "per_day": 0.27,
+    "win_rate": 0.53,
+    "pf": 0.944,
+    "expectancy_r": -0.0157,
+    "net_r": -1.6,
+    "max_dd_r": 5.8,
+    "fill_rate": 0.463
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "2R",
+   "dev": {
+    "trades": 100,
+    "per_day": 0.27,
+    "win_rate": 0.5,
+    "pf": 0.78,
+    "expectancy_r": -0.0672,
+    "net_r": -6.7,
+    "max_dd_r": 8.5,
+    "fill_rate": 0.463
+   }
+  },
+  {
+   "signal": "z>=2.5",
+   "offset_atr": 0.5,
+   "ttl_min": 30,
+   "hold_min": 90,
+   "exit": "ladder",
+   "dev": {
+    "trades": 100,
+    "per_day": 0.27,
+    "win_rate": 0.59,
+    "pf": 0.906,
+    "expectancy_r": -0.0238,
+    "net_r": -2.4,
+    "max_dd_r": 5.2,
+    "fill_rate": 0.463
+   }
+  }
+ ],
+ "candidates": {
+  "best on DEV": {
+   "config": {
+    "signal": "z>=1.5",
+    "offset_atr": 0.5,
+    "ttl_min": 15,
+    "hold_min": 30,
+    "exit": "ladder"
+   },
+   "windows": {
+    "DEV": {
+     "trades": 660,
+     "per_day": 1.81,
+     "win_rate": 0.573,
+     "pf": 1.098,
+     "expectancy_r": 0.014,
+     "net_r": 9.3,
+     "max_dd_r": 7.4,
+     "fill_rate": 0.274
+    },
+    "TEST": {
+     "trades": 894,
+     "per_day": 2.45,
+     "win_rate": 0.523,
+     "pf": 0.749,
+     "expectancy_r": -0.0511,
+     "net_r": -45.7,
+     "max_dd_r": 50.1,
+     "fill_rate": 0.301
+    },
+    "HOLD1": {
+     "trades": 663,
+     "per_day": 1.81,
+     "win_rate": 0.558,
+     "pf": 0.81,
+     "expectancy_r": -0.0353,
+     "net_r": -23.4,
+     "max_dd_r": 29.8,
+     "fill_rate": 0.285
+    },
+    "HOLD2": {
+     "trades": 776,
+     "per_day": 1.42,
+     "win_rate": 0.554,
+     "pf": 0.848,
+     "expectancy_r": -0.0273,
+     "net_r": -21.2,
+     "max_dd_r": 25.0,
+     "fill_rate": 0.275
+    }
+   },
+   "out_of_sample": {
+    "trades": 2333,
+    "per_day": 2333.0,
+    "win_rate": 0.544,
+    "pf": 0.797,
+    "expectancy_r": -0.0387,
+    "net_r": -90.3,
+    "max_dd_r": 93.0
+   },
+   "checks": {
+    "test_pos": false,
+    "hold1_pos": false,
+    "hold2_pos": false,
+    "pf_1_10": false,
+    "trades_150": true,
+    "double_cost_pos": 0.0
+   },
+   "pass": false
+  },
+  "best on DEV at the decision price (offset 0)": {
+   "config": {
+    "signal": "z>=2.5",
+    "offset_atr": 0.0,
+    "ttl_min": 15,
+    "hold_min": 58,
+    "exit": "ladder"
+   },
+   "windows": {
+    "DEV": {
+     "trades": 215,
+     "per_day": 0.59,
+     "win_rate": 0.549,
+     "pf": 1.0,
+     "expectancy_r": -0.0,
+     "net_r": -0.0,
+     "max_dd_r": 5.4,
+     "fill_rate": 0.995
+    },
+    "TEST": {
+     "trades": 385,
+     "per_day": 1.06,
+     "win_rate": 0.535,
+     "pf": 0.689,
+     "expectancy_r": -0.0811,
+     "net_r": -31.2,
+     "max_dd_r": 35.1,
+     "fill_rate": 0.985
+    },
+    "HOLD1": {
+     "trades": 175,
+     "per_day": 0.48,
+     "win_rate": 0.594,
+     "pf": 0.998,
+     "expectancy_r": -0.0003,
+     "net_r": -0.1,
+     "max_dd_r": 8.2,
+     "fill_rate": 0.972
+    },
+    "HOLD2": {
+     "trades": 269,
+     "per_day": 0.49,
+     "win_rate": 0.52,
+     "pf": 0.775,
+     "expectancy_r": -0.0472,
+     "net_r": -12.7,
+     "max_dd_r": 16.2,
+     "fill_rate": 0.924
+    }
+   },
+   "out_of_sample": {
+    "trades": 829,
+    "per_day": 829.0,
+    "win_rate": 0.543,
+    "pf": 0.769,
+    "expectancy_r": -0.0531,
+    "net_r": -44.0,
+    "max_dd_r": 47.4
+   },
+   "checks": {
+    "test_pos": false,
+    "hold1_pos": false,
+    "hold2_pos": false,
+    "pf_1_10": false,
+    "trades_150": true,
+    "double_cost_pos": 0.0
+   },
+   "pass": false
+  }
+ },
+ "v11_4_with_limit_entry_only": {
+  "DEV": {
+   "trades": 33951,
+   "per_day": 93.03,
+   "win_rate": 0.477,
+   "pf": 0.796,
+   "expectancy_r": -0.029,
+   "net_r": -983.1,
+   "max_dd_r": 984.9,
+   "fill_rate": 0.969
+  },
+  "TEST": {
+   "trades": 33811,
+   "per_day": 92.65,
+   "win_rate": 0.477,
+   "pf": 0.783,
+   "expectancy_r": -0.0312,
+   "net_r": -1055.7,
+   "max_dd_r": 1059.4,
+   "fill_rate": 0.965
+  },
+  "HOLD1": {
+   "trades": 33763,
+   "per_day": 92.27,
+   "win_rate": 0.465,
+   "pf": 0.741,
+   "expectancy_r": -0.0365,
+   "net_r": -1233.4,
+   "max_dd_r": 1234.4,
+   "fill_rate": 0.961
+  },
+  "HOLD2": {
+   "trades": 48701,
+   "per_day": 89.21,
+   "win_rate": 0.441,
+   "pf": 0.653,
+   "expectancy_r": -0.0505,
+   "net_r": -2461.8,
+   "max_dd_r": 2464.0,
+   "fill_rate": 0.929
+  }
+ },
+ "verdict": "NONE PASSES: limit entries do not rescue Renata's signal; she stays V11.4",
+ "elapsed_s": 20.2
+}
