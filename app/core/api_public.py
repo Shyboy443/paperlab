@@ -828,7 +828,8 @@ async def roster(request: Request) -> dict[str, Any]:
 
 EXPORT_COLUMNS = (("Opened (UTC)", "entry_ts"), ("Closed (UTC)", "exit_ts"), ("Hold (h)", None), ("Coin", "symbol"),
                   ("Side", "side"), ("Entry", "entry_price"), ("Exit", "exit_price"), ("Qty", "qty"), ("Notional", None),
-                  ("Gross P&L", "gross"), ("Fees", "fees"), ("Slippage", "slippage"), ("Funding", "funding"), ("Net P&L", "net"),
+                  ("Gross P&L (decision prices)", "gross"), ("Gross P&L (fill prices)", None), ("Fees", "fees"),
+                  ("Slippage incl. latency drift (- = favourable)", "slippage"), ("Funding", "funding"), ("Net P&L", "net"),
                   ("R", "r"), ("Exit reason", "exit_kind"), ("Risk %", "risk_pct"), ("Tier", "tier"), ("Jev level", "jev_level"),
                   ("Counterfactual", "counterfactual"), ("Re-derived", "rederived"))
 
@@ -849,6 +850,9 @@ def trades_csv(trades: list[dict[str, Any]]) -> str:
         for col, k in EXPORT_COLUMNS:
             if col == "Hold (h)":
                 v = round((t["exit_ts"] - t["entry_ts"]) / 3_600_000, 2) if t.get("exit_ts") and t.get("entry_ts") else ""
+            elif col == "Gross P&L (fill prices)":           # = decision-price gross - slippage; net = this - fees + funding
+                sgn = 1 if t.get("side") == "long" else -1
+                v = round(sgn * (float(t["exit_price"]) - float(t["entry_price"])) * float(t["qty"]), 8)                     if t.get("exit_price") and t.get("entry_price") and t.get("qty") else ""
             elif col == "Notional":
                 v = round(float(t["qty"]) * float(t["entry_price"]), 4) if t.get("qty") and t.get("entry_price") else ""
             elif k in ("entry_ts", "exit_ts"):

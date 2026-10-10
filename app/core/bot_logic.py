@@ -139,4 +139,27 @@ def logic_text(program: str, key: str, name: str = "") -> str:
         return "\n".join(lines)
     if sid not in classes:
         return "\n".join(lines + [f"Strategy: {sid} (no strategy class found)"])
-    return "\n".join(lines + _describe(classes[sid], sid))
+    out = lines + _describe(classes[sid], sid)
+    if program in ("v11", "v14"):
+        note = ladder_note(sid, key)
+        if note:
+            out.append(note)
+    return "\n".join(out)
+
+
+def ladder_note(family: str, key: str) -> str:
+    """V11 / V14 scanners exit on the operator's take-profit ladder, NOT on Params.target_r."""
+    try:
+        from app.strategies.v11 import ladder
+    except Exception:
+        return ""
+    k = ladder.SPACING.get(family)
+    if k is None:
+        return ""
+    shares = ladder.SHARES.get(family, (0.25, 0.5, 0.25))
+    lock = ladder.LOCK_AFTER_TP1.get(family, 0.0)
+    return (f"Exits actually used: take-profit ladder {int(shares[0] * 100)}/{int(shares[1] * 100)}/{int(shares[2] * 100)}% "
+            f"at {k:g}R / {2 * k:g}R / {3 * k:g}R (app/strategies/v11/ladder.py); after TP1 the stop moves to entry + the "
+            f"fees or {lock:g} of the way to TP1, after TP2 onto TP1; the time stop closes the rest. The target_r "
+            f"parameter above is NOT used for exits"
+            + (" (a +JEV twin stretches the rungs by Jev's confidence)" if key.endswith("+JEV") else "") + ".")

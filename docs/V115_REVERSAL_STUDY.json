@@ -1,0 +1,741 @@
+{
+ "built": "2026-10-10 08:29 UTC",
+ "rules": "V11.5 study: can Renata's 1-hour reversal ranker (V11.4-SCAN) be made profitable after costs?\n(operator, 2026-10-10: \"fix & upgrade Renata ... rigorously tested V11.5 conditional-reversal strategy\".)\n\n    python scripts/v115_reversal_study.py build --data-dir /data/bt2y --start 2024-10-01 --end 2026-10-01 --out /data/v115/main.npz\n    python scripts/v115_reversal_study.py build --data-dir /data/bt_hold_crypto --start 2023-10-01 --end 2024-10-01 --out /data/v115/hold1.npz\n    python scripts/v115_reversal_study.py build --data-dir /data/bt_hold2 --start 2022-01-01 --end 2023-07-01 --out /data/v115/hold2.npz\n    python scripts/v115_reversal_study.py analyze --dir /data/v115 --out docs/V115_REVERSAL_STUDY.json\n\nPRE-REGISTERED (2026-10-10, before any run; selection on DEV only, nothing re-tuned after TEST / holdouts)\n\nUniverse: the 30 V11 coins (docs/V11_FREEZE.json); an hour is scanned only when >= 10 coins have complete data.\nDecision: at every UTC hour close, from closed 1h bars only (built from the 1m tape; an hour with a missing minute is\nnot a bar). Entry: the OPEN of the minute after the decision (1 minute of latency), as a taker.\nCosts (Bybit linear): taker fee 5.5 bp per side + 2 bp spread/slippage per market fill; a take-profit is a resting\nlimit (maker 2 bp, no slippage); a stop fills at the stop, or at the minute's open when it gaps through. If one minute\nreaches both the stop and a target, the STOP fills (conservative). Funding is ignored (holds <= 2 h).\nResults are in R (1R = the planned stop distance), costs included; max drawdown is on the cumulative R curve.\n\nWindows: DEV 2024-10-01..2025-10-01 (all selection), TEST 2025-10-01..2026-10-01, HOLD1 2023-10-01..2024-10-01,\nHOLD2 2022-01-01..2023-07-01.\n\nBaseline (corrected V11.4): every hour short the 2 highest and buy the 2 lowest 4h returns; stop 2 x ATR14(1h),\nclamped to 1.5-8%; the operator's ladder 25/50/25% at 0.5 / 1 / 1.5R with the stop to entry + half of TP1 after TP1\nand onto TP1 after TP2; time exit at 58 minutes.\n\nVariants, each adding to the one before (the spec's V11.5 A-E):\n  A  STRENGTH      only coins whose 4h move is >= z_min ATR14(1h) units (a statistical extreme), 0-2 per side\n                   (\"LEGAL_STRONG / LEGAL_CONVICTION\" are position-SIZING tiers, not signal strength: not used)\n  B  REGIME        + skip the hour when BTC's own 4h move is >= btc_max ATR units (a broad move, not a coin extreme),\n                   and rank on the move RELATIVE to BTC\n  C  CONFIRM       + the last 15m bar closes against the 4h move (a reversal has started)\n  D  CONTROL       + skip a coin whose 24h move is in the same direction and >= persist_z ATR units (persistent trend),\n                   optionally require climax volume (the hour's quote volume >= vol_min x its 7-day median), and a\n                   6-hour cooldown on a coin after a stop (a cooled-down trade is dropped, not replaced)\n  E  EXITS         + the exit chosen on DEV from: hold 15/30/45/58/90/120 min x stop 1/1.5/2/3 ATR x target\n                   time-only / fixed 1R / fixed 2R / the ladder\nz_min, btc_max and persist_z are chosen on DEV from small grids (z_min 1/1.5/2/2.5/3, btc_max 1.5/2.5/none,\npersist_z 3/5/none), maximising DEV expectancy with >= 300 DEV trades.\n\nVerdict: a variant PASSES only if its expectancy (R/trade after costs) is > 0 in TEST, HOLD1 and HOLD2, its profit\nfactor over the three is >= 1.10, it has >= 150 trades in each, and it is still > 0 with costs doubled. If nothing\npasses, the report says so and Renata stays V11.4 (no V11.5 goes live).\n",
+ "candidates": {
+  "DEV": 87600,
+  "TEST": 87590,
+  "HOLD1": 87830,
+  "HOLD2": 131030
+ },
+ "variants": {
+  "V11.4 baseline (corrected)": {
+   "config": {
+    "per_side": 2,
+    "stop_atr": 2.0,
+    "hold": 58,
+    "target": "ladder"
+   },
+   "windows": {
+    "DEV": {
+     "trades": 35040,
+     "per_day": 96.01,
+     "win_rate": 0.464,
+     "pf": 0.744,
+     "expectancy_r": -0.0375,
+     "net_r": -1313.4,
+     "max_dd_r": 1314.9
+    },
+    "TEST": {
+     "trades": 35036,
+     "per_day": 96.01,
+     "win_rate": 0.468,
+     "pf": 0.747,
+     "expectancy_r": -0.0371,
+     "net_r": -1298.6,
+     "max_dd_r": 1302.2
+    },
+    "HOLD1": {
+     "trades": 35132,
+     "per_day": 96.01,
+     "win_rate": 0.45,
+     "pf": 0.69,
+     "expectancy_r": -0.0453,
+     "net_r": -1591.7,
+     "max_dd_r": 1592.1
+    },
+    "HOLD2": {
+     "trades": 52412,
+     "per_day": 96.01,
+     "win_rate": 0.43,
+     "pf": 0.627,
+     "expectancy_r": -0.0553,
+     "net_r": -2897.4,
+     "max_dd_r": 2898.5
+    }
+   },
+   "out_of_sample": {
+    "trades": 122580,
+    "per_day": 122580.0,
+    "win_rate": 0.447,
+    "pf": 0.679,
+    "expectancy_r": -0.0472,
+    "net_r": -5787.7,
+    "max_dd_r": 5789.4
+   },
+   "checks": {
+    "test_pos": false,
+    "hold1_pos": false,
+    "hold2_pos": false,
+    "pf_1_10": false,
+    "trades_150": true,
+    "double_cost_pos": 0.0
+   },
+   "pass": false
+  },
+  "V11.5-A strength": {
+   "config": {
+    "per_side": 2,
+    "stop_atr": 2.0,
+    "hold": 58,
+    "target": "ladder",
+    "z_min": 2.0
+   },
+   "windows": {
+    "DEV": {
+     "trades": 705,
+     "per_day": 1.93,
+     "win_rate": 0.548,
+     "pf": 0.842,
+     "expectancy_r": -0.0307,
+     "net_r": -21.7,
+     "max_dd_r": 24.7
+    },
+    "TEST": {
+     "trades": 1059,
+     "per_day": 2.9,
+     "win_rate": 0.524,
+     "pf": 0.7,
+     "expectancy_r": -0.0707,
+     "net_r": -74.9,
+     "max_dd_r": 76.8
+    },
+    "HOLD1": {
+     "trades": 705,
+     "per_day": 1.93,
+     "win_rate": 0.562,
+     "pf": 0.885,
+     "expectancy_r": -0.0218,
+     "net_r": -15.4,
+     "max_dd_r": 23.9
+    },
+    "HOLD2": {
+     "trades": 914,
+     "per_day": 1.67,
+     "win_rate": 0.512,
+     "pf": 0.742,
+     "expectancy_r": -0.0503,
+     "net_r": -45.9,
+     "max_dd_r": 46.3
+    }
+   },
+   "out_of_sample": {
+    "trades": 2678,
+    "per_day": 2678.0,
+    "win_rate": 0.53,
+    "pf": 0.757,
+    "expectancy_r": -0.0509,
+    "net_r": -136.2,
+    "max_dd_r": 136.7
+   },
+   "checks": {
+    "test_pos": false,
+    "hold1_pos": false,
+    "hold2_pos": false,
+    "pf_1_10": false,
+    "trades_150": true,
+    "double_cost_pos": 0.0
+   },
+   "pass": false
+  },
+  "V11.5-B + BTC regime, BTC-relative": {
+   "config": {
+    "per_side": 2,
+    "stop_atr": 2.0,
+    "hold": 58,
+    "target": "ladder",
+    "z_min": 2.0,
+    "btc_max": 1.5,
+    "relative": true
+   },
+   "windows": {
+    "DEV": {
+     "trades": 419,
+     "per_day": 1.15,
+     "win_rate": 0.539,
+     "pf": 0.835,
+     "expectancy_r": -0.0336,
+     "net_r": -14.1,
+     "max_dd_r": 17.0
+    },
+    "TEST": {
+     "trades": 616,
+     "per_day": 1.69,
+     "win_rate": 0.537,
+     "pf": 0.721,
+     "expectancy_r": -0.0721,
+     "net_r": -44.4,
+     "max_dd_r": 48.0
+    },
+    "HOLD1": {
+     "trades": 399,
+     "per_day": 1.09,
+     "win_rate": 0.581,
+     "pf": 0.957,
+     "expectancy_r": -0.008,
+     "net_r": -3.2,
+     "max_dd_r": 9.8
+    },
+    "HOLD2": {
+     "trades": 308,
+     "per_day": 0.56,
+     "win_rate": 0.526,
+     "pf": 0.765,
+     "expectancy_r": -0.0498,
+     "net_r": -15.3,
+     "max_dd_r": 17.8
+    }
+   },
+   "out_of_sample": {
+    "trades": 1323,
+    "per_day": 1323.0,
+    "win_rate": 0.548,
+    "pf": 0.79,
+    "expectancy_r": -0.0476,
+    "net_r": -63.0,
+    "max_dd_r": 65.3
+   },
+   "checks": {
+    "test_pos": false,
+    "hold1_pos": false,
+    "hold2_pos": false,
+    "pf_1_10": false,
+    "trades_150": true,
+    "double_cost_pos": 0.0
+   },
+   "pass": false
+  },
+  "V11.5-C + 15m reversal confirmation": {
+   "config": {
+    "per_side": 2,
+    "stop_atr": 2.0,
+    "hold": 58,
+    "target": "ladder",
+    "z_min": 2.0,
+    "btc_max": 1.5,
+    "relative": true,
+    "confirm": true
+   },
+   "windows": {
+    "DEV": {
+     "trades": 113,
+     "per_day": 0.31,
+     "win_rate": 0.531,
+     "pf": 0.683,
+     "expectancy_r": -0.069,
+     "net_r": -7.8,
+     "max_dd_r": 10.9
+    },
+    "TEST": {
+     "trades": 167,
+     "per_day": 0.46,
+     "win_rate": 0.545,
+     "pf": 0.66,
+     "expectancy_r": -0.0909,
+     "net_r": -15.2,
+     "max_dd_r": 16.7
+    },
+    "HOLD1": {
+     "trades": 132,
+     "per_day": 0.36,
+     "win_rate": 0.523,
+     "pf": 0.872,
+     "expectancy_r": -0.0242,
+     "net_r": -3.2,
+     "max_dd_r": 8.3
+    },
+    "HOLD2": {
+     "trades": 101,
+     "per_day": 0.19,
+     "win_rate": 0.545,
+     "pf": 1.132,
+     "expectancy_r": 0.0169,
+     "net_r": 1.7,
+     "max_dd_r": 1.7
+    }
+   },
+   "out_of_sample": {
+    "trades": 400,
+    "per_day": 400.0,
+    "win_rate": 0.537,
+    "pf": 0.798,
+    "expectancy_r": -0.0417,
+    "net_r": -16.7,
+    "max_dd_r": 21.4
+   },
+   "checks": {
+    "test_pos": false,
+    "hold1_pos": false,
+    "hold2_pos": true,
+    "pf_1_10": false,
+    "trades_150": false,
+    "double_cost_pos": 0.0
+   },
+   "pass": false
+  },
+  "V11.5-D + persistence, volume, cooldown": {
+   "config": {
+    "per_side": 2,
+    "stop_atr": 2.0,
+    "hold": 58,
+    "target": "ladder",
+    "z_min": 2.0,
+    "btc_max": 1.5,
+    "relative": true,
+    "confirm": true,
+    "persist_z": 3.0,
+    "vol_min": null,
+    "cooldown_h": 6
+   },
+   "windows": {
+    "DEV": {
+     "trades": 104,
+     "per_day": 0.28,
+     "win_rate": 0.51,
+     "pf": 0.649,
+     "expectancy_r": -0.0799,
+     "net_r": -8.3,
+     "max_dd_r": 11.1
+    },
+    "TEST": {
+     "trades": 149,
+     "per_day": 0.41,
+     "win_rate": 0.557,
+     "pf": 0.718,
+     "expectancy_r": -0.0709,
+     "net_r": -10.6,
+     "max_dd_r": 12.1
+    },
+    "HOLD1": {
+     "trades": 123,
+     "per_day": 0.34,
+     "win_rate": 0.528,
+     "pf": 0.94,
+     "expectancy_r": -0.0108,
+     "net_r": -1.3,
+     "max_dd_r": 6.6
+    },
+    "HOLD2": {
+     "trades": 100,
+     "per_day": 0.18,
+     "win_rate": 0.55,
+     "pf": 1.137,
+     "expectancy_r": 0.0177,
+     "net_r": 1.8,
+     "max_dd_r": 1.7
+    }
+   },
+   "out_of_sample": {
+    "trades": 372,
+    "per_day": 372.0,
+    "win_rate": 0.546,
+    "pf": 0.86,
+    "expectancy_r": -0.0272,
+    "net_r": -10.1,
+    "max_dd_r": 15.1
+   },
+   "checks": {
+    "test_pos": false,
+    "hold1_pos": false,
+    "hold2_pos": true,
+    "pf_1_10": false,
+    "trades_150": false,
+    "double_cost_pos": 0.0
+   },
+   "pass": false
+  },
+  "V11.5-E + exits chosen on DEV": {
+   "config": {
+    "per_side": 2,
+    "stop_atr": 1.0,
+    "hold": 15,
+    "target": "time",
+    "z_min": 2.0,
+    "btc_max": 1.5,
+    "relative": true,
+    "confirm": true,
+    "persist_z": 3.0,
+    "vol_min": null,
+    "cooldown_h": 6
+   },
+   "windows": {
+    "DEV": {
+     "trades": 108,
+     "per_day": 0.3,
+     "win_rate": 0.481,
+     "pf": 0.62,
+     "expectancy_r": -0.091,
+     "net_r": -9.8,
+     "max_dd_r": 13.2
+    },
+    "TEST": {
+     "trades": 156,
+     "per_day": 0.43,
+     "win_rate": 0.41,
+     "pf": 0.73,
+     "expectancy_r": -0.0674,
+     "net_r": -10.5,
+     "max_dd_r": 13.5
+    },
+    "HOLD1": {
+     "trades": 127,
+     "per_day": 0.35,
+     "win_rate": 0.402,
+     "pf": 0.705,
+     "expectancy_r": -0.0703,
+     "net_r": -8.9,
+     "max_dd_r": 13.6
+    },
+    "HOLD2": {
+     "trades": 101,
+     "per_day": 0.19,
+     "win_rate": 0.386,
+     "pf": 0.673,
+     "expectancy_r": -0.0608,
+     "net_r": -6.1,
+     "max_dd_r": 6.9
+    }
+   },
+   "out_of_sample": {
+    "trades": 384,
+    "per_day": 384.0,
+    "win_rate": 0.401,
+    "pf": 0.709,
+    "expectancy_r": -0.0666,
+    "net_r": -25.6,
+    "max_dd_r": 28.6
+   },
+   "checks": {
+    "test_pos": false,
+    "hold1_pos": false,
+    "hold2_pos": false,
+    "pf_1_10": false,
+    "trades_150": false,
+    "double_cost_pos": 0.0
+   },
+   "pass": false
+  }
+ },
+ "singles": {
+  "strength only": {
+   "DEV": {
+    "trades": 705,
+    "per_day": 1.93,
+    "win_rate": 0.548,
+    "pf": 0.842,
+    "expectancy_r": -0.0307,
+    "net_r": -21.7,
+    "max_dd_r": 24.7
+   },
+   "TEST": {
+    "trades": 1059,
+    "per_day": 2.9,
+    "win_rate": 0.524,
+    "pf": 0.7,
+    "expectancy_r": -0.0707,
+    "net_r": -74.9,
+    "max_dd_r": 76.8
+   },
+   "HOLD1": {
+    "trades": 705,
+    "per_day": 1.93,
+    "win_rate": 0.562,
+    "pf": 0.885,
+    "expectancy_r": -0.0218,
+    "net_r": -15.4,
+    "max_dd_r": 23.9
+   },
+   "HOLD2": {
+    "trades": 914,
+    "per_day": 1.67,
+    "win_rate": 0.512,
+    "pf": 0.742,
+    "expectancy_r": -0.0503,
+    "net_r": -45.9,
+    "max_dd_r": 46.3
+   }
+  },
+  "BTC regime only": {
+   "DEV": {
+    "trades": 33988,
+    "per_day": 93.13,
+    "win_rate": 0.464,
+    "pf": 0.742,
+    "expectancy_r": -0.0376,
+    "net_r": -1277.7,
+    "max_dd_r": 1279.2
+   },
+   "TEST": {
+    "trades": 33908,
+    "per_day": 92.92,
+    "win_rate": 0.468,
+    "pf": 0.747,
+    "expectancy_r": -0.0369,
+    "net_r": -1251.9,
+    "max_dd_r": 1256.4
+   },
+   "HOLD1": {
+    "trades": 34012,
+    "per_day": 92.95,
+    "win_rate": 0.449,
+    "pf": 0.686,
+    "expectancy_r": -0.0457,
+    "net_r": -1553.2,
+    "max_dd_r": 1553.5
+   },
+   "HOLD2": {
+    "trades": 50552,
+    "per_day": 92.6,
+    "win_rate": 0.431,
+    "pf": 0.628,
+    "expectancy_r": -0.0548,
+    "net_r": -2770.2,
+    "max_dd_r": 2771.4
+   }
+  },
+  "confirmation only": {
+   "DEV": {
+    "trades": 23358,
+    "per_day": 64.0,
+    "win_rate": 0.439,
+    "pf": 0.66,
+    "expectancy_r": -0.0509,
+    "net_r": -1188.6,
+    "max_dd_r": 1189.6
+   },
+   "TEST": {
+    "trades": 24419,
+    "per_day": 66.92,
+    "win_rate": 0.44,
+    "pf": 0.68,
+    "expectancy_r": -0.0463,
+    "net_r": -1130.7,
+    "max_dd_r": 1133.2
+   },
+   "HOLD1": {
+    "trades": 23609,
+    "per_day": 64.52,
+    "win_rate": 0.421,
+    "pf": 0.613,
+    "expectancy_r": -0.0577,
+    "net_r": -1363.3,
+    "max_dd_r": 1363.3
+   },
+   "HOLD2": {
+    "trades": 33284,
+    "per_day": 60.97,
+    "win_rate": 0.402,
+    "pf": 0.593,
+    "expectancy_r": -0.0599,
+    "net_r": -1992.3,
+    "max_dd_r": 1993.9
+   }
+  },
+  "persistence + cooldown only": {
+   "DEV": {
+    "trades": 32610,
+    "per_day": 89.35,
+    "win_rate": 0.462,
+    "pf": 0.739,
+    "expectancy_r": -0.0376,
+    "net_r": -1227.1,
+    "max_dd_r": 1229.7
+   },
+   "TEST": {
+    "trades": 32203,
+    "per_day": 88.25,
+    "win_rate": 0.465,
+    "pf": 0.742,
+    "expectancy_r": -0.0369,
+    "net_r": -1188.5,
+    "max_dd_r": 1191.1
+   },
+   "HOLD1": {
+    "trades": 32729,
+    "per_day": 89.44,
+    "win_rate": 0.446,
+    "pf": 0.68,
+    "expectancy_r": -0.0464,
+    "net_r": -1518.1,
+    "max_dd_r": 1518.4
+   },
+   "HOLD2": {
+    "trades": 49057,
+    "per_day": 89.86,
+    "win_rate": 0.427,
+    "pf": 0.619,
+    "expectancy_r": -0.0561,
+    "net_r": -2754.4,
+    "max_dd_r": 2755.7
+   }
+  },
+  "exits only": {
+   "DEV": {
+    "trades": 35040,
+    "per_day": 96.01,
+    "win_rate": 0.409,
+    "pf": 0.575,
+    "expectancy_r": -0.0678,
+    "net_r": -2376.0,
+    "max_dd_r": 2378.3
+   },
+   "TEST": {
+    "trades": 35036,
+    "per_day": 96.01,
+    "win_rate": 0.405,
+    "pf": 0.574,
+    "expectancy_r": -0.0681,
+    "net_r": -2386.8,
+    "max_dd_r": 2386.8
+   },
+   "HOLD1": {
+    "trades": 35132,
+    "per_day": 96.01,
+    "win_rate": 0.387,
+    "pf": 0.524,
+    "expectancy_r": -0.075,
+    "net_r": -2636.6,
+    "max_dd_r": 2637.1
+   },
+   "HOLD2": {
+    "trades": 52412,
+    "per_day": 96.01,
+    "win_rate": 0.352,
+    "pf": 0.443,
+    "expectancy_r": -0.0856,
+    "net_r": -4488.0,
+    "max_dd_r": 4488.4
+   }
+  },
+  "1 per side (less forced)": {
+   "DEV": {
+    "trades": 17520,
+    "per_day": 48.01,
+    "win_rate": 0.475,
+    "pf": 0.777,
+    "expectancy_r": -0.0326,
+    "net_r": -570.3,
+    "max_dd_r": 571.7
+   },
+   "TEST": {
+    "trades": 17518,
+    "per_day": 48.01,
+    "win_rate": 0.477,
+    "pf": 0.774,
+    "expectancy_r": -0.034,
+    "net_r": -595.6,
+    "max_dd_r": 597.0
+   },
+   "HOLD1": {
+    "trades": 17566,
+    "per_day": 48.01,
+    "win_rate": 0.46,
+    "pf": 0.71,
+    "expectancy_r": -0.0425,
+    "net_r": -746.3,
+    "max_dd_r": 746.7
+   },
+   "HOLD2": {
+    "trades": 26206,
+    "per_day": 48.0,
+    "win_rate": 0.441,
+    "pf": 0.645,
+    "expectancy_r": -0.0526,
+    "net_r": -1378.0,
+    "max_dd_r": 1379.5
+   }
+  }
+ },
+ "gross_by_strength": {
+  "DEV": {
+   "0-1": {
+    "n": 61153,
+    "gross_bp_58m": 2.3
+   },
+   "1-1.5": {
+    "n": 7945,
+    "gross_bp_58m": 1.79
+   },
+   "1.5-2": {
+    "n": 2102,
+    "gross_bp_58m": 2.38
+   },
+   "2-3": {
+    "n": 713,
+    "gross_bp_58m": 10.79
+   },
+   "3-99": {
+    "n": 75,
+    "gross_bp_58m": -58.31
+   }
+  },
+  "TEST": {
+   "0-1": {
+    "n": 64138,
+    "gross_bp_58m": 1.57
+   },
+   "1-1.5": {
+    "n": 8758,
+    "gross_bp_58m": -1.94
+   },
+   "1.5-2": {
+    "n": 2344,
+    "gross_bp_58m": -5.28
+   },
+   "2-3": {
+    "n": 998,
+    "gross_bp_58m": -16.13
+   },
+   "3-99": {
+    "n": 174,
+    "gross_bp_58m": -60.79
+   }
+  },
+  "HOLD1": {
+   "0-1": {
+    "n": 62271,
+    "gross_bp_58m": 0.5
+   },
+   "1-1.5": {
+    "n": 7531,
+    "gross_bp_58m": 3.99
+   },
+   "1.5-2": {
+    "n": 1978,
+    "gross_bp_58m": 4.76
+   },
+   "2-3": {
+    "n": 686,
+    "gross_bp_58m": 11.66
+   },
+   "3-99": {
+    "n": 62,
+    "gross_bp_58m": 25.16
+   }
+  },
+  "HOLD2": {
+   "0-1": {
+    "n": 82489,
+    "gross_bp_58m": 0.95
+   },
+   "1-1.5": {
+    "n": 9152,
+    "gross_bp_58m": 2.9
+   },
+   "1.5-2": {
+    "n": 2575,
+    "gross_bp_58m": 3.23
+   },
+   "2-3": {
+    "n": 1006,
+    "gross_bp_58m": -0.98
+   },
+   "3-99": {
+    "n": 94,
+    "gross_bp_58m": -3.2
+   }
+  }
+ },
+ "cost_round_trip_bp": 15.0,
+ "recommendation": "NONE PASSES: keep Renata on V11.4 (paper); no V11.5 goes live",
+ "elapsed_s": 18.8
+}
