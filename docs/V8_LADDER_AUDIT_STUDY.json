@@ -1,0 +1,1757 @@
+{
+ "preregistered": "V8.3 +LADDER audit study (operator review, 2026-10-12). Research only: nothing here changes a frozen bot.\n\nPRE-REGISTERED (written before any result was seen):\n  Every variant replays the SAME live engine (LevelMakerEngineV8, EXECUTION_V8 60 s fills, maker TPs, taker stops,\n  SizingV6, frozen rules) on 1m bars, V8.3 VWAP snap-back entries, 6 coins (ARB DOGE ENA ETH SOL XRP), one position\n  per coin book, daily book reset (as v8_snap_hold_study), engine halts off. 1m bars are walked adverse-first\n  (a bar touching both the stop and a target fills the STOP first): the conservative handling of ambiguous bars.\n\n  Exit variants (identical entries):\n    E0  LADDER3   the live +LADDER: 1/3 at 0.75R (stop -> entry+0.15%), 1/3 at 1.5R (stop -> +0.75R), 1/3 at 2.5R\n    E1  SINGLE15  the live CONTROL: one 1.5R target, no stop moves\n    E2  TWO       1/2 at 1.0R (stop -> entry+0.15%), 1/2 at 2.0R\n  Entry / risk variants (on top of E0):\n    F1  CD60      no new entry within 60 min after a STOP exit on that coin\n    F2  VWAPFLAT  enter only when |VWAP(48) now - VWAP(48) 12 bars ago| / ATR14 <= 0.5 (the reversion target is not\n                  running away)\n    F3  HTFFLAT   enter only when the 1h trend (EMA20/50 + slope, ctx_trend) is \"flat\"\n    P2  CAP2      the six coins as ONE book that holds at most 2 trades at once (E0 trades accepted in time order;\n                  closed-trade approximation: a skipped trade does not free the coin for a different entry)\n  Windows: W1 = 2026-06-26 .. 2026-10-02 (market.duckdb), split in halves; W2 = 2025-01-01 .. 2026-06-25\n  (history_v8.duckdb), independent. Metrics: trades, R/trade after costs (fees in R), total R, profit factor, max\n  drawdown in R of the six coins' combined closed-trade R curve.\n  PASS = beats E0 on R/trade AND total R, with max DD (R) no more than 10% worse, in BOTH W1 halves AND in W2.\n  A variant that fails stays a research note; nothing is deployed from this study.\n\nREVISION 2 (2026-10-12, after the operator's review; the rule and the variants above are unchanged):\n  - \"PASS\" is reported as \"RELATIVE IMPROVEMENT\" (vs E0) -- it never meant profitable; every variant loses.\n  - Two different questions are separated: (a) COMPLETE STRATEGY comparison (each variant's own trades: filters and\n    cooldowns remove entries, and exit variants change which later signals are free to fill, so trade counts differ);\n    (b) MATCHED-ENTRY exit comparison: only the entries that E0, E1 and E2 all took, so the exits alone differ.\n  - Drawdown is also measured on ACCOUNT EQUITY at EVERY 1m update (wallet + open positions marked at each close; the\n    hourly thinning only shapes what is kept for charts): the six coins' books summed, fixed daily capital (each\n    coin's book restarts at its start equity every UTC day and the day's P&L is banked), in USDT and in % of the\n    of the starting capital (it can exceed 100 % because every day is re-funded) and of the running peak.\n\n    python scripts/v8_ladder_audit_study.py            # both windows, 4 processes\n",
+ "windows": {
+  "W1": {
+   "since": 1782777600000,
+   "mid": 1786838400000,
+   "end": 1790899200000,
+   "variants": {
+    "E0": {
+     "full": {
+      "trades": 3827,
+      "r_per_trade": -0.1057,
+      "total_r": -404.36,
+      "pf": 0.709,
+      "max_dd_r": 412.48,
+      "win_rate": 0.493,
+      "net_usdt": -76.04,
+      "account": {
+       "updates": 135360,
+       "start_usdt": 120.0,
+       "end_usdt": 49.3,
+       "max_dd_usdt": 72.67,
+       "max_dd_pct_of_start": 60.56,
+       "max_dd_pct_of_peak": 60.53,
+       "max_dd_at": 1790704259999
+      }
+     },
+     "half1": {
+      "trades": 1788,
+      "r_per_trade": -0.0889,
+      "total_r": -158.95,
+      "pf": 0.718,
+      "max_dd_r": 158.95,
+      "win_rate": 0.483,
+      "net_usdt": -28.84,
+      "account": {
+       "updates": 67680,
+       "start_usdt": 120.0,
+       "end_usdt": 92.85,
+       "max_dd_usdt": 27.32,
+       "max_dd_pct_of_start": 22.77,
+       "max_dd_pct_of_peak": 22.75,
+       "max_dd_at": 1786600619999
+      }
+     },
+     "half2": {
+      "trades": 2039,
+      "r_per_trade": -0.1204,
+      "total_r": -245.41,
+      "pf": 0.703,
+      "max_dd_r": 256.94,
+      "win_rate": 0.502,
+      "net_usdt": -47.2,
+      "account": {
+       "updates": 67680,
+       "start_usdt": 92.85,
+       "end_usdt": 49.3,
+       "max_dd_usdt": 46.24,
+       "max_dd_pct_of_start": 38.53,
+       "max_dd_pct_of_peak": 49.38,
+       "max_dd_at": 1790704259999
+      }
+     },
+     "by_coin": {
+      "ARBUSDT": {
+       "trades": 823,
+       "r_per_trade": -0.1598,
+       "total_r": -131.5,
+       "pf": 0.64,
+       "max_dd_r": 137.36,
+       "win_rate": 0.488,
+       "net_usdt": -25.11
+      },
+      "DOGEUSDT": {
+       "trades": 662,
+       "r_per_trade": -0.135,
+       "total_r": -89.39,
+       "pf": 0.607,
+       "max_dd_r": 91.59,
+       "win_rate": 0.474,
+       "net_usdt": -17.27
+      },
+      "ENAUSDT": {
+       "trades": 864,
+       "r_per_trade": -0.072,
+       "total_r": -62.2,
+       "pf": 0.822,
+       "max_dd_r": 68.67,
+       "win_rate": 0.551,
+       "net_usdt": -12.3
+      },
+      "ETHUSDT": {
+       "trades": 232,
+       "r_per_trade": -0.0824,
+       "total_r": -19.11,
+       "pf": 0.716,
+       "max_dd_r": 22.1,
+       "win_rate": 0.461,
+       "net_usdt": -4.83
+      },
+      "SOLUSDT": {
+       "trades": 590,
+       "r_per_trade": -0.0601,
+       "total_r": -35.43,
+       "pf": 0.797,
+       "max_dd_r": 42.49,
+       "win_rate": 0.475,
+       "net_usdt": -3.51
+      },
+      "XRPUSDT": {
+       "trades": 656,
+       "r_per_trade": -0.1017,
+       "total_r": -66.73,
+       "pf": 0.677,
+       "max_dd_r": 71.67,
+       "win_rate": 0.471,
+       "net_usdt": -13.01
+      }
+     }
+    },
+    "E1": {
+     "full": {
+      "trades": 3652,
+      "r_per_trade": -0.0969,
+      "total_r": -353.73,
+      "pf": 0.775,
+      "max_dd_r": 382.5,
+      "win_rate": 0.433,
+      "net_usdt": -67.86,
+      "account": {
+       "updates": 135360,
+       "start_usdt": 120.0,
+       "end_usdt": 58.03,
+       "max_dd_usdt": 67.1,
+       "max_dd_pct_of_start": 55.92,
+       "max_dd_pct_of_peak": 54.95,
+       "max_dd_at": 1790602979999
+      }
+     },
+     "half1": {
+      "trades": 1748,
+      "r_per_trade": -0.0915,
+      "total_r": -159.95,
+      "pf": 0.741,
+      "max_dd_r": 171.38,
+      "win_rate": 0.441,
+      "net_usdt": -30.01,
+      "account": {
+       "updates": 67680,
+       "start_usdt": 120.0,
+       "end_usdt": 92.43,
+       "max_dd_usdt": 30.1,
+       "max_dd_pct_of_start": 25.08,
+       "max_dd_pct_of_peak": 24.65,
+       "max_dd_at": 1786600619999
+      }
+     },
+     "half2": {
+      "trades": 1904,
+      "r_per_trade": -0.1018,
+      "total_r": -193.78,
+      "pf": 0.797,
+      "max_dd_r": 214.89,
+      "win_rate": 0.426,
+      "net_usdt": -37.85,
+      "account": {
+       "updates": 67680,
+       "start_usdt": 92.43,
+       "end_usdt": 58.03,
+       "max_dd_usdt": 38.25,
+       "max_dd_pct_of_start": 31.88,
+       "max_dd_pct_of_peak": 41.01,
+       "max_dd_at": 1790602979999
+      }
+     },
+     "by_coin": {
+      "ARBUSDT": {
+       "trades": 788,
+       "r_per_trade": -0.1275,
+       "total_r": -100.45,
+       "pf": 0.762,
+       "max_dd_r": 108.05,
+       "win_rate": 0.414,
+       "net_usdt": -19.49
+      },
+      "DOGEUSDT": {
+       "trades": 642,
+       "r_per_trade": -0.1453,
+       "total_r": -93.3,
+       "pf": 0.621,
+       "max_dd_r": 97.83,
+       "win_rate": 0.414,
+       "net_usdt": -18.12
+      },
+      "ENAUSDT": {
+       "trades": 810,
+       "r_per_trade": -0.0543,
+       "total_r": -44.01,
+       "pf": 0.897,
+       "max_dd_r": 75.62,
+       "win_rate": 0.446,
+       "net_usdt": -9.19
+      },
+      "ETHUSDT": {
+       "trades": 227,
+       "r_per_trade": -0.0617,
+       "total_r": -14.01,
+       "pf": 0.794,
+       "max_dd_r": 19.34,
+       "win_rate": 0.458,
+       "net_usdt": -3.83
+      },
+      "SOLUSDT": {
+       "trades": 546,
+       "r_per_trade": -0.0568,
+       "total_r": -31.02,
+       "pf": 0.822,
+       "max_dd_r": 42.09,
+       "win_rate": 0.454,
+       "net_usdt": -3.15
+      },
+      "XRPUSDT": {
+       "trades": 639,
+       "r_per_trade": -0.111,
+       "total_r": -70.94,
+       "pf": 0.696,
+       "max_dd_r": 79.46,
+       "win_rate": 0.432,
+       "net_usdt": -14.09
+      }
+     }
+    },
+    "E2": {
+     "full": {
+      "trades": 3664,
+      "r_per_trade": -0.0977,
+      "total_r": -357.96,
+      "pf": 0.753,
+      "max_dd_r": 372.13,
+      "win_rate": 0.464,
+      "net_usdt": -68.25,
+      "account": {
+       "updates": 135360,
+       "start_usdt": 120.0,
+       "end_usdt": 58.3,
+       "max_dd_usdt": 65.0,
+       "max_dd_pct_of_start": 54.17,
+       "max_dd_pct_of_peak": 53.58,
+       "max_dd_at": 1790704259999
+      }
+     },
+     "half1": {
+      "trades": 1736,
+      "r_per_trade": -0.0841,
+      "total_r": -146.01,
+      "pf": 0.75,
+      "max_dd_r": 152.78,
+      "win_rate": 0.46,
+      "net_usdt": -27.15,
+      "account": {
+       "updates": 67680,
+       "start_usdt": 120.0,
+       "end_usdt": 95.13,
+       "max_dd_usdt": 26.38,
+       "max_dd_pct_of_start": 21.98,
+       "max_dd_pct_of_peak": 21.74,
+       "max_dd_at": 1786600619999
+      }
+     },
+     "half2": {
+      "trades": 1928,
+      "r_per_trade": -0.1099,
+      "total_r": -211.96,
+      "pf": 0.756,
+      "max_dd_r": 222.83,
+      "win_rate": 0.468,
+      "net_usdt": -41.1,
+      "account": {
+       "updates": 67680,
+       "start_usdt": 95.13,
+       "end_usdt": 58.3,
+       "max_dd_usdt": 39.6,
+       "max_dd_pct_of_start": 33.0,
+       "max_dd_pct_of_peak": 41.28,
+       "max_dd_at": 1790704259999
+      }
+     },
+     "by_coin": {
+      "ARBUSDT": {
+       "trades": 785,
+       "r_per_trade": -0.1599,
+       "total_r": -125.49,
+       "pf": 0.674,
+       "max_dd_r": 128.41,
+       "win_rate": 0.452,
+       "net_usdt": -23.96
+      },
+      "DOGEUSDT": {
+       "trades": 638,
+       "r_per_trade": -0.1191,
+       "total_r": -75.98,
+       "pf": 0.668,
+       "max_dd_r": 79.09,
+       "win_rate": 0.445,
+       "net_usdt": -14.8
+      },
+      "ENAUSDT": {
+       "trades": 807,
+       "r_per_trade": -0.056,
+       "total_r": -45.22,
+       "pf": 0.879,
+       "max_dd_r": 61.88,
+       "win_rate": 0.504,
+       "net_usdt": -9.6
+      },
+      "ETHUSDT": {
+       "trades": 230,
+       "r_per_trade": -0.0698,
+       "total_r": -16.07,
+       "pf": 0.761,
+       "max_dd_r": 21.91,
+       "win_rate": 0.457,
+       "net_usdt": -4.09
+      },
+      "SOLUSDT": {
+       "trades": 568,
+       "r_per_trade": -0.0525,
+       "total_r": -29.83,
+       "pf": 0.832,
+       "max_dd_r": 40.63,
+       "win_rate": 0.465,
+       "net_usdt": -2.89
+      },
+      "XRPUSDT": {
+       "trades": 636,
+       "r_per_trade": -0.1028,
+       "total_r": -65.38,
+       "pf": 0.702,
+       "max_dd_r": 71.66,
+       "win_rate": 0.448,
+       "net_usdt": -12.91
+      }
+     }
+    },
+    "F1": {
+     "full": {
+      "trades": 3413,
+      "r_per_trade": -0.1001,
+      "total_r": -341.7,
+      "pf": 0.717,
+      "max_dd_r": 354.67,
+      "win_rate": 0.486,
+      "net_usdt": -64.16,
+      "account": {
+       "updates": 135360,
+       "start_usdt": 120.0,
+       "end_usdt": 60.01,
+       "max_dd_usdt": 62.49,
+       "max_dd_pct_of_start": 52.08,
+       "max_dd_pct_of_peak": 51.81,
+       "max_dd_at": 1790704259999
+      }
+     },
+     "half1": {
+      "trades": 1656,
+      "r_per_trade": -0.0795,
+      "total_r": -131.62,
+      "pf": 0.738,
+      "max_dd_r": 135.26,
+      "win_rate": 0.481,
+      "net_usdt": -23.71,
+      "account": {
+       "updates": 67680,
+       "start_usdt": 120.0,
+       "end_usdt": 97.3,
+       "max_dd_usdt": 23.43,
+       "max_dd_pct_of_start": 19.52,
+       "max_dd_pct_of_peak": 19.43,
+       "max_dd_at": 1786606259999
+      }
+     },
+     "half2": {
+      "trades": 1757,
+      "r_per_trade": -0.1196,
+      "total_r": -210.08,
+      "pf": 0.703,
+      "max_dd_r": 221.0,
+      "win_rate": 0.492,
+      "net_usdt": -40.45,
+      "account": {
+       "updates": 67680,
+       "start_usdt": 97.3,
+       "end_usdt": 60.01,
+       "max_dd_usdt": 39.5,
+       "max_dd_pct_of_start": 32.92,
+       "max_dd_pct_of_peak": 40.46,
+       "max_dd_at": 1790704259999
+      }
+     },
+     "by_coin": {
+      "ARBUSDT": {
+       "trades": 691,
+       "r_per_trade": -0.1605,
+       "total_r": -110.9,
+       "pf": 0.636,
+       "max_dd_r": 115.81,
+       "win_rate": 0.486,
+       "net_usdt": -21.01
+      },
+      "DOGEUSDT": {
+       "trades": 598,
+       "r_per_trade": -0.1221,
+       "total_r": -73.04,
+       "pf": 0.627,
+       "max_dd_r": 75.24,
+       "win_rate": 0.467,
+       "net_usdt": -14.01
+      },
+      "ENAUSDT": {
+       "trades": 740,
+       "r_per_trade": -0.0685,
+       "total_r": -50.68,
+       "pf": 0.83,
+       "max_dd_r": 57.59,
+       "win_rate": 0.541,
+       "net_usdt": -10.03
+      },
+      "ETHUSDT": {
+       "trades": 223,
+       "r_per_trade": -0.095,
+       "total_r": -21.19,
+       "pf": 0.678,
+       "max_dd_r": 23.56,
+       "win_rate": 0.453,
+       "net_usdt": -5.3
+      },
+      "SOLUSDT": {
+       "trades": 558,
+       "r_per_trade": -0.0523,
+       "total_r": -29.17,
+       "pf": 0.819,
+       "max_dd_r": 36.52,
+       "win_rate": 0.471,
+       "net_usdt": -2.62
+      },
+      "XRPUSDT": {
+       "trades": 603,
+       "r_per_trade": -0.0941,
+       "total_r": -56.72,
+       "pf": 0.692,
+       "max_dd_r": 60.79,
+       "win_rate": 0.466,
+       "net_usdt": -11.2
+      }
+     }
+    },
+    "F2": {
+     "full": {
+      "trades": 1723,
+      "r_per_trade": -0.0743,
+      "total_r": -127.96,
+      "pf": 0.775,
+      "max_dd_r": 139.03,
+      "win_rate": 0.5,
+      "net_usdt": -23.96,
+      "account": {
+       "updates": 135360,
+       "start_usdt": 120.0,
+       "end_usdt": 96.4,
+       "max_dd_usdt": 25.41,
+       "max_dd_pct_of_start": 21.18,
+       "max_dd_pct_of_peak": 20.99,
+       "max_dd_at": 1790723819999
+      }
+     },
+     "half1": {
+      "trades": 878,
+      "r_per_trade": -0.0621,
+      "total_r": -54.49,
+      "pf": 0.789,
+      "max_dd_r": 62.1,
+      "win_rate": 0.491,
+      "net_usdt": -9.69,
+      "account": {
+       "updates": 67680,
+       "start_usdt": 120.0,
+       "end_usdt": 109.96,
+       "max_dd_usdt": 11.16,
+       "max_dd_pct_of_start": 9.3,
+       "max_dd_pct_of_peak": 9.22,
+       "max_dd_at": 1786826219999
+      }
+     },
+     "half2": {
+      "trades": 845,
+      "r_per_trade": -0.0869,
+      "total_r": -73.46,
+      "pf": 0.764,
+      "max_dd_r": 77.86,
+      "win_rate": 0.509,
+      "net_usdt": -14.27,
+      "account": {
+       "updates": 67680,
+       "start_usdt": 109.96,
+       "end_usdt": 96.4,
+       "max_dd_usdt": 14.44,
+       "max_dd_pct_of_start": 12.03,
+       "max_dd_pct_of_peak": 13.12,
+       "max_dd_at": 1790723819999
+      }
+     },
+     "by_coin": {
+      "ARBUSDT": {
+       "trades": 357,
+       "r_per_trade": -0.1231,
+       "total_r": -43.96,
+       "pf": 0.708,
+       "max_dd_r": 51.73,
+       "win_rate": 0.515,
+       "net_usdt": -8.7
+      },
+      "DOGEUSDT": {
+       "trades": 321,
+       "r_per_trade": -0.1176,
+       "total_r": -37.74,
+       "pf": 0.619,
+       "max_dd_r": 40.1,
+       "win_rate": 0.474,
+       "net_usdt": -7.17
+      },
+      "ENAUSDT": {
+       "trades": 379,
+       "r_per_trade": -0.0536,
+       "total_r": -20.33,
+       "pf": 0.859,
+       "max_dd_r": 23.54,
+       "win_rate": 0.541,
+       "net_usdt": -4.26
+      },
+      "ETHUSDT": {
+       "trades": 59,
+       "r_per_trade": -0.0005,
+       "total_r": -0.03,
+       "pf": 0.998,
+       "max_dd_r": 3.44,
+       "win_rate": 0.542,
+       "net_usdt": -0.13
+      },
+      "SOLUSDT": {
+       "trades": 293,
+       "r_per_trade": -0.0485,
+       "total_r": -14.2,
+       "pf": 0.824,
+       "max_dd_r": 20.78,
+       "win_rate": 0.468,
+       "net_usdt": -1.26
+      },
+      "XRPUSDT": {
+       "trades": 314,
+       "r_per_trade": -0.0373,
+       "total_r": -11.71,
+       "pf": 0.854,
+       "max_dd_r": 14.41,
+       "win_rate": 0.481,
+       "net_usdt": -2.45
+      }
+     }
+    },
+    "F3": {
+     "full": {
+      "trades": 955,
+      "r_per_trade": -0.0873,
+      "total_r": -83.35,
+      "pf": 0.737,
+      "max_dd_r": 91.89,
+      "win_rate": 0.486,
+      "net_usdt": -15.97,
+      "account": {
+       "updates": 135360,
+       "start_usdt": 120.0,
+       "end_usdt": 105.36,
+       "max_dd_usdt": 16.12,
+       "max_dd_pct_of_start": 13.43,
+       "max_dd_pct_of_peak": 13.41,
+       "max_dd_at": 1790775119999
+      }
+     },
+     "half1": {
+      "trades": 489,
+      "r_per_trade": -0.0841,
+      "total_r": -41.15,
+      "pf": 0.728,
+      "max_dd_r": 42.44,
+      "win_rate": 0.468,
+      "net_usdt": -7.78,
+      "account": {
+       "updates": 67680,
+       "start_usdt": 120.0,
+       "end_usdt": 112.91,
+       "max_dd_usdt": 7.55,
+       "max_dd_pct_of_start": 6.29,
+       "max_dd_pct_of_peak": 6.28,
+       "max_dd_at": 1786462979999
+      }
+     },
+     "half2": {
+      "trades": 466,
+      "r_per_trade": -0.0906,
+      "total_r": -42.2,
+      "pf": 0.745,
+      "max_dd_r": 50.14,
+      "win_rate": 0.504,
+      "net_usdt": -8.19,
+      "account": {
+       "updates": 67680,
+       "start_usdt": 112.91,
+       "end_usdt": 105.36,
+       "max_dd_usdt": 8.87,
+       "max_dd_pct_of_start": 7.39,
+       "max_dd_pct_of_peak": 7.85,
+       "max_dd_at": 1790775119999
+      }
+     },
+     "by_coin": {
+      "ARBUSDT": {
+       "trades": 168,
+       "r_per_trade": -0.1767,
+       "total_r": -29.69,
+       "pf": 0.605,
+       "max_dd_r": 31.39,
+       "win_rate": 0.464,
+       "net_usdt": -5.69
+      },
+      "DOGEUSDT": {
+       "trades": 191,
+       "r_per_trade": -0.1042,
+       "total_r": -19.89,
+       "pf": 0.648,
+       "max_dd_r": 23.36,
+       "win_rate": 0.455,
+       "net_usdt": -3.85
+      },
+      "ENAUSDT": {
+       "trades": 186,
+       "r_per_trade": -0.09,
+       "total_r": -16.74,
+       "pf": 0.783,
+       "max_dd_r": 19.04,
+       "win_rate": 0.538,
+       "net_usdt": -2.89
+      },
+      "ETHUSDT": {
+       "trades": 77,
+       "r_per_trade": -0.11,
+       "total_r": -8.47,
+       "pf": 0.603,
+       "max_dd_r": 8.66,
+       "win_rate": 0.403,
+       "net_usdt": -2.02
+      },
+      "SOLUSDT": {
+       "trades": 154,
+       "r_per_trade": -0.01,
+       "total_r": -1.54,
+       "pf": 0.96,
+       "max_dd_r": 7.33,
+       "win_rate": 0.506,
+       "net_usdt": -0.1
+      },
+      "XRPUSDT": {
+       "trades": 179,
+       "r_per_trade": -0.0391,
+       "total_r": -7.0,
+       "pf": 0.853,
+       "max_dd_r": 13.04,
+       "win_rate": 0.503,
+       "net_usdt": -1.42
+      }
+     }
+    },
+    "P2": {
+     "full": {
+      "trades": 1874,
+      "r_per_trade": -0.1239,
+      "total_r": -232.25,
+      "pf": 0.674,
+      "max_dd_r": 234.6,
+      "win_rate": 0.495,
+      "net_usdt": -43.15
+     },
+     "half1": {
+      "trades": 779,
+      "r_per_trade": -0.0987,
+      "total_r": -76.9,
+      "pf": 0.7,
+      "max_dd_r": 76.9,
+      "win_rate": 0.487,
+      "net_usdt": -14.27
+     },
+     "half2": {
+      "trades": 1095,
+      "r_per_trade": -0.1419,
+      "total_r": -155.35,
+      "pf": 0.658,
+      "max_dd_r": 159.73,
+      "win_rate": 0.5,
+      "net_usdt": -28.88
+     },
+     "by_coin": {
+      "ARBUSDT": {
+       "trades": 823,
+       "r_per_trade": -0.1598,
+       "total_r": -131.5,
+       "pf": 0.64,
+       "max_dd_r": 137.36,
+       "win_rate": 0.488,
+       "net_usdt": -25.11
+      },
+      "DOGEUSDT": {
+       "trades": 662,
+       "r_per_trade": -0.135,
+       "total_r": -89.39,
+       "pf": 0.607,
+       "max_dd_r": 91.59,
+       "win_rate": 0.474,
+       "net_usdt": -17.27
+      },
+      "ENAUSDT": {
+       "trades": 864,
+       "r_per_trade": -0.072,
+       "total_r": -62.2,
+       "pf": 0.822,
+       "max_dd_r": 68.67,
+       "win_rate": 0.551,
+       "net_usdt": -12.3
+      },
+      "ETHUSDT": {
+       "trades": 232,
+       "r_per_trade": -0.0824,
+       "total_r": -19.11,
+       "pf": 0.716,
+       "max_dd_r": 22.1,
+       "win_rate": 0.461,
+       "net_usdt": -4.83
+      },
+      "SOLUSDT": {
+       "trades": 590,
+       "r_per_trade": -0.0601,
+       "total_r": -35.43,
+       "pf": 0.797,
+       "max_dd_r": 42.49,
+       "win_rate": 0.475,
+       "net_usdt": -3.51
+      },
+      "XRPUSDT": {
+       "trades": 656,
+       "r_per_trade": -0.1017,
+       "total_r": -66.73,
+       "pf": 0.677,
+       "max_dd_r": 71.67,
+       "win_rate": 0.471,
+       "net_usdt": -13.01
+      }
+     }
+    },
+    "E0_legs": {
+     "0tp_be": 124,
+     "0tp_time": 1299,
+     "0tp_stop": 1015,
+     "1tp_tp": 171,
+     "1tp_be": 561,
+     "1tp_time": 259,
+     "2tp_tp": 4,
+     "2tp_be": 199,
+     "2tp_time": 85,
+     "3tp_tp": 110
+    },
+    "paired_E0_vs_E1": {
+     "pairs": 3255,
+     "mean_E0": -0.109,
+     "mean_E1": -0.1011
+    },
+    "matched_entries": {
+     "E0": {
+      "full": {
+       "trades": 3194,
+       "r_per_trade": -0.1059,
+       "total_r": -338.38,
+       "pf": 0.704,
+       "max_dd_r": 346.28,
+       "win_rate": 0.49,
+       "net_usdt": -63.86
+      },
+      "half1": {
+       "trades": 1516,
+       "r_per_trade": -0.0895,
+       "total_r": -135.71,
+       "pf": 0.709,
+       "max_dd_r": 135.71,
+       "win_rate": 0.482,
+       "net_usdt": -24.46
+      },
+      "half2": {
+       "trades": 1678,
+       "r_per_trade": -0.1208,
+       "total_r": -202.67,
+       "pf": 0.701,
+       "max_dd_r": 213.99,
+       "win_rate": 0.497,
+       "net_usdt": -39.4
+      }
+     },
+     "E1": {
+      "full": {
+       "trades": 3194,
+       "r_per_trade": -0.0983,
+       "total_r": -313.96,
+       "pf": 0.769,
+       "max_dd_r": 333.84,
+       "win_rate": 0.433,
+       "net_usdt": -59.74
+      },
+      "half1": {
+       "trades": 1516,
+       "r_per_trade": -0.0884,
+       "total_r": -133.98,
+       "pf": 0.741,
+       "max_dd_r": 137.3,
+       "win_rate": 0.443,
+       "net_usdt": -24.64
+      },
+      "half2": {
+       "trades": 1678,
+       "r_per_trade": -0.1073,
+       "total_r": -179.99,
+       "pf": 0.787,
+       "max_dd_r": 200.3,
+       "win_rate": 0.424,
+       "net_usdt": -35.09
+      }
+     },
+     "E2": {
+      "full": {
+       "trades": 3194,
+       "r_per_trade": -0.0987,
+       "total_r": -315.11,
+       "pf": 0.748,
+       "max_dd_r": 323.0,
+       "win_rate": 0.462,
+       "net_usdt": -59.73
+      },
+      "half1": {
+       "trades": 1516,
+       "r_per_trade": -0.0781,
+       "total_r": -118.37,
+       "pf": 0.759,
+       "max_dd_r": 118.37,
+       "win_rate": 0.464,
+       "net_usdt": -21.49
+      },
+      "half2": {
+       "trades": 1678,
+       "r_per_trade": -0.1172,
+       "total_r": -196.74,
+       "pf": 0.741,
+       "max_dd_r": 208.11,
+       "win_rate": 0.461,
+       "net_usdt": -38.24
+      }
+     },
+     "entries": 3194
+    }
+   }
+  },
+  "W2": {
+   "since": 1736035200000,
+   "mid": 1759190400000,
+   "end": 1782345600000,
+   "variants": {
+    "E0": {
+     "full": {
+      "trades": 22022,
+      "r_per_trade": -0.1293,
+      "total_r": -2847.4,
+      "pf": 0.69,
+      "max_dd_r": 2849.71,
+      "win_rate": 0.488,
+      "net_usdt": -530.02,
+      "account": {
+       "updates": 771840,
+       "start_usdt": 120.0,
+       "end_usdt": -414.58,
+       "max_dd_usdt": 535.55,
+       "max_dd_pct_of_start": 446.29,
+       "max_dd_pct_of_peak": 444.16,
+       "max_dd_at": 1782324119999
+      }
+     },
+     "half1": {
+      "trades": 10999,
+      "r_per_trade": -0.1252,
+      "total_r": -1376.65,
+      "pf": 0.706,
+      "max_dd_r": 1387.36,
+      "win_rate": 0.493,
+      "net_usdt": -257.71,
+      "account": {
+       "updates": 385920,
+       "start_usdt": 120.0,
+       "end_usdt": -150.52,
+       "max_dd_usdt": 273.61,
+       "max_dd_pct_of_start": 228.01,
+       "max_dd_pct_of_peak": 226.92,
+       "max_dd_at": 1759151519999
+      }
+     },
+     "half2": {
+      "trades": 11023,
+      "r_per_trade": -0.1334,
+      "total_r": -1470.75,
+      "pf": 0.673,
+      "max_dd_r": 1471.57,
+      "win_rate": 0.482,
+      "net_usdt": -272.31,
+      "account": {
+       "updates": 385920,
+       "start_usdt": -150.52,
+       "end_usdt": -414.58,
+       "max_dd_usdt": 264.52,
+       "max_dd_pct_of_start": 220.43,
+       "max_dd_pct_of_peak": -0.0,
+       "max_dd_at": 1782324119999
+      }
+     },
+     "by_coin": {
+      "ARBUSDT": {
+       "trades": 4621,
+       "r_per_trade": -0.1261,
+       "total_r": -582.88,
+       "pf": 0.71,
+       "max_dd_r": 590.55,
+       "win_rate": 0.502,
+       "net_usdt": -110.48
+      },
+      "DOGEUSDT": {
+       "trades": 4358,
+       "r_per_trade": -0.1463,
+       "total_r": -637.77,
+       "pf": 0.65,
+       "max_dd_r": 642.96,
+       "win_rate": 0.481,
+       "net_usdt": -120.36
+      },
+      "ENAUSDT": {
+       "trades": 4718,
+       "r_per_trade": -0.1293,
+       "total_r": -609.93,
+       "pf": 0.707,
+       "max_dd_r": 613.85,
+       "win_rate": 0.515,
+       "net_usdt": -114.14
+      },
+      "ETHUSDT": {
+       "trades": 1103,
+       "r_per_trade": -0.1089,
+       "total_r": -120.11,
+       "pf": 0.721,
+       "max_dd_r": 123.62,
+       "win_rate": 0.442,
+       "net_usdt": -29.2
+      },
+      "SOLUSDT": {
+       "trades": 3127,
+       "r_per_trade": -0.1082,
+       "total_r": -338.26,
+       "pf": 0.734,
+       "max_dd_r": 345.24,
+       "win_rate": 0.468,
+       "net_usdt": -50.06
+      },
+      "XRPUSDT": {
+       "trades": 4095,
+       "r_per_trade": -0.1364,
+       "total_r": -558.45,
+       "pf": 0.644,
+       "max_dd_r": 558.45,
+       "win_rate": 0.473,
+       "net_usdt": -105.8
+      }
+     }
+    },
+    "E1": {
+     "full": {
+      "trades": 21277,
+      "r_per_trade": -0.1267,
+      "total_r": -2696.3,
+      "pf": 0.75,
+      "max_dd_r": 2703.74,
+      "win_rate": 0.416,
+      "net_usdt": -503.6,
+      "account": {
+       "updates": 771840,
+       "start_usdt": 120.0,
+       "end_usdt": -369.24,
+       "max_dd_usdt": 492.0,
+       "max_dd_pct_of_start": 410.0,
+       "max_dd_pct_of_peak": 402.91,
+       "max_dd_at": 1782324119999
+      }
+     },
+     "half1": {
+      "trades": 10813,
+      "r_per_trade": -0.1177,
+      "total_r": -1272.84,
+      "pf": 0.778,
+      "max_dd_r": 1287.97,
+      "win_rate": 0.417,
+      "net_usdt": -239.45,
+      "account": {
+       "updates": 385920,
+       "start_usdt": 120.0,
+       "end_usdt": -113.23,
+       "max_dd_usdt": 238.04,
+       "max_dd_pct_of_start": 198.37,
+       "max_dd_pct_of_peak": 194.94,
+       "max_dd_at": 1759151519999
+      }
+     },
+     "half2": {
+      "trades": 10464,
+      "r_per_trade": -0.136,
+      "total_r": -1423.46,
+      "pf": 0.718,
+      "max_dd_r": 1425.76,
+      "win_rate": 0.416,
+      "net_usdt": -264.15,
+      "account": {
+       "updates": 385920,
+       "start_usdt": -113.23,
+       "end_usdt": -369.24,
+       "max_dd_usdt": 256.73,
+       "max_dd_pct_of_start": 213.94,
+       "max_dd_pct_of_peak": -0.0,
+       "max_dd_at": 1782324119999
+      }
+     },
+     "by_coin": {
+      "ARBUSDT": {
+       "trades": 4604,
+       "r_per_trade": -0.1157,
+       "total_r": -532.67,
+       "pf": 0.782,
+       "max_dd_r": 534.3,
+       "win_rate": 0.421,
+       "net_usdt": -101.49
+      },
+      "DOGEUSDT": {
+       "trades": 4211,
+       "r_per_trade": -0.1499,
+       "total_r": -631.28,
+       "pf": 0.697,
+       "max_dd_r": 637.93,
+       "win_rate": 0.405,
+       "net_usdt": -119.8
+      },
+      "ENAUSDT": {
+       "trades": 4668,
+       "r_per_trade": -0.1244,
+       "total_r": -580.75,
+       "pf": 0.788,
+       "max_dd_r": 599.36,
+       "win_rate": 0.411,
+       "net_usdt": -108.36
+      },
+      "ETHUSDT": {
+       "trades": 1046,
+       "r_per_trade": -0.1326,
+       "total_r": -138.66,
+       "pf": 0.703,
+       "max_dd_r": 141.65,
+       "win_rate": 0.416,
+       "net_usdt": -33.09
+      },
+      "SOLUSDT": {
+       "trades": 2794,
+       "r_per_trade": -0.115,
+       "total_r": -321.24,
+       "pf": 0.756,
+       "max_dd_r": 334.34,
+       "win_rate": 0.426,
+       "net_usdt": -47.4
+      },
+      "XRPUSDT": {
+       "trades": 3954,
+       "r_per_trade": -0.1244,
+       "total_r": -491.69,
+       "pf": 0.717,
+       "max_dd_r": 493.43,
+       "win_rate": 0.423,
+       "net_usdt": -93.45
+      }
+     }
+    },
+    "E2": {
+     "full": {
+      "trades": 21415,
+      "r_per_trade": -0.1293,
+      "total_r": -2769.62,
+      "pf": 0.72,
+      "max_dd_r": 2774.68,
+      "win_rate": 0.447,
+      "net_usdt": -515.13,
+      "account": {
+       "updates": 771840,
+       "start_usdt": 120.0,
+       "end_usdt": -378.94,
+       "max_dd_usdt": 500.13,
+       "max_dd_pct_of_start": 416.77,
+       "max_dd_pct_of_peak": 413.86,
+       "max_dd_at": 1782324119999
+      }
+     },
+     "half1": {
+      "trades": 10870,
+      "r_per_trade": -0.1242,
+      "total_r": -1350.27,
+      "pf": 0.74,
+      "max_dd_r": 1363.69,
+      "win_rate": 0.451,
+      "net_usdt": -253.02,
+      "account": {
+       "updates": 385920,
+       "start_usdt": 120.0,
+       "end_usdt": -126.92,
+       "max_dd_usdt": 250.26,
+       "max_dd_pct_of_start": 208.55,
+       "max_dd_pct_of_peak": 207.09,
+       "max_dd_at": 1759151519999
+      }
+     },
+     "half2": {
+      "trades": 10545,
+      "r_per_trade": -0.1346,
+      "total_r": -1419.35,
+      "pf": 0.697,
+      "max_dd_r": 1420.04,
+      "win_rate": 0.443,
+      "net_usdt": -262.11,
+      "account": {
+       "updates": 385920,
+       "start_usdt": -126.92,
+       "end_usdt": -378.94,
+       "max_dd_usdt": 252.43,
+       "max_dd_pct_of_start": 210.36,
+       "max_dd_pct_of_peak": -0.0,
+       "max_dd_at": 1782324119999
+      }
+     },
+     "by_coin": {
+      "ARBUSDT": {
+       "trades": 4584,
+       "r_per_trade": -0.1253,
+       "total_r": -574.33,
+       "pf": 0.741,
+       "max_dd_r": 578.3,
+       "win_rate": 0.455,
+       "net_usdt": -108.85
+      },
+      "DOGEUSDT": {
+       "trades": 4196,
+       "r_per_trade": -0.1485,
+       "total_r": -623.15,
+       "pf": 0.675,
+       "max_dd_r": 628.57,
+       "win_rate": 0.436,
+       "net_usdt": -116.97
+      },
+      "ENAUSDT": {
+       "trades": 4683,
+       "r_per_trade": -0.1242,
+       "total_r": -581.48,
+       "pf": 0.756,
+       "max_dd_r": 583.3,
+       "win_rate": 0.46,
+       "net_usdt": -109.22
+      },
+      "ETHUSDT": {
+       "trades": 1068,
+       "r_per_trade": -0.1216,
+       "total_r": -129.85,
+       "pf": 0.707,
+       "max_dd_r": 131.97,
+       "win_rate": 0.423,
+       "net_usdt": -31.6
+      },
+      "SOLUSDT": {
+       "trades": 2956,
+       "r_per_trade": -0.1118,
+       "total_r": -330.51,
+       "pf": 0.745,
+       "max_dd_r": 337.46,
+       "win_rate": 0.442,
+       "net_usdt": -47.76
+      },
+      "XRPUSDT": {
+       "trades": 3928,
+       "r_per_trade": -0.135,
+       "total_r": -530.3,
+       "pf": 0.674,
+       "max_dd_r": 532.23,
+       "win_rate": 0.443,
+       "net_usdt": -100.73
+      }
+     }
+    },
+    "F1": {
+     "full": {
+      "trades": 19650,
+      "r_per_trade": -0.1282,
+      "total_r": -2519.34,
+      "pf": 0.69,
+      "max_dd_r": 2528.42,
+      "win_rate": 0.487,
+      "net_usdt": -468.62,
+      "account": {
+       "updates": 771840,
+       "start_usdt": 120.0,
+       "end_usdt": -325.79,
+       "max_dd_usdt": 447.52,
+       "max_dd_pct_of_start": 372.93,
+       "max_dd_pct_of_peak": 368.68,
+       "max_dd_at": 1782324119999
+      }
+     },
+     "half1": {
+      "trades": 10066,
+      "r_per_trade": -0.1278,
+      "total_r": -1286.46,
+      "pf": 0.701,
+      "max_dd_r": 1299.18,
+      "win_rate": 0.493,
+      "net_usdt": -239.23,
+      "account": {
+       "updates": 385920,
+       "start_usdt": 120.0,
+       "end_usdt": -103.7,
+       "max_dd_usdt": 226.77,
+       "max_dd_pct_of_start": 188.97,
+       "max_dd_pct_of_peak": 186.82,
+       "max_dd_at": 1759169879999
+      }
+     },
+     "half2": {
+      "trades": 9584,
+      "r_per_trade": -0.1286,
+      "total_r": -1232.88,
+      "pf": 0.679,
+      "max_dd_r": 1234.88,
+      "win_rate": 0.481,
+      "net_usdt": -229.38,
+      "account": {
+       "updates": 385920,
+       "start_usdt": -103.7,
+       "end_usdt": -325.79,
+       "max_dd_usdt": 222.5,
+       "max_dd_pct_of_start": 185.42,
+       "max_dd_pct_of_peak": -0.0,
+       "max_dd_at": 1782324119999
+      }
+     },
+     "by_coin": {
+      "ARBUSDT": {
+       "trades": 4032,
+       "r_per_trade": -0.1304,
+       "total_r": -525.81,
+       "pf": 0.699,
+       "max_dd_r": 528.93,
+       "win_rate": 0.501,
+       "net_usdt": -99.13
+      },
+      "DOGEUSDT": {
+       "trades": 3747,
+       "r_per_trade": -0.1439,
+       "total_r": -539.33,
+       "pf": 0.65,
+       "max_dd_r": 542.46,
+       "win_rate": 0.476,
+       "net_usdt": -101.39
+      },
+      "ENAUSDT": {
+       "trades": 4526,
+       "r_per_trade": -0.1348,
+       "total_r": -610.22,
+       "pf": 0.698,
+       "max_dd_r": 615.8,
+       "win_rate": 0.514,
+       "net_usdt": -113.96
+      },
+      "ETHUSDT": {
+       "trades": 998,
+       "r_per_trade": -0.1023,
+       "total_r": -102.11,
+       "pf": 0.732,
+       "max_dd_r": 106.87,
+       "win_rate": 0.448,
+       "net_usdt": -24.55
+      },
+      "SOLUSDT": {
+       "trades": 2769,
+       "r_per_trade": -0.107,
+       "total_r": -296.3,
+       "pf": 0.733,
+       "max_dd_r": 299.97,
+       "win_rate": 0.467,
+       "net_usdt": -44.47
+      },
+      "XRPUSDT": {
+       "trades": 3578,
+       "r_per_trade": -0.1245,
+       "total_r": -445.57,
+       "pf": 0.666,
+       "max_dd_r": 448.35,
+       "win_rate": 0.476,
+       "net_usdt": -85.12
+      }
+     }
+    },
+    "F2": {
+     "full": {
+      "trades": 9355,
+      "r_per_trade": -0.1134,
+      "total_r": -1060.66,
+      "pf": 0.719,
+      "max_dd_r": 1061.29,
+      "win_rate": 0.493,
+      "net_usdt": -196.05,
+      "account": {
+       "updates": 771840,
+       "start_usdt": 120.0,
+       "end_usdt": -68.01,
+       "max_dd_usdt": 188.41,
+       "max_dd_pct_of_start": 157.01,
+       "max_dd_pct_of_peak": 156.91,
+       "max_dd_at": 1782300059999
+      }
+     },
+     "half1": {
+      "trades": 4762,
+      "r_per_trade": -0.121,
+      "total_r": -576.04,
+      "pf": 0.714,
+      "max_dd_r": 580.62,
+      "win_rate": 0.497,
+      "net_usdt": -105.82,
+      "account": {
+       "updates": 385920,
+       "start_usdt": 120.0,
+       "end_usdt": 20.53,
+       "max_dd_usdt": 100.52,
+       "max_dd_pct_of_start": 83.77,
+       "max_dd_pct_of_peak": 83.72,
+       "max_dd_at": 1759166219999
+      }
+     },
+     "half2": {
+      "trades": 4593,
+      "r_per_trade": -0.1055,
+      "total_r": -484.62,
+      "pf": 0.725,
+      "max_dd_r": 485.24,
+      "win_rate": 0.489,
+      "net_usdt": -90.23,
+      "account": {
+       "updates": 385920,
+       "start_usdt": 20.53,
+       "end_usdt": -68.01,
+       "max_dd_usdt": 88.93,
+       "max_dd_pct_of_start": 74.11,
+       "max_dd_pct_of_peak": 431.83,
+       "max_dd_at": 1782300059999
+      }
+     },
+     "by_coin": {
+      "ARBUSDT": {
+       "trades": 2012,
+       "r_per_trade": -0.1,
+       "total_r": -201.2,
+       "pf": 0.76,
+       "max_dd_r": 210.0,
+       "win_rate": 0.505,
+       "net_usdt": -38.38
+      },
+      "DOGEUSDT": {
+       "trades": 1880,
+       "r_per_trade": -0.1068,
+       "total_r": -200.84,
+       "pf": 0.727,
+       "max_dd_r": 202.61,
+       "win_rate": 0.488,
+       "net_usdt": -38.34
+      },
+      "ENAUSDT": {
+       "trades": 2196,
+       "r_per_trade": -0.1234,
+       "total_r": -271.0,
+       "pf": 0.719,
+       "max_dd_r": 273.74,
+       "win_rate": 0.518,
+       "net_usdt": -49.35
+      },
+      "ETHUSDT": {
+       "trades": 272,
+       "r_per_trade": -0.1203,
+       "total_r": -32.73,
+       "pf": 0.686,
+       "max_dd_r": 36.19,
+       "win_rate": 0.412,
+       "net_usdt": -7.9
+      },
+      "SOLUSDT": {
+       "trades": 1125,
+       "r_per_trade": -0.0913,
+       "total_r": -102.69,
+       "pf": 0.761,
+       "max_dd_r": 109.34,
+       "win_rate": 0.486,
+       "net_usdt": -14.28
+      },
+      "XRPUSDT": {
+       "trades": 1870,
+       "r_per_trade": -0.1349,
+       "total_r": -252.19,
+       "pf": 0.644,
+       "max_dd_r": 252.19,
+       "win_rate": 0.473,
+       "net_usdt": -47.79
+      }
+     }
+    },
+    "F3": {
+     "full": {
+      "trades": 5306,
+      "r_per_trade": -0.1132,
+      "total_r": -600.4,
+      "pf": 0.721,
+      "max_dd_r": 607.09,
+      "win_rate": 0.491,
+      "net_usdt": -113.4,
+      "account": {
+       "updates": 771840,
+       "start_usdt": 120.0,
+       "end_usdt": 12.82,
+       "max_dd_usdt": 109.35,
+       "max_dd_pct_of_start": 91.12,
+       "max_dd_pct_of_peak": 90.62,
+       "max_dd_at": 1779857519999
+      }
+     },
+     "half1": {
+      "trades": 2656,
+      "r_per_trade": -0.1314,
+      "total_r": -349.02,
+      "pf": 0.693,
+      "max_dd_r": 353.86,
+      "win_rate": 0.485,
+      "net_usdt": -66.42,
+      "account": {
+       "updates": 385920,
+       "start_usdt": 120.0,
+       "end_usdt": 56.53,
+       "max_dd_usdt": 64.84,
+       "max_dd_pct_of_start": 54.03,
+       "max_dd_pct_of_peak": 53.73,
+       "max_dd_at": 1759151099999
+      }
+     },
+     "half2": {
+      "trades": 2650,
+      "r_per_trade": -0.0949,
+      "total_r": -251.38,
+      "pf": 0.752,
+      "max_dd_r": 255.58,
+      "win_rate": 0.498,
+      "net_usdt": -46.97,
+      "account": {
+       "updates": 385920,
+       "start_usdt": 56.53,
+       "end_usdt": 12.82,
+       "max_dd_usdt": 45.35,
+       "max_dd_pct_of_start": 37.79,
+       "max_dd_pct_of_peak": 80.03,
+       "max_dd_at": 1779857519999
+      }
+     },
+     "by_coin": {
+      "ARBUSDT": {
+       "trades": 1134,
+       "r_per_trade": -0.0857,
+       "total_r": -97.14,
+       "pf": 0.797,
+       "max_dd_r": 114.44,
+       "win_rate": 0.525,
+       "net_usdt": -18.8
+      },
+      "DOGEUSDT": {
+       "trades": 1054,
+       "r_per_trade": -0.1295,
+       "total_r": -136.45,
+       "pf": 0.67,
+       "max_dd_r": 142.81,
+       "win_rate": 0.485,
+       "net_usdt": -25.34
+      },
+      "ENAUSDT": {
+       "trades": 1162,
+       "r_per_trade": -0.1065,
+       "total_r": -123.7,
+       "pf": 0.758,
+       "max_dd_r": 125.79,
+       "win_rate": 0.528,
+       "net_usdt": -23.62
+      },
+      "ETHUSDT": {
+       "trades": 286,
+       "r_per_trade": -0.1066,
+       "total_r": -30.49,
+       "pf": 0.728,
+       "max_dd_r": 37.71,
+       "win_rate": 0.42,
+       "net_usdt": -7.2
+      },
+      "SOLUSDT": {
+       "trades": 709,
+       "r_per_trade": -0.1124,
+       "total_r": -79.72,
+       "pf": 0.722,
+       "max_dd_r": 81.02,
+       "win_rate": 0.465,
+       "net_usdt": -13.15
+      },
+      "XRPUSDT": {
+       "trades": 961,
+       "r_per_trade": -0.1383,
+       "total_r": -132.9,
+       "pf": 0.616,
+       "max_dd_r": 134.47,
+       "win_rate": 0.455,
+       "net_usdt": -25.3
+      }
+     }
+    },
+    "P2": {
+     "full": {
+      "trades": 11472,
+      "r_per_trade": -0.1344,
+      "total_r": -1541.37,
+      "pf": 0.684,
+      "max_dd_r": 1541.61,
+      "win_rate": 0.49,
+      "net_usdt": -287.32
+     },
+     "half1": {
+      "trades": 6035,
+      "r_per_trade": -0.1341,
+      "total_r": -809.23,
+      "pf": 0.69,
+      "max_dd_r": 813.75,
+      "win_rate": 0.496,
+      "net_usdt": -150.07
+     },
+     "half2": {
+      "trades": 5437,
+      "r_per_trade": -0.1347,
+      "total_r": -732.14,
+      "pf": 0.677,
+      "max_dd_r": 732.14,
+      "win_rate": 0.484,
+      "net_usdt": -137.25
+     },
+     "by_coin": {
+      "ARBUSDT": {
+       "trades": 4621,
+       "r_per_trade": -0.1261,
+       "total_r": -582.88,
+       "pf": 0.71,
+       "max_dd_r": 590.55,
+       "win_rate": 0.502,
+       "net_usdt": -110.48
+      },
+      "DOGEUSDT": {
+       "trades": 4358,
+       "r_per_trade": -0.1463,
+       "total_r": -637.77,
+       "pf": 0.65,
+       "max_dd_r": 642.96,
+       "win_rate": 0.481,
+       "net_usdt": -120.36
+      },
+      "ENAUSDT": {
+       "trades": 4718,
+       "r_per_trade": -0.1293,
+       "total_r": -609.93,
+       "pf": 0.707,
+       "max_dd_r": 613.85,
+       "win_rate": 0.515,
+       "net_usdt": -114.14
+      },
+      "ETHUSDT": {
+       "trades": 1103,
+       "r_per_trade": -0.1089,
+       "total_r": -120.11,
+       "pf": 0.721,
+       "max_dd_r": 123.62,
+       "win_rate": 0.442,
+       "net_usdt": -29.2
+      },
+      "SOLUSDT": {
+       "trades": 3127,
+       "r_per_trade": -0.1082,
+       "total_r": -338.26,
+       "pf": 0.734,
+       "max_dd_r": 345.24,
+       "win_rate": 0.468,
+       "net_usdt": -50.06
+      },
+      "XRPUSDT": {
+       "trades": 4095,
+       "r_per_trade": -0.1364,
+       "total_r": -558.45,
+       "pf": 0.644,
+       "max_dd_r": 558.45,
+       "win_rate": 0.473,
+       "net_usdt": -105.8
+      }
+     }
+    },
+    "E0_legs": {
+     "0tp_be": 966,
+     "0tp_time": 4739,
+     "0tp_stop": 7285,
+     "1tp_tp": 1358,
+     "1tp_be": 3587,
+     "1tp_time": 1306,
+     "2tp_tp": 19,
+     "2tp_be": 1334,
+     "2tp_time": 623,
+     "3tp_tp": 805
+    },
+    "paired_E0_vs_E1": {
+     "pairs": 18168,
+     "mean_E0": -0.1338,
+     "mean_E1": -0.1317
+    },
+    "matched_entries": {
+     "E0": {
+      "full": {
+       "trades": 17787,
+       "r_per_trade": -0.1345,
+       "total_r": -2392.34,
+       "pf": 0.679,
+       "max_dd_r": 2393.32,
+       "win_rate": 0.48,
+       "net_usdt": -446.06
+      },
+      "half1": {
+       "trades": 8742,
+       "r_per_trade": -0.1298,
+       "total_r": -1134.57,
+       "pf": 0.698,
+       "max_dd_r": 1142.76,
+       "win_rate": 0.486,
+       "net_usdt": -213.67
+      },
+      "half2": {
+       "trades": 9045,
+       "r_per_trade": -0.1391,
+       "total_r": -1257.77,
+       "pf": 0.66,
+       "max_dd_r": 1258.2,
+       "win_rate": 0.475,
+       "net_usdt": -232.39
+      }
+     },
+     "E1": {
+      "full": {
+       "trades": 17787,
+       "r_per_trade": -0.1335,
+       "total_r": -2374.7,
+       "pf": 0.736,
+       "max_dd_r": 2381.05,
+       "win_rate": 0.413,
+       "net_usdt": -443.59
+      },
+      "half1": {
+       "trades": 8742,
+       "r_per_trade": -0.121,
+       "total_r": -1058.03,
+       "pf": 0.771,
+       "max_dd_r": 1070.19,
+       "win_rate": 0.414,
+       "net_usdt": -199.74
+      },
+      "half2": {
+       "trades": 9045,
+       "r_per_trade": -0.1456,
+       "total_r": -1316.67,
+       "pf": 0.699,
+       "max_dd_r": 1320.09,
+       "win_rate": 0.411,
+       "net_usdt": -243.85
+      }
+     },
+     "E2": {
+      "full": {
+       "trades": 17787,
+       "r_per_trade": -0.1352,
+       "total_r": -2405.59,
+       "pf": 0.707,
+       "max_dd_r": 2408.03,
+       "win_rate": 0.443,
+       "net_usdt": -448.62
+      },
+      "half1": {
+       "trades": 8742,
+       "r_per_trade": -0.1257,
+       "total_r": -1098.86,
+       "pf": 0.736,
+       "max_dd_r": 1109.5,
+       "win_rate": 0.448,
+       "net_usdt": -207.66
+      },
+      "half2": {
+       "trades": 9045,
+       "r_per_trade": -0.1445,
+       "total_r": -1306.73,
+       "pf": 0.676,
+       "max_dd_r": 1307.1,
+       "win_rate": 0.438,
+       "net_usdt": -240.96
+      }
+     },
+     "entries": 17787
+    }
+   }
+  }
+ },
+ "verdict": {
+  "E1": "no relative improvement",
+  "E2": "no relative improvement",
+  "F1": "RELATIVE IMPROVEMENT vs E0 (still loses)",
+  "F2": "RELATIVE IMPROVEMENT vs E0 (still loses)",
+  "F3": "RELATIVE IMPROVEMENT vs E0 (still loses)",
+  "P2": "no relative improvement"
+ },
+ "note": "Every variant loses money in every window; a relative improvement is not profitability.",
+ "revision_note": "max_dd_pct_of_start corrected post-run to the fixed 120 USDT capital (6 x 20); the first run divided by the window's first account value"
+}
