@@ -1,0 +1,573 @@
+{
+ "doc": "V8.3 entry diagnosis (2026-10-12): where does the loss come from? Research only, on the ALREADY INSPECTED windows\n(W1 2026-06-26..10-02 with recorded funding, W2 2025-01-01..2026-06-25 without funding data), CONTROL exits (one 1.5R\ntarget), the live engine. Every trade's net result is split into:\n\n    gross       price move from the SIGNAL close to the exit, at mid (what the entry idea earns before any cost)\n    latency     the 60 s between the signal and the fill (price drift, part of slippage)\n    spread      half-spreads paid on taker fills (entry, stop, time exit)\n    impact      size impact (zero at these sizes)\n    fees        exchange fees (taker entry/stop/time, maker target)\n    funding     settlements while held (W1 only)\n    net = gross - latency - spread - impact - fees + funding        (all in R of the trade's initial risk)\n\nIt also records, at each signal, the distance from the close to the rolling 4h VWAP (the reversion target) relative to\nthe 1.5R target distance, to see whether entries whose expected reversion covers the target and the costs do better.\nThe new entry hypothesis is chosen from this and frozen BEFORE any untouched data is read (docs/V8_COSTGATE_FREEZE.json).\n\n    python scripts/v8_entry_diagnosis.py\n",
+ "windows": {
+  "W1": {
+   "all": {
+    "trades": 3205,
+    "R_per_trade": {
+     "gross": -0.0179,
+     "latency": 0.0,
+     "spread": 0.0185,
+     "impact": 0.0,
+     "fees": 0.0859,
+     "funding": 0.0002,
+     "net": -0.1221
+    },
+    "usdt_total": {
+     "gross": -12.6,
+     "latency": 0.0,
+     "spread": 11.15,
+     "fees": 51.48,
+     "funding": 0.13,
+     "net": -75.1
+    },
+    "win_rate_gross": 0.462
+   },
+   "by_side": {
+    "long": {
+     "trades": 1539,
+     "R_per_trade": {
+      "gross": -0.0079,
+      "latency": 0.0,
+      "spread": 0.0184,
+      "impact": 0.0,
+      "fees": 0.0862,
+      "funding": -0.0003,
+      "net": -0.1128
+     },
+     "usdt_total": {
+      "gross": -3.42,
+      "latency": 0.0,
+      "spread": 5.35,
+      "fees": 24.84,
+      "funding": -0.08,
+      "net": -33.7
+     },
+     "win_rate_gross": 0.482
+    },
+    "short": {
+     "trades": 1666,
+     "R_per_trade": {
+      "gross": -0.0272,
+      "latency": 0.0,
+      "spread": 0.0185,
+      "impact": 0.0,
+      "fees": 0.0857,
+      "funding": 0.0007,
+      "net": -0.1307
+     },
+     "usdt_total": {
+      "gross": -9.17,
+      "latency": 0.0,
+      "spread": 5.8,
+      "fees": 26.64,
+      "funding": 0.21,
+      "net": -41.4
+     },
+     "win_rate_gross": 0.444
+    }
+   },
+   "by_coin": {
+    "ARBUSDT": {
+     "trades": 790,
+     "R_per_trade": {
+      "gross": -0.0411,
+      "latency": 0.0,
+      "spread": 0.0202,
+      "impact": 0.0,
+      "fees": 0.0839,
+      "funding": 0.0002,
+      "net": -0.145
+     },
+     "usdt_total": {
+      "gross": -6.52,
+      "latency": 0.0,
+      "spread": 3.16,
+      "fees": 13.15,
+      "funding": 0.03,
+      "net": -22.8
+     },
+     "win_rate_gross": 0.433
+    },
+    "DOGEUSDT": {
+     "trades": 642,
+     "R_per_trade": {
+      "gross": -0.0594,
+      "latency": 0.0,
+      "spread": 0.0183,
+      "impact": 0.0,
+      "fees": 0.0885,
+      "funding": 0.0003,
+      "net": -0.1659
+     },
+     "usdt_total": {
+      "gross": -7.44,
+      "latency": 0.0,
+      "spread": 2.32,
+      "fees": 11.25,
+      "funding": 0.03,
+      "net": -20.98
+     },
+     "win_rate_gross": 0.456
+    },
+    "ENAUSDT": {
+     "trades": 810,
+     "R_per_trade": {
+      "gross": 0.0306,
+      "latency": 0.0,
+      "spread": 0.0206,
+      "impact": 0.0,
+      "fees": 0.0828,
+      "funding": 0.0002,
+      "net": -0.0725
+     },
+     "usdt_total": {
+      "gross": 4.8,
+      "latency": 0.0,
+      "spread": 3.3,
+      "fees": 13.27,
+      "funding": 0.04,
+      "net": -11.73
+     },
+     "win_rate_gross": 0.459
+    },
+    "ETHUSDT": {
+     "trades": 0
+    },
+    "SOLUSDT": {
+     "trades": 323,
+     "R_per_trade": {
+      "gross": 0.0317,
+      "latency": 0.0,
+      "spread": 0.0166,
+      "impact": 0.0,
+      "fees": 0.0893,
+      "funding": 0.0003,
+      "net": -0.0738
+     },
+     "usdt_total": {
+      "gross": 0.91,
+      "latency": 0.0,
+      "spread": 0.49,
+      "fees": 2.66,
+      "funding": 0.01,
+      "net": -2.23
+     },
+     "win_rate_gross": 0.505
+    },
+    "XRPUSDT": {
+     "trades": 640,
+     "R_per_trade": {
+      "gross": -0.0341,
+      "latency": 0.0,
+      "spread": 0.0149,
+      "impact": 0.0,
+      "fees": 0.0882,
+      "funding": 0.0001,
+      "net": -0.1371
+     },
+     "usdt_total": {
+      "gross": -4.35,
+      "latency": 0.0,
+      "spread": 1.88,
+      "fees": 11.15,
+      "funding": 0.02,
+      "net": -17.36
+     },
+     "win_rate_gross": 0.487
+    }
+   },
+   "by_vwap_cover": {
+    "vwap_dist/target 0-0.5": {
+     "trades": 1988,
+     "R_per_trade": {
+      "gross": -0.0249,
+      "latency": 0.0,
+      "spread": 0.0162,
+      "impact": 0.0,
+      "fees": 0.0883,
+      "funding": 0.0002,
+      "net": -0.1292
+     },
+     "usdt_total": {
+      "gross": -10.37,
+      "latency": 0.0,
+      "spread": 5.91,
+      "fees": 32.06,
+      "funding": 0.08,
+      "net": -48.25
+     },
+     "win_rate_gross": 0.48
+    },
+    "vwap_dist/target 0.5-0.75": {
+     "trades": 618,
+     "R_per_trade": {
+      "gross": -0.0333,
+      "latency": 0.0,
+      "spread": 0.0199,
+      "impact": 0.0,
+      "fees": 0.0838,
+      "funding": 0.0003,
+      "net": -0.1368
+     },
+     "usdt_total": {
+      "gross": -4.59,
+      "latency": 0.0,
+      "spread": 2.38,
+      "fees": 10.02,
+      "funding": 0.04,
+      "net": -16.95
+     },
+     "win_rate_gross": 0.437
+    },
+    "vwap_dist/target 0.75-1.0": {
+     "trades": 321,
+     "R_per_trade": {
+      "gross": 0.0658,
+      "latency": 0.0,
+      "spread": 0.0221,
+      "impact": 0.0,
+      "fees": 0.0808,
+      "funding": 0.0003,
+      "net": -0.0369
+     },
+     "usdt_total": {
+      "gross": 4.08,
+      "latency": 0.0,
+      "spread": 1.39,
+      "fees": 5.08,
+      "funding": 0.02,
+      "net": -2.37
+     },
+     "win_rate_gross": 0.461
+    },
+    "vwap_dist/target 1.0-1.25": {
+     "trades": 151,
+     "R_per_trade": {
+      "gross": 0.0448,
+      "latency": 0.0,
+      "spread": 0.0247,
+      "impact": 0.0,
+      "fees": 0.0792,
+      "funding": 0.0,
+      "net": -0.0591
+     },
+     "usdt_total": {
+      "gross": 1.23,
+      "latency": 0.0,
+      "spread": 0.73,
+      "fees": 2.33,
+      "funding": 0.0,
+      "net": -1.83
+     },
+     "win_rate_gross": 0.437
+    },
+    "vwap_dist/target 1.25-inf": {
+     "trades": 127,
+     "R_per_trade": {
+      "gross": -0.1195,
+      "latency": 0.0,
+      "spread": 0.0299,
+      "impact": 0.0,
+      "fees": 0.0803,
+      "funding": -0.0004,
+      "net": -0.2301
+     },
+     "usdt_total": {
+      "gross": -2.94,
+      "latency": 0.0,
+      "spread": 0.74,
+      "fees": 1.99,
+      "funding": -0.01,
+      "net": -5.69
+     },
+     "win_rate_gross": 0.346
+    }
+   }
+  },
+  "W2": {
+   "all": {
+    "trades": 17837,
+    "R_per_trade": {
+     "gross": -0.0434,
+     "latency": 0.0,
+     "spread": 0.0162,
+     "impact": 0.0,
+     "fees": 0.0847,
+     "funding": 0.0,
+     "net": -0.1443
+    },
+    "usdt_total": {
+     "gross": -151.67,
+     "latency": 0.0,
+     "spread": 55.82,
+     "fees": 293.24,
+     "funding": 0,
+     "net": -500.73
+    },
+    "win_rate_gross": 0.434
+   },
+   "by_side": {
+    "long": {
+     "trades": 9191,
+     "R_per_trade": {
+      "gross": -0.0715,
+      "latency": 0.0,
+      "spread": 0.0164,
+      "impact": 0.0,
+      "fees": 0.0848,
+      "funding": 0.0,
+      "net": -0.1727
+     },
+     "usdt_total": {
+      "gross": -129.64,
+      "latency": 0.0,
+      "spread": 29.08,
+      "fees": 151.15,
+      "funding": 0,
+      "net": -309.87
+     },
+     "win_rate_gross": 0.421
+    },
+    "short": {
+     "trades": 8646,
+     "R_per_trade": {
+      "gross": -0.0136,
+      "latency": 0.0,
+      "spread": 0.016,
+      "impact": 0.0,
+      "fees": 0.0846,
+      "funding": 0.0,
+      "net": -0.1141
+     },
+     "usdt_total": {
+      "gross": -22.03,
+      "latency": 0.0,
+      "spread": 26.75,
+      "fees": 142.09,
+      "funding": 0,
+      "net": -190.86
+     },
+     "win_rate_gross": 0.449
+    }
+   },
+   "by_coin": {
+    "ARBUSDT": {
+     "trades": 4604,
+     "R_per_trade": {
+      "gross": -0.0317,
+      "latency": 0.0,
+      "spread": 0.0156,
+      "impact": 0.0,
+      "fees": 0.0842,
+      "funding": 0.0,
+      "net": -0.1315
+     },
+     "usdt_total": {
+      "gross": -29.07,
+      "latency": 0.0,
+      "spread": 14.27,
+      "fees": 76.9,
+      "funding": 0,
+      "net": -120.24
+     },
+     "win_rate_gross": 0.434
+    },
+    "DOGEUSDT": {
+     "trades": 4212,
+     "R_per_trade": {
+      "gross": -0.0684,
+      "latency": 0.0,
+      "spread": 0.0161,
+      "impact": 0.0,
+      "fees": 0.0858,
+      "funding": 0.0,
+      "net": -0.1703
+     },
+     "usdt_total": {
+      "gross": -56.59,
+      "latency": 0.0,
+      "spread": 13.36,
+      "fees": 71.02,
+      "funding": 0,
+      "net": -140.97
+     },
+     "win_rate_gross": 0.433
+    },
+    "ENAUSDT": {
+     "trades": 4668,
+     "R_per_trade": {
+      "gross": -0.0362,
+      "latency": 0.0,
+      "spread": 0.0184,
+      "impact": 0.0,
+      "fees": 0.0824,
+      "funding": 0.0,
+      "net": -0.1371
+     },
+     "usdt_total": {
+      "gross": -33.35,
+      "latency": 0.0,
+      "spread": 16.72,
+      "fees": 74.84,
+      "funding": 0,
+      "net": -124.91
+     },
+     "win_rate_gross": 0.416
+    },
+    "ETHUSDT": {
+     "trades": 0
+    },
+    "SOLUSDT": {
+     "trades": 399,
+     "R_per_trade": {
+      "gross": -0.0214,
+      "latency": 0.0,
+      "spread": 0.0201,
+      "impact": 0.0,
+      "fees": 0.0861,
+      "funding": 0.0,
+      "net": -0.1276
+     },
+     "usdt_total": {
+      "gross": -0.94,
+      "latency": 0.0,
+      "spread": 0.74,
+      "fees": 3.18,
+      "funding": 0,
+      "net": -4.85
+     },
+     "win_rate_gross": 0.436
+    },
+    "XRPUSDT": {
+     "trades": 3954,
+     "R_per_trade": {
+      "gross": -0.0412,
+      "latency": 0.0,
+      "spread": 0.0139,
+      "impact": 0.0,
+      "fees": 0.0868,
+      "funding": 0.0,
+      "net": -0.1418
+     },
+     "usdt_total": {
+      "gross": -31.72,
+      "latency": 0.0,
+      "spread": 10.73,
+      "fees": 67.3,
+      "funding": 0,
+      "net": -109.76
+     },
+     "win_rate_gross": 0.457
+    }
+   },
+   "by_vwap_cover": {
+    "vwap_dist/target 0-0.5": {
+     "trades": 9199,
+     "R_per_trade": {
+      "gross": -0.0463,
+      "latency": 0.0,
+      "spread": 0.0136,
+      "impact": 0.0,
+      "fees": 0.0867,
+      "funding": 0.0,
+      "net": -0.1465
+     },
+     "usdt_total": {
+      "gross": -83.14,
+      "latency": 0.0,
+      "spread": 24.07,
+      "fees": 154.68,
+      "funding": 0,
+      "net": -261.9
+     },
+     "win_rate_gross": 0.448
+    },
+    "vwap_dist/target 0.5-0.75": {
+     "trades": 4454,
+     "R_per_trade": {
+      "gross": -0.0525,
+      "latency": 0.0,
+      "spread": 0.0169,
+      "impact": 0.0,
+      "fees": 0.0838,
+      "funding": 0.0,
+      "net": -0.1532
+     },
+     "usdt_total": {
+      "gross": -45.23,
+      "latency": 0.0,
+      "spread": 14.61,
+      "fees": 72.75,
+      "funding": 0,
+      "net": -132.59
+     },
+     "win_rate_gross": 0.424
+    },
+    "vwap_dist/target 0.75-1.0": {
+     "trades": 2335,
+     "R_per_trade": {
+      "gross": -0.0154,
+      "latency": 0.0,
+      "spread": 0.0192,
+      "impact": 0.0,
+      "fees": 0.082,
+      "funding": 0.0,
+      "net": -0.1167
+     },
+     "usdt_total": {
+      "gross": -6.78,
+      "latency": 0.0,
+      "spread": 8.69,
+      "fees": 37.14,
+      "funding": 0,
+      "net": -52.62
+     },
+     "win_rate_gross": 0.429
+    },
+    "vwap_dist/target 1.0-1.25": {
+     "trades": 1048,
+     "R_per_trade": {
+      "gross": -0.0243,
+      "latency": 0.0,
+      "spread": 0.0217,
+      "impact": 0.0,
+      "fees": 0.0807,
+      "funding": 0.0,
+      "net": -0.1267
+     },
+     "usdt_total": {
+      "gross": -5.81,
+      "latency": 0.0,
+      "spread": 4.38,
+      "fees": 16.3,
+      "funding": 0,
+      "net": -26.49
+     },
+     "win_rate_gross": 0.407
+    },
+    "vwap_dist/target 1.25-inf": {
+     "trades": 801,
+     "R_per_trade": {
+      "gross": -0.0664,
+      "latency": 0.0,
+      "spread": 0.0264,
+      "impact": 0.0,
+      "fees": 0.0801,
+      "funding": 0.0,
+      "net": -0.1729
+     },
+     "usdt_total": {
+      "gross": -10.69,
+      "latency": 0.0,
+      "spread": 4.07,
+      "fees": 12.36,
+      "funding": 0,
+      "net": -27.13
+     },
+     "win_rate_gross": 0.381
+    }
+   }
+  }
+ }
+}

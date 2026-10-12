@@ -209,3 +209,17 @@ Deliberate test on the V16 paper worker (`SIGSTOP` on its process, on production
 **Still to set up (operator):** an uptime monitor outside Railway (for example UptimeRobot) polling
 `https://paperlab-production-919c.up.railway.app/public/health/deep` every 5 minutes. It covers the case the in-app
 watchdog cannot see: the whole app going down.
+
+## 8. Follow-up: entry diagnosis and decision (2026-10-12)
+
+`docs/V8_ENTRY_DIAGNOSIS.md` splits the loss:
+- **Gross move from the signal close:** +0.067 to +0.083R per trade.
+- **Measured from the actual fill:** about 0R (+0.009R W1 / −0.023R W2).
+- **Costs:** about 0.105R in fees and spread.
+
+Entering 2 s after the close instead of 60 s is worse (−0.122 / −0.144R): the delay filters for confirmation rather
+than costing money. Gating on the expected reversion (VWAP distance) leaves every group negative.
+
+**Operator decision:** stop here. V8.3 stays as the research baseline, and no hypothesis was tested on the untouched
+2024-01 → 2024-09 window. That data is kept unopened for a genuinely new entry idea, to be frozen first and then paper
+traded.
