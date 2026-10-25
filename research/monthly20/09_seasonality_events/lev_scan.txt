@@ -1,0 +1,14 @@
+stack L 1 mean     1.74 med   1.64 worst  -12.43 dd  36.85 net      102.5 liq 0 top3 42.1
+stack L 2 mean     3.34 med   2.96 worst  -24.81 dd  65.34 net      217.8 liq 0 top3 43.3
+stack L 3 mean     4.80 med   3.63 worst  -37.15 dd  84.01 net      280.0 liq 0 top3 53.7
+stack L 5 mean     7.30 med   5.60 worst  -61.66 dd  98.48 net       88.1 liq 0 top3 164.0
+stack L 8 mean  -100.00 med -100.00 worst -100.00 dd 100.00 net     -100.0 liq 1 top3 None
+stack L12 mean  -100.00 med -100.00 worst -100.00 dd 100.00 net     -100.0 liq 1 top3 None
+stack L20 mean  -100.00 med -100.00 worst -100.00 dd 100.00 net     -100.0 liq 1 top3 None
+fomc L 1 mean     1.02 med   0.07 worst   -1.97 dd   3.92 net       58.5 liq 0 top3 5.6
+fomc L 2 mean     2.04 med   0.14 worst   -3.93 dd   7.82 net      146.8 liq 0 top3 6.0
+fomc L 3 mean     3.06 med   0.21 worst   -5.89 dd  11.71 net      278.4 liq 0 top3 6.7
+fomc L 5 mean     5.09 med   0.35 worst   -9.82 dd  19.46 net      750.8 liq 0 top3 8.0
+fomc L 8 mean     8.14 med   0.56 worst  -15.69 dd  31.02 net     2498.8 liq 0 top3 9.6
+fomc L12 mean    11.28 med   0.83 worst  -23.51 dd  46.83 net     6806.6 liq 4 top3 12.0
+fomc L20 mean    13.41 med   0.00 worst  -69.91 dd  81.69 net     2481.6 liq 29 top3 23.9

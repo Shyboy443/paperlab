@@ -1,0 +1,8 @@
+# SITE_ADDRESS comes from /opt/paperlab/.env, e.g. 140-238-12-34.sslip.io (free name that points at the VM's IP) or
+# your own domain. Caddy fetches and renews the HTTPS certificate by itself.
+{$SITE_ADDRESS} {
+	encode gzip
+	reverse_proxy paperlab:8080 {
+		flush_interval -1
+	}
+}

@@ -324,9 +324,10 @@ const Desk = {
     f.tz = h('input', { type: 'text', value: s.tz || '' });
     f.tg = h('input', { type: 'checkbox' }); f.tg.checked = !!n.telegram;
     f.app = h('input', { type: 'checkbox' }); f.app.checked = n.in_app !== false;
+    f.approval = h('select', {}, ...[['manual', 'Manual: each trade waits for my Approve in Telegram'], ['auto', 'Automatic: trade without asking (no Telegram messages)']].map(([v, t]) => h('option', { value: v, text: t, selected: v === (s.approval || 'auto') })));
     const save = async () => {
       try {
-        await post('/api/desk/settings', { enabled: f.enabled.checked, schedule_hours: +f.schedule.value, universe: f.universe.value, mode: f.mode.value,
+        await post('/api/desk/settings', { enabled: f.enabled.checked, schedule_hours: +f.schedule.value, universe: f.universe.value, mode: f.mode.value, approval: f.approval.value,
           risk_pct: +f.risk.value, max_plans: +f.plans.value, max_open: +f.maxOpen.value, max_total_risk_pct: +f.totalRisk.value, max_same_side: +f.sameSide.value, start_balance: +f.balance.value, recap_hour: +f.recap.value, tz: f.tz.value.trim(),
           notify: { in_app: f.app.checked, telegram: f.tg.checked, email: false } });
         toast('Desk settings saved'); this.refresh();
@@ -335,6 +336,7 @@ const Desk = {
     return h('div', { class: 'card dk-settings' }, h('h3', { text: 'Desk settings' }),
       field('Scheduled sessions on', f.enabled), field('Schedule', f.schedule, 'aligned to UTC, 2 minutes after the candle closes'),
       field('Coin universe', f.universe, 'USDT pairs, comma separated (max 20)'), field('Mode', f.mode),
+      field('Trade approval', f.approval, 'also switchable from Telegram: /mode trading manual | auto'),
       field('Risk per trade (% of equity, fees included)', f.risk), field('Trades Charts may propose each session', f.plans, 'each one is checked and gets its own Skeptic verdict'),
       field('Max open trades', f.maxOpen, 'each trade is sized to fit equity / this number (no leverage)'),
       field('Max total open risk (% of equity)', f.totalRisk, 'the sum of all open trades\u2019 stop-out losses'),

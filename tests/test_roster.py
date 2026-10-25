@@ -101,7 +101,7 @@ def test_after_a_restart_newer_bots_in_profit_fill_the_free_places():
     assert {"V8.3-SOL-5M+LADDER", "V8.3-XRP-5M", "V8.3-ENA-5M", "V7.1-ENA-15M"} == {r["key"] for r in out["retired"]}
 
 
-def test_the_v6_backtest_winners_are_always_on_screen():
+def test_the_v6_backtest_winners_are_always_on_screen(programs_running):
     out = _build({"v6": [_row("V6.6-ARB-1H", 0.0, 0, coin="ARB", sid="V6.6"), _row("V6.6-XRP-1H", 0.0, 0, coin="XRP", sid="V6.6"),
                          _row("V6.2-XRP-1H", 0.0, 0, coin="XRP", sid="V6.2"), _row("V6.1-XRP-4H", 0.0, 0, coin="XRP", sid="V6.1"),
                          _row("V6.6-XRP-1H+JEV", 0.0, 0, coin="XRP", sid="V6.6")],

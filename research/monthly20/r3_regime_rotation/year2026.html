@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rotation 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.3/dist/lightweight-charts.standalone.production.js"></script>
+<script>document.write('<script src="year2026_data.js?v=' + Date.now() + '"><\/script>');  // never show a cached old build</script>
+<style>
+:root{--bg:#0b0f14;--panel:#121820;--panel2:#18202a;--line:#243040;--soft:#1b2430;--text:#e6edf3;--muted:#8b98a8;--up:#22c55e;--down:#ef4444;--accent:#38bdf8;--sans:'Space Grotesk',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 var(--sans);font-variant-numeric:tabular-nums}
+main{max-width:1100px;margin:0 auto;padding:28px 24px 56px}
+h1{font-size:28px;line-height:1.2;margin:0}h2{font-size:18px;margin:0 0 4px}
+.lead{color:var(--muted);margin:8px 0 0;max-width:780px}
+section{margin-top:26px}.hint{color:var(--muted);font-size:13px;margin:0 0 10px}
+.muted{color:var(--muted)}.pos{color:var(--up)}.neg{color:var(--down)}
+.pick{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-top:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{background:var(--panel);border:1px solid var(--line);color:var(--text);font:500 14px var(--sans);padding:7px 13px;border-radius:999px;cursor:pointer}
+.chips button.on{background:#0e3a52;border-color:var(--accent)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.kpi .k{color:var(--muted);font-size:12.5px}.kpi .v{font-size:22px;font-weight:700;margin-top:2px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-width:0}
+.readout{font-size:13px;min-height:20px;margin-bottom:6px}
+#eq{height:280px}#daily{height:220px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{color:var(--muted);font-weight:500;text-align:right;padding:8px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{text-align:right;padding:7px 8px;border-bottom:2px solid var(--panel);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:14px}
+.scroll{max-height:520px;overflow:auto}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12.5px;margin:2px;background:var(--panel2);border:1px solid var(--line)}
+@media (max-width:860px){.two{grid-template-columns:minmax(0,1fr)}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){main{padding:20px 16px 44px}h1{font-size:23px}.kpi .v{font-size:19px}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Rotation + BTC-trend switch · 2026 so far</h1>
+  <p class="lead" id="lead"></p>
+  <div class="pick"><span class="muted" style="font-size:13px">Fees</span><div class="chips" id="feeChips"></div></div>
+
+  <section><div class="kpis" id="kpis"></div></section>
+
+  <section>
+    <div class="card"><h2>How $1,000 (on 1 Jan 2026) moved</h2><div class="readout" id="eqRead"></div><div id="eq"></div></div>
+  </section>
+  <section>
+    <div class="card"><h2>Every day</h2><p class="hint">Green bar = the day made money, red = it lost. Point at a bar for the date and number.</p>
+      <div class="readout" id="dRead"></div><div id="daily"></div></div>
+  </section>
+
+  <section class="two">
+    <div><h2>Every month</h2><p class="hint">Calendar months (UTC).</p><div class="card" id="months"></div></div>
+    <div><h2>Every week</h2><p class="hint">Monday to Sunday (UTC), newest first.</p><div class="card scroll" id="weeks"></div></div>
+  </section>
+
+  <section>
+    <h2>What it holds right now</h2><p class="hint">Positions open at the end of the data (21 Oct 2026). Back-test only: no real orders.</p>
+    <div class="card" id="held"></div>
+  </section>
+</main>
+<script>
+(function(){
+const Y = window.Y26;
+if (!Y) { document.querySelector('main').innerHTML = '<p class="lead">No data. Run <code>python research/monthly20/r2_rotation/year2026.py</code>.</p>'; return; }
+let fee = 'normal';
+try { fee = localStorage.getItem('y26-fee') || 'normal'; } catch (e) {}
+const usd = v => '$' + Math.round(v).toLocaleString('en-US');
+const pct = (v, d = 1) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(d) + '%';
+const cls = v => v > 0 ? 'pos' : v < 0 ? 'neg' : '';
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const nice = s => `${+s.slice(8)} ${MON[+s.slice(5, 7) - 1]}`;
+document.getElementById('lead').textContent = 'Same rotation, but it only trades in weeks when Bitcoin is above its 100-day average; otherwise it sits in cash. No leverage. Back-test with fees, slippage and funding; coins that were later delisted are included.';
+
+const opts = {layout: {background: {color: 'transparent'}, textColor: '#8b98a8', fontFamily: 'Space Grotesk'},
+  grid: {vertLines: {color: '#161d26'}, horzLines: {color: '#161d26'}}, rightPriceScale: {borderColor: '#243040'},
+  timeScale: {borderColor: '#243040'}, crosshair: {mode: 0}, autoSize: true};
+const eqC = LightweightCharts.createChart(document.getElementById('eq'), {...opts, localization: {priceFormatter: v => '$' + Math.round(v)}});
+const dC = LightweightCharts.createChart(document.getElementById('daily'), {...opts, localization: {priceFormatter: v => v.toFixed(1) + '%'}});
+const eqS = eqC.addAreaSeries({lineColor: '#38bdf8', topColor: 'rgba(56,189,248,.25)', bottomColor: 'rgba(56,189,248,0)', lineWidth: 2, priceLineVisible: false});
+eqS.createPriceLine({price: 1000, color: '#8b98a8', lineStyle: 2, lineWidth: 1, axisLabelVisible: true, title: 'start'});
+const dS = dC.addHistogramSeries({priceLineVisible: false});
+let eqLatest = '', dLatest = '';
+eqC.subscribeCrosshairMove(p => { const v = p.time && p.seriesData.get(eqS);
+  document.getElementById('eqRead').innerHTML = v ? `${nice(p.time)}: <b>${usd(v.value)}</b> (${pct(v.value / 10 - 100)} for the year)` : eqLatest; });
+dC.subscribeCrosshairMove(p => { const v = p.time && p.seriesData.get(dS);
+  document.getElementById('dRead').innerHTML = v ? `${nice(p.time)}: <b class="${cls(v.value)}">${pct(v.value, 2)}</b>` : dLatest; });
+
+function render() {
+  try { localStorage.setItem('y26-fee', fee); } catch (e) {}
+  const el = document.getElementById('feeChips'); el.innerHTML = '';
+  for (const [k, t] of [['normal', 'Normal fees'], ['double', 'Double fees']]) {
+    const b = document.createElement('button'); b.textContent = t; b.className = fee === k ? 'on' : '';
+    b.onclick = () => { fee = k; render(); }; el.appendChild(b);
+  }
+  const V = Y[fee], s = V.stats;
+  const k = (t, v, c = '') => `<div class="kpi"><div class="k">${t}</div><div class="v ${c}">${v}</div></div>`;
+  document.getElementById('kpis').innerHTML =
+    k('$1,000 on 1 Jan is now', usd(s.end), cls(s.net)) + k('This year', pct(s.net), cls(s.net)) +
+    k('Worst drop from a high', '−' + s.max_dd.toFixed(0) + '%') + k('Months up', `${s.months_up} of ${s.months}`) +
+    k('Weeks up', `${s.weeks_up} of ${s.weeks}`) + k('Days up', `${s.days_up} of ${s.days}`) +
+    k('Best day', pct(s.best_day), 'pos') + k('Worst day', pct(s.worst_day), 'neg');
+
+  eqS.setData([{time: '2025-12-31', value: 1000}, ...V.days.map(d => ({time: d.date, value: d.equity}))]);
+  dS.setData(V.days.map(d => ({time: d.date, value: d.ret, color: d.ret >= 0 ? 'rgba(34,197,94,.8)' : 'rgba(239,68,68,.8)'})));
+  eqC.timeScale().fitContent(); dC.timeScale().fitContent();
+  const last = V.days.at(-1);
+  eqLatest = `${nice(last.date)}: <b>${usd(last.equity)}</b> (${pct(s.net)} for the year)`; document.getElementById('eqRead').innerHTML = eqLatest;
+  dLatest = `Last day ${nice(last.date)}: <b class="${cls(last.ret)}">${pct(last.ret, 2)}</b>`; document.getElementById('dRead').innerHTML = dLatest;
+
+  const cell = (v, max) => `<td style="background:rgba(${v >= 0 ? '34,197,94' : '239,68,68'},${(.06 + Math.min(Math.abs(v), max) / max * .4).toFixed(2)})">${pct(v)}</td>`;
+  document.getElementById('months').innerHTML = `<table><thead><tr><th>Month</th><th>Result</th><th>$1,000 became</th></tr></thead><tbody>${
+    V.months.map((m, i) => `<tr><td>${MON[+m.key.slice(5) - 1]}${i === V.months.length - 1 ? ' <span class="muted">(to 21st)</span>' : ''}</td>${cell(m.ret, 25)}<td>${usd(m.equity)}</td></tr>`).join('')
+  }<tr><td><b>Year so far</b></td><td class="${cls(s.net)}"><b>${pct(s.net)}</b></td><td><b>${usd(s.end)}</b></td></tr></tbody></table>`;
+  document.getElementById('weeks').innerHTML = `<table><thead><tr><th>Week</th><th>Dates</th><th>Result</th><th>$1,000 became</th></tr></thead><tbody>${
+    V.weeks.slice().reverse().map(w => `<tr><td>${w.key.slice(5)}</td><td class="muted">${nice(w.from)} – ${nice(w.to)}</td>${cell(w.ret, 12)}<td>${usd(w.equity)}</td></tr>`).join('')
+  }</tbody></table>`;
+  const L = V.holding_now.filter(x => x[1] > 0).map(x => x[0].replace('USDT', '')), S = V.holding_now.filter(x => x[1] < 0).map(x => x[0].replace('USDT', ''));
+  document.getElementById('held').innerHTML = `<div><b class="pos">Betting up (long ${L.length}):</b> ${L.map(x => `<span class="tag">${x}</span>`).join('')}</div>
+    <div style="margin-top:8px"><b class="neg">Betting down (short ${S.length}):</b> ${S.map(x => `<span class="tag">${x}</span>`).join('')}</div>`;
+}
+render();
+})();
+</script>
+</body>
+</html>

@@ -9,9 +9,8 @@
                  open positions, activity
      Bots        every bot: status (ACTIVE / QUALIFIED / ELIMINATED), capital-growth sparkline, trades, costs;
                  a bot opens with its own candles, growth curve and trade list
-     Markets     live Bybit prices and a large candlestick chart
 
-   Charts use lightweight-charts (candles, growth lines) and inline SVG (sparklines). Nothing here can mutate. */
+   Charts use native Vela (candles, growth lines) and inline SVG (sparklines). Nothing here can mutate. */
 'use strict';
 
 // quote: the symbol suffix (crypto perps are COINUSDT, stocks are the bare ticker); ccy / book: how money is shown
@@ -35,6 +34,9 @@ for (const p of ARENA_RETIRED) delete ARENA_PROGRAMS[p];
 const arenaBotRetired = (prog, key) => ARENA_RETIRED.includes(prog)
   || (prog === 'v6' && ARENA_RETIRED_V6.includes(String(key || '').split('-')[0]));
 const progOf = (p) => ARENA_PROGRAMS[p] || ARENA_PROGRAMS.v6;
+// 2026-10-14 the operator switched every bot program off (app/core/programs.py): no tab for them. Their entries stay
+// above so old links and history still render.
+const ARENA_OFF = new Set(['v6', 'v8', 'v11', 'v13', 'v14', 'v16', 'v17']);
 const STATUS_KIND = { ACTIVE: 'muted', QUALIFIED: 'up', ELIMINATED: 'down' };
 // what each V11 scanner looks for (app/strategies/v11/scan.py)
 const SCAN_BLURB = {
@@ -75,10 +77,9 @@ function sparkline(curve, w = 90, hgt = 24) {
   svg.append(base, path);
   return svg;
 }
-const chartLib = () => (typeof LightweightCharts !== 'undefined' ? LightweightCharts : null);
 function chartTheme() {
   const css = getComputedStyle(document.documentElement);
-  const v = (n, f) => (css.getPropertyValue(n) || f).trim();
+  const v = (n, f) => chartColor((css.getPropertyValue(n) || f).trim());
   return { bg: v('--panel', '#0c1210'), text: v('--muted', '#7a9087'), grid: 'rgba(122,144,135,.10)', up: v('--up', '#1ff29a'),
     down: v('--down', '#ff4d61'), accent: v('--accent', '#38d6ff') };
 }
@@ -89,7 +90,7 @@ function withAlpha(color, a) {
   return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`;
 }
 
-/* Position boxes (a lightweight-charts series primitive), drawn like a trading terminal's long / short tool: a green
+/* Position boxes (a Vela native renderer layer), drawn like a trading terminal's long / short tool: a green
    zone from the entry to the target, a red zone from the entry to the stop, the entry line, and for a closed position
    a dashed path to its exit. Open positions run to their 45-minute time stop. Kept quiet on purpose: no labels and no
    price lines until a box is hovered -- then that box is highlighted with its target, stop and result, and the others
@@ -104,64 +105,52 @@ class PositionBoxes {
   /** every take-profit level of a box, nearest first (a single target is a one-rung ladder) */
   static tps(b) { return (b.tps && b.tps.length ? b.tps : [b.target]).filter(isNum); }
   static far(b) { const t = PositionBoxes.tps(b); return t.length ? t[t.length - 1] : null; }
-  attached({ chart, series, requestUpdate }) {
-    this.chart = chart; this.series = series; this.requestUpdate = requestUpdate;
-    this.onMove = (p) => {
-      const pt = p && p.point;
-      // overlapping boxes: the one whose entry line is nearest the cursor
-      const hits = pt ? this.rects.filter((r) => pt.x >= r.x0 && pt.x <= r.x1 && pt.y >= r.top && pt.y <= r.bottom) : [];
-      hits.sort((a, c) => Math.abs(pt.y - a.yE) - Math.abs(pt.y - c.yE));
-      const b = hits.length ? hits[0].box : this.pinned;
-      if (b !== this.hover) { this.hover = b; this.requestUpdate(); }
-    };
-    chart.subscribeCrosshairMove(this.onMove);
+  paint(ctx, args) {
+    this.coords = args.coords; this.scale = args.scale; this.bounds = args.bounds;
+    // Rendered coordinates and hover hit-testing use Vela's authoritative native transform.
+    this.rects = this.boxes.map(b => this.geometry(b)).filter(Boolean);
+    const pt = args.cursor;
+    const hits = pt ? this.rects.filter(r => pt.x >= r.x0 && pt.x <= r.x1 && pt.y >= r.top && pt.y <= r.bottom) : [];
+    hits.sort((a, b) => Math.abs(pt.y - a.yE) - Math.abs(pt.y - b.yE));
+    this.hover = hits.length ? hits[0].box : this.pinned;
+    this.drawBoxes(ctx);
+    this.drawLabels(ctx, {width: args.coords.width});
+    for (const m of this.marks || []) {
+      const x = args.coords.timeToX(m.time), y = args.coords.priceToY(m.price, args.scale, args.bounds);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+      ctx.fillStyle = m.color; ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
+      ctx.font = '600 10px "JetBrains Mono", monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(m.text, x, y + (m.side === 'long' ? -12 : 12)); ctx.textAlign = 'left';
+    }
   }
-  detached() { if (this.chart) this.chart.unsubscribeCrosshairMove(this.onMove); }
-  updateAllViews() {}
   /** logical bar index of a time in ms (fractional past the last bar, so open boxes can extend into the future) */
   index(ms) {
-    const t = Math.floor(ms / 1000 / this.step) * this.step, n = this.times.length;
+    const t = Math.floor(ms / this.step) * this.step, n = this.times.length;
     if (!n) return null;
     if (t > this.times[n - 1]) return n - 1 + (t - this.times[n - 1]) / this.step;
     let lo = 0, hi = n - 1;
     while (lo < hi) { const mid = (lo + hi + 1) >> 1; if (this.times[mid] <= t) lo = mid; else hi = mid - 1; }
     return this.times[lo] <= t ? lo : null;
   }
-  autoscaleInfo(from, to) {
-    let lo = Infinity, hi = -Infinity;
-    for (const b of this.boxes) {
-      const i0 = this.index(b.entry_ts), i1 = b.open ? this.times.length - 1 : this.index(b.exit_ts);
-      if (i0 === null || i1 === null || i1 < from || i0 > to) continue;
-      for (const v of [b.entry, b.stop, ...PositionBoxes.tps(b)]) if (isNum(v)) { lo = Math.min(lo, v); hi = Math.max(hi, v); }
-    }
-    return isFinite(lo) ? { priceRange: { minValue: lo, maxValue: hi } } : null;
-  }
-  paneViews() {
-    const self = this;
-    return [
-      { zOrder: () => 'bottom', renderer: () => ({ draw: (target) => target.useMediaCoordinateSpace(({ context }) => self.drawBoxes(context)) }) },
-      { zOrder: () => 'top', renderer: () => ({ draw: (target) => target.useMediaCoordinateSpace(({ context, mediaSize }) => self.drawLabels(context, mediaSize)) }) },
-    ];
-  }
   geometry(b) {
-    const ts = this.chart.timeScale(), s = this.series;
-    const sp = Math.max(1, (ts.logicalToCoordinate(1) ?? 0) - (ts.logicalToCoordinate(0) ?? 0));
+    const ts = this.coords, Y = p => this.coords.priceToY(p, this.scale, this.bounds);
+    const sp = Math.max(1, (ts.logicalToX(1) ?? 0) - (ts.logicalToX(0) ?? 0));
     const i0 = this.index(b.entry_ts);
     if (i0 === null) return null;
     let i1 = b.open ? (b.time_stop_ts ? this.index(b.time_stop_ts) : null) : this.index(b.exit_ts);
     if (i1 === null || i1 < i0 + 2) i1 = i0 + (b.open ? 3 : 2);       // a one-bar trade still gets a visible box
-    const x0 = ts.logicalToCoordinate(i0) - sp / 2, x1 = ts.logicalToCoordinate(i1) + sp / 2;
+    const x0 = ts.logicalToX(i0) - sp / 2, x1 = ts.logicalToX(i1) + sp / 2;
     const far = PositionBoxes.far(b);
-    const yE = s.priceToCoordinate(b.entry), yT = isNum(far) ? s.priceToCoordinate(far) : null;
-    const yS = isNum(b.stop) ? s.priceToCoordinate(b.stop) : null;
+    const yE = Y(b.entry), yT = isNum(far) ? Y(far) : null;
+    const yS = isNum(b.stop) ? Y(b.stop) : null;
     if (x0 === null || x1 === null || yE === null) return null;
     const tps = PositionBoxes.tps(b);
-    const yTps = tps.length > 1 ? tps.map((v) => s.priceToCoordinate(v)).filter((y) => y !== null) : [];
+    const yTps = tps.length > 1 ? tps.map((v) => Y(v)).filter((y) => y !== null) : [];
     const ys = [yE, yT, yS].filter((y) => y !== null);
-    const xExit = !b.open && isNum(b.exit) ? ts.logicalToCoordinate(this.index(b.exit_ts) ?? i1) : null;
+    const xExit = !b.open && isNum(b.exit) ? ts.logicalToX(this.index(b.exit_ts) ?? i1) : null;
     return { box: b, x0, x1, yE, yT, yS, yTps, top: Math.min(...ys), bottom: Math.max(...ys), xExit,
-      yExit: xExit !== null ? s.priceToCoordinate(b.exit) : null, xEntry: ts.logicalToCoordinate(i0),
-      xNow: ts.logicalToCoordinate(this.times.length - 1) + sp / 2 };
+      yExit: xExit !== null ? Y(b.exit) : null, xEntry: ts.logicalToX(i0),
+      xNow: ts.logicalToX(this.times.length - 1) + sp / 2 };
   }
   drawBoxes(ctx) {
     const th = this.th;
@@ -262,6 +251,7 @@ const Arena = {
     try { const p = localStorage.getItem('arena.prog'); if (ARENA_PROGRAMS[p]) this.prog = p; } catch (e) { /* storage blocked */ }
     const q = new URLSearchParams(location.search).get('p');
     if (ARENA_PROGRAMS[q]) this.prog = q;
+    if (ARENA_OFF.has(this.prog) && ARENA_PROGRAMS.video) this.prog = 'video';
     if (q === 'video' && new URLSearchParams(location.search).get('bot') === 'BTC-4H-BREAKOUT') this.botKey = 'BTC-4H-BREAKOUT';
   },
   setProgram(p) {
@@ -276,10 +266,10 @@ const Arena = {
     if (this.loading) { this.again = true; return; }        // a view switch mid-load: load again right after
     this.loading = true;
     try {
-      // the home screen is the roster (roster.js); a bot's page and the markets need their program's payload
-      const roster = typeof Roster !== 'undefined' && this.view !== 'markets';
+      // the home screen is the roster (roster.js); a bot's page needs its program's payload
+      const roster = typeof Roster !== 'undefined';
       const [d] = await Promise.all([this.view !== 'dashboard' || !roster ? getJSON(this.base + '/' + this.prog) : null,
-        roster ? Roster.fetch(true).catch(() => null) : null]);
+        roster ? Roster.fetch().catch(() => null) : null]);
       if (d) {
         this.data[this.prog] = d;
         this.addEvents(this.prog, (d.activity || []).slice().reverse(), true);
@@ -328,7 +318,8 @@ const Arena = {
     if (typeof LivePrices !== 'undefined') LivePrices.schedule();
   },
   onEvent(prog, d) {
-    if (d && arenaBotRetired(prog, d.bot_key)) return;            // out of the arena
+    if (!d || typeof d !== 'object') return;
+    if (arenaBotRetired(prog, d.bot_key)) return;            // out of the arena
     this.addEvents(prog, [d], false);
     if (['open', 'closed', 'eliminated', 'system'].includes(d.type) && prog === this.prog) this.reloadSoon(1500);
     if (prog === this.prog && this.visible()) this.renderFeed();
@@ -353,8 +344,10 @@ const Arena = {
 
   /* ---- activity ---- */
   addEvents(prog, list, history) {
-    const feed = this.feed[prog];
+    // Programs may publish before their dashboard has been opened.
+    const feed = this.feed[prog] || (this.feed[prog] = []);
     for (const raw of list) {
+      if (!raw || typeof raw !== 'object') continue;
       const e = Object.assign({}, raw, { type: raw.type || raw.kind });
       if (!['candidate', 'open', 'closed', 'eliminated', 'system'].includes(e.type)) continue;
       if (e.type === 'closed' && e.counterfactual) continue;
@@ -405,7 +398,7 @@ const Arena = {
       NO_DATA_KEYS: ['NEEDS ALPACA KEYS', 'warn'] })[s] || [s, 'warn'];
   },
   switcher() {
-    return h('div', { class: 'arena-switch', role: 'tablist' }, Object.entries(ARENA_PROGRAMS).map(([k, p]) =>
+    return h('div', { class: 'arena-switch', role: 'tablist' }, Object.entries(ARENA_PROGRAMS).filter(([k]) => !ARENA_OFF.has(k)).map(([k, p]) =>
       h('button', { type: 'button', role: 'tab', class: 'arena-tab' + (k === this.prog ? ' on' : ''), onclick: () => this.setProgram(k) },
         h('b', { text: p.label }), h('span', { text: p.sub }))));
   },
@@ -466,7 +459,7 @@ const Arena = {
     // The symbol is fixed NOW: a bot's page sets this.coin to the bot's coin only while building this card.
     const symbol = this.coin + progOf(this.prog).quote;
     const focus = opts.botKey && this.focus && this.focus.bot === opts.botKey && this.focus.symbol === symbol ? this.focus : null;
-    setTimeout(() => this.drawCandles(host, symbol, tf, opts.botKey, who, focus), 0);
+    setTimeout(() => this.drawCandles(host, symbol, tf, opts.botKey, who, focus).catch(e => this.chartError(host, e)), 0);
     return card;
   },
   /** The chart shows ONE bot's positions (a bot holds one position at a time, so its boxes never pile up). The picker
@@ -488,44 +481,44 @@ const Arena = {
     }
     return pick;
   },
+  chartError(host, error) {
+    if (!host.isConnected) return;
+    clear(host).append(h('p', { class: 'err', text: 'Chart could not load: ' + error.message }),
+      h('button', { type: 'button', text: 'Retry chart', onclick: () => this.render() }));
+  },
   async drawCandles(host, symbol, tf, botKey, who, focus) {
-    const L = chartLib();
-    if (!L) { host.append(h('p', { class: 'sub', text: 'chart library unavailable' })); return; }
     const stepMs = { '1m': 60, '5m': 300, '15m': 900, '1h': 3600, '4h': 14400 }[tf] * 1000;
     // a chosen trade: end the window a little after it, so an older trade is still in the picture
     const until = focus ? Math.min(Date.now(), (focus.exit_ts || focus.entry_ts) + 60 * stepMs) : 0;
     let d;
-    try { d = await getJSON(`${this.base}/${this.prog}/candles?symbol=${symbol}&tf=${tf}&limit=300${until ? '&until=' + until : ''}`); } catch (e) { d = { candles: [] }; }
+    d = await getJSON(`${this.base}/${this.prog}/candles?symbol=${symbol}&tf=${tf}&limit=300${until ? '&until=' + until : ''}`);
     if (!host.isConnected) return;
     const th = chartTheme();
-    const chart = L.createChart(host, { autoSize: true, layout: { background: { color: 'transparent' }, textColor: th.text, fontFamily: 'JetBrains Mono, monospace' },
-      grid: { vertLines: { color: th.grid }, horzLines: { color: th.grid } }, rightPriceScale: { borderColor: 'rgba(122,144,135,.25)' },
-      timeScale: { borderColor: 'rgba(122,144,135,.25)', timeVisible: true, secondsVisible: false }, crosshair: { mode: 0 } });
-    this.charts.push(chart);
-    const s = chart.addCandlestickSeries({ upColor: th.up, downColor: th.down, borderUpColor: th.up, borderDownColor: th.down, wickUpColor: th.up, wickDownColor: th.down });
-    const bars = (d.candles || []).map((c) => ({ time: c[0] / 1000, open: c[1], high: c[2], low: c[3], close: c[4] }));
-    s.setData(bars);
-    const vol = chart.addHistogramSeries({ priceFormat: { type: 'volume' }, priceScaleId: '', color: 'rgba(56,214,255,.25)' });
-    vol.priceScale().applyOptions({ scaleMargins: { top: 0.82, bottom: 0 } });
-    vol.setData((d.candles || []).map((c) => ({ time: c[0] / 1000, value: c[5], color: c[4] >= c[1] ? 'rgba(31,242,154,.22)' : 'rgba(255,77,97,.22)' })));
-    const step = ARENA_PROGRAMS[this.prog] && { '1m': 60, '5m': 300, '15m': 900, '1h': 3600, '4h': 14400 }[tf];
+    const bars = (d.candles || []).map(c => ({time:c[0], open:c[1], high:c[2], low:c[3], close:c[4], volume:c[5]}));
+    if (!bars.length) { host.textContent = 'No candles available for this market yet.'; return; }
+    const step = stepMs;
     const quote = progOf(this.prog).quote;
     const pick = botKey || this.botPicker(who, this.positionBoxes(d, symbol, ''), quote ? symbol.slice(0, -quote.length) : symbol);
     const boxes = pick ? this.positionBoxes(d, symbol, pick) : [];
-    if (bars.length && s.attachPrimitive) { host.positionBoxes = new PositionBoxes(bars, boxes, step, th, true); s.attachPrimitive(host.positionBoxes); }
-    host.chartRefs = { chart, s, vol, symbol, tf, step, botKey, who, focus, prog: this.prog };      // for in-place refreshes
-    s.setMarkers(this.exitMarks(d, boxes, step));
+    const pb = host.positionBoxes = new PositionBoxes(bars, boxes, step, th, true);
+    pb.marks = this.exitMarks(d, boxes, step);
+    const inst = await DashboardVela.create(host, {bars, pb, theme: th, symbol, minutes: stepMs / 60000});
+    if (!inst) return;
+    this.charts.push(inst);
+    const chart = inst.chart;
+    host.chartRefs = {chart, inst, symbol, tf, step, botKey, who, focus, prog: this.prog};
     // the latest ~120 bars with room on the right for open boxes running to their time stop -- or the chosen trade
-    const n = bars.length, pb = host.positionBoxes;
+    const n = bars.length;
     const chosen = focus && pb ? boxes.find((b) => !b.open && Math.abs((b.entry_ts || 0) - focus.entry_ts) < 1000
       && (!focus.side || b.side === focus.side)) : null;
     if (chosen) {
       pb.pinned = pb.hover = chosen;
       const i0 = pb.index(chosen.entry_ts) ?? n - 60, i1 = pb.index(chosen.exit_ts) ?? i0 + 4;
       const pad = Math.max(25, (i1 - i0) * 1.5);
-      chart.timeScale().setVisibleLogicalRange({ from: i0 - pad, to: i1 + pad });
-    } else if (n > 120) chart.timeScale().setVisibleLogicalRange({ from: n - 120, to: n + 10 });
-    else chart.timeScale().fitContent();
+      chart.setVisibleRange({from: chosen.entry_ts - pad * step, to: chosen.exit_ts + pad * step});
+    } else if (n > 120) chart.setVisibleRange({from: bars[n - 120].time, to: bars[n - 1].time + 10 * step});
+    else chart.setVisibleRangePreset('ALL');
+    inst.refreshOverlay();
   },
   /** closed boxes from the candles payload plus the program's open positions on this coin (a pair's twin fills merged) */
   positionBoxes(d, symbol, botKey) {
@@ -551,31 +544,21 @@ const Arena = {
     const card = h('div', { class: 'card', id: 'arena-growth' },
       h('div', { class: 'card-head' }, h('h2', { text: 'Capital growth · every bot' }),
         h('span', { class: 'sub', text: '% of each bot\'s ' + progOf(this.prog).book + ' · top 5 and bottom 3 highlighted · eliminated bots dashed' })), host);
-    setTimeout(() => {
-      const L = chartLib();
-      if (!L || !host.isConnected) return;
-      const th = chartTheme();
-      const chart = L.createChart(host, { autoSize: true, layout: { background: { color: 'transparent' }, textColor: th.text, fontFamily: 'JetBrains Mono, monospace' },
-        grid: { vertLines: { color: th.grid }, horzLines: { color: th.grid } }, rightPriceScale: { borderColor: 'rgba(122,144,135,.25)' },
-        timeScale: { borderColor: 'rgba(122,144,135,.25)', timeVisible: true }, crosshair: { mode: 0 }, handleScroll: false, handleScale: false });
-      this.charts.push(chart);
-      const ranked = rows.slice().sort((a, b) => (b.net_now || 0) - (a.net_now || 0));
-      const top = new Set(ranked.slice(0, 5).map((r) => r.key)), bottom = new Set(ranked.slice(-3).map((r) => r.key));
-      for (const r of ranked.slice().reverse()) {
-        const start = r.curve[0][1] || 20;
-        const pts = [];
-        for (const [t, v] of r.curve) {
-          const time = Math.floor(t / 1000);
-          if (pts.length && time <= pts[pts.length - 1].time) pts[pts.length - 1].value = (v / start - 1) * 100;
-          else pts.push({ time, value: (v / start - 1) * 100 });
-        }
-        const hi = top.has(r.key) || bottom.has(r.key);
-        const line = chart.addLineSeries({ color: top.has(r.key) ? th.up : bottom.has(r.key) ? th.down : 'rgba(122,144,135,.35)',
-          lineWidth: hi ? 2 : 1, lineStyle: r.program_status === 'ELIMINATED' ? 2 : 0, lastValueVisible: hi, priceLineVisible: false,
-          title: hi ? r.key : '', priceFormat: { type: 'custom', formatter: (v) => v.toFixed(1) + '%' } });
-        line.setData(pts);
-      }
-      chart.timeScale().fitContent();
+    setTimeout(async () => {
+      if (!host.isConnected) return;
+      try {
+        const th = chartTheme(), ranked = rows.slice().sort((a, b) => (b.net_now || 0) - (a.net_now || 0));
+        const top = new Set(ranked.slice(0, 5).map(r => r.key)), bottom = new Set(ranked.slice(-3).map(r => r.key));
+        const models = ranked.slice().reverse().map(r => {
+          const start = r.curve[0][1] || 20;
+          return {title:r.key, color:top.has(r.key) ? th.up : bottom.has(r.key) ? th.down : '#7a9087',
+            width:top.has(r.key) || bottom.has(r.key) ? 2 : 1, dashed:r.program_status === 'ELIMINATED',
+            points:[...new Map(r.curve.map(([time,v]) => [time, {time, value:(v / start - 1) * 100}])).values()]};
+        });
+        if (!models.length) { host.textContent = 'No equity history yet.'; return; }
+        const inst = await DashboardVela.create(host, {bars:DashboardVela.pointsToBars(models.flatMap(m => m.points)), models, theme:th, line:true});
+        if (inst) { this.charts.push(inst); inst.chart.setVisibleRangePreset('ALL'); }
+      } catch(e) { this.chartError(host,e); }
     }, 0);
     return card;
   },
@@ -781,7 +764,7 @@ const Arena = {
   },
 
   /* ---- views ---- */
-  destroyCharts() { for (const c of this.charts) { try { c.remove(); } catch (e) { /* gone */ } } this.charts = []; },
+  destroyCharts() { for (const c of this.charts) { try { c.destroy(); } catch (e) { /* gone */ } } this.charts = []; },
   /** What is on screen: a reload may refresh it in place only while this is unchanged. */
   screenKey() {
     return [this.view, this.prog, this.botKey, this.coin, this.tf, this.botCoin[this.botKey] || '',
@@ -816,17 +799,14 @@ const Arena = {
   async updateCandles(host) {
     const r = host.chartRefs, pb = host.positionBoxes;
     if (!r) return;
-    const stepMs = r.step * 1000;
+    const stepMs = r.step;
     const until = r.focus ? Math.min(Date.now(), (r.focus.exit_ts || r.focus.entry_ts) + 60 * stepMs) : 0;
     let d;
     try { d = await getJSON(`${this.base}/${r.prog}/candles?symbol=${r.symbol}&tf=${r.tf}&limit=300${until ? '&until=' + until : ''}`); } catch (e) { return; }
     if (!host.isConnected || !(d.candles || []).length) return;
-    const bars = d.candles.map((c) => ({ time: c[0] / 1000, open: c[1], high: c[2], low: c[3], close: c[4] }));
-    const ts = r.chart.timeScale(), lr = ts.getVisibleLogicalRange();
-    const old = pb ? pb.times : [];
-    const atEnd = lr && old.length && lr.to >= old.length - 1.5;
-    r.s.setData(bars);
-    r.vol.setData(d.candles.map((c) => ({ time: c[0] / 1000, value: c[5], color: c[4] >= c[1] ? 'rgba(31,242,154,.22)' : 'rgba(255,77,97,.22)' })));
+    const bars = d.candles.map(c => ({time:c[0], open:c[1], high:c[2], low:c[3], close:c[4], volume:c[5]}));
+    const range = r.chart.getVisibleRange(), oldLast = r.inst.bars.at(-1)?.time;
+    const atEnd = range && oldLast && range.to >= oldLast - r.step * 1.5;
     const quote = progOf(r.prog).quote;
     const pick = r.botKey || this.botPicker(r.who, this.positionBoxes(d, r.symbol, ''), quote ? r.symbol.slice(0, -quote.length) : r.symbol);
     const boxes = pick ? this.positionBoxes(d, r.symbol, pick) : [];
@@ -838,12 +818,11 @@ const Arena = {
       pb.hover = pb.hover ? boxes.find((b) => same(pb.hover, b) || (pb.hover.open && b.open && b.entry_ts === pb.hover.entry_ts)) || pb.pinned : pb.pinned;
       if (pb.requestUpdate) pb.requestUpdate();
     }
-    r.s.setMarkers(this.exitMarks(d, boxes, r.step));
-    if (lr && old.length) {
-      const shift = Math.round((bars[0].time - old[0]) / r.step);             // bars that fell off the left edge
-      let from = lr.from - shift, to = lr.to - shift;
-      if (atEnd) { const grow = (bars.length - 1) - (old.length - 1 - shift); from += grow; to += grow; }
-      ts.setVisibleLogicalRange({ from, to });
+    if (pb) pb.marks = this.exitMarks(d, boxes, r.step);
+    await DashboardVela.update(r.inst, bars);
+    if (range && atEnd && oldLast) {
+      const shift = bars.at(-1).time - oldLast;
+      r.chart.setVisibleRange({from:range.from + shift, to:range.to + shift});
     }
   },
   /** that bot's exits keep a small marker with the result */
@@ -853,7 +832,7 @@ const Arena = {
     const seen = new Set();
     return (d.markers || []).filter((m) => m.kind === 'exit' && exits.has(m.ts + '|' + m.price)).filter((m) => {
       const k = m.ts + '|' + m.price; if (seen.has(k)) return false; seen.add(k); return true;
-    }).map((m) => ({ time: Math.floor(m.ts / 1000 / step) * step, position: m.side === 'long' ? 'aboveBar' : 'belowBar',
+    }).map((m) => ({ time: Math.floor(m.ts / step) * step, price:m.price, side:m.side,
       color: m.net >= 0 ? th.up : th.down, shape: 'circle', size: 0.5, text: aMoney(m.net, 2) })).sort((a, b) => a.time - b.time);
   },
   render() {
@@ -868,7 +847,7 @@ const Arena = {
       if (Math.abs(window.scrollY - y) > 1) window.scrollTo(0, y);
       return;
     }
-    if (this.view === 'markets' || typeof Roster === 'undefined') grid.append(this.switcher());
+    if (typeof Roster === 'undefined') grid.append(this.switcher());
     if (!d) { grid.append(h('div', { class: 'card' }, h('p', { class: 'sub', text: 'loading…' }))); return; }
     if (!d.experiment) {
       const [txt, kind] = this.statusOf(d);
@@ -880,8 +859,6 @@ const Arena = {
       if (typeof Roster === 'undefined') grid.append(this.kpis(d));
       if (this.botKey) grid.append(this.botCard(d));
       grid.append(typeof Roster !== 'undefined' ? Roster.botsCard() : this.botsCard(d, false));
-    } else if (this.view === 'markets') {
-      grid.append(LivePrices.strip(), this.candleCard(d, { tall: true }));
     } else {
       grid.append(this.kpis(d),
         h('div', { class: 'cc-left' }, this.candleCard(d), this.growthCard(d)),
@@ -923,7 +900,7 @@ const Arena = {
   },
 };
 
-/* The lean navigation shared by both pages: Dashboard / Bots / Markets map to Arena views in the home panel. */
+/* The lean navigation shared by both pages: Dashboard / Bots map to Arena views in the home panel. */
 const ArenaNav = {
   go(view) {
     if (typeof Nav !== 'undefined' && Nav.goArena) Nav.goArena(view);

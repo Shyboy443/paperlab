@@ -1,0 +1,44 @@
+{
+ "R": {
+  "mean_month": 4.49,
+  "median_month": 3.0,
+  "geo_month": 3.9,
+  "max_dd_pct": 44.3,
+  "net_pct": 1353.93,
+  "t_stat": 3.34,
+  "liq": 29,
+  "corr_vs_r2": 0.941,
+  "r2_mean": 3.93
+ },
+ "M": {
+  "mean_month": 5.16,
+  "median_month": 4.52,
+  "geo_month": 3.62,
+  "max_dd_pct": 51.96,
+  "net_pct": 1105.76,
+  "t_stat": 2.34,
+  "liq": 21,
+  "corr_vs_r2": 0.969,
+  "r2_mean": 5.56
+ },
+ "T": {
+  "mean_month": 3.42,
+  "median_month": 1.73,
+  "geo_month": 2.22,
+  "max_dd_pct": 62.78,
+  "net_pct": 363.51,
+  "t_stat": 1.75,
+  "liq": 13,
+  "corr_vs_r2": 0.999,
+  "r2_mean": 3.33
+ },
+ "B": {
+  "mean_month": 2.77,
+  "median_month": 1.08,
+  "geo_month": 1.74,
+  "max_dd_pct": 57.31,
+  "net_pct": 233.82,
+  "t_stat": 1.56,
+  "liq": 0
+ }
+}

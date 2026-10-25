@@ -58,7 +58,8 @@ async function tryLogin(pw) {
     } else {
       console.error('[login] post-auth error', e);
       setText($('#login-err'), e.message || 'post-auth error');
-      // leave modal hidden; the operator is authenticated, the server is just being slow
+      // The authenticated stream can recover independently of this initial REST read.
+      Poll.start();
     }
   }
 }
@@ -78,7 +79,7 @@ const Poll = {
   stop() { Stream.stop(); this.seq = 0; },
   accept(st) {
     this.state = st; this.lastOk = Date.now();
-    if (st.equity_curves) { this.lastCurves = Date.now(); Charts.setCurves(st.equity_curves); }
+    if (st.equity_curves) { this.lastCurves = Date.now(); try { Charts.setCurves(st.equity_curves); } catch (e) { console.error('[equity chart] render failed', e); } }
     try { render(st); } catch (e) { console.error('render failed', e); }   // a render bug must not read as a dead server
   },
   /** One REST read now (after an action, or when the chart needs its curves). */
@@ -136,14 +137,20 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) upda
 // ---- navigation: ARENA / TRADERS / MARKET / VALIDATION / ACTIVITY (+ system) -------------------------
 /* Every existing panel keeps its markup and renderer; the navigation decides which one shows. A
    competition sub-view is the `competition` panel with Competition.showTab(ctab). */
+// 2026-10-21 the operator removed the markets, programs, autonomous-research and news-collector screens and their code
+// (no profit, only complexity); old links open the Dashboard.
 const NAV = {
   dashboard: { label: 'Dashboard', items: [{ id: 'home', label: 'Dashboard', panel: 'home', view: 'dashboard' }] },
   bots: { label: 'Bots', items: [{ id: 'bots', label: 'Bots', panel: 'home', view: 'bots' }] },
-  markets: { label: 'Markets', items: [{ id: 'markets', label: 'Markets', panel: 'home', view: 'markets' }] },
-  programs: { label: 'Programs', items: [{ id: 'programs', label: 'Programs', panel: 'programs' }] },
-  analyzer: { label: 'Cost analyzer', items: [{ id: 'analyzer', label: 'Cost analyzer', panel: 'analyzer' }] },
-  desk: { label: 'Trading Desk', items: [{ id: 'desk', label: 'Trading Desk', panel: 'desk' }] },
-  scout: { label: 'Scout', items: [{ id: 'scout', label: 'Scout', panel: 'scout' }] },
+  ytcheck: { label: 'Strategy check', items: [{ id: 'ytcheck', label: 'Strategy check', panel: 'ytcheck' }] },
+  desk: { label: 'Trading Desk', items: [
+    { id: 'ranking', label: 'Ranking', panel: 'deskrank' },
+    { id: 'desk', label: 'AI agents', panel: 'desk' },
+    { id: 'divergence', label: 'Divergence', panel: 'divergence' },
+    { id: 'donchian', label: 'Donchian', panel: 'donchian' },
+    { id: 'macd', label: 'MACD', panel: 'macd' },
+    { id: 't3cci', label: 'T3-CCI', panel: 't3cci' },
+    { id: 'chi', label: 'CHI', panel: 'chi' }] },
   system: { label: 'System', items: [
     { id: 'system', label: 'System', panel: 'system' },
     { id: 'controls', label: 'Controls', panel: 'controls' },
@@ -153,6 +160,9 @@ const NAV = {
 };
 const LEGACY_HASH = { overview: 'traders/bakeoff', strategies: 'traders/books', positions: 'market/positions', tape: 'market/tape',
   competition: 'validation/overview', controls: 'system/controls',
+  // the desks share one Trading Desk menu item
+  divergence: 'desk/divergence', 'divergence/divergence': 'desk/divergence', nowick: 'desk/nowick', 'nowick/nowick': 'desk/nowick',
+  donchian: 'desk/donchian', 'donchian/donchian': 'desk/donchian', macd: 'desk/macd',
   // screens that moved when the research history left the front door
   'arena/aggressive': 'validation/aggressive', 'arena/aggressive-v3': 'validation/aggressive-v3',
   'arena/discovery': 'validation/discovery', 'arena/jev': 'validation/jev', 'arena/v4': 'validation/v4',
@@ -181,6 +191,7 @@ const Nav = {
   goArena(view) { this.go(NAV[view] ? view : 'dashboard'); },
   go(primary, secondary, silent, extra) {
     const grp = NAV[primary] || NAV.dashboard;
+    if (grp.href) { location.assign(grp.href); return; }
     const item = grp.items.find((i) => i.id === secondary) || grp.items[0];
     this.primary = primary; this.secondary = item.id; this.panel = item.panel;
     Tabs.active = item.panel;
@@ -199,14 +210,19 @@ const Nav = {
     if (item.panel === 'home') { Arena.view = item.view || 'dashboard'; Arena.load(); } else Arena.deactivate();
     if (item.panel === 'research') Home.load(); else Home.deactivate();
     if (item.panel === 'mirror') LiveMirror.load();
-    if (item.panel === 'scout') Scout.load(); else Scout.deactivate();
     if (item.panel === 'desk') Desk.load(); else Desk.deactivate();
+    if (item.panel === 'divergence') DivergenceDesk.load(); else DivergenceDesk.deactivate();
+    if (item.panel === 'nowick') NoWickDesk.load(); else NoWickDesk.deactivate();
+    if (item.panel === 'donchian') DonchianDesk.load(); else DonchianDesk.deactivate();
+    if (item.panel === 'macd') MacdDesk.load(); else MacdDesk.deactivate();
+    if (item.panel === 't3cci') T3CciDesk.load(); else T3CciDesk.deactivate();
+    if (item.panel === 'chi') ChiDesk.load(); else ChiDesk.deactivate();
+    if (item.panel === 'deskrank') DeskRanking.load(); else DeskRanking.deactivate();
     if (item.panel === 'traders') { Traders.botId = (extra && extra.traderId) || ''; Traders.load(); }
     if (item.panel === 'v4') V4View.load();
     if (item.panel === 'v5') V5View.load();
     if (item.panel === 'system') SystemView.load();
-    if (item.panel === 'programs') ProgramsView.load();
-    if (item.panel === 'analyzer') AnalyzerView.load();
+    if (item.panel === 'ytcheck') YtCheck.load();
     if (item.panel === 'live') Shadow.load();
     if (item.panel === 'activity') { if (!Activity.loaded) Activity.load(); else Activity.render(); }
     if (item.panel === 'health') Health.render();
@@ -794,7 +810,7 @@ function init() {
   Stream.on('unauthorized', () => { Auth.clear(); showLogin('session rejected — enter the password again'); });
   Stream.onStatus(() => updateStale());
   Safety.init(['ws', 'data', 'jev']);        // execution, kill switch and engine have their own header controls here
-  Nav.init(); initControls(); Charts.init($('#equity-chart'));
+  // Bind essential session controls before optional panels and their charts.
   $('#login-form').addEventListener('submit', (e) => { e.preventDefault(); tryLogin($('#login-pw').value); });
   $('#logout').addEventListener('click', (e) => { e.preventDefault(); Auth.clear(); Poll.stop(); Poll.state = null; Drawer.close(); showLogin('logged out'); });
   $('#kill-btn').addEventListener('click', killOrResume);
@@ -807,5 +823,16 @@ function init() {
   $('#tape-strategy').addEventListener('change', () => Tape.render());
   setInterval(updateStale, 1000);
   if (Auth.get() == null) showLogin(); else Poll.start();
+  initializeDashboardArea('Navigation', () => Nav.init());
+  initializeDashboardArea('Execution controls', () => initControls());
+  initializeDashboardArea('Equity chart', () => Charts.init($('#equity-chart')));
+}
+function initializeDashboardArea(name, initialize) {
+  try { initialize(); }
+  catch (error) {
+    console.error('[dashboard] ' + name + ' could not initialize', error);
+    const notice = $('#dashboard-errors');
+    if (notice) { notice.hidden = false; notice.title = error.message; setText(notice, name + ' could not load. Refresh the page to retry.'); }
+  }
 }
 document.addEventListener('DOMContentLoaded', init);

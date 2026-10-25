@@ -62,8 +62,10 @@ def _provider(exchange: str, network: str) -> None:
         raise HTTPException(404, "unknown provider")
 
 
-def _in_use(m: Any, exchange: str, network: str, stock_trend: Any = None) -> bool:
+def _in_use(m: Any, exchange: str, network: str, stock_trend: Any = None, ibs_bot: Any = None) -> bool:
     if exchange == 'alpaca' and stock_trend is not None and stock_trend.uses_provider(network):
+        return True
+    if exchange == 'alpaca' and ibs_bot is not None and ibs_bot.uses_provider(network):
         return True
     return any(x["exchange"] == exchange and x["network"] == network and (x["status"] == "ARMED" or x.get("position"))
                for x in m.mirrors.values())
@@ -75,7 +77,8 @@ async def save_keys(request: Request, exchange: str, network: str) -> Any:
     The response never echoes them."""
     m = _mirror(request)
     _provider(exchange, network)
-    if _in_use(m, exchange, network, getattr(request.app.state, 'stock_trend', None)):
+    if _in_use(m, exchange, network, getattr(request.app.state, 'stock_trend', None),
+               getattr(request.app.state, 'ibs_bot', None)):
         return JSONResponse({"ok": False, "error": "stop the live mirrors on this provider before changing its keys"}, status_code=409)
     try:
         body = await request.json()
@@ -89,7 +92,8 @@ async def save_keys(request: Request, exchange: str, network: str) -> Any:
 async def clear_keys(request: Request, exchange: str, network: str) -> Any:
     m = _mirror(request)
     _provider(exchange, network)
-    if _in_use(m, exchange, network, getattr(request.app.state, 'stock_trend', None)):
+    if _in_use(m, exchange, network, getattr(request.app.state, 'stock_trend', None),
+               getattr(request.app.state, 'ibs_bot', None)):
         return JSONResponse({"ok": False, "error": "stop the live mirrors on this provider before removing its keys"}, status_code=409)
     return {"ok": True, "removed": m.providers.forget_keys(exchange, network)}
 

@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trend Filter Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.3/dist/lightweight-charts.standalone.production.js"></script>
+<script>document.write('<script src="output/viewer_data.js?v=' + Date.now() + '"><\/script>');  // never show a cached old run</script>
+<style>
+:root{
+  --bg:#0b0f14;--panel:#121820;--panel2:#18202a;--line:#243040;--soft:#1b2430;--text:#e6edf3;--muted:#8b98a8;
+  --always:#a3aebb;--strong:#38bdf8;--up:#22c55e;--down:#ef4444;
+  --sans:'Space Grotesk',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 var(--sans);font-variant-numeric:tabular-nums}
+main{max-width:1100px;margin:0 auto;padding:28px 24px 56px}
+h1{font-size:28px;line-height:1.2;margin:0;letter-spacing:-.01em}
+.lead{color:var(--muted);margin:8px 0 0;max-width:760px}
+section{margin-top:32px}
+h2{font-size:18px;margin:0 0 4px}
+.hint{color:var(--muted);font-size:13px;margin:0 0 12px}
+.muted{color:var(--muted)}
+.pos{color:var(--up)}.neg{color:var(--down)}
+.hidden{display:none!important}
+i.sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:7px;vertical-align:-1px}
+
+/* short answer */
+.answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.answer{background:var(--panel);border:1px solid var(--line);border-left:5px solid;border-radius:14px;padding:16px 18px}
+.answer.yes{border-left-color:var(--up)}.answer.no{border-left-color:var(--down)}
+.answer .who{color:var(--muted);font-size:13px}
+.answer .big{font-size:23px;font-weight:700;margin:2px 0 4px}
+.answer.yes .big{color:var(--up)}.answer.no .big{color:var(--down)}
+.answer p{margin:0 0 12px;font-size:14px}
+.mini{display:grid;grid-template-columns:auto auto auto;gap:6px 14px;font-size:14px;align-items:baseline}
+.mini b{text-align:right}
+
+/* pickers */
+.pick{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin:12px 0 0}
+.pick .step{color:var(--muted);font-size:13px;width:120px;flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{background:var(--panel);border:1px solid var(--line);color:var(--text);font:500 14px var(--sans);padding:7px 13px;border-radius:999px;cursor:pointer}
+.chips button:hover{border-color:#3a4a5e}
+.chips button.on{background:#0e3a52;border-color:var(--strong)}
+.botinfo{color:var(--muted);font-size:13px;margin:6px 0 0 132px}
+
+/* the two versions side by side */
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+.side{background:var(--panel);border:1px solid var(--line);border-top:5px solid;border-radius:14px;padding:16px 18px;min-width:0}
+.side.always{border-top-color:var(--always)}.side.strong{border-top-color:var(--strong)}
+.side h3{margin:0 0 10px;font-size:16px}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin:-4px 0 10px;min-height:22px}
+.badge{font-size:12px;padding:2px 9px;border-radius:999px;background:var(--panel2);border:1px solid var(--line)}
+.money{font-size:30px;font-weight:700;line-height:1.15;margin:0 0 8px}
+.money .chg{font-size:15px;font-weight:500;margin-left:6px}
+tr.total td{border-top:1px solid var(--line);font-weight:600}
+.calh{font-size:15px;margin:0 0 8px}
+table.cal{font-size:13px}
+table.cal th,table.cal td{padding:7px 6px}
+table.cal td{border-bottom:2px solid var(--panel)}
+table.cal tr.sel td{background:transparent}
+table.cal tr.sel td:first-child{color:var(--strong);font-weight:700}
+.row{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--soft);font-size:14px}
+.row .k{color:var(--muted)}.row .v{font-weight:600;text-align:right}
+.explain{color:var(--muted);font-size:13px;margin:12px 0 0;line-height:1.6}
+.explain b{color:var(--text);font-weight:600}
+
+/* charts */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-width:0}
+.chart-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-bottom:6px}
+.key{display:flex;gap:6px 16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.readout{font-size:13px;min-height:20px;margin-bottom:6px}
+#equity{height:290px}#price{height:400px}
+
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{color:var(--muted);font-weight:500;text-align:right;padding:8px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{text-align:right;padding:8px;border-bottom:1px solid var(--soft);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+tr.click{cursor:pointer}tr.click:hover td{background:var(--panel2)}tr.sel td{background:#13304a}
+.wide{overflow-x:auto}.scroll{max-height:400px;overflow:auto}
+
+/* fold-outs */
+details{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-top:12px}
+summary{cursor:pointer;padding:14px 16px;font-weight:600;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:'▸';display:inline-block;width:20px;color:var(--muted);transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+summary .muted{font-weight:400;font-size:13px;margin-left:6px}
+details .body{padding:0 16px 16px}
+details ul{margin:0;padding-left:20px;line-height:1.7}
+
+@media (max-width:760px){.answers{grid-template-columns:minmax(0,1fr)}.pick .step{width:100%}.botinfo{margin-left:0}}
+@media (max-width:560px){main{padding:20px 16px 44px}h1{font-size:23px}.compare{gap:8px}.side{padding:12px}
+  .money{font-size:23px}.row{font-size:13px}#price{height:320px}#equity{height:240px}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Does it help to trade only when the market is in a strong trend?</h1>
+  <p class="lead" id="lead"></p>
+  <div class="pick" style="margin-top:18px"><span class="step">Show results for</span><div class="chips" id="periodChips"></div></div>
+
+  <section>
+    <h2>Short answer</h2>
+    <p class="hint" id="answerHint"></p>
+    <div class="answers" id="answers"></div>
+    <p class="explain hidden" id="yearNote"><b>Careful:</b> one year is a short time. A handful of trades decide it, so it can’t prove or
+      disprove the idea on its own. The whole-test result counts more.</p>
+  </section>
+
+  <section>
+    <h2>Look closer</h2>
+    <div class="pick"><span class="step">1. Pick a bot</span><div class="chips" id="botChips"></div></div>
+    <div class="botinfo" id="botInfo"></div>
+    <div class="pick"><span class="step">2. Pick a coin</span><div class="chips" id="coinChips"></div></div>
+
+    <div class="compare" id="compare"></div>
+    <p class="explain">
+      <b>Only strong trends</b> = the bot only keeps a trade open while a trend-strength meter (ADX) says the price is moving strongly one way. The rest of the time it waits in cash.<br>
+      <b>Worst drop</b> = the biggest fall from a high point before it recovered. Smaller is safer.
+    </p>
+  </section>
+
+  <section>
+    <h2 id="calTitle">Every month</h2>
+    <p class="hint" id="calHint"></p>
+    <div class="card">
+      <h3 class="calh"><i class="sw" style="background:var(--always)"></i>Always trading</h3><div class="wide" id="calNone"></div>
+      <h3 class="calh" style="margin-top:20px"><i class="sw" style="background:var(--strong)"></i>Only strong trends</h3><div class="wide" id="calAdx"></div>
+      <p class="explain" id="calSum"></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <div class="chart-head"><h2 id="eqTitle">How $1,000 grew</h2>
+        <div class="key"><span><i class="sw" style="background:var(--always)"></i>Always trading</span><span><i class="sw" style="background:var(--strong)"></i>Only strong trends</span></div></div>
+      <div class="readout" id="eqRead"></div>
+      <div id="equity"></div>
+    </div>
+  </section>
+
+  <section id="priceSection">
+    <div class="card">
+      <div class="chart-head"><h2 id="priceTitle">Price</h2>
+        <div class="chips" id="showChips"></div></div>
+      <div class="key" style="margin-bottom:6px">
+        <span><i class="sw" style="background:rgba(34,197,94,.45)"></i>bot is betting the price goes up</span>
+        <span><i class="sw" style="background:rgba(239,68,68,.45)"></i>bot is betting the price goes down</span>
+        <span><i class="sw" style="background:transparent;outline:1px solid var(--line)"></i>no colour = waiting in cash</span></div>
+      <div class="readout" id="priceRead"></div>
+      <div id="price"></div>
+    </div>
+  </section>
+  <p class="hint hidden" id="pickCoinHint" style="margin-top:12px">Pick a single coin above to see its price chart and every trade.</p>
+
+  <section>
+    <h2 id="yearsTitle">Year by year</h2>
+    <p class="hint" id="yearsHint"></p>
+    <div class="card wide" id="years"></div>
+  </section>
+
+  <section>
+    <details id="tradesBox"><summary>Every trade <span class="muted" id="tradesCount"></span></summary>
+      <div class="body"><p class="hint">Newest first. Click a trade to zoom the price chart to it.</p><div class="scroll" id="trades"></div></div></details>
+    <details><summary>All 10 coins side by side <span class="muted" id="coinsSub"></span></summary>
+      <div class="body"><p class="hint" id="coinsHint"></p><div class="wide" id="overview"></div></div></details>
+    <details><summary>How the test works</summary><div class="body" id="how"></div></details>
+  </section>
+</main>
+<script>
+(function(){
+const D = window.TS_DATA;
+if (!D) { document.querySelector('main').innerHTML = '<p class="lead">No data yet. Run <code>python research/trend_strength/run.py</code> first.</p>'; return; }
+const COINS = Object.keys(D.coins);
+const BOTS = {
+  ema5_100: {name: 'Bot A · EMA', what: 'Buys when the 5-day average price rises above the 100-day average. Bets on a fall when it drops below.'},
+  mom60: {name: 'Bot B · Momentum', what: 'Buys when the price is higher than 60 days ago. Bets on a fall when it is lower.'},
+};
+const VER = {none: 'Always trading', adx: 'Only strong trends'};
+const COL = {none: '#a3aebb', adx: '#38bdf8'};
+const DAY = 864e5;
+const YEAR = new Date(D.end).getUTCFullYear();
+const FIRST = new Date(D.portfolio['ema5_100|none'].equity[0][0]).getUTCFullYear();
+const YEARS = Array.from({length: YEAR - FIRST + 1}, (_, i) => FIRST + i);
+const PERIODS = Object.fromEntries([...YEARS.map(y => [String(y), y === YEAR ? `${y} (so far)` : String(y)]), ['all', `All years (${FIRST}–${YEAR})`]]);
+let st = {period: String(YEAR), bot: 'ema5_100', coin: 'Portfolio', show: 'adx'};
+try { Object.assign(st, JSON.parse(localStorage.getItem('ts-simple') || '{}')); } catch (e) {}
+if (!PERIODS[st.period]) st.period = String(YEAR);
+if (!BOTS[st.bot]) st.bot = 'ema5_100';
+if (st.coin !== 'Portfolio' && !D.coins[st.coin]) st.coin = 'Portfolio';
+if (!VER[st.show]) st.show = 'adx';
+
+const money = net => 1000 * (1 + net / 100);
+const usd = v => (v < 0 ? '−$' : '$') + Math.abs(Math.round(v)).toLocaleString('en-US');
+const pct = (v, d = 0) => v == null ? '–' : (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(d) + '%';
+const cls = v => v > 0 ? 'pos' : v < 0 ? 'neg' : '';
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const nice = ms => { const d = new Date(ms); return `${d.getUTCDate()} ${MON[d.getUTCMonth()]} ${d.getUTCFullYear()}`; };
+const sec = ms => Math.floor(ms / 1000);
+const px = p => '$' + (p >= 1000 ? Math.round(p).toLocaleString('en-US') : p >= 1 ? p.toFixed(2) : p.toFixed(4));
+const pickedYear = () => st.period === 'all' ? null : +st.period;
+const yearMode = () => pickedYear() !== null;
+const yStart = () => Date.UTC(pickedYear(), 0, 1), yEnd = () => Date.UTC(pickedYear() + 1, 0, 1);
+const inYear = () => pickedYear() === YEAR ? 'this year' : `in ${pickedYear()}`;
+// money at time t on a book's equity curve: the first year starts from exactly 10,000, like the study's yearly figures
+const valueAt = (eq, t) => { if (t <= eq[0][0]) return 10_000; let v = eq[0][1]; for (const [tt, e] of eq) { if (tt > t) break; v = e; } return v; };
+const book = (f, coin = st.coin, bot = st.bot) => coin === 'Portfolio' ? D.portfolio[bot + '|' + f] : D.coins[coin].books[bot + '|' + f];
+const whole = (f, coin = st.coin, bot = st.bot) => coin === 'Portfolio' ? D.portfolio[bot + '|' + f].double : D.coins[coin].books[bot + '|' + f].stats.double;
+const coinName = c => c === 'Portfolio' ? 'all 10 coins' : c;
+
+document.getElementById('lead').textContent =
+  `We tested 2 trend-following bots on ${COINS.length} coins (${COINS.join(', ')}) from 1 Jan 2021 to ${nice(D.end)}, using past prices. ` +
+  `No real money. Fees are counted at double the normal rate, to be safe.`;
+
+function positions(b) {  // day -> +1 / -1 while a trade is open (filled at the day's open, closed at the exit day's open)
+  const m = new Map();
+  const add = (a, z, side) => { for (let t = a; t < z; t += DAY) m.set(t, side); };
+  for (const t of b.trades) add(t.in, t.out, t.side);
+  if (b.open) add(b.open.in, D.end + DAY, b.open.side);
+  return m;
+}
+
+// the money in $, starting from $1,000 at the start of the chosen period
+function curve(f, coin = st.coin, bot = st.bot) {
+  const eq = book(f, coin, bot).equity;
+  if (!yearMode()) return eq.map(([t, e]) => [t, e / 10]);
+  const a = yStart(), z = yEnd(), start = valueAt(eq, a);
+  return eq.filter(([t]) => t >= a && t <= z).map(([t, e]) => [t, e / start * 1000]);
+}
+
+function monthly(f, coin = st.coin, bot = st.bot, y = pickedYear()) {  // [month, % change or null, still running] for the 12 months of a year
+  const eq = book(f, coin, bot).equity;
+  return MON.map((name, m) => {
+    const a = Date.UTC(y, m, 1), z = Date.UTC(y, m + 1, 1);
+    return [name, a >= D.end ? null : (valueAt(eq, z) / valueAt(eq, a) - 1) * 100, a < D.end && z > D.end];
+  });
+}
+const yearTotal = (f, y, coin = st.coin, bot = st.bot) => {
+  const eq = book(f, coin, bot).equity;
+  return (valueAt(eq, Date.UTC(y + 1, 0, 1)) / valueAt(eq, Date.UTC(y, 0, 1)) - 1) * 100;
+};
+
+// the numbers for one version over the chosen period; the whole test uses the study's own figures
+function result(f, coin = st.coin, bot = st.bot) {
+  const s = whole(f, coin, bot);
+  if (!yearMode()) return {end: money(s.net), net: s.net, dd: s.dd, retdd: s.ret_dd, cagr: s.cagr,
+                           trades: s.trades, won: s.win_rate, exposure: s.exposure};
+  const c = curve(f, coin, bot), a = yStart(), z = Math.min(yEnd(), D.end);
+  let peak = 1000, dd = 0;
+  for (const [, v] of c) { peak = Math.max(peak, v); dd = Math.max(dd, 1 - v / peak); }
+  const r = {end: c.at(-1)[1], net: (c.at(-1)[1] / 1000 - 1) * 100, dd: dd * 100, months: monthly(f, coin, bot).filter(m => m[1] !== null)};
+  if (coin !== 'Portfolio') {
+    const b = book(f, coin, bot), tr = b.trades.filter(t => t.out > a && t.out <= yEnd()), pos = positions(b);
+    let n = 0, held = 0;
+    for (let t = a; t < z; t += DAY) { n++; if (pos.get(t)) held++; }
+    Object.assign(r, {trades: tr.length, won: tr.length ? 100 * tr.filter(t => t.pnl > 0).length / tr.length : 0, exposure: 100 * held / n});
+  }
+  return r;
+}
+
+function answers() {
+  return Object.keys(BOTS).map(bot => {
+    const a = result('none', 'Portfolio', bot), b = result('adx', 'Portfolio', bot);
+    let good, big, why;
+    if (yearMode()) {
+      const more = COINS.filter(c => result('adx', c, bot).net > result('none', c, bot).net).length;
+      const drops = Math.abs(b.dd - a.dd) < 1.5 ? 'about the same drops' : b.dd < a.dd ? 'smaller drops' : 'bigger drops';
+      good = b.net > a.net;
+      big = good ? '✓ Strong trends did better' : '✗ Always trading did better';
+      why = `Only strong trends made ${good ? 'more' : 'less'} money ${inYear()}, with ${drops}. It made more on ${good ? '' : 'only '}${more} of ${COINS.length} coins.`;
+    } else {
+      const v = D.verdict[bot + '|adx'];
+      good = v.helps;
+      big = good ? '✓ Yes, it helps' : '✗ No, it doesn’t help';
+      why = (good ? (b.net >= 0.8 * a.net ? 'About the same profit, with much smaller drops.' : 'Less profit, but much smaller drops.')
+                  : 'Smaller drops, but it gives up too much profit.') + ` Better on ${good ? '' : 'only '}${v.coins_improved} of ${COINS.length} coins.`;
+    }
+    const line = (f, s) => `<span><i class="sw" style="background:${COL[f]}"></i>${VER[f]}</span><b class="${cls(s.net)}">${usd(s.end)}</b><span class="muted">worst drop −${s.dd.toFixed(0)}%</span>`;
+    return `<div class="answer ${good ? 'yes' : 'no'}"><div class="who">${BOTS[bot].name}</div>
+      <div class="big">${big}</div><p>${why}</p><div class="mini">${line('none', a)}${line('adx', b)}</div></div>`;
+  }).join('');
+}
+
+function chips(id, items, key) {
+  const el = document.getElementById(id);
+  el.innerHTML = '';
+  for (const [val, label] of items) {
+    const b = document.createElement('button');
+    b.textContent = label; b.className = st[key] === val ? 'on' : '';
+    b.onclick = () => { st[key] = val; render(); };
+    el.appendChild(b);
+  }
+}
+
+const base = {
+  layout: {background: {color: 'transparent'}, textColor: '#8b98a8', fontFamily: 'Space Grotesk'},
+  grid: {vertLines: {color: '#161d26'}, horzLines: {color: '#161d26'}},
+  rightPriceScale: {borderColor: '#243040'}, timeScale: {borderColor: '#243040', minBarSpacing: 0.05},
+  crosshair: {mode: 0}, autoSize: true, handleScale: {axisPressedMouseMove: false},
+};
+const eqEl = document.getElementById('equity'), priceEl = document.getElementById('price');
+const eqChart = LightweightCharts.createChart(eqEl, {...base,
+  localization: {priceFormatter: v => '$' + Math.round(v).toLocaleString('en-US')}});
+const priceChart = LightweightCharts.createChart(priceEl, base);
+const eqLines = {};
+for (const f of ['none', 'adx'])
+  eqLines[f] = eqChart.addLineSeries({color: COL[f], lineWidth: f === 'adx' ? 3 : 2, priceLineVisible: false, lastValueVisible: true});
+const shade = priceChart.addHistogramSeries({priceScaleId: 'shade', priceLineVisible: false, lastValueVisible: false});
+priceChart.priceScale('shade').applyOptions({scaleMargins: {top: 0, bottom: 0}, visible: false});
+const candles = priceChart.addCandlestickSeries({upColor: '#cfd8e3', downColor: '#5b6878', borderVisible: false,
+  wickUpColor: '#cfd8e3', wickDownColor: '#5b6878', priceLineVisible: false});
+
+let syncing = false;
+function link(a, aEl, b) {
+  a.timeScale().subscribeVisibleTimeRangeChange(r => {
+    if (syncing || !r || !aEl.offsetParent) return; syncing = true;
+    try { b.timeScale().setVisibleRange(r); } catch (e) {}
+    syncing = false;
+  });
+}
+link(priceChart, priceEl, eqChart); link(eqChart, eqEl, priceChart);
+
+// hover read-outs in plain words
+const eqRead = document.getElementById('eqRead'), priceRead = document.getElementById('priceRead');
+let eqLatest = '', posByDay = new Map(), priceLatest = '';
+const both = (t, a, b) => `${t}: <b style="color:${COL.none}">Always trading ${usd(a)}</b> · <b style="color:${COL.adx}">Only strong trends ${usd(b)}</b>`;
+eqChart.subscribeCrosshairMove(p => {
+  const a = p.time && p.seriesData.get(eqLines.none), b = p.time && p.seriesData.get(eqLines.adx);
+  eqRead.innerHTML = a && b ? both(nice(p.time * 1000), a.value, b.value) : eqLatest;
+});
+const doing = side => side > 0 ? '<span class="pos">betting up</span>' : side < 0 ? '<span class="neg">betting down</span>' : '<span class="muted">waiting in cash</span>';
+priceChart.subscribeCrosshairMove(p => {
+  const c = p.time && p.seriesData.get(candles);
+  priceRead.innerHTML = c ? `${nice(p.time * 1000)} · price ${px(c.close)} · the bot was ${doing(posByDay.get(p.time * 1000) || 0)}` : priceLatest;
+});
+
+function sideCard(f) {
+  const s = result(f), o = result(f === 'none' ? 'adx' : 'none');
+  const badges = [s.net > o.net ? 'More profit' : '', s.dd < o.dd ? 'Smaller drops' : ''].filter(Boolean);
+  let rows = `<div class="row"><span class="k">Worst drop</span><span class="v">−${s.dd.toFixed(0)}%</span></div>`;
+  rows += yearMode()
+    ? `<div class="row"><span class="k">Months that made money</span><span class="v">${s.months.filter(m => m[1] > 0).length} of ${s.months.length}</span></div>`
+    : `<div class="row"><span class="k">Average per year</span><span class="v ${cls(s.cagr)}">${pct(s.cagr, 1)}</span></div>`;
+  if (st.coin !== 'Portfolio') rows +=
+    `<div class="row"><span class="k">${yearMode() ? 'Trades closed ' + inYear() : 'Trades'}</span><span class="v">${s.trades} (${s.won.toFixed(0)}% won)</span></div>
+     <div class="row"><span class="k">Time in a trade</span><span class="v">${s.exposure.toFixed(0)}%</span></div>`;
+  return `<div class="side ${f === 'none' ? 'always' : 'strong'}"><h3>${VER[f]}</h3>
+    <div class="badges">${badges.map(b => `<span class="badge">${b}</span>`).join('')}</div>
+    <div class="muted" style="font-size:13px">$1,000 ${yearMode() ? 'on 1 Jan ' + pickedYear() + ' ' : ''}became</div>
+    <div class="money ${cls(s.net)}">${usd(s.end)}<span class="chg">${pct(s.net, 1)}</span></div>${rows}</div>`;
+}
+
+function render() {
+  try { localStorage.setItem('ts-simple', JSON.stringify(st)); } catch (e) {}
+  const port = st.coin === 'Portfolio', ym = yearMode();
+  chips('periodChips', Object.entries(PERIODS), 'period');
+  chips('botChips', Object.entries(BOTS).map(([k, v]) => [k, v.name]), 'bot');
+  chips('coinChips', [['Portfolio', 'All 10 coins'], ...COINS.map(c => [c, c])], 'coin');
+  chips('showChips', [['adx', 'Show: Only strong trends'], ['none', 'Show: Always trading']], 'show');
+  document.getElementById('answerHint').textContent = ym
+    ? `All 10 coins together, starting with $1,000 on 1 Jan ${pickedYear()}, up to ${pickedYear() === YEAR ? nice(D.end) : '31 Dec ' + pickedYear()}.`
+    : `All 10 coins together, starting with $1,000 on 1 Jan 2021, up to ${nice(D.end)}.`;
+  document.getElementById('answers').innerHTML = answers();
+  document.getElementById('yearNote').classList.toggle('hidden', !ym);
+  document.getElementById('botInfo').textContent = BOTS[st.bot].what;
+  document.getElementById('compare').innerHTML = sideCard('none') + sideCard('adx');
+
+  // money chart
+  const cv = {none: curve('none'), adx: curve('adx')};
+  for (const f of ['none', 'adx']) eqLines[f].setData(cv[f].map(([t, v]) => ({time: sec(t), value: v})));
+  document.getElementById('eqTitle').textContent = `How $1,000 grew · ${ym ? inYear() : 'since ' + FIRST} · ${BOTS[st.bot].name} · ${coinName(st.coin)}`;
+  eqLatest = both('Today', cv.none.at(-1)[1], cv.adx.at(-1)[1]);
+  eqRead.innerHTML = eqLatest;
+
+  document.getElementById('priceSection').classList.toggle('hidden', port);
+  document.getElementById('pickCoinHint').classList.toggle('hidden', !port);
+  document.getElementById('tradesBox').classList.toggle('hidden', port);
+  if (!port) {
+    const c = D.coins[st.coin], b = book(st.show);
+    document.getElementById('priceTitle').textContent = `${st.coin} price · trades of “${VER[st.show]}”`;
+    const last = c.candles.at(-1)[4];
+    const dp = last >= 1000 ? 0 : last >= 1 ? 2 : 4;
+    candles.applyOptions({priceFormat: {type: 'price', precision: dp, minMove: 10 ** -dp}});
+    candles.setData(c.candles.map(([t, o, h, l, cl]) => ({time: sec(t), open: o, high: h, low: l, close: cl})));
+    posByDay = positions(b);
+    shade.setData(c.candles.map(([t]) => {
+      const side = posByDay.get(t);
+      return side ? {time: sec(t), value: 1, color: side > 0 ? 'rgba(34,197,94,.16)' : 'rgba(239,68,68,.18)'} : {time: sec(t)};
+    }));
+    const now = posByDay.get(c.candles.at(-1)[0]) || 0;
+    priceLatest = `Now: price ${px(last)} · the bot is ${doing(now)}`;
+    priceRead.innerHTML = priceLatest;
+
+    // every trade (only the picked year's when a year is picked), newest first; profit as % of the money at the time
+    const eqAt = new Map(b.equity);
+    const list = b.trades.filter(t => !ym || (t.out > yStart() && t.out <= yEnd()));
+    const rows = list.slice().reverse().map(t => { const p = t.pnl / (eqAt.get(t.in) || 10_000) * 100;
+      return `<tr class="click" data-in="${t.in}" data-out="${t.out}">
+      <td class="${t.side > 0 ? 'pos' : 'neg'}">${t.side > 0 ? '▲ Up' : '▼ Down'}</td><td>${nice(t.in)}</td><td>${nice(t.out)}</td>
+      <td>${Math.round((t.out - t.in) / DAY)}</td><td>${px(t.entry)}</td><td>${px(t.exit)}</td>
+      <td class="${cls(p)}">${pct(p, 1)}</td></tr>`; }).join('');
+    const open = b.open ? `<tr><td class="${b.open.side > 0 ? 'pos' : 'neg'}">${b.open.side > 0 ? '▲ Up' : '▼ Down'}</td><td>${nice(b.open.in)}</td><td class="muted">still open</td><td>${Math.round((D.end - b.open.in) / DAY)}</td><td>${px(b.open.entry)}</td><td></td><td></td></tr>` : '';
+    document.getElementById('trades').innerHTML = `<table><thead><tr><th>Bet</th><th>Opened</th><th>Closed</th><th>Days</th><th>Buy/sell price</th><th>Close price</th><th>Profit</th></tr></thead><tbody>${open}${rows}</tbody></table>`;
+    document.getElementById('tradesCount').textContent = `· ${st.coin} · ${VER[st.show]} · ${list.length} closed${ym ? ' ' + inYear() : ''}${b.open ? ' + 1 open' : ''}`;
+    document.querySelectorAll('#trades tr.click').forEach(tr => tr.onclick = () => {
+      document.querySelectorAll('#trades tr.sel').forEach(x => x.classList.remove('sel')); tr.classList.add('sel');
+      const a = +tr.dataset.in, z = +tr.dataset.out, pad = Math.max(25 * DAY, (z - a) * .5);
+      document.getElementById('priceSection').scrollIntoView({behavior: 'smooth', block: 'start'});
+      priceChart.timeScale().setVisibleRange({from: sec(a - pad), to: sec(z + pad)});
+    });
+  }
+  // show the whole period on both charts; an explicit range (unlike fitContent) is not undone by the chart-to-chart sync
+  const range = {from: sec(cv.none[0][0]), to: sec(cv.none.at(-1)[0])};
+  eqChart.timeScale().setVisibleRange(range);
+  if (!port) priceChart.timeScale().setVisibleRange(range);
+
+  // month by month (a picked year) or year by year (all years)
+  const head = first => `<thead><tr><th>${first}</th><th><i class="sw" style="background:${COL.none}"></i>Always trading</th><th><i class="sw" style="background:${COL.adx}"></i>Only strong trends</th></tr></thead>`;
+  if (ym) {
+    const A = result('none'), B = result('adx');
+    document.getElementById('yearsTitle').textContent = `Month by month · ${pickedYear()}`;
+    document.getElementById('yearsHint').textContent = 'How much the money grew (or shrank) each month.';
+    document.getElementById('years').innerHTML = `<table>${head('Month')}<tbody>${
+      A.months.map(([m, v, running], i) => `<tr><td>${m}${running ? ' <span class="muted">(so far)</span>' : ''}</td><td class="${cls(v)}">${pct(v, 1)}</td><td class="${cls(B.months[i][1])}">${pct(B.months[i][1], 1)}</td></tr>`).join('')
+    }<tr class="total"><td>Whole year${pickedYear() === YEAR ? ' so far' : ''}</td><td class="${cls(A.net)}">${pct(A.net, 1)}</td><td class="${cls(B.net)}">${pct(B.net, 1)}</td></tr></tbody></table>`;
+  } else {
+    const yA = whole('none').yearly, yB = whole('adx').yearly;
+    document.getElementById('yearsTitle').textContent = 'Year by year';
+    document.getElementById('yearsHint').textContent = 'How much the money grew (or shrank) in each year.';
+    document.getElementById('years').innerHTML = `<table>${head('Year')}<tbody>${
+      Object.keys(yA).map(y => `<tr><td>${y}${+y === YEAR ? ' <span class="muted">(so far)</span>' : ''}</td><td class="${cls(yA[y])}">${pct(yA[y], 1)}</td><td class="${cls(yB[y])}">${pct(yB[y], 1)}</td></tr>`).join('')
+    }</tbody></table>`;
+  }
+
+  // every month of every year, both versions; colour strength follows the size of the month
+  const calCell = v => v == null ? '<td class="muted">·</td>'
+    : `<td style="background:rgba(${v >= 0 ? '34,197,94' : '239,68,68'},${(.06 + Math.min(Math.abs(v), 12) / 12 * .34).toFixed(2)})">${pct(v, 1)}</td>`;
+  const calendar = f => `<table class="cal"><thead><tr><th>Year</th>${MON.map(m => `<th>${m}</th>`).join('')}<th>Whole year</th></tr></thead><tbody>${
+    YEARS.map(y => { const t = yearTotal(f, y);
+      return `<tr class="click${String(y) === st.period ? ' sel' : ''}" data-year="${y}"><td>${y}</td>${monthly(f, st.coin, st.bot, y).map(([, v]) => calCell(v)).join('')}<td class="${cls(t)}"><b>${pct(t, 1)}</b></td></tr>`; }).join('')
+  }</tbody></table>`;
+  document.getElementById('calNone').innerHTML = calendar('none');
+  document.getElementById('calAdx').innerHTML = calendar('adx');
+  let n = 0, upA = 0, upB = 0, beat = 0;
+  for (const y of YEARS) {
+    const A = monthly('none', st.coin, st.bot, y), B = monthly('adx', st.coin, st.bot, y);
+    A.forEach(([, v], i) => { if (v == null) return; n++; upA += v > 0; upB += B[i][1] > 0; beat += B[i][1] > v; });
+  }
+  document.getElementById('calTitle').textContent = `Every month, ${FIRST}–${YEAR}`;
+  document.getElementById('calHint').textContent = `${BOTS[st.bot].name} · ${coinName(st.coin)}. Green = the month made money, red = it lost money; darker = bigger. Click a year to open it.`;
+  document.getElementById('calSum').innerHTML = `Months that made money: <b>Always trading ${upA} of ${n}</b> · <b>Only strong trends ${upB} of ${n}</b>. ` +
+    `Only strong trends did better than always trading in ${beat} of ${n} months (it often sits in cash, so it misses some good months and some bad ones).`;
+  document.querySelectorAll('table.cal tr.click').forEach(tr => tr.onclick = () => {
+    st.period = tr.dataset.year; render(); document.getElementById('periodChips').scrollIntoView({behavior: 'smooth', block: 'center'});
+  });
+
+  // all coins for the chosen bot
+  const cell = s => `<td><span class="${cls(s.net)}">${usd(s.end)}</span> <span class="muted">· −${s.dd.toFixed(0)}%</span></td>`;
+  const body = [...COINS, 'Portfolio'].map(c => {
+    const a = result('none', c), b = result('adx', c), better = ym ? b.net > a.net : b.retdd > a.retdd;
+    return `<tr class="click${c === st.coin ? ' sel' : ''}" data-coin="${c}">
+      <td>${c === 'Portfolio' ? '<b>All 10 coins</b>' : c}</td>${cell(a)}${cell(b)}
+      <td>${better ? `<span class="pos">✓ ${ym ? 'made more' : 'better'}</span>` : `<span class="neg">✗ ${ym ? 'made less' : 'worse'}</span>`}</td></tr>`;
+  }).join('');
+  document.getElementById('overview').innerHTML = `<table><thead><tr><th>Coin</th><th>Always trading</th><th>Only strong trends</th><th>Strong-trend version</th></tr></thead><tbody>${body}</tbody></table>`;
+  document.getElementById('coinsSub').textContent = `· ${BOTS[st.bot].name} · ${ym ? inYear() : 'since ' + FIRST}`;
+  document.getElementById('coinsHint').textContent = ym
+    ? `What $1,000 on 1 Jan ${pickedYear()} became, and the worst drop ${inYear()}. Click a coin to open it.`
+    : 'What $1,000 became since 2021, and the worst drop. Click a coin to open it.';
+  document.querySelectorAll('#overview tr.click').forEach(tr => tr.onclick = () => {
+    st.coin = tr.dataset.coin; render(); document.getElementById('botChips').scrollIntoView({behavior: 'smooth', block: 'center'});
+  });
+}
+
+// how the test works, with the other filter and normal-fee numbers for reference
+const P = k => D.portfolio[k];
+const lineFor = k => `${usd(money(P(k).double.net))}, worst drop −${P(k).double.dd.toFixed(0)}%`;
+document.getElementById('how').innerHTML = `<ul>
+  <li>Each bot looks at the price once a day, after the daily candle closes, and trades at the next day’s open.</li>
+  <li>It can bet on the price going up (buy) or going down (short).</li>
+  <li>Trades are smaller on jumpy coins, so one wild coin can’t sink everything. A trade never uses more than half the money.</li>
+  <li>Fees, slippage and funding are all included, counted at double the normal rate. With normal fees every number is a little better
+      (Bot A since 2021: ${usd(money(P('ema5_100|none').base.net))} always, ${usd(money(P('ema5_100|adx').base.net))} strong trends only).</li>
+  <li>“All 10 coins” means $100 in each coin.</li>
+  <li>Picking a year restarts the money at $1,000 on 1 Jan of that year; the bots keep any trade they already had open.</li>
+  <li>“Better” for a coin (whole test) means more profit for each 1% of worst drop.</li>
+  <li>We also tried a second way to spot strong trends: the price moving in a straight line instead of zig-zagging. It did not help either bot
+      (since 2021, Bot A: ${lineFor('ema5_100|er')} · Bot B: ${lineFor('mom60|er')}).</li>
+  <li>The rules were fixed before the test ran, so nothing was tuned to fit. Still, these are past prices that had been looked at before,
+      and a big part of the profit came in 2021. The real proof is a paper test from today on.</li>
+  <li class="muted">Data built ${D.generated.replace('T', ' ').slice(0, 16)} UTC by <code>research/trend_strength/run.py</code>. Research only, no orders.</li>
+</ul>`;
+
+render();
+})();
+</script>
+</body>
+</html>

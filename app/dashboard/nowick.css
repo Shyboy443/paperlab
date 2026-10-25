@@ -1,0 +1,153 @@
+/* No-Wick Retest desk */
+#nowick-root{--nw-panel:#06121c;--nw-line:rgba(255,255,255,.1);display:grid;gap:14px;min-width:0}
+#nowick-root .nw-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;align-items:flex-start}
+#nowick-root .nw-head h2{margin:0 0 4px}
+#nowick-root .nw-head .sub{max-width:110ch}
+#nowick-root .nw-head-r{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+#nowick-root .pill.warn{color:#ffdc91}
+#nowick-root .nw-card{background:var(--nw-panel);border:1px solid var(--nw-line);border-radius:12px;padding:14px 16px;min-width:0}
+#nowick-root .nw-books{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+#nowick-root .nw-book h3{margin:0 0 8px}
+#nowick-root .nw-book dl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 8px}
+#nowick-root .nw-book dt{color:#96aab9;font-size:11px}
+#nowick-root .nw-book dd{margin:0;font-family:var(--mono,monospace);font-size:15px}
+#nowick-root .pos{color:#00d3cf}
+#nowick-root .neg{color:#ff5088}
+#nowick-root .nw-controls{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-bottom:10px}
+#nowick-root .nw-markets,#nowick-root .nw-tfs,#nowick-root .nw-tabs{display:flex;flex-wrap:wrap;gap:6px}
+#nowick-root button[data-nw-symbol],#nowick-root button[data-nw-tf],#nowick-root button[data-nw-list]{background:transparent;color:inherit;border:1px solid var(--nw-line);border-radius:6px;padding:5px 11px;cursor:pointer;font:inherit;font-size:12.5px}
+#nowick-root button[aria-pressed=true]{background:#14344d;border-color:#62beff}
+#nowick-root .nw-chart-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:6px}
+#nowick-root .nw-chart-head h3{margin:0}
+#nowick-root .nw-chart{height:max(560px,calc(100vh - 300px))}
+#nowick-root .nw-legend{margin-top:8px;font-size:11.5px}
+#nowick-root .nw-tabs{margin-bottom:10px}
+#nowick-root .nw-scroll{overflow:auto;max-height:520px}
+#nowick-root .nw-table{width:100%;border-collapse:collapse;font-size:12.5px}
+#nowick-root .nw-table th{text-align:left;color:#96aab9;font-weight:500;padding:6px 8px;border-bottom:1px solid var(--nw-line);white-space:nowrap;position:sticky;top:0;background:var(--nw-panel)}
+#nowick-root .nw-table td{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.05);white-space:nowrap}
+#nowick-root .nw-table td.num{font-family:var(--mono,monospace);text-align:right}
+#nowick-root .nw-table tr[data-nw-trade]{cursor:pointer}
+#nowick-root .nw-table tr[data-nw-trade]:hover{background:rgba(98,190,255,.06)}
+#nowick-root .nw-table tr.on{background:rgba(245,213,71,.1)}
+#nowick-root .nw-table .chip{padding:2px 10px;font-size:11px}
+#nowick-root .empty{color:#96aab9}
+@media(max-width:720px){#nowick-root .nw-book dl{grid-template-columns:repeat(2,minmax(0,1fr))}#nowick-root .nw-chart{height:480px}}
+
+/* Donchian desk reuses the No-Wick card / table styles */
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root){--nw-panel:#06121c;--nw-line:rgba(255,255,255,.1);display:grid;gap:14px;min-width:0}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;align-items:flex-start}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-head h2{margin:0 0 4px}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-head .sub{max-width:120ch}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-head-r{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root) .pill.warn{color:#ffdc91}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-card{background:var(--nw-panel);border:1px solid var(--nw-line);border-radius:12px;padding:14px 16px;min-width:0}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .dt-h3{margin:0 0 8px;font-size:14px}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root) .pos{color:#00d3cf}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root) .neg{color:#ff5088}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-chart-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:6px}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-chart-head h3{margin:0}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-chart{height:max(560px,calc(100vh - 300px))}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-legend{margin-top:8px;font-size:11.5px}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-scroll{overflow:auto;max-height:520px}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-table{width:100%;border-collapse:collapse;font-size:12.5px}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-table th{text-align:left;color:#96aab9;font-weight:500;padding:6px 8px;border-bottom:1px solid var(--nw-line);white-space:nowrap;position:sticky;top:0;background:var(--nw-panel)}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-table td{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.05);white-space:nowrap}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-table td.num{font-family:var(--mono,monospace);text-align:right}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-table tr[data-dt-symbol],:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-table tr[data-dt-trade],:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-table tr[data-mc-symbol],:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-table tr[data-mc-trade]{cursor:pointer}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-table tr:hover{background:rgba(98,190,255,.06)}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-table tr.on{background:rgba(245,213,71,.1)}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-table .chip{padding:2px 10px;font-size:11px}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root) .empty{color:#96aab9}
+@media(max-width:720px){:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-chart{height:480px}}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-table th.num{text-align:right}
+:is(#donchian-root,#macd-root,#deskrank-root,#t3cci-root,#chi-root,.zec-live) .nw-table td{display:table-cell}
+#deskrank-root .dr-table tr[data-dr-tab]{cursor:pointer}
+#deskrank-root .dr-table td,#deskrank-root .dr-table th{padding:6px 7px;vertical-align:middle}
+#deskrank-root .dr-rank{font-size:15px;width:64px}
+#deskrank-root .dr-big{font-size:14px;font-weight:600}
+#deskrank-root .dd-ok{color:#00d3cf}
+#deskrank-root .dd-mid{color:#f5d547}
+#deskrank-root .dd-bad{color:#ff5088}
+#deskrank-root .dr-muted{color:#7f93a3}
+#deskrank-root .dr-cfg{white-space:normal;min-width:180px;font-size:11.5px}
+#deskrank-root .dr-flag{font-size:10.5px;color:#ff5088;border:1px solid rgba(255,80,136,.4);border-radius:999px;padding:1px 6px;white-space:nowrap}
+#deskrank-root tr.dr-idle td,#deskrank-root tr.dr-over td{opacity:.6}
+#deskrank-root .dr-note{margin:-2px 0 10px;font-size:12px}
+#deskrank-root .dr-limits{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+#deskrank-root .dr-limits button{background:transparent;color:inherit;border:1px solid var(--nw-line);border-radius:6px;padding:4px 10px;cursor:pointer;font:inherit;font-size:12px}
+#deskrank-root .dr-limits button[aria-pressed=true]{background:#14344d;border-color:#62beff}
+#deskrank-root .dr-bound{font-size:10.5px;font-weight:400;white-space:nowrap}
+#deskrank-root .dr-prov{font-size:10px;color:#ffdc91;margin-top:2px}
+#macd-root .mc-perp-note{margin:-2px 0 10px;font-size:12px}
+#macd-root .nw-table tfoot td{border-top:1px solid var(--nw-line);padding:7px 8px}
+
+/* MACD live controls (private dashboard) */
+:is(#macd-root,#donchian-root,.zec-live) .ml-card{border-color:rgba(245,213,71,.35)}
+:is(#macd-root,#donchian-root,.zec-live) .ml-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+:is(#macd-root,#donchian-root,.zec-live) .ml-switch{display:flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap}
+:is(#macd-root,#donchian-root,.zec-live) .ml-switch input{position:absolute;opacity:0;width:52px;height:28px;margin:0;cursor:pointer}
+:is(#macd-root,#donchian-root,.zec-live) .ml-switch span{width:52px;height:28px;border-radius:999px;background:#33404c;position:relative;transition:background .2s}
+:is(#macd-root,#donchian-root,.zec-live) .ml-switch span::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#e8eef3;transition:left .2s}
+:is(#macd-root,#donchian-root,.zec-live) .ml-switch.on span{background:#00b3ae}
+:is(#macd-root,#donchian-root,.zec-live) .ml-switch.on span::after{left:27px}
+:is(#macd-root,#donchian-root,.zec-live) .ml-switch input:focus-visible+span{outline:2px solid #62beff;outline-offset:2px}
+:is(#macd-root,#donchian-root,.zec-live) .ml-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:10px 0}
+:is(#macd-root,#donchian-root,.zec-live) .ml-form label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:#96aab9}
+:is(#macd-root,#donchian-root,.zec-live) .ml-form input,:is(#macd-root,#donchian-root,.zec-live) .ml-form select{background:#0a1926;border:1px solid var(--nw-line);color:inherit;border-radius:6px;padding:6px 8px;font:inherit}
+:is(#macd-root,#donchian-root,.zec-live) .ml-dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin:10px 0}
+:is(#macd-root,#donchian-root,.zec-live) .ml-dl dt{font-size:11px;color:#96aab9}
+:is(#macd-root,#donchian-root,.zec-live) .ml-dl dd{margin:0;font-family:var(--mono,monospace)}
+:is(#macd-root,#donchian-root,.zec-live) .ml-h4{margin:14px 0 6px;font-size:13px}
+:is(#macd-root,#donchian-root,.zec-live) .ml-msg{margin:6px 0;font-size:12.5px}
+:is(#macd-root,#donchian-root,.zec-live) .ml-add{margin-top:10px}
+:is(#macd-root,#donchian-root,.zec-live) .ml-add summary{cursor:pointer;color:#62beff;font-size:12.5px}
+:is(#macd-root,#donchian-root,.zec-live) .ml-log{margin:6px 0;padding-left:16px;font-size:11.5px;max-height:240px;overflow:auto}
+.ml-modal-host .ml-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1000}
+.ml-modal-host .ml-modal[hidden]{display:none}
+.ml-modal-host .ml-dialog{background:#0c1d2b;border:1px solid rgba(255,80,136,.5);border-radius:12px;padding:18px 20px;max-width:440px;width:calc(100% - 32px)}
+.ml-modal-host .ml-dialog h3{margin:0 0 8px}
+.ml-modal-host .ml-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+.ml-modal-host .ml-danger{background:#ff5088;color:#160610;border-color:#ff5088;font-weight:600}
+.ml-modal-host .chip{cursor:pointer}
+:is(#macd-root,#donchian-root,.zec-live) .ml-shared{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:8px 0;padding:8px 10px;border:1px dashed rgba(98,190,255,.45);border-radius:8px;font-size:12.5px}
+:is(#macd-root,#donchian-root,.zec-live) .ml-avail{color:#00d3cf;font-size:11.5px}
+:is(#macd-root,#donchian-root,.zec-live) .ml-bal{font-family:var(--mono,monospace);font-size:12px;white-space:nowrap}
+
+:is(#macd-root,#donchian-root,.zec-live) .ml-switch.pending span{background:#8a7a2a}
+:is(#macd-root,#donchian-root,.zec-live) .ml-switch.pending b{color:#f5d547}
+:is(#macd-root,#donchian-root,.zec-live) .ml-pending{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0;padding:8px 10px;border-radius:8px;background:rgba(245,213,71,.08);border:1px solid rgba(245,213,71,.35);font-size:12.5px}
+:is(#macd-root,#donchian-root,.zec-live) .ml-spin{width:14px;height:14px;border-radius:50%;border:2px solid rgba(245,213,71,.35);border-top-color:#f5d547;animation:ml-spin .8s linear infinite;flex:none}
+@keyframes ml-spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){:is(#macd-root,#donchian-root,.zec-live) .ml-spin{animation:none;border-top-color:rgba(245,213,71,.35)}}
+
+/* T3-CCI / CHI desks */
+:is(#t3cci-root,#chi-root) .tv-rules{margin:4px 0 8px;padding-left:18px;font-size:12.5px;line-height:1.55}
+:is(#t3cci-root,#chi-root) .tv-params{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:#96aab9;margin-bottom:6px}
+:is(#t3cci-root,#chi-root) .tv-params b{color:#cfe7ff;font-weight:500}
+:is(#t3cci-root,#chi-root) .tv-note{border-left:2px solid rgba(245,213,71,.6);padding-left:8px}
+:is(#t3cci-root,#chi-root) .tv-sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
+:is(#t3cci-root,#chi-root) .tv-modes{display:flex;gap:6px;flex-wrap:wrap}
+:is(#t3cci-root,#chi-root) .tv-modes button{background:transparent;color:inherit;border:1px solid var(--nw-line);border-radius:6px;padding:4px 10px;cursor:pointer;font:inherit;font-size:12px}
+:is(#t3cci-root,#chi-root) .tv-modes button[aria-pressed=true]{background:#14344d;border-color:#62beff}
+:is(#t3cci-root,#chi-root) .tv-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:10px 0}
+:is(#t3cci-root,#chi-root) .tv-tiles div{background:rgba(255,255,255,.03);border:1px solid var(--nw-line);border-radius:8px;padding:6px 8px}
+:is(#t3cci-root,#chi-root) .tv-tiles small{display:block;color:#96aab9;font-size:11px}
+:is(#t3cci-root,#chi-root) .tv-tiles b{font-family:var(--mono,monospace);font-size:14px}
+:is(#t3cci-root,#chi-root) .tv-caveat{margin:8px 0;padding:8px 10px;border-radius:8px;background:rgba(255,80,136,.07);border:1px solid rgba(255,80,136,.3);font-size:12.5px}
+:is(#t3cci-root,#chi-root) .tv-dl{font-size:12.5px;margin-top:8px}
+:is(#t3cci-root,#chi-root) .tv-dl a{color:#62beff}
+:is(#t3cci-root,#chi-root) .tv-list{margin:4px 0;padding-left:18px;font-size:12px}
+:is(#t3cci-root,#chi-root) .tv-books{max-height:420px}
+:is(#t3cci-root,#chi-root) tr[data-tv-hbook]{cursor:pointer}
+:is(#t3cci-root,#chi-root) .tv-hist{border-color:rgba(150,170,185,.35)}
+
+/* the ZEC bots' live switches on the home page (roster.js) and the start button / pre-checks of every live switch */
+.zec-live{--nw-panel:#06121c;--nw-line:rgba(255,255,255,.1);padding:16px 18px;margin:12px 0;min-width:0}
+:is(#macd-root,#donchian-root,.zec-live) .ml-go-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:4px 0 8px}
+:is(#macd-root,#donchian-root,.zec-live) .ml-go{background:#00b3ae;color:#04161a;border:1px solid #00b3ae;border-radius:8px;padding:8px 18px;font:inherit;font-weight:600;cursor:pointer}
+:is(#macd-root,#donchian-root,.zec-live) .ml-go:disabled{background:#33404c;border-color:#33404c;color:#96aab9;cursor:not-allowed}
+:is(#macd-root,#donchian-root,.zec-live) .ml-block{margin:8px 0;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,80,136,.5);background:rgba(255,80,136,.08);font-size:12.5px}
+:is(#macd-root,#donchian-root,.zec-live) .ml-block ol{margin:6px 0 0;padding-left:18px}
+:is(#macd-root,#donchian-root,.zec-live) .ml-msg.neg{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,80,136,.5);background:rgba(255,80,136,.08)}
+:is(#macd-root,#donchian-root,.zec-live) .ml-msg.pos{padding:8px 10px;border-radius:8px;border:1px solid rgba(0,211,207,.45);background:rgba(0,211,207,.08)}

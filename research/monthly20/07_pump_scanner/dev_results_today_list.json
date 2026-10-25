@@ -1,0 +1,509 @@
+{
+ "symbols": 518,
+ "grid": [
+  {
+   "name": "LONG_MOM r4>=10% newhigh30d trail5% hold72h",
+   "dev": {
+    "mean_month": -2.17,
+    "median_month": -0.82,
+    "geo_month": -2.63,
+    "worst_month": -29.46,
+    "max_dd_pct": 72.8,
+    "net_pct": -71.45,
+    "trades": 2545,
+    "win_rate": 34.7,
+    "biggest_trade_share": null,
+    "exits": {
+     "stop": 2545
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": -2.13,
+   "dev_2023_24_geo": -3.06
+  },
+  {
+   "name": "LONG_MOM r4>=10% newhigh30d trail5% hold168h",
+   "dev": {
+    "mean_month": -2.17,
+    "median_month": -0.82,
+    "geo_month": -2.63,
+    "worst_month": -29.46,
+    "max_dd_pct": 72.8,
+    "net_pct": -71.45,
+    "trades": 2545,
+    "win_rate": 34.7,
+    "biggest_trade_share": null,
+    "exits": {
+     "stop": 2545
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": -2.13,
+   "dev_2023_24_geo": -3.06
+  },
+  {
+   "name": "LONG_MOM r4>=10% newhigh30d trail10% hold72h",
+   "dev": {
+    "mean_month": -0.34,
+    "median_month": -2.61,
+    "geo_month": -1.55,
+    "worst_month": -26.16,
+    "max_dd_pct": 69.07,
+    "net_pct": -52.04,
+    "trades": 1846,
+    "win_rate": 35.8,
+    "biggest_trade_share": null,
+    "exits": {
+     "stop": 1775,
+     "time": 71
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": -0.47,
+   "dev_2023_24_geo": -2.64
+  },
+  {
+   "name": "LONG_MOM r4>=10% newhigh30d trail10% hold168h",
+   "dev": {
+    "mean_month": -0.34,
+    "median_month": -2.72,
+    "geo_month": -1.69,
+    "worst_month": -27.29,
+    "max_dd_pct": 69.4,
+    "net_pct": -55.04,
+    "trades": 1809,
+    "win_rate": 35.4,
+    "biggest_trade_share": null,
+    "exits": {
+     "stop": 1802,
+     "time": 7
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": -1.07,
+   "dev_2023_24_geo": -2.28
+  },
+  {
+   "name": "LONG_MOM r4>=10% newhigh30d trail15% hold72h",
+   "dev": {
+    "mean_month": 3.91,
+    "median_month": -0.89,
+    "geo_month": 1.37,
+    "worst_month": -29.99,
+    "max_dd_pct": 74.47,
+    "net_pct": 89.87,
+    "trades": 1307,
+    "win_rate": 37.9,
+    "biggest_trade_share": 101.1,
+    "exits": {
+     "stop": 981,
+     "time": 326
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": 6.19,
+   "dev_2023_24_geo": -3.67
+  },
+  {
+   "name": "LONG_MOM r4>=10% newhigh30d trail15% hold168h",
+   "dev": {
+    "mean_month": 2.23,
+    "median_month": -2.91,
+    "geo_month": -0.54,
+    "worst_month": -33.88,
+    "max_dd_pct": 80.57,
+    "net_pct": -22.55,
+    "trades": 1142,
+    "win_rate": 35.4,
+    "biggest_trade_share": null,
+    "exits": {
+     "stop": 1072,
+     "time": 70
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": 4.01,
+   "dev_2023_24_geo": -5.24
+  },
+  {
+   "name": "LONG_MOM r4>=15% newhigh30d trail5% hold72h",
+   "dev": {
+    "mean_month": -0.72,
+    "median_month": -0.16,
+    "geo_month": -0.88,
+    "worst_month": -12.07,
+    "max_dd_pct": 40.22,
+    "net_pct": -34.03,
+    "trades": 1181,
+    "win_rate": 34.9,
+    "biggest_trade_share": null,
+    "exits": {
+     "stop": 1181
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": -0.78,
+   "dev_2023_24_geo": -0.96
+  },
+  {
+   "name": "LONG_MOM r4>=15% newhigh30d trail5% hold168h",
+   "dev": {
+    "mean_month": -0.72,
+    "median_month": -0.16,
+    "geo_month": -0.88,
+    "worst_month": -12.07,
+    "max_dd_pct": 40.22,
+    "net_pct": -34.03,
+    "trades": 1181,
+    "win_rate": 34.9,
+    "biggest_trade_share": null,
+    "exits": {
+     "stop": 1181
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": -0.78,
+   "dev_2023_24_geo": -0.96
+  },
+  {
+   "name": "LONG_MOM r4>=15% newhigh30d trail10% hold72h",
+   "dev": {
+    "mean_month": 0.7,
+    "median_month": -0.32,
+    "geo_month": 0.15,
+    "worst_month": -14.16,
+    "max_dd_pct": 37.7,
+    "net_pct": 7.13,
+    "trades": 1033,
+    "win_rate": 36.0,
+    "biggest_trade_share": 306.5,
+    "exits": {
+     "stop": 1023,
+     "time": 10
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": 1.4,
+   "dev_2023_24_geo": -1.21
+  },
+  {
+   "name": "LONG_MOM r4>=15% newhigh30d trail10% hold168h",
+   "dev": {
+    "mean_month": 0.79,
+    "median_month": -1.21,
+    "geo_month": 0.21,
+    "worst_month": -14.44,
+    "max_dd_pct": 39.89,
+    "net_pct": 10.35,
+    "trades": 1029,
+    "win_rate": 36.2,
+    "biggest_trade_share": 202.2,
+    "exits": {
+     "stop": 1028,
+     "time": 1
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": 1.37,
+   "dev_2023_24_geo": -1.05
+  },
+  {
+   "name": "LONG_MOM r4>=15% newhigh30d trail15% hold72h",
+   "dev": {
+    "mean_month": 3.6,
+    "median_month": 0.14,
+    "geo_month": 2.38,
+    "worst_month": -20.7,
+    "max_dd_pct": 45.62,
+    "net_pct": 201.38,
+    "trades": 843,
+    "win_rate": 35.9,
+    "biggest_trade_share": 26.5,
+    "exits": {
+     "stop": 733,
+     "time": 110
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": 5.61,
+   "dev_2023_24_geo": -1.13
+  },
+  {
+   "name": "LONG_MOM r4>=15% newhigh30d trail15% hold168h",
+   "dev": {
+    "mean_month": 3.23,
+    "median_month": 0.0,
+    "geo_month": 1.81,
+    "worst_month": -23.72,
+    "max_dd_pct": 53.94,
+    "net_pct": 132.43,
+    "trades": 815,
+    "win_rate": 35.0,
+    "biggest_trade_share": 40.5,
+    "exits": {
+     "stop": 793,
+     "time": 22
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": 5.9,
+   "dev_2023_24_geo": -2.53
+  },
+  {
+   "name": "SHORT_EXH r24>=50% c<hi24*0.9 stop10% tp10% hold72h",
+   "dev": {
+    "mean_month": -0.99,
+    "median_month": 0.0,
+    "geo_month": -1.11,
+    "worst_month": -18.77,
+    "max_dd_pct": 46.71,
+    "net_pct": -40.72,
+    "trades": 356,
+    "win_rate": 48.0,
+    "biggest_trade_share": null,
+    "exits": {
+     "tp": 170,
+     "stop": 185,
+     "time": 1
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": -1.36,
+   "dev_2023_24_geo": -0.79
+  },
+  {
+   "name": "SHORT_EXH r24>=50% c<hi24*0.9 stop10% tp20% hold72h",
+   "dev": {
+    "mean_month": -0.6,
+    "median_month": 0.0,
+    "geo_month": -0.82,
+    "worst_month": -20.19,
+    "max_dd_pct": 43.52,
+    "net_pct": -32.19,
+    "trades": 265,
+    "win_rate": 34.0,
+    "biggest_trade_share": null,
+    "exits": {
+     "tp": 76,
+     "stop": 175,
+     "time": 14
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": -0.5,
+   "dev_2023_24_geo": -1.14
+  },
+  {
+   "name": "SHORT_EXH r24>=50% c<hi24*0.9 stop20% tp10% hold72h",
+   "dev": {
+    "mean_month": -0.62,
+    "median_month": 0.0,
+    "geo_month": -0.83,
+    "worst_month": -20.88,
+    "max_dd_pct": 49.91,
+    "net_pct": -32.48,
+    "trades": 266,
+    "win_rate": 66.2,
+    "biggest_trade_share": null,
+    "exits": {
+     "tp": 174,
+     "stop": 90,
+     "time": 2
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": -0.96,
+   "dev_2023_24_geo": -0.66
+  },
+  {
+   "name": "SHORT_EXH r24>=50% c<hi24*0.9 stop20% tp20% hold72h",
+   "dev": {
+    "mean_month": -0.21,
+    "median_month": 0.0,
+    "geo_month": -0.51,
+    "worst_month": -24.26,
+    "max_dd_pct": 51.77,
+    "net_pct": -21.44,
+    "trades": 204,
+    "win_rate": 53.4,
+    "biggest_trade_share": null,
+    "exits": {
+     "tp": 85,
+     "stop": 93,
+     "time": 26
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": -0.36,
+   "dev_2023_24_geo": -0.65
+  },
+  {
+   "name": "SHORT_FADE r24>=30% stop15% hold24h",
+   "dev": {
+    "mean_month": -7.7,
+    "median_month": -2.62,
+    "geo_month": -9.72,
+    "worst_month": -54.3,
+    "max_dd_pct": 99.25,
+    "net_pct": -99.18,
+    "trades": 1668,
+    "win_rate": 49.7,
+    "biggest_trade_share": null,
+    "exits": {
+     "stop": 660,
+     "time": 1008
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": -10.25,
+   "dev_2023_24_geo": -8.72
+  },
+  {
+   "name": "SHORT_FADE r24>=30% stop15% hold72h",
+   "dev": {
+    "mean_month": -11.49,
+    "median_month": -6.61,
+    "geo_month": -14.39,
+    "worst_month": -61.25,
+    "max_dd_pct": 99.95,
+    "net_pct": -99.93,
+    "trades": 1388,
+    "win_rate": 40.9,
+    "biggest_trade_share": null,
+    "exits": {
+     "stop": 743,
+     "time": 645
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": -17.48,
+   "dev_2023_24_geo": -10.3
+  },
+  {
+   "name": "SHORT_FADE r24>=30% stop30% hold24h",
+   "dev": {
+    "mean_month": -8.19,
+    "median_month": -3.3,
+    "geo_month": -10.3,
+    "worst_month": -55.25,
+    "max_dd_pct": 99.46,
+    "net_pct": -99.39,
+    "trades": 1294,
+    "win_rate": 56.3,
+    "biggest_trade_share": null,
+    "exits": {
+     "time": 1080,
+     "stop": 214
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": -11.86,
+   "dev_2023_24_geo": -8.13
+  },
+  {
+   "name": "SHORT_FADE r24>=30% stop30% hold72h",
+   "dev": {
+    "mean_month": -10.71,
+    "median_month": -6.49,
+    "geo_month": -13.61,
+    "worst_month": -62.8,
+    "max_dd_pct": 99.92,
+    "net_pct": -99.9,
+    "trades": 1021,
+    "win_rate": 52.5,
+    "biggest_trade_share": null,
+    "exits": {
+     "stop": 275,
+     "time": 746
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": -17.32,
+   "dev_2023_24_geo": -8.82
+  },
+  {
+   "name": "LONG_BOUNCE r24<=-20% stop10% hold24h",
+   "dev": {
+    "mean_month": 4.66,
+    "median_month": 0.45,
+    "geo_month": 4.01,
+    "worst_month": -17.06,
+    "max_dd_pct": 41.54,
+    "net_pct": 533.96,
+    "trades": 718,
+    "win_rate": 46.7,
+    "biggest_trade_share": 15.1,
+    "exits": {
+     "stop": 300,
+     "time": 418
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": 7.06,
+   "dev_2023_24_geo": 0.62
+  },
+  {
+   "name": "LONG_BOUNCE r24<=-20% stop10% hold48h",
+   "dev": {
+    "mean_month": 2.65,
+    "median_month": 0.18,
+    "geo_month": 1.43,
+    "worst_month": -32.17,
+    "max_dd_pct": 70.58,
+    "net_pct": 95.22,
+    "trades": 702,
+    "win_rate": 38.5,
+    "biggest_trade_share": 39.0,
+    "exits": {
+     "stop": 364,
+     "time": 338
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": 3.89,
+   "dev_2023_24_geo": -1.23
+  },
+  {
+   "name": "LONG_BOUNCE r24<=-20% stop20% hold24h",
+   "dev": {
+    "mean_month": 6.92,
+    "median_month": 2.85,
+    "geo_month": 6.1,
+    "worst_month": -14.07,
+    "max_dd_pct": 44.53,
+    "net_pct": 1516.0,
+    "trades": 541,
+    "win_rate": 58.8,
+    "biggest_trade_share": 8.8,
+    "exits": {
+     "time": 462,
+     "stop": 79
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": 10.33,
+   "dev_2023_24_geo": 1.42
+  },
+  {
+   "name": "LONG_BOUNCE r24<=-20% stop20% hold48h",
+   "dev": {
+    "mean_month": 5.99,
+    "median_month": 1.96,
+    "geo_month": 4.8,
+    "worst_month": -19.66,
+    "max_dd_pct": 59.83,
+    "net_pct": 804.82,
+    "trades": 509,
+    "win_rate": 51.7,
+    "biggest_trade_share": 17.4,
+    "exits": {
+     "time": 402,
+     "stop": 107
+    },
+    "capacity_capped_entries": 0
+   },
+   "dev_2021_22_geo": 9.44,
+   "dev_2023_24_geo": -0.23
+  }
+ ]
+}

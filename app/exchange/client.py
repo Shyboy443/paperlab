@@ -257,6 +257,34 @@ class ExchangeClient:
                 res.status = "UNCONFIRMED" if res.status in ("NEW", "PARTIALLY_FILLED", "UNKNOWN") else res.status
         return res
 
+    async def book_ticker(self, symbol: str) -> tuple[float, float]:
+        """(best bid, best ask) of a futures symbol (public)."""
+        r = await with_retry(lambda: self.ex.fapiPublicGetTickerBookTicker({"symbol": symbol}),
+                             label=f"bookTicker {symbol}", exchange=self.ex)
+        return _f(r.get("bidPrice")), _f(r.get("askPrice"))
+
+    async def post_only_order(self, intent: OrderIntent, price: float) -> OrderResult:
+        """A futures LIMIT order with timeInForce GTX (post-only): it rests in the book at `price` (rounded to the tick,
+        never across the spread) or Binance rejects it (status EXPIRED) -- it can never pay the taker fee."""
+        if self.kind != "futures":
+            raise RuntimeError("post-only orders are futures-only here")
+        rules = self.rules.get(intent.symbol)
+        if rules:
+            price = rules.round_price(price, "down" if intent.side == "BUY" else "up")
+        params: dict[str, Any] = {"symbol": intent.symbol, "side": intent.side, "type": "LIMIT", "timeInForce": "GTX",
+                                  "quantity": self._qty_str(intent.symbol, intent.qty), "price": self._price_str(intent.symbol, price),
+                                  "newClientOrderId": intent.client_id, "newOrderRespType": "RESULT"}
+        if intent.reduce_only:
+            params["reduceOnly"] = "true"
+        try:
+            r = await with_retry(lambda: self.ex.fapiPrivatePostOrder(params), label=f"limit {intent.client_id}", attempts=1,
+                                 exchange=self.ex)
+        except Exception as exc:
+            if binance_code(exc) == -5022:      # "could not be executed as maker": it would have crossed; same as EXPIRED
+                return OrderResult(intent.client_id, "", "EXPIRED", None, 0.0, {})
+            raise
+        return self._result(intent.client_id, r)
+
     async def _sleep(self, s: float) -> None:
         import asyncio
         await asyncio.sleep(s)

@@ -1,6 +1,6 @@
 {
  "protocol": "V7_ACTIVE_PAPER_V1",
- "frozen_at": "2026-09-24T14:45:04Z",
+ "frozen_at": "2026-10-12T08:35:36Z",
  "code": {
   "strategy:v3_base": "33d10d257921",
   "strategy:base": "c9f60e2aec70",
@@ -11,7 +11,7 @@
   "strategy:V6.4": "423430109b6c",
   "strategy:V6.5": "6e47b4ad3a83",
   "strategy:V6.6": "24acb54a7396",
-  "source:app.competition.v6_config": "98cb9363f674",
+  "source:app.competition.v6_config": "a86b6c88748f",
   "source:app.ai.jev.v6": "9243992bac5b",
   "source:app.live.v6_gates": "c69718f36eb8",
   "source:app.live.bybit_market": "8ebd6dff95e7",
@@ -127,16 +127,10 @@
    "min_stop_bps": 8.0
   },
   "hourly_families": [
-   "V6.1",
    "V6.2",
-   "V6.3",
-   "V6.4",
-   "V6.5",
    "V6.6"
   ],
-  "swing_families": [
-   "V6.1"
-  ],
+  "swing_families": [],
   "traded_coins": 4,
   "breadth_set": 16,
   "warmup_days": 45,
@@ -297,14 +291,6 @@
   "state_builder": "a8f9983b3bf9"
  },
  "field": [
-  "V6.1-ARB-1H",
-  "V6.1-ARB-1H+JEV",
-  "V6.1-ENA-1H",
-  "V6.1-ENA-1H+JEV",
-  "V6.1-XRP-1H",
-  "V6.1-XRP-1H+JEV",
-  "V6.1-DOGE-1H",
-  "V6.1-DOGE-1H+JEV",
   "V6.2-ARB-1H",
   "V6.2-ARB-1H+JEV",
   "V6.2-ENA-1H",
@@ -313,30 +299,6 @@
   "V6.2-XRP-1H+JEV",
   "V6.2-DOGE-1H",
   "V6.2-DOGE-1H+JEV",
-  "V6.3-ARB-1H",
-  "V6.3-ARB-1H+JEV",
-  "V6.3-ENA-1H",
-  "V6.3-ENA-1H+JEV",
-  "V6.3-XRP-1H",
-  "V6.3-XRP-1H+JEV",
-  "V6.3-DOGE-1H",
-  "V6.3-DOGE-1H+JEV",
-  "V6.4-ARB-1H",
-  "V6.4-ARB-1H+JEV",
-  "V6.4-ENA-1H",
-  "V6.4-ENA-1H+JEV",
-  "V6.4-XRP-1H",
-  "V6.4-XRP-1H+JEV",
-  "V6.4-DOGE-1H",
-  "V6.4-DOGE-1H+JEV",
-  "V6.5-ARB-1H",
-  "V6.5-ARB-1H+JEV",
-  "V6.5-ENA-1H",
-  "V6.5-ENA-1H+JEV",
-  "V6.5-XRP-1H",
-  "V6.5-XRP-1H+JEV",
-  "V6.5-DOGE-1H",
-  "V6.5-DOGE-1H+JEV",
   "V6.6-ARB-1H",
   "V6.6-ARB-1H+JEV",
   "V6.6-ENA-1H",
@@ -344,15 +306,7 @@
   "V6.6-XRP-1H",
   "V6.6-XRP-1H+JEV",
   "V6.6-DOGE-1H",
-  "V6.6-DOGE-1H+JEV",
-  "V6.1-ARB-4H",
-  "V6.1-ARB-4H+JEV",
-  "V6.1-ENA-4H",
-  "V6.1-ENA-4H+JEV",
-  "V6.1-XRP-4H",
-  "V6.1-XRP-4H+JEV",
-  "V6.1-DOGE-4H",
-  "V6.1-DOGE-4H+JEV"
+  "V6.6-DOGE-1H+JEV"
  ],
  "note": "V6 is evaluated on LIVE FORWARD data only; nothing here was fitted to V1-V5 results",
  "execution_revision": {
@@ -362,7 +316,9 @@
   "archive": "snapshots/2026-10-04-execution-audit/docs/V6_FREEZE.json",
   "rules": "existing instrument rules retained; no universe reselection"
  },
- "baseline_fingerprint": "93f9c48b67163c69",
+ "refrozen_from": "93f9c48b67163c69",
+ "refreeze_note": "re-frozen 2026-10-12: V6 field trimmed to V6.2/V6.6 (operator removed the families retired from view)",
+ "baseline_fingerprint": "49a19f92106eee90",
  "challenger_code": {
   "app.strategies.v7.active": "afc6adf01866",
   "app.competition.v7_config": "da4763ead310",
@@ -397,5 +353,5 @@
    "V7.2"
   ]
  },
- "fingerprint": "e3d2f218aeea90b3"
+ "fingerprint": "c727084768b0688e"
 }

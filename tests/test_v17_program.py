@@ -61,7 +61,7 @@ def test_live_classes_read_the_store():
         assert cls.regime(300 * DAY) == "long"                # a rising BTC is above its 50-day mean
 
 
-def test_field_and_service_switch(tmp_path):
+def test_field_and_service_switch(tmp_path, programs_running):
     from app.core.programs import program_retired
     from app.live.v6_service import V6ForwardService
     plan = v17.field_plan()

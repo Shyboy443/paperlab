@@ -1,0 +1,327 @@
+{
+ "data": {
+  "hourly_bars": 62352,
+  "first": 1568073600000,
+  "last": 1792537200000,
+  "funding_rows": 7793,
+  "funding_without_mark": 4536
+ },
+ "books": {
+  "Momentum 60d": {
+   "base": {
+    "net": 120.12,
+    "dd": 28.75,
+    "closed": 94,
+    "longs": 47,
+    "shorts": 47,
+    "six_months": 6.88,
+    "october_colombo": -0.74,
+    "best_trade_usdt": 4426.0,
+    "top3_share_of_profit": 90.3,
+    "yearly": {
+     "2021": 31.79,
+     "2022": -10.29,
+     "2023": 31.71,
+     "2024": 15.24,
+     "2025": 6.83,
+     "2026": 14.77
+    },
+    "open_at_cutoff": 1
+   },
+   "double_costs": {
+    "net": 108.54,
+    "dd": 29.81,
+    "closed": 94,
+    "longs": 47,
+    "shorts": 47,
+    "six_months": 6.58,
+    "october_colombo": -0.74,
+    "best_trade_usdt": 4243.0,
+    "top3_share_of_profit": 96.9,
+    "yearly": {
+     "2021": 31.14,
+     "2022": -11.16,
+     "2023": 30.89,
+     "2024": 13.14,
+     "2025": 5.78,
+     "2026": 14.24
+    },
+    "open_at_cutoff": 1
+   }
+  },
+  "EMA5/100": {
+   "base": {
+    "net": 116.43,
+    "dd": 24.01,
+    "closed": 34,
+    "longs": 17,
+    "shorts": 17,
+    "six_months": 8.42,
+    "october_colombo": -0.7,
+    "best_trade_usdt": 7124.0,
+    "top3_share_of_profit": 110.0,
+    "yearly": {
+     "2021": 7.03,
+     "2022": 27.33,
+     "2023": 4.98,
+     "2024": 32.39,
+     "2025": 0.94,
+     "2026": 13.14
+    },
+    "open_at_cutoff": 1
+   },
+   "double_costs": {
+    "net": 112.1,
+    "dd": 24.32,
+    "closed": 34,
+    "longs": 17,
+    "shorts": 17,
+    "six_months": 8.22,
+    "october_colombo": -0.7,
+    "best_trade_usdt": 7050.0,
+    "top3_share_of_profit": 112.9,
+    "yearly": {
+     "2021": 6.81,
+     "2022": 27.24,
+     "2023": 4.38,
+     "2024": 31.76,
+     "2025": 0.45,
+     "2026": 12.93
+    },
+    "open_at_cutoff": 1
+   }
+  },
+  "EMA10/100": {
+   "base": {
+    "net": 67.53,
+    "dd": 27.3,
+    "closed": 24,
+    "longs": 12,
+    "shorts": 12,
+    "six_months": -3.19,
+    "october_colombo": -0.62,
+    "best_trade_usdt": 6349.0,
+    "top3_share_of_profit": 149.1,
+    "yearly": {
+     "2021": 4.18,
+     "2022": 17.87,
+     "2023": 8.27,
+     "2024": 24.38,
+     "2025": 0.06,
+     "2026": 1.2
+    },
+    "open_at_cutoff": 1
+   },
+   "double_costs": {
+    "net": 65.15,
+    "dd": 27.5,
+    "closed": 24,
+    "longs": 12,
+    "shorts": 12,
+    "six_months": -3.38,
+    "october_colombo": -0.62,
+    "best_trade_usdt": 6289.0,
+    "top3_share_of_profit": 152.7,
+    "yearly": {
+     "2021": 3.97,
+     "2022": 17.79,
+     "2023": 7.75,
+     "2024": 24.04,
+     "2025": -0.13,
+     "2026": 1.0
+    },
+    "open_at_cutoff": 1
+   }
+  },
+  "EMA20/50 (old baseline)": {
+   "base": {
+    "net": 58.4,
+    "dd": 36.19,
+    "closed": 34,
+    "longs": 17,
+    "shorts": 17,
+    "six_months": 5.37,
+    "october_colombo": -0.7,
+    "best_trade_usdt": 5934.0,
+    "top3_share_of_profit": 190.5,
+    "yearly": {
+     "2021": 16.98,
+     "2022": -2.41,
+     "2023": 18.21,
+     "2024": 11.45,
+     "2025": -1.77,
+     "2026": 7.16
+    },
+    "open_at_cutoff": 1
+   },
+   "double_costs": {
+    "net": 55.22,
+    "dd": 36.43,
+    "closed": 34,
+    "longs": 17,
+    "shorts": 17,
+    "six_months": 5.23,
+    "october_colombo": -0.7,
+    "best_trade_usdt": 5873.0,
+    "top3_share_of_profit": 199.4,
+    "yearly": {
+     "2021": 16.74,
+     "2022": -2.68,
+     "2023": 17.81,
+     "2024": 11.03,
+     "2025": -2.24,
+     "2026": 6.82
+    },
+    "open_at_cutoff": 1
+   }
+  },
+  "Passive 50% long": {
+   "base": {
+    "net": 33.84,
+    "dd": 66.86,
+    "closed": 0,
+    "longs": 0,
+    "shorts": 0,
+    "six_months": 7.08,
+    "october_colombo": -1.38,
+    "best_trade_usdt": 0,
+    "top3_share_of_profit": 0.0,
+    "yearly": {
+     "2021": 3.2,
+     "2022": -51.76,
+     "2023": 80.79,
+     "2024": 82.55,
+     "2025": -11.86,
+     "2026": -7.64
+    }
+   }
+  }
+ },
+ "neighbours_base_costs": {
+  "momentum 20d": {
+   "net": 47.47,
+   "dd": 25.39,
+   "closed": 239
+  },
+  "momentum 30d": {
+   "net": 75.82,
+   "dd": 29.23,
+   "closed": 188
+  },
+  "momentum 40d": {
+   "net": 165.0,
+   "dd": 33.32,
+   "closed": 128
+  },
+  "momentum 45d": {
+   "net": 91.63,
+   "dd": 27.86,
+   "closed": 130
+  },
+  "momentum 50d": {
+   "net": 88.29,
+   "dd": 24.68,
+   "closed": 120
+  },
+  "momentum 55d": {
+   "net": 90.13,
+   "dd": 41.0,
+   "closed": 120
+  },
+  "momentum 60d": {
+   "net": 120.12,
+   "dd": 28.75,
+   "closed": 94
+  },
+  "momentum 65d": {
+   "net": 64.43,
+   "dd": 30.42,
+   "closed": 74
+  },
+  "momentum 70d": {
+   "net": 79.12,
+   "dd": 36.68,
+   "closed": 86
+  },
+  "momentum 75d": {
+   "net": 208.52,
+   "dd": 19.02,
+   "closed": 60
+  },
+  "momentum 80d": {
+   "net": 59.65,
+   "dd": 36.46,
+   "closed": 64
+  },
+  "momentum 90d": {
+   "net": 47.46,
+   "dd": 32.26,
+   "closed": 74
+  },
+  "momentum 120d": {
+   "net": 51.0,
+   "dd": 39.04,
+   "closed": 60
+  },
+  "momentum 180d": {
+   "net": 51.36,
+   "dd": 44.92,
+   "closed": 44
+  },
+  "EMA3/100": {
+   "net": 99.91,
+   "dd": 30.4,
+   "closed": 50
+  },
+  "EMA4/100": {
+   "net": 79.22,
+   "dd": 25.04,
+   "closed": 42
+  },
+  "EMA5/80": {
+   "net": 50.31,
+   "dd": 33.4,
+   "closed": 50
+  },
+  "EMA5/90": {
+   "net": 98.26,
+   "dd": 30.8,
+   "closed": 42
+  },
+  "EMA5/100": {
+   "net": 116.43,
+   "dd": 24.01,
+   "closed": 34
+  },
+  "EMA5/110": {
+   "net": 93.33,
+   "dd": 28.42,
+   "closed": 36
+  },
+  "EMA5/120": {
+   "net": 82.19,
+   "dd": 31.88,
+   "closed": 36
+  },
+  "EMA6/100": {
+   "net": 96.82,
+   "dd": 28.65,
+   "closed": 34
+  },
+  "EMA7/100": {
+   "net": 73.67,
+   "dd": 33.61,
+   "closed": 34
+  },
+  "EMA5/150": {
+   "net": 32.77,
+   "dd": 35.53,
+   "closed": 32
+  },
+  "EMA5/200": {
+   "net": 32.54,
+   "dd": 37.21,
+   "closed": 30
+  }
+ }
+}

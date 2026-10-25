@@ -1,4 +1,4 @@
-/* PaperLab - public read-only page: the lean arena (Dashboard / Bots / Markets / System).
+/* PaperLab - public read-only page: the lean arena (Dashboard / Bots / Strategy check / Trading Desk / System).
 
    Every request is a plain GET against /api/public/... (no credential, no cookie); the push channel is the PUBLIC
    one (WebSocket /api/public/ws, SSE fallback), which only carries events the server published as public. Nothing
@@ -7,10 +7,8 @@
    URLs are real paths so a link survives a reload:
      /public/competition            Dashboard (?p=v8|v7|v6 picks the program)
      /public/competition/bots       Bots
-     /public/competition/markets    Markets
-     /public/competition/programs   Programs (lab.js)
+     /public/competition/strategy-check  Strategy check (ytcheck.js)
      /public/competition/desk       Trading Desk (desk.js)
-     /public/competition/analyzer   Cost analyzer (lab.js; asks for the dashboard password)
      /public/competition/system     System (research history links to the server-rendered report)
    Older paths from the research-era page land on the Dashboard. */
 'use strict';
@@ -48,14 +46,19 @@ function toast(msg, kind) {
   setTimeout(() => el.remove(), 4000);
 }
 
+// 2026-10-21 the markets, programs, autonomous-research and news-collector screens were removed (operator); old links
+// open the Dashboard.
 const NAV = [
   { id: 'dashboard', path: '', label: 'Dashboard', panel: 'home', view: 'dashboard' },
   { id: 'bots', path: 'bots', label: 'Bots', panel: 'home', view: 'bots' },
-  { id: 'markets', path: 'markets', label: 'Markets', panel: 'home', view: 'markets' },
-  { id: 'programs', path: 'programs', label: 'Programs', panel: 'programs' },
-  { id: 'analyzer', path: 'analyzer', label: 'Cost analyzer', panel: 'analyzer' },
-  { id: 'desk', path: 'desk', label: 'Trading Desk', panel: 'desk' },
-  { id: 'scout', path: 'scout', label: 'Scout', panel: 'scout' },
+  { id: 'ytcheck', path: 'strategy-check', label: 'Strategy check', panel: 'ytcheck' },
+  { id: 'deskrank', path: 'desks', label: 'Trading Desk', panel: 'deskrank', group: 'desk', tab: 'Ranking' },
+  { id: 'desk', path: 'desk', label: 'Trading Desk', panel: 'desk', group: 'desk', tab: 'AI agents' },
+  { id: 'divergence', path: 'divergence', label: 'Divergence Desk', panel: 'divergence', group: 'desk', tab: 'Divergence' },
+  { id: 'donchian', path: 'donchian', label: 'Donchian Desk', panel: 'donchian', group: 'desk', tab: 'Donchian' },
+  { id: 'macd', path: 'macd', label: 'MACD Desk', panel: 'macd', group: 'desk', tab: 'MACD' },
+  { id: 't3cci', path: 't3cci', label: 'T3-CCI Desk', panel: 't3cci', group: 'desk', tab: 'T3-CCI' },
+  { id: 'chi', path: 'chi', label: 'CHI Desk', panel: 'chi', group: 'desk', tab: 'CHI' },
   { id: 'system', path: 'system', label: 'System', panel: 'system' },
 ];
 
@@ -68,26 +71,40 @@ const Nav = {
   panel: 'home',
   init() {
     const bar = $('#nav');
-    for (const n of NAV) bar.append(navButton(n.id, n.label, () => this.go(n.id)));
+    // a group (the Trading Desk) is one sidebar item that opens its first tab
+    for (const n of NAV) if (!n.group || NAV.find((x) => x.group === n.group) === n) bar.append(navButton(n.group || n.id, n.label, () => this.go(n.id)));
   },
   go(id) {
     const n = NAV.find((x) => x.id === id) || NAV[0];
+    if (n.href) { location.assign(n.href); return; }
     const url = '/public/competition' + (n.path ? '/' + n.path : '') + location.search;
     if (location.pathname + location.search !== url) history.pushState(null, '', url);
     this.show(n);
   },
   goArena(view) { this.go(view); },
   show(n) {
+    if (n.href) { location.assign(n.href); return; }
     this.panel = n.panel;
-    $$('#nav [data-nav]').forEach((b) => b.classList.toggle('active', b.dataset.nav === n.id));
+    $$('#nav [data-nav]').forEach((b) => b.classList.toggle('active', b.dataset.nav === (n.group || n.id)));
+    const tabs = $('#desk-tabs');
+    if (tabs) {
+      tabs.replaceChildren(...NAV.filter((x) => n.group && x.group === n.group).map((x) => h('button', {
+        role: 'tab', type: 'button', class: x.id === n.id ? 'active' : '', text: x.tab, onclick: () => this.go(x.id) })));
+      tabs.hidden = !n.group;
+    }
     $$('main [data-panel]').forEach((el) => { el.hidden = el.dataset.panel !== n.panel; });
     if (n.panel === 'home') { Arena.view = n.view; Arena.load(); } else Arena.deactivate();
     if (n.panel === 'system') SystemView.load();
-    if (n.panel === 'programs') ProgramsView.load();
-    if (n.panel === 'analyzer') AnalyzerView.load();
+    if (n.panel === 'ytcheck') YtCheck.load();
     window.scrollTo(0, 0);
-    if (n.panel === 'scout') Scout.load(); else Scout.deactivate();
     if (n.panel === 'desk') Desk.load(); else Desk.deactivate();
+    if (n.panel === 'divergence') DivergenceDesk.load(); else DivergenceDesk.deactivate();
+    if (n.panel === 'nowick') NoWickDesk.load(); else NoWickDesk.deactivate();
+    if (n.panel === 'donchian') DonchianDesk.load(); else DonchianDesk.deactivate();
+    if (n.panel === 'macd') MacdDesk.load(); else MacdDesk.deactivate();
+    if (n.panel === 't3cci') T3CciDesk.load(); else T3CciDesk.deactivate();
+    if (n.panel === 'chi') ChiDesk.load(); else ChiDesk.deactivate();
+    if (n.panel === 'deskrank') DeskRanking.load(); else DeskRanking.deactivate();
   },
 };
 

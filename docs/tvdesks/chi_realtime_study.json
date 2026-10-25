@@ -1,0 +1,1982 @@
+{
+ "window_utc": [
+  "2024-10-11 00:00",
+  "2026-10-11 00:00 (exclusive)"
+ ],
+ "books": 84,
+ "capital_per_book": 10000.0,
+ "costs": {
+  "commission_per_side": 0.001,
+  "slippage_per_side": 0.0002
+ },
+ "one_pass_check": {
+  "decisions_checked": 839,
+  "mismatches": [],
+  "mismatch_count": 0
+ },
+ "portfolio": {
+  "backtest": {
+   "net_return_pct": 17.49904851420787,
+   "ending_capital": 986992.0075193462,
+   "max_drawdown_pct": 29.100771390295076,
+   "ohlc_drawdown_bound_pct": 30.21068858237609,
+   "trades": 1860,
+   "win_rate_pct": 34.46236559139785,
+   "profit_factor": 1.1617928490651785,
+   "fees": 42377.81382162686
+  },
+  "realtime": {
+   "net_return_pct": 0.8296275831452649,
+   "ending_capital": 846968.8716984203,
+   "max_drawdown_pct": 2.843306882854457,
+   "ohlc_drawdown_bound_pct": 3.081406420849242,
+   "trades": 87,
+   "win_rate_pct": 36.7816091954023,
+   "profit_factor": 1.1995906910703722,
+   "fees": 1763.2144506187306
+  }
+ },
+ "totals": {
+  "buy_requests_backtest": 3205,
+  "buy_requests_realtime": 88,
+  "buy_requests_both": 45,
+  "realtime_losing_books": 36,
+  "realtime_winning_books": 20,
+  "realtime_books_without_trades": 28
+ },
+ "per_book": [
+  {
+   "asset": "BTC",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 52,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 163,
+    "realtime": 144
+   },
+   "backtest": {
+    "net_return_pct": 6.259610139852256,
+    "max_drawdown_pct": 35.471308639073285,
+    "trades": 26
+   },
+   "realtime": {
+    "net_return_pct": 3.457965484517489,
+    "max_drawdown_pct": 3.8163607222221008,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "ETH",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 42,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 143,
+    "realtime": 114
+   },
+   "backtest": {
+    "net_return_pct": 54.030530955357904,
+    "max_drawdown_pct": 43.64829521578842,
+    "trades": 24
+   },
+   "realtime": {
+    "net_return_pct": -3.8196348188196727,
+    "max_drawdown_pct": 3.8196348188196727,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "BNB",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 49,
+    "realtime": 1,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 118,
+    "realtime": 99
+   },
+   "backtest": {
+    "net_return_pct": -20.76731864848683,
+    "max_drawdown_pct": 36.43479457331931,
+    "trades": 27
+   },
+   "realtime": {
+    "net_return_pct": 13.780880567853139,
+    "max_drawdown_pct": 7.200779756363329,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "SOL",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 42,
+    "realtime": 1,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 158,
+    "realtime": 130
+   },
+   "backtest": {
+    "net_return_pct": -6.37500679487073,
+    "max_drawdown_pct": 50.95548694350607,
+    "trades": 22
+   },
+   "realtime": {
+    "net_return_pct": -4.718049282672054,
+    "max_drawdown_pct": 7.2216363076923145,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "USDC",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 46,
+    "realtime": 1,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 105,
+    "realtime": 81
+   },
+   "backtest": {
+    "net_return_pct": -5.7583996176451935,
+    "max_drawdown_pct": 5.7677193565981,
+    "trades": 22
+   },
+   "realtime": {
+    "net_return_pct": -0.2995445370264638,
+    "max_drawdown_pct": 0.2995445370264638,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "XRP",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 48,
+    "realtime": 3,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 173,
+    "realtime": 138
+   },
+   "backtest": {
+    "net_return_pct": 212.41789966247856,
+    "max_drawdown_pct": 51.115803578285416,
+    "trades": 25
+   },
+   "realtime": {
+    "net_return_pct": -15.308925562885578,
+    "max_drawdown_pct": 15.35073608580737,
+    "trades": 3
+   }
+  },
+  {
+   "asset": "ADA",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 39,
+    "realtime": 2,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 187,
+    "realtime": 152
+   },
+   "backtest": {
+    "net_return_pct": -15.118695855945695,
+    "max_drawdown_pct": 58.81473374885926,
+    "trades": 22
+   },
+   "realtime": {
+    "net_return_pct": -3.5294577718032127,
+    "max_drawdown_pct": 12.340283761744697,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "AVAX",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 43,
+    "realtime": 2,
+    "both": 2
+   },
+   "sell_requests": {
+    "backtest": 164,
+    "realtime": 131
+   },
+   "backtest": {
+    "net_return_pct": 7.633167347896874,
+    "max_drawdown_pct": 32.16635101348655,
+    "trades": 23
+   },
+   "realtime": {
+    "net_return_pct": 11.114666550860107,
+    "max_drawdown_pct": 16.69214614876109,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "DOGE",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 44,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 173,
+    "realtime": 147
+   },
+   "backtest": {
+    "net_return_pct": 198.3109326808687,
+    "max_drawdown_pct": 29.976509492387926,
+    "trades": 21
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "TRX",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 47,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 152,
+    "realtime": 127
+   },
+   "backtest": {
+    "net_return_pct": 21.79284958377363,
+    "max_drawdown_pct": 13.32440977827314,
+    "trades": 28
+   },
+   "realtime": {
+    "net_return_pct": 3.3976752418875433,
+    "max_drawdown_pct": 2.5385754816391604,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "LINK",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 49,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 154,
+    "realtime": 126
+   },
+   "backtest": {
+    "net_return_pct": 7.9942433629081044,
+    "max_drawdown_pct": 54.336001677147785,
+    "trades": 25
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "DOT",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 37,
+    "realtime": 2,
+    "both": 2
+   },
+   "sell_requests": {
+    "backtest": 169,
+    "realtime": 138
+   },
+   "backtest": {
+    "net_return_pct": -20.152379931536103,
+    "max_drawdown_pct": 48.92629937493904,
+    "trades": 21
+   },
+   "realtime": {
+    "net_return_pct": -3.7163065590157363,
+    "max_drawdown_pct": 15.966096093610583,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "SUI",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 34,
+    "realtime": 1,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 171,
+    "realtime": 148
+   },
+   "backtest": {
+    "net_return_pct": 229.47693029543902,
+    "max_drawdown_pct": 35.15774947265625,
+    "trades": 20
+   },
+   "realtime": {
+    "net_return_pct": -5.039995376739592,
+    "max_drawdown_pct": 12.24825122613995,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "NEAR",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 34,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 155,
+    "realtime": 133
+   },
+   "backtest": {
+    "net_return_pct": 94.80016233719361,
+    "max_drawdown_pct": 35.36564885494368,
+    "trades": 19
+   },
+   "realtime": {
+    "net_return_pct": 2.688671881839122,
+    "max_drawdown_pct": 8.853416863289388,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "APT",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 33,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 171,
+    "realtime": 141
+   },
+   "backtest": {
+    "net_return_pct": -27.830093863916094,
+    "max_drawdown_pct": 49.459103218034386,
+    "trades": 18
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "XLM",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 40,
+    "realtime": 1,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 185,
+    "realtime": 154
+   },
+   "backtest": {
+    "net_return_pct": 84.38372984312915,
+    "max_drawdown_pct": 43.318282639945096,
+    "trades": 24
+   },
+   "realtime": {
+    "net_return_pct": -7.683899407547267,
+    "max_drawdown_pct": 7.683899407547267,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "LTC",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 42,
+    "realtime": 1,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 149,
+    "realtime": 117
+   },
+   "backtest": {
+    "net_return_pct": -49.082708939657984,
+    "max_drawdown_pct": 68.64020285733035,
+    "trades": 24
+   },
+   "realtime": {
+    "net_return_pct": -0.012786008563203666,
+    "max_drawdown_pct": 5.326368598378284,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "HBAR",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 41,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 182,
+    "realtime": 155
+   },
+   "backtest": {
+    "net_return_pct": 158.85558967735813,
+    "max_drawdown_pct": 43.52801892460534,
+    "trades": 21
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "UNI",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 40,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 177,
+    "realtime": 143
+   },
+   "backtest": {
+    "net_return_pct": 157.7804527986985,
+    "max_drawdown_pct": 54.65997169707626,
+    "trades": 24
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "SHIB",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 35,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 187,
+    "realtime": 147
+   },
+   "backtest": {
+    "net_return_pct": 12.262882410972953,
+    "max_drawdown_pct": 36.76808834793221,
+    "trades": 18
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "TAO",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 38,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 149,
+    "realtime": 124
+   },
+   "backtest": {
+    "net_return_pct": -29.092056055164516,
+    "max_drawdown_pct": 48.51893025479664,
+    "trades": 20
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "KAS",
+   "venue": "Gate",
+   "buy_requests": {
+    "backtest": 43,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 181,
+    "realtime": 157
+   },
+   "backtest": {
+    "net_return_pct": 17.41051793911097,
+    "max_drawdown_pct": 28.932804484011143,
+    "trades": 21
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "ATOM",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 46,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 148,
+    "realtime": 124
+   },
+   "backtest": {
+    "net_return_pct": -50.0602306516577,
+    "max_drawdown_pct": 59.98974019028183,
+    "trades": 28
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "ARB",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 39,
+    "realtime": 4,
+    "both": 2
+   },
+   "sell_requests": {
+    "backtest": 184,
+    "realtime": 151
+   },
+   "backtest": {
+    "net_return_pct": 58.203233477119824,
+    "max_drawdown_pct": 53.864150893330155,
+    "trades": 22
+   },
+   "realtime": {
+    "net_return_pct": -24.160748356895866,
+    "max_drawdown_pct": 25.969031720001578,
+    "trades": 4
+   }
+  },
+  {
+   "asset": "OP",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 33,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 168,
+    "realtime": 142
+   },
+   "backtest": {
+    "net_return_pct": -33.199272010765256,
+    "max_drawdown_pct": 63.0256061303982,
+    "trades": 19
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "POL",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 31,
+    "realtime": 2,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 192,
+    "realtime": 152
+   },
+   "backtest": {
+    "net_return_pct": -5.35314425431368,
+    "max_drawdown_pct": 47.996566554872864,
+    "trades": 22
+   },
+   "realtime": {
+    "net_return_pct": -8.421169958610975,
+    "max_drawdown_pct": 8.625041060600214,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "AAVE",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 47,
+    "realtime": 2,
+    "both": 2
+   },
+   "sell_requests": {
+    "backtest": 161,
+    "realtime": 127
+   },
+   "backtest": {
+    "net_return_pct": 58.33478417967586,
+    "max_drawdown_pct": 50.498553170869464,
+    "trades": 25
+   },
+   "realtime": {
+    "net_return_pct": -6.9233359803758665,
+    "max_drawdown_pct": 11.133054372582851,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "RENDER",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 36,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 180,
+    "realtime": 151
+   },
+   "backtest": {
+    "net_return_pct": 34.48604280418359,
+    "max_drawdown_pct": 40.08469267519873,
+    "trades": 18
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "ICP",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 38,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 184,
+    "realtime": 148
+   },
+   "backtest": {
+    "net_return_pct": -31.21429767787537,
+    "max_drawdown_pct": 55.01736315927121,
+    "trades": 24
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "BCH",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 40,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 152,
+    "realtime": 122
+   },
+   "backtest": {
+    "net_return_pct": -53.95017629161447,
+    "max_drawdown_pct": 63.73567788676044,
+    "trades": 25
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "FET",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 30,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 168,
+    "realtime": 138
+   },
+   "backtest": {
+    "net_return_pct": -52.37954111127724,
+    "max_drawdown_pct": 62.99139492636847,
+    "trades": 22
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "INJ",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 41,
+    "realtime": 2,
+    "both": 2
+   },
+   "sell_requests": {
+    "backtest": 164,
+    "realtime": 139
+   },
+   "backtest": {
+    "net_return_pct": -21.794243943009196,
+    "max_drawdown_pct": 52.35701095144385,
+    "trades": 26
+   },
+   "realtime": {
+    "net_return_pct": -12.53143832295085,
+    "max_drawdown_pct": 17.424213202480644,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "TIA",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 37,
+    "realtime": 2,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 166,
+    "realtime": 135
+   },
+   "backtest": {
+    "net_return_pct": 83.86519695334766,
+    "max_drawdown_pct": 32.230739696011156,
+    "trades": 18
+   },
+   "realtime": {
+    "net_return_pct": 6.825499703076421,
+    "max_drawdown_pct": 11.100957300847725,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "IMX",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 37,
+    "realtime": 2,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 166,
+    "realtime": 145
+   },
+   "backtest": {
+    "net_return_pct": 12.571323021677316,
+    "max_drawdown_pct": 44.06699687365846,
+    "trades": 20
+   },
+   "realtime": {
+    "net_return_pct": -0.46722192741824875,
+    "max_drawdown_pct": 18.67774806646525,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "FDUSD",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 52,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 109,
+    "realtime": 79
+   },
+   "backtest": {
+    "net_return_pct": -8.289010624086647,
+    "max_drawdown_pct": 8.289010624086647,
+    "trades": 27
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "LDO",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 49,
+    "realtime": 2,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 176,
+    "realtime": 140
+   },
+   "backtest": {
+    "net_return_pct": -33.98086643663055,
+    "max_drawdown_pct": 65.93082374361433,
+    "trades": 27
+   },
+   "realtime": {
+    "net_return_pct": 27.2236196595097,
+    "max_drawdown_pct": 14.592823939906108,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "ENA",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 31,
+    "realtime": 1,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 179,
+    "realtime": 155
+   },
+   "backtest": {
+    "net_return_pct": 31.80108620238695,
+    "max_drawdown_pct": 47.178377179212184,
+    "trades": 19
+   },
+   "realtime": {
+    "net_return_pct": -4.329706267286659,
+    "max_drawdown_pct": 10.141386688963227,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "ALGO",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 31,
+    "realtime": 1,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 175,
+    "realtime": 143
+   },
+   "backtest": {
+    "net_return_pct": 59.81019518913191,
+    "max_drawdown_pct": 57.504108448863754,
+    "trades": 19
+   },
+   "realtime": {
+    "net_return_pct": -4.508184265020176,
+    "max_drawdown_pct": 5.662176525934881,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "FIL",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 36,
+    "realtime": 3,
+    "both": 2
+   },
+   "sell_requests": {
+    "backtest": 181,
+    "realtime": 144
+   },
+   "backtest": {
+    "net_return_pct": -53.459748793461515,
+    "max_drawdown_pct": 72.01866367026284,
+    "trades": 22
+   },
+   "realtime": {
+    "net_return_pct": 19.124971372965426,
+    "max_drawdown_pct": 25.300103021879583,
+    "trades": 3
+   }
+  },
+  {
+   "asset": "SEI",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 35,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 157,
+    "realtime": 133
+   },
+   "backtest": {
+    "net_return_pct": -40.67115036876336,
+    "max_drawdown_pct": 58.833876804113046,
+    "trades": 23
+   },
+   "realtime": {
+    "net_return_pct": -9.193587243111633,
+    "max_drawdown_pct": 21.58420738346283,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "QNT",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 44,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 151,
+    "realtime": 125
+   },
+   "backtest": {
+    "net_return_pct": 152.7887476967301,
+    "max_drawdown_pct": 57.85872645475985,
+    "trades": 22
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "GRT",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 30,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 195,
+    "realtime": 166
+   },
+   "backtest": {
+    "net_return_pct": 4.86621184943965,
+    "max_drawdown_pct": 52.42797430224546,
+    "trades": 20
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "ONDO",
+   "venue": "Gate",
+   "buy_requests": {
+    "backtest": 45,
+    "realtime": 2,
+    "both": 2
+   },
+   "sell_requests": {
+    "backtest": 159,
+    "realtime": 137
+   },
+   "backtest": {
+    "net_return_pct": 42.13744655177527,
+    "max_drawdown_pct": 44.95530963738075,
+    "trades": 20
+   },
+   "realtime": {
+    "net_return_pct": -22.972074684868648,
+    "max_drawdown_pct": 28.879654884395155,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "PYTH",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 35,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 172,
+    "realtime": 143
+   },
+   "backtest": {
+    "net_return_pct": -35.267002119807586,
+    "max_drawdown_pct": 49.637213717192566,
+    "trades": 20
+   },
+   "realtime": {
+    "net_return_pct": -10.696173048008584,
+    "max_drawdown_pct": 11.960707615062748,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "JUP",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 38,
+    "realtime": 1,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 168,
+    "realtime": 141
+   },
+   "backtest": {
+    "net_return_pct": -52.00791113732244,
+    "max_drawdown_pct": 67.85017694468976,
+    "trades": 24
+   },
+   "realtime": {
+    "net_return_pct": 19.517340565630924,
+    "max_drawdown_pct": 12.383967389830508,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "RAY",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 41,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 153,
+    "realtime": 124
+   },
+   "backtest": {
+    "net_return_pct": 73.01960285449769,
+    "max_drawdown_pct": 74.42964051732947,
+    "trades": 24
+   },
+   "realtime": {
+    "net_return_pct": 38.11141871322909,
+    "max_drawdown_pct": 12.07845542361371,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "RUNE",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 37,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 162,
+    "realtime": 133
+   },
+   "backtest": {
+    "net_return_pct": 3.5203969126275547,
+    "max_drawdown_pct": 47.42142948807106,
+    "trades": 21
+   },
+   "realtime": {
+    "net_return_pct": 2.3182437976402293,
+    "max_drawdown_pct": 6.20328849028402,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "CRV",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 41,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 152,
+    "realtime": 122
+   },
+   "backtest": {
+    "net_return_pct": 160.96090387368972,
+    "max_drawdown_pct": 41.88808858183908,
+    "trades": 21
+   },
+   "realtime": {
+    "net_return_pct": 1.6942512769034135,
+    "max_drawdown_pct": 12.130648142209822,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "AR",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 34,
+    "realtime": 3,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 163,
+    "realtime": 134
+   },
+   "backtest": {
+    "net_return_pct": -44.11340457705188,
+    "max_drawdown_pct": 66.76639752358896,
+    "trades": 22
+   },
+   "realtime": {
+    "net_return_pct": -18.48843765887126,
+    "max_drawdown_pct": 30.990154158870965,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "AKT",
+   "venue": "Gate",
+   "buy_requests": {
+    "backtest": 36,
+    "realtime": 1,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 207,
+    "realtime": 170
+   },
+   "backtest": {
+    "net_return_pct": -20.917901307320786,
+    "max_drawdown_pct": 50.512779800906905,
+    "trades": 21
+   },
+   "realtime": {
+    "net_return_pct": -1.9769626900126736,
+    "max_drawdown_pct": 13.438865608564099,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "WLD",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 36,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 198,
+    "realtime": 167
+   },
+   "backtest": {
+    "net_return_pct": -34.36793678088597,
+    "max_drawdown_pct": 65.00259903850647,
+    "trades": 23
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "STRK",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 37,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 193,
+    "realtime": 158
+   },
+   "backtest": {
+    "net_return_pct": -4.833020918123854,
+    "max_drawdown_pct": 54.66693984529583,
+    "trades": 24
+   },
+   "realtime": {
+    "net_return_pct": -7.318047566671881,
+    "max_drawdown_pct": 8.123538133918773,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "ZK",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 28,
+    "realtime": 1,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 184,
+    "realtime": 156
+   },
+   "backtest": {
+    "net_return_pct": -63.0037794335801,
+    "max_drawdown_pct": 76.9518091886576,
+    "trades": 23
+   },
+   "realtime": {
+    "net_return_pct": -4.265127415128989,
+    "max_drawdown_pct": 11.59486902912622,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "DYM",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 34,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 202,
+    "realtime": 170
+   },
+   "backtest": {
+    "net_return_pct": -31.60934863812893,
+    "max_drawdown_pct": 64.59272444153639,
+    "trades": 19
+   },
+   "realtime": {
+    "net_return_pct": -2.9980612660389983,
+    "max_drawdown_pct": 11.077281772151892,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "SNX",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 31,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 189,
+    "realtime": 166
+   },
+   "backtest": {
+    "net_return_pct": -49.794347921609116,
+    "max_drawdown_pct": 63.14965775906742,
+    "trades": 25
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "COMP",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 40,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 203,
+    "realtime": 166
+   },
+   "backtest": {
+    "net_return_pct": -7.637494682145885,
+    "max_drawdown_pct": 62.65289507848875,
+    "trades": 23
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "DYDX",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 35,
+    "realtime": 2,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 178,
+    "realtime": 147
+   },
+   "backtest": {
+    "net_return_pct": 71.19461937066771,
+    "max_drawdown_pct": 45.94124433355125,
+    "trades": 16
+   },
+   "realtime": {
+    "net_return_pct": 4.778435006453341,
+    "max_drawdown_pct": 9.79178826815641,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "PENDLE",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 35,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 151,
+    "realtime": 129
+   },
+   "backtest": {
+    "net_return_pct": -32.54929284660159,
+    "max_drawdown_pct": 63.43398614516711,
+    "trades": 23
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "CAKE",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 51,
+    "realtime": 3,
+    "both": 2
+   },
+   "sell_requests": {
+    "backtest": 183,
+    "realtime": 158
+   },
+   "backtest": {
+    "net_return_pct": -32.21694085362073,
+    "max_drawdown_pct": 65.28812871751161,
+    "trades": 31
+   },
+   "realtime": {
+    "net_return_pct": -7.0325533473701185,
+    "max_drawdown_pct": 21.883629195991606,
+    "trades": 3
+   }
+  },
+  {
+   "asset": "RPL",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 25,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 197,
+    "realtime": 166
+   },
+   "backtest": {
+    "net_return_pct": -42.04793906744252,
+    "max_drawdown_pct": 56.37308802973677,
+    "trades": 20
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "GMX",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 33,
+    "realtime": 2,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 170,
+    "realtime": 140
+   },
+   "backtest": {
+    "net_return_pct": -70.20867740926656,
+    "max_drawdown_pct": 79.60284539347755,
+    "trades": 24
+   },
+   "realtime": {
+    "net_return_pct": -2.697369964808072,
+    "max_drawdown_pct": 7.243882445414851,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "1INCH",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 31,
+    "realtime": 1,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 164,
+    "realtime": 137
+   },
+   "backtest": {
+    "net_return_pct": -54.07568575576811,
+    "max_drawdown_pct": 57.067967975197575,
+    "trades": 22
+   },
+   "realtime": {
+    "net_return_pct": -5.606891955030147,
+    "max_drawdown_pct": 6.499679079670317,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "W",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 36,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 186,
+    "realtime": 153
+   },
+   "backtest": {
+    "net_return_pct": -47.23464337035589,
+    "max_drawdown_pct": 57.48280023486998,
+    "trades": 24
+   },
+   "realtime": {
+    "net_return_pct": -8.74640349675574,
+    "max_drawdown_pct": 10.938218942065491,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "ZRO",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 33,
+    "realtime": 1,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 160,
+    "realtime": 127
+   },
+   "backtest": {
+    "net_return_pct": 45.31336449258576,
+    "max_drawdown_pct": 45.19183188550247,
+    "trades": 18
+   },
+   "realtime": {
+    "net_return_pct": -2.4841252867331076,
+    "max_drawdown_pct": 15.287543618739896,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "AXL",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 34,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 199,
+    "realtime": 168
+   },
+   "backtest": {
+    "net_return_pct": -47.912713780777786,
+    "max_drawdown_pct": 60.455774662503444,
+    "trades": 21
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "CRO",
+   "venue": "Gate",
+   "buy_requests": {
+    "backtest": 38,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 194,
+    "realtime": 157
+   },
+   "backtest": {
+    "net_return_pct": 32.02877871794758,
+    "max_drawdown_pct": 51.890482220412196,
+    "trades": 21
+   },
+   "realtime": {
+    "net_return_pct": -5.663541714810394,
+    "max_drawdown_pct": 5.663541714810394,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "BGB",
+   "venue": "Bitget",
+   "buy_requests": {
+    "backtest": 57,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 177,
+    "realtime": 153
+   },
+   "backtest": {
+    "net_return_pct": 108.06610918383637,
+    "max_drawdown_pct": 60.637723446709366,
+    "trades": 30
+   },
+   "realtime": {
+    "net_return_pct": 1.0613347935249706,
+    "max_drawdown_pct": 6.4215585488959,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "GT",
+   "venue": "Gate",
+   "buy_requests": {
+    "backtest": 49,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 136,
+    "realtime": 106
+   },
+   "backtest": {
+    "net_return_pct": 90.15108035965429,
+    "max_drawdown_pct": 40.02236700080002,
+    "trades": 19
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "PAXG",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 62,
+    "realtime": 4,
+    "both": 2
+   },
+   "sell_requests": {
+    "backtest": 130,
+    "realtime": 112
+   },
+   "backtest": {
+    "net_return_pct": 42.64528488875485,
+    "max_drawdown_pct": 19.251916375066656,
+    "trades": 30
+   },
+   "realtime": {
+    "net_return_pct": 24.49001266426256,
+    "max_drawdown_pct": 5.909820391798215,
+    "trades": 4
+   }
+  },
+  {
+   "asset": "XTZ",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 39,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 174,
+    "realtime": 145
+   },
+   "backtest": {
+    "net_return_pct": 40.954157137690636,
+    "max_drawdown_pct": 46.3918088038511,
+    "trades": 21
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "FLOW",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 26,
+    "realtime": 2,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 199,
+    "realtime": 164
+   },
+   "backtest": {
+    "net_return_pct": -34.688579798316034,
+    "max_drawdown_pct": 53.49965738910471,
+    "trades": 18
+   },
+   "realtime": {
+    "net_return_pct": -7.386833334311815,
+    "max_drawdown_pct": 11.762339704662917,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "EGLD",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 34,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 175,
+    "realtime": 146
+   },
+   "backtest": {
+    "net_return_pct": 20.85196950624968,
+    "max_drawdown_pct": 54.30516757660415,
+    "trades": 21
+   },
+   "realtime": {
+    "net_return_pct": 63.03889355207561,
+    "max_drawdown_pct": 15.642638709920787,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "KAVA",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 37,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 161,
+    "realtime": 131
+   },
+   "backtest": {
+    "net_return_pct": -38.438111099042985,
+    "max_drawdown_pct": 61.656872310847554,
+    "trades": 25
+   },
+   "realtime": {
+    "net_return_pct": -4.326573735346628,
+    "max_drawdown_pct": 6.434923241296531,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "CELO",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 24,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 189,
+    "realtime": 155
+   },
+   "backtest": {
+    "net_return_pct": -22.11891567045444,
+    "max_drawdown_pct": 50.471420803987634,
+    "trades": 15
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "NEO",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 25,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 172,
+    "realtime": 131
+   },
+   "backtest": {
+    "net_return_pct": -12.371518885680267,
+    "max_drawdown_pct": 53.71771781702892,
+    "trades": 17
+   },
+   "realtime": {
+    "net_return_pct": -0.13201857182104648,
+    "max_drawdown_pct": 6.388888888888877,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "ETC",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 32,
+    "realtime": 2,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 161,
+    "realtime": 129
+   },
+   "backtest": {
+    "net_return_pct": -2.0315153970309474,
+    "max_drawdown_pct": 51.20100555700875,
+    "trades": 20
+   },
+   "realtime": {
+    "net_return_pct": -10.944911709441508,
+    "max_drawdown_pct": 15.714073147574215,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "ZEC",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 57,
+    "realtime": 2,
+    "both": 2
+   },
+   "sell_requests": {
+    "backtest": 168,
+    "realtime": 142
+   },
+   "backtest": {
+    "net_return_pct": 346.865261741723,
+    "max_drawdown_pct": 69.8036198276273,
+    "trades": 31
+   },
+   "realtime": {
+    "net_return_pct": 19.49642109112064,
+    "max_drawdown_pct": 16.291746799220707,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "METIS",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 27,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 166,
+    "realtime": 136
+   },
+   "backtest": {
+    "net_return_pct": 14.525973148214533,
+    "max_drawdown_pct": 40.6710041121882,
+    "trades": 18
+   },
+   "realtime": {
+    "net_return_pct": -8.618119350057462,
+    "max_drawdown_pct": 12.958156267990073,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "LPT",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 32,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 209,
+    "realtime": 183
+   },
+   "backtest": {
+    "net_return_pct": -27.566558185362577,
+    "max_drawdown_pct": 70.42799126125121,
+    "trades": 23
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "THETA",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 28,
+    "realtime": 1,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 160,
+    "realtime": 131
+   },
+   "backtest": {
+    "net_return_pct": 37.035066572906295,
+    "max_drawdown_pct": 37.58117495024948,
+    "trades": 18
+   },
+   "realtime": {
+    "net_return_pct": -0.8612717222396871,
+    "max_drawdown_pct": 8.443314999999984,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "JASMY",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 38,
+    "realtime": 0,
+    "both": 0
+   },
+   "sell_requests": {
+    "backtest": 189,
+    "realtime": 152
+   },
+   "backtest": {
+    "net_return_pct": 19.229106782002027,
+    "max_drawdown_pct": 43.317606615191515,
+    "trades": 19
+   },
+   "realtime": {
+    "net_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "trades": 0
+   }
+  },
+  {
+   "asset": "SAND",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 29,
+    "realtime": 2,
+    "both": 2
+   },
+   "sell_requests": {
+    "backtest": 185,
+    "realtime": 157
+   },
+   "backtest": {
+    "net_return_pct": -13.14004015292256,
+    "max_drawdown_pct": 48.0982808829857,
+    "trades": 19
+   },
+   "realtime": {
+    "net_return_pct": 19.09355468667906,
+    "max_drawdown_pct": 14.548540797632082,
+    "trades": 2
+   }
+  },
+  {
+   "asset": "MANA",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 39,
+    "realtime": 1,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 182,
+    "realtime": 150
+   },
+   "backtest": {
+    "net_return_pct": -18.375365730229277,
+    "max_drawdown_pct": 56.362224023172125,
+    "trades": 23
+   },
+   "realtime": {
+    "net_return_pct": 1.4858710575567313,
+    "max_drawdown_pct": 1.0662117684210548,
+    "trades": 1
+   }
+  },
+  {
+   "asset": "GALA",
+   "venue": "Binance",
+   "buy_requests": {
+    "backtest": 25,
+    "realtime": 3,
+    "both": 1
+   },
+   "sell_requests": {
+    "backtest": 165,
+    "realtime": 136
+   },
+   "backtest": {
+    "net_return_pct": -41.65837992056415,
+    "max_drawdown_pct": 67.65508719505297,
+    "trades": 20
+   },
+   "realtime": {
+    "net_return_pct": 34.868479481682925,
+    "max_drawdown_pct": 38.64930030324456,
+    "trades": 3
+   }
+  }
+ ],
+ "historical_only": true
+}

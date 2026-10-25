@@ -60,6 +60,8 @@ class MirrorService:
                  clock: Callable[[], float] = time.time, alert: Callable[[str], None] | None = None):
         self.storage = storage
         self.alert_fn = alert                        # the operator's Telegram (main sets it: telegram.alert)
+        self.account_guard = None                    # main sets it: (exchange, network) -> owner text when a linked-account
+                                                     # strategy owns the account behind the shared key (one strategy per account)
         self.safe: dict[str, str] = {}               # program -> why no new entries are mirrored
         self.exchange_safe: dict[tuple[str, str], str] = {}
         self._fails: dict[tuple[str, str], int] = {}
@@ -176,6 +178,9 @@ class MirrorService:
             raise MirrorError(f"amount must be above 0 and at most {self.providers.max_amount():g} USDT (LIVE_MIRROR_MAX_AMOUNT_USDT)")
         if not 0 < max_daily <= amount or not 0 < max_total <= amount:
             raise MirrorError("loss limits must be above 0 and at most the amount")
+        busy = self.account_guard(exchange, network) if self.account_guard else None
+        if busy:
+            raise MirrorError(f"the {exchange} {network} account behind the shared key is in use by {busy}: one strategy per account")
         if self.providers.keys(exchange, network) is None:
             raise MirrorError(f"{exchange} {network} keys are not configured on the server")
         if network == "mainnet":

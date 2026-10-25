@@ -43,7 +43,7 @@ const LiveMirror = {
         kvList({
           market: p.exchange === 'anthropic' ? 'AI for the Trading Desk agents (never trades)'
             : p.exchange === 'telegram' ? 'notifications: every paper trade, TP hit and close (never trades)'
-            : data ? 'data source for the V10 scout (never trades)' : stocks ? 'US stocks & ETFs' : 'crypto USDT perpetuals',
+            : data ? 'data source (never trades)' : stocks ? 'US stocks & ETFs' : 'crypto USDT perpetuals',
           keys: src,
           [data ? 'access' : 'balance']: p.keys_configured ? (bal.ok ? (data ? bal.access || 'OK' : bal.available + ' ' + (bal.currency || 'USDT') + ' available (equity ' + bal.wallet + ')') : 'error: ' + (bal.error || '?')) : DASH,
           ...(p.telegram ? this.telegramRows(p, bal) : {}),
@@ -104,7 +104,6 @@ const LiveMirror = {
       return h('p', { class: 'sub', text: 'Key entry needs DASHBOARD_PASSWORD on the server; until then set ' + p.key_env.join(' + ') + ' in Railway variables.' });
     }
     const [kLabel, sLabel] = p.exchange === 'anthropic' ? ['Claude API key (sk-ant-…)', 'not needed — leave empty']
-      : p.exchange === 'reddit' ? ['app client ID', 'app secret']
       : p.exchange === 'telegram' ? ['bot token (from @BotFather)', 'chat id (optional: or send /start to your bot)']
         : ['API key', 'API secret'];
     const keyIn = h('input', { type: 'password', placeholder: kLabel, autocomplete: 'off', spellcheck: 'false' });
@@ -113,7 +112,6 @@ const LiveMirror = {
     const form = h('div', { class: 'key-form', hidden: true },
       h('label', { class: 'field' }, h('span', { text: kLabel }), keyIn),
       h('label', { class: 'field' }, h('span', { text: sLabel }), secIn),
-      p.exchange === 'reddit' ? h('p', { class: 'sub', text: 'Create a free "script" app at reddit.com/prefs/apps (any name; redirect uri http://localhost:8080). The client ID is the short code under the app name.' }) : null,
       p.exchange === 'anthropic' ? h('p', { class: 'sub', text: 'Create a key at console.anthropic.com → API keys and paste it here. It is checked with a free call (no tokens spent), then stored encrypted on the server; the Trading Desk switches to Claude (Sonnet 5.5 for Charts, Skeptic and your chats; Haiku 5.5 for the rest) at once. Remove it to fall back to OpenRouter.' }) : null,
       p.exchange === 'telegram' ? h('p', { class: 'sub', text: 'Paste the token @BotFather gave you, save, then open your bot in Telegram and send /start: that chat gets every paper trade (TP hits and closes reply to the trade). Leave the chat id empty unless you know it.' }) : null,
       err,
@@ -174,10 +172,35 @@ const LiveMirror = {
       clear(strip).append(
         h('div', { class: 'rs-live-top' }, h('b', { text: '● LIVE · ' + m.exchange.toUpperCase() + (real ? ' · REAL MONEY' : ' · TESTNET') }),
           h('span', { text: done })),
-        h('div', { class: 'rs-live-sub', text: holding }));
+        h('div', { class: 'rs-live-sub', text: holding }),
+        h('button', { type: 'button', class: 'rs-live-stop', text: 'Stop live', title: 'stop copying this bot onto the exchange',
+          onclick: (e) => { e.stopPropagation(); this.stopMirror(m, x.name || x.key).then((ok) => { if (ok) strip.hidden = true; }); } }));
       strip.hidden = false;
     }).catch(() => {});
     return strip;
+  },
+
+  /* STOP a live copy after "are you sure?": closes its exchange position at market, then the bot is free for GO LIVE
+     elsewhere and its account free for another strategy. Resolves true when stopped. */
+  async stopMirror(m, name) {
+    const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const real = m.network === 'mainnet', coin = String(m.symbol || '').replace(/USDT$/, ''), p = m.position;
+    const what = p ? 'This closes the open <b>' + esc(p.side) + ' ' + esc(String(p.qty)) + ' ' + esc(coin) + '</b> position at market on '
+      : 'Nothing is open. This stops copying on ';
+    const html = what + '<b>' + esc(m.exchange.toUpperCase() + ' ' + (real ? 'mainnet (real money)' : 'testnet')) + '</b> and turns the live copy of <b>' +
+      esc(name) + '</b> off. The paper bot keeps running.';
+    const sure = typeof confirmLive === 'function' ? await confirmLive('Stop live trading for ' + name + '?', html)
+      : window.confirm('Stop live trading for ' + name + '? This closes its live position.');
+    if (!sure) return false;
+    try {
+      await post('/api/mirror/' + encodeURIComponent(m.id) + '/stop', {});
+      this._mc = null;
+      if (typeof toast === 'function') toast('Live copy of ' + name + ' stopped.');
+      return true;
+    } catch (e) {
+      if (typeof toast === 'function') toast('Could not stop: ' + e.message, 'err'); else window.alert('Could not stop: ' + e.message);
+      return false;
+    }
   },
 
   /* the bot page's slot: "● LIVE · binance testnet · ARMED" when this bot is mirrored, else the GO LIVE button */
@@ -192,7 +215,9 @@ const LiveMirror = {
       clear(slot).append(h('button', { type: 'button', class: 'live-badge ' + (real ? 'real' : 'test'),
         title: 'open Providers & Live: the mirror, its live log and its STOP button',
         text: '● LIVE · ' + m.exchange + ' ' + (real ? 'REAL MONEY' : 'testnet') + ' · ' + (m.trades || 0) + ((m.trades || 0) === 1 ? ' trade' : ' trades') + pos,
-        onclick: () => Nav.go('system', 'live-mirror') }));
+        onclick: () => Nav.go('system', 'live-mirror') }),
+        h('button', { type: 'button', class: 'btn danger', text: 'Stop live',
+          onclick: () => this.stopMirror(m, bot.name || bot.key).then((ok) => { if (ok) clear(slot).append(button()); }) }));
     }).catch(() => clear(slot).append(button()));
     return slot;
   },

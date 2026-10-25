@@ -930,6 +930,7 @@ async def arena_candles(request: Request, program: str, symbol: str = Query(...,
     ends the window there instead of now (the dashboard centres a chosen closed trade)."""
     import asyncio
     from app.core.arena_live_view import candles
+    from app.core.storage_read_view import read_view
     from app.core.v6_view import current_experiment
     stores = {"v6": lambda: _svc(request).storage, "v7": lambda: getattr(request.app.state, "v7_storage", None),
               "v8": lambda: getattr(request.app.state, "v8_storage", None),
@@ -950,8 +951,9 @@ async def arena_candles(request: Request, program: str, symbol: str = Query(...,
 
     def build() -> dict[str, Any]:
         now = int(time.time() * 1000)
-        return candles(st, current_experiment(st, svc), sym, tf, limit, now_ms=min(until, now) if until else None,
-                       program=program)
+        with read_view(st) as snapshot:
+            return candles(snapshot, current_experiment(snapshot, svc), sym, tf, limit, now_ms=min(until, now) if until else None,
+                           program=program)
     return {**(await asyncio.to_thread(build)), "program": program, "read_only": True}
 
 

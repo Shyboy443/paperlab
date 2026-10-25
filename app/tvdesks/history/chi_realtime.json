@@ -1,0 +1,35 @@
+{
+ "window_utc": [
+  "2024-10-11 00:00",
+  "2026-10-11 00:00 (exclusive)"
+ ],
+ "books": 84,
+ "totals": {
+  "buy_requests_backtest": 3205,
+  "buy_requests_realtime": 88,
+  "buy_requests_both": 45,
+  "realtime_losing_books": 36,
+  "realtime_winning_books": 20,
+  "realtime_books_without_trades": 28
+ },
+ "decisions_checked": 839,
+ "mismatches": 0,
+ "portfolio": {
+  "backtest": {
+   "net_return_pct": 17.49904851420787,
+   "max_drawdown_pct": 29.100771390295076,
+   "trades": 1860,
+   "win_rate_pct": 34.46236559139785,
+   "profit_factor": 1.1617928490651785
+  },
+  "realtime": {
+   "net_return_pct": 0.8296275831452649,
+   "max_drawdown_pct": 2.843306882854457,
+   "trades": 87,
+   "win_rate_pct": 36.7816091954023,
+   "profit_factor": 1.1995906910703722
+  }
+ },
+ "script": "scripts/tvdesks_chi_realtime_study.py",
+ "historical_only": true
+}

@@ -1,0 +1,125 @@
+{
+ "top_usd": [
+  {
+   "sym": "ENJUSDT",
+   "side": 1,
+   "entry": "2026-04-12",
+   "days": 6,
+   "pnl_usd": 35108.0,
+   "share_of_total": 0.3135,
+   "pnl_pct_of_equity": 50.13
+  },
+  {
+   "sym": "CYSUSDT",
+   "side": -1,
+   "entry": "2026-09-02",
+   "days": 15,
+   "pnl_usd": 30272.0,
+   "share_of_total": 0.2703,
+   "pnl_pct_of_equity": 30.16
+  },
+  {
+   "sym": "BEATUSDT",
+   "side": -1,
+   "entry": "2026-08-05",
+   "days": 27,
+   "pnl_usd": 23912.0,
+   "share_of_total": 0.2135,
+   "pnl_pct_of_equity": 32.81
+  },
+  {
+   "sym": "CLOUSDT",
+   "side": -1,
+   "entry": "2026-01-25",
+   "days": 14,
+   "pnl_usd": 23334.0,
+   "share_of_total": 0.2084,
+   "pnl_pct_of_equity": 49.17
+  },
+  {
+   "sym": "SKYAIUSDT",
+   "side": 1,
+   "entry": "2026-06-11",
+   "days": 7,
+   "pnl_usd": 19165.0,
+   "share_of_total": 0.1711,
+   "pnl_pct_of_equity": 17.74
+  },
+  {
+   "sym": "USUSDT",
+   "side": -1,
+   "entry": "2026-10-14",
+   "days": 8,
+   "pnl_usd": 14224.0,
+   "share_of_total": 0.127,
+   "pnl_pct_of_equity": 10.66
+  },
+  {
+   "sym": "RAVEUSDT",
+   "side": 1,
+   "entry": "2026-04-12",
+   "days": 4,
+   "pnl_usd": 13801.0,
+   "share_of_total": 0.1232,
+   "pnl_pct_of_equity": 19.71
+  },
+  {
+   "sym": "MYXUSDT",
+   "side": 1,
+   "entry": "2025-09-07",
+   "days": 4,
+   "pnl_usd": 12831.0,
+   "share_of_total": 0.1146,
+   "pnl_pct_of_equity": 64.11
+  }
+ ],
+ "sum_pct_of_equity": 363.24,
+ "largest_position_share_of_summed_pct": 0.1765,
+ "top_by_pct": [
+  {
+   "sym": "MYXUSDT",
+   "side": 1,
+   "entry": "2025-09-07",
+   "days": 4,
+   "pnl_usd": 12831.0,
+   "share_of_total": 0.1146,
+   "pnl_pct_of_equity": 64.11
+  },
+  {
+   "sym": "ENJUSDT",
+   "side": 1,
+   "entry": "2026-04-12",
+   "days": 6,
+   "pnl_usd": 35108.0,
+   "share_of_total": 0.3135,
+   "pnl_pct_of_equity": 50.13
+  },
+  {
+   "sym": "CLOUSDT",
+   "side": -1,
+   "entry": "2026-01-25",
+   "days": 14,
+   "pnl_usd": 23334.0,
+   "share_of_total": 0.2084,
+   "pnl_pct_of_equity": 49.17
+  },
+  {
+   "sym": "LUNAUSDT",
+   "side": -1,
+   "entry": "2022-05-08",
+   "days": 6,
+   "pnl_usd": 3976.0,
+   "share_of_total": 0.0355,
+   "pnl_pct_of_equity": 42.1
+  },
+  {
+   "sym": "BEATUSDT",
+   "side": -1,
+   "entry": "2026-08-05",
+   "days": 27,
+   "pnl_usd": 23912.0,
+   "share_of_total": 0.2135,
+   "pnl_pct_of_equity": 32.81
+  }
+ ]
+}

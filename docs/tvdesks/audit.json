@@ -1,0 +1,3353 @@
+{
+ "generated_utc": "2026-10-12T14:54:31Z",
+ "package_manifest_hash": "SHA-256",
+ "passed": false,
+ "checks": [
+  {
+   "check": "package SHA-256 manifest",
+   "passed": true,
+   "compared": 571,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles BTC",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests BTC",
+   "passed": true,
+   "compared": 221,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades BTC cost x1 vs package broker",
+   "passed": true,
+   "compared": 26,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity BTC cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades BTC cost x2 vs package broker",
+   "passed": true,
+   "compared": 26,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity BTC cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles ETH",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests ETH",
+   "passed": true,
+   "compared": 192,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ETH cost x1 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ETH cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ETH cost x2 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ETH cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles BNB",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests BNB",
+   "passed": true,
+   "compared": 169,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades BNB cost x1 vs package broker",
+   "passed": true,
+   "compared": 27,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity BNB cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades BNB cost x2 vs package broker",
+   "passed": true,
+   "compared": 27,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity BNB cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles SOL",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests SOL",
+   "passed": true,
+   "compared": 205,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades SOL cost x1 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity SOL cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades SOL cost x2 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity SOL cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles USDC",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests USDC",
+   "passed": true,
+   "compared": 155,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades USDC cost x1 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity USDC cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades USDC cost x2 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity USDC cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles XRP",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests XRP",
+   "passed": true,
+   "compared": 229,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades XRP cost x1 vs package broker",
+   "passed": true,
+   "compared": 25,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity XRP cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades XRP cost x2 vs package broker",
+   "passed": true,
+   "compared": 25,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity XRP cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles ADA",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests ADA",
+   "passed": true,
+   "compared": 233,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ADA cost x1 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ADA cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ADA cost x2 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ADA cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles AVAX",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests AVAX",
+   "passed": true,
+   "compared": 214,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades AVAX cost x1 vs package broker",
+   "passed": true,
+   "compared": 23,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity AVAX cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades AVAX cost x2 vs package broker",
+   "passed": true,
+   "compared": 23,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity AVAX cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles DOGE",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests DOGE",
+   "passed": true,
+   "compared": 222,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades DOGE cost x1 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity DOGE cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades DOGE cost x2 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity DOGE cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles TRX",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests TRX",
+   "passed": true,
+   "compared": 204,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades TRX cost x1 vs package broker",
+   "passed": true,
+   "compared": 28,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity TRX cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades TRX cost x2 vs package broker",
+   "passed": true,
+   "compared": 28,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity TRX cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles LINK",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests LINK",
+   "passed": true,
+   "compared": 211,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades LINK cost x1 vs package broker",
+   "passed": true,
+   "compared": 25,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity LINK cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades LINK cost x2 vs package broker",
+   "passed": true,
+   "compared": 25,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity LINK cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles DOT",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests DOT",
+   "passed": true,
+   "compared": 208,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades DOT cost x1 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity DOT cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades DOT cost x2 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity DOT cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles SUI",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests SUI",
+   "passed": true,
+   "compared": 206,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades SUI cost x1 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity SUI cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades SUI cost x2 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity SUI cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles NEAR",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests NEAR",
+   "passed": true,
+   "compared": 195,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades NEAR cost x1 vs package broker",
+   "passed": true,
+   "compared": 19,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity NEAR cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades NEAR cost x2 vs package broker",
+   "passed": true,
+   "compared": 19,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity NEAR cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles APT",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests APT",
+   "passed": true,
+   "compared": 209,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades APT cost x1 vs package broker",
+   "passed": true,
+   "compared": 18,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity APT cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades APT cost x2 vs package broker",
+   "passed": true,
+   "compared": 18,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity APT cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles XLM",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests XLM",
+   "passed": true,
+   "compared": 227,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades XLM cost x1 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity XLM cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades XLM cost x2 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity XLM cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles LTC",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests LTC",
+   "passed": true,
+   "compared": 198,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades LTC cost x1 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity LTC cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades LTC cost x2 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity LTC cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles HBAR",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests HBAR",
+   "passed": true,
+   "compared": 228,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades HBAR cost x1 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity HBAR cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades HBAR cost x2 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity HBAR cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles UNI",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests UNI",
+   "passed": true,
+   "compared": 221,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades UNI cost x1 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity UNI cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades UNI cost x2 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity UNI cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles SHIB",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests SHIB",
+   "passed": false,
+   "compared": 223,
+   "first_mismatch": {
+    "requests": "sell_indices",
+    "position": 152,
+    "expected_index": 3840,
+    "actual_index": 3839,
+    "utc": "2026-06-02 20:00 UTC"
+   }
+  },
+  {
+   "check": "CHI trades SHIB cost x1 vs package broker",
+   "passed": true,
+   "compared": 18,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity SHIB cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades SHIB cost x2 vs package broker",
+   "passed": true,
+   "compared": 18,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity SHIB cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles TAO",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests TAO",
+   "passed": true,
+   "compared": 193,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades TAO cost x1 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity TAO cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades TAO cost x2 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity TAO cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles KAS",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests KAS",
+   "passed": true,
+   "compared": 232,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades KAS cost x1 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity KAS cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades KAS cost x2 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity KAS cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles ATOM",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests ATOM",
+   "passed": true,
+   "compared": 198,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ATOM cost x1 vs package broker",
+   "passed": true,
+   "compared": 28,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ATOM cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ATOM cost x2 vs package broker",
+   "passed": true,
+   "compared": 28,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ATOM cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles ARB",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests ARB",
+   "passed": true,
+   "compared": 229,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ARB cost x1 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ARB cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ARB cost x2 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ARB cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles OP",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests OP",
+   "passed": true,
+   "compared": 208,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades OP cost x1 vs package broker",
+   "passed": true,
+   "compared": 19,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity OP cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades OP cost x2 vs package broker",
+   "passed": true,
+   "compared": 19,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity OP cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles POL",
+   "passed": true,
+   "compared": 4545,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests POL",
+   "passed": true,
+   "compared": 224,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades POL cost x1 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity POL cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades POL cost x2 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity POL cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles AAVE",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests AAVE",
+   "passed": true,
+   "compared": 216,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades AAVE cost x1 vs package broker",
+   "passed": true,
+   "compared": 25,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity AAVE cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades AAVE cost x2 vs package broker",
+   "passed": true,
+   "compared": 25,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity AAVE cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles RENDER",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests RENDER",
+   "passed": true,
+   "compared": 220,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades RENDER cost x1 vs package broker",
+   "passed": true,
+   "compared": 18,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity RENDER cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades RENDER cost x2 vs package broker",
+   "passed": true,
+   "compared": 18,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity RENDER cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles ICP",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests ICP",
+   "passed": true,
+   "compared": 230,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ICP cost x1 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ICP cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ICP cost x2 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ICP cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles BCH",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests BCH",
+   "passed": true,
+   "compared": 198,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades BCH cost x1 vs package broker",
+   "passed": true,
+   "compared": 25,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity BCH cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades BCH cost x2 vs package broker",
+   "passed": true,
+   "compared": 25,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity BCH cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles FET",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests FET",
+   "passed": true,
+   "compared": 203,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades FET cost x1 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity FET cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades FET cost x2 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity FET cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles INJ",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests INJ",
+   "passed": true,
+   "compared": 209,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades INJ cost x1 vs package broker",
+   "passed": true,
+   "compared": 26,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity INJ cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades INJ cost x2 vs package broker",
+   "passed": true,
+   "compared": 26,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity INJ cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles TIA",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests TIA",
+   "passed": true,
+   "compared": 209,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades TIA cost x1 vs package broker",
+   "passed": true,
+   "compared": 18,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity TIA cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades TIA cost x2 vs package broker",
+   "passed": true,
+   "compared": 18,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity TIA cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles IMX",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests IMX",
+   "passed": true,
+   "compared": 212,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades IMX cost x1 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity IMX cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades IMX cost x2 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity IMX cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles FDUSD",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests FDUSD",
+   "passed": true,
+   "compared": 166,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades FDUSD cost x1 vs package broker",
+   "passed": true,
+   "compared": 27,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity FDUSD cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades FDUSD cost x2 vs package broker",
+   "passed": true,
+   "compared": 27,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity FDUSD cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles LDO",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests LDO",
+   "passed": true,
+   "compared": 228,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades LDO cost x1 vs package broker",
+   "passed": true,
+   "compared": 27,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity LDO cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades LDO cost x2 vs package broker",
+   "passed": true,
+   "compared": 27,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity LDO cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles ENA",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests ENA",
+   "passed": true,
+   "compared": 213,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ENA cost x1 vs package broker",
+   "passed": true,
+   "compared": 19,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ENA cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ENA cost x2 vs package broker",
+   "passed": true,
+   "compared": 19,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ENA cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles ALGO",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests ALGO",
+   "passed": true,
+   "compared": 215,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ALGO cost x1 vs package broker",
+   "passed": true,
+   "compared": 19,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ALGO cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ALGO cost x2 vs package broker",
+   "passed": true,
+   "compared": 19,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ALGO cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles FIL",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests FIL",
+   "passed": true,
+   "compared": 222,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades FIL cost x1 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity FIL cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades FIL cost x2 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity FIL cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles SEI",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests SEI",
+   "passed": true,
+   "compared": 199,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades SEI cost x1 vs package broker",
+   "passed": true,
+   "compared": 23,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity SEI cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades SEI cost x2 vs package broker",
+   "passed": true,
+   "compared": 23,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity SEI cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles QNT",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests QNT",
+   "passed": true,
+   "compared": 204,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades QNT cost x1 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity QNT cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades QNT cost x2 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity QNT cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles GRT",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests GRT",
+   "passed": true,
+   "compared": 233,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades GRT cost x1 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity GRT cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades GRT cost x2 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity GRT cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles ONDO",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests ONDO",
+   "passed": true,
+   "compared": 213,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ONDO cost x1 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ONDO cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ONDO cost x2 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ONDO cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles PYTH",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests PYTH",
+   "passed": true,
+   "compared": 211,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades PYTH cost x1 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity PYTH cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades PYTH cost x2 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity PYTH cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles JUP",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests JUP",
+   "passed": true,
+   "compared": 212,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades JUP cost x1 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity JUP cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades JUP cost x2 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity JUP cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles RAY",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests RAY",
+   "passed": true,
+   "compared": 204,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades RAY cost x1 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity RAY cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades RAY cost x2 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity RAY cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles RUNE",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests RUNE",
+   "passed": true,
+   "compared": 206,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades RUNE cost x1 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity RUNE cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades RUNE cost x2 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity RUNE cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles CRV",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests CRV",
+   "passed": true,
+   "compared": 196,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades CRV cost x1 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity CRV cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades CRV cost x2 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity CRV cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles AR",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests AR",
+   "passed": true,
+   "compared": 203,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades AR cost x1 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity AR cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades AR cost x2 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity AR cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles AKT",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests AKT",
+   "passed": true,
+   "compared": 250,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades AKT cost x1 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity AKT cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades AKT cost x2 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity AKT cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles WLD",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests WLD",
+   "passed": true,
+   "compared": 236,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades WLD cost x1 vs package broker",
+   "passed": true,
+   "compared": 23,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity WLD cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades WLD cost x2 vs package broker",
+   "passed": true,
+   "compared": 23,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity WLD cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles STRK",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests STRK",
+   "passed": true,
+   "compared": 235,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades STRK cost x1 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity STRK cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades STRK cost x2 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity STRK cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles ZK",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests ZK",
+   "passed": true,
+   "compared": 216,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ZK cost x1 vs package broker",
+   "passed": true,
+   "compared": 23,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ZK cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ZK cost x2 vs package broker",
+   "passed": true,
+   "compared": 23,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ZK cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles DYM",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests DYM",
+   "passed": true,
+   "compared": 244,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades DYM cost x1 vs package broker",
+   "passed": true,
+   "compared": 19,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity DYM cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades DYM cost x2 vs package broker",
+   "passed": true,
+   "compared": 19,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity DYM cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles SNX",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests SNX",
+   "passed": true,
+   "compared": 226,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades SNX cost x1 vs package broker",
+   "passed": true,
+   "compared": 25,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity SNX cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades SNX cost x2 vs package broker",
+   "passed": true,
+   "compared": 25,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity SNX cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles COMP",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests COMP",
+   "passed": true,
+   "compared": 249,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades COMP cost x1 vs package broker",
+   "passed": true,
+   "compared": 23,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity COMP cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades COMP cost x2 vs package broker",
+   "passed": true,
+   "compared": 23,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity COMP cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles DYDX",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests DYDX",
+   "passed": true,
+   "compared": 215,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades DYDX cost x1 vs package broker",
+   "passed": true,
+   "compared": 16,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity DYDX cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades DYDX cost x2 vs package broker",
+   "passed": true,
+   "compared": 16,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity DYDX cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles PENDLE",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests PENDLE",
+   "passed": true,
+   "compared": 192,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades PENDLE cost x1 vs package broker",
+   "passed": true,
+   "compared": 23,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity PENDLE cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades PENDLE cost x2 vs package broker",
+   "passed": true,
+   "compared": 23,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity PENDLE cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles CAKE",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests CAKE",
+   "passed": true,
+   "compared": 239,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades CAKE cost x1 vs package broker",
+   "passed": true,
+   "compared": 31,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity CAKE cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades CAKE cost x2 vs package broker",
+   "passed": true,
+   "compared": 31,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity CAKE cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "T3-CCI requests CAKE",
+   "passed": true,
+   "compared": 4380,
+   "first_mismatch": null
+  },
+  {
+   "check": "T3-CCI trades CAKE cost x1 vs package broker",
+   "passed": true,
+   "compared": 163,
+   "first_mismatch": null
+  },
+  {
+   "check": "T3-CCI equity CAKE cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "T3-CCI trades CAKE cost x2 vs package broker",
+   "passed": true,
+   "compared": 163,
+   "first_mismatch": null
+  },
+  {
+   "check": "T3-CCI equity CAKE cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles RPL",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests RPL",
+   "passed": true,
+   "compared": 227,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades RPL cost x1 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity RPL cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades RPL cost x2 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity RPL cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles GMX",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests GMX",
+   "passed": true,
+   "compared": 210,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades GMX cost x1 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity GMX cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades GMX cost x2 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity GMX cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles 1INCH",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests 1INCH",
+   "passed": true,
+   "compared": 204,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades 1INCH cost x1 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity 1INCH cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades 1INCH cost x2 vs package broker",
+   "passed": true,
+   "compared": 22,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity 1INCH cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles W",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests W",
+   "passed": true,
+   "compared": 228,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades W cost x1 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity W cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades W cost x2 vs package broker",
+   "passed": true,
+   "compared": 24,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity W cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles ZRO",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests ZRO",
+   "passed": true,
+   "compared": 196,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ZRO cost x1 vs package broker",
+   "passed": true,
+   "compared": 18,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ZRO cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ZRO cost x2 vs package broker",
+   "passed": true,
+   "compared": 18,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ZRO cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles AXL",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests AXL",
+   "passed": true,
+   "compared": 238,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades AXL cost x1 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity AXL cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades AXL cost x2 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity AXL cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles CRO",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests CRO",
+   "passed": true,
+   "compared": 241,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades CRO cost x1 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity CRO cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades CRO cost x2 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity CRO cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles BGB",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests BGB",
+   "passed": true,
+   "compared": 243,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades BGB cost x1 vs package broker",
+   "passed": true,
+   "compared": 30,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity BGB cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades BGB cost x2 vs package broker",
+   "passed": true,
+   "compared": 30,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity BGB cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles GT",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests GT",
+   "passed": true,
+   "compared": 190,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades GT cost x1 vs package broker",
+   "passed": true,
+   "compared": 19,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity GT cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades GT cost x2 vs package broker",
+   "passed": true,
+   "compared": 19,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity GT cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles PAXG",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests PAXG",
+   "passed": true,
+   "compared": 194,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades PAXG cost x1 vs package broker",
+   "passed": true,
+   "compared": 30,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity PAXG cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades PAXG cost x2 vs package broker",
+   "passed": true,
+   "compared": 30,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity PAXG cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles XTZ",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests XTZ",
+   "passed": true,
+   "compared": 217,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades XTZ cost x1 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity XTZ cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades XTZ cost x2 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity XTZ cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles FLOW",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests FLOW",
+   "passed": true,
+   "compared": 235,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades FLOW cost x1 vs package broker",
+   "passed": true,
+   "compared": 18,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity FLOW cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades FLOW cost x2 vs package broker",
+   "passed": true,
+   "compared": 18,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity FLOW cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles EGLD",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests EGLD",
+   "passed": true,
+   "compared": 216,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades EGLD cost x1 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity EGLD cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades EGLD cost x2 vs package broker",
+   "passed": true,
+   "compared": 21,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity EGLD cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles KAVA",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests KAVA",
+   "passed": true,
+   "compared": 206,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades KAVA cost x1 vs package broker",
+   "passed": true,
+   "compared": 25,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity KAVA cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades KAVA cost x2 vs package broker",
+   "passed": true,
+   "compared": 25,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity KAVA cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles CELO",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests CELO",
+   "passed": true,
+   "compared": 215,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades CELO cost x1 vs package broker",
+   "passed": true,
+   "compared": 15,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity CELO cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades CELO cost x2 vs package broker",
+   "passed": true,
+   "compared": 15,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity CELO cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles NEO",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests NEO",
+   "passed": true,
+   "compared": 201,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades NEO cost x1 vs package broker",
+   "passed": true,
+   "compared": 17,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity NEO cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades NEO cost x2 vs package broker",
+   "passed": true,
+   "compared": 17,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity NEO cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles ETC",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests ETC",
+   "passed": true,
+   "compared": 199,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ETC cost x1 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ETC cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ETC cost x2 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ETC cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles ZEC",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests ZEC",
+   "passed": true,
+   "compared": 233,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ZEC cost x1 vs package broker",
+   "passed": true,
+   "compared": 31,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ZEC cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades ZEC cost x2 vs package broker",
+   "passed": true,
+   "compared": 31,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity ZEC cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "T3-CCI requests ZEC",
+   "passed": true,
+   "compared": 4380,
+   "first_mismatch": null
+  },
+  {
+   "check": "T3-CCI trades ZEC cost x1 vs package broker",
+   "passed": true,
+   "compared": 174,
+   "first_mismatch": null
+  },
+  {
+   "check": "T3-CCI equity ZEC cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "T3-CCI trades ZEC cost x2 vs package broker",
+   "passed": true,
+   "compared": 174,
+   "first_mismatch": null
+  },
+  {
+   "check": "T3-CCI equity ZEC cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles METIS",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests METIS",
+   "passed": true,
+   "compared": 199,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades METIS cost x1 vs package broker",
+   "passed": true,
+   "compared": 18,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity METIS cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades METIS cost x2 vs package broker",
+   "passed": true,
+   "compared": 18,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity METIS cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles LPT",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests LPT",
+   "passed": true,
+   "compared": 250,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades LPT cost x1 vs package broker",
+   "passed": true,
+   "compared": 23,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity LPT cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades LPT cost x2 vs package broker",
+   "passed": true,
+   "compared": 23,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity LPT cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles THETA",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests THETA",
+   "passed": true,
+   "compared": 190,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades THETA cost x1 vs package broker",
+   "passed": true,
+   "compared": 18,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity THETA cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades THETA cost x2 vs package broker",
+   "passed": true,
+   "compared": 18,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity THETA cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles JASMY",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests JASMY",
+   "passed": true,
+   "compared": 232,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades JASMY cost x1 vs package broker",
+   "passed": true,
+   "compared": 19,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity JASMY cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades JASMY cost x2 vs package broker",
+   "passed": true,
+   "compared": 19,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity JASMY cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles SAND",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests SAND",
+   "passed": true,
+   "compared": 219,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades SAND cost x1 vs package broker",
+   "passed": true,
+   "compared": 19,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity SAND cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades SAND cost x2 vs package broker",
+   "passed": true,
+   "compared": 19,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity SAND cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles MANA",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests MANA",
+   "passed": true,
+   "compared": 226,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades MANA cost x1 vs package broker",
+   "passed": true,
+   "compared": 23,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity MANA cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades MANA cost x2 vs package broker",
+   "passed": true,
+   "compared": 23,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity MANA cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "4h candles GALA",
+   "passed": true,
+   "compared": 4620,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI requests GALA",
+   "passed": true,
+   "compared": 192,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades GALA cost x1 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity GALA cost x1 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI trades GALA cost x2 vs package broker",
+   "passed": true,
+   "compared": 20,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI equity GALA cost x2 vs package broker",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "T3-CCI ZEC trades cost x1 vs winner-trades-cost-1.csv",
+   "passed": true,
+   "compared": 174,
+   "first_mismatch": null
+  },
+  {
+   "check": "T3-CCI ZEC equity cost x1 vs winner-equity-cost-1.csv",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI 84-book trades cost x1 vs portfolio-leader-trades-cost-1.csv",
+   "passed": true,
+   "compared": 1860,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI portfolio equity cost x1 vs portfolio-leader-equity-cost-1.csv",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "T3-CCI ZEC trades cost x2 vs winner-trades-cost-2.csv",
+   "passed": true,
+   "compared": 174,
+   "first_mismatch": null
+  },
+  {
+   "check": "T3-CCI ZEC equity cost x2 vs winner-equity-cost-2.csv",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI 84-book trades cost x2 vs portfolio-leader-trades-cost-2.csv",
+   "passed": true,
+   "compared": 1860,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI portfolio equity cost x2 vs portfolio-leader-equity-cost-2.csv",
+   "passed": true,
+   "compared": 13140,
+   "first_mismatch": null
+  },
+  {
+   "check": "T3-CCI ZEC monthly cost x1 vs winner-monthly-results.csv",
+   "passed": true,
+   "compared": 25,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI portfolio monthly cost x1 vs portfolio-leader-monthly-results.csv",
+   "passed": true,
+   "compared": 25,
+   "first_mismatch": null
+  },
+  {
+   "check": "summary rows vs individual-results.csv (T3-CCI ZEC/CAKE, CHI x84, both costs)",
+   "passed": true,
+   "compared": 172,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI portfolio summary cost x1 vs cohort-results.csv",
+   "passed": true,
+   "compared": 5,
+   "first_mismatch": null
+  },
+  {
+   "check": "CHI portfolio summary cost x2 vs cohort-results.csv",
+   "passed": true,
+   "compared": 5,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint T3-CCI ZEC trades",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint T3-CCI ZEC ending_capital",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint T3-CCI ZEC net_return_pct",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint T3-CCI ZEC max_drawdown_pct",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint T3-CCI ZEC ohlc_drawdown_bound_pct",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint T3-CCI ZEC doubled_cost_return_pct",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint T3-CCI CAKE net_return_pct",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint T3-CCI CAKE max_drawdown_pct",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint T3-CCI CAKE ohlc_drawdown_bound_pct",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint CHI 84 trades",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint CHI 84 ending_capital",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint CHI 84 net_return_pct",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint CHI 84 max_drawdown_pct",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint CHI 84 ohlc_drawdown_bound_pct",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint CHI 84 doubled_cost_return_pct",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint CHI 84 without_zec_return_pct",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  },
+  {
+   "check": "checkpoint CHI 84 positive_coins",
+   "passed": true,
+   "compared": 1,
+   "first_mismatch": null
+  }
+ ],
+ "first_mismatches": {
+  "CHI requests SHIB": {
+   "requests": "sell_indices",
+   "position": 152,
+   "expected_index": 3840,
+   "actual_index": 3839,
+   "utc": "2026-06-02 20:00 UTC"
+  }
+ },
+ "checkpoints": {
+  "expected": {
+   "T3-CCI ZEC": {
+    "trades": 174,
+    "ending_capital": 242415.359096,
+    "net_return_pct": 2324.153591,
+    "max_drawdown_pct": 48.492574,
+    "ohlc_drawdown_bound_pct": 51.465752,
+    "doubled_cost_return_pct": 1496.60837
+   },
+   "T3-CCI CAKE": {
+    "net_return_pct": 409.133158,
+    "max_drawdown_pct": 33.506498,
+    "ohlc_drawdown_bound_pct": 39.506146
+   },
+   "CHI 84": {
+    "trades": 1860,
+    "ending_capital": 986992.007519,
+    "net_return_pct": 17.499049,
+    "max_drawdown_pct": 29.100771,
+    "ohlc_drawdown_bound_pct": 30.210689,
+    "doubled_cost_return_pct": 11.385354,
+    "without_zec_return_pct": 13.530781,
+    "positive_coins": 39
+   }
+  },
+  "actual": {
+   "T3-CCI ZEC": {
+    "trades": 174,
+    "ending_capital": 242415.35909601068,
+    "net_return_pct": 2324.153590960107,
+    "max_drawdown_pct": 48.49257425009159,
+    "ohlc_drawdown_bound_pct": 51.465751584133514,
+    "doubled_cost_return_pct": 1496.6083695257773
+   },
+   "T3-CCI CAKE": {
+    "net_return_pct": 409.1331577900484,
+    "max_drawdown_pct": 33.50649803471983,
+    "ohlc_drawdown_bound_pct": 39.50614562887947
+   },
+   "CHI 84": {
+    "trades": 1860,
+    "ending_capital": 986992.0075193462,
+    "net_return_pct": 17.49904851420787,
+    "max_drawdown_pct": 29.100771390295076,
+    "ohlc_drawdown_bound_pct": 30.21068858237609,
+    "doubled_cost_return_pct": 11.385353628727724,
+    "without_zec_return_pct": 13.530780884960713,
+    "positive_coins": 39
+   }
+  }
+ },
+ "extra": {
+  "chi_first_18_months_pct": 7.816318624516416,
+  "chi_last_6_months_pct": 8.980764705399324,
+  "chi_losing_coins": 45,
+  "chi_median_coin_pct": [
+   -5.7583996176451935,
+   -5.35314425431368
+  ]
+ }
+}

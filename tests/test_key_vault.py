@@ -73,7 +73,7 @@ class TestProviders:
     def test_alpaca_is_a_stocks_provider(self):
         assert PROVIDERS[("alpaca", "testnet")]["market"] == "stocks" and PROVIDERS[("alpaca", "mainnet")]["market"] == "stocks"
         assert {PROVIDERS[k]["market"] for k in PROVIDERS if k[0] in ("bybit", "binance")} == {"crypto"}
-        assert PROVIDERS[("reddit", "data")]["market"] == "data"
+        assert ("reddit", "data") not in PROVIDERS            # the V10 scout and its Reddit key were removed 2026-10-21
 
     def test_keys_are_saved_only_after_the_provider_accepts_them(self, tmp_path):
         v = KeyVault(tmp_path / "k.vault", "p")

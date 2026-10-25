@@ -1,0 +1,48 @@
+
+L=1 z=3 H=1 events=652  (gross %, sign-adjusted: + = continuation of BTC's move)
+  BTC up   n= 317 laggards +0.093  leaders +0.111  all +0.132
+  BTC down n= 335 laggards +0.124  leaders -0.532  all -0.094
+  2021 n= 153 laggards +0.166  leaders -0.654  all -0.017  lag-lead +0.820  median lead -0.255
+  2022 n= 188 laggards +0.156  leaders -0.202  all +0.009  lag-lead +0.358  median lead -0.023
+  2023 n= 164 laggards -0.008  leaders -0.171  all -0.050  lag-lead +0.163  median lead -0.263
+  2024 n= 147 laggards +0.119  leaders +0.158  all +0.133  lag-lead -0.039  median lead -0.054
+
+L=1 z=2 H=1 events=1783  (gross %, sign-adjusted: + = continuation of BTC's move)
+  BTC up   n= 888 laggards +0.098  leaders +0.080  all +0.099
+  BTC down n= 895 laggards +0.046  leaders -0.332  all -0.105
+  2021 n= 463 laggards +0.072  leaders -0.338  all -0.073  lag-lead +0.411  median lead -0.201
+  2022 n= 475 laggards +0.212  leaders -0.064  all +0.072  lag-lead +0.276  median lead -0.037
+  2023 n= 441 laggards -0.015  leaders -0.099  all -0.038  lag-lead +0.084  median lead -0.152
+  2024 n= 404 laggards +0.002  leaders +0.011  all +0.024  lag-lead -0.009  median lead -0.083
+
+L=2 z=3 H=2 events=643  (gross %, sign-adjusted: + = continuation of BTC's move)
+  BTC up   n= 312 laggards -0.094  leaders +0.145  all +0.111
+  BTC down n= 331 laggards -0.267  leaders -0.817  all -0.498
+  2021 n= 143 laggards -0.321  leaders -1.149  all -0.578  lag-lead +0.828  median lead -0.034
+  2022 n= 181 laggards -0.454  leaders -0.151  all -0.160  lag-lead -0.302  median lead +0.203
+  2023 n= 165 laggards +0.218  leaders -0.150  all -0.021  lag-lead +0.368  median lead -0.316
+  2024 n= 154 laggards -0.167  leaders -0.057  all -0.098  lag-lead -0.110  median lead +0.075
+
+L=4 z=3 H=2 events=631  (gross %, sign-adjusted: + = continuation of BTC's move)
+  BTC up   n= 309 laggards -0.276  leaders -0.017  all -0.109
+  BTC down n= 322 laggards -0.481  leaders -0.975  all -0.625
+  2021 n= 142 laggards -0.624  leaders -1.729  all -0.862  lag-lead +1.104  median lead -0.612
+  2022 n= 180 laggards -0.711  leaders -0.192  all -0.412  lag-lead -0.518  median lead +0.160
+  2023 n= 175 laggards +0.059  leaders -0.037  all -0.019  lag-lead +0.096  median lead -0.219
+  2024 n= 134 laggards -0.254  leaders -0.245  all -0.261  lag-lead -0.009  median lead -0.502
+
+L=4 z=3 H=4 events=631  (gross %, sign-adjusted: + = continuation of BTC's move)
+  BTC up   n= 309 laggards -0.192  leaders +0.048  all -0.058
+  BTC down n= 322 laggards -0.388  leaders -0.931  all -0.691
+  2021 n= 142 laggards -0.751  leaders -1.994  all -1.042  lag-lead +1.243  median lead -0.474
+  2022 n= 180 laggards -0.593  leaders +0.241  all -0.303  lag-lead -0.833  median lead +0.115
+  2023 n= 175 laggards +0.186  leaders -0.013  all +0.030  lag-lead +0.199  median lead -0.225
+  2024 n= 134 laggards -0.028  leaders -0.319  all -0.322  lag-lead +0.291  median lead -0.359
+
+L=4 z=2 H=4 events=1891  (gross %, sign-adjusted: + = continuation of BTC's move)
+  BTC up   n= 941 laggards +0.015  leaders +0.102  all +0.051
+  BTC down n= 950 laggards -0.219  leaders -0.491  all -0.353
+  2021 n= 470 laggards -0.259  leaders -0.840  all -0.459  lag-lead +0.581  median lead -0.193
+  2022 n= 508 laggards -0.203  leaders +0.034  all -0.133  lag-lead -0.237  median lead -0.202
+  2023 n= 486 laggards +0.105  leaders +0.011  all +0.012  lag-lead +0.093  median lead -0.165
+  2024 n= 427 laggards -0.046  leaders +0.004  all -0.021  lag-lead -0.050  median lead -0.086

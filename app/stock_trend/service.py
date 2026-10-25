@@ -35,6 +35,7 @@ class StockTrendService:
         self.quote_feed=self.env.get('STOCK_TREND_QUOTE_FEED','iex')
         if self.quote_feed not in ('iex','sip'):raise ValueError('Stock quote feed must be iex or sip')
         self.utcnow=lambda:datetime.now(timezone.utc)
+        self.alpaca_guard=lambda network:None    # set by app/main.py: another strategy on the same Alpaca account
 
     def save(self):
         with self.db:self.db.execute("INSERT OR REPLACE INTO state VALUES('config',?)",(json.dumps(self.config),))
@@ -99,6 +100,8 @@ class StockTrendService:
         if amount>self.max_allocation():raise Blocked('Allocation exceeds the configured strategy cap')
         cap=capacity(amount)
         if not cap['can_open']:raise Blocked(cap['reason'])
+        owner=self.alpaca_guard(network)
+        if owner:raise Blocked(owner+' uses this Alpaca account: one strategy per account')
         if network=='mainnet':
             if not self.secure:raise Blocked('Live stocks require an authenticated private dashboard')
             if acknowledgement!='LIVE STOCKS 5':raise Blocked('Enter LIVE STOCKS 5 to arm real-money stocks')

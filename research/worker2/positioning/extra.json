@@ -1,0 +1,37 @@
+{
+ "primary_equity_pct_shares": {
+  "total_pct_points": 237.0,
+  "max_share": 0.1754,
+  "top5": [
+   [
+    "MYXUSDT",
+    0.1754
+   ],
+   [
+    "TRBUSDT",
+    0.1063
+   ],
+   [
+    "PIPPINUSDT",
+    0.105
+   ],
+   [
+    "SIRENUSDT",
+    0.0737
+   ],
+   [
+    "RIVERUSDT",
+    0.0733
+   ]
+  ]
+ },
+ "primary_usd_profit_share_from_test_positions": 0.659,
+ "unfixed_r4_03_at_500": {
+  "opening_orders": 1125,
+  "skipped": 28,
+  "skipped_share": 0.0249,
+  "coins": [
+   "BTCUSDT"
+  ]
+ }
+}

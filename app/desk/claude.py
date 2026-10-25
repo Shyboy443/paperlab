@@ -144,14 +144,20 @@ class ClaudeLLM(DeskLLM):
 
     def chat(self, system: str, messages: Sequence[dict[str, Any]], tools: Sequence[dict[str, Any]] | None = None,
              run_tool: ToolRunner | None = None, max_rounds: int = 3, json_mode: bool = False,
-             max_tokens: int | None = None, deep: bool = False) -> dict[str, Any]:
+             max_tokens: int | None = None, deep: bool = False,
+             allow_continuation: bool = True) -> dict[str, Any]:
         if not self._ak():                             # no Anthropic key (yet): the OpenRouter path
             return super().chat(system, messages, tools=tools, run_tool=run_tool, max_rounds=max_rounds,
-                                json_mode=json_mode, max_tokens=max_tokens, deep=deep)
+                                json_mode=json_mode, max_tokens=max_tokens, deep=deep,
+                                allow_continuation=allow_continuation)
         model = self.claude_model_deep if deep else self.claude_model
         # thinking (on by default for these models) counts toward max_tokens, so leave room for it
         params: dict[str, Any] = {"model": model, "system": system, "max_tokens": max(8000, max_tokens or self.max_tokens),
                                   "messages": to_claude_messages(messages)}
+        if not allow_continuation:
+            # Bounded structured reviews must honor the caller's token cap.
+            params["max_tokens"] = max_tokens or self.max_tokens
+            params["thinking"] = {"type": "disabled"}
         if tools:
             params["tools"] = to_claude_tools(tools)
         if json_mode:
@@ -177,7 +183,7 @@ class ClaudeLLM(DeskLLM):
                 params["messages"] = params["messages"] + [{"role": "user", "content": results}]
                 continue
             text = self._text(resp)
-            if stop == "max_tokens" and continued < 1:
+            if stop == "max_tokens" and continued < 1 and allow_continuation:
                 continued += 1
                 params["messages"] = params["messages"] + [{"role": "assistant", "content": resp.content},
                                                            {"role": "user", "content": "Continue exactly where you stopped."}]
@@ -185,7 +191,8 @@ class ClaudeLLM(DeskLLM):
                 text = (text + " " + self._text(more)).strip()
                 if getattr(more, "stop_reason", None) == "max_tokens":
                     text = complete_sentences(text)
-            return {"text": text, "tool_calls": used, "cost_usd": round(self.cost_total - cost0, 5)}
+            return {"text": text, "tool_calls": used, "cost_usd": round(self.cost_total - cost0, 5),
+                    "truncated": not allow_continuation and stop == "max_tokens"}
         return {"text": "(stopped after too many tool calls)", "tool_calls": used, "cost_usd": round(self.cost_total - cost0, 5)}
 
 

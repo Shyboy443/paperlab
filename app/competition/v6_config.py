@@ -30,8 +30,11 @@ DAY = 24 * HOUR
 
 HORIZON_TAG = {"HOURLY": "1H", "SWING": "4H"}
 SIGNAL_TF = {"HOURLY": "1h", "SWING": "4h"}
-HOURLY_FAMILIES: tuple[str, ...] = ("V6.1", "V6.2", "V6.3", "V6.4", "V6.5", "V6.6")
-SWING_FAMILIES: tuple[str, ...] = ("V6.1",)            # the V5 lead (a SWING replication) is also run as SWING
+# 2026-10-12 the operator removed the families retired from view (V6.1/V6.3/V6.4/V6.5, and V6.1 SWING) so they no longer
+# compute: only the two families that made money over the two-year backtest stay in the field. This re-froze V6 (same
+# coins, breadth set and instrument rules) and, through the shared baseline, every program built on it.
+HOURLY_FAMILIES: tuple[str, ...] = ("V6.2", "V6.6")
+SWING_FAMILIES: tuple[str, ...] = ()
 TRADED_COINS = 4                                        # the top of the frozen universe ranking
 BREADTH_SET = 16                                        # BTC + ETH + the top liquid eligible coins, observed only
 

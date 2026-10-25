@@ -1,0 +1,579 @@
+{
+ "leadlag_corr_dev": {
+  "SOLUSDT": -0.0321,
+  "ADAUSDT": -0.0519,
+  "AVAXUSDT": -0.0393,
+  "DOTUSDT": -0.0396,
+  "NEARUSDT": -0.0297,
+  "BNBUSDT": -0.0154
+ },
+ "grid": [
+  {
+   "name": "A_resid_cs_look4_rebal1",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -25.33,
+    "median_month": -28.55,
+    "geo_month": -26.23,
+    "worst_month": -46.79,
+    "best_month": 13.67,
+    "months_up": 2.0,
+    "net_pct": -100.0,
+    "max_dd_pct": 100.0,
+    "trades": 33599,
+    "win_rate": 42.6,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 42,
+    "zero_cost_mean_month": 7.93
+   }
+  },
+  {
+   "name": "A_resid_cs_look4_rebal4",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -12.51,
+    "median_month": -13.53,
+    "geo_month": -13.32,
+    "worst_month": -39.78,
+    "best_month": 13.07,
+    "months_up": 7.0,
+    "net_pct": -99.86,
+    "max_dd_pct": 99.9,
+    "trades": 8400,
+    "win_rate": 43.1,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 25,
+    "zero_cost_mean_month": 4.56
+   }
+  },
+  {
+   "name": "A_resid_cs_look12_rebal1",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -18.1,
+    "median_month": -19.36,
+    "geo_month": -19.16,
+    "worst_month": -55.1,
+    "best_month": 15.27,
+    "months_up": 3.0,
+    "net_pct": -99.99,
+    "max_dd_pct": 100.0,
+    "trades": 33599,
+    "win_rate": 45.7,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 51,
+    "zero_cost_mean_month": 2.56
+   }
+  },
+  {
+   "name": "A_resid_cs_look12_rebal4",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -10.11,
+    "median_month": -9.69,
+    "geo_month": -11.04,
+    "worst_month": -56.43,
+    "best_month": 15.0,
+    "months_up": 5.0,
+    "net_pct": -99.54,
+    "max_dd_pct": 99.56,
+    "trades": 8400,
+    "win_rate": 46.3,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 9,
+    "zero_cost_mean_month": -0.06
+   }
+  },
+  {
+   "name": "A_resid_cs_look12_rebal24",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -2.97,
+    "median_month": -3.34,
+    "geo_month": -3.67,
+    "worst_month": -50.44,
+    "best_month": 22.64,
+    "months_up": 15.0,
+    "net_pct": -82.12,
+    "max_dd_pct": 84.79,
+    "trades": 1400,
+    "win_rate": 46.5,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 2,
+    "zero_cost_mean_month": -0.13
+   }
+  },
+  {
+   "name": "A_resid_cs_look24_rebal1",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -12.62,
+    "median_month": -13.87,
+    "geo_month": -13.58,
+    "worst_month": -53.16,
+    "best_month": 37.27,
+    "months_up": 4.0,
+    "net_pct": -99.88,
+    "max_dd_pct": 99.89,
+    "trades": 33599,
+    "win_rate": 47.3,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 32,
+    "zero_cost_mean_month": 2.65
+   }
+  },
+  {
+   "name": "A_resid_cs_look24_rebal4",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -6.78,
+    "median_month": -7.21,
+    "geo_month": -7.73,
+    "worst_month": -54.93,
+    "best_month": 19.5,
+    "months_up": 13.0,
+    "net_pct": -97.54,
+    "max_dd_pct": 98.06,
+    "trades": 8400,
+    "win_rate": 48.7,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 17,
+    "zero_cost_mean_month": 0.63
+   }
+  },
+  {
+   "name": "A_resid_cs_look24_rebal24",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -3.95,
+    "median_month": -3.02,
+    "geo_month": -4.42,
+    "worst_month": -34.8,
+    "best_month": 12.22,
+    "months_up": 17.0,
+    "net_pct": -87.5,
+    "max_dd_pct": 89.29,
+    "trades": 1400,
+    "win_rate": 48.0,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 3,
+    "zero_cost_mean_month": -1.11
+   }
+  },
+  {
+   "name": "A_resid_cs_look72_rebal1",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -9.14,
+    "median_month": -8.17,
+    "geo_month": -9.46,
+    "worst_month": -28.38,
+    "best_month": 3.6,
+    "months_up": 5.0,
+    "net_pct": -98.97,
+    "max_dd_pct": 99.09,
+    "trades": 33599,
+    "win_rate": 48.7,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 48,
+    "zero_cost_mean_month": -0.4
+   }
+  },
+  {
+   "name": "A_resid_cs_look72_rebal4",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -6.21,
+    "median_month": -4.3,
+    "geo_month": -6.51,
+    "worst_month": -25.68,
+    "best_month": 5.52,
+    "months_up": 9.0,
+    "net_pct": -95.49,
+    "max_dd_pct": 96.21,
+    "trades": 8400,
+    "win_rate": 49.4,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 15,
+    "zero_cost_mean_month": -1.98
+   }
+  },
+  {
+   "name": "A_resid_cs_look72_rebal24",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -3.09,
+    "median_month": -1.88,
+    "geo_month": -3.32,
+    "worst_month": -19.83,
+    "best_month": 10.27,
+    "months_up": 15.0,
+    "net_pct": -78.8,
+    "max_dd_pct": 82.55,
+    "trades": 1400,
+    "win_rate": 48.7,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 2,
+    "zero_cost_mean_month": -1.4
+   }
+  },
+  {
+   "name": "A_resid_ts_look24_z1.5_rebal4",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -6.48,
+    "median_month": -4.12,
+    "geo_month": -7.85,
+    "worst_month": -69.54,
+    "best_month": 9.01,
+    "months_up": 15.0,
+    "net_pct": -97.67,
+    "max_dd_pct": 98.01,
+    "trades": 4637,
+    "win_rate": 39.7,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 1,
+    "zero_cost_mean_month": -2.39
+   }
+  },
+  {
+   "name": "A_resid_ts_look24_z2.5_rebal4",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -3.08,
+    "median_month": -1.27,
+    "geo_month": -3.82,
+    "worst_month": -57.04,
+    "best_month": 11.83,
+    "months_up": 13.0,
+    "net_pct": -83.3,
+    "max_dd_pct": 83.82,
+    "trades": 1753,
+    "win_rate": 39.5,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 1,
+    "zero_cost_mean_month": -1.5
+   }
+  },
+  {
+   "name": "A_resid_ts_look72_z1.5_rebal4",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -6.66,
+    "median_month": -5.01,
+    "geo_month": -7.35,
+    "worst_month": -54.5,
+    "best_month": 6.09,
+    "months_up": 9.0,
+    "net_pct": -97.02,
+    "max_dd_pct": 97.64,
+    "trades": 4991,
+    "win_rate": 43.0,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 4,
+    "zero_cost_mean_month": -3.69
+   }
+  },
+  {
+   "name": "A_resid_ts_look72_z2.5_rebal4",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -2.03,
+    "median_month": -0.44,
+    "geo_month": -2.61,
+    "worst_month": -42.55,
+    "best_month": 23.97,
+    "months_up": 18.0,
+    "net_pct": -70.34,
+    "max_dd_pct": 77.68,
+    "trades": 1931,
+    "win_rate": 42.7,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 3,
+    "zero_cost_mean_month": -0.71
+   }
+  },
+  {
+   "name": "C_leadlag_k2.0_sign1_hold1",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -5.66,
+    "median_month": -5.18,
+    "geo_month": -5.72,
+    "worst_month": -15.2,
+    "best_month": -1.13,
+    "months_up": 0.0,
+    "net_pct": -93.33,
+    "max_dd_pct": 93.37,
+    "trades": 3262,
+    "win_rate": 20.1,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 0,
+    "zero_cost_mean_month": -0.94
+   }
+  },
+  {
+   "name": "C_leadlag_k2.0_sign-1_hold1",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -3.89,
+    "median_month": -4.1,
+    "geo_month": -3.92,
+    "worst_month": -10.65,
+    "best_month": 2.39,
+    "months_up": 3.0,
+    "net_pct": -84.14,
+    "max_dd_pct": 84.32,
+    "trades": 3262,
+    "win_rate": 22.1,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 0,
+    "zero_cost_mean_month": 0.94
+   }
+  },
+  {
+   "name": "C_leadlag_k3.0_sign1_hold1",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -2.51,
+    "median_month": -1.75,
+    "geo_month": -2.54,
+    "worst_month": -11.24,
+    "best_month": 0.29,
+    "months_up": 1.0,
+    "net_pct": -69.36,
+    "max_dd_pct": 69.57,
+    "trades": 1220,
+    "win_rate": 19.8,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 0,
+    "zero_cost_mean_month": -0.71
+   }
+  },
+  {
+   "name": "C_leadlag_k3.0_sign-1_hold1",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -1.12,
+    "median_month": -1.02,
+    "geo_month": -1.14,
+    "worst_month": -5.5,
+    "best_month": 4.9,
+    "months_up": 9.0,
+    "net_pct": -40.85,
+    "max_dd_pct": 42.5,
+    "trades": 1220,
+    "win_rate": 23.9,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 0,
+    "zero_cost_mean_month": 0.72
+   }
+  },
+  {
+   "name": "B_pairs_zw72_e2.0_all",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -1.2,
+    "median_month": -1.25,
+    "geo_month": -1.43,
+    "worst_month": -23.44,
+    "best_month": 29.48,
+    "months_up": 17.0,
+    "net_pct": -48.34,
+    "max_dd_pct": 56.54,
+    "trades": 33591,
+    "win_rate": 49.6,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 8,
+    "zero_cost_mean_month": 0.02
+   }
+  },
+  {
+   "name": "B_pairs_zw72_e2.0_open",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -4.07,
+    "median_month": -4.81,
+    "geo_month": -4.91,
+    "worst_month": -46.91,
+    "best_month": 49.01,
+    "months_up": 15.0,
+    "net_pct": -90.12,
+    "max_dd_pct": 91.48,
+    "trades": 33591,
+    "win_rate": 49.5,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 48,
+    "zero_cost_mean_month": -0.81
+   }
+  },
+  {
+   "name": "B_pairs_zw72_e2.5_all",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -0.83,
+    "median_month": -1.12,
+    "geo_month": -1.06,
+    "worst_month": -23.57,
+    "best_month": 31.23,
+    "months_up": 18.0,
+    "net_pct": -38.82,
+    "max_dd_pct": 48.66,
+    "trades": 33541,
+    "win_rate": 49.5,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 3,
+    "zero_cost_mean_month": 0.12
+   }
+  },
+  {
+   "name": "B_pairs_zw72_e2.5_open",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -4.16,
+    "median_month": -5.26,
+    "geo_month": -5.33,
+    "worst_month": -53.09,
+    "best_month": 65.11,
+    "months_up": 13.0,
+    "net_pct": -91.95,
+    "max_dd_pct": 92.67,
+    "trades": 33541,
+    "win_rate": 49.4,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 31,
+    "zero_cost_mean_month": -1.33
+   }
+  },
+  {
+   "name": "B_pairs_zw168_e2.0_all",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -1.27,
+    "median_month": -0.6,
+    "geo_month": -1.47,
+    "worst_month": -20.91,
+    "best_month": 17.61,
+    "months_up": 18.0,
+    "net_pct": -49.48,
+    "max_dd_pct": 53.61,
+    "trades": 33536,
+    "win_rate": 49.5,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 9,
+    "zero_cost_mean_month": -0.59
+   }
+  },
+  {
+   "name": "B_pairs_zw168_e2.0_open",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -3.8,
+    "median_month": -2.64,
+    "geo_month": -4.66,
+    "worst_month": -43.64,
+    "best_month": 30.14,
+    "months_up": 18.0,
+    "net_pct": -88.85,
+    "max_dd_pct": 90.81,
+    "trades": 33536,
+    "win_rate": 49.5,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 51,
+    "zero_cost_mean_month": -1.84
+   }
+  },
+  {
+   "name": "B_pairs_zw168_e2.5_all",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -1.0,
+    "median_month": -0.62,
+    "geo_month": -1.11,
+    "worst_month": -16.74,
+    "best_month": 9.92,
+    "months_up": 22.0,
+    "net_pct": -40.29,
+    "max_dd_pct": 44.67,
+    "trades": 33333,
+    "win_rate": 49.7,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 8,
+    "zero_cost_mean_month": -0.41
+   }
+  },
+  {
+   "name": "B_pairs_zw168_e2.5_open",
+   "dev": {
+    "n_months": 46,
+    "mean_month": -3.65,
+    "median_month": -2.21,
+    "geo_month": -4.32,
+    "worst_month": -40.36,
+    "best_month": 24.47,
+    "months_up": 18.0,
+    "net_pct": -86.86,
+    "max_dd_pct": 88.66,
+    "trades": 33333,
+    "win_rate": 49.7,
+    "top3_share_of_profit": null,
+    "liq_legs": 0,
+    "wiped": false,
+    "vol_capped_legs": 44,
+    "zero_cost_mean_month": -1.78
+   }
+  }
+ ]
+}

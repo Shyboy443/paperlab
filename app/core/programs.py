@@ -16,8 +16,13 @@ from __future__ import annotations
 RETIRED_ON = "2026-10-08"
 # 2026-10-09 the operator turned the scalpers back on as paper bots ("scalper bots are not doing anything at all, fix
 # that"): V8 / V11 / V13 / V14 run again, still labelled no edge after costs. V7, V9 and V12 stay off.
-REACTIVATED = frozenset({"v8", "v11", "v13", "v14"})
-RETIRED_PROGRAMS = frozenset({"v7", "v9", "v12"})
+# 2026-10-12 the operator switched V8 off entirely ("remove the retired bots ... don't waste server performance").
+# 2026-10-14 the operator removed EVERY bot program, the V6.2/V6.6 backtest winners included ("just remove the bots,
+# keep it empty for now, don't touch the trading desk"). Nothing here runs; the Trading Desk desks are separate.
+REACTIVATED: frozenset[str] = frozenset()
+RETIRED_PROGRAMS = frozenset({"v6", "v7", "v8", "v9", "v11", "v12", "v13", "v14", "v16", "v17"})
+# Since 2026-10-12 these families are no longer in V6's field at all (they stopped computing); the filter stays for
+# their old rows in the history databases.
 RETIRED_V6_FAMILIES = frozenset({"V6.1", "V6.3", "V6.4", "V6.5"})
 WHY = ("Switched off on 2026-10-08: the two-year backtest lost money (V6.2 and V6.6 were the only families that made "
        "money).")

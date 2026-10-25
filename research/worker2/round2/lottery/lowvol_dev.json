@@ -1,0 +1,26 @@
+{
+ "max1d": {
+  "mean_rank_corr_with_vol": 0.74,
+  "short_leg_overlap_with_highvol_top8": 0.674
+ },
+ "smax": {
+  "mean_rank_corr_with_vol": 0.252,
+  "short_leg_overlap_with_highvol_top8": 0.429
+ },
+ "skewh": {
+  "mean_rank_corr_with_vol": 0.429,
+  "short_leg_overlap_with_highvol_top8": 0.492
+ },
+ "maxh": {
+  "mean_rank_corr_with_vol": 0.924,
+  "short_leg_overlap_with_highvol_top8": 0.82
+ },
+ "book_monthly_corr_max1d_vs_lowvol_DEV": 0.776,
+ "lowvol_book_DEV": {
+  "median_month": -0.58,
+  "geo_month": 0.07,
+  "mean_month": 0.43,
+  "net_pct": 3.28,
+  "t_stat": 0.34
+ }
+}

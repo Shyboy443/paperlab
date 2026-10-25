@@ -1,0 +1,426 @@
+{
+ "source": "TradingView_Strategy_Research_2024-2026 data-coverage.json (status full_period), frozen 2026-10-12T09:08:29Z",
+ "note": "the exact 84 assets with the complete two-year window, in the package's order; stablecoins and gold tokens included",
+ "assets": [
+  {
+   "asset": "BTC",
+   "venue": "Binance",
+   "pair": "BTCUSDT"
+  },
+  {
+   "asset": "ETH",
+   "venue": "Binance",
+   "pair": "ETHUSDT"
+  },
+  {
+   "asset": "BNB",
+   "venue": "Binance",
+   "pair": "BNBUSDT"
+  },
+  {
+   "asset": "SOL",
+   "venue": "Binance",
+   "pair": "SOLUSDT"
+  },
+  {
+   "asset": "USDC",
+   "venue": "Binance",
+   "pair": "USDCUSDT"
+  },
+  {
+   "asset": "XRP",
+   "venue": "Binance",
+   "pair": "XRPUSDT"
+  },
+  {
+   "asset": "ADA",
+   "venue": "Binance",
+   "pair": "ADAUSDT"
+  },
+  {
+   "asset": "AVAX",
+   "venue": "Binance",
+   "pair": "AVAXUSDT"
+  },
+  {
+   "asset": "DOGE",
+   "venue": "Binance",
+   "pair": "DOGEUSDT"
+  },
+  {
+   "asset": "TRX",
+   "venue": "Binance",
+   "pair": "TRXUSDT"
+  },
+  {
+   "asset": "LINK",
+   "venue": "Binance",
+   "pair": "LINKUSDT"
+  },
+  {
+   "asset": "DOT",
+   "venue": "Binance",
+   "pair": "DOTUSDT"
+  },
+  {
+   "asset": "SUI",
+   "venue": "Binance",
+   "pair": "SUIUSDT"
+  },
+  {
+   "asset": "NEAR",
+   "venue": "Binance",
+   "pair": "NEARUSDT"
+  },
+  {
+   "asset": "APT",
+   "venue": "Binance",
+   "pair": "APTUSDT"
+  },
+  {
+   "asset": "XLM",
+   "venue": "Binance",
+   "pair": "XLMUSDT"
+  },
+  {
+   "asset": "LTC",
+   "venue": "Binance",
+   "pair": "LTCUSDT"
+  },
+  {
+   "asset": "HBAR",
+   "venue": "Binance",
+   "pair": "HBARUSDT"
+  },
+  {
+   "asset": "UNI",
+   "venue": "Binance",
+   "pair": "UNIUSDT"
+  },
+  {
+   "asset": "SHIB",
+   "venue": "Binance",
+   "pair": "SHIBUSDT"
+  },
+  {
+   "asset": "TAO",
+   "venue": "Binance",
+   "pair": "TAOUSDT"
+  },
+  {
+   "asset": "KAS",
+   "venue": "Gate",
+   "pair": "KAS_USDT"
+  },
+  {
+   "asset": "ATOM",
+   "venue": "Binance",
+   "pair": "ATOMUSDT"
+  },
+  {
+   "asset": "ARB",
+   "venue": "Binance",
+   "pair": "ARBUSDT"
+  },
+  {
+   "asset": "OP",
+   "venue": "Binance",
+   "pair": "OPUSDT"
+  },
+  {
+   "asset": "POL",
+   "venue": "Binance",
+   "pair": "POLUSDT"
+  },
+  {
+   "asset": "AAVE",
+   "venue": "Binance",
+   "pair": "AAVEUSDT"
+  },
+  {
+   "asset": "RENDER",
+   "venue": "Binance",
+   "pair": "RENDERUSDT"
+  },
+  {
+   "asset": "ICP",
+   "venue": "Binance",
+   "pair": "ICPUSDT"
+  },
+  {
+   "asset": "BCH",
+   "venue": "Binance",
+   "pair": "BCHUSDT"
+  },
+  {
+   "asset": "FET",
+   "venue": "Binance",
+   "pair": "FETUSDT"
+  },
+  {
+   "asset": "INJ",
+   "venue": "Binance",
+   "pair": "INJUSDT"
+  },
+  {
+   "asset": "TIA",
+   "venue": "Binance",
+   "pair": "TIAUSDT"
+  },
+  {
+   "asset": "IMX",
+   "venue": "Binance",
+   "pair": "IMXUSDT"
+  },
+  {
+   "asset": "FDUSD",
+   "venue": "Binance",
+   "pair": "FDUSDUSDT"
+  },
+  {
+   "asset": "LDO",
+   "venue": "Binance",
+   "pair": "LDOUSDT"
+  },
+  {
+   "asset": "ENA",
+   "venue": "Binance",
+   "pair": "ENAUSDT"
+  },
+  {
+   "asset": "ALGO",
+   "venue": "Binance",
+   "pair": "ALGOUSDT"
+  },
+  {
+   "asset": "FIL",
+   "venue": "Binance",
+   "pair": "FILUSDT"
+  },
+  {
+   "asset": "SEI",
+   "venue": "Binance",
+   "pair": "SEIUSDT"
+  },
+  {
+   "asset": "QNT",
+   "venue": "Binance",
+   "pair": "QNTUSDT"
+  },
+  {
+   "asset": "GRT",
+   "venue": "Binance",
+   "pair": "GRTUSDT"
+  },
+  {
+   "asset": "ONDO",
+   "venue": "Gate",
+   "pair": "ONDO_USDT"
+  },
+  {
+   "asset": "PYTH",
+   "venue": "Binance",
+   "pair": "PYTHUSDT"
+  },
+  {
+   "asset": "JUP",
+   "venue": "Binance",
+   "pair": "JUPUSDT"
+  },
+  {
+   "asset": "RAY",
+   "venue": "Binance",
+   "pair": "RAYUSDT"
+  },
+  {
+   "asset": "RUNE",
+   "venue": "Binance",
+   "pair": "RUNEUSDT"
+  },
+  {
+   "asset": "CRV",
+   "venue": "Binance",
+   "pair": "CRVUSDT"
+  },
+  {
+   "asset": "AR",
+   "venue": "Binance",
+   "pair": "ARUSDT"
+  },
+  {
+   "asset": "AKT",
+   "venue": "Gate",
+   "pair": "AKT_USDT"
+  },
+  {
+   "asset": "WLD",
+   "venue": "Binance",
+   "pair": "WLDUSDT"
+  },
+  {
+   "asset": "STRK",
+   "venue": "Binance",
+   "pair": "STRKUSDT"
+  },
+  {
+   "asset": "ZK",
+   "venue": "Binance",
+   "pair": "ZKUSDT"
+  },
+  {
+   "asset": "DYM",
+   "venue": "Binance",
+   "pair": "DYMUSDT"
+  },
+  {
+   "asset": "SNX",
+   "venue": "Binance",
+   "pair": "SNXUSDT"
+  },
+  {
+   "asset": "COMP",
+   "venue": "Binance",
+   "pair": "COMPUSDT"
+  },
+  {
+   "asset": "DYDX",
+   "venue": "Binance",
+   "pair": "DYDXUSDT"
+  },
+  {
+   "asset": "PENDLE",
+   "venue": "Binance",
+   "pair": "PENDLEUSDT"
+  },
+  {
+   "asset": "CAKE",
+   "venue": "Binance",
+   "pair": "CAKEUSDT"
+  },
+  {
+   "asset": "RPL",
+   "venue": "Binance",
+   "pair": "RPLUSDT"
+  },
+  {
+   "asset": "GMX",
+   "venue": "Binance",
+   "pair": "GMXUSDT"
+  },
+  {
+   "asset": "1INCH",
+   "venue": "Binance",
+   "pair": "1INCHUSDT"
+  },
+  {
+   "asset": "W",
+   "venue": "Binance",
+   "pair": "WUSDT"
+  },
+  {
+   "asset": "ZRO",
+   "venue": "Binance",
+   "pair": "ZROUSDT"
+  },
+  {
+   "asset": "AXL",
+   "venue": "Binance",
+   "pair": "AXLUSDT"
+  },
+  {
+   "asset": "CRO",
+   "venue": "Gate",
+   "pair": "CRO_USDT"
+  },
+  {
+   "asset": "BGB",
+   "venue": "Bitget",
+   "pair": "BGBUSDT"
+  },
+  {
+   "asset": "GT",
+   "venue": "Gate",
+   "pair": "GT_USDT"
+  },
+  {
+   "asset": "PAXG",
+   "venue": "Binance",
+   "pair": "PAXGUSDT"
+  },
+  {
+   "asset": "XTZ",
+   "venue": "Binance",
+   "pair": "XTZUSDT"
+  },
+  {
+   "asset": "FLOW",
+   "venue": "Binance",
+   "pair": "FLOWUSDT"
+  },
+  {
+   "asset": "EGLD",
+   "venue": "Binance",
+   "pair": "EGLDUSDT"
+  },
+  {
+   "asset": "KAVA",
+   "venue": "Binance",
+   "pair": "KAVAUSDT"
+  },
+  {
+   "asset": "CELO",
+   "venue": "Binance",
+   "pair": "CELOUSDT"
+  },
+  {
+   "asset": "NEO",
+   "venue": "Binance",
+   "pair": "NEOUSDT"
+  },
+  {
+   "asset": "ETC",
+   "venue": "Binance",
+   "pair": "ETCUSDT"
+  },
+  {
+   "asset": "ZEC",
+   "venue": "Binance",
+   "pair": "ZECUSDT"
+  },
+  {
+   "asset": "METIS",
+   "venue": "Binance",
+   "pair": "METISUSDT"
+  },
+  {
+   "asset": "LPT",
+   "venue": "Binance",
+   "pair": "LPTUSDT"
+  },
+  {
+   "asset": "THETA",
+   "venue": "Binance",
+   "pair": "THETAUSDT"
+  },
+  {
+   "asset": "JASMY",
+   "venue": "Binance",
+   "pair": "JASMYUSDT"
+  },
+  {
+   "asset": "SAND",
+   "venue": "Binance",
+   "pair": "SANDUSDT"
+  },
+  {
+   "asset": "MANA",
+   "venue": "Binance",
+   "pair": "MANAUSDT"
+  },
+  {
+   "asset": "GALA",
+   "venue": "Binance",
+   "pair": "GALAUSDT"
+  }
+ ]
+}

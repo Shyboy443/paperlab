@@ -1,0 +1,318 @@
+{
+ "P": {
+  "2021": {
+   "x1": {
+    "net_pct": 212.53,
+    "median_month": 11.46,
+    "geo_month": 9.96,
+    "worst_month": -2.01,
+    "max_dd_pct": 10.15,
+    "months_up": 10.0,
+    "n_months": 12
+   },
+   "x2": {
+    "net_pct": 183.22,
+    "median_month": 10.34,
+    "geo_month": 9.06,
+    "worst_month": -2.59,
+    "max_dd_pct": 10.36,
+    "months_up": 10.0,
+    "n_months": 12
+   },
+   "trades": 723,
+   "avg_trade_net_bps": 116.8,
+   "win_rate": 47.3,
+   "long_avg_bps": 234.5,
+   "short_avg_bps": -19.5,
+   "share_long": 0.54
+  },
+  "2022": {
+   "x1": {
+    "net_pct": 106.68,
+    "median_month": 6.08,
+    "geo_month": 6.24,
+    "worst_month": -17.41,
+    "max_dd_pct": 20.32,
+    "months_up": 10.0,
+    "n_months": 12
+   },
+   "x2": {
+    "net_pct": 89.81,
+    "median_month": 5.4,
+    "geo_month": 5.49,
+    "worst_month": -18.15,
+    "max_dd_pct": 20.95,
+    "months_up": 10.0,
+    "n_months": 12
+   },
+   "trades": 628,
+   "avg_trade_net_bps": 149.6,
+   "win_rate": 54.3,
+   "long_avg_bps": 32.3,
+   "short_avg_bps": 252.9,
+   "share_long": 0.47
+  },
+  "2023": {
+   "x1": {
+    "net_pct": 91.69,
+    "median_month": 6.07,
+    "geo_month": 5.57,
+    "worst_month": -3.26,
+    "max_dd_pct": 11.27,
+    "months_up": 8.0,
+    "n_months": 12
+   },
+   "x2": {
+    "net_pct": 70.35,
+    "median_month": 4.94,
+    "geo_month": 4.54,
+    "worst_month": -4.95,
+    "max_dd_pct": 12.91,
+    "months_up": 8.0,
+    "n_months": 12
+   },
+   "trades": 633,
+   "avg_trade_net_bps": 52.1,
+   "win_rate": 46.3,
+   "long_avg_bps": 121.0,
+   "short_avg_bps": -32.4,
+   "share_long": 0.55
+  },
+  "2024": {
+   "x1": {
+    "net_pct": 72.85,
+    "median_month": 1.34,
+    "geo_month": 4.67,
+    "worst_month": -5.8,
+    "max_dd_pct": 11.85,
+    "months_up": 8.0,
+    "n_months": 12
+   },
+   "x2": {
+    "net_pct": 57.4,
+    "median_month": 0.64,
+    "geo_month": 3.85,
+    "worst_month": -6.9,
+    "max_dd_pct": 13.29,
+    "months_up": 8.0,
+    "n_months": 12
+   },
+   "trades": 530,
+   "avg_trade_net_bps": 106.0,
+   "win_rate": 51.9,
+   "long_avg_bps": 119.3,
+   "short_avg_bps": 85.3,
+   "share_long": 0.61
+  },
+  "2025": {
+   "x1": {
+    "net_pct": 31.03,
+    "median_month": 1.83,
+    "geo_month": 2.28,
+    "worst_month": -9.6,
+    "max_dd_pct": 16.3,
+    "months_up": 7.0,
+    "n_months": 12
+   },
+   "x2": {
+    "net_pct": 20.41,
+    "median_month": 1.28,
+    "geo_month": 1.56,
+    "worst_month": -9.93,
+    "max_dd_pct": 17.19,
+    "months_up": 7.0,
+    "n_months": 12
+   },
+   "trades": 484,
+   "avg_trade_net_bps": 48.4,
+   "win_rate": 47.3,
+   "long_avg_bps": 63.3,
+   "short_avg_bps": 30.4,
+   "share_long": 0.55
+  },
+  "2026": {
+   "x1": {
+    "net_pct": 33.63,
+    "median_month": 2.23,
+    "geo_month": 2.94,
+    "worst_month": -12.21,
+    "max_dd_pct": 14.26,
+    "months_up": 7.0,
+    "n_months": 10
+   },
+   "x2": {
+    "net_pct": 20.45,
+    "median_month": 1.02,
+    "geo_month": 1.88,
+    "worst_month": -13.35,
+    "max_dd_pct": 16.48,
+    "months_up": 7.0,
+    "n_months": 10
+   },
+   "trades": 656,
+   "avg_trade_net_bps": 76.6,
+   "win_rate": 52.1,
+   "long_avg_bps": 105.6,
+   "short_avg_bps": 47.5,
+   "share_long": 0.5
+  }
+ },
+ "r4_09_original": {
+  "2021": {
+   "x1": {
+    "net_pct": 426.92,
+    "median_month": 16.66,
+    "geo_month": 14.85,
+    "worst_month": -3.22,
+    "max_dd_pct": 14.86,
+    "months_up": 11.0,
+    "n_months": 12
+   },
+   "x2": {
+    "net_pct": 362.68,
+    "median_month": 15.01,
+    "geo_month": 13.62,
+    "worst_month": -4.22,
+    "max_dd_pct": 15.12,
+    "months_up": 11.0,
+    "n_months": 12
+   },
+   "trades": 723,
+   "avg_trade_net_bps": 116.8,
+   "win_rate": 47.3,
+   "long_avg_bps": 234.5,
+   "short_avg_bps": -19.5,
+   "share_long": 0.54
+  },
+  "2022": {
+   "x1": {
+    "net_pct": 161.63,
+    "median_month": 8.09,
+    "geo_month": 8.34,
+    "worst_month": -17.86,
+    "max_dd_pct": 22.37,
+    "months_up": 10.0,
+    "n_months": 12
+   },
+   "x2": {
+    "net_pct": 138.05,
+    "median_month": 7.23,
+    "geo_month": 7.5,
+    "worst_month": -18.66,
+    "max_dd_pct": 23.03,
+    "months_up": 10.0,
+    "n_months": 12
+   },
+   "trades": 628,
+   "avg_trade_net_bps": 149.6,
+   "win_rate": 54.3,
+   "long_avg_bps": 32.3,
+   "short_avg_bps": 252.9,
+   "share_long": 0.47
+  },
+  "2023": {
+   "x1": {
+    "net_pct": 106.31,
+    "median_month": 5.83,
+    "geo_month": 6.22,
+    "worst_month": -2.96,
+    "max_dd_pct": 11.11,
+    "months_up": 9.0,
+    "n_months": 12
+   },
+   "x2": {
+    "net_pct": 81.5,
+    "median_month": 4.56,
+    "geo_month": 5.09,
+    "worst_month": -4.76,
+    "max_dd_pct": 12.77,
+    "months_up": 9.0,
+    "n_months": 12
+   },
+   "trades": 633,
+   "avg_trade_net_bps": 52.1,
+   "win_rate": 46.3,
+   "long_avg_bps": 121.0,
+   "short_avg_bps": -32.4,
+   "share_long": 0.55
+  },
+  "2024": {
+   "x1": {
+    "net_pct": 109.28,
+    "median_month": 3.25,
+    "geo_month": 6.35,
+    "worst_month": -8.31,
+    "max_dd_pct": 11.98,
+    "months_up": 8.0,
+    "n_months": 12
+   },
+   "x2": {
+    "net_pct": 87.86,
+    "median_month": 2.42,
+    "geo_month": 5.39,
+    "worst_month": -9.46,
+    "max_dd_pct": 13.63,
+    "months_up": 8.0,
+    "n_months": 12
+   },
+   "trades": 530,
+   "avg_trade_net_bps": 106.0,
+   "win_rate": 51.9,
+   "long_avg_bps": 119.3,
+   "short_avg_bps": 85.3,
+   "share_long": 0.61
+  },
+  "2025": {
+   "x1": {
+    "net_pct": 13.67,
+    "median_month": 0.16,
+    "geo_month": 1.07,
+    "worst_month": -12.21,
+    "max_dd_pct": 31.42,
+    "months_up": 6.0,
+    "n_months": 12
+   },
+   "x2": {
+    "net_pct": 2.47,
+    "median_month": -0.46,
+    "geo_month": 0.2,
+    "worst_month": -12.56,
+    "max_dd_pct": 32.35,
+    "months_up": 5.0,
+    "n_months": 12
+   },
+   "trades": 484,
+   "avg_trade_net_bps": 48.4,
+   "win_rate": 47.3,
+   "long_avg_bps": 63.3,
+   "short_avg_bps": 30.4,
+   "share_long": 0.55
+  },
+  "2026": {
+   "x1": {
+    "net_pct": 57.96,
+    "median_month": 1.38,
+    "geo_month": 4.68,
+    "worst_month": -28.81,
+    "max_dd_pct": 31.14,
+    "months_up": 6.0,
+    "n_months": 10
+   },
+   "x2": {
+    "net_pct": 37.69,
+    "median_month": -0.12,
+    "geo_month": 3.25,
+    "worst_month": -29.88,
+    "max_dd_pct": 32.17,
+    "months_up": 5.0,
+    "n_months": 10
+   },
+   "trades": 656,
+   "avg_trade_net_bps": 76.6,
+   "win_rate": 52.1,
+   "long_avg_bps": 105.6,
+   "short_avg_bps": 47.5,
+   "share_long": 0.5
+  }
+ }
+}

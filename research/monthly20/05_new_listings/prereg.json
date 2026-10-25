@@ -1,0 +1,6 @@
+{"written": "2026-10-23, before any TEST run",
+ "attempts": [
+  {"name": "A_SHORT_7d_L1_k5_stop50", "side": -1, "delay_h": 1, "hold_d": 7, "stop": 0.5, "lev": 1, "slots": 5},
+  {"name": "B_SHORT_7d_L2_k5_stop25", "side": -1, "delay_h": 1, "hold_d": 7, "stop": 0.25, "lev": 2, "slots": 5},
+  {"name": "C_SHORT_7d_L5_k5_chase20", "side": -1, "delay_h": 1, "hold_d": 7, "stop": 0.25, "lev": 5, "slots": 5}
+ ]}

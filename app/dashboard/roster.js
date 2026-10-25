@@ -125,6 +125,198 @@ const Roster = {
     Arena.openBot(x.key);
   },
 
+  /* ---- the operator's MACD bots (2026-10-18: "the bots I asked for, where are they?") ----
+     ZEC (long or flat) and the STX / DASH / XLM coin bots (long and short, half size, maker orders). Backtests are public;
+     the live status and the switch need the private dashboard (each switch lives on Trading Desk -> MACD). */
+  macdBots() {
+    const BOTS = [
+      { desk: 'macd', coin: 'ZEC', rule: 'MACD 12/26/9 · 4h · long or flat · full size' },
+      { desk: 'macd-stx', coin: 'STX', rule: 'MACD 12/26/9 · 4h · long and short · full size, 1x · maker orders' },
+      { desk: 'macd-dash', coin: 'DASH', rule: 'MACD 12/26/9 · 4h · long and short · full size, 1x · maker orders' },
+      { desk: 'macd-xlm', coin: 'XLM', rule: 'MACD 12/26/9 · 4h · long and short · full size, 1x · maker orders' }];
+    const priv = !!window.PAPERLAB_PRIVATE && typeof api === 'function';
+    const pct = (v) => (v > 0 ? '+' : '') + Number(v).toFixed(1) + '%';
+    const open = () => { if (priv && typeof Nav !== 'undefined' && Nav.go) Nav.go('desk', 'macd'); else location.assign('/public/competition/macd'); };
+    const list = h('div', { class: 'rs-cards' });
+    const note = h('p', { class: 'sub' });
+    const box = h('div', { class: 'rs-section macd-bots' },
+      h('h2', { text: 'Your MACD bots' }),
+      h('span', { class: 'sub', text: priv ? 'live switches on Trading Desk → MACD · each needs its own linked Binance account · real money when the account is mainnet'
+        : 'live bots on Binance perpetuals · their switches are on the private dashboard' }), list, note);
+    (async () => {
+      let bt = {};
+      try { bt = (await (await fetch('/api/public/macd-coins', { cache: 'no-store' })).json()).coins || {}; } catch (e) { /* backtests are optional here */ }
+      for (const b of BOTS) {
+        let st = null;
+        if (priv) { try { st = await api('/api/' + b.desk + '/live'); } catch (e) { st = { status: 'unavailable' }; } }
+        const k = bt[b.coin + 'USDT'];
+        const status = st ? st.status : null;
+        const pos = st && st.position ? st.position.side + ' ' + st.position.qty + ' @ ' + Number(st.position.entry).toPrecision(6) : (st ? 'flat' : null);
+        list.append(h('div', { class: 'card rs-card' },
+          h('div', { class: 'rs-card-head' }, h('b', { text: 'MACD ' + b.coin }), status ? pill(status, status === 'ARMED' ? 'up' : status === 'HALTED' || status === 'CLOSING' ? 'down' : 'muted') : null),
+          h('p', { class: 'sub', text: b.rule }),
+          k ? h('p', { text: '2-year backtest: ' + pct(k.net2y) + ' · max drawdown ' + Number(k.dd).toFixed(0) + '% · worst month ' + pct(k.worst_month) }) : null,
+          st ? h('p', { text: 'Live: ' + status + (st.account ? ' on ' + st.account.label + ' (' + st.account.network + ')' : ' · no account linked') + ' · ' + pos
+            + (st.realized ? ' · realized ' + (st.realized > 0 ? '+' : '') + Number(st.realized).toFixed(2) + ' USDT' : '') }) : null,
+          h('button', { type: 'button', class: 'btn', text: priv ? 'Open its live switch' : 'Open the MACD desk', onclick: open })));
+      }
+      const pf = bt.PORTFOLIO;
+      if (pf) note.textContent = 'STX + DASH + XLM together (backtest, full size each, 1x): ' + pct(pf.net2y) + ' over 2 years, max drawdown '
+        + Number(pf.dd).toFixed(0) + '%. Picked with hindsight; expect live results below the backtest. DASH supplies most of the return.';
+      try {                                     // the choppy-market filter's forward paper test (docs/MACD_CHOP_TEST.md)
+        const ch = await (await fetch('/api/public/macd-chop', { cache: 'no-store' })).json();
+        const c = (ch.combined || {}).control, f = (ch.combined || {}).filter;
+        const since = ch.start_ms ? new Date(ch.start_ms).toISOString().slice(0, 10) : '—';
+        box.append(h('p', { class: 'sub', text: 'Choppy-market filter, paper test since ' + since + ' (decided on ' + (ch.evaluate_on || '2026-12-31') + '): '
+          + (c && f ? 'without filter ' + pct(c.return_pct) + ' (max DD ' + Number(c.max_drawdown_pct).toFixed(1) + '%) · with filter ' + pct(f.return_pct)
+            + ' (max DD ' + Number(f.max_drawdown_pct).toFixed(1) + '%) · ' + (ch.crosses || 0) + ' crosses so far' : 'starting at the next 4h candle') }));
+      } catch (e) { /* the test is optional on this page */ }
+    })();
+    return box;
+  },
+
+  /* ---- the operator's ZEC bots (2026-10-18: "build bots for them not trading desks") ----
+     Six TradingView strategies on the ZEC perpetual, long-only. Built ONCE and re-attached on every home render (the
+     home is rebuilt every 30 s): an open live switch keeps its half-typed form. Backtests are public; the live status and
+     the switches need the private dashboard (makeDeskLiveUI from macdlive.js). */
+  /* ---- the Ensemble (operator 2026-10-23): round 4's only strategy that passed all 8 luck checks. Paper book public;
+     the live switch (private dashboard) copies it onto one linked Binance account. */
+  ensembleBot() {
+    if (this.ensBox) { this.ensRefresh(); return this.ensBox; }
+    const priv = !!window.PAPERLAB_PRIVATE && typeof api === 'function' && typeof post === 'function';
+    const pct = (v, d = 1) => (v > 0 ? '+' : '') + Number(v).toFixed(d) + '%';
+    const n2 = (v) => v == null ? '—' : Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const body = h('div', {});
+    const livebox = h('div', { class: 'card ml-card' });
+    let msg = '', busy = false;
+    this.ensBox = h('div', { class: 'rs-section ensemble-bot' },
+      h('h2', { text: 'Ensemble · rotation + ML + 60-day momentum' }),
+      h('span', { class: 'sub', text: 'the only strategy that passed all 8 luck checks (2021–2026 at 1x: about +4% a month on average, max drawdown 23%) · '
+        + 'about 30–70 coins long and short · 1x · rebalanced just after 00:00 UTC' }), body, priv ? livebox : null);
+    const drawLive = async () => {
+      let v;
+      try { v = await api('/api/ensemble/live'); } catch (e) { clear(livebox).append(h('p', { class: 'sub', text: 'Live switch unavailable: ' + e.message })); return; }
+      const on = ['ARMED', 'CLOSING', 'HALTED'].includes(v.status);
+      const free = (v.accounts || []).filter((a) => !a.owner);
+      const g = v.mainnet || {};
+      const el = [h('div', { class: 'rs-card-head' }, h('b', { text: 'Live switch' }),
+        pill(v.status, v.status === 'ARMED' ? 'up' : v.status === 'HALTED' || v.status === 'CLOSING' ? 'down' : 'muted'))];
+      if (msg) el.push(h('p', { class: 'ml-msg ' + (msg.startsWith('Error') ? 'neg' : 'pos'), text: msg }));
+      if (v.status === 'HALTED' || v.status === 'CLOSING') el.push(h('p', { class: 'ml-msg neg', text: v.status + ': ' + (v.reason || '') }));
+      if (on) {
+        el.push(h('p', { text: 'On ' + (v.account ? v.account.label + ' (' + v.account.network + ')' : '—') + ' · amount ' + n2(v.amount) + ' USDT · loss limit ' + n2(v.max_loss)
+          + ' USDT · equity now ' + n2(v.equity) + ' USDT · ' + v.n_positions + ' open positions (book: ' + v.book_positions + ') · last rebalance ' + (v.last_day ? new Date(v.last_day).toISOString().slice(0, 10) : '—') }));
+        if ((v.skipped || []).length) el.push(h('p', { class: 'sub', text: 'Skipped at the last rebalance (below Binance minimum or error): ' + v.skipped.map((s) => s.symbol.replace('USDT', '') + ' (' + s.why + ')').join(', ') }));
+        el.push(h('button', { type: 'button', class: 'chip ml-danger', disabled: busy, text: 'Switch OFF (closes every position)', onclick: async () => {
+          const ok = typeof confirmLive === 'function' ? await confirmLive('Stop the Ensemble live?', 'This closes all <b>' + v.n_positions + '</b> positions at market on <b>' + (v.account || {}).label + '</b> and switches it off.') : confirm('Stop the Ensemble live and close every position?');
+          if (!ok) return;
+          busy = true; msg = 'Switching off: closing every position…'; drawLive();
+          try { await post('/api/ensemble/live/stop', { sure: true }); msg = 'The Ensemble live is OFF.'; } catch (e) { msg = 'Error: ' + e.message; }
+          busy = false; drawLive();
+        } }));
+      } else {
+        const acct = h('select', {}, ...(free.length ? free.map((a) => h('option', { value: a.id, text: a.label + ' · ' + a.network })) : [h('option', { value: '', text: 'link an account first (Trading Desk → MACD → Linked accounts)' })]));
+        const amount = h('input', { type: 'number', min: String(v.rules.min_amount), step: '1', placeholder: String(v.rules.min_amount) });
+        const loss = h('input', { type: 'number', min: '1', step: '1', placeholder: 'e.g. 30% of the amount' });
+        const phrase = h('input', { autocomplete: 'off', spellcheck: 'false' });
+        el.push(h('p', { class: 'sub', text: 'Opens the book\'s current positions at once (market orders, 1x isolated, ' + Math.round(v.rules.scale * 100) + '% of the amount), then trades what the book trades each day. '
+          + 'Minimum ' + v.rules.min_amount + ' USDT (smaller amounts fall under Binance\'s minimum order on many coins). Use a dedicated, flat account. Real money when the account is mainnet. '
+          + 'Mainnet: server switch ' + (g.switch ? 'ON' : 'OFF') + ' · testnet gate ' + (g.testnet_waived ? 'waived' : g.testnet_passed ? 'passed' : 'not passed') + '.' }),
+          h('div', { class: 'ml-form' }, h('label', {}, 'Account', acct), h('label', {}, 'Amount (USDT, max ' + v.max_amount + ')', amount),
+            h('label', {}, 'Loss limit (USDT)', loss), h('label', {}, 'Type ', h('code', { text: v.confirm_phrase }), phrase)),
+          h('button', { type: 'button', class: 'ml-go', disabled: busy || !free.length, text: 'Switch ON live trading', onclick: async () => {
+            const b = { account_id: acct.value, amount: Number(amount.value), max_loss: Number(loss.value), confirm: phrase.value };
+            busy = true; msg = 'Switching on: checking the account, then opening the positions (can take a minute)…'; drawLive();
+            try { await post('/api/ensemble/live/start', b); msg = 'The Ensemble live is ON.'; } catch (e) { msg = 'Error: ' + e.message; }
+            busy = false; drawLive();
+          } }));
+      }
+      if ((v.log || []).length) el.push(h('details', {}, h('summary', { class: 'sub', text: 'Live log' }),
+        h('ul', { class: 'ml-log' }, ...[...v.log].reverse().slice(0, 25).map((l) => h('li', { text: new Date(l.ts).toISOString().slice(0, 16).replace('T', ' ') + ' ' + l.kind + ' '
+          + Object.entries(l).filter(([k]) => !['ts', 'kind'].includes(k)).map(([k, x]) => k + '=' + (typeof x === 'object' ? JSON.stringify(x) : x)).join(' ') })))));
+      clear(livebox).append(...el);
+    };
+    const draw = async () => {
+      let d = null;
+      try { d = await (await fetch('/api/public/ensemble', { cache: 'no-store' })).json(); } catch (e) { /* shown below */ }
+      const b = (d && d.book) || {};
+      const out = [];
+      if (!d || !b.curve) out.push(h('p', { class: 'sub', text: d && d.status ? 'Paper book: ' + (d.status.phase || '') + (d.status.error ? ' · ' + d.status.error : ' · the first run fetches about 550 coins, a few minutes') : 'Paper book loading…' }));
+      else {
+        out.push(h('p', { text: 'Paper book since ' + b.curve[0][0] + ': ' + pct(b.net_pct) + ' · ' + b.n_positions + ' positions (' + b.longs + ' long, ' + b.shorts + ' short), gross ' + (b.gross * 100).toFixed(0)
+          + '% · weights ' + Object.entries(d.today.weights).map(([k, x]) => ({ R: 'rotation', M: 'ML', T: 'momentum' }[k] || k) + ' ' + Math.round(x * 100) + '%').join(', ') }));
+        out.push(h('p', { class: 'sub', text: 'Months: ' + b.months.map(([m, x]) => m + ' ' + pct(x)).join(' · ') + ' · forward (not replay) from ' + b.first_forward_day + '.' }));
+        out.push(h('details', {}, h('summary', { class: 'sub', text: 'today\'s positions (% of equity)' }),
+          h('p', { class: 'sub', text: d.positions.map(([c, w]) => c + ' ' + (w > 0 ? '+' : '') + w.toFixed(1)).join(' · ') })));
+      }
+      clear(body).append(...out);
+      if (priv) await drawLive();
+    };
+    this.ensRefresh = () => { if (!this.ensBusy) { this.ensBusy = true; draw().finally(() => { this.ensBusy = false; }); } };
+    this.ensRefresh();
+    return this.ensBox;
+  },
+
+  zecBots() {
+    if (this.zecBox) { this.zecRefresh(); return this.zecBox; }
+    const KEYS = ['emarsi', 'momentum', 'emacross', 'macross', 'scalpslayer', 'wilder'];
+    const priv = !!window.PAPERLAB_PRIVATE && typeof api === 'function' && typeof ZecLiveUIs !== 'undefined';
+    const pct = (v) => (v > 0 ? '+' : '') + Number(v).toFixed(1) + '%';
+    const list = h('div', { class: 'rs-cards' });
+    const note = h('p', { class: 'sub' });
+    // one switch panel per bot, each inside a wrapper this section shows / hides (the live UI un-hides its own host)
+    const hosts = Object.fromEntries(KEYS.map((k) => [k, h('div', { class: 'card ml-card zec-live' })]));
+    const wraps = Object.fromEntries(KEYS.map((k) => [k, h('div', { hidden: true }, hosts[k])]));
+    const panel = h('div', {}, ...KEYS.map((k) => wraps[k]));
+    let shown = null;
+    const toggle = (k) => {
+      if (shown) { ZecLiveUIs[shown].deactivate(); wraps[shown].hidden = true; }
+      if (shown === k) { shown = null; return; }
+      shown = k; wraps[k].hidden = false;
+      ZecLiveUIs[k].load(hosts[k]);
+      wraps[k].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+    this.zecBox = h('div', { class: 'rs-section zec-bots' },
+      h('h2', { text: 'Your ZEC bots' }),
+      h('span', { class: 'sub', text: 'six TradingView strategies on the ZEC perpetual · long-only · full size, 1x · maker orders · '
+        + (priv ? 'each needs its own linked Binance account · real money when the account is mainnet' : 'their live switches are on the private dashboard') }),
+      list, panel, note);
+    let bt = {};
+    const draw = async () => {
+      if (!Object.keys(bt).length) {
+        try { bt = (await (await fetch('/api/public/zec-bots', { cache: 'no-store' })).json()).bots || {}; } catch (e) { /* optional */ }
+      }
+      const cards = [];
+      for (const k of KEYS) {
+        const b = bt[k] || {};
+        let st = null;
+        if (priv) { try { st = await api('/api/zec-' + k + '/live'); } catch (e) { st = { status: 'unavailable' }; } }
+        const status = st ? st.status : null;
+        const pos = st && st.position ? st.position.side + ' ' + st.position.qty + ' @ ' + Number(st.position.entry).toPrecision(6) : (st ? 'flat' : null);
+        const months = Object.entries(b.monthly || {});
+        cards.push(h('div', { class: 'card rs-card' },
+          h('div', { class: 'rs-card-head' }, h('b', { text: 'ZEC · ' + (b.name || k) }), status ? pill(status, status === 'ARMED' ? 'up' : status === 'HALTED' || status === 'CLOSING' ? 'down' : 'muted') : null),
+          h('p', { class: 'sub', text: (b.interval || '') + ' candles · long-only · full size, 1x · maker orders' }),
+          b.net2y !== undefined ? h('p', { text: '2-year backtest: ' + pct(b.net2y) + ' · max drawdown ' + Number(b.dd).toFixed(0) + '% · year 1 ' + pct(b.y1) + ' · year 2 ' + pct(b.y2) }) : null,
+          b.net2y !== undefined ? h('p', { class: 'sub', text: 'worst month ' + pct(b.worst_month) + ' · worst week ' + pct(b.worst_week) + ' · profitable months ' + b.pos_months + ' of ' + b.months
+            + ' · ' + b.trades + ' trades' + (b.long_short ? ' · with shorts it would be ' + pct(b.long_short.net2y) + ', DD ' + Number(b.long_short.dd).toFixed(0) + '%' : '') }) : null,
+          months.length ? h('details', {}, h('summary', { class: 'sub', text: 'monthly returns' }),
+            h('p', { class: 'sub', text: months.map(([m, v]) => m + ' ' + pct(v)).join(' · ') })) : null,
+          st ? h('p', { text: 'Live: ' + status + (st.account ? ' on ' + st.account.label + ' (' + st.account.network + ')' : ' · no account linked') + ' · ' + pos
+            + (st.realized ? ' · realized ' + (st.realized > 0 ? '+' : '') + Number(st.realized).toFixed(2) + ' USDT' : '') }) : null,
+          priv ? h('button', { type: 'button', class: 'btn', text: 'Live switch', onclick: () => toggle(k) }) : null));
+      }
+      clear(list).append(...cards);
+      const pf = bt.PORTFOLIO, bh = bt.BUY_HOLD;
+      if (pf) note.textContent = 'All six together (equal money, backtest): ' + pct(pf.net2y) + ' over 2 years, max drawdown ' + Number(pf.dd).toFixed(0)
+        + '%' + (bh ? '; simply holding ZEC: ' + pct(bh.net2y) + ', max drawdown ' + Number(bh.dd).toFixed(0) + '%' : '')
+        + '. ZEC was the best coin of the study, picked with hindsight; all six bots and the MACD ZEC bot hold the same coin, so they win and lose together.';
+    };
+    this.zecRefresh = () => { if (!this.zecBusy) { this.zecBusy = true; draw().finally(() => { this.zecBusy = false; }); } };
+    this.zecRefresh();
+    return this.zecBox;
+  },
+
   /* ---- the home screen ---- */
   render(grid) {
     const d = this.data;
@@ -141,7 +333,11 @@ const Roster = {
       kpi('trades · 24h', String(k.roster_trades_24h ?? 0), (k.positions_open ?? 0) + ' positions open'),
       kpi('retired', String(k.retired ?? 0), 'still paper trading, off screen'),
       kpi('every bot', this.delta(k.all_net, 'USD'), (k.all_trades ?? 0).toLocaleString() + ' trades · all programs', signClass(k.all_net)));
-    const cards = h('div', { class: 'rs-cards' }, stage.length ? stage.map((x) => this.card(x)) :
+    // Operator 2026-10-14: every bot program switched off and the home page kept empty. The Bitcoin breakout bot and
+    // the QQQ value reversal study keep running on their own pages (header buttons) but are not shown here.
+    const videoBots = (d.scanners || []).filter((x) => x.program === 'video').length + stage.filter((x) => x.program === 'video').length;
+    const none = !((k.bots_total || 0) - videoBots);
+    const cards = none ? h('div', {}, this.ensembleBot(), this.zecBots(), this.macdBots()) : h('div', { class: 'rs-cards' }, stage.length ? stage.map((x) => this.card(x)) :
       h('div', { class: 'card', text: 'No bot is in profit yet with enough trades. The stage fills itself as soon as one is.' }));
     const ready = d.ready || [];
     const readySection = ready.length ? [h('div', { class: 'rs-section' }, h('h2', { text: 'Backtest winners · V6.6 trend follower & V6.2 momentum rider' }),
@@ -152,9 +348,15 @@ const Roster = {
     const bees = (d.scanners || []).filter((x) => x.program === 'v12');
     const snaps = (d.scanners || []).filter((x) => x.program === 'v13');
     const htfs = (d.scanners || []).filter((x) => x.program === 'v14');
-    const breakouts = (d.scanners || []).filter((x) => x.program === 'video');
+    const breakouts = [];                                // shown on its own page only (operator, 2026-10-14)
     const conds = (d.scanners || []).filter((x) => x.program === 'v16');
     const swings = (d.scanners || []).filter((x) => x.program === 'v17').sort((a, b) => (b.net ?? 0) - (a.net ?? 0));
+    const value = null;                                  // the QQQ study: its own page only (operator, 2026-10-14)
+    const valueSection = value ? [h('div', { class: 'card' },
+      h('h2', { text: 'QQQ value reversal · from your Nasdaq video' }),
+      h('p', { class: 'sub', text: 'Alpaca consolidated volume · 15/30-minute session reversals · separate delayed-feed paper books' }),
+      h('p', { text: value.status + ' · ' + value.trades + ' closed forward trades · historical study ' + value.research_phase.toLowerCase() }),
+      h('a', { class: 'btn ghost', href: '/public/value-reversal', text: 'Open results, charts and paper trades' }))] : [];
     const scanners = scan.length ? [h('div', { class: 'rs-section' }, h('h2', { text: 'The scanners · 30 coins each' }),
       h('span', { class: 'sub', text: 'always on screen · each bot trades up to 8 coins at once · TP1 closes 25% (stop → past entry + fees) · TP2 50% (stop → TP1) · TP3 the last 25%' })),
     h('div', { class: 'rs-cards' }, scan.map((x) => this.card(x)))] : [];
@@ -177,8 +379,8 @@ const Roster = {
       h('span', { class: 'sub', text: 'always shown · BTCUSDT 4h · open the bot for controls, fills and trade history' })),
       h('div', { class: 'rs-cards' }, breakouts.map((x) => this.card(x))));
     const side = h('aside', { class: 'rs-side' }, this.board(stage), this.streamCard(), this.retiredCard());
-    grid.append(h('div', { class: 'rs-wrap' }, top, h('div', { class: 'rs-main' }, h('div', { class: 'rs-left' }, cards, ...readySection, scanners), side),
-      h('p', { class: 'sub rs-rule', text: ((d.rule || {}).text || '') + ' Paper only: simulated fills on live market data.' })));
+    grid.append(h('div', { class: 'rs-wrap' }, none ? null : top, h('div', { class: 'rs-main' }, h('div', { class: 'rs-left' }, ...valueSection, cards, ...readySection, scanners), none ? null : side),
+      none ? null : h('p', { class: 'sub rs-rule', text: ((d.rule || {}).text || '') + ' Paper only: simulated fills on live market data.' })));
   },
   card(x) {
     const c = this.color(x), ccy = x.currency;
@@ -359,6 +561,8 @@ const Roster = {
       { h: 'id', cell: (x) => h('span', { class: 'sub mono', text: x.key }) },
     ], ready, { onRow: (x) => this.open(x), empty: 'none' });
     const ret = d.retired || [];
+    // every arena program switched off (operator, 2026-10-14): only always-shown bots from their own labs may remain
+    const armEmpty = !(d.roster || []).length && !ready.length && !ret.length && !(d.scanners || []).some((x) => x.program !== 'video');
     const rt = h('table', { class: 'tbl' });
     renderTable(rt, [
       { h: 'bot', cell: (x) => h('span', null, h('b', { text: x.name }), h('span', { class: 'sub', text: ' ' + x.persona })) },
@@ -375,9 +579,11 @@ const Roster = {
       ready.length ? [h('div', { class: 'card-head' }, h('h2', { text: 'Backtest winners · ' + ready.length + ' · can go live' }),
         h('span', { class: 'sub', text: 'V6.6 trend follower and V6.2 momentum rider bots whose two-year backtest made money · click one to open it'
           + (window.PAPERLAB_PRIVATE ? ' and press GO LIVE' : '') })), h('div', { class: 'tablewrap' }, rd)] : null,
-      h('div', { class: 'card-head' }, h('h2', { text: 'On stage · ' + (d.roster || []).length }), h('span', { class: 'sub', text: (d.rule || {}).text || '' })),
-      h('div', { class: 'tablewrap' }, t),
+      ...(armEmpty ? [h('div', { class: 'card-head' }, h('h2', { text: 'No arena bots' }),
+          h('span', { class: 'sub', text: 'Every bot program was switched off on 14 Oct 2026. New bots will appear here when they are added. The Trading Desk keeps running.' }))]
+        : [h('div', { class: 'card-head' }, h('h2', { text: 'On stage · ' + (d.roster || []).length }), h('span', { class: 'sub', text: (d.rule || {}).text || '' })),
+          h('div', { class: 'tablewrap' }, t)]),
       (d.scanners || []).length ? [h('h3', { text: 'Always shown bots · ' + d.scanners.length }), h('div', { class: 'tablewrap' }, st)] : null,
-      det);
+      armEmpty ? null : det);
   },
 };

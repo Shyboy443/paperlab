@@ -1,0 +1,5 @@
+{"idea": "Lead-lag after sharp BTC (or top-5 basket) moves on Binance USDT perps: trade alts by their beta-adjusted gap to the leader's move. Primary (DEV-selected): after a sharp BTC DOWN hour, buy the 5 alts that overshot BTC most (beta-adjusted) and hold 4h. Secondary (literal catch-up hypothesis): after a sharp top-5-basket UP hour, buy the 5 laggards and hold 4h.",
+ "attempts": [
+  {"name": "A_fade_overshoot_after_btc_dump", "cfg": {"tf": "1h", "leader": "BTC", "side": "lead", "dirs": "down", "L": 1, "z": 2.0, "H": 4, "K": 5, "rmin": 1, "rmax": 50}},
+  {"name": "B_catchup_laggards_after_top5_pump", "cfg": {"tf": "1h", "leader": "TOP5", "side": "lag", "dirs": "up", "L": 1, "z": 3.0, "H": 4, "K": 5, "rmin": 1, "rmax": 50}}
+ ]}

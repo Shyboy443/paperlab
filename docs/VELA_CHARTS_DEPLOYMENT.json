@@ -1,0 +1,47 @@
+{
+  "deployment_id": "a09c9856-7d04-4c2f-a5c0-2371ff4c4fa4",
+  "status": "SUCCESS",
+  "verified_at": "2026-10-08T16:05:16.232127+00:00",
+  "library": "@luxalgo/vela 0.8.3",
+  "hosted": {
+    "hosted_files_sha256": {
+      "/static/value-reversal-vela.js": "d693fc46f1b494d0fe03b7e8f87807289f13acf89a800ebf0abbe6b47f00d163",
+      "/static/vendor/vela-0.8.3/vela.global.min.js": "4e732bbb648aefc6f330d1e5b74aefa39bc4ab322d1a9ddd46a654856fd77fdf",
+      "/static/vendor/vela-0.8.3/LICENSE": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6",
+      "/static/vendor/vela-0.8.3/NOTICE": "943b246985e5f0fc3b3291b2326eb05163ed36e2cfce4921688e4330edf53236",
+      "/static/value-reversal-crypto.js": "59631d847a943a5887f45d60bf68dd6ee052bf1c3f50f3a1ddc292e6239502e6"
+    },
+    "source_checks_preserved": 463584,
+    "wallet_results_preserved": 56,
+    "qqq_start_preserved": 1791457943261,
+    "broker_orders_enabled": false,
+    "qqq_status": "OBSERVING",
+    "qqq_error": null
+  },
+  "viewports_verified": [
+    1280,
+    390
+  ],
+  "crypto_configurations_rendered": 24,
+  "checks": [
+    "closed OHLCV timestamps",
+    "exact reclaim direction and placement",
+    "native triangle labels rendered",
+    "per-bar profile levels and missing-value gaps",
+    "PVA/CVA labels",
+    "New York timezone",
+    "button and wheel zoom",
+    "signal navigation",
+    "fullscreen expansion",
+    "live chart reuse and viewport preservation",
+    "desktop/mobile layout",
+    "license notice and visible attribution"
+  ],
+  "python_checks_passed": 22,
+  "qqq_forward_start_preserved": 1791457943261,
+  "archive_hashes_preserved": true,
+  "paper_books_preserved": 8,
+  "stock_rule": "TREND5-SMA200-MOM63-LOT1-v1",
+  "stock_status": "WAIT_NEXT_OPEN",
+  "stock_error": null
+}

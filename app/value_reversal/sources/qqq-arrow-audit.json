@@ -1,0 +1,60 @@
+{
+  "arrows": 25,
+  "trades": 22,
+  "untraded": [
+    {
+      "signal": {
+        "ts": 1723481100000,
+        "side": -1,
+        "stop": 448.4,
+        "target": 441.6978333337,
+        "value_low": 441.6978333337,
+        "value_high": 446.2630000018,
+        "outside_bars": 4,
+        "last_directional_volume": 454126.0,
+        "reclaim_volume": 680175.0,
+        "observed_ms": 1723482000000,
+        "entry_eligible": false
+      },
+      "ny_time": "2024-08-12T12:45:00-04:00",
+      "reason": "already_in_position"
+    },
+    {
+      "signal": {
+        "ts": 1753904700000,
+        "side": 1,
+        "stop": 562.25,
+        "target": 568.4929999981,
+        "value_low": 563.3223333333,
+        "value_high": 568.4929999981,
+        "outside_bars": 2,
+        "last_directional_volume": 2007391.0,
+        "reclaim_volume": 4201253.0,
+        "observed_ms": 1753905600000,
+        "entry_eligible": false
+      },
+      "ny_time": "2025-07-30T15:45:00-04:00",
+      "reason": "session_close"
+    },
+    {
+      "signal": {
+        "ts": 1766767500000,
+        "side": -1,
+        "stop": 622.38,
+        "target": 620.205,
+        "value_low": 620.205,
+        "value_high": 622.075,
+        "outside_bars": 2,
+        "last_directional_volume": 536158.0,
+        "reclaim_volume": 881425.0,
+        "observed_ms": 1766768400000,
+        "entry_eligible": false
+      },
+      "ny_time": "2025-12-26T11:45:00-05:00",
+      "reason": "already_in_position"
+    }
+  ],
+  "key": "QQQ-15m-previous-5bars",
+  "period": "comparison",
+  "data_sha256": "06250db96d2842bcb90e97c942729013e58ca6fee648797a5cae61d299afc725"
+}

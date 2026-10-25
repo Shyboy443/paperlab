@@ -1,6 +1,6 @@
 {
  "protocol": "V17_SWING_PAPER_V1",
- "baseline_fingerprint": "93f9c48b67163c69",
+ "baseline_fingerprint": "49a19f92106eee90",
  "code": {
   "app.competition.v17_config": "5b9db16420e7",
   "app.live.v17_worker": "e8a01c307518",
@@ -167,5 +167,8 @@
   "docs/V17_SWING_STUDY.json",
   "docs/V18_TREND_STUDY.json"
  ],
- "fingerprint": "244540d9fd7b75fb"
+ "fingerprint": "6c8dfb38b7101848",
+ "frozen_at": "2026-10-12T08:35:37Z",
+ "refrozen_from": "244540d9fd7b75fb",
+ "refreeze_note": "re-frozen 2026-10-12: V6 field trimmed to V6.2/V6.6 (operator removed the families retired from view)"
 }

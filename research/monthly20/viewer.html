@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rotation and ML Bots</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.3/dist/lightweight-charts.standalone.production.js"></script>
+<script>document.write('<script src="viewer_data.js?v=' + Date.now() + '"><\/script>');  // never show a cached old build</script>
+<style>
+:root{
+  --bg:#0b0f14;--panel:#121820;--panel2:#18202a;--line:#243040;--soft:#1b2430;--text:#e6edf3;--muted:#8b98a8;
+  --up:#22c55e;--down:#ef4444;--warn:#f59e0b;--sans:'Space Grotesk',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 var(--sans);font-variant-numeric:tabular-nums}
+main{max-width:1150px;margin:0 auto;padding:28px 24px 56px}
+h1{font-size:28px;line-height:1.2;margin:0}
+h2{font-size:18px;margin:0 0 4px}
+.lead{color:var(--muted);margin:8px 0 0;max-width:780px}
+section{margin-top:28px}
+.hint{color:var(--muted);font-size:13px;margin:0 0 12px}
+.muted{color:var(--muted)}.pos{color:var(--up)}.neg{color:var(--down)}
+.pick{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-top:12px}
+.pick .step{color:var(--muted);font-size:13px;width:90px;flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{background:var(--panel);border:1px solid var(--line);color:var(--text);font:500 14px var(--sans);padding:7px 13px;border-radius:999px;cursor:pointer}
+.chips button.on{background:#0e3a52;border-color:#38bdf8}
+.chips button:disabled{opacity:.4;cursor:default}
+.warn{background:#2a1f0a;border:1px solid #5a4210;border-radius:12px;padding:12px 16px;font-size:14px;margin-top:18px}
+.warn b{color:var(--warn)}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.bot{background:var(--panel);border:1px solid var(--line);border-top:5px solid;border-radius:14px;padding:14px 16px;min-width:0;cursor:pointer}
+.bot.off{opacity:.45}
+.bot h3{margin:0;font-size:16px}
+.bot .what{color:var(--muted);font-size:12.5px;margin:4px 0 10px;min-height:54px}
+.money{font-size:26px;font-weight:700;line-height:1.15}
+.row{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-top:1px solid var(--soft);font-size:13.5px}
+.row .k{color:var(--muted)}.row .v{font-weight:600;text-align:right}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-width:0}
+.chart-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-bottom:6px}
+.readout{font-size:13px;min-height:20px;margin-bottom:6px}
+#chart{height:380px}
+i.sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{color:var(--muted);font-weight:500;text-align:right;padding:8px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{text-align:right;padding:7px 8px;border-bottom:2px solid var(--panel);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+tr.total td{border-top:1px solid var(--line);font-weight:600}
+.wide{overflow-x:auto}.scroll{max-height:560px;overflow:auto}
+@media (max-width:900px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){main{padding:20px 16px 44px}h1{font-size:23px}.cards{gap:8px}.bot{padding:12px}.money{font-size:21px}
+  .pick .step{width:100%}#chart{height:300px}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Rotation and ML bots</h1>
+  <p class="lead">The two best results from the 10-agent research round. Back-test on past prices: no real money.
+    Rules were fixed on 2021–Oct 2024 data, then tested once on the last 2 years. Fees, slippage, funding and liquidations are included.</p>
+
+  <div class="pick"><span class="step">Period</span><div class="chips" id="periodChips"></div></div>
+  <div class="pick"><span class="step">Fees</span><div class="chips" id="feeChips"></div></div>
+
+  <div class="warn"><b>Read this first:</b> these numbers are month-end values. Inside a month the money swung much more.
+    The ML 3x bot fell <b id="ml3dd"></b> from its high during the last 2 years and had about a coin-flip chance of losing 90% in the agent’s simulations.
+    Nothing here is safe to trade with real money.</div>
+
+  <section>
+    <h2>What $1,000 became</h2>
+    <p class="hint" id="cardsHint"></p>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section>
+    <div class="card">
+      <div class="chart-head"><h2>How $1,000 grew</h2><div class="chips" id="scaleChips"></div></div>
+      <div class="readout" id="read"></div>
+      <div id="chart"></div>
+      <p class="hint" style="margin:8px 0 0">Click a bot’s card above to hide or show its line. Grey = just holding Bitcoin, for comparison.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Every month</h2>
+    <p class="hint">Green = the month made money, red = it lost; darker = bigger.</p>
+    <div class="card wide scroll" id="months"></div>
+  </section>
+</main>
+<script>
+(function(){
+const M = window.M20;
+if (!M) { document.querySelector('main').innerHTML = '<p class="lead">No data yet. Run <code>python research/monthly20/build_viewer.py</code> first.</p>'; return; }
+const COL = {rot2: '#38bdf8', ml1: '#a78bfa', ml3: '#f472b6', ml5: '#fb923c', btc: '#8b98a8'};
+const TEST_FIRST = '2024-11';
+let st = {period: 'test', fees: 'normal', log: false, hidden: {ml5: true}};
+try { Object.assign(st, JSON.parse(localStorage.getItem('m20-view') || '{}')); } catch (e) {}
+
+const usd = v => (v < 0 ? '−$' : '$') + Math.abs(Math.round(v)).toLocaleString('en-US');
+const pct = (v, d = 1) => v == null ? '–' : (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(d) + '%';
+const cls = v => v > 0 ? 'pos' : v < 0 ? 'neg' : '';
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const label = k => `${MON[+k.slice(5) - 1]} ${k.slice(0, 4)}`;
+
+// the months a bot shows for the chosen period and fees: {"YYYY-MM": %}
+function months(b) {
+  const test = st.fees === 'double' ? b.test2x : b.test;
+  if (st.period === 'test') return test;
+  const dev = Object.fromEntries(Object.entries(b.dev).filter(([k]) => k < TEST_FIRST));
+  return {...dev, ...test};
+}
+function btcMonths(keys) { return Object.fromEntries(keys.map(k => [k, M.btc[k] ?? 0])); }
+function stats(ms) {
+  const v = Object.values(ms), s = [...v].sort((a, b) => a - b), n = v.length;
+  let eq = 1000, peak = 1000, dd = 0;
+  for (const x of v) { eq *= 1 + x / 100; peak = Math.max(peak, eq); dd = Math.max(dd, 1 - eq / peak); }
+  return {end: eq, mean: v.reduce((a, b) => a + b, 0) / n, median: n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2,
+          worst: s[0], best: s[n - 1], up: v.filter(x => x > 0).length, n, dd: dd * 100};
+}
+function curve(ms) {  // month-end values, starting at $1,000 on the 1st of the first month
+  const keys = Object.keys(ms).sort();
+  const pts = [{time: keys[0] + '-01', value: 1000}];
+  let eq = 1000;
+  for (const k of keys) {
+    eq *= 1 + ms[k] / 100;
+    const [y, m] = k.split('-').map(Number), nx = m === 12 ? `${y + 1}-01` : `${y}-${String(m + 1).padStart(2, '0')}`;
+    pts.push({time: nx + '-01', value: Math.max(eq, 0.01)});
+  }
+  return pts;
+}
+
+function chips(id, items, key, disabled) {
+  const el = document.getElementById(id); el.innerHTML = '';
+  for (const [val, text] of items) {
+    const b = document.createElement('button');
+    b.textContent = text; b.className = st[key] === val ? 'on' : ''; b.disabled = !!disabled;
+    b.onclick = () => { st[key] = val; render(); };
+    el.appendChild(b);
+  }
+}
+
+const chart = LightweightCharts.createChart(document.getElementById('chart'), {
+  layout: {background: {color: 'transparent'}, textColor: '#8b98a8', fontFamily: 'Space Grotesk'},
+  grid: {vertLines: {color: '#161d26'}, horzLines: {color: '#161d26'}},
+  rightPriceScale: {borderColor: '#243040'}, timeScale: {borderColor: '#243040'},
+  crosshair: {mode: 0}, autoSize: true, localization: {priceFormatter: v => '$' + Math.round(v).toLocaleString('en-US')},
+});
+const lines = {};
+for (const k of [...M.bots.map(b => b.key), 'btc'])
+  lines[k] = chart.addLineSeries({color: COL[k], lineWidth: k === 'btc' ? 2 : 3, lineStyle: k === 'btc' ? 2 : 0, priceLineVisible: false});
+const read = document.getElementById('read');
+let latest = '';
+const names = Object.fromEntries([...M.bots.map(b => [b.key, b.label]), ['btc', 'Hold BTC']]);
+chart.subscribeCrosshairMove(p => {
+  if (!p.time) { read.innerHTML = latest; return; }
+  const t = p.time, d = typeof t === 'string' ? t : `${t.year}-${String(t.month).padStart(2, '0')}-01`;
+  read.innerHTML = `${label(d.slice(0, 7))}: ` + Object.keys(lines).filter(k => !st.hidden[k]).map(k => {
+    const v = p.seriesData.get(lines[k]); return v ? `<b style="color:${COL[k]}">${names[k]} ${usd(v.value)}</b>` : '';
+  }).filter(Boolean).join(' · ');
+});
+
+function render() {
+  try { localStorage.setItem('m20-view', JSON.stringify(st)); } catch (e) {}
+  if (st.period === 'all' && st.fees === 'double') st.fees = 'normal';
+  chips('periodChips', [['test', 'Last 2 years (Nov 2024 – Oct 2026)'], ['all', 'Since 2021']], 'period');
+  chips('feeChips', [['normal', 'Normal fees'], ['double', 'Double fees']], 'fees', st.period === 'all');
+  chips('scaleChips', [[false, 'Normal scale'], [true, 'Log scale']], 'log');
+  chart.priceScale('right').applyOptions({mode: st.log ? 1 : 0});
+  const ml3 = M.bots.find(b => b.key === 'ml3');
+  document.getElementById('ml3dd').textContent = `${Math.round(ml3.test_dd)}%`;
+  document.getElementById('cardsHint').textContent = (st.period === 'test'
+    ? 'Start with $1,000 on 1 Nov 2024 (the 2-year test the rules never saw).'
+    : 'Start with $1,000 on 1 Jan 2021. Note: 2021–Oct 2024 is the data the rules were designed on, so it flatters them.')
+    + ' Click a card to hide or show its line.';
+
+  // cards
+  const all = M.bots.map(b => ({b, ms: months(b)}));
+  const keys = Object.keys(all[0].ms).sort();
+  const btc = btcMonths(keys);
+  document.getElementById('cards').innerHTML = all.map(({b, ms}) => {
+    const s = stats(ms);
+    const trueDD = st.period === 'test' ? (st.fees === 'double' ? b.test2x_dd : b.test_dd) : null;
+    return `<div class="bot${st.hidden[b.key] ? ' off' : ''}" data-key="${b.key}" style="border-top-color:${COL[b.key]}">
+      <h3>${b.label}</h3><div class="what">${b.what}</div>
+      <div class="muted" style="font-size:13px">$1,000 became</div><div class="money ${cls(s.end - 1000)}">${usd(s.end)}</div>
+      <div class="row"><span class="k">Average month</span><span class="v ${cls(s.mean)}">${pct(s.mean)}</span></div>
+      <div class="row"><span class="k">Typical month</span><span class="v ${cls(s.median)}">${pct(s.median)}</span></div>
+      <div class="row"><span class="k">Worst month</span><span class="v neg">${pct(s.worst)}</span></div>
+      <div class="row"><span class="k">Worst drop</span><span class="v">−${Math.round(trueDD ?? s.dd)}%${trueDD == null ? ' <span class="muted">(month ends)</span>' : ''}</span></div>
+      <div class="row"><span class="k">Months up</span><span class="v">${s.up} of ${s.n}</span></div></div>`;
+  }).join('');
+  document.querySelectorAll('.bot').forEach(el => el.onclick = () => { st.hidden[el.dataset.key] = !st.hidden[el.dataset.key]; render(); });
+
+  // chart
+  for (const {b, ms} of all) { lines[b.key].setData(curve(ms)); lines[b.key].applyOptions({visible: !st.hidden[b.key]}); }
+  lines.btc.setData(curve(btc));
+  chart.timeScale().fitContent();
+  const sb = stats(btc);
+  latest = 'Today: ' + all.filter(({b}) => !st.hidden[b.key]).map(({b, ms}) => `<b style="color:${COL[b.key]}">${b.label} ${usd(stats(ms).end)}</b>`).join(' · ')
+    + ` · <b style="color:${COL.btc}">Hold BTC ${usd(sb.end)}</b>`;
+  read.innerHTML = latest;
+
+  // every month
+  const cell = v => v == null ? '<td class="muted">·</td>'
+    : `<td style="background:rgba(${v >= 0 ? '34,197,94' : '239,68,68'},${(.06 + Math.min(Math.abs(v), 40) / 40 * .4).toFixed(2)})">${pct(v)}</td>`;
+  const head = `<tr><th>Month</th>${all.map(({b}) => `<th><i class="sw" style="background:${COL[b.key]}"></i>${b.label}</th>`).join('')}<th><i class="sw" style="background:${COL.btc}"></i>Hold BTC</th></tr>`;
+  const rows = keys.slice().reverse().map(k => `<tr><td>${label(k)}${k === keys.at(-1) ? ' <span class="muted">(part)</span>' : ''}</td>${all.map(({ms}) => cell(ms[k])).join('')}${cell(btc[k])}</tr>`).join('');
+  const avg = `<tr class="total"><td>Average month</td>${all.map(({ms}) => { const m = stats(ms).mean; return `<td class="${cls(m)}">${pct(m)}</td>`; }).join('')}<td class="${cls(sb.mean)}">${pct(sb.mean)}</td></tr>`;
+  document.getElementById('months').innerHTML = `<table><thead>${head}</thead><tbody>${rows}${avg}</tbody></table>`;
+}
+render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "checked_utc": "2026-10-11T02:55:08.193519+00:00",
+  "deployment_id": "ec4819b1-d317-42c0-b57a-935269207df9",
+  "status": "SUCCESS",
+  "url": "https://paperlab-production-919c.up.railway.app/public/competition/divergence",
+  "private_route": "/#divergence/divergence",
+  "legacy_redirect_verified": true,
+  "python_checks": "38 passed",
+  "browser_checks": [
+    "desktop and mobile fixture: conversation, XSS-safe output, native Vela, ledger, decisions, historical rows, same-document navigation, inactive timers, errors and retry",
+    "production public desktop/mobile and authenticated dashboard: native chart/RSI, same-document navigation, GET-only; no uncaught or logged JS errors"
+  ],
+  "frozen_rules_reviews_and_position_preserved": true,
+  "research_frozen_history_preserved": true,
+  "baseline": {
+    "equity": 1002.6923201042171,
+    "closed_trades": 0,
+    "realized_net": 0.0,
+    "fees": 0.074223392352,
+    "funding": 0.018262616569
+  },
+  "council": {
+    "equity": 1000.0,
+    "closed_trades": 0,
+    "realized_net": 0.0
+  },
+  "review_limitation": "First council review failed validation. Original record lacks detailed failure reason; no old review was replayed."
+}

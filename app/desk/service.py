@@ -38,7 +38,9 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "enabled": True, "schedule_hours": 4, "universe": list(DEFAULT_UNIVERSE), "mode": "cautious", "risk_pct": 2.0,
     "start_balance": 1000.0, "notify": {"in_app": True, "telegram": True, "email": False}, "recap_hour": 21,
     "tz": "Asia/Colombo", "max_plans": 3, "max_open": 3, "max_total_risk_pct": 6.0, "max_same_side": 3,
+    "approval": "auto",          # operator 2026-10-11: no Telegram approval prompts (manual stays switchable)
 }
+APPROVAL_MS = HOUR_MS      # a decision waiting for the operator's Telegram approval expires after an hour
 SCHEDULES = (1, 2, 4, 6, 8, 12, 24)
 
 
@@ -80,6 +82,11 @@ def validate_settings(body: Mapping[str, Any], current: Mapping[str, Any], has_t
         if n.get("email"):
             raise ValueError("email alerts are not set up on this server (no mail account); use Telegram or in-app")
         out["notify"] = {"in_app": bool(n.get("in_app", True)), "telegram": bool(n.get("telegram", True)), "email": False}
+    if "approval" in body:
+        v = str(body["approval"]).lower()
+        if v not in ("manual", "auto"):
+            raise ValueError("approval must be manual (Telegram Approve / Reject) or auto")
+        out["approval"] = v
     if "max_plans" in body:
         v = int(body["max_plans"])
         if not 1 <= v <= 3:
@@ -122,6 +129,7 @@ class DeskService:
                  anthropic_key: Callable[[], str | None] | None = None,
                  clock: Callable[[], float] = time.time):
         e = os.environ if env is None else env
+        self.public_base = (e.get("PUBLIC_BASE_URL") or "https://paperlab-production-919c.up.railway.app").rstrip("/")
         self.enabled = str(e.get("DESK_ENABLED", "true")).strip().lower() not in ("0", "false", "no", "off")
         self.clock = clock
         self.ledger = Ledger(db_path, clock=clock)
@@ -203,6 +211,11 @@ class DeskService:
     def _tick(self) -> None:
         now = self.now_ms()
         st = self.settings
+        tg = self.telegram() if self.telegram else None
+        if tg is not None:
+            tg.register_desk("trading", "Trading Desk", lambda: self.settings.get("approval", "manual"),
+                             lambda m: self.update_settings({"approval": m}))
+        self._process_approvals(now, tg)
         if st["enabled"]:
             step = int(st["schedule_hours"]) * HOUR_MS
             slot = now // step * step
@@ -380,6 +393,11 @@ class DeskService:
             for pl in plans or []:
                 v, b = verdicts.get(pl.coin, (None, None))
                 go, why = A.decide(mode, bool(checks.get(pl.coin, {}).get("ok")), v, b)
+                if go and self.settings.get("approval", "manual") == "manual" and self.telegram is not None:
+                    ok_req, why_req = self._request_approval(pl, sid, why, msgs)
+                    lines.append((f"AWAITING APPROVAL: {pl.side.upper()} {pl.coin}" if ok_req else f"NO TRADE {pl.coin}")
+                                 + f" -- {why_req}")
+                    continue
                 if go:
                     try:
                         candles = self.market.candles(pl.coin, "1h", 60)[1]
@@ -625,7 +643,7 @@ class DeskService:
             return {"ok": True, "trade": done}
         if name == "update_settings":
             body = {k: args[k] for k in ("mode", "schedule_hours", "universe", "risk_pct", "enabled", "max_plans",
-                                         "max_open") if k in args}
+                                         "max_open", "approval") if k in args}
             try:
                 new = self.update_settings(body)
             except (ValueError, TypeError) as exc:
@@ -634,6 +652,85 @@ class DeskService:
             return {"ok": True, "settings": {k: new[k] for k in ("mode", "schedule_hours", "universe", "risk_pct", "enabled",
                                                                  "max_plans", "max_open")}}
         return {"error": "unknown tool"}
+
+    # -- operator approval (Telegram) -----------------------------------------------------------------------------------
+    def link(self) -> str:
+        return f"{self.public_base}/public/competition/desk"
+
+    def _request_approval(self, pl: Any, sid: str, why: str, msgs: list[dict[str, Any]]) -> tuple[bool, str]:
+        """Send a passing plan to Telegram with Approve / Reject; it opens only when the operator approves."""
+        tg = self.telegram() if self.telegram else None
+        if tg is None:
+            return False, "manual approval is on, but Telegram is not linked"
+        e = html.escape
+        price = self.market.price(pl.coin, fresh=True)[1]
+        text = (f"🧭 <b>Trading Desk</b> · paper · needs your approval\n<b>{e(pl.side.upper())} {e(pl.coin)}</b> "
+                f"(session {e(sid)})\nEntry {e(str(pl.entry))} · stop {pl.stop:g} · target {pl.target:g} · now {price:g}\n"
+                f"Why: {e((pl.why or self._why(pl, msgs) or '')[:400])}\nDesk check: {e(why[:200])}\n"
+                "<i>Approve within 60 minutes; it is refused if price has already passed the stop or the target.</i>")
+        png = None
+        try:
+            from app.live.trade_chart import render
+            candles = self.market.candles(pl.coin, "1h", 84)[1]
+            bars = [[c["t"], c["o"], c["h"], c["l"], c["c"], c.get("v", 0.0)] for c in candles]
+            entry = price if str(pl.entry).lower() == "market" else float(pl.entry)
+            png = render(bars, side=pl.side, entry=entry, stop=float(pl.stop), tps=[float(pl.target)],
+                         entry_ts=self.now_ms(), title=f"{pl.coin} / USDT", subtitle="Trading Desk plan", tf_label="1h",
+                         footer="paper decision · awaiting your approval")
+        except Exception:
+            png = None
+        token = tg.request_approval("trading", f"{sid}:{pl.coin}", text, self.link(), png)
+        if not token:
+            return False, "Telegram refused the approval request"
+        pending = list(self.ledger.kv("approvals") or [])
+        pending.append({"token": token, "coin": pl.coin, "side": pl.side, "entry": pl.entry, "stop": pl.stop,
+                        "target": pl.target, "why": (pl.why or self._why(pl, msgs) or "")[:500], "session_id": sid,
+                        "created": self.now_ms()})
+        self.ledger.set_kv("approvals", pending)
+        return True, "sent to Telegram for the operator's approval"
+
+    def _process_approvals(self, now: int, tg: Any) -> None:
+        pending = list(self.ledger.kv("approvals") or [])
+        if not pending:
+            return
+        if self.settings.get("approval", "auto") != "manual":       # approval switched off: drop open requests
+            for a in pending:
+                if tg is not None:
+                    tg.finish_approval(a["token"], "Approval is switched off: this request is closed, no trade.", "expired")
+            self.ledger.set_kv("approvals", [])
+            return
+        keep = []
+        for a in pending:
+            st = tg.approval_status(a["token"]) if tg is not None else None
+            if st == "approved":
+                try:
+                    price = self.market.price(a["coin"], fresh=True)[1]
+                    long = a["side"] == "long"
+                    if (long and (price <= a["stop"] or price >= a["target"])) or (not long and (price >= a["stop"] or price <= a["target"])):
+                        raise LedgerError(f"price {price:g} is already beyond the stop or the target")
+                    candles = self.market.candles(a["coin"], "1h", 60)[1]
+                    t = self.ledger.open(a["coin"], a["side"], a["entry"], a["stop"], a["target"],
+                                         reason=f"session {a['session_id']} (approved in Telegram): {a['why']}",
+                                         session_id=a["session_id"], price=price,
+                                         chart=[[c["t"], c["o"], c["h"], c["l"], c["c"]] for c in candles])
+                    toks = dict(self.ledger.kv("approval_tokens") or {})
+                    toks[str(t["id"])] = a["token"]
+                    self.ledger.set_kv("approval_tokens", toks)
+                    self.post("chief", "trade", f"Opened paper trade #{t['id']} after the operator approved it", {"trade": t})
+                    tg.finish_approval(a["token"], "✅ " + self._trade_html(t, "opened"), "approved")
+                except (LedgerError, RuntimeError, KeyError, ValueError) as exc:
+                    self.post("chief", "trade", f"Approved {a['side']} {a['coin']} not opened: {exc}")
+                    tg.finish_approval(a["token"], f"Approved, but not opened: {html.escape(str(exc))}", "approved")
+            elif st == "rejected":
+                self.post("chief", "trade", f"The operator rejected the {a['side']} {a['coin']} plan: no trade")
+                tg.finish_approval(a["token"], "❌ Rejected: no trade.", "rejected")
+            elif st in (None, "expired") or now - a["created"] > APPROVAL_MS:
+                self.post("chief", "trade", f"No approval within an hour for {a['side']} {a['coin']}: no trade")
+                if tg is not None:
+                    tg.finish_approval(a["token"], "⌛ No answer within an hour: no trade.", "expired")
+            else:
+                keep.append(a)
+        self.ledger.set_kv("approvals", keep)
 
     # -- ledger ---------------------------------------------------------------------------------------------------------
     def update_ledger(self, quiet: bool = False) -> list[dict[str, Any]]:
@@ -648,6 +745,10 @@ class DeskService:
                 self.post("chief", "trade", f"Closed paper trade #{t['id']} {t['coin']} at {t['exit']:g} ({t['exit_reason']}): "
                           f"{t['pnl']:+.2f} USD ({t['r']:+.2f}R)", {"trade": t})
                 self._alert(self._trade_html(t, "closed"))
+                token = (self.ledger.kv("approval_tokens") or {}).get(str(t["id"]))
+                tg = self.telegram() if self.telegram else None
+                if token and tg is not None:
+                    tg.reply_approval(token, "Closed: " + self._trade_html(t, "closed"))
             elif ev == "filled":
                 self.post("chief", "trade", f"Limit filled: #{t['id']} {t['side']} {t['coin']} at {t['entry']:g}", {"trade": t})
                 self._alert(self._trade_html(t, "filled"))
@@ -725,5 +826,5 @@ class DeskService:
                 "sessions": self.ledger.sessions(30), "ledger": self._lean(self.report()), "health": self.health(),
                 "settings": {k: st[k] for k in ("enabled", "schedule_hours", "universe", "mode", "risk_pct",
                                                 "start_balance", "recap_hour", "tz", "max_plans", "max_open",
-                                                "max_total_risk_pct", "max_same_side")}
+                                                "max_total_risk_pct", "max_same_side", "approval")}
                 | {"notify": st["notify"]}}

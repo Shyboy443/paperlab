@@ -1,0 +1,26 @@
+{
+  "deployment_id": "b807c233-3aee-4919-9ca8-8dac2a8d60a2",
+  "status": "SUCCESS",
+  "removed": [
+    "uploaded-file Cost analyzer sidebar/page",
+    "file upload and streamed AI client",
+    "private analyzer endpoints and service"
+  ],
+  "retained": [
+    "Programs",
+    "saved bot history",
+    "strategy backtest analysis",
+    "legacy /lab redirects"
+  ],
+  "verification": {
+    "local_removal_tests": 3,
+    "public_api_tests": 27,
+    "public_browser": {
+      "old_link_redirect": "/public/competition",
+      "analyzer_removed": true,
+      "stream": "LIVE",
+      "program_cards": 4,
+      "javascript_errors": []
+    }
+  }
+}

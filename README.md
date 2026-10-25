@@ -112,8 +112,8 @@ Key modules:
 | `app/live/v6_golive.py` | Which V6 bots may go live (a profitable two-year backtest) |
 | `app/core/` | API routes, views, storage, auth, realtime stream |
 | `app/dashboard/` | Front end: the operator console and public arena (plain JavaScript, no build step), in the Lovable dashboard's design (sidebar, `styles.css` "LAB THEME") |
-| `app/dashboard/lab.js` | The Programs and Cost analyzer views, ported from the Lovable dashboard |
-| `app/core/api_lab.py`, `app/ai/analyzer.py` | The private AI cost analyzer (OpenRouter; the key stays server-side) |
+| `app/dashboard/lab.js` | The Programs view and shared sidebar icons |
+| `app/core/api_lab.py` | Legacy dashboard address redirects |
 
 ## Safety model
 
@@ -147,8 +147,9 @@ uvicorn app.main:app --port 8540
 
 - Private dashboard: http://localhost:8540/ (user `admin`, password from `.env`).
 - Public read-only arena: http://localhost:8540/public/competition.
-- Both have Dashboard, Bots, Markets, Programs, Cost analyzer, Scout and System. The cost analyzer asks for the
-  dashboard password on the public page.
+- Both have Dashboard, Bots, Markets, Programs, 24/7 Market Research, News & sentiment and System.
+  Market Research scans Binance spot/perpetual markets, tests strategies and tracks forward paper books.
+  News & sentiment monitors headlines and crowd attention every five minutes.
 
 The forward programs start only when their switches are on (see [Configuration](#configuration)).
 
@@ -188,7 +189,6 @@ re-run.
 | `DASHBOARD_PASSWORD` | Private dashboard and API login (Basic auth) |
 | `V6_FORWARD_ENABLED`, `V8_FORWARD_ENABLED`, ... `V14_FORWARD_ENABLED` | Start each forward paper program at boot |
 | `JEV_ENABLED`, `OPENROUTER_API_KEY` | The Jev AI twins (decision model via OpenRouter) |
-| `ANALYZER_MODEL`, `ANALYZER_MAX_TOKENS` | The cost analyzer's OpenRouter model (default `anthropic/claude-opus-5.5`) and answer length (16000) |
 | `SCOUT_ENABLED`, `AUTORESEARCH_ENABLED` | The research-only programs |
 | `TELEGRAM_FILTER` | Which programs send Telegram trade signals (for example `v11,v12,v13,v14,v8:CONTROL`) |
 | `LIVE_MIRROR_MAINNET_ENABLED` | Allows real-money live mirrors (off by default) |

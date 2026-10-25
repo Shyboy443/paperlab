@@ -1,0 +1,1205 @@
+{
+ "generated_utc": "2026-10-20T20:01:19+00:00",
+ "pre_registration": "docs/SCRIBD_ROUND6_STUDY.md",
+ "costs": {
+  "etf": "0.01% per side SPY/QQQ/IWM, 0.05% country ETFs",
+  "stocks": "0.03% per side"
+ },
+ "missing_data": [
+  "GXG",
+  "RSX"
+ ],
+ "rules": [
+  {
+   "key": "pagonidis_ibs_1day",
+   "doc": "The IBS Effect: Mean Reversion in Equity ETFs, Pagonidis 2013 (168296451): Table 6 strategy",
+   "assets": [
+    "ECH",
+    "EEM",
+    "EFA",
+    "EPHE",
+    "EPI",
+    "EPP",
+    "EWA",
+    "EWC",
+    "EWD",
+    "EWG",
+    "EWH",
+    "EWI",
+    "EWJ",
+    "EWL",
+    "EWM",
+    "EWO",
+    "EWP",
+    "EWQ",
+    "EWS",
+    "EWT",
+    "EWU",
+    "EWY",
+    "EWZ",
+    "EZA",
+    "FXI",
+    "IDX",
+    "ILF",
+    "IWM",
+    "QQQ",
+    "SPY",
+    "THD"
+   ],
+   "tf": "daily",
+   "rule": "",
+   "windows": {
+    "a": [
+     "1995-01-01",
+     "2013-01-01"
+    ],
+    "b": [
+     "2013-01-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 50309,
+    "win_rate_pct": 51.64881035202449,
+    "mean_ret_pct": 0.15755262833457642,
+    "total_ret_pct": 7926.315178884205,
+    "profit_factor": 1.2709433616740498,
+    "max_dd_pct_sum": 288.9158235671093
+   },
+   "b": {
+    "trades": 50585,
+    "win_rate_pct": 47.69991104082238,
+    "mean_ret_pct": -0.013596441528962454,
+    "total_ret_pct": -687.7759947425658,
+    "profit_factor": 0.9725669793290539,
+    "max_dd_pct_sum": 1216.1818378162357,
+    "mean_ci_low": -0.02626127608138282,
+    "by_asset_ret_pct": {
+     "ECH": -210.4630284159423,
+     "EEM": 0.7153037071884667,
+     "EFA": -111.31630132537768,
+     "EPHE": 8.445960685986435,
+     "EPI": 71.51188582722195,
+     "EPP": -83.92565553635666,
+     "EWA": -62.28601463316973,
+     "EWC": -209.35898572435883,
+     "EWD": -115.92689249938009,
+     "EWG": -102.72318245502672,
+     "EWH": 47.04791012276288,
+     "EWI": 5.341809563577515,
+     "EWJ": -33.67142825090809,
+     "EWL": -122.07071189988879,
+     "EWM": 77.6539260174194,
+     "EWO": -39.449520373701304,
+     "EWP": -15.313734488357353,
+     "EWQ": -89.16843600998278,
+     "EWS": -69.32105419617523,
+     "EWT": -16.01868715938198,
+     "EWU": -132.65120793593746,
+     "EWY": 88.686952995625,
+     "EWZ": 88.35799555340799,
+     "EZA": 90.62952526664256,
+     "FXI": 98.57735558600189,
+     "IDX": 43.076414020492834,
+     "ILF": -78.99379418238905,
+     "IWM": 44.33804922063056,
+     "QQQ": 70.77863419841742,
+     "SPY": 11.576377986575306,
+     "THD": 58.1445395918184
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 50309,
+     "win_rate_pct": 53.242958516368844,
+     "mean_ret_pct": 0.2495058637533405,
+     "total_ret_pct": 12552.390499566807,
+     "profit_factor": 1.4637262707440064,
+     "max_dd_pct_sum": 182.10584032605766
+    },
+    "b": {
+     "trades": 50585,
+     "win_rate_pct": 50.91034891766334,
+     "mean_ret_pct": 0.07848082136000678,
+     "total_ret_pct": 3969.9523484959427,
+     "profit_factor": 1.1746833208525527,
+     "max_dd_pct_sum": 89.26784888579346
+    }
+   },
+   "checks": {
+    "a_positive": true,
+    "b_positive": false,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": false
+   },
+   "verdict": "FAIL",
+   "recent_b_trades": [
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 51.209999084472656,
+     "ret_pct": -0.7636011688870068,
+     "r": null,
+     "result": "next close",
+     "asset": "EWD"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 94.87999725341797,
+     "ret_pct": 0.015878597416841684,
+     "r": null,
+     "result": "next close",
+     "asset": "EWJ"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 26.510000228881836,
+     "ret_pct": -0.9671616012087204,
+     "r": null,
+     "result": "next close",
+     "asset": "EWM"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 58.27000045776367,
+     "ret_pct": -1.7123710657538567,
+     "r": null,
+     "result": "next close",
+     "asset": "EWP"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 31.34000015258789,
+     "ret_pct": -0.450815601503128,
+     "r": null,
+     "result": "next close",
+     "asset": "EWS"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 106.26000213623047,
+     "ret_pct": 0.8406173347508465,
+     "r": null,
+     "result": "next close",
+     "asset": "EWT"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 150.44000244140625,
+     "ret_pct": 3.9793201876900093,
+     "r": null,
+     "result": "next close",
+     "asset": "EWY"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 33.84000015258789,
+     "ret_pct": -1.0156216643239748,
+     "r": null,
+     "result": "next close",
+     "asset": "FXI"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 8.970000267028809,
+     "ret_pct": -2.4399669105854267,
+     "r": null,
+     "result": "next close",
+     "asset": "IDX"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 270.44000244140625,
+     "ret_pct": 0.29057252280525525,
+     "r": null,
+     "result": "next close",
+     "asset": "IWM"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 709.7999877929688,
+     "ret_pct": 1.1858525931299988,
+     "r": null,
+     "result": "next close",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1792368000000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 41.099998474121094,
+     "ret_pct": 0.7511613154784642,
+     "r": null,
+     "result": "next close",
+     "asset": "EPI"
+    },
+    {
+     "t": 1792368000000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 50.869998931884766,
+     "ret_pct": 0.3126162809663081,
+     "r": null,
+     "result": "next close",
+     "asset": "EWD"
+    },
+    {
+     "t": 1792368000000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 41.040000915527344,
+     "ret_pct": 0.8619954891019959,
+     "r": null,
+     "result": "next close",
+     "asset": "EWG"
+    },
+    {
+     "t": 1792368000000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 21.959999084472656,
+     "ret_pct": 0.6054790198590222,
+     "r": null,
+     "result": "next close",
+     "asset": "EWH"
+    },
+    {
+     "t": 1792368000000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 55.38999938964844,
+     "ret_pct": 0.9826905475395737,
+     "r": null,
+     "result": "next close",
+     "asset": "EWI"
+    },
+    {
+     "t": 1792368000000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 94.98999786376953,
+     "ret_pct": 0.3471950308296195,
+     "r": null,
+     "result": "next close",
+     "asset": "EWJ"
+    },
+    {
+     "t": 1792368000000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 62.0099983215332,
+     "ret_pct": 1.5440743188679888,
+     "r": null,
+     "result": "next close",
+     "asset": "EWL"
+    },
+    {
+     "t": 1792368000000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 26.280000686645508,
+     "ret_pct": 0.9839320397474741,
+     "r": null,
+     "result": "next close",
+     "asset": "EWM"
+    },
+    {
+     "t": 1792368000000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 57.33000183105469,
+     "ret_pct": 1.2075614443709117,
+     "r": null,
+     "result": "next close",
+     "asset": "EWP"
+    },
+    {
+     "t": 1792368000000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 41.58000183105469,
+     "ret_pct": 0.6331505021858845,
+     "r": null,
+     "result": "next close",
+     "asset": "EWQ"
+    },
+    {
+     "t": 1792368000000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 47.34000015258789,
+     "ret_pct": 0.755082971276887,
+     "r": null,
+     "result": "next close",
+     "asset": "EWU"
+    },
+    {
+     "t": 1792368000000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 156.5800018310547,
+     "ret_pct": -1.775621068666787,
+     "r": null,
+     "result": "next close",
+     "asset": "EWY"
+    },
+    {
+     "t": 1792368000000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 33.529998779296875,
+     "ret_pct": -0.07018450484246964,
+     "r": null,
+     "result": "next close",
+     "asset": "FXI"
+    },
+    {
+     "t": 1792368000000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 71.41000366210938,
+     "ret_pct": -0.9328016938729274,
+     "r": null,
+     "result": "next close",
+     "asset": "THD"
+    }
+   ]
+  },
+  {
+   "key": "pagonidis_rsi3_ibs",
+   "doc": "The IBS Effect: Mean Reversion in Equity ETFs, Pagonidis 2013 (168296451): Cutler RSI(3) + IBS filter",
+   "assets": [
+    "ECH",
+    "EEM",
+    "EFA",
+    "EPHE",
+    "EPI",
+    "EPP",
+    "EWA",
+    "EWC",
+    "EWD",
+    "EWG",
+    "EWH",
+    "EWI",
+    "EWJ",
+    "EWL",
+    "EWM",
+    "EWO",
+    "EWP",
+    "EWQ",
+    "EWS",
+    "EWT",
+    "EWU",
+    "EWY",
+    "EWZ",
+    "EZA",
+    "FXI",
+    "IDX",
+    "ILF",
+    "IWM",
+    "QQQ",
+    "SPY",
+    "THD"
+   ],
+   "tf": "daily",
+   "rule": "",
+   "windows": {
+    "a": [
+     "1995-01-01",
+     "2013-01-01"
+    ],
+    "b": [
+     "2013-01-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 6546,
+    "win_rate_pct": 62.00733272227315,
+    "mean_ret_pct": 0.4251593212379924,
+    "total_ret_pct": 2783.092916823898,
+    "profit_factor": 1.6370851190262459,
+    "max_dd_pct_sum": 46.685354960473674
+   },
+   "b": {
+    "trades": 6871,
+    "win_rate_pct": 56.73118905545045,
+    "mean_ret_pct": 0.05956140869736463,
+    "total_ret_pct": 409.24643915959234,
+    "profit_factor": 1.0983888657319374,
+    "max_dd_pct_sum": 125.71684511818337,
+    "mean_ci_low": 0.016799812697465864,
+    "by_asset_ret_pct": {
+     "ECH": -90.49589183941355,
+     "EEM": -14.048772493275395,
+     "EFA": 2.174851440364027,
+     "EPHE": -3.8830904155517114,
+     "EPI": -0.23944780205216432,
+     "EPP": 10.77922737875507,
+     "EWA": 49.61308859905915,
+     "EWC": -16.345172251825876,
+     "EWD": -21.773478407720038,
+     "EWG": 20.292980839273152,
+     "EWH": -20.448461523597388,
+     "EWI": 46.47222655720817,
+     "EWJ": 29.8260579072615,
+     "EWL": -22.194262629825204,
+     "EWM": -1.194324831936256,
+     "EWO": 32.294281060846835,
+     "EWP": -0.8739650280238718,
+     "EWQ": -13.526403576014218,
+     "EWS": 9.675964106210323,
+     "EWT": 29.761406896078704,
+     "EWU": -30.182996698734918,
+     "EWY": 39.48022906557614,
+     "EWZ": 49.07594524573557,
+     "EZA": 48.585079743899264,
+     "FXI": 5.469332918212967,
+     "IDX": 20.670378650346386,
+     "ILF": 34.547748170651495,
+     "IWM": 70.9112170818652,
+     "QQQ": 96.0680194661735,
+     "SPY": 59.101594865556194,
+     "THD": -10.34692333551063
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 6546,
+     "win_rate_pct": 63.26000611060189,
+     "mean_ret_pct": 0.5159070604668523,
+     "total_ret_pct": 3377.127617816015,
+     "profit_factor": 1.8144605276635752,
+     "max_dd_pct_sum": 39.730358450758374
+    },
+    "b": {
+     "trades": 6871,
+     "win_rate_pct": 59.321787221656244,
+     "mean_ret_pct": 0.15220692885711792,
+     "total_ret_pct": 1045.8138081772572,
+     "profit_factor": 1.268716916239635,
+     "max_dd_pct_sum": 82.25797410524069
+    }
+   },
+   "checks": {
+    "a_positive": true,
+    "b_positive": false,
+    "b_ci_above_zero": true,
+    "b_half_the_assets": true
+   },
+   "verdict": "FAIL",
+   "recent_b_trades": [
+    {
+     "t": 1791417600000,
+     "exit_t": 1791504000000,
+     "dir": 1,
+     "entry": 66.0999984741211,
+     "ret_pct": 0.9584789583948863,
+     "r": null,
+     "result": "rule exit",
+     "asset": "EEM"
+    },
+    {
+     "t": 1791417600000,
+     "exit_t": 1791504000000,
+     "dir": 1,
+     "entry": 22.270000457763672,
+     "ret_pct": 2.233814310064832,
+     "r": null,
+     "result": "rule exit",
+     "asset": "EPHE"
+    },
+    {
+     "t": 1791417600000,
+     "exit_t": 1791504000000,
+     "dir": 1,
+     "entry": 97.31999969482422,
+     "ret_pct": 0.45459403695240025,
+     "r": null,
+     "result": "rule exit",
+     "asset": "EWJ"
+    },
+    {
+     "t": 1791417600000,
+     "exit_t": 1791504000000,
+     "dir": 1,
+     "entry": 26.3799991607666,
+     "ret_pct": 0.9608820894824202,
+     "r": null,
+     "result": "rule exit",
+     "asset": "EWM"
+    },
+    {
+     "t": 1791417600000,
+     "exit_t": 1791849600000,
+     "dir": 1,
+     "entry": 113.33999633789062,
+     "ret_pct": 0.005825612391213708,
+     "r": null,
+     "result": "rule exit",
+     "asset": "EWT"
+    },
+    {
+     "t": 1791417600000,
+     "exit_t": 1791849600000,
+     "dir": 1,
+     "entry": 176.2899932861328,
+     "ret_pct": -5.616552895824667,
+     "r": null,
+     "result": "rule exit",
+     "asset": "EWY"
+    },
+    {
+     "t": 1791763200000,
+     "exit_t": 1791849600000,
+     "dir": 1,
+     "entry": 40.310001373291016,
+     "ret_pct": 0.9662001745997755,
+     "r": null,
+     "result": "rule exit",
+     "asset": "EWO"
+    },
+    {
+     "t": 1791763200000,
+     "exit_t": 1792022400000,
+     "dir": 1,
+     "entry": 31.549999237060547,
+     "ret_pct": -0.41679390586680365,
+     "r": null,
+     "result": "rule exit",
+     "asset": "EWS"
+    },
+    {
+     "t": 1791936000000,
+     "exit_t": 1792022400000,
+     "dir": 1,
+     "entry": 36.91999816894531,
+     "ret_pct": 0.9287407541115668,
+     "r": null,
+     "result": "rule exit",
+     "asset": "ECH"
+    },
+    {
+     "t": 1791936000000,
+     "exit_t": 1792022400000,
+     "dir": 1,
+     "entry": 64.38999938964844,
+     "ret_pct": -0.7674721371286114,
+     "r": null,
+     "result": "rule exit",
+     "asset": "EEM"
+    },
+    {
+     "t": 1791936000000,
+     "exit_t": 1792022400000,
+     "dir": 1,
+     "entry": 95.83999633789062,
+     "ret_pct": -0.5275783079683359,
+     "r": null,
+     "result": "rule exit",
+     "asset": "EWJ"
+    },
+    {
+     "t": 1791936000000,
+     "exit_t": 1792022400000,
+     "dir": 1,
+     "entry": 110.94000244140625,
+     "ret_pct": -1.7216901123489097,
+     "r": null,
+     "result": "rule exit",
+     "asset": "EWT"
+    },
+    {
+     "t": 1791936000000,
+     "exit_t": 1792022400000,
+     "dir": 1,
+     "entry": 159.8300018310547,
+     "ret_pct": -2.3575208463429416,
+     "r": null,
+     "result": "rule exit",
+     "asset": "EWY"
+    },
+    {
+     "t": 1791936000000,
+     "exit_t": 1792022400000,
+     "dir": 1,
+     "entry": 33.86000061035156,
+     "ret_pct": 1.0807374634359248,
+     "r": null,
+     "result": "rule exit",
+     "asset": "FXI"
+    },
+    {
+     "t": 1791936000000,
+     "exit_t": 1792022400000,
+     "dir": 1,
+     "entry": 271.3699951171875,
+     "ret_pct": 1.34699728145358,
+     "r": null,
+     "result": "rule exit",
+     "asset": "IWM"
+    },
+    {
+     "t": 1791936000000,
+     "exit_t": 1792022400000,
+     "dir": 1,
+     "entry": 728.9500122070312,
+     "ret_pct": -0.15031307907307595,
+     "r": null,
+     "result": "rule exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1791936000000,
+     "exit_t": 1792022400000,
+     "dir": 1,
+     "entry": 769.5999755859375,
+     "ret_pct": 0.2645352794475991,
+     "r": null,
+     "result": "rule exit",
+     "asset": "SPY"
+    },
+    {
+     "t": 1792022400000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 41.58000183105469,
+     "ret_pct": 3.097048962985886,
+     "r": null,
+     "result": "end",
+     "asset": "EWZ"
+    },
+    {
+     "t": 1792022400000,
+     "exit_t": 1792108800000,
+     "dir": 1,
+     "entry": 37.2599983215332,
+     "ret_pct": 0.6779278801042505,
+     "r": null,
+     "result": "rule exit",
+     "asset": "ILF"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 62.849998474121094,
+     "ret_pct": 0.6315400300441634,
+     "r": null,
+     "result": "end",
+     "asset": "EEM"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 94.87999725341797,
+     "ret_pct": 0.4635920908071779,
+     "r": null,
+     "result": "end",
+     "asset": "EWJ"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 106.26000213623047,
+     "ret_pct": 0.854726020664856,
+     "r": null,
+     "result": "end",
+     "asset": "EWT"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 150.44000244140625,
+     "ret_pct": 2.235310976428617,
+     "r": null,
+     "result": "end",
+     "asset": "EWY"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 8.970000267028809,
+     "ret_pct": 3.2428113903369784,
+     "r": null,
+     "result": "end",
+     "asset": "IDX"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 709.7999877929688,
+     "ret_pct": 1.1858525931299988,
+     "r": null,
+     "result": "end",
+     "asset": "QQQ"
+    }
+   ],
+   "random_timing": {
+    "a": {
+     "rule_mean_pct": 0.4251593212379924,
+     "random_mean_pct": -0.012740610160200649,
+     "edge_pct": 0.43789993139819305,
+     "z": 13.462011227368615
+    },
+    "b": {
+     "rule_mean_pct": 0.05956140869736463,
+     "random_mean_pct": -0.03522902367201655,
+     "edge_pct": 0.09479043236938117,
+     "z": 4.313624039778614
+    }
+   },
+   "qqq_only": {
+    "a": {
+     "trades": 257,
+     "win_rate_pct": 68.09338521400778,
+     "mean_ret_pct": 0.7436461724060593,
+     "total_ret_pct": 191.11706630835727,
+     "profit_factor": 2.4871825216537182,
+     "max_dd_pct_sum": 20.2780466061579
+    },
+    "b": {
+     "trades": 215,
+     "win_rate_pct": 66.51162790697674,
+     "mean_ret_pct": 0.44682799751708624,
+     "total_ret_pct": 96.06801946617354,
+     "profit_factor": 2.081294705270629,
+     "max_dd_pct_sum": 11.349258076506077
+    }
+   },
+   "leverage_2010_2026": {
+    "QQQ": {
+     "trades": 269,
+     "mean_ret_pct": 0.444338949720885,
+     "worst_trade_pct": -8.068473303516532,
+     "total_pct": 214.52097619777115,
+     "cagr_pct": 7.1286536480839935,
+     "max_dd_pct": 11.072077570177829
+    },
+    "TQQQ": {
+     "trades": 269,
+     "mean_ret_pct": 1.2496010210315471,
+     "worst_trade_pct": -22.829274784559917,
+     "total_pct": 1781.7407627291025,
+     "cagr_pct": 19.287000111303108,
+     "max_dd_pct": 31.033028429373022
+    }
+   }
+  },
+  {
+   "key": "katsanos_stiffness",
+   "doc": "The Stiffness Indicator, Katsanos, S&C Nov 2018 (422943971)",
+   "assets": [
+    "AAPL",
+    "AMGN",
+    "AMZN",
+    "AXP",
+    "BA",
+    "CAT",
+    "CRM",
+    "CSCO",
+    "CVX",
+    "DIS",
+    "GS",
+    "HD",
+    "HON",
+    "IBM",
+    "JNJ",
+    "JPM",
+    "KO",
+    "MCD",
+    "MMM",
+    "MRK",
+    "MSFT",
+    "NKE",
+    "NVDA",
+    "PG",
+    "SHW",
+    "TRV",
+    "UNH",
+    "V",
+    "VZ",
+    "WMT"
+   ],
+   "tf": "daily",
+   "rule": "",
+   "windows": {
+    "a": [
+     "2008-08-01",
+     "2018-08-01"
+    ],
+    "b": [
+     "2018-08-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 98,
+    "win_rate_pct": 72.44897959183673,
+    "mean_ret_pct": 7.063822507806662,
+    "total_ret_pct": 692.2546057650528,
+    "profit_factor": 4.366618980471321,
+    "max_dd_pct_sum": 37.828623373220296
+   },
+   "b": {
+    "trades": 226,
+    "win_rate_pct": 56.19469026548673,
+    "mean_ret_pct": 2.8996898622155483,
+    "total_ret_pct": 655.3299088607139,
+    "profit_factor": 1.634113477145577,
+    "max_dd_pct_sum": 95.54869116299676,
+    "mean_ci_low": 0.780019458240276,
+    "by_asset_ret_pct": {
+     "AAPL": 79.39532547130442,
+     "AMGN": 4.786886519279333,
+     "AMZN": 45.14533205331896,
+     "AXP": 62.817743868501424,
+     "BA": -41.21656823323267,
+     "CAT": -9.084726840144235,
+     "CRM": -14.837318314752839,
+     "CSCO": 16.73388092036555,
+     "CVX": 61.902365204920315,
+     "DIS": -47.189610764685604,
+     "GS": 44.10446682611813,
+     "HD": -15.880829962635616,
+     "HON": -9.235487946000658,
+     "IBM": 19.5796872452158,
+     "JNJ": -37.46457411151904,
+     "JPM": 13.21416220689758,
+     "KO": 12.453576645254039,
+     "MCD": -8.773781597829014,
+     "MMM": 4.256848734959135,
+     "MRK": 24.33515589806722,
+     "MSFT": 30.61866926694214,
+     "NKE": -24.174874804372642,
+     "NVDA": 241.43171229615103,
+     "PG": 26.583006889320835,
+     "SHW": 14.715907177290628,
+     "TRV": 74.71830273570941,
+     "UNH": -33.54772210703143,
+     "V": 54.17943597539043,
+     "VZ": 8.379292530275363,
+     "WMT": 57.38364507763587
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 98,
+     "win_rate_pct": 72.44897959183673,
+     "mean_ret_pct": 7.125960295895425,
+     "total_ret_pct": 698.3441089977516,
+     "profit_factor": 4.422176583122842,
+     "max_dd_pct_sum": 37.53988533882193
+    },
+    "b": {
+     "trades": 226,
+     "win_rate_pct": 57.07964601769911,
+     "mean_ret_pct": 2.960578035626229,
+     "total_ret_pct": 669.0906360515278,
+     "profit_factor": 1.6509179324855807,
+     "max_dd_pct_sum": 94.97718431829233
+    }
+   },
+   "checks": {
+    "a_positive": true,
+    "b_positive": true,
+    "b_ci_above_zero": true,
+    "b_half_the_assets": true
+   },
+   "verdict": "PASS (not counted: needs a survivorship-free re-test)",
+   "recent_b_trades": [
+    {
+     "t": 1758672000000,
+     "exit_t": 1769472000000,
+     "dir": 1,
+     "entry": 254.28068708944184,
+     "ret_pct": 1.585628918820943,
+     "r": null,
+     "result": "rule exit",
+     "asset": "AAPL"
+    },
+    {
+     "t": 1759881600000,
+     "exit_t": 1770681600000,
+     "dir": 1,
+     "entry": 283.61535368932766,
+     "ret_pct": 1.9702025579800684,
+     "r": null,
+     "result": "rule exit",
+     "asset": "TRV"
+    },
+    {
+     "t": 1761609600000,
+     "exit_t": 1772496000000,
+     "dir": 1,
+     "entry": 85.59655675976717,
+     "ret_pct": 36.908600323109575,
+     "r": null,
+     "result": "rule exit",
+     "asset": "MRK"
+    },
+    {
+     "t": 1763683200000,
+     "exit_t": 1773187200000,
+     "dir": 1,
+     "entry": 303.82004331141417,
+     "ret_pct": -8.207770472772857,
+     "r": null,
+     "result": "rule exit",
+     "asset": "UNH"
+    },
+    {
+     "t": 1764115200000,
+     "exit_t": 1774310400000,
+     "dir": 1,
+     "entry": 299.0873184520494,
+     "ret_pct": -18.838320913544514,
+     "r": null,
+     "result": "rule exit",
+     "asset": "IBM"
+    },
+    {
+     "t": 1765756800000,
+     "exit_t": 1776643200000,
+     "dir": 1,
+     "entry": 314.7692233228592,
+     "ret_pct": 10.986978033129693,
+     "r": null,
+     "result": "rule exit",
+     "asset": "AMGN"
+    },
+    {
+     "t": 1768262400000,
+     "exit_t": 1778803200000,
+     "dir": 1,
+     "entry": 69.07824598974003,
+     "ret_pct": 16.264893440438065,
+     "r": null,
+     "result": "rule exit",
+     "asset": "KO"
+    },
+    {
+     "t": 1772496000000,
+     "exit_t": 1777939200000,
+     "dir": 1,
+     "entry": 325.55236644920046,
+     "ret_pct": -13.897529355968437,
+     "r": null,
+     "result": "rule exit",
+     "asset": "MCD"
+    },
+    {
+     "t": 1776124800000,
+     "exit_t": 1786665600000,
+     "dir": 1,
+     "entry": 297.2170176177079,
+     "ret_pct": 24.06715232573788,
+     "r": null,
+     "result": "rule exit",
+     "asset": "TRV"
+    },
+    {
+     "t": 1776729600000,
+     "exit_t": 1787270400000,
+     "dir": 1,
+     "entry": 45.04157730565492,
+     "ret_pct": 7.873157685548129,
+     "r": null,
+     "result": "rule exit",
+     "asset": "VZ"
+    },
+    {
+     "t": 1782086400000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 1104.2915097606365,
+     "ret_pct": -19.83249480743438,
+     "r": null,
+     "result": "end",
+     "asset": "GS"
+    },
+    {
+     "t": 1782345600000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 404.16133931155116,
+     "ret_pct": -1.165992838577296,
+     "r": null,
+     "result": "end",
+     "asset": "UNH"
+    },
+    {
+     "t": 1782432000000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 192.90414096411192,
+     "ret_pct": 12.997421294314233,
+     "r": null,
+     "result": "end",
+     "asset": "NVDA"
+    },
+    {
+     "t": 1782691200000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 234.22000122070312,
+     "ret_pct": 8.91604374950571,
+     "r": null,
+     "result": "end",
+     "asset": "AMZN"
+    },
+    {
+     "t": 1783296000000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 307.0951430290638,
+     "ret_pct": 10.905575671876061,
+     "r": null,
+     "result": "end",
+     "asset": "AAPL"
+    },
+    {
+     "t": 1784764800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 351.39717584563147,
+     "ret_pct": 13.630598454104831,
+     "r": null,
+     "result": "end",
+     "asset": "V"
+    },
+    {
+     "t": 1786060800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 127.0898145557412,
+     "ret_pct": 14.028314198281036,
+     "r": null,
+     "result": "end",
+     "asset": "MRK"
+    },
+    {
+     "t": 1786579200000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 183.37724262019455,
+     "ret_pct": -10.160314565251415,
+     "r": null,
+     "result": "end",
+     "asset": "MMM"
+    },
+    {
+     "t": 1786665600000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 361.1979972145266,
+     "ret_pct": -6.142924812558076,
+     "r": null,
+     "result": "end",
+     "asset": "JPM"
+    },
+    {
+     "t": 1787788800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 268.45001220703125,
+     "ret_pct": -5.281014299891877,
+     "r": null,
+     "result": "end",
+     "asset": "JNJ"
+    },
+    {
+     "t": 1787875200000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 333.3389827510096,
+     "ret_pct": -6.162762914493826,
+     "r": null,
+     "result": "end",
+     "asset": "AXP"
+    },
+    {
+     "t": 1788134400000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 428.5899963378906,
+     "ret_pct": 0.35285565040878963,
+     "r": null,
+     "result": "end",
+     "asset": "AMGN"
+    },
+    {
+     "t": 1791158400000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 206.8300018310547,
+     "ret_pct": 8.18101334426574,
+     "r": null,
+     "result": "end",
+     "asset": "CVX"
+    },
+    {
+     "t": 1791936000000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 238.39999389648438,
+     "ret_pct": -0.026452251445892846,
+     "r": null,
+     "result": "end",
+     "asset": "CRM"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 541.3099975585938,
+     "ret_pct": -2.3888323535152374,
+     "r": null,
+     "result": "end",
+     "asset": "MSFT"
+    }
+   ],
+   "random_timing": {
+    "a": {
+     "rule_mean_pct": 7.063822507806662,
+     "random_mean_pct": 5.678744634255434,
+     "edge_pct": 1.3850778735512277,
+     "z": 0.9705719754201776
+    },
+    "b": {
+     "rule_mean_pct": 2.8996898622155483,
+     "random_mean_pct": 4.734374296836039,
+     "edge_pct": -1.834684434620491,
+     "z": -1.6692033922523146
+    }
+   }
+  }
+ ],
+ "headline": "No new counted winner. Pagonidis' IBS effect weakened after his 2013 paper (one-day rule +0.16% \u2192 +0.08% per trade before costs, now losing after costs); his RSI(3)+IBS rule still beats random timing but misses the bar across 31 ETFs (on QQQ alone PF 2.08). Katsanos' Stiffness only rides the Dow stocks' rise. Best return winner stays round 3's IBS rule on QQQ: 37.6% a year in TQQQ since 2010."
+}

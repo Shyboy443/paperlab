@@ -132,7 +132,7 @@ class TestField:
 
 
 class TestWiring:
-    def test_service_names_roster_route_and_settings(self, tmp_path):
+    def test_service_names_roster_route_and_settings(self, tmp_path, programs_running):
         from app.core import bot_names, roster_view
         from app.core.api_public import router
         from app.live.telegram import settings_text

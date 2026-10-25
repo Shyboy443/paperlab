@@ -1,0 +1,35 @@
+{
+  "round": 9,
+  "title": "Cross-venue perpetual basis (OKX vs Binance)",
+  "input_class": "mark_price_basis",
+  "venues": ["OKX", "Binance"],
+  "instrument": "BTC-USDT-SWAP",
+  "data_attempted": "1-minute mark prices, OKX history-mark endpoint",
+  "data_obtained": "1-minute mark prices, last 24h only",
+  "data_horizon": "~17 hours of overlapping marks between OKX and Binance",
+  "structural_finding": {
+    "basis_p50_bps": 0.66,
+    "basis_p90_bps": 1.50,
+    "basis_p99_bps": 3.04,
+    "basis_max_bps": 5.05,
+    "round_trip_cost_bps": 80.0,
+    "interpretation": "Largest observed basis (5 bps) is 6.25% of the round-trip cost (80 bps). The p99 of the basis (3 bps) is 3.75% of the cost. The signal does not fire at any threshold that would net positive."
+  },
+  "results": {
+    "split": {
+      "metrics": {"avg_daily": 0.0, "sharpe": 0.0, "max_dd": 0.0, "min_equity_pct": 1.0, "trades": 0, "n_windows": 1},
+      "verdict": {"hit": false, "reason": "too few trades: 0 < 30"},
+      "n_trades": 0,
+      "params": {"entry_bps": 25.0, "exit_bps": 5.0, "max_hold_min": 240, "notional_usd": 10000.0, "cost_tier": "std_taker_alt"}
+    },
+    "walkforward": {
+      "metrics": {"avg_daily": 0.0, "sharpe": 0.0, "max_dd": 0.0, "min_equity_pct": 1.0, "trades": 0, "n_windows": 0},
+      "verdict": {"hit": false, "reason": "too few trades: 0 < 30 (no complete walk-forward windows — 17h of data, 1440 bars, walk-forward needs >=455 daily bars)"},
+      "n_trades": 0,
+      "params": {"entry_bps": 25.0, "exit_bps": 5.0, "max_hold_min": 240, "notional_usd": 10000.0, "cost_tier": "std_taker_alt"}
+    }
+  },
+  "data_caveat": "OKX public 'history-mark-price-candles' endpoint is mislabeled — verified via 50-page probe: it returns the same 24h rolling window regardless of the 'after' cursor. This is the same hard 24-100 day cap your prior workspace hit on Coinbase hourly (~300d) and OKX funding (~100d). The walk-forward cannot be evaluated because the data is too short to form even one chained test window.",
+  "verdict": "INSUFFICIENT DATA + STRUCTURAL FAILURE. Same finding as round 4.2: cross-venue mark-price basis is far smaller than retail cost schedule. Same data-availability wall as rounds 1-8.",
+  "next_action": "loop policy says pick the next input class. Round 10 was 1-minute microstructure, but it has the same public-data cap. Honest move: write a SYNTHESIS log and stop the loop with the structural finding, rather than continue producing 'INSUFFICIENT DATA' verdicts."
+}

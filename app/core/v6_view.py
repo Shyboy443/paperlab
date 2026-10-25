@@ -12,6 +12,7 @@ import time
 from typing import Any, Iterable, Mapping, Sequence
 
 from app.competition.v6_config import STARTING_BALANCE, maturity
+from app.core.storage_read_view import isolated_read
 
 HOUR = 3_600_000
 DAY = 24 * HOUR
@@ -166,6 +167,7 @@ def equity_curve(trades: Sequence[Mapping[str, Any]], start: float, t0: int, now
     return pts
 
 
+@isolated_read
 def v6_payload(storage: Any, svc: Any = None, now_ms: int | None = None, activity: int = 60) -> dict[str, Any]:
     now_ms = now_ms or int(time.time() * 1000)
     health = svc.health() if svc is not None else {"status": "DISABLED", "enabled": False}
@@ -316,6 +318,7 @@ def v6_payload(storage: Any, svc: Any = None, now_ms: int | None = None, activit
     }
 
 
+@isolated_read
 def v6_activity(storage: Any, svc: Any = None, limit: int = 100, before_id: int | None = None) -> dict[str, Any]:
     exp = current_experiment(storage, svc)
     if exp is None:
@@ -325,6 +328,7 @@ def v6_activity(storage: Any, svc: Any = None, limit: int = 100, before_id: int 
             "events": [{"id": r["id"], "ts": r["ts"], "kind": r["kind"], **_pick(r.get("data"), EVENT_FIELDS)} for r in rows]}
 
 
+@isolated_read
 def v6_bot(storage: Any, key: str, svc: Any = None) -> dict[str, Any]:
     exp = current_experiment(storage, svc)
     if exp is None:

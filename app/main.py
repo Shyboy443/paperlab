@@ -154,6 +154,10 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
+        # LINE-UP (app/core/lineup.py): only the Ensemble and the IBS bot run; PAPERLAB_LINEUP=full starts everything.
+        from app.core.lineup import Lineup
+        lineup = Lineup.from_env()
+        app.state.lineup = lineup
         storage = Storage(settings.db_path)
         # Tournament results are produced off-box and shipped with the image; this imports any the
         # volume database does not already have. Additive and idempotent, so a redeploy is a no-op.
@@ -187,7 +191,7 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         shadow = LiveShadowService(str(settings.db_path), bus=realtime.bus)
         app.state.shadow = shadow
         realtime.shadow = shadow
-        shadow.start()
+        lineup.start("shadow", shadow)
         log.info("live shadow: %s", shadow.health()["status"])
         # V6 FORWARD ARENA: the frozen V6 bots (and +JEV twins) on live Bybit data, paper fills, started automatically
         # at every boot when V6_FORWARD_ENABLED=true. It resumes its forward experiment; it never backtests.
@@ -195,7 +199,7 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         v6 = V6ForwardService(str(settings.db_path), bus=realtime.bus)
         app.state.v6 = v6
         realtime.v6 = v6
-        v6.start()
+        lineup.start("v6", v6)
         log.info("V6 forward: %s", v6.health()["status"])
         # The active challenger owns a separate database: no shared wallets or market watermarks.
         v7_storage = Storage(str(settings.db_path.with_name("v7-forward.db")))
@@ -203,7 +207,7 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         app.state.v7 = v7
         app.state.v7_storage = v7_storage
         realtime.v7 = v7
-        v7.start()
+        lineup.start("v7", v7)
         log.info("V7 active paper: %s", v7.health()["status"])
         # V8 SCALP: aggressive 5m scalpers on their own database and freeze (V8_FORWARD_ENABLED).
         v8_storage = Storage(str(settings.db_path.with_name("v8-forward.db")))
@@ -232,7 +236,7 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         await mirror.start()
         v8.listeners.append(mirror.on_event)
         v6.listeners.append(mirror.on_event)
-        v8.start()
+        lineup.start("v8", v8)
         log.info("V8 scalp paper: %s", v8.health()["status"])
         # V9 STOCKS: paper scalpers on US stocks / ETFs (Alpaca IEX data, regular sessions), its own database.
         v9_storage = Storage(str(settings.db_path.with_name("v9-forward.db")))
@@ -240,7 +244,7 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         app.state.v9 = v9
         app.state.v9_storage = v9_storage
         realtime.v9 = v9
-        v9.start()
+        lineup.start("v9", v9)
         log.info("V9 stock paper: %s", v9.health()["status"])
         # V11 SCAN: multi-coin scanner bots on one ordered Bybit tape (public data), its own database.
         v11_storage = Storage(str(settings.db_path.with_name("v11-forward.db")))
@@ -248,7 +252,7 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         app.state.v11 = v11
         app.state.v11_storage = v11_storage
         realtime.v11 = v11
-        v11.start()
+        lineup.start("v11", v11)
         log.info("V11 scan paper: %s", v11.health()["status"])
         # V12 BIZZY: beebots' Bizzy Bee day breakout and her Jev twin, the same ordered Bybit tape, its own database.
         v12_storage = Storage(str(settings.db_path.with_name("v12-forward.db")))
@@ -256,7 +260,7 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         app.state.v12 = v12
         app.state.v12_storage = v12_storage
         realtime.v12 = v12
-        v12.start()
+        lineup.start("v12", v12)
         log.info("V12 Bizzy paper: %s", v12.health()["status"])
         # V13 SNAPBACK: limit-order (maker) mean reversion over the V11 coins, the same ordered Bybit tape, its own db.
         v13_storage = Storage(str(settings.db_path.with_name("v13-forward.db")))
@@ -264,7 +268,7 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         app.state.v13 = v13
         app.state.v13_storage = v13_storage
         realtime.v13 = v13
-        v13.start()
+        lineup.start("v13", v13)
         log.info("V13 Snapback paper: %s", v13.health()["status"])
         # V14 HTF: copies of the best strategies that check the higher timeframes first, the same tape, its own db.
         v14_storage = Storage(str(settings.db_path.with_name("v14-forward.db")))
@@ -272,7 +276,7 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         app.state.v14 = v14
         app.state.v14_storage = v14_storage
         realtime.v14 = v14
-        v14.start()
+        lineup.start("v14", v14)
         log.info("V14 HTF paper: %s", v14.health()["status"])
         # V16 CONDITIONAL: the coin-by-coin study's two CHOP-only survivors (BTC V6.6, UNI V6.1), paper, own database.
         v16_storage = Storage(str(settings.db_path.with_name("v16-forward.db")))
@@ -280,7 +284,7 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         app.state.v16 = v16
         app.state.v16_storage = v16_storage
         realtime.v16 = v16
-        v16.start()
+        lineup.start("v16", v16)
         log.info("V16 conditional paper: %s", v16.health()["status"])
         # V17 SWING: the long-hold families that passed the V17 / V18 studies, on the 10 majors, paper, own database.
         v17_storage = Storage(str(settings.db_path.with_name("v17-forward.db")))
@@ -288,11 +292,13 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         app.state.v17 = v17
         app.state.v17_storage = v17_storage
         realtime.v17 = v17
-        v17.start()
+        lineup.start("v17", v17)
         log.info("V17 swing paper: %s", v17.health()["status"])
         # RENATA V12-VOL: the pre-registered six-month forward paper test of one V12 research rule (paper only).
         v12vol = None
         try:
+            if not lineup.keeps("v12vol"):
+                raise LookupError("removed from the line-up")
             if os.environ.get("V12VOL_FORWARD_ENABLED", "true").strip().lower() in ("0", "false", "no", "off"):
                 raise LookupError("disabled by V12VOL_FORWARD_ENABLED")
             from app.lab12.forward import V12VolForward
@@ -336,7 +342,8 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
                                     names=lambda: roster_payload(app.state).get("names") or {}, stats=_bot_stats,
                                     confidence=_confidence,
                                     chart=lambda program, ev, name: chart_for_open(program_db[program], program, ev, name)
-                                    if program in program_db else None)
+                                    if program in program_db else None,
+                                    default_scope="desks")   # operator 2026-10-11: desk decisions only
         app.state.telegram = telegram
         for svc in (v6, v7, v8, v9, v11, v12, v13, v14, v16, v17):
             svc.listeners.append(telegram.on_event)
@@ -349,41 +356,155 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
                             notifier=telegram, names=lambda: roster_payload(app.state).get("names") or {})
         app.state.watchdog = watchdog
         watchdog.start()
-        # V10 SCOUT: news + Reddit attention research (no trading); keys from the same encrypted vault.
-        from app.scout.service import ScoutService
-        scout = ScoutService(str(settings.db_path.with_name("scout.db")), providers=mirror.providers, bus=realtime.bus)
-        app.state.scout = scout
-        scout.start()
-        log.info("V10 scout: %s", scout.health()["state"])
         # TRADING DESK: six AI agents (OpenRouter) in one group chat, paper ledger only (app/desk).
         from app.desk.service import DeskService
-
-        def desk_social(coin: str) -> list:
-            rows = scout.store.items(coin, 30, int(time.time() * 1000) - 86_400_000)
-            tones = scout.store.tones([r["id"] for r in rows])
-            return [{**r, "tone": tones.get((r["id"], coin))} for r in rows]
-        desk = DeskService(str(settings.db_path.with_name("desk.db")), bus=realtime.bus, social=desk_social,
+        desk = DeskService(str(settings.db_path.with_name("desk.db")), bus=realtime.bus,
                            telegram=lambda: getattr(app.state, "telegram", None),
                            anthropic_key=lambda: (mirror.providers.keys("anthropic", "data") or (None,))[0])
         app.state.desk = desk
-        desk.start()
+        lineup.start("desk", desk)
         log.info("Trading desk: %s", desk.health()["llm"]["model"])
-        from app.autoresearch.service import ResearchService
-        research = ResearchService(settings.db_path.with_name("autonomous-research.db"))
-        app.state.research = research
-        research.start()
-        log.info("Autonomous market research enabled=%s", research.enabled)
+        from app.divergence.service import DivergenceService
+        divergence = DivergenceService(settings.db_path.with_name("divergence-desk.db"), llm=desk.llm,
+                                       can_enter=lambda: not engine.risk.state.killed,
+                                       telegram=lambda: getattr(app.state, "telegram", None))
+        app.state.divergence = divergence
+        lineup.start("divergence", divergence)
+        # NO-WICK DESK: the operator's No-Wick Retest strategy, 5m and 15m paper books (paper only).
+        from app.nowick.service import NoWickService
+        nowick = NoWickService(settings.db_path.with_name("nowick-desk.db"))
+        app.state.nowick = nowick
+        lineup.start("nowick", nowick)
+        # DONCHIAN DESK: LuxAlgo Donchian Trend Rules (defaults), 4h, one paper book per coin (paper only).
+        from app.donchian.service import DonchianService
+        donchian = DonchianService(settings.db_path.with_name("donchian-desk.db"))
+        app.state.donchian = donchian
+        lineup.start("donchian", donchian)
+        # MACD DESK (MACD-2): LuxAlgo MACD 12/26/9 crosses on Binance SPOT ZEC 4h, the audited settings (paper only).
+        from app.macd.service import MacdService
+        macd = MacdService(settings.db_path.with_name("macd-spot-desk.db"))
+        app.state.macd = macd
+        lineup.start("macd", macd)
+        # LINKED ACCOUNTS + MACD DESK LIVE: one strategy per linked exchange account; the MACD desk's ZEC perp rule can be
+        # switched on for ONE linked Binance account from the private dashboard (all guards in app/macd/live.py).
+        from app.live.accounts import LinkedAccounts
+        from app.macd.live import MacdLive
+        accounts = LinkedAccounts(settings.data_dir / "linked-accounts.json", vault, mirror.providers)
+        app.state.accounts = accounts
+        # one strategy per account across BOTH live paths (the mirror's shared key may also be a linked account)
+        accounts.mirror_busy = lambda ex, net: next((f"{m['program']} {m['bot_key']}" for m in mirror.mirrors.values()
+                                                     if (m["exchange"], m["network"]) == (ex, net)
+                                                     and (m["status"] == "ARMED" or m.get("position"))), None)
+        mirror.account_guard = accounts.shared_owner
+        macd_live = MacdLive(macd, accounts, mirror.providers, lambda: storage.provider_checks("binance"),
+                             storage.provider_check_save, telegram=lambda: getattr(app.state, "telegram", None))
+        app.state.macd_live = macd_live
+        lineup.retire_desk_live("macd_live", macd_live)
+        from app.donchian.live import DonchianLive                   # same switch on the Donchian desk (one coin, long & short)
+        donchian_live = DonchianLive(donchian, accounts, mirror.providers, lambda: storage.provider_checks("binance"),
+                                     storage.provider_check_save, telegram=lambda: getattr(app.state, "telegram", None))
+        app.state.donchian_live = donchian_live
+        lineup.retire_desk_live("donchian_live", donchian_live)
+        # MACD COIN BOTS: the MACD rule on STX / DASH / XLM perpetuals, long and short, one live switch each (operator,
+        # 2026-10-17; hindsight picks, see docs/MACD_TRIO_STUDY.md). Off until switched on from the private dashboard.
+        from app.macdtrio.live import COINS as TRIO_COINS, MacdCoinLive, TrioMarket
+        trio_market = TrioMarket(settings.db_path.with_name("macd-trio.db"))
+        coin_lives = []
+        for _coin in TRIO_COINS:
+            _live = MacdCoinLive(_coin, trio_market, accounts, mirror.providers, lambda: storage.provider_checks("binance"),
+                                 storage.provider_check_save, telegram=lambda: getattr(app.state, "telegram", None))
+            setattr(app.state, f"macd_{_coin.lower()}_live", _live)
+            lineup.retire_desk_live(f"macd_{_coin.lower()}_live", _live)
+            coin_lives.append(_live)
+        # ZEC BOTS: six TradingView strategies on the ZECUSDT perpetual, long-only, one live switch each (operator,
+        # 2026-10-18; docs/ZEC_BOTS_STUDY.md). Off until switched on from the private dashboard's home page.
+        from app.zecbots.live import ZecBotLive, ZecMarket
+        from app.zecbots.rules import RULES as ZEC_RULES
+        zec_market = ZecMarket(settings.db_path.with_name("zec-bots.db"))
+        for _key in ZEC_RULES:
+            _live = ZecBotLive(_key, zec_market, accounts, mirror.providers, lambda: storage.provider_checks("binance"),
+                               storage.provider_check_save, telegram=lambda: getattr(app.state, "telegram", None))
+            setattr(app.state, f"zec_{_key}_live", _live)
+            lineup.retire_desk_live(f"zec_{_key}_live", _live)
+            coin_lives.append(_live)
+        app.state.extra_live_names = (tuple(f"macd_{c.lower()}_live" for c in TRIO_COINS)
+                                      + tuple(f"zec_{k}_live" for k in ZEC_RULES))
+        # ENSEMBLE: round 4's r4_07 book (rotation + ML + 60-day momentum, inverse-vol weights, 1x) as a daily paper book
+        # on the server's own Binance data, plus a live switch that copies it onto a linked account (operator,
+        # 2026-10-23). The switch is off until the operator turns it on from the private dashboard.
+        from app.ensemble.live import EnsembleLive
+        from app.ensemble.service import EnsembleService
+        ensemble = EnsembleService(settings.db_path.with_name("ensemble.db"), settings.data_dir,
+                                   telegram=lambda: getattr(app.state, "telegram", None))
+        app.state.ensemble = ensemble
+        lineup.start("ensemble", ensemble)
+        ensemble_live = EnsembleLive(ensemble, accounts, mirror.providers, lambda: storage.provider_checks("binance"),
+                                     storage.provider_check_save, telegram=lambda: getattr(app.state, "telegram", None))
+        app.state.ensemble_live = ensemble_live
+        lineup.retire_desk_live("ensemble_live", ensemble_live)
+        app.state.extra_live_names = (*app.state.extra_live_names, "ensemble_live")
+        # WORKER 2: afternoon session momentum (research/worker2/session/PREREG.md, rule P) as a paper book on hourly
+        # Binance data (universe from Worker 1's daily store), plus its own live switch (operator, 2026-10-25). Off
+        # until the operator turns it on from the private dashboard.
+        from app.worker2.live import Worker2Live
+        from app.worker2.service import Worker2Service
+        worker2 = Worker2Service(settings.db_path.with_name("worker2.db"), ensemble.store,
+                                 telegram=lambda: getattr(app.state, "telegram", None))
+        app.state.worker2 = worker2
+        lineup.start("worker2", worker2)
+        worker2_live = Worker2Live(worker2, accounts, mirror.providers, lambda: storage.provider_checks("binance"),
+                                   storage.provider_check_save, telegram=lambda: getattr(app.state, "telegram", None))
+        app.state.worker2_live = worker2_live
+        lineup.retire_desk_live("worker2_live", worker2_live)
+        app.state.extra_live_names = (*app.state.extra_live_names, "worker2_live")
+        # Forward paper test of a choppy-market filter for those bots (docs/MACD_CHOP_TEST.md); paper only.
+        from app.macdtrio.chop_test import ChopPaperTest
+        macd_chop = ChopPaperTest(trio_market)
+        app.state.macd_chop = macd_chop
+        lineup.start("macd_chop", macd_chop)
+        # TRADINGVIEW RESEARCH DESKS (paper only): T3-CCI (ZEC + CAKE) and CHI (the 84 full-history assets), long/cash
+        # spot books following the operator's research package (app/tvdesks; verified by scripts/tvdesks_verify.py).
+        # PUMP.FUN RECORDER: research data for the pre-registered study (docs/PUMPFUN_PLAN.md); public data, never trades.
+        from app.pumpfun.service import PumpfunRecorder
+        pumpfun = PumpfunRecorder(settings.db_path.with_name("pumpfun.db"),
+                                  telegram=lambda: getattr(app.state, "telegram", None))
+        app.state.pumpfun = pumpfun
+        lineup.start("pumpfun", pumpfun)
+        from app.tvdesks.service import TvDeskService
+        tv_desks = []
+        for _desk in ("t3cci", "chi"):
+            _svc = TvDeskService(settings.db_path.with_name(f"tv-{_desk}.db"), _desk,
+                                 telegram=lambda: getattr(app.state, "telegram", None))
+            setattr(app.state, f"tv_{_desk}", _svc)
+            lineup.start(f"tv_{_desk}", _svc)
+            tv_desks.append(_svc)
         from app.stock_trend.service import StockTrendService
         stock_trend = StockTrendService(settings.db_path.with_name('stock-trend.db'), mirror.providers,
                                        secure=bool(settings.dashboard_password) and not settings.allow_no_auth)
         app.state.stock_trend = stock_trend
-        stock_trend.start()
+        lineup.start("stock_trend", stock_trend)
+        # IBS BOT: round 3's frozen QQQ IBS rule on Alpaca, QQQ + TQQQ books (docs/IBS_LIVE_BOT.md). Logs every decision
+        # (shadow books) from the start; real orders only after the operator switches it on from the private dashboard.
+        from app.ibsbot.service import IbsBot
+        ibs_bot = IbsBot(settings.db_path.with_name('ibs-bot.db'), mirror.providers,
+                         secure=bool(settings.dashboard_password) and not settings.allow_no_auth,
+                         telegram=lambda: getattr(app.state, "telegram", None),
+                         other_user=lambda net: "the stock trend strategy" if stock_trend.uses_provider(net) else None)
+        stock_trend.alpaca_guard = lambda net: "the IBS bot" if ibs_bot.uses_provider(net) else None
+        app.state.ibs_bot = ibs_bot
+        app.state.extra_live_names = (*app.state.extra_live_names, "ibs_bot")   # the kill switch sells its positions too
+        lineup.start("ibs_bot", ibs_bot)
         from app.video_breakout.service import VideoBreakoutService
         video_breakout = VideoBreakoutService(settings.data_dir / 'video-breakout.json',
                                              can_enter=lambda: not engine.risk.state.killed)
         app.state.video_breakout = video_breakout
-        video_breakout.start()
-        if v6.enabled or v7.enabled or v8.enabled:
+        lineup.start("video_breakout", video_breakout)
+        from app.value_reversal.service import ValueReversalService
+        value_reversal = ValueReversalService(settings.data_dir / 'qqq-value-reversal-v2.json',
+                                             mirror.providers, can_enter=lambda: not engine.risk.state.killed)
+        app.state.value_reversal = value_reversal
+        lineup.start("value_reversal", value_reversal)
+        if lineup.keeps("display_prices") and (v6.enabled or v7.enabled or v8.enabled):
             from app.core.display_prices import DisplayPrices
             from app.competition.v6_config import load_freeze
             from app.competition.v8_config import COINS as V8_COINS
@@ -410,8 +531,9 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         finally:
             boot_task.cancel()
             await video_breakout.close()
+            await value_reversal.close()
             await stock_trend.close()
-            await asyncio.to_thread(research.stop)
+            await ibs_bot.close()
             if realtime.display_prices is not None:
                 await realtime.display_prices.stop()
             await asyncio.to_thread(shadow.stop)
@@ -439,8 +561,19 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
             v17_storage.close()
             if v12vol is not None:
                 v12vol.stop()
+            await asyncio.to_thread(divergence.stop)
+            nowick.stop()
+            donchian.stop()
+            macd.stop()
+            macd_live.stop()
+            donchian_live.stop()
+            for _live in coin_lives:
+                _live.stop()
+            macd_chop.stop()
+            pumpfun.stop()
+            for _svc in tv_desks:
+                _svc.stop()
             await asyncio.to_thread(desk.stop)
-            await asyncio.to_thread(scout.stop)
             await realtime.stop()
             await engine.stop()
             await client.close()
@@ -461,24 +594,46 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
     app.include_router(api_public.router)
     app.include_router(api_jev.router)
     app.include_router(api_stream.router)
-    from app.core import api_live_mirror, api_scout
+    from app.core import api_live_mirror
     app.include_router(api_live_mirror.router)
-    app.include_router(api_scout.public_router)
-    app.include_router(api_scout.router)
-    from app.core import api_autoresearch
-    app.include_router(api_autoresearch.router)
+    from app.core import api_divergence
+    app.include_router(api_divergence.router)
+    app.include_router(api_divergence.private_router)
+    from app.core import api_nowick
+    app.include_router(api_nowick.router)
+    from app.core import api_donchian
+    app.include_router(api_donchian.router)
+    from app.core import api_macd
+    app.include_router(api_macd.router)
+    from app.core import api_live_accounts
+    app.include_router(api_live_accounts.router)
+    from app.core import api_tvdesks
+    app.include_router(api_tvdesks.router)
+    from app.core import api_pumpfun
+    app.include_router(api_pumpfun.router)
+    from app.core import api_macdtrio
+    app.include_router(api_macdtrio.router)
+    from app.core import api_ytstrats                      # the YouTube-ranking strategies' crypto test (read-only)
+    app.include_router(api_ytstrats.router)
+    from app.core import api_desks
+    app.include_router(api_desks.router)
     from app.core import api_stock_trend
     app.include_router(api_stock_trend.router)
+    from app.core import api_ibsbot
+    app.include_router(api_ibsbot.public_router)
+    app.include_router(api_ibsbot.router)
     from app.core import api_video_breakout
     app.include_router(api_video_breakout.router)
+    from app.core import api_value_reversal
+    app.include_router(api_value_reversal.router)
     from app.core import api_v12vol                 # Renata V12-VOL forward paper test (read-only)
     app.include_router(api_v12vol.public_router)
     from app.core import api_desk                   # the Trading Desk (AI agents, paper ledger)
     app.include_router(api_desk.public_router)
     app.include_router(api_desk.router)
-    from app.core import api_lab                    # the private cost analyzer (+ /lab -> /public/competition)
-    from app.ai.analyzer import Analyzer
-    app.state.analyzer = Analyzer.from_env()
+    from app.core import api_home                   # the line-up the home page shows (read-only)
+    app.include_router(api_home.router)
+    from app.core import api_lab                    # legacy /lab redirects
     app.include_router(api_lab.router)
 
     @app.get('/public/video-breakout', include_in_schema=False)
@@ -493,13 +648,22 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
     def stock_trend_page():
         return FileResponse(DASHBOARD_DIR / 'stock-trend.html', headers={'Cache-Control':'no-cache'})
 
-    @app.get("/public/research", include_in_schema=False)
-    def research_page():
-        return FileResponse(DASHBOARD_DIR / "research.html", headers={"Cache-Control": "no-cache"})
+    @app.get('/public/value-reversal', include_in_schema=False)
+    def value_reversal_page():
+        return FileResponse(DASHBOARD_DIR / 'value-reversal.html', headers={'Cache-Control':'no-cache'})
+
+    @app.get("/public/divergence", include_in_schema=False)
+    def divergence_page():
+        return RedirectResponse("/public/competition/divergence", status_code=307)
     app.add_exception_handler(EngineError, api.engine_error_handler)  # type: ignore[arg-type]
 
     if DASHBOARD_DIR.exists():
         app.mount("/static", NoCacheStatic(directory=str(DASHBOARD_DIR)), name="static")
+
+    def _lean() -> bool:
+        """The lean line-up (app/core/lineup.py) serves the new two-bot dashboard (bots.html) on / and /public/competition."""
+        lu = getattr(app.state, "lineup", None)
+        return (lu.mode if lu is not None else ("full" if os.environ.get("PAPERLAB_LINEUP", "lean").strip().lower() == "full" else "lean")) == "lean"
 
     def _competition_service() -> Any:
         svc = getattr(app.state, "competition", None)
@@ -639,6 +803,10 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         """Read-only inspection shell. Every deep link serves the same page; the path after
         /public/competition is routed client-side, so /public/competition/validation and
         /public/competition/bot/<key> are directly addressable and reloadable."""
+        if rest.split("/")[0] == "analyzer":
+            return RedirectResponse("/public/competition", status_code=307)
+        if _lean():
+            return HTMLResponse(_index_html(DASHBOARD_DIR / "bots.html"), headers={"Cache-Control": "no-store"})
         page = DASHBOARD_DIR / "public.html"
         if not page.exists():
             return HTMLResponse("<h1>PaperLab</h1><p>Public inspection page not built.</p>",
@@ -647,6 +815,9 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
 
     @app.api_route("/", methods=["GET", "HEAD"], include_in_schema=False)
     async def index() -> Any:
+        if _lean():                   # the lean line-up's dashboard: the same page as public, plus the private controls
+            html = _index_html(DASHBOARD_DIR / "bots.html").replace('<body data-mode="public">', '<body data-mode="private">', 1)
+            return HTMLResponse(html, headers={"Cache-Control": "no-store"})
         index_file = DASHBOARD_DIR / "index.html"
         if not index_file.exists():
             return HTMLResponse("<h1>PaperLab</h1><p>Dashboard not built yet. API is live at /api/state.</p>")

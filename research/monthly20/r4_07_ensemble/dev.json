@@ -1,0 +1,499 @@
+{
+ "legs_dev": {
+  "R": {
+   "mean_month": 4.01,
+   "median_month": 2.32,
+   "geo_month": 3.62,
+   "worst_month": -16.16,
+   "max_dd_pct": 22.47,
+   "net_pct": 413.88,
+   "t_stat": 2.96,
+   "months_up": 28,
+   "n_months": 46,
+   "liq": 9,
+   "wiped": false,
+   "lev_mean": 1.0,
+   "lev_max": 1.0
+  },
+  "M": {
+   "mean_month": 2.2,
+   "median_month": 2.74,
+   "geo_month": 1.31,
+   "worst_month": -31.62,
+   "max_dd_pct": 49.79,
+   "net_pct": 82.0,
+   "t_stat": 1.12,
+   "months_up": 28,
+   "n_months": 46,
+   "liq": 3,
+   "wiped": false,
+   "lev_mean": 1.0,
+   "lev_max": 1.0
+  },
+  "T": {
+   "mean_month": 3.18,
+   "median_month": 1.45,
+   "geo_month": 1.73,
+   "worst_month": -31.93,
+   "max_dd_pct": 62.78,
+   "net_pct": 119.78,
+   "t_stat": 1.21,
+   "months_up": 26,
+   "n_months": 46,
+   "liq": 4,
+   "wiped": false,
+   "lev_mean": 1.0,
+   "lev_max": 1.0
+  },
+  "B": {
+   "mean_month": 2.62,
+   "median_month": -0.61,
+   "geo_month": 1.33,
+   "worst_month": -27.19,
+   "max_dd_pct": 57.31,
+   "net_pct": 83.82,
+   "t_stat": 1.07,
+   "months_up": 22,
+   "n_months": 46,
+   "liq": 0,
+   "wiped": false,
+   "lev_mean": 1.0,
+   "lev_max": 1.0
+  }
+ },
+ "grid": [
+  {
+   "cfg": {
+    "legs": "RMT",
+    "scheme": "EW",
+    "wlook": 60,
+    "wevery": 7
+   },
+   "dev": {
+    "mean_month": 3.08,
+    "median_month": 2.62,
+    "geo_month": 2.83,
+    "worst_month": -13.7,
+    "max_dd_pct": 23.43,
+    "net_pct": 261.2,
+    "t_stat": 2.9,
+    "months_up": 28,
+    "n_months": 46,
+    "liq": 10,
+    "wiped": false,
+    "lev_mean": 1.0,
+    "lev_max": 1.0
+   },
+   "mean_w_dev": [
+    0.333,
+    0.333,
+    0.333
+   ]
+  },
+  {
+   "cfg": {
+    "legs": "RMT",
+    "scheme": "IV",
+    "wlook": 60,
+    "wevery": 7
+   },
+   "dev": {
+    "mean_month": 3.16,
+    "median_month": 1.87,
+    "geo_month": 2.96,
+    "worst_month": -11.02,
+    "max_dd_pct": 20.21,
+    "net_pct": 283.4,
+    "t_stat": 3.32,
+    "months_up": 29,
+    "n_months": 46,
+    "liq": 9,
+    "wiped": false,
+    "lev_mean": 1.0,
+    "lev_max": 1.0
+   },
+   "mean_w_dev": [
+    0.423,
+    0.303,
+    0.274
+   ]
+  },
+  {
+   "cfg": {
+    "legs": "RMT",
+    "scheme": "ERC",
+    "wlook": 60,
+    "wevery": 7
+   },
+   "dev": {
+    "mean_month": 1.79,
+    "median_month": 1.59,
+    "geo_month": 1.6,
+    "worst_month": -17.33,
+    "max_dd_pct": 32.34,
+    "net_pct": 107.38,
+    "t_stat": 1.95,
+    "months_up": 26,
+    "n_months": 46,
+    "liq": 10,
+    "wiped": false,
+    "lev_mean": 1.0,
+    "lev_max": 1.0
+   },
+   "mean_w_dev": [
+    0.406,
+    0.326,
+    0.268
+   ]
+  },
+  {
+   "cfg": {
+    "legs": "RMTB",
+    "scheme": "EW",
+    "wlook": 60,
+    "wevery": 7
+   },
+   "dev": {
+    "mean_month": 3.0,
+    "median_month": 4.66,
+    "geo_month": 2.68,
+    "worst_month": -14.2,
+    "max_dd_pct": 28.94,
+    "net_pct": 238.03,
+    "t_stat": 2.5,
+    "months_up": 29,
+    "n_months": 46,
+    "liq": 10,
+    "wiped": false,
+    "lev_mean": 1.0,
+    "lev_max": 1.0
+   },
+   "mean_w_dev": [
+    0.25,
+    0.25,
+    0.25,
+    0.25
+   ]
+  },
+  {
+   "cfg": {
+    "legs": "RMTB",
+    "scheme": "IV",
+    "wlook": 60,
+    "wevery": 7
+   },
+   "dev": {
+    "mean_month": 3.22,
+    "median_month": 3.55,
+    "geo_month": 2.97,
+    "worst_month": -12.09,
+    "max_dd_pct": 27.38,
+    "net_pct": 284.51,
+    "t_stat": 2.99,
+    "months_up": 29,
+    "n_months": 46,
+    "liq": 10,
+    "wiped": false,
+    "lev_mean": 1.0,
+    "lev_max": 1.0
+   },
+   "mean_w_dev": [
+    0.343,
+    0.245,
+    0.222,
+    0.19
+   ]
+  },
+  {
+   "cfg": {
+    "legs": "RMTB",
+    "scheme": "ERC",
+    "wlook": 60,
+    "wevery": 7
+   },
+   "dev": {
+    "mean_month": 3.22,
+    "median_month": 2.77,
+    "geo_month": 2.93,
+    "worst_month": -11.31,
+    "max_dd_pct": 32.19,
+    "net_pct": 278.03,
+    "t_stat": 2.8,
+    "months_up": 28,
+    "n_months": 46,
+    "liq": 9,
+    "wiped": false,
+    "lev_mean": 1.0,
+    "lev_max": 1.0
+   },
+   "mean_w_dev": [
+    0.346,
+    0.253,
+    0.208,
+    0.193
+   ]
+  }
+ ],
+ "corr_dev_daily": [
+  [
+   1.0,
+   -0.053,
+   0.143,
+   0.032
+  ],
+  [
+   -0.053,
+   1.0,
+   -0.037,
+   0.006
+  ],
+  [
+   0.143,
+   -0.037,
+   1.0,
+   0.615
+  ],
+  [
+   0.032,
+   0.006,
+   0.615,
+   1.0
+  ]
+ ],
+ "selected": {
+  "legs": "RMT",
+  "scheme": "IV",
+  "wlook": 60,
+  "wevery": 7
+ },
+ "dev_leverage": [
+  {
+   "kind": "const",
+   "L": 1,
+   "dev": {
+    "mean_month": 3.16,
+    "median_month": 1.87,
+    "geo_month": 2.96,
+    "worst_month": -11.02,
+    "max_dd_pct": 20.21,
+    "net_pct": 283.4,
+    "t_stat": 3.32,
+    "months_up": 29,
+    "n_months": 46,
+    "liq": 9,
+    "wiped": false,
+    "lev_mean": 1.0,
+    "lev_max": 1.0
+   }
+  },
+  {
+   "kind": "const",
+   "L": 2,
+   "dev": {
+    "mean_month": 5.2,
+    "median_month": 3.56,
+    "geo_month": 4.32,
+    "worst_month": -22.05,
+    "max_dd_pct": 46.43,
+    "net_pct": 599.62,
+    "t_stat": 2.55,
+    "months_up": 26,
+    "n_months": 46,
+    "liq": 172,
+    "wiped": false,
+    "lev_mean": 2.0,
+    "lev_max": 2.0
+   }
+  },
+  {
+   "kind": "const",
+   "L": 3,
+   "dev": {
+    "mean_month": 6.48,
+    "median_month": 1.54,
+    "geo_month": 4.61,
+    "worst_month": -23.21,
+    "max_dd_pct": 59.86,
+    "net_pct": 696.03,
+    "t_stat": 2.13,
+    "months_up": 25,
+    "n_months": 46,
+    "liq": 587,
+    "wiped": false,
+    "lev_mean": 3.0,
+    "lev_max": 3.0
+   }
+  },
+  {
+   "kind": "const",
+   "L": 5,
+   "dev": {
+    "mean_month": 5.83,
+    "median_month": -2.11,
+    "geo_month": 1.14,
+    "worst_month": -62.44,
+    "max_dd_pct": 84.15,
+    "net_pct": 68.27,
+    "t_stat": 1.24,
+    "months_up": 21,
+    "n_months": 46,
+    "liq": 1782,
+    "wiped": false,
+    "lev_mean": 5.0,
+    "lev_max": 5.0
+   }
+  },
+  {
+   "kind": "const",
+   "L": 7.5,
+   "dev": {
+    "mean_month": -1.84,
+    "median_month": -7.96,
+    "geo_month": -10.33,
+    "worst_month": -80.1,
+    "max_dd_pct": 99.9,
+    "net_pct": -99.34,
+    "t_stat": -0.29,
+    "months_up": 18,
+    "n_months": 46,
+    "liq": 3519,
+    "wiped": false,
+    "lev_mean": 7.5,
+    "lev_max": 7.5
+   }
+  },
+  {
+   "kind": "const",
+   "L": 10,
+   "dev": {
+    "mean_month": -3.24,
+    "median_month": -14.1,
+    "geo_month": -19.56,
+    "worst_month": -84.14,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "t_stat": -0.33,
+    "months_up": 16,
+    "n_months": 46,
+    "liq": 5090,
+    "wiped": false,
+    "lev_mean": 10.0,
+    "lev_max": 10.0
+   }
+  },
+  {
+   "kind": "voltarget",
+   "sigma": 0.25,
+   "dev": {
+    "mean_month": 3.57,
+    "median_month": 1.98,
+    "geo_month": 3.31,
+    "worst_month": -8.49,
+    "max_dd_pct": 19.9,
+    "net_pct": 347.53,
+    "t_stat": 3.25,
+    "months_up": 27,
+    "n_months": 46,
+    "liq": 17,
+    "wiped": false,
+    "lev_mean": 1.1503807240872352,
+    "lev_max": 2.6158012581070746
+   }
+  },
+  {
+   "kind": "voltarget",
+   "sigma": 0.5,
+   "dev": {
+    "mean_month": 5.81,
+    "median_month": 3.16,
+    "geo_month": 4.83,
+    "worst_month": -16.11,
+    "max_dd_pct": 44.04,
+    "net_pct": 774.6,
+    "t_stat": 2.66,
+    "months_up": 25,
+    "n_months": 46,
+    "liq": 191,
+    "wiped": false,
+    "lev_mean": 2.287194722778849,
+    "lev_max": 5.231602516214149
+   }
+  },
+  {
+   "kind": "voltarget",
+   "sigma": 0.75,
+   "dev": {
+    "mean_month": 7.19,
+    "median_month": 3.9,
+    "geo_month": 4.85,
+    "worst_month": -29.19,
+    "max_dd_pct": 61.92,
+    "net_pct": 783.17,
+    "t_stat": 2.12,
+    "months_up": 25,
+    "n_months": 46,
+    "liq": 661,
+    "wiped": false,
+    "lev_mean": 3.4225707436902773,
+    "lev_max": 7.847403774321225
+   }
+  },
+  {
+   "kind": "voltarget",
+   "sigma": 1.0,
+   "dev": {
+    "mean_month": 5.92,
+    "median_month": -1.43,
+    "geo_month": 2.11,
+    "worst_month": -42.99,
+    "max_dd_pct": 81.49,
+    "net_pct": 160.9,
+    "t_stat": 1.37,
+    "months_up": 22,
+    "n_months": 46,
+    "liq": 1359,
+    "wiped": false,
+    "lev_mean": 4.542522981563114,
+    "lev_max": 9.936773195338862
+   }
+  },
+  {
+   "kind": "voltarget",
+   "sigma": 1.5,
+   "dev": {
+    "mean_month": 3.4,
+    "median_month": -7.99,
+    "geo_month": -4.11,
+    "worst_month": -60.81,
+    "max_dd_pct": 98.72,
+    "net_pct": -85.48,
+    "t_stat": 0.57,
+    "months_up": 21,
+    "n_months": 46,
+    "liq": 2724,
+    "wiped": false,
+    "lev_mean": 6.530832686636358,
+    "lev_max": 9.810650730293942
+   }
+  },
+  {
+   "kind": "voltarget",
+   "sigma": 2.0,
+   "dev": {
+    "mean_month": -1.51,
+    "median_month": -12.13,
+    "geo_month": -12.28,
+    "worst_month": -71.94,
+    "max_dd_pct": 99.98,
+    "net_pct": -99.76,
+    "t_stat": -0.2,
+    "months_up": 19,
+    "n_months": 46,
+    "liq": 3750,
+    "wiped": false,
+    "lev_mean": 7.891422448741308,
+    "lev_max": 9.953430128314626
+   }
+  }
+ ]
+}

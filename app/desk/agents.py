@@ -304,12 +304,13 @@ ACTION_TOOLS = [
                                           "required": ["coin", "side", "entry", "stop", "target"]}}},
     {"type": "function", "function": {"name": "close_trade", "description": "Close an open PAPER trade at the market price now, or cancel a pending limit. Only when the operator explicitly asks.",
                                       "parameters": {"type": "object", "properties": {"trade_id": {"type": "integer"}}, "required": ["trade_id"]}}},
-    {"type": "function", "function": {"name": "update_settings", "description": "Change desk settings when the operator explicitly asks: mode (cautious/aggressive), schedule_hours (1,2,4,6,8,12,24), universe (list of tickers), risk_pct (0.25-5), enabled (scheduled sessions on/off).",
+    {"type": "function", "function": {"name": "update_settings", "description": "Change desk settings when the operator explicitly asks: mode (cautious/aggressive), schedule_hours (1,2,4,6,8,12,24), universe (list of tickers), risk_pct (0.25-5), enabled (scheduled sessions on/off), approval (manual = each trade waits for the operator's Telegram Approve; auto = trade without asking).",
                                       "parameters": {"type": "object", "properties": {
                                           "mode": {"type": "string", "enum": ["cautious", "aggressive"]}, "schedule_hours": {"type": "integer"},
                                           "universe": {"type": "array", "items": {"type": "string"}}, "risk_pct": {"type": "number"},
                                           "enabled": {"type": "boolean"}, "max_plans": {"type": "integer"},
-                                          "max_open": {"type": "integer"}}}}},
+                                          "max_open": {"type": "integer"},
+                                          "approval": {"type": "string", "enum": ["manual", "auto"]}}}}},
 ]
 
 

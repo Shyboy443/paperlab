@@ -1,0 +1,74 @@
+{
+ "dev": {
+  "mean_month": 9.52,
+  "median_month": 8.08,
+  "geo_month": 8.83,
+  "worst_month": -17.86,
+  "max_dd_pct": 22.37,
+  "net_pct": 4811.74,
+  "trades": 2414,
+  "t_stat": 5.15
+ },
+ "dev_r4_results_json": {
+  "mean_month": 9.52,
+  "median_month": 8.08,
+  "geo_month": 8.83,
+  "worst_month": -17.86,
+  "max_dd_pct": 22.37,
+  "net_pct": 4811.74,
+  "trades": 2414,
+  "t_stat": 5.15
+ },
+ "dev_match": true,
+ "test": {
+  "mean_month": 4.34,
+  "median_month": 1.03,
+  "geo_month": 3.28,
+  "worst_month": -28.81,
+  "max_dd_pct": 32.84,
+  "net_pct": 116.71,
+  "trades": 1240,
+  "t_stat": 1.36
+ },
+ "test_r4_results_json": {
+  "mean_month": 4.34,
+  "median_month": 1.03,
+  "geo_month": 3.28,
+  "worst_month": -28.81,
+  "max_dd_pct": 32.84,
+  "net_pct": 116.71,
+  "trades": 1240,
+  "t_stat": 1.36
+ },
+ "test_match": true,
+ "full": {
+  "mean_month": 7.81,
+  "median_month": 6.68,
+  "geo_month": 7.0,
+  "worst_month": -27.3,
+  "max_dd_pct": 31.32,
+  "net_pct": 11322.28,
+  "trades": 3654,
+  "t_stat": 4.87
+ },
+ "full_r4_results_json": {
+  "mean_month": 7.81,
+  "median_month": 6.68,
+  "geo_month": 7.0,
+  "worst_month": -27.3,
+  "max_dd_pct": 31.32,
+  "net_pct": 11322.28,
+  "trades": 3654,
+  "t_stat": 4.87
+ },
+ "full_match": true,
+ "max_position_share_of_profit": 0.1456,
+ "max_position_pct_of_equity": 20.69,
+ "dev_signal_sigma_pct": {
+  "10": 0.6306,
+  "25": 0.8335,
+  "50": 1.1544,
+  "75": 1.5507,
+  "90": 2.0163
+ }
+}

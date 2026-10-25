@@ -387,7 +387,7 @@ class TestRunnerAndView:
         assert ladder_rungs("v11", "V11.2-SCAN") == (0.5, 1.0, 1.5) and ladder_rungs("v8", "V8.1-ETH-5M+LADDER") == (0.75, 1.5, 2.5)
         assert ladder_rungs("v8", "V8.1-ETH-5M") is None
 
-    def test_service_switch_and_get_only_routes(self, tmp_path):
+    def test_service_switch_and_get_only_routes(self, tmp_path, programs_running):
         from app.core import api_public
         from app.live.v6_service import V6ForwardService
         assert V6ForwardService(str(tmp_path / "x.db"), env={}, program="V11").enabled is False

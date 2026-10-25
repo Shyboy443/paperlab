@@ -156,7 +156,8 @@ class DeskLLM:
 
     def chat(self, system: str, messages: Sequence[dict[str, Any]], tools: Sequence[dict[str, Any]] | None = None,
              run_tool: ToolRunner | None = None, max_rounds: int = 3, json_mode: bool = False,
-             max_tokens: int | None = None, deep: bool = False) -> dict[str, Any]:
+             max_tokens: int | None = None, deep: bool = False,
+             allow_continuation: bool = True) -> dict[str, Any]:
         """One agent turn. With tools, tool calls are executed by `run_tool` and fed back for up to `max_rounds`.
         Returns {"text", "tool_calls": [{name, args}], "cost_usd"}."""
         msgs: list[dict[str, Any]] = [{"role": "system", "content": system}, *messages]
@@ -174,7 +175,7 @@ class DeskLLM:
             calls = choice.get("tool_calls") or []
             if not calls or not run_tool:
                 text = (choice.get("content") or "").strip()
-                if first.get("finish_reason") == "length" and continued < 1:
+                if first.get("finish_reason") == "length" and continued < 1 and allow_continuation:
                     continued += 1                     # one continuation instead of a cut-off message
                     msgs.append({"role": "assistant", "content": text})
                     msgs.append({"role": "user", "content": "Continue exactly where you stopped. Do not repeat anything."})
@@ -185,7 +186,8 @@ class DeskLLM:
                         text = complete_sentences(text)
                 elif first.get("finish_reason") == "length":
                     text = complete_sentences(text)
-                return {"text": text, "tool_calls": used, "cost_usd": round(self.cost_total - cost0, 5)}
+                return {"text": text, "tool_calls": used, "cost_usd": round(self.cost_total - cost0, 5),
+                        "truncated": not allow_continuation and first.get("finish_reason") == "length"}
             msgs.append({"role": "assistant", "content": choice.get("content") or "", "tool_calls": calls})
             for call in calls:
                 fn = call.get("function") or {}

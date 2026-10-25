@@ -24,6 +24,7 @@ from typing import Any, Callable, Mapping
 
 log = logging.getLogger("paperlab.live.watchdog")
 
+HEARTBEAT_STALE_S = 60.0         # a worker that reported nothing for this long is down (6 missed 10 s beats)
 CHECK_S = 30.0
 CONFIRM = 2                      # consecutive checks before an alert / a recovery
 STALE_S = 180.0                  # market data older than this is stale
@@ -39,6 +40,9 @@ WATCHED_BOT_STATES = {"ELIMINATED": "❌ eliminated", "QUALIFIED": "✅ QUALIFIE
 def problem_of(h: Mapping[str, Any], up_s: float, ws_required: bool = True) -> str | None:
     """One program's health -> the problem in words, or None when healthy."""
     st = str(h.get("status") or "DISABLED")
+    hb = h.get("heartbeat_age_s")
+    if hb is not None and st not in WARMING and float(hb) > HEARTBEAT_STALE_S:
+        return f"worker silent for {float(hb):.0f} s (missed heartbeats; last status {st})"
     if st in WARMING:
         return f"still {st.lower().replace('_', ' ')} after {up_s / 60:.0f} min" if up_s > WARMUP_GRACE_S else None
     if st not in OK_STATUSES:
@@ -92,8 +96,14 @@ class Watchdog:
             except Exception as exc:              # the watchdog must never die
                 log.warning("watchdog check failed: %s: %s", type(exc).__name__, str(exc)[:160])
 
-    def _send(self, text: str) -> None:
-        if self.notifier is not None:
+    def _send(self, text: str, ops: bool = False) -> None:
+        """ops=True: worker down / recovered / restarted -- always delivered (the 'desk decisions only' Telegram scope
+        mutes ordinary alerts, but an outage must reach the operator)."""
+        if self.notifier is None:
+            return
+        if ops and hasattr(self.notifier, "ops_alert"):
+            self.notifier.ops_alert(text)
+        else:
             self.notifier.alert(text)
 
     def _name(self, program: str, key: str) -> str:
@@ -116,7 +126,7 @@ class Watchdog:
                                              "since": None, "alerted": False, "last_alert": 0.0})
             if (h.get("restarts") or 0) > s["restarts"]:
                 self._send(f"♻️ <b>{prog.upper()} worker restarted</b> (restart #{h.get('restarts')}); it resumes its "
-                           "experiment and re-derives the books.")
+                           "experiment and re-derives the books before new entries.", ops=True)
             s["restarts"] = h.get("restarts") or 0
             if prob:
                 s["bad"], s["good"] = s["bad"] + 1, 0
@@ -128,13 +138,14 @@ class Watchdog:
                     if not s["alerted"] and (now - s["last_alert"] >= ALERT_COOLDOWN_S or lasting):
                         s["alerted"], s["last_alert"] = True, now
                         self._send(f"🔴 <b>{prog.upper()} DOWN</b>: {html.escape(prob)}. No new live entries while it "
-                                   "lasts; open positions keep their stops.")
+                                   "lasts; open positions keep their stops.", ops=True)
             else:
                 s["good"], s["bad"] = s["good"] + 1, 0
                 if s["down"] is not None and s["good"] >= CONFIRM:
                     mins = (now - (s["since"] or now)) / 60
                     if s["alerted"]:
-                        self._send(f"🟢 <b>{prog.upper()} recovered</b> after {mins:.0f} min ({html.escape(s['down'])}).")
+                        self._send(f"🟢 <b>{prog.upper()} recovered</b> after {mins:.0f} min ({html.escape(s['down'])}).",
+                                   ops=True)
                     s["down"], s["since"], s["alerted"] = None, None, False
             if self.mirror is not None:
                 self.mirror.set_program_safe(prog, s["down"])
@@ -212,7 +223,7 @@ class Watchdog:
             h = svc.health()
             s = self.state.get(prog) or {}
             progs[prog] = {"status": str(h.get("status")), "problem": s.get("down"), "restarts": _num(h.get("restarts")),
-                           "klines_age_s": _num(h.get("klines_age_s"))}
+                           "klines_age_s": _num(h.get("klines_age_s")), "heartbeat_age_s": _num(h.get("heartbeat_age_s"))}
         mh = self.mirror.health() if self.mirror is not None else {"armed": 0, "safe_mode": {}}
         tg = self.notifier.health() if self.notifier is not None else {}
         down = [p for p, v in progs.items() if v["problem"]]

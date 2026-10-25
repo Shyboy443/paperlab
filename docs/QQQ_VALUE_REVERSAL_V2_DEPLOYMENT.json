@@ -1,0 +1,85 @@
+{
+  "deployment_id": "fb570d22-b188-4a61-b5d0-cd73790221a1",
+  "status": "SUCCESS",
+  "url": "https://paperlab-production-919c.up.railway.app/public/value-reversal",
+  "verified_at": "2026-10-08T11:13:46.763206+00:00",
+  "rule": "QQQ-LUX-VARS-ROWS60-v2",
+  "broker_orders_enabled": false,
+  "execution": "DELAYED_FEED_PAPER_SIMULATION",
+  "forward_start_ms": 1791457943261,
+  "source_sha256": {
+    "model.py": "46e166b4704d2f77f73722cf05f49be0116cf1b8eaf0a615e56ea899f8d876f6",
+    "data.py": "b3785a3f6d8f8a0d5eed05e6e3ad4561d83aa4df443affc5eead9696d7eb616f",
+    "research.py": "8a73eb063940bea1b7ded62212f8c96258060f2f13f474b574290635e0b8350f",
+    "indicator.py": "5c7d64c5451b5bed05f8cbf12f43c1787abc98e90dfcad20368cb30b1c24b826"
+  },
+  "source_parity": {
+    "runtime": "0.11.0",
+    "scope": "Published Pine source on identical QQQ RTH candles; 2024-2025; one-cent tick and 5/10-bar input overrides; no drawing or signal changes",
+    "jobs": [
+      {
+        "minutes": 15,
+        "window": 5,
+        "bars": 12980,
+        "level_and_signal_checks": 103840,
+        "signals": 68,
+        "mismatches": []
+      },
+      {
+        "minutes": 15,
+        "window": 10,
+        "bars": 12980,
+        "level_and_signal_checks": 103840,
+        "signals": 81,
+        "mismatches": []
+      },
+      {
+        "minutes": 30,
+        "window": 5,
+        "bars": 6490,
+        "level_and_signal_checks": 51920,
+        "signals": 39,
+        "mismatches": []
+      },
+      {
+        "minutes": 30,
+        "window": 10,
+        "bars": 6490,
+        "level_and_signal_checks": 51920,
+        "signals": 48,
+        "mismatches": []
+      }
+    ],
+    "indicator_sha256": "5c7d64c5451b5bed05f8cbf12f43c1787abc98e90dfcad20368cb30b1c24b826",
+    "pine_source_sha256": "79b5fb709ee7d1dcac5b3cdbaf3373fcf2a1fbd9a61a7127ca5bdf9039f8a56f"
+  },
+  "v1_preservation": {
+    "v1_state_sha256": "8221adc9d1358694e323c1fc06b6876698f83381c684863a6025f63059ee03d1",
+    "v1_report_sha256": "57eb2ed870b80231796c0bb524154f8fe923db72565c4678d32a67fb6b1bcead"
+  },
+  "v1_state_and_report_unchanged": true,
+  "saved_forward_books": 8,
+  "startup_fills": 0,
+  "tests": {
+    "regression": "140 passed across QQQ, roster, public API, stock live controls and guard",
+    "source": "Full published Pine source, all 2024-2025 identical QQQ RTH candles; 311520 comparisons, zero mismatches",
+    "hosted_browser": "1280/390px; eight configurations and books, all monthly/trade rows, period/variant controls, candle replay and source proof; no JS error or page overflow",
+    "hosted_api": "Report, replay, original Pine and translated Python GET endpoints verified"
+  },
+  "historical_verdict": "FAIL",
+  "primary_comparison": {
+    "monthly_avg_net_pct": -0.13102291667548097,
+    "return_pct": -3.10733892999997,
+    "max_dd_pct": 3.3193698854539226,
+    "trades": 22
+  },
+  "existing_stock_status": "WAIT_NEXT_OPEN",
+  "existing_stock_rule": "TREND5-SMA200-MOM63-LOT1-v1",
+  "continuous_research": "RUNNING",
+  "limitations": [
+    "QQQ 09:30 RTH adapter differs from NQ 18:00 futures session.",
+    "Published source is an indicator, not a complete order-management/backtest strategy.",
+    "Published profile expansion can undershoot its configured value-area coverage; disclosed without silently substituting another formula.",
+    "Observed retrospective returns and delayed-feed simulation do not prove future profitability."
+  ]
+}

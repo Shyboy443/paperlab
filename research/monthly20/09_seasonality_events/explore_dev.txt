@@ -1,0 +1,83 @@
+== hour of day (UTC), mean 1h return
+hour 00                      BTCA    1.1bp t  0.3 n730 | BTCB    3.3bp t  1.6 n670 | ETHA    0.0bp t  0.0 n730 | ETHB    5.5bp t  2.1 n670 | ALTSA    2.2bp t  0.5 n730 | ALTSB    2.7bp t  1.0 n670
+hour 01                      BTCA    0.2bp t  0.1 n730 | BTCB   -2.7bp t -1.2 n670 | ETHA   -0.8bp t -0.2 n730 | ETHB   -5.0bp t -1.8 n670 | ALTSA    0.4bp t  0.1 n730 | ALTSB   -2.1bp t -0.7 n670
+hour 02                      BTCA   -6.4bp t -2.4 n730 | BTCB    0.7bp t  0.4 n670 | ETHA   -8.4bp t -2.5 n730 | ETHB   -0.0bp t -0.0 n670 | ALTSA   -4.2bp t -1.1 n730 | ALTSB    0.9bp t  0.4 n670
+hour 03                      BTCA   -4.4bp t -1.5 n730 | BTCB    0.4bp t  0.3 n670 | ETHA   -7.6bp t -2.0 n730 | ETHB    2.9bp t  1.7 n670 | ALTSA   -5.8bp t -1.4 n730 | ALTSB    4.4bp t  2.4 n670
+hour 04                      BTCA    0.1bp t  0.0 n730 | BTCB   -0.1bp t -0.1 n670 | ETHA    4.1bp t  1.4 n730 | ETHB    1.4bp t  0.9 n670 | ALTSA    5.5bp t  1.6 n730 | ALTSB    2.9bp t  1.3 n670
+hour 05                      BTCA    3.2bp t  1.3 n730 | BTCB   -0.2bp t -0.1 n670 | ETHA    5.3bp t  1.7 n730 | ETHB   -0.1bp t -0.1 n670 | ALTSA   10.0bp t  2.8 n730 | ALTSB    0.6bp t  0.3 n670
+hour 06                      BTCA    0.8bp t  0.3 n730 | BTCB    2.5bp t  1.8 n670 | ETHA    0.7bp t  0.2 n730 | ETHB    1.9bp t  1.2 n670 | ALTSA    4.4bp t  1.2 n730 | ALTSB    1.6bp t  0.7 n670
+hour 07                      BTCA    3.3bp t  1.2 n730 | BTCB   -1.6bp t -1.0 n670 | ETHA    3.9bp t  1.1 n730 | ETHB   -0.6bp t -0.3 n670 | ALTSA    6.7bp t  1.8 n730 | ALTSB    0.8bp t  0.4 n670
+hour 08                      BTCA    1.6bp t  0.5 n730 | BTCB    2.6bp t  1.5 n670 | ETHA   -2.3bp t -0.6 n730 | ETHB    2.6bp t  1.2 n670 | ALTSA   -2.6bp t -0.6 n730 | ALTSB    0.3bp t  0.1 n670
+hour 09                      BTCA   -2.1bp t -0.8 n730 | BTCB    1.4bp t  1.0 n670 | ETHA   -2.4bp t -0.7 n730 | ETHB    1.5bp t  0.8 n670 | ALTSA   -1.9bp t -0.5 n730 | ALTSB    3.1bp t  1.5 n670
+hour 10                      BTCA    3.1bp t  1.2 n730 | BTCB    1.6bp t  1.1 n670 | ETHA    3.5bp t  1.0 n730 | ETHB   -0.2bp t -0.1 n670 | ALTSA    7.7bp t  2.0 n730 | ALTSB    2.0bp t  1.1 n670
+hour 11                      BTCA   -0.8bp t -0.3 n730 | BTCB    2.1bp t  1.4 n670 | ETHA    1.7bp t  0.5 n730 | ETHB    2.0bp t  1.2 n670 | ALTSA    1.1bp t  0.3 n730 | ALTSB   -0.3bp t -0.1 n670
+hour 12                      BTCA   -0.4bp t -0.1 n730 | BTCB    2.8bp t  1.5 n670 | ETHA    1.1bp t  0.2 n730 | ETHB    1.5bp t  0.8 n670 | ALTSA   -3.3bp t -0.6 n730 | ALTSB   -0.9bp t -0.4 n670
+hour 13                      BTCA    4.0bp t  1.2 n730 | BTCB   -1.8bp t -0.8 n670 | ETHA    6.0bp t  1.4 n730 | ETHB   -5.7bp t -2.5 n670 | ALTSA    7.9bp t  1.6 n730 | ALTSB   -5.4bp t -2.0 n670
+hour 14                      BTCA   -5.2bp t -1.4 n730 | BTCB   -1.2bp t -0.4 n670 | ETHA   -1.9bp t -0.4 n730 | ETHB   -3.4bp t -1.1 n670 | ALTSA   -7.0bp t -1.3 n730 | ALTSB   -4.0bp t -1.3 n670
+hour 15                      BTCA    1.7bp t  0.5 n730 | BTCB    0.7bp t  0.3 n670 | ETHA    6.8bp t  1.6 n730 | ETHB   -1.5bp t -0.6 n670 | ALTSA    7.2bp t  1.7 n730 | ALTSB   -2.6bp t -0.8 n670
+hour 16                      BTCA    0.9bp t  0.3 n730 | BTCB    0.2bp t  0.1 n670 | ETHA    4.7bp t  1.1 n730 | ETHB   -0.7bp t -0.3 n670 | ALTSA    4.7bp t  1.2 n730 | ALTSB   -3.4bp t -1.4 n670
+hour 17                      BTCA   -5.1bp t -1.8 n730 | BTCB    4.8bp t  2.2 n670 | ETHA   -5.9bp t -1.6 n730 | ETHB    4.5bp t  1.8 n670 | ALTSA   -5.8bp t -1.6 n730 | ALTSB    5.7bp t  2.1 n670
+hour 18                      BTCA   -0.8bp t -0.3 n730 | BTCB    3.0bp t  1.4 n670 | ETHA    0.4bp t  0.1 n730 | ETHB    1.5bp t  0.6 n670 | ALTSA   -1.2bp t -0.3 n730 | ALTSB    3.5bp t  1.2 n670
+hour 19                      BTCA   -0.4bp t -0.1 n730 | BTCB   -3.4bp t -1.4 n670 | ETHA    0.8bp t  0.2 n730 | ETHB   -1.0bp t -0.4 n670 | ALTSA   -0.6bp t -0.2 n730 | ALTSB   -0.3bp t -0.1 n670
+hour 20                      BTCA    2.3bp t  0.7 n730 | BTCB    1.7bp t  0.8 n670 | ETHA    4.2bp t  1.1 n730 | ETHB   -1.3bp t -0.5 n670 | ALTSA    2.7bp t  0.7 n730 | ALTSB   -1.4bp t -0.5 n670
+hour 21                      BTCA    4.1bp t  1.4 n730 | BTCB    3.2bp t  1.6 n670 | ETHA    4.6bp t  1.2 n730 | ETHB    5.1bp t  2.0 n670 | ALTSA    5.7bp t  1.4 n730 | ALTSB    3.5bp t  1.3 n670
+hour 22                      BTCA    0.2bp t  0.1 n730 | BTCB    5.7bp t  2.7 n670 | ETHA    1.0bp t  0.3 n730 | ETHB    5.2bp t  2.2 n670 | ALTSA    0.3bp t  0.1 n730 | ALTSB    6.4bp t  2.6 n670
+hour 23                      BTCA   -0.8bp t -0.2 n730 | BTCB   -1.1bp t -0.7 n670 | ETHA    0.5bp t  0.1 n730 | ETHB   -1.0bp t -0.6 n670 | ALTSA    0.4bp t  0.1 n730 | ALTSB    1.5bp t  0.8 n670
+== day of week, mean hourly return x24
+dow 0                        BTCA   -0.0bp t -0.0 n2496 | BTCB    2.4bp t  2.0 n2304 | ETHA    1.1bp t  0.5 n2496 | ETHB    1.9bp t  1.3 n2304 | ALTSA   -0.9bp t -0.4 n2496 | ALTSB    0.8bp t  0.5 n2304
+dow 1                        BTCA   -0.4bp t -0.2 n2496 | BTCB    0.6bp t  0.5 n2304 | ETHA    1.0bp t  0.4 n2496 | ETHB   -1.0bp t -0.8 n2304 | ALTSA    1.7bp t  0.7 n2496 | ALTSB   -0.8bp t -0.6 n2304
+dow 2                        BTCA    1.2bp t  0.7 n2496 | BTCB    1.3bp t  1.1 n2304 | ETHA    2.8bp t  1.2 n2496 | ETHB    0.8bp t  0.6 n2304 | ALTSA    2.6bp t  1.0 n2496 | ALTSB    1.1bp t  0.8 n2304
+dow 3                        BTCA   -0.4bp t -0.3 n2496 | BTCB   -0.4bp t -0.4 n2304 | ETHA   -0.4bp t -0.2 n2496 | ETHB    0.0bp t  0.0 n2304 | ALTSA    2.0bp t  0.9 n2496 | ALTSB    0.3bp t  0.2 n2304
+dow 4                        BTCA   -0.5bp t -0.3 n2520 | BTCB    1.4bp t  1.3 n2280 | ETHA   -1.5bp t -0.7 n2520 | ETHB    0.8bp t  0.7 n2280 | ALTSA    1.1bp t  0.5 n2520 | ALTSB    2.2bp t  1.6 n2280
+dow 5                        BTCA   -0.0bp t -0.0 n2520 | BTCB    0.5bp t  0.8 n2280 | ETHA    1.4bp t  0.8 n2520 | ETHB    0.3bp t  0.4 n2280 | ALTSA    2.8bp t  1.5 n2520 | ALTSB    1.4bp t  1.2 n2280
+dow 6                        BTCA    0.2bp t  0.2 n2496 | BTCB    1.3bp t  1.8 n2304 | ETHA    1.4bp t  0.7 n2496 | ETHB    1.5bp t  1.6 n2304 | ALTSA    0.8bp t  0.4 n2496 | ALTSB    0.7bp t  0.7 n2304
+weekend                      BTCA    0.1bp t  0.1 n5016 | BTCB    0.9bp t  1.9 n4584 | ETHA    1.4bp t  1.1 n5016 | ETHB    0.9bp t  1.4 n4584 | ALTSA    1.8bp t  1.4 n5016 | ALTSB    1.0bp t  1.3 n4584
+turn of month (last+first3)  BTCA    1.9bp t  1.3 n2304 | BTCB   -1.2bp t -1.1 n2112 | ETHA    6.6bp t  3.6 n2304 | ETHB   -1.5bp t -1.3 n2112 | ALTSA    5.6bp t  3.2 n2304 | ALTSB   -0.6bp t -0.4 n2112
+== funding stamps
+funding hour -2              BTCA   -1.4bp t -0.8 n2190 | BTCB    2.3bp t  1.8 n2010 | ETHA   -0.1bp t -0.0 n2190 | ETHB    1.2bp t  0.9 n2010 | ALTSA   -0.8bp t -0.3 n2190 | ALTSB    1.3bp t  0.9 n2010
+funding hour -1              BTCA    1.4bp t  0.8 n2190 | BTCB   -0.7bp t -0.6 n2010 | ETHA    3.7bp t  1.6 n2190 | ETHB   -1.0bp t -0.8 n2010 | ALTSA    4.8bp t  2.0 n2190 | ALTSB   -0.1bp t -0.1 n2010
+funding hour +0              BTCA    1.2bp t  0.6 n2190 | BTCB    2.1bp t  1.8 n2010 | ETHA    0.8bp t  0.3 n2190 | ETHB    2.5bp t  1.8 n2010 | ALTSA    1.5bp t  0.6 n2190 | ALTSB   -0.1bp t -0.1 n2010
+funding hour +1              BTCA   -2.3bp t -1.4 n2190 | BTCB    1.2bp t  1.0 n2010 | ETHA   -3.0bp t -1.4 n2190 | ETHB    0.3bp t  0.2 n2010 | ALTSA   -2.4bp t -1.1 n2190 | ALTSB    2.2bp t  1.5 n2010
+== US session
+NY 09:00 bar (open)          BTCA    3.2bp t  0.7 n521 | BTCB   -4.2bp t -1.3 n479 | ETHA    7.1bp t  1.3 n521 | ETHB   -7.5bp t -2.2 n479 | ALTSA    6.9bp t  1.1 n521 | ALTSB   -9.0bp t -2.5 n479
+NY 15:00 bar (close)         BTCA    5.3bp t  1.7 n730 | BTCB   -3.1bp t -1.2 n670 | ETHA    4.5bp t  1.2 n730 | ETHB   -1.2bp t -0.4 n670 | ALTSA    3.1bp t  0.8 n730 | ALTSB   -1.8bp t -0.6 n670
+US session 10-16             BTCA   -1.5bp t -0.9 n3126 | BTCB    0.7bp t  0.5 n2874 | ETHA    0.5bp t  0.2 n3126 | ETHB   -0.7bp t -0.5 n2874 | ALTSA   -1.3bp t -0.6 n3126 | ALTSB   -0.4bp t -0.2 n2874
+weekday off-session          BTCA    0.5bp t  0.5 n9378 | BTCB    1.2bp t  2.2 n8622 | ETHA    0.7bp t  0.6 n9378 | ETHB    0.9bp t  1.5 n8622 | ALTSA    2.2bp t  1.8 n9378 | ALTSB    1.1bp t  1.6 n8622
+== macro
+cpi pre 1-24h                BTCA    0.9bp t  0.3 n576 | BTCB    5.2bp t  2.3 n528 | ETHA    1.7bp t  0.4 n576 | ETHB    5.1bp t  2.1 n528 | ALTSA    3.7bp t  0.7 n576 | ALTSB    3.9bp t  1.5 n528
+cpi pre 1-4h                 BTCA   13.0bp t  1.6 n96 | BTCB   10.5bp t  2.6 n88 | ETHA   12.6bp t  1.3 n96 | ETHB    4.5bp t  1.0 n88 | ALTSA   10.3bp t  0.8 n96 | ALTSB    2.0bp t  0.4 n88
+cpi pre 25-72h               BTCA   -0.4bp t -0.1 n1152 | BTCB    2.1bp t  1.4 n1056 | ETHA   -3.5bp t -1.1 n1152 | ETHB    1.6bp t  0.9 n1056 | ALTSA   -2.3bp t -0.7 n1152 | ALTSB    0.5bp t  0.2 n1056
+cpi post 0-0h                BTCA  -12.5bp t -0.2 n24 | BTCB   33.5bp t  1.2 n22 | ETHA  -23.0bp t -0.3 n24 | ETHB   28.7bp t  1.1 n22 | ALTSA  -27.6bp t -0.3 n24 | ALTSB   53.6bp t  1.7 n22
+cpi post 0-3h                BTCA    5.5bp t  0.3 n96 | BTCB   -5.5bp t -0.5 n88 | ETHA    4.5bp t  0.2 n96 | ETHB    1.3bp t  0.1 n88 | ALTSA    7.3bp t  0.3 n96 | ALTSB    3.2bp t  0.3 n88
+cpi post 1-24h               BTCA    0.6bp t  0.2 n576 | BTCB    0.6bp t  0.2 n528 | ETHA   -0.3bp t -0.1 n576 | ETHB    0.7bp t  0.3 n528 | ALTSA    0.6bp t  0.1 n576 | ALTSB    2.2bp t  0.8 n528
+cpi post 25-72h              BTCA   -3.3bp t -1.6 n1152 | BTCB    1.3bp t  0.8 n1056 | ETHA   -2.5bp t -0.8 n1152 | ETHB    1.6bp t  0.8 n1056 | ALTSA   -0.6bp t -0.2 n1152 | ALTSB    2.5bp t  1.1 n1056
+fomc pre 1-24h               BTCA    2.7bp t  0.6 n384 | BTCB    1.0bp t  0.4 n336 | ETHA    3.9bp t  0.7 n384 | ETHB   -0.3bp t -0.1 n336 | ALTSA    4.8bp t  0.9 n384 | ALTSB    0.0bp t  0.0 n336
+fomc pre 1-4h                BTCA    9.2bp t  0.7 n64 | BTCB   13.0bp t  1.8 n56 | ETHA    9.7bp t  0.5 n64 | ETHB    5.5bp t  0.6 n56 | ALTSA   11.6bp t  0.8 n64 | ALTSB    8.1bp t  0.9 n56
+fomc pre 25-72h              BTCA   -2.5bp t -0.7 n768 | BTCB   -3.7bp t -1.8 n672 | ETHA   -4.0bp t -0.9 n768 | ETHB   -5.2bp t -2.2 n672 | ALTSA   -2.7bp t -0.7 n768 | ALTSB   -3.4bp t -1.3 n672
+fomc post 0-0h               BTCA   94.6bp t  1.8 n16 | BTCB   29.9bp t  0.9 n14 | ETHA  138.0bp t  2.3 n16 | ETHB   65.8bp t  1.9 n14 | ALTSA  167.0bp t  3.9 n16 | ALTSB  113.4bp t  2.7 n14
+fomc post 0-3h               BTCA   18.7bp t  1.0 n64 | BTCB    1.5bp t  0.1 n56 | ETHA   21.7bp t  0.9 n64 | ETHB    4.4bp t  0.2 n56 | ALTSA   43.1bp t  2.1 n64 | ALTSB   22.4bp t  1.1 n56
+fomc post 1-24h              BTCA   -3.8bp t -1.0 n384 | BTCB   -1.0bp t -0.3 n336 | ETHA   -3.6bp t -0.7 n384 | ETHB   -1.4bp t -0.3 n336 | ALTSA    2.6bp t  0.5 n384 | ALTSB   -0.5bp t -0.1 n336
+fomc post 25-72h             BTCA    0.5bp t  0.2 n768 | BTCB    0.2bp t  0.1 n672 | ETHA    0.3bp t  0.1 n768 | ETHB    0.9bp t  0.5 n672 | ALTSA    5.3bp t  1.6 n768 | ALTSB    0.7bp t  0.3 n672
+== options expiry
+Fri 00-08 pre-expiry         BTCA   -2.5bp t -0.9 n840 | BTCB   -1.3bp t -0.7 n760 | ETHA   -2.5bp t -0.7 n840 | ETHB    0.2bp t  0.1 n760 | ALTSA    1.9bp t  0.5 n840 | ALTSB    1.1bp t  0.5 n760
+Fri 08-24 post-expiry        BTCA    0.4bp t  0.2 n1680 | BTCB    2.8bp t  2.0 n1520 | ETHA   -0.9bp t -0.4 n1680 | ETHB    1.1bp t  0.7 n1520 | ALTSA    0.7bp t  0.3 n1680 | ALTSB    2.8bp t  1.6 n1520
+last Fri pre                 BTCA   -8.1bp t -1.7 n192 | BTCB   -1.9bp t -0.7 n176 | ETHA  -10.8bp t -1.8 n192 | ETHB   -0.9bp t -0.3 n176 | ALTSA   -1.6bp t -0.2 n192 | ALTSB    1.4bp t  0.4 n176
+== CME weekend gap (BTC price Sun 18:00 NY open vs Fri 17:00 NY close) -> forward returns from Sun open
+gap>1% fade H 6 BTC A: mean  -26.2bp t -0.7 n64
+gap>1% fade H 6 BTC B: mean  -65.9bp t -2.5 n40
+gap>1% fade H 6 ETH A: mean  -43.5bp t -0.9 n64
+gap>1% fade H 6 ETH B: mean  -87.7bp t -2.1 n40
+gap>1% fade H 6 ALTSA: mean  -26.2bp t -0.5 n64
+gap>1% fade H 6 ALTSB: mean  -64.0bp t -1.8 n40
+gap>1% fade H24 BTC A: mean  -36.3bp t -0.5 n64
+gap>1% fade H24 BTC B: mean -160.8bp t -3.4 n40
+gap>1% fade H24 ETH A: mean  -56.1bp t -0.7 n64
+gap>1% fade H24 ETH B: mean -112.6bp t -2.1 n40
+gap>1% fade H24 ALTSA: mean  -29.7bp t -0.4 n64
+gap>1% fade H24 ALTSB: mean  -68.1bp t -1.4 n40
+gap>1% fade H72 BTC A: mean   -0.4bp t -0.0 n64
+gap>1% fade H72 BTC B: mean -199.1bp t -2.4 n40
+gap>1% fade H72 ETH A: mean  -34.0bp t -0.2 n64
+gap>1% fade H72 ETH B: mean -119.2bp t -1.5 n40
+gap>1% fade H72 ALTSA: mean  -64.8bp t -0.5 n64
+gap>1% fade H72 ALTSB: mean  -43.6bp t -0.7 n40

@@ -119,6 +119,17 @@ async def kill(request: Request) -> dict[str, Any]:
     mirror = getattr(request.app.state, "mirror", None)
     if mirror is not None:                     # every live mirror stops and closes its exchange position
         out = {**out, "live_mirrors_stopped": await mirror.disarm_all("kill switch")}
+    for name in ("macd_live", "donchian_live", *getattr(request.app.state, "extra_live_names", ())):  # every desk live: close, off
+        live = getattr(request.app.state, name, None)
+        if live is not None and getattr(live, "loop", True) is None:     # never started (removed from the line-up): off, flat
+            continue
+        if live is not None:
+            if hasattr(live, "request_abort"):
+                live.request_abort()
+            try:
+                out = {**out, name: (await live.call(lambda live=live: live.disarm("kill switch")))["status"]}
+            except Exception as exc:
+                out = {**out, name: f"FAILED: {type(exc).__name__}"}
     return out
 
 

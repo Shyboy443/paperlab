@@ -1,0 +1,305 @@
+{
+ "test_trades": 1240,
+ "signals_per_day": {
+  "days_with_signal": 425,
+  "mean": 2.92,
+  "max": 23,
+  "share_days_gt5": 0.115
+ },
+ "order_notional_at_500_usdt": {
+  "0": 0.0,
+  "1": 15.28,
+  "5": 21.74,
+  "25": 31.25,
+  "50": 55.46,
+  "75": 91.65,
+  "100": 100.0
+ },
+ "share_orders_below_5_usdt": 0.0024,
+ "share_orders_below_20_usdt": 0.0347,
+ "most_traded_test": [
+  [
+   "ADAUSDT",
+   42
+  ],
+  [
+   "DOGEUSDT",
+   41
+  ],
+  [
+   "LINKUSDT",
+   40
+  ],
+  [
+   "XRPUSDT",
+   39
+  ],
+  [
+   "1000PEPEUSDT",
+   37
+  ],
+  [
+   "BNBUSDT",
+   37
+  ],
+  [
+   "SUIUSDT",
+   37
+  ],
+  [
+   "BCHUSDT",
+   37
+  ],
+  [
+   "WLDUSDT",
+   37
+  ],
+  [
+   "ENAUSDT",
+   35
+  ],
+  [
+   "SOLUSDT",
+   32
+  ],
+  [
+   "AVAXUSDT",
+   31
+  ],
+  [
+   "PAXGUSDT",
+   28
+  ],
+  [
+   "UNIUSDT",
+   27
+  ],
+  [
+   "AAVEUSDT",
+   27
+  ],
+  [
+   "TAOUSDT",
+   26
+  ],
+  [
+   "NEARUSDT",
+   24
+  ],
+  [
+   "WIFUSDT",
+   23
+  ],
+  [
+   "LTCUSDT",
+   23
+  ],
+  [
+   "FILUSDT",
+   23
+  ],
+  [
+   "ZECUSDT",
+   23
+  ],
+  [
+   "HYPEUSDT",
+   19
+  ],
+  [
+   "DOTUSDT",
+   17
+  ],
+  [
+   "PENGUUSDT",
+   17
+  ],
+  [
+   "TRUMPUSDT",
+   17
+  ]
+ ],
+ "min_notional_traded_test": {
+  "listed_now": 182,
+  "n_coins": 183,
+  "distinct_min_notional": {
+   "5.0": 178,
+   "20.0": 4
+  },
+  "not_listed_now": [
+   "AI16ZUSDT",
+   "ALPACAUSDT",
+   "BAKEUSDT",
+   "BNXUSDT",
+   "DEGOUSDT",
+   "EOSUSDT",
+   "FTMUSDT",
+   "FUNUSDT",
+   "HIFIUSDT",
+   "IPUSDT",
+   "OMUSDT",
+   "TONUSDT",
+   "UXLINKUSDT",
+   "VANRYUSDT",
+   "VOXELUSDT"
+  ]
+ },
+ "slippage_100usdt_snapshot": {
+  "ADAUSDT": {
+   "spread_bps": 4.87,
+   "buy100_bps": 2.44,
+   "sell100_bps": 2.44,
+   "top5_depth_usdt": 573633.0
+  },
+  "DOGEUSDT": {
+   "spread_bps": 1.3,
+   "buy100_bps": 0.65,
+   "sell100_bps": 0.65,
+   "top5_depth_usdt": 292760.0
+  },
+  "LINKUSDT": {
+   "spread_bps": 0.88,
+   "buy100_bps": 0.44,
+   "sell100_bps": 0.76,
+   "top5_depth_usdt": 41439.0
+  },
+  "XRPUSDT": {
+   "spread_bps": 0.77,
+   "buy100_bps": 0.38,
+   "sell100_bps": 0.38,
+   "top5_depth_usdt": 172091.0
+  },
+  "1000PEPEUSDT": {
+   "spread_bps": 0.23,
+   "buy100_bps": 0.11,
+   "sell100_bps": 0.11,
+   "top5_depth_usdt": 4087.0
+  },
+  "BNBUSDT": {
+   "spread_bps": 0.13,
+   "buy100_bps": 0.07,
+   "sell100_bps": 0.07,
+   "top5_depth_usdt": 19131.0
+  },
+  "SUIUSDT": {
+   "spread_bps": 1.09,
+   "buy100_bps": 0.55,
+   "sell100_bps": 0.55,
+   "top5_depth_usdt": 91292.0
+  },
+  "BCHUSDT": {
+   "spread_bps": 0.36,
+   "buy100_bps": 0.18,
+   "sell100_bps": 0.18,
+   "top5_depth_usdt": 3360.0
+  },
+  "WLDUSDT": {
+   "spread_bps": 2.16,
+   "buy100_bps": 1.08,
+   "sell100_bps": 1.08,
+   "top5_depth_usdt": 64643.0
+  },
+  "ENAUSDT": {
+   "spread_bps": 0.52,
+   "buy100_bps": 0.26,
+   "sell100_bps": 0.26,
+   "top5_depth_usdt": 11283.0
+  },
+  "SOLUSDT": {
+   "spread_bps": 0.98,
+   "buy100_bps": 0.49,
+   "sell100_bps": 0.49,
+   "top5_depth_usdt": 829775.0
+  },
+  "AVAXUSDT": {
+   "spread_bps": 1.13,
+   "buy100_bps": 0.57,
+   "sell100_bps": 0.57,
+   "top5_depth_usdt": 57678.0
+  },
+  "PAXGUSDT": {
+   "spread_bps": 0.02,
+   "buy100_bps": 0.01,
+   "sell100_bps": 0.01,
+   "top5_depth_usdt": 8632.0
+  },
+  "UNIUSDT": {
+   "spread_bps": 1.48,
+   "buy100_bps": 0.74,
+   "sell100_bps": 0.74,
+   "top5_depth_usdt": 72010.0
+  },
+  "AAVEUSDT": {
+   "spread_bps": 0.73,
+   "buy100_bps": 0.37,
+   "sell100_bps": 0.37,
+   "top5_depth_usdt": 10331.0
+  },
+  "TAOUSDT": {
+   "spread_bps": 0.4,
+   "buy100_bps": 0.2,
+   "sell100_bps": 0.2,
+   "top5_depth_usdt": 12030.0
+  },
+  "NEARUSDT": {
+   "spread_bps": 2.26,
+   "buy100_bps": 1.13,
+   "sell100_bps": 1.13,
+   "top5_depth_usdt": 285377.0
+  },
+  "WIFUSDT": {
+   "spread_bps": 5.57,
+   "buy100_bps": 2.78,
+   "sell100_bps": 2.78,
+   "top5_depth_usdt": 90689.0
+  },
+  "LTCUSDT": {
+   "spread_bps": 1.78,
+   "buy100_bps": 0.89,
+   "sell100_bps": 0.89,
+   "top5_depth_usdt": 94194.0
+  },
+  "FILUSDT": {
+   "spread_bps": 1.09,
+   "buy100_bps": 0.54,
+   "sell100_bps": 0.54,
+   "top5_depth_usdt": 29711.0
+  },
+  "ZECUSDT": {
+   "spread_bps": 0.08,
+   "buy100_bps": 0.04,
+   "sell100_bps": 0.04,
+   "top5_depth_usdt": 561.0
+  },
+  "HYPEUSDT": {
+   "spread_bps": 0.13,
+   "buy100_bps": 0.07,
+   "sell100_bps": 0.07,
+   "top5_depth_usdt": 1673.0
+  },
+  "DOTUSDT": {
+   "spread_bps": 0.98,
+   "buy100_bps": 1.09,
+   "sell100_bps": 0.49,
+   "top5_depth_usdt": 9869.0
+  },
+  "PENGUUSDT": {
+   "spread_bps": 1.34,
+   "buy100_bps": 0.67,
+   "sell100_bps": 0.67,
+   "top5_depth_usdt": 23100.0
+  },
+  "TRUMPUSDT": {
+   "spread_bps": 6.04,
+   "buy100_bps": 3.02,
+   "sell100_bps": 3.02,
+   "top5_depth_usdt": 163439.0
+  }
+ },
+ "slippage_summary_bps_per_side": {
+  "median": 0.55,
+  "max": 3.02,
+  "model_bps_per_side": 2.0
+ },
+ "snapshot_utc": "2026-10-25 07:34"
+}

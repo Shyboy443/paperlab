@@ -1,0 +1,49 @@
+{
+  "rule": "CRYPTO-LUX-VARS-NY18-v1",
+  "verdict": "FAIL",
+  "source_checks": 152064,
+  "configurations": 24,
+  "positive_comparison_settings": 7,
+  "stress_positive_settings": 1,
+  "qqq_start_preserved": 1791457943261,
+  "qqq_status": "OBSERVING",
+  "qqq_error": null,
+  "qqq_audit_verified": true,
+  "source_hashes_verified": true,
+  "replays": [
+    {
+      "key": "BTCUSDT-15m-previous-5bars",
+      "date": "2025-12-29",
+      "candles": 96,
+      "signals": 1
+    },
+    {
+      "key": "ETHUSDT-30m-previous-5bars",
+      "date": "2025-12-25",
+      "candles": 48,
+      "signals": 1
+    },
+    {
+      "key": "SOLUSDT-30m-developing-10bars",
+      "date": "2025-12-09",
+      "candles": 48,
+      "signals": 1
+    }
+  ],
+  "checked_at": "2026-10-08T12:15:50.210465+00:00",
+  "deployment_id": "48e83e08-f512-469a-8f64-4e0e3c848808",
+  "deployment_status": "SUCCESS",
+  "saved_qqq_history_preserved": true,
+  "archived_v1_hashes_preserved": true,
+  "existing_stock_status": "WAIT_NEXT_OPEN",
+  "broker_orders_enabled": false,
+  "python_validation": "67 original/combined checks passed, then 20 final crypto execution/API checks passed",
+  "browser_validation": "Hosted 1280px and 390px; 24 crypto rows, 8 QQQ rows, both period selectors, SOL replay, 24 months, no page errors or overflow",
+  "wallet_validation": "192 cost/period wallets reconciled to their complete ledgers; all monthly and signal counts verified",
+  "artifact_sha256": {
+    "crypto-research-report.json.gz": "76533b5fb9126295bb7230b5a26d927eb6e5383609ce5bc8a0b3074d342f5cec",
+    "crypto-research-replay.json.gz": "bda9dfa9f91b51954e7391a3a5a669ed3452f7e35722257999d933db7d83c63b",
+    "crypto-source-parity.json": "71fb62e5507b84a90c0dd50c6d75a184264171f8fef28a5d70896a7091e038c6",
+    "qqq-arrow-audit.json": "9af0a8756d34dc385d005579d329a3a213c2098f59f04d20413147986b02e9e5"
+  }
+}

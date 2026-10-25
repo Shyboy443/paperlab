@@ -1,6 +1,6 @@
 {
  "protocol": "V16_CONDITIONAL_PAPER_V1",
- "baseline_fingerprint": "93f9c48b67163c69",
+ "baseline_fingerprint": "49a19f92106eee90",
  "code": {
   "app.competition.v16_config": "5a883ed8618c",
   "app.live.v16_worker": "624341cc2991"
@@ -68,5 +68,8 @@
   "UNIUSDT": 480
  },
  "study": "docs/V16_COIN_STUDY.json",
- "fingerprint": "b1b04f22fb609497"
+ "fingerprint": "545849a7334e8044",
+ "frozen_at": "2026-10-12T08:35:37Z",
+ "refrozen_from": "b1b04f22fb609497",
+ "refreeze_note": "re-frozen 2026-10-12: V6 field trimmed to V6.2/V6.6 (operator removed the families retired from view)"
 }

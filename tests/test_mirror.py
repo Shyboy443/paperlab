@@ -377,3 +377,13 @@ def test_a_bot_that_loses_its_qualification_takes_no_new_live_entries(tmp_path):
     row["program_status"] = "QUALIFIED"
     run(svc.handle("v8", OPEN))
     assert len(fx.orders) == 3 and svc.mirrors[m["id"]]["status"] == "ARMED"
+
+
+def test_mirror_refuses_an_account_a_linked_desk_owns(tmp_path):
+    from app.live.mirror import MirrorError
+    svc, fx, st, row = make(tmp_path)
+    svc.account_guard = lambda ex, net: "Donchian Desk" if (ex, net) == ("bybit", "testnet") else None
+    with pytest.raises(MirrorError, match="one strategy per account"):
+        run(svc.arm(REQ))
+    svc.account_guard = lambda ex, net: None
+    assert run(svc.arm(REQ))["status"] == "ARMED"

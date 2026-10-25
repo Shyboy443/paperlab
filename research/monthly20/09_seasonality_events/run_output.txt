@@ -1,0 +1,62 @@
+STACK_1X DEV           mean     1.74 med    1.64 worst  -12.43 dd  36.85 net     102.5 tr 182 liq 0 top3 42.1
+STACK_1X TEST          mean     0.03 med   -0.03 worst   -4.85 dd  18.37 net      -0.4 tr 85 liq 0 top3 None
+STACK_1X TEST2x        mean    -0.26 med   -0.18 worst   -5.41 dd  22.20 net      -7.1 tr 85 liq 0 top3 None
+STACK_3X DEV           mean     4.80 med    3.63 worst  -37.15 dd  84.01 net     280.0 tr 182 liq 0 top3 53.7
+STACK_3X TEST          mean    -0.05 med   -0.08 worst  -15.81 dd  49.51 net     -11.4 tr 85 liq 0 top3 None
+STACK_3X TEST2x        mean    -0.91 med   -0.55 worst  -17.68 dd  56.36 net     -28.1 tr 85 liq 0 top3 None
+FOMC_1X DEV            mean     1.02 med    0.07 worst   -1.97 dd   3.92 net      58.5 tr 360 liq 0 top3 5.6
+FOMC_1X TEST           mean    -0.11 med    0.00 worst   -2.16 dd   8.40 net      -2.7 tr 192 liq 0 top3 None
+FOMC_1X TEST2x         mean    -0.20 med    0.00 worst   -2.29 dd   9.94 net      -4.8 tr 192 liq 0 top3 None
+FOMC_12X DEV           mean    11.28 med    0.83 worst  -23.51 dd  46.83 net    6806.6 tr 360 liq 4 top3 12.0
+FOMC_12X TEST          mean    -1.28 med    0.00 worst  -25.78 dd  68.63 net     -38.9 tr 192 liq 0 top3 None
+FOMC_12X TEST2x        mean    -2.39 med    0.00 worst  -27.34 dd  74.89 net     -53.7 tr 192 liq 0 top3 None
+GAP_1X DEV             mean     1.67 med    1.75 worst  -12.79 dd  38.20 net      95.7 tr 104 liq 0 top3 44.5
+GAP_1X TEST            mean     0.04 med   -0.10 worst   -4.82 dd  18.41 net      -0.3 tr 46 liq 0 top3 None
+GAP_1X TEST2x          mean    -0.23 med   -0.26 worst   -5.48 dd  21.91 net      -6.5 tr 46 liq 0 top3 None
+STACK_FIXED_1X DEV     mean     3.14 med    1.60 worst   -8.81 dd  29.92 net     276.4 tr 1112 liq 0 top3 22.9
+STACK_FIXED_1X TEST    mean     0.04 med    0.10 worst   -7.28 dd  23.00 net      -1.4 tr 538 liq 0 top3 None
+STACK_FIXED_1X TEST2x  mean    -0.47 med   -0.32 worst   -8.07 dd  30.42 net     -12.8 tr 538 liq 0 top3 None
+STACK_FIXED_3X DEV     mean     8.39 med    4.07 worst  -29.35 dd  72.81 net    1599.7 tr 1112 liq 2 top3 38.2
+STACK_FIXED_3X TEST    mean    -0.01 med    0.29 worst  -21.37 dd  59.42 net     -18.6 tr 538 liq 0 top3 None
+STACK_FIXED_3X TEST2x  mean    -1.52 med   -0.96 worst  -23.42 dd  70.16 net     -43.7 tr 538 liq 0 top3 None
+sweep stack L1         mean     0.03 med   -0.03 worst   -4.85 dd  18.37 net      -0.4 tr 85 liq 0 top3 None
+sweep stack L2         mean     0.01 med   -0.05 worst   -9.84 dd  34.95 net      -4.3 tr 85 liq 0 top3 None
+sweep stack L3         mean    -0.05 med   -0.08 worst  -15.81 dd  49.51 net     -11.4 tr 85 liq 0 top3 None
+sweep stack L5         mean    -0.33 med   -0.14 worst  -29.76 dd  72.26 net     -32.6 tr 85 liq 0 top3 None
+sweep stack L8         mean    -1.10 med   -0.23 worst  -55.50 dd  91.82 net     -69.4 tr 85 liq 0 top3 None
+sweep stack L12        mean     4.66 med   -1.50 worst -100.00 dd 100.00 net    -100.0 tr 16 liq 1 top3 None
+sweep stack L20        mean    58.38 med   58.95 worst -100.00 dd 100.00 net    -100.0 tr 12 liq 1 top3 None
+sweep stack L30        mean  -100.00 med -100.00 worst -100.00 dd 100.00 net    -100.0 tr 4 liq 1 top3 None
+sweep stack_fixed L1   mean     0.04 med    0.10 worst   -7.28 dd  23.00 net      -1.4 tr 538 liq 0 top3 None
+sweep stack_fixed L2   mean     0.03 med    0.20 worst  -14.41 dd  42.96 net      -8.0 tr 538 liq 0 top3 None
+sweep stack_fixed L3   mean    -0.01 med    0.29 worst  -21.37 dd  59.42 net     -18.6 tr 538 liq 0 top3 None
+sweep stack_fixed L5   mean    -0.23 med    0.43 worst  -34.63 dd  82.03 net     -46.2 tr 538 liq 0 top3 None
+sweep stack_fixed L8   mean    -0.96 med    0.39 worst  -52.62 dd  96.54 net     -82.5 tr 538 liq 0 top3 None
+sweep stack_fixed L12  mean    -1.62 med   13.88 worst -100.00 dd 100.00 net    -100.0 tr 93 liq 8 top3 None
+sweep stack_fixed L20  mean   -15.67 med  -60.39 worst -100.00 dd 100.00 net    -100.0 tr 67 liq 16 top3 None
+sweep stack_fixed L30  mean  -100.00 med -100.00 worst -100.00 dd 100.00 net    -100.0 tr 26 liq 10 top3 None
+sweep fomc L1          mean    -0.11 med    0.00 worst   -2.16 dd   8.40 net      -2.7 tr 192 liq 0 top3 None
+sweep fomc L2          mean    -0.21 med    0.00 worst   -4.31 dd  16.21 net      -5.5 tr 192 liq 0 top3 None
+sweep fomc L3          mean    -0.32 med    0.00 worst   -6.46 dd  23.47 net      -8.4 tr 192 liq 0 top3 None
+sweep fomc L5          mean    -0.53 med    0.00 worst  -10.76 dd  36.45 net     -14.8 tr 192 liq 0 top3 None
+sweep fomc L8          mean    -0.85 med    0.00 worst  -17.21 dd  52.51 net     -24.9 tr 192 liq 0 top3 None
+sweep fomc L12         mean    -1.28 med    0.00 worst  -25.78 dd  68.63 net     -38.9 tr 192 liq 0 top3 None
+sweep fomc L20         mean    -2.29 med    0.00 worst  -44.49 dd  88.42 net     -66.9 tr 192 liq 2 top3 None
+sweep fomc L30         mean    -6.42 med    0.00 worst  -79.48 dd  99.49 net     -97.8 tr 192 liq 23 top3 None
+sweep gap L1           mean     0.04 med   -0.10 worst   -4.82 dd  18.41 net      -0.3 tr 46 liq 0 top3 None
+sweep gap L2           mean     0.02 med   -0.19 worst  -10.31 dd  35.00 net      -4.0 tr 46 liq 0 top3 None
+sweep gap L3           mean    -0.05 med   -0.29 worst  -16.45 dd  49.57 net     -11.0 tr 46 liq 0 top3 None
+sweep gap L5           mean    -0.35 med   -0.49 worst  -30.66 dd  72.31 net     -32.0 tr 46 liq 0 top3 None
+sweep gap L8           mean    -1.17 med   -0.78 worst  -56.40 dd  91.84 net     -68.9 tr 46 liq 0 top3 None
+sweep gap L12          mean     3.01 med   -3.63 worst -100.00 dd 100.00 net    -100.0 tr 9 liq 1 top3 None
+sweep gap L20          mean    53.14 med   60.11 worst -100.00 dd 100.00 net    -100.0 tr 7 liq 1 top3 None
+sweep gap L30          mean  -100.00 med -100.00 worst -100.00 dd 100.00 net    -100.0 tr 2 liq 1 top3 None
+sweep cpi L1           mean    -0.00 med   -0.17 worst   -3.85 dd  14.12 net      -0.8 tr 276 liq 0 top3 None
+sweep cpi L2           mean    -0.00 med   -0.34 worst   -7.69 dd  26.24 net      -3.1 tr 276 liq 0 top3 None
+sweep cpi L3           mean    -0.00 med   -0.51 worst  -11.54 dd  36.76 net      -6.8 tr 276 liq 0 top3 None
+sweep cpi L5           mean    -0.00 med   -0.85 worst  -19.22 dd  53.96 net     -17.4 tr 276 liq 0 top3 None
+sweep cpi L8           mean    -0.00 med   -1.36 worst  -30.72 dd  72.44 net     -38.1 tr 276 liq 0 top3 None
+sweep cpi L12          mean    -2.42 med   -2.04 worst  -47.63 dd  88.19 net     -79.5 tr 276 liq 9 top3 None
+sweep cpi L20          mean   -14.66 med  -25.41 worst  -86.70 dd  99.99 net    -100.0 tr 276 liq 64 top3 None
+sweep cpi L30          mean   -80.15 med  -80.15 worst -100.00 dd 100.00 net    -100.0 tr 24 liq 21 top3 None
+verdict FAIL leverage needed (linear) 500.0

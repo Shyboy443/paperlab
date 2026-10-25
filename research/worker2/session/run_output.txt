@@ -1,0 +1,191 @@
+dev {'mean_month': np.float64(6.93), 'median_month': np.float64(6.88), 'geo_month': np.float64(6.52), 'worst_month': np.float64(-17.41), 'max_dd_pct': np.float64(20.32), 'months_up': np.int64(34), 'n_months': 46, 'net_pct': np.float64(1727.78), 'trades': 2414, 't_stat': 4.98}
+dev_double_cost {'mean_month': np.float64(6.04), 'median_month': np.float64(6.27), 'geo_month': np.float64(5.64), 'worst_month': np.float64(-18.15), 'max_dd_pct': np.float64(20.95), 'months_up': np.int64(34), 'n_months': 46, 'net_pct': np.float64(1149.58), 'trades': 2414, 't_stat': 4.41}
+test {'mean_month': np.float64(3.36), 'median_month': np.float64(2.22), 'geo_month': np.float64(3.02), 'worst_month': np.float64(-12.21), 'max_dd_pct': np.float64(17.26), 'months_up': np.int64(16), 'n_months': 24, 'net_pct': np.float64(104.35), 'trades': 1240, 't_stat': 1.93}
+test_double_cost {'mean_month': np.float64(2.49), 'median_month': np.float64(1.02), 'geo_month': np.float64(2.16), 'worst_month': np.float64(-13.35), 'max_dd_pct': np.float64(18.74), 'months_up': np.int64(16), 'n_months': 24, 'net_pct': np.float64(66.94), 'trades': 1240, 't_stat': 1.45}
+full {'mean_month': np.float64(5.74), 'median_month': np.float64(4.44), 'geo_month': np.float64(5.35), 'worst_month': np.float64(-17.41), 'max_dd_pct': np.float64(20.32), 'months_up': np.int64(50), 'n_months': 70, 'net_pct': np.float64(3729.0), 'trades': 3654, 't_stat': 5.19}
+full_double_cost {'mean_month': np.float64(4.84), 'median_month': np.float64(3.72), 'geo_month': np.float64(4.45), 'worst_month': np.float64(-18.15), 'max_dd_pct': np.float64(20.95), 'months_up': np.int64(50), 'n_months': 70, 'net_pct': np.float64(2007.51), 'trades': 3654, 't_stat': 4.45}
+y2025_26 {'mean_month': np.float64(2.91), 'median_month': np.float64(2.23), 'geo_month': np.float64(2.58), 'worst_month': np.float64(-12.21), 'max_dd_pct': np.float64(17.26), 'months_up': np.int64(14), 'n_months': 22, 'net_pct': np.float64(75.09), 'trades': 1140, 't_stat': 1.61}
+y2025_26_double_cost {'mean_month': np.float64(2.03), 'median_month': np.float64(1.02), 'geo_month': np.float64(1.7), 'worst_month': np.float64(-13.35), 'max_dd_pct': np.float64(18.74), 'months_up': np.int64(14), 'n_months': 22, 'net_pct': np.float64(45.04), 'trades': 1140, 't_stat': 1.14}
+years {'2021': np.float64(212.53), '2022': np.float64(106.84), '2023': np.float64(90.92), '2024': np.float64(72.85), '2025': np.float64(30.35), '2026': np.float64(37.67)} 2x {'2021': np.float64(183.27), '2022': np.float64(89.91), '2023': np.float64(69.89), '2024': np.float64(57.38), '2025': np.float64(20.39), '2026': np.float64(21.73)}
+check 1 True {'dev': np.float64(1727.78), 'dev_double_cost': np.float64(1149.58), 'test': np.float64(104.35), 'test_double_cost': np.float64(66.94)}
+check 2 True {'years': {'2021': np.float64(212.53), '2022': np.float64(106.84), '2023': np.float64(90.92), '2024': np.float64(72.85), '2025': np.float64(30.35), '2026': np.float64(37.67)}, '2022-01..2026-10_pct': np.float64(1124.86)}
+check 3 True {'t_stat': 5.19, 'boot_p5_mean_month': 3.95, 'n_months': 70}
+check 4 True {'net_without_3_best_pct': 1867.16, 'best3': [23.97, 24.08, 26.51]}
+check 5 True {'share_positive_both': np.float64(0.9)}
+check 6 True {'strategy_net_pct': np.float64(3729.0), 'beats_share': 1.0, 'random_median_net_pct': 102.99, 'random_p95_net_pct': 199.45}
+check 7 True {'top5_coins': ['RAVEUSDT', '1000PEPEUSDT', 'SOLUSDT', 'DEXEUSDT', 'SUIUSDT'], 'net_without_top5_pct': np.float64(2283.69), 'max_single_position_share_of_profit': 0.0628, 'max_position': {'coin': 'RAVEUSDT', 'day': '2026-04-12', 'pct_of_equity': np.float64(6.83), 'size_pct_of_equity': np.float64(7.83), 'ret_pct': np.float64(87.26)}, 'max_single_position_pct_of_equity': np.float64(13.46), 'info_max_share_of_log_growth': 0.0336}
+check 8 True {'geo_month': np.float64(5.35), 'mean_month': np.float64(5.74)}
+  nb {'name': 'H=8', 'dev_net': np.float64(-18.4), 'test_net': np.float64(5.2), 'dev_median': np.float64(-1.35), 'test_median': np.float64(-2.67)}
+  nb {'name': 'H=12', 'dev_net': np.float64(50.66), 'test_net': np.float64(19.27), 'dev_median': np.float64(-1.07), 'test_median': np.float64(1.84)}
+  nb {'name': 'H=20', 'dev_net': np.float64(415.24), 'test_net': np.float64(27.69), 'dev_median': np.float64(2.3), 'test_median': np.float64(0.65)}
+  nb {'name': 'H=24', 'dev_net': np.float64(-5.42), 'test_net': np.float64(13.68), 'dev_median': np.float64(-0.34), 'test_median': np.float64(0.79)}
+  nb {'name': 'k=1.0', 'dev_net': np.float64(318.97), 'test_net': np.float64(36.12), 'dev_median': np.float64(2.71), 'test_median': np.float64(0.93)}
+  nb {'name': 'k=1.5', 'dev_net': np.float64(1436.26), 'test_net': np.float64(85.05), 'dev_median': np.float64(5.88), 'test_median': np.float64(3.04)}
+  nb {'name': 'k=2.5', 'dev_net': np.float64(585.41), 'test_net': np.float64(121.1), 'dev_median': np.float64(4.84), 'test_median': np.float64(2.95)}
+  nb {'name': 'k=3.0', 'dev_net': np.float64(206.83), 'test_net': np.float64(74.44), 'dev_median': np.float64(2.78), 'test_median': np.float64(1.98)}
+  nb {'name': 'hold=5', 'dev_net': np.float64(40.06), 'test_net': np.float64(60.6), 'dev_median': np.float64(0.21), 'test_median': np.float64(0.45)}
+  nb {'name': 'hold=8', 'dev_net': np.float64(646.04), 'test_net': np.float64(133.61), 'dev_median': np.float64(4.69), 'test_median': np.float64(3.92)}
+  nb {'name': 'hold=12', 'dev_net': np.float64(1629.76), 'test_net': np.float64(122.42), 'dev_median': np.float64(5.61), 'test_median': np.float64(0.55)}
+  nb {'name': 'hold=15', 'dev_net': np.float64(1994.28), 'test_net': np.float64(104.77), 'dev_median': np.float64(6.91), 'test_median': np.float64(1.0)}
+  nb {'name': 'K=3', 'dev_net': np.float64(5590.52), 'test_net': np.float64(125.17), 'dev_median': np.float64(8.03), 'test_median': np.float64(1.9)}
+  nb {'name': 'K=4', 'dev_net': np.float64(2875.91), 'test_net': np.float64(116.21), 'dev_median': np.float64(7.58), 'test_median': np.float64(1.99)}
+  nb {'name': 'K=6', 'dev_net': np.float64(1159.32), 'test_net': np.float64(95.43), 'dev_median': np.float64(6.22), 'test_median': np.float64(2.21)}
+  nb {'name': 'K=8', 'dev_net': np.float64(622.99), 'test_net': np.float64(84.25), 'dev_median': np.float64(5.07), 'test_median': np.float64(2.06)}
+  nb {'name': 'W=240', 'dev_net': np.float64(1370.56), 'test_net': np.float64(92.95), 'dev_median': np.float64(5.54), 'test_median': np.float64(4.6)}
+  nb {'name': 'W=360', 'dev_net': np.float64(1345.4), 'test_net': np.float64(75.5), 'dev_median': np.float64(5.44), 'test_median': np.float64(3.02)}
+  nb {'name': 'W=600', 'dev_net': np.float64(1719.34), 'test_net': np.float64(143.28), 'dev_median': np.float64(6.12), 'test_median': np.float64(3.51)}
+  nb {'name': 'W=720', 'dev_net': np.float64(1711.26), 'test_net': np.float64(130.83), 'dev_median': np.float64(5.61), 'test_median': np.float64(3.52)}
+nocap {'mean_month': np.float64(5.71), 'median_month': np.float64(4.44), 'geo_month': np.float64(5.31), 'worst_month': np.float64(-17.41), 'max_dd_pct': np.float64(20.32), 'months_up': np.int64(50), 'n_months': 70, 'net_pct': np.float64(3645.32), 'trades': 3654, 't_stat': 5.18}
+N1 sig_ref=0.834% {'mean_month': np.float64(4.5), 'median_month': np.float64(4.08), 'geo_month': np.float64(4.25), 'worst_month': np.float64(-14.03), 'max_dd_pct': np.float64(16.24), 'months_up': np.int64(50), 'n_months': 70, 'net_pct': np.float64(1745.34), 'trades': 3654, 't_stat': 5.18} {'mean_month': np.float64(2.77), 'median_month': np.float64(1.6), 'geo_month': np.float64(2.56), 'worst_month': np.float64(-8.7), 'max_dd_pct': np.float64(13.1), 'months_up': np.int64(16), 'n_months': 24, 'net_pct': np.float64(83.54), 'trades': 1240, 't_stat': 2.01} {'pass': True, 'numbers': {'top5_coins': ['RAVEUSDT', '1000PEPEUSDT', 'SOLUSDT', 'DOTUSDT', 'SUIUSDT'], 'net_without_top5_pct': np.float64(1110.54), 'max_single_position_share_of_profit': 0.0482, 'max_position': {'coin': 'RAVEUSDT', 'day': '2026-04-12', 'pct_of_equity': np.float64(4.94), 'size_pct_of_equity': np.float64(5.66), 'ret_pct': np.float64(87.26)}, 'max_single_position_pct_of_equity': np.float64(9.73), 'info_max_share_of_log_growth': 0.031}}
+N2 sig_ref=1.551% {'mean_month': np.float64(6.74), 'median_month': np.float64(4.8), 'geo_month': np.float64(6.2), 'worst_month': np.float64(-18.65), 'max_dd_pct': np.float64(22.28), 'months_up': np.int64(51), 'n_months': 70, 'net_pct': np.float64(6637.24), 'trades': 3654, 't_stat': 5.21} {'mean_month': np.float64(3.69), 'median_month': np.float64(2.79), 'geo_month': np.float64(3.22), 'worst_month': np.float64(-14.53), 'max_dd_pct': np.float64(21.85), 'months_up': np.int64(16), 'n_months': 24, 'net_pct': np.float64(114.01), 'trades': 1240, 't_stat': 1.79} {'pass': True, 'numbers': {'top5_coins': ['RAVEUSDT', '1000PEPEUSDT', 'DEXEUSDT', 'MYXUSDT', 'SOLUSDT'], 'net_without_top5_pct': np.float64(3475.97), 'max_single_position_share_of_profit': 0.0802, 'max_position': {'coin': 'RAVEUSDT', 'day': '2026-04-12', 'pct_of_equity': np.float64(9.18), 'size_pct_of_equity': np.float64(10.53), 'ret_pct': np.float64(87.26)}, 'max_single_position_pct_of_equity': np.float64(18.09), 'info_max_share_of_log_growth': 0.0383}}
+orig years {'2021': np.float64(426.9), '2022': np.float64(162.91), '2023': np.float64(106.35), '2024': np.float64(108.42), '2025': np.float64(17.16), '2026': np.float64(63.62)} {'2021': np.float64(362.7), '2022': np.float64(139.04), '2023': np.float64(81.24), '2024': np.float64(88.0), '2025': np.float64(1.89), '2026': np.float64(37.72)} {'mean_month': np.float64(2.66), 'median_month': np.float64(-0.46), 'geo_month': np.float64(1.58), 'worst_month': np.float64(-29.88), 'max_dd_pct': np.float64(34.36), 'months_up': np.int64(10), 'n_months': 22, 'net_pct': np.float64(41.09), 'trades': 1140, 't_stat': 0.8}
+w1 check 0.0
+{
+"corr": {
+"monthly_full_2021_2026": -0.021,
+"monthly_2022_2026": -0.064,
+"monthly_test": -0.088,
+"daily_full": 0.048,
+"daily_2022_2026": 0.037,
+"daily_test": 0.013
+},
+"n_days": 2120,
+"note": "P daily book without the 1% volume cap (small account)",
+"combo": {
+"full": {
+"P_alone": {
+"mean_month": 5.71,
+"median_month": 4.44,
+"geo_month": 5.31,
+"worst_month": -17.41,
+"months_up": 50,
+"n_months": 70,
+"net_pct": 3645.3,
+"max_dd_monthly_pct": 17.41,
+"max_dd_daily_pct": 20.32
+},
+"W1_alone": {
+"mean_month": 4.09,
+"median_month": 2.73,
+"geo_month": 3.77,
+"worst_month": -12.4,
+"months_up": 46,
+"n_months": 70,
+"net_pct": 1233.3,
+"max_dd_monthly_pct": 16.54,
+"max_dd_daily_pct": 23.27
+},
+"combo_50_50_daily_rebal": {
+"mean_month": 4.89,
+"median_month": 4.8,
+"geo_month": 4.71,
+"worst_month": -6.25,
+"months_up": 53,
+"n_months": 70,
+"net_pct": 2412.1,
+"max_dd_monthly_pct": 7.21,
+"max_dd_daily_pct": 11.41
+},
+"combo_50_50_monthly_rebal": {
+"mean_month": 4.9,
+"median_month": 4.81,
+"geo_month": 4.72,
+"worst_month": -6.12,
+"months_up": 53,
+"n_months": 70,
+"net_pct": 2429.0,
+"max_dd_monthly_pct": 7.23
+}
+},
+"2022_2026": {
+"P_alone": {
+"mean_month": 4.77,
+"median_month": 3.01,
+"geo_month": 4.38,
+"worst_month": -17.41,
+"months_up": 40,
+"n_months": 58,
+"net_pct": 1098.4,
+"max_dd_monthly_pct": 17.41,
+"max_dd_daily_pct": 20.32
+},
+"W1_alone": {
+"mean_month": 3.73,
+"median_month": 2.23,
+"geo_month": 3.4,
+"worst_month": -12.4,
+"months_up": 36,
+"n_months": 58,
+"net_pct": 594.6,
+"max_dd_monthly_pct": 16.54,
+"max_dd_daily_pct": 23.27
+},
+"combo_50_50_daily_rebal": {
+"mean_month": 4.22,
+"median_month": 4.08,
+"geo_month": 4.05,
+"worst_month": -6.25,
+"months_up": 43,
+"n_months": 58,
+"net_pct": 901.3,
+"max_dd_monthly_pct": 7.21,
+"max_dd_daily_pct": 11.41
+},
+"combo_50_50_monthly_rebal": {
+"mean_month": 4.25,
+"median_month": 4.0,
+"geo_month": 4.08,
+"worst_month": -6.12,
+"months_up": 43,
+"n_months": 58,
+"net_pct": 917.4,
+"max_dd_monthly_pct": 7.23
+}
+},
+"test": {
+"P_alone": {
+"mean_month": 3.36,
+"median_month": 2.23,
+"geo_month": 3.02,
+"worst_month": -12.21,
+"months_up": 16,
+"n_months": 24,
+"net_pct": 104.3,
+"max_dd_monthly_pct": 12.21,
+"max_dd_daily_pct": 17.26
+},
+"W1_alone": {
+"mean_month": 5.86,
+"median_month": 3.84,
+"geo_month": 5.33,
+"worst_month": -12.4,
+"months_up": 17,
+"n_months": 24,
+"net_pct": 247.7,
+"max_dd_monthly_pct": 12.4,
+"max_dd_daily_pct": 23.27
+},
+"combo_50_50_daily_rebal": {
+"mean_month": 4.57,
+"median_month": 3.57,
+"geo_month": 4.37,
+"worst_month": -6.25,
+"months_up": 20,
+"n_months": 24,
+"net_pct": 179.2,
+"max_dd_monthly_pct": 6.25,
+"max_dd_daily_pct": 11.41
+},
+"combo_50_50_monthly_rebal": {
+"mean_month": 4.61,
+"median_month": 3.54,
+"geo_month": 4.41,
+"worst_month": -6.12,
+"months_up": 20,
+"n_months": 24,
+"net_pct": 182.0,
+"max_dd_monthly_pct": 6.12
+}
+}
+}
+}

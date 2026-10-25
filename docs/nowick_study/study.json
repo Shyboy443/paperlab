@@ -1,0 +1,222 @@
+{
+ "generated_utc": "2026-10-18T06:26:41+00:00",
+ "window": [
+  1776643200000,
+  1784419200000,
+  1792195200000
+ ],
+ "variants": {
+  "5m": {
+   "tf": "5m",
+   "floor": 0.0,
+   "dev": {
+    "trades": 5204,
+    "closed": 5204,
+    "win_rate": 0.32109915449654114,
+    "total_r": -2588.038014325402,
+    "avg_r": -0.49731706654984664,
+    "profit_factor": 0.5316397077732575,
+    "max_drawdown_r": 2590.2909591459097
+   },
+   "test": {
+    "trades": 5477,
+    "closed": 5477,
+    "win_rate": 0.3127624612013876,
+    "total_r": -3462.971813992211,
+    "avg_r": -0.6322752992499929,
+    "profit_factor": 0.4581319074181897,
+    "max_drawdown_r": 3476.4388164919833
+   },
+   "test_coins_positive": 0,
+   "test_per_coin_r": {
+    "BTCUSDT": -813.5965280797194,
+    "ETHUSDT": -423.0983911105281,
+    "SOLUSDT": -258.4354773658248,
+    "BNBUSDT": -597.4810047396853,
+    "XRPUSDT": -217.6915675783047,
+    "DOGEUSDT": -234.08130894896885,
+    "ADAUSDT": -141.57628461078946,
+    "AVAXUSDT": -287.60893427778586,
+    "LINKUSDT": -279.3967276191915,
+    "SUIUSDT": -210.0055896614037
+   }
+  },
+  "5m +floor": {
+   "tf": "5m",
+   "floor": 0.0035,
+   "dev": {
+    "trades": 528,
+    "closed": 528,
+    "win_rate": 0.3390151515151515,
+    "total_r": -81.05748537407165,
+    "avg_r": -0.15351796472362053,
+    "profit_factor": 0.8083102720414483,
+    "max_drawdown_r": 86.47272156367853
+   },
+   "test": {
+    "trades": 665,
+    "closed": 665,
+    "win_rate": 0.3308270676691729,
+    "total_r": -113.35649040359891,
+    "avg_r": -0.17046088782496077,
+    "profit_factor": 0.7876751095183073,
+    "max_drawdown_r": 125.2847717405563
+   },
+   "test_coins_positive": 3,
+   "test_per_coin_r": {
+    "BTCUSDT": -0.9998458469243507,
+    "ETHUSDT": 0.8819011234011196,
+    "SOLUSDT": -9.789776694050117,
+    "BNBUSDT": -5.38845045135039,
+    "XRPUSDT": 1.8101002578393501,
+    "DOGEUSDT": -17.54288445201298,
+    "ADAUSDT": -37.070226408063924,
+    "AVAXUSDT": 1.1474608970587528,
+    "LINKUSDT": -9.195635799665261,
+    "SUIUSDT": -37.20913302983106
+   }
+  },
+  "15m": {
+   "tf": "15m",
+   "floor": 0.0,
+   "dev": {
+    "trades": 289,
+    "closed": 289,
+    "win_rate": 0.3079584775086505,
+    "total_r": -93.6026700614387,
+    "avg_r": -0.3238846714928675,
+    "profit_factor": 0.6404746820845657,
+    "max_drawdown_r": 98.71839356337081
+   },
+   "test": {
+    "trades": 264,
+    "closed": 264,
+    "win_rate": 0.29545454545454547,
+    "total_r": -122.22964004786729,
+    "avg_r": -0.4629910607873761,
+    "profit_factor": 0.5399447365176522,
+    "max_drawdown_r": 125.59279769671208
+   },
+   "test_coins_positive": 1,
+   "test_per_coin_r": {
+    "BTCUSDT": -28.08997204004773,
+    "ETHUSDT": -8.784051962531072,
+    "SOLUSDT": -3.8042963870023008,
+    "BNBUSDT": -18.287569935742532,
+    "XRPUSDT": 2.3990954296048246,
+    "DOGEUSDT": -12.736320168953295,
+    "ADAUSDT": -18.127039143356356,
+    "AVAXUSDT": -25.08274532415444,
+    "LINKUSDT": -1.7527563904368946,
+    "SUIUSDT": -7.963984125247515
+   }
+  },
+  "15m +floor": {
+   "tf": "15m",
+   "floor": 0.0035,
+   "dev": {
+    "trades": 145,
+    "closed": 145,
+    "win_rate": 0.2827586206896552,
+    "total_r": -46.263471249766035,
+    "avg_r": -0.3190584224121795,
+    "profit_factor": 0.6293196973998316,
+    "max_drawdown_r": 56.57480979504404
+   },
+   "test": {
+    "trades": 101,
+    "closed": 101,
+    "win_rate": 0.297029702970297,
+    "total_r": -29.306933026219948,
+    "avg_r": -0.29016765372494996,
+    "profit_factor": 0.6632584334593351,
+    "max_drawdown_r": 38.083406399308
+   },
+   "test_coins_positive": 4,
+   "test_per_coin_r": {
+    "BTCUSDT": 1.887902500984037,
+    "ETHUSDT": -2.9204479162954162,
+    "SOLUSDT": -2.637637900273975,
+    "BNBUSDT": -0.5739240115575786,
+    "XRPUSDT": 3.8696173062847166,
+    "DOGEUSDT": -0.5758525055058936,
+    "ADAUSDT": -19.309061640922646,
+    "AVAXUSDT": -13.265275066243012,
+    "LINKUSDT": 0.4743875818385572,
+    "SUIUSDT": 3.743358625471269
+   }
+  },
+  "1h": {
+   "tf": "1h",
+   "floor": 0.0,
+   "dev": {
+    "trades": 10,
+    "closed": 10,
+    "win_rate": 0.2,
+    "total_r": -5.213654476061748,
+    "avg_r": -0.5213654476061749,
+    "profit_factor": 0.42682643707678547,
+    "max_drawdown_r": 7.982463959662277
+   },
+   "test": {
+    "trades": 3,
+    "closed": 3,
+    "win_rate": 0.0,
+    "total_r": -3.661000175531232,
+    "avg_r": -1.220333391843744,
+    "profit_factor": 0.0,
+    "max_drawdown_r": 3.661000175531232
+   },
+   "test_coins_positive": 0,
+   "test_per_coin_r": {
+    "BTCUSDT": 0,
+    "ETHUSDT": -1.2861077818035724,
+    "SOLUSDT": 0,
+    "BNBUSDT": -1.2809375000717362,
+    "XRPUSDT": 0,
+    "DOGEUSDT": 0,
+    "ADAUSDT": 0,
+    "AVAXUSDT": -1.0939548936559231,
+    "LINKUSDT": 0,
+    "SUIUSDT": 0
+   }
+  },
+  "1h +floor": {
+   "tf": "1h",
+   "floor": 0.0035,
+   "dev": {
+    "trades": 9,
+    "closed": 9,
+    "win_rate": 0.2222222222222222,
+    "total_r": -3.9388064942871,
+    "avg_r": -0.4376451660319,
+    "profit_factor": 0.49639810598265266,
+    "max_drawdown_r": 6.707615977887628
+   },
+   "test": {
+    "trades": 1,
+    "closed": 1,
+    "win_rate": 0.0,
+    "total_r": -1.0939548936559231,
+    "avg_r": -1.0939548936559231,
+    "profit_factor": 0.0,
+    "max_drawdown_r": 1.0939548936559231
+   },
+   "test_coins_positive": 0,
+   "test_per_coin_r": {
+    "BTCUSDT": 0,
+    "ETHUSDT": 0,
+    "SOLUSDT": 0,
+    "BNBUSDT": 0,
+    "XRPUSDT": 0,
+    "DOGEUSDT": 0,
+    "ADAUSDT": 0,
+    "AVAXUSDT": -1.0939548936559231,
+    "LINKUSDT": 0,
+    "SUIUSDT": 0
+   }
+  }
+ },
+ "selected_on_dev": "15m +floor",
+ "passed_test": false
+}

@@ -1,0 +1,35 @@
+{
+  "deployment_id": "163c024f-997a-40b4-8c2d-88f400718174",
+  "status": "SUCCESS",
+  "renderer": "Vela 0.8.3 native",
+  "verification": {
+    "browser_widths": [
+      1440,
+      390
+    ],
+    "bot_candles": {
+      "DOGEUSDT": [
+        "1h",
+        "5m"
+      ],
+      "ARBUSDT": [
+        "15m"
+      ]
+    },
+    "native_renderer": true,
+    "tradingview_scripts": false,
+    "tradingview_requests": false,
+    "trade_boxes": true,
+    "hover": true,
+    "trade_selection": true,
+    "refresh_preserves_zoom": true,
+    "growth_curves": true,
+    "equity_toggles": true,
+    "python_regressions_passed": 5,
+    "three_target_ladder_and_stop_labels": true,
+    "private_cached_and_fresh_login": true,
+    "private_stream_reconnect": true,
+    "private_check_order_writes": 0
+  },
+  "scope": "Dashboard presentation only; saved trades, rules, data sources and execution unchanged."
+}

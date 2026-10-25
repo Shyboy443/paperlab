@@ -1,6 +1,6 @@
 {
  "protocol": "V11_SCAN_PAPER_V1",
- "baseline_fingerprint": "93f9c48b67163c69",
+ "baseline_fingerprint": "49a19f92106eee90",
  "code": {
   "app.strategies.v11.scan": "ca8211449c68",
   "app.strategies.v11.ladder": "228bb8cd17e8",
@@ -210,7 +210,7 @@
    "tp_scale": "0.5 + confidence, clamped to [0.75, 1.5]"
   }
  },
- "frozen_at": "2026-10-03T07:48:49Z",
+ "frozen_at": "2026-10-12T08:35:37Z",
  "rules": {
   "BTCUSDT": {
    "symbol": "BTCUSDT",
@@ -562,7 +562,7 @@
   "docs/V11_ACTIVITY_CHECK.json"
  ],
  "note": "V11 is judged on LIVE forward paper data only; the pre-launch study found no scanner rule that beats costs, so no edge is claimed",
- "fingerprint": "a1362b00b8c8c078",
+ "fingerprint": "e2b5a7e0fcf98677",
  "execution_revision": {
   "supersedes": "bd8aec0dfc357140",
   "baseline": "93f9c48b67163c69",
@@ -570,5 +570,7 @@
   "reason": "execution and loss-limit correction; historical study verdicts retained",
   "archive": "snapshots/2026-10-04-execution-audit/docs/V11_FREEZE.json",
   "rules": "existing instrument rules retained; no universe reselection"
- }
+ },
+ "refrozen_from": "a1362b00b8c8c078",
+ "refreeze_note": "re-frozen 2026-10-12: V6 field trimmed to V6.2/V6.6 (operator removed the families retired from view)"
 }

@@ -1,6 +1,6 @@
 {
  "protocol": "V9_STOCKS_PAPER_V1",
- "baseline_fingerprint": "93f9c48b67163c69",
+ "baseline_fingerprint": "49a19f92106eee90",
  "code": {
   "app.strategies.v9.stocks": "ad85b9c679ef",
   "app.strategies.v8.arena": "4a6a1edc4aaa",
@@ -222,7 +222,7 @@
    "qty_precision": 0
   }
  },
- "frozen_at": "2026-10-06T20:10:55Z",
+ "frozen_at": "2026-10-12T08:35:37Z",
  "field": [
   "V9.1-SPY-5M",
   "V9.1-SPY-5M+JEV",
@@ -286,5 +286,7 @@
   "V9.3-GOOGL-5M+JEV"
  ],
  "note": "V9 is judged on LIVE forward paper data only (Alpaca IEX, regular sessions); no edge claimed",
- "fingerprint": "03100171b90664fa"
+ "fingerprint": "d91737d9ba7ec3b6",
+ "refrozen_from": "03100171b90664fa",
+ "refreeze_note": "re-frozen 2026-10-12: V6 field trimmed to V6.2/V6.6 (operator removed the families retired from view)"
 }

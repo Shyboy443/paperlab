@@ -1,0 +1,280 @@
+{
+ "BREADTH_LIMIT": {
+  "base": {
+   "n_months": 47,
+   "mean_month": 7.54,
+   "median_month": 3.84,
+   "geo_month": 6.69,
+   "worst_month": -17.72,
+   "best_month": 65.93,
+   "months_up": 32,
+   "net_pct": 1996.41,
+   "max_dd_pct": 28.42,
+   "trades": 1337,
+   "win_rate": 59.8,
+   "top3_share_of_profit": 11.7,
+   "liquidations": 0,
+   "max_trade_share_of_profit": 4.3
+  },
+  "double_cost": {
+   "n_months": 47,
+   "mean_month": 7.16,
+   "median_month": 3.52,
+   "geo_month": 6.32,
+   "worst_month": -17.86,
+   "best_month": 64.59,
+   "months_up": 30,
+   "net_pct": 1685.37,
+   "max_dd_pct": 28.82,
+   "trades": 1337,
+   "win_rate": 59.2,
+   "top3_share_of_profit": 12.1,
+   "liquidations": 0,
+   "max_trade_share_of_profit": 4.4
+  },
+  "years": {
+   "2021": {
+    "geo_month": 16.52,
+    "mean_month": 18.32,
+    "max_dd_pct": 21.02
+   },
+   "2022": {
+    "geo_month": 0.63,
+    "mean_month": 0.9,
+    "max_dd_pct": 25.17
+   },
+   "2023": {
+    "geo_month": 2.1,
+    "mean_month": 2.2,
+    "max_dd_pct": 14.2
+   },
+   "2024": {
+    "geo_month": 6.61,
+    "mean_month": 6.92,
+    "max_dd_pct": 28.42
+   }
+  },
+  "lev": {
+   "1": {
+    "mean_month": 7.54,
+    "median_month": 3.84,
+    "geo_month": 6.69,
+    "worst_month": -17.72,
+    "max_dd_pct": 28.42,
+    "net_pct": 1996.41,
+    "liquidations": 0
+   },
+   "1.5": {
+    "mean_month": 11.57,
+    "median_month": 5.76,
+    "geo_month": 9.6,
+    "worst_month": -26.77,
+    "max_dd_pct": 39.84,
+    "net_pct": 7345.47,
+    "liquidations": 0
+   },
+   "2": {
+    "mean_month": 15.71,
+    "median_month": 7.67,
+    "geo_month": 12.13,
+    "worst_month": -35.94,
+    "max_dd_pct": 49.85,
+    "net_pct": 21591.82,
+    "liquidations": 0
+   },
+   "2.5": {
+    "mean_month": 19.57,
+    "median_month": 9.03,
+    "geo_month": 13.42,
+    "worst_month": -49.01,
+    "max_dd_pct": 65.51,
+    "net_pct": 37057.73,
+    "liquidations": 4
+   },
+   "3": {
+    "mean_month": 20.48,
+    "median_month": 11.48,
+    "geo_month": 11.75,
+    "worst_month": -69.55,
+    "max_dd_pct": 87.26,
+    "net_pct": 18401.16,
+    "liquidations": 18
+   },
+   "4": {
+    "mean_month": 22.41,
+    "median_month": 8.13,
+    "geo_month": 1.2,
+    "worst_month": -92.38,
+    "max_dd_pct": 99.87,
+    "net_pct": 74.92,
+    "liquidations": 48
+   },
+   "5": {
+    "mean_month": 17.93,
+    "median_month": 0.0,
+    "geo_month": -17.89,
+    "worst_month": -99.78,
+    "max_dd_pct": 100.0,
+    "net_pct": -99.99,
+    "liquidations": 70
+   },
+   "7": {
+    "mean_month": NaN,
+    "median_month": NaN,
+    "geo_month": -100.0,
+    "worst_month": -100.0,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "liquidations": 43
+   },
+   "10": {
+    "mean_month": NaN,
+    "median_month": NaN,
+    "geo_month": -100.0,
+    "worst_month": -100.0,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "liquidations": 64
+   }
+  }
+ },
+ "FLUSH_LIMIT": {
+  "base": {
+   "n_months": 47,
+   "mean_month": 2.66,
+   "median_month": 0.79,
+   "geo_month": 2.33,
+   "worst_month": -14.91,
+   "best_month": 47.59,
+   "months_up": 30,
+   "net_pct": 194.96,
+   "max_dd_pct": 21.11,
+   "trades": 649,
+   "win_rate": 58.2,
+   "top3_share_of_profit": 19.9,
+   "liquidations": 0,
+   "max_trade_share_of_profit": 7.8
+  },
+  "double_cost": {
+   "n_months": 47,
+   "mean_month": 2.49,
+   "median_month": 0.58,
+   "geo_month": 2.16,
+   "worst_month": -15.08,
+   "best_month": 47.37,
+   "months_up": 29,
+   "net_pct": 172.96,
+   "max_dd_pct": 21.11,
+   "trades": 649,
+   "win_rate": 57.3,
+   "top3_share_of_profit": 21.6,
+   "liquidations": 0,
+   "max_trade_share_of_profit": 8.7
+  },
+  "years": {
+   "2021": {
+    "geo_month": 6.64,
+    "mean_month": 7.44,
+    "max_dd_pct": 21.11
+   },
+   "2022": {
+    "geo_month": 0.45,
+    "mean_month": 0.54,
+    "max_dd_pct": 10.94
+   },
+   "2023": {
+    "geo_month": 0.6,
+    "mean_month": 0.62,
+    "max_dd_pct": 10.82
+   },
+   "2024": {
+    "geo_month": 1.0,
+    "mean_month": 1.23,
+    "max_dd_pct": 17.62
+   }
+  },
+  "lev": {
+   "1": {
+    "mean_month": 2.66,
+    "median_month": 0.79,
+    "geo_month": 2.33,
+    "worst_month": -14.91,
+    "max_dd_pct": 21.11,
+    "net_pct": 194.96,
+    "liquidations": 0
+   },
+   "1.5": {
+    "mean_month": 3.99,
+    "median_month": 1.19,
+    "geo_month": 3.28,
+    "worst_month": -22.0,
+    "max_dd_pct": 27.56,
+    "net_pct": 355.58,
+    "liquidations": 0
+   },
+   "2": {
+    "mean_month": 5.32,
+    "median_month": 1.59,
+    "geo_month": 4.11,
+    "worst_month": -28.85,
+    "max_dd_pct": 34.4,
+    "net_pct": 563.54,
+    "liquidations": 0
+   },
+   "2.5": {
+    "mean_month": 6.47,
+    "median_month": 1.77,
+    "geo_month": 4.67,
+    "worst_month": -35.47,
+    "max_dd_pct": 42.48,
+    "net_pct": 754.45,
+    "liquidations": 1
+   },
+   "3": {
+    "mean_month": 6.93,
+    "median_month": 1.67,
+    "geo_month": 4.32,
+    "worst_month": -41.86,
+    "max_dd_pct": 50.19,
+    "net_pct": 628.39,
+    "liquidations": 7
+   },
+   "4": {
+    "mean_month": 4.29,
+    "median_month": 1.94,
+    "geo_month": 0.86,
+    "worst_month": -60.66,
+    "max_dd_pct": 90.58,
+    "net_pct": 49.9,
+    "liquidations": 28
+   },
+   "5": {
+    "mean_month": 3.52,
+    "median_month": 1.86,
+    "geo_month": -2.58,
+    "worst_month": -86.81,
+    "max_dd_pct": 98.68,
+    "net_pct": -70.72,
+    "liquidations": 47
+   },
+   "7": {
+    "mean_month": 2.98,
+    "median_month": 2.55,
+    "geo_month": -17.22,
+    "worst_month": -99.83,
+    "max_dd_pct": 100.0,
+    "net_pct": -99.99,
+    "liquidations": 78
+   },
+   "10": {
+    "mean_month": 0.91,
+    "median_month": 0.0,
+    "geo_month": -17.85,
+    "worst_month": -99.76,
+    "max_dd_pct": 100.0,
+    "net_pct": -99.99,
+    "liquidations": 68
+   }
+  }
+ }
+}

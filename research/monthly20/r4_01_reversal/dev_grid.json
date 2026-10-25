@@ -1,0 +1,4550 @@
+{
+ "rule": "DEV-only grid (2021-01-01..2024-10-31) for the short-term cross-sectional reversal book. Writes dev_grid.json.\n\nSelection rule (fixed before this grid was run): among all grid rows, take the highest DEV arithmetic mean month at\nbaseline costs among rows whose DEV net is > 0 at doubled costs; if no row qualifies, take the highest DEV mean month at\nbaseline costs (then the TEST run is a formality and a clean FAIL is expected). Universe top-40, k = 10 per side, 1x.\n",
+ "rows": [
+  {
+   "kind": "raw",
+   "L": 1,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -45.09,
+    "median_month": -50.32,
+    "geo_month": -46.57,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "turnover_per_day": 35.464,
+    "cost_drag_month_pct": 75.468,
+    "liquidations": 1
+   },
+   "gross": {
+    "mean_month": 14.63,
+    "median_month": 3.37,
+    "geo_month": 11.96,
+    "max_dd_pct": 41.98,
+    "net_pct": 20164.87,
+    "turnover_per_day": 35.464,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 1,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -33.74,
+    "median_month": -38.56,
+    "geo_month": -35.16,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "turnover_per_day": 25.651,
+    "cost_drag_month_pct": 54.586,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 1,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -13.39,
+    "median_month": -15.75,
+    "geo_month": -13.94,
+    "max_dd_pct": 99.94,
+    "net_pct": -99.91,
+    "turnover_per_day": 8.72,
+    "cost_drag_month_pct": 18.557,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": 3.87,
+    "median_month": 1.73,
+    "geo_month": 3.23,
+    "max_dd_pct": 39.43,
+    "net_pct": 345.6,
+    "turnover_per_day": 8.72,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 1,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -10.26,
+    "median_month": -13.0,
+    "geo_month": -10.79,
+    "max_dd_pct": 99.67,
+    "net_pct": -99.53,
+    "turnover_per_day": 6.072,
+    "cost_drag_month_pct": 12.92,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 1,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -8.31,
+    "median_month": -10.09,
+    "geo_month": -8.61,
+    "max_dd_pct": 98.79,
+    "net_pct": -98.54,
+    "turnover_per_day": 4.365,
+    "cost_drag_month_pct": 9.289,
+    "liquidations": 4
+   },
+   "gross": {
+    "mean_month": 0.42,
+    "median_month": -1.21,
+    "geo_month": 0.11,
+    "max_dd_pct": 53.38,
+    "net_pct": 5.18,
+    "turnover_per_day": 4.365,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 1,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.81,
+    "median_month": -6.21,
+    "geo_month": -6.06,
+    "max_dd_pct": 95.56,
+    "net_pct": -94.71,
+    "turnover_per_day": 3.034,
+    "cost_drag_month_pct": 6.457,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 1,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -0.96,
+    "median_month": -1.17,
+    "geo_month": -1.25,
+    "max_dd_pct": 62.65,
+    "net_pct": -44.61,
+    "turnover_per_day": 1.479,
+    "cost_drag_month_pct": 3.148,
+    "liquidations": 7
+   },
+   "gross": {
+    "mean_month": 2.14,
+    "median_month": 1.72,
+    "geo_month": 1.84,
+    "max_dd_pct": 33.7,
+    "net_pct": 136.05,
+    "turnover_per_day": 1.479,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 7
+   },
+   "double": {
+    "mean_month": -3.97,
+    "median_month": -4.34,
+    "geo_month": -4.25,
+    "max_dd_pct": 88.76,
+    "net_pct": -87.02,
+    "turnover_per_day": 1.479,
+    "cost_drag_month_pct": 6.295,
+    "liquidations": 7
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 1,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": 0.39,
+    "median_month": 0.56,
+    "geo_month": 0.07,
+    "max_dd_pct": 47.05,
+    "net_pct": 3.39,
+    "turnover_per_day": 1.031,
+    "cost_drag_month_pct": 2.195,
+    "liquidations": 7
+   },
+   "double": {
+    "mean_month": -1.75,
+    "median_month": -1.65,
+    "geo_month": -2.06,
+    "max_dd_pct": 68.2,
+    "net_pct": -62.39,
+    "turnover_per_day": 1.031,
+    "cost_drag_month_pct": 4.39,
+    "liquidations": 7
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 4,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -26.75,
+    "median_month": -30.67,
+    "geo_month": -27.63,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "turnover_per_day": 18.262,
+    "cost_drag_month_pct": 38.862,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": 7.17,
+    "median_month": 2.49,
+    "geo_month": 5.92,
+    "max_dd_pct": 50.69,
+    "net_pct": 1391.13,
+    "turnover_per_day": 18.262,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 4,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -16.04,
+    "median_month": -18.4,
+    "geo_month": -16.65,
+    "max_dd_pct": 99.99,
+    "net_pct": -99.98,
+    "turnover_per_day": 10.302,
+    "cost_drag_month_pct": 21.922,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 4,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -15.74,
+    "median_month": -16.13,
+    "geo_month": -16.07,
+    "max_dd_pct": 99.98,
+    "net_pct": -99.97,
+    "turnover_per_day": 8.843,
+    "cost_drag_month_pct": 18.817,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": 1.31,
+    "median_month": 0.36,
+    "geo_month": 0.93,
+    "max_dd_pct": 42.48,
+    "net_pct": 54.7,
+    "turnover_per_day": 8.843,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 4,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -11.66,
+    "median_month": -13.12,
+    "geo_month": -11.99,
+    "max_dd_pct": 99.8,
+    "net_pct": -99.75,
+    "turnover_per_day": 6.381,
+    "cost_drag_month_pct": 13.578,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 4,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -8.77,
+    "median_month": -7.72,
+    "geo_month": -9.05,
+    "max_dd_pct": 98.91,
+    "net_pct": -98.84,
+    "turnover_per_day": 4.405,
+    "cost_drag_month_pct": 9.375,
+    "liquidations": 4
+   },
+   "gross": {
+    "mean_month": -0.0,
+    "median_month": 0.07,
+    "geo_month": -0.29,
+    "max_dd_pct": 57.13,
+    "net_pct": -12.87,
+    "turnover_per_day": 4.405,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 4,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.71,
+    "median_month": -6.55,
+    "geo_month": -8.04,
+    "max_dd_pct": 98.15,
+    "net_pct": -98.05,
+    "turnover_per_day": 3.126,
+    "cost_drag_month_pct": 6.653,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 4,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -1.81,
+    "median_month": -1.91,
+    "geo_month": -2.09,
+    "max_dd_pct": 67.83,
+    "net_pct": -62.96,
+    "turnover_per_day": 1.473,
+    "cost_drag_month_pct": 3.134,
+    "liquidations": 8
+   },
+   "gross": {
+    "mean_month": 1.25,
+    "median_month": 1.07,
+    "geo_month": 0.96,
+    "max_dd_pct": 35.67,
+    "net_pct": 56.93,
+    "turnover_per_day": 1.473,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 8
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 4,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -0.68,
+    "median_month": 0.52,
+    "geo_month": -0.98,
+    "max_dd_pct": 43.22,
+    "net_pct": -37.15,
+    "turnover_per_day": 1.025,
+    "cost_drag_month_pct": 2.181,
+    "liquidations": 8
+   },
+   "double": {
+    "mean_month": -2.78,
+    "median_month": -1.43,
+    "geo_month": -3.08,
+    "max_dd_pct": 79.01,
+    "net_pct": -77.0,
+    "turnover_per_day": 1.025,
+    "cost_drag_month_pct": 4.362,
+    "liquidations": 8
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 12,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -19.42,
+    "median_month": -20.32,
+    "geo_month": -19.88,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "turnover_per_day": 10.939,
+    "cost_drag_month_pct": 23.278,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": 1.2,
+    "median_month": 0.01,
+    "geo_month": 0.65,
+    "max_dd_pct": 59.05,
+    "net_pct": 35.65,
+    "turnover_per_day": 10.939,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 12,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -10.89,
+    "median_month": -11.07,
+    "geo_month": -11.23,
+    "max_dd_pct": 99.65,
+    "net_pct": -99.63,
+    "turnover_per_day": 4.416,
+    "cost_drag_month_pct": 9.397,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 12,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -11.83,
+    "median_month": -12.27,
+    "geo_month": -12.19,
+    "max_dd_pct": 99.79,
+    "net_pct": -99.78,
+    "turnover_per_day": 5.156,
+    "cost_drag_month_pct": 10.972,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -1.83,
+    "median_month": -1.77,
+    "geo_month": -2.22,
+    "max_dd_pct": 74.17,
+    "net_pct": -65.19,
+    "turnover_per_day": 5.156,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 12,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -9.37,
+    "median_month": -7.9,
+    "geo_month": -9.85,
+    "max_dd_pct": 99.28,
+    "net_pct": -99.24,
+    "turnover_per_day": 3.122,
+    "cost_drag_month_pct": 6.644,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 12,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -10.87,
+    "median_month": -9.53,
+    "geo_month": -11.37,
+    "max_dd_pct": 99.68,
+    "net_pct": -99.66,
+    "turnover_per_day": 3.628,
+    "cost_drag_month_pct": 7.721,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -3.87,
+    "median_month": -2.53,
+    "geo_month": -4.39,
+    "max_dd_pct": 89.24,
+    "net_pct": -87.9,
+    "turnover_per_day": 3.628,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 12,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -8.72,
+    "median_month": -7.37,
+    "geo_month": -9.2,
+    "max_dd_pct": 99.05,
+    "net_pct": -98.93,
+    "turnover_per_day": 2.401,
+    "cost_drag_month_pct": 5.11,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 12,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -3.5,
+    "median_month": -3.87,
+    "geo_month": -3.92,
+    "max_dd_pct": 88.14,
+    "net_pct": -84.7,
+    "turnover_per_day": 1.472,
+    "cost_drag_month_pct": 3.132,
+    "liquidations": 10
+   },
+   "gross": {
+    "mean_month": -0.49,
+    "median_month": -0.78,
+    "geo_month": -0.92,
+    "max_dd_pct": 59.78,
+    "net_pct": -35.19,
+    "turnover_per_day": 1.472,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 10
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 12,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -2.8,
+    "median_month": -1.93,
+    "geo_month": -3.23,
+    "max_dd_pct": 84.79,
+    "net_pct": -78.62,
+    "turnover_per_day": 1.035,
+    "cost_drag_month_pct": 2.203,
+    "liquidations": 10
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 24,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -15.72,
+    "median_month": -17.26,
+    "geo_month": -16.0,
+    "max_dd_pct": 99.97,
+    "net_pct": -99.97,
+    "turnover_per_day": 7.91,
+    "cost_drag_month_pct": 16.832,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": -0.61,
+    "median_month": -1.51,
+    "geo_month": -0.94,
+    "max_dd_pct": 62.81,
+    "net_pct": -35.79,
+    "turnover_per_day": 7.91,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 24,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.1,
+    "median_month": -7.94,
+    "geo_month": -7.34,
+    "max_dd_pct": 97.51,
+    "net_pct": -97.22,
+    "turnover_per_day": 2.513,
+    "cost_drag_month_pct": 5.348,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 24,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -10.08,
+    "median_month": -10.92,
+    "geo_month": -10.34,
+    "max_dd_pct": 99.48,
+    "net_pct": -99.41,
+    "turnover_per_day": 3.716,
+    "cost_drag_month_pct": 7.908,
+    "liquidations": 2
+   },
+   "gross": {
+    "mean_month": -2.83,
+    "median_month": -2.99,
+    "geo_month": -3.11,
+    "max_dd_pct": 80.93,
+    "net_pct": -77.35,
+    "turnover_per_day": 3.716,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 2
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 24,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -6.24,
+    "median_month": -5.25,
+    "geo_month": -6.49,
+    "max_dd_pct": 96.05,
+    "net_pct": -95.73,
+    "turnover_per_day": 1.884,
+    "cost_drag_month_pct": 4.01,
+    "liquidations": 2
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 24,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.87,
+    "median_month": -7.07,
+    "geo_month": -8.15,
+    "max_dd_pct": 98.36,
+    "net_pct": -98.17,
+    "turnover_per_day": 2.581,
+    "cost_drag_month_pct": 5.492,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -2.78,
+    "median_month": -2.3,
+    "geo_month": -3.07,
+    "max_dd_pct": 79.97,
+    "net_pct": -76.95,
+    "turnover_per_day": 2.581,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 24,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -6.16,
+    "median_month": -4.76,
+    "geo_month": -6.44,
+    "max_dd_pct": 96.01,
+    "net_pct": -95.63,
+    "turnover_per_day": 1.56,
+    "cost_drag_month_pct": 3.319,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 24,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.28,
+    "median_month": -4.56,
+    "geo_month": -4.57,
+    "max_dd_pct": 89.87,
+    "net_pct": -88.93,
+    "turnover_per_day": 1.479,
+    "cost_drag_month_pct": 3.147,
+    "liquidations": 9
+   },
+   "gross": {
+    "mean_month": -1.28,
+    "median_month": -1.4,
+    "geo_month": -1.58,
+    "max_dd_pct": 58.94,
+    "net_pct": -52.74,
+    "turnover_per_day": 1.479,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 9
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 24,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -2.97,
+    "median_month": -3.44,
+    "geo_month": -3.21,
+    "max_dd_pct": 81.02,
+    "net_pct": -78.46,
+    "turnover_per_day": 1.067,
+    "cost_drag_month_pct": 2.27,
+    "liquidations": 9
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 72,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -12.39,
+    "median_month": -12.29,
+    "geo_month": -12.67,
+    "max_dd_pct": 99.84,
+    "net_pct": -99.83,
+    "turnover_per_day": 4.773,
+    "cost_drag_month_pct": 10.157,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": -3.22,
+    "median_month": -3.43,
+    "geo_month": -3.53,
+    "max_dd_pct": 84.62,
+    "net_pct": -81.53,
+    "turnover_per_day": 4.773,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 72,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.84,
+    "median_month": -5.6,
+    "geo_month": -6.21,
+    "max_dd_pct": 95.89,
+    "net_pct": -95.08,
+    "turnover_per_day": 1.08,
+    "cost_drag_month_pct": 2.298,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 72,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -9.08,
+    "median_month": -8.82,
+    "geo_month": -9.44,
+    "max_dd_pct": 99.16,
+    "net_pct": -99.05,
+    "turnover_per_day": 2.224,
+    "cost_drag_month_pct": 4.732,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -4.77,
+    "median_month": -4.68,
+    "geo_month": -5.14,
+    "max_dd_pct": 93.61,
+    "net_pct": -91.61,
+    "turnover_per_day": 2.224,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 72,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.61,
+    "median_month": -5.64,
+    "geo_month": -5.99,
+    "max_dd_pct": 95.67,
+    "net_pct": -94.53,
+    "turnover_per_day": 0.832,
+    "cost_drag_month_pct": 1.771,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 72,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.88,
+    "median_month": -7.38,
+    "geo_month": -8.33,
+    "max_dd_pct": 98.55,
+    "net_pct": -98.32,
+    "turnover_per_day": 1.533,
+    "cost_drag_month_pct": 3.263,
+    "liquidations": 4
+   },
+   "gross": {
+    "mean_month": -4.89,
+    "median_month": -4.2,
+    "geo_month": -5.35,
+    "max_dd_pct": 93.72,
+    "net_pct": -92.44,
+    "turnover_per_day": 1.533,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 72,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.68,
+    "median_month": -4.29,
+    "geo_month": -6.1,
+    "max_dd_pct": 96.14,
+    "net_pct": -94.81,
+    "turnover_per_day": 0.719,
+    "cost_drag_month_pct": 1.529,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 72,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -3.66,
+    "median_month": -2.71,
+    "geo_month": -4.06,
+    "max_dd_pct": 89.88,
+    "net_pct": -85.76,
+    "turnover_per_day": 0.879,
+    "cost_drag_month_pct": 1.872,
+    "liquidations": 7
+   },
+   "gross": {
+    "mean_month": -1.87,
+    "median_month": -0.85,
+    "geo_month": -2.28,
+    "max_dd_pct": 79.73,
+    "net_pct": -66.25,
+    "turnover_per_day": 0.879,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 7
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 72,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -3.22,
+    "median_month": -3.12,
+    "geo_month": -3.69,
+    "max_dd_pct": 89.06,
+    "net_pct": -82.94,
+    "turnover_per_day": 0.549,
+    "cost_drag_month_pct": 1.169,
+    "liquidations": 7
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 168,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -9.72,
+    "median_month": -9.34,
+    "geo_month": -10.11,
+    "max_dd_pct": 99.36,
+    "net_pct": -99.33,
+    "turnover_per_day": 3.292,
+    "cost_drag_month_pct": 7.005,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": -3.3,
+    "median_month": -2.75,
+    "geo_month": -3.72,
+    "max_dd_pct": 84.9,
+    "net_pct": -83.19,
+    "turnover_per_day": 3.292,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 168,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.7,
+    "median_month": -4.51,
+    "geo_month": -5.0,
+    "max_dd_pct": 91.6,
+    "net_pct": -91.01,
+    "turnover_per_day": 0.633,
+    "cost_drag_month_pct": 1.346,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 168,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.44,
+    "median_month": -7.3,
+    "geo_month": -7.93,
+    "max_dd_pct": 98.05,
+    "net_pct": -97.94,
+    "turnover_per_day": 1.545,
+    "cost_drag_month_pct": 3.287,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -4.4,
+    "median_month": -4.14,
+    "geo_month": -4.91,
+    "max_dd_pct": 92.0,
+    "net_pct": -90.64,
+    "turnover_per_day": 1.545,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 168,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.49,
+    "median_month": -4.08,
+    "geo_month": -4.88,
+    "max_dd_pct": 91.63,
+    "net_pct": -90.47,
+    "turnover_per_day": 0.47,
+    "cost_drag_month_pct": 0.999,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 168,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -6.75,
+    "median_month": -6.91,
+    "geo_month": -7.22,
+    "max_dd_pct": 97.19,
+    "net_pct": -97.05,
+    "turnover_per_day": 1.062,
+    "cost_drag_month_pct": 2.26,
+    "liquidations": 5
+   },
+   "gross": {
+    "mean_month": -4.65,
+    "median_month": -4.75,
+    "geo_month": -5.14,
+    "max_dd_pct": 92.99,
+    "net_pct": -91.64,
+    "turnover_per_day": 1.062,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 5
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 168,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.87,
+    "median_month": -4.19,
+    "geo_month": -5.26,
+    "max_dd_pct": 92.86,
+    "net_pct": -92.1,
+    "turnover_per_day": 0.405,
+    "cost_drag_month_pct": 0.861,
+    "liquidations": 2
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 168,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.35,
+    "median_month": -4.6,
+    "geo_month": -4.77,
+    "max_dd_pct": 92.89,
+    "net_pct": -89.96,
+    "turnover_per_day": 0.607,
+    "cost_drag_month_pct": 1.291,
+    "liquidations": 8
+   },
+   "gross": {
+    "mean_month": -3.13,
+    "median_month": -3.32,
+    "geo_month": -3.56,
+    "max_dd_pct": 88.46,
+    "net_pct": -81.78,
+    "turnover_per_day": 0.607,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 8
+   }
+  },
+  {
+   "kind": "raw",
+   "L": 168,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -2.91,
+    "median_month": -1.45,
+    "geo_month": -3.32,
+    "max_dd_pct": 87.2,
+    "net_pct": -79.53,
+    "turnover_per_day": 0.321,
+    "cost_drag_month_pct": 0.682,
+    "liquidations": 7
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 1,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -45.61,
+    "median_month": -50.9,
+    "geo_month": -47.01,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "turnover_per_day": 35.4,
+    "cost_drag_month_pct": 75.332,
+    "liquidations": 1
+   },
+   "gross": {
+    "mean_month": 13.39,
+    "median_month": 3.7,
+    "geo_month": 10.89,
+    "max_dd_pct": 45.24,
+    "net_pct": 12781.2,
+    "turnover_per_day": 35.4,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 1,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -34.01,
+    "median_month": -39.74,
+    "geo_month": -35.45,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "turnover_per_day": 25.596,
+    "cost_drag_month_pct": 54.467,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 1,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -14.43,
+    "median_month": -16.8,
+    "geo_month": -15.05,
+    "max_dd_pct": 99.97,
+    "net_pct": -99.95,
+    "turnover_per_day": 8.724,
+    "cost_drag_month_pct": 18.564,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": 2.61,
+    "median_month": 0.18,
+    "geo_month": 1.91,
+    "max_dd_pct": 49.76,
+    "net_pct": 143.09,
+    "turnover_per_day": 8.724,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 1,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -10.66,
+    "median_month": -12.17,
+    "geo_month": -11.23,
+    "max_dd_pct": 99.75,
+    "net_pct": -99.63,
+    "turnover_per_day": 6.08,
+    "cost_drag_month_pct": 12.938,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 1,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -8.81,
+    "median_month": -8.76,
+    "geo_month": -9.08,
+    "max_dd_pct": 98.98,
+    "net_pct": -98.86,
+    "turnover_per_day": 4.352,
+    "cost_drag_month_pct": 9.261,
+    "liquidations": 4
+   },
+   "gross": {
+    "mean_month": -0.15,
+    "median_month": -0.33,
+    "geo_month": -0.44,
+    "max_dd_pct": 53.84,
+    "net_pct": -18.7,
+    "turnover_per_day": 4.352,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 1,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.98,
+    "median_month": -7.7,
+    "geo_month": -6.19,
+    "max_dd_pct": 95.65,
+    "net_pct": -95.04,
+    "turnover_per_day": 3.043,
+    "cost_drag_month_pct": 6.475,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 1,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -1.06,
+    "median_month": -0.83,
+    "geo_month": -1.37,
+    "max_dd_pct": 61.9,
+    "net_pct": -47.79,
+    "turnover_per_day": 1.479,
+    "cost_drag_month_pct": 3.147,
+    "liquidations": 8
+   },
+   "gross": {
+    "mean_month": 2.04,
+    "median_month": 1.52,
+    "geo_month": 1.72,
+    "max_dd_pct": 34.15,
+    "net_pct": 122.39,
+    "turnover_per_day": 1.479,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 8
+   },
+   "double": {
+    "mean_month": -4.06,
+    "median_month": -3.94,
+    "geo_month": -4.37,
+    "max_dd_pct": 89.64,
+    "net_pct": -87.76,
+    "turnover_per_day": 1.479,
+    "cost_drag_month_pct": 6.293,
+    "liquidations": 8
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 1,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": 0.24,
+    "median_month": 0.22,
+    "geo_month": -0.05,
+    "max_dd_pct": 39.09,
+    "net_pct": -2.33,
+    "turnover_per_day": 1.022,
+    "cost_drag_month_pct": 2.175,
+    "liquidations": 7
+   },
+   "double": {
+    "mean_month": -1.88,
+    "median_month": -1.96,
+    "geo_month": -2.16,
+    "max_dd_pct": 69.65,
+    "net_pct": -64.15,
+    "turnover_per_day": 1.022,
+    "cost_drag_month_pct": 4.35,
+    "liquidations": 7
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 4,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -27.39,
+    "median_month": -30.03,
+    "geo_month": -28.13,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "turnover_per_day": 18.234,
+    "cost_drag_month_pct": 38.802,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": 6.15,
+    "median_month": 3.63,
+    "geo_month": 5.13,
+    "max_dd_pct": 55.35,
+    "net_pct": 948.17,
+    "turnover_per_day": 18.234,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 4,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -16.24,
+    "median_month": -18.3,
+    "geo_month": -16.8,
+    "max_dd_pct": 99.99,
+    "net_pct": -99.98,
+    "turnover_per_day": 10.31,
+    "cost_drag_month_pct": 21.94,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 4,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -16.23,
+    "median_month": -17.57,
+    "geo_month": -16.56,
+    "max_dd_pct": 99.98,
+    "net_pct": -99.98,
+    "turnover_per_day": 8.82,
+    "cost_drag_month_pct": 18.768,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": 0.66,
+    "median_month": -0.93,
+    "geo_month": 0.29,
+    "max_dd_pct": 50.18,
+    "net_pct": 14.58,
+    "turnover_per_day": 8.82,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 4,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -11.91,
+    "median_month": -13.16,
+    "geo_month": -12.22,
+    "max_dd_pct": 99.82,
+    "net_pct": -99.78,
+    "turnover_per_day": 6.375,
+    "cost_drag_month_pct": 13.566,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 4,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -8.86,
+    "median_month": -7.57,
+    "geo_month": -9.19,
+    "max_dd_pct": 98.97,
+    "net_pct": -98.92,
+    "turnover_per_day": 4.397,
+    "cost_drag_month_pct": 9.358,
+    "liquidations": 4
+   },
+   "gross": {
+    "mean_month": -0.11,
+    "median_month": 1.16,
+    "geo_month": -0.46,
+    "max_dd_pct": 64.09,
+    "net_pct": -19.6,
+    "turnover_per_day": 4.397,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 4,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.54,
+    "median_month": -5.81,
+    "geo_month": -7.91,
+    "max_dd_pct": 98.03,
+    "net_pct": -97.92,
+    "turnover_per_day": 3.117,
+    "cost_drag_month_pct": 6.632,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 4,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -1.93,
+    "median_month": -0.85,
+    "geo_month": -2.27,
+    "max_dd_pct": 69.4,
+    "net_pct": -65.99,
+    "turnover_per_day": 1.464,
+    "cost_drag_month_pct": 3.115,
+    "liquidations": 9
+   },
+   "gross": {
+    "mean_month": 1.11,
+    "median_month": 2.12,
+    "geo_month": 0.76,
+    "max_dd_pct": 39.53,
+    "net_pct": 42.85,
+    "turnover_per_day": 1.464,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 9
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 4,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -1.2,
+    "median_month": 0.02,
+    "geo_month": -1.58,
+    "max_dd_pct": 55.38,
+    "net_pct": -52.75,
+    "turnover_per_day": 1.019,
+    "cost_drag_month_pct": 2.168,
+    "liquidations": 9
+   },
+   "double": {
+    "mean_month": -3.28,
+    "median_month": -1.54,
+    "geo_month": -3.65,
+    "max_dd_pct": 83.38,
+    "net_pct": -82.61,
+    "turnover_per_day": 1.019,
+    "cost_drag_month_pct": 4.335,
+    "liquidations": 9
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 12,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -19.46,
+    "median_month": -20.1,
+    "geo_month": -19.96,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "turnover_per_day": 10.91,
+    "cost_drag_month_pct": 23.217,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": 1.09,
+    "median_month": 0.18,
+    "geo_month": 0.49,
+    "max_dd_pct": 54.9,
+    "net_pct": 25.54,
+    "turnover_per_day": 10.91,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 12,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -10.42,
+    "median_month": -9.76,
+    "geo_month": -10.8,
+    "max_dd_pct": 99.57,
+    "net_pct": -99.54,
+    "turnover_per_day": 4.415,
+    "cost_drag_month_pct": 9.394,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 12,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -11.66,
+    "median_month": -11.29,
+    "geo_month": -12.06,
+    "max_dd_pct": 99.78,
+    "net_pct": -99.76,
+    "turnover_per_day": 5.146,
+    "cost_drag_month_pct": 10.95,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -1.66,
+    "median_month": -1.57,
+    "geo_month": -2.1,
+    "max_dd_pct": 72.24,
+    "net_pct": -63.07,
+    "turnover_per_day": 5.146,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 12,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -9.38,
+    "median_month": -8.96,
+    "geo_month": -9.81,
+    "max_dd_pct": 99.27,
+    "net_pct": -99.22,
+    "turnover_per_day": 3.116,
+    "cost_drag_month_pct": 6.631,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 12,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -10.33,
+    "median_month": -9.09,
+    "geo_month": -10.87,
+    "max_dd_pct": 99.58,
+    "net_pct": -99.55,
+    "turnover_per_day": 3.624,
+    "cost_drag_month_pct": 7.712,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -3.3,
+    "median_month": -1.83,
+    "geo_month": -3.86,
+    "max_dd_pct": 86.01,
+    "net_pct": -84.31,
+    "turnover_per_day": 3.624,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 12,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -8.38,
+    "median_month": -7.94,
+    "geo_month": -8.86,
+    "max_dd_pct": 98.87,
+    "net_pct": -98.72,
+    "turnover_per_day": 2.409,
+    "cost_drag_month_pct": 5.127,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 12,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -3.83,
+    "median_month": -3.7,
+    "geo_month": -4.23,
+    "max_dd_pct": 90.29,
+    "net_pct": -86.86,
+    "turnover_per_day": 1.456,
+    "cost_drag_month_pct": 3.099,
+    "liquidations": 8
+   },
+   "gross": {
+    "mean_month": -0.86,
+    "median_month": -0.68,
+    "geo_month": -1.27,
+    "max_dd_pct": 61.23,
+    "net_pct": -45.16,
+    "turnover_per_day": 1.456,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 8
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 12,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -2.98,
+    "median_month": -1.53,
+    "geo_month": -3.4,
+    "max_dd_pct": 85.58,
+    "net_pct": -80.36,
+    "turnover_per_day": 1.022,
+    "cost_drag_month_pct": 2.174,
+    "liquidations": 8
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 24,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -15.41,
+    "median_month": -15.92,
+    "geo_month": -15.67,
+    "max_dd_pct": 99.97,
+    "net_pct": -99.97,
+    "turnover_per_day": 7.91,
+    "cost_drag_month_pct": 16.832,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": -0.25,
+    "median_month": -0.41,
+    "geo_month": -0.55,
+    "max_dd_pct": 53.51,
+    "net_pct": -22.87,
+    "turnover_per_day": 7.91,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 24,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.31,
+    "median_month": -7.86,
+    "geo_month": -7.52,
+    "max_dd_pct": 97.68,
+    "net_pct": -97.47,
+    "turnover_per_day": 2.514,
+    "cost_drag_month_pct": 5.349,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 24,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -10.02,
+    "median_month": -10.34,
+    "geo_month": -10.27,
+    "max_dd_pct": 99.45,
+    "net_pct": -99.39,
+    "turnover_per_day": 3.704,
+    "cost_drag_month_pct": 7.882,
+    "liquidations": 2
+   },
+   "gross": {
+    "mean_month": -2.8,
+    "median_month": -2.84,
+    "geo_month": -3.06,
+    "max_dd_pct": 80.12,
+    "net_pct": -76.8,
+    "turnover_per_day": 3.704,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 2
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 24,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.08,
+    "median_month": -6.23,
+    "geo_month": -7.34,
+    "max_dd_pct": 97.42,
+    "net_pct": -97.22,
+    "turnover_per_day": 1.876,
+    "cost_drag_month_pct": 3.991,
+    "liquidations": 2
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 24,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -8.41,
+    "median_month": -7.44,
+    "geo_month": -8.7,
+    "max_dd_pct": 98.73,
+    "net_pct": -98.61,
+    "turnover_per_day": 2.565,
+    "cost_drag_month_pct": 5.458,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -3.38,
+    "median_month": -2.44,
+    "geo_month": -3.68,
+    "max_dd_pct": 84.81,
+    "net_pct": -82.81,
+    "turnover_per_day": 2.565,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 24,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -6.97,
+    "median_month": -6.11,
+    "geo_month": -7.26,
+    "max_dd_pct": 97.36,
+    "net_pct": -97.1,
+    "turnover_per_day": 1.549,
+    "cost_drag_month_pct": 3.296,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 24,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.06,
+    "median_month": -4.65,
+    "geo_month": -5.38,
+    "max_dd_pct": 93.1,
+    "net_pct": -92.55,
+    "turnover_per_day": 1.467,
+    "cost_drag_month_pct": 3.123,
+    "liquidations": 9
+   },
+   "gross": {
+    "mean_month": -2.11,
+    "median_month": -1.68,
+    "geo_month": -2.43,
+    "max_dd_pct": 71.2,
+    "net_pct": -68.56,
+    "turnover_per_day": 1.467,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 9
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 24,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -3.96,
+    "median_month": -5.03,
+    "geo_month": -4.28,
+    "max_dd_pct": 88.19,
+    "net_pct": -87.18,
+    "turnover_per_day": 1.054,
+    "cost_drag_month_pct": 2.243,
+    "liquidations": 9
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 72,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -12.73,
+    "median_month": -13.0,
+    "geo_month": -13.04,
+    "max_dd_pct": 99.87,
+    "net_pct": -99.86,
+    "turnover_per_day": 4.773,
+    "cost_drag_month_pct": 10.157,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": -3.6,
+    "median_month": -3.63,
+    "geo_month": -3.94,
+    "max_dd_pct": 87.17,
+    "net_pct": -84.91,
+    "turnover_per_day": 4.773,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 72,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.97,
+    "median_month": -5.89,
+    "geo_month": -6.34,
+    "max_dd_pct": 96.09,
+    "net_pct": -95.4,
+    "turnover_per_day": 1.085,
+    "cost_drag_month_pct": 2.309,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 72,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -9.24,
+    "median_month": -8.76,
+    "geo_month": -9.59,
+    "max_dd_pct": 99.21,
+    "net_pct": -99.13,
+    "turnover_per_day": 2.232,
+    "cost_drag_month_pct": 4.751,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -4.91,
+    "median_month": -4.32,
+    "geo_month": -5.28,
+    "max_dd_pct": 93.59,
+    "net_pct": -92.2,
+    "turnover_per_day": 2.232,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 72,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.54,
+    "median_month": -4.08,
+    "geo_month": -5.88,
+    "max_dd_pct": 95.45,
+    "net_pct": -94.2,
+    "turnover_per_day": 0.838,
+    "cost_drag_month_pct": 1.783,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 72,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.89,
+    "median_month": -7.06,
+    "geo_month": -8.3,
+    "max_dd_pct": 98.51,
+    "net_pct": -98.3,
+    "turnover_per_day": 1.537,
+    "cost_drag_month_pct": 3.271,
+    "liquidations": 4
+   },
+   "gross": {
+    "mean_month": -4.88,
+    "median_month": -4.02,
+    "geo_month": -5.31,
+    "max_dd_pct": 93.6,
+    "net_pct": -92.32,
+    "turnover_per_day": 1.537,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 72,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.26,
+    "median_month": -3.69,
+    "geo_month": -5.68,
+    "max_dd_pct": 94.85,
+    "net_pct": -93.58,
+    "turnover_per_day": 0.72,
+    "cost_drag_month_pct": 1.533,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 72,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -3.93,
+    "median_month": -5.19,
+    "geo_month": -4.31,
+    "max_dd_pct": 89.98,
+    "net_pct": -87.36,
+    "turnover_per_day": 0.882,
+    "cost_drag_month_pct": 1.876,
+    "liquidations": 7
+   },
+   "gross": {
+    "mean_month": -2.14,
+    "median_month": -3.46,
+    "geo_month": -2.53,
+    "max_dd_pct": 79.07,
+    "net_pct": -69.98,
+    "turnover_per_day": 0.882,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 7
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 72,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -2.42,
+    "median_month": -1.57,
+    "geo_month": -2.88,
+    "max_dd_pct": 84.44,
+    "net_pct": -74.64,
+    "turnover_per_day": 0.55,
+    "cost_drag_month_pct": 1.171,
+    "liquidations": 7
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 168,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -10.13,
+    "median_month": -9.49,
+    "geo_month": -10.47,
+    "max_dd_pct": 99.49,
+    "net_pct": -99.45,
+    "turnover_per_day": 3.287,
+    "cost_drag_month_pct": 6.994,
+    "liquidations": 1
+   },
+   "gross": {
+    "mean_month": -3.75,
+    "median_month": -3.1,
+    "geo_month": -4.11,
+    "max_dd_pct": 88.24,
+    "net_pct": -86.12,
+    "turnover_per_day": 3.287,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 168,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.14,
+    "median_month": -4.19,
+    "geo_month": -5.47,
+    "max_dd_pct": 93.37,
+    "net_pct": -92.9,
+    "turnover_per_day": 0.633,
+    "cost_drag_month_pct": 1.348,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 168,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.86,
+    "median_month": -7.55,
+    "geo_month": -8.27,
+    "max_dd_pct": 98.4,
+    "net_pct": -98.27,
+    "turnover_per_day": 1.535,
+    "cost_drag_month_pct": 3.267,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -4.85,
+    "median_month": -4.44,
+    "geo_month": -5.28,
+    "max_dd_pct": 93.04,
+    "net_pct": -92.2,
+    "turnover_per_day": 1.535,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 168,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.47,
+    "median_month": -4.28,
+    "geo_month": -4.83,
+    "max_dd_pct": 90.9,
+    "net_pct": -90.25,
+    "turnover_per_day": 0.469,
+    "cost_drag_month_pct": 0.997,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 168,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.32,
+    "median_month": -6.77,
+    "geo_month": -7.73,
+    "max_dd_pct": 97.92,
+    "net_pct": -97.72,
+    "turnover_per_day": 1.053,
+    "cost_drag_month_pct": 2.242,
+    "liquidations": 5
+   },
+   "gross": {
+    "mean_month": -5.25,
+    "median_month": -4.56,
+    "geo_month": -5.68,
+    "max_dd_pct": 94.26,
+    "net_pct": -93.59,
+    "turnover_per_day": 1.053,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 5
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 168,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.37,
+    "median_month": -4.56,
+    "geo_month": -4.7,
+    "max_dd_pct": 90.88,
+    "net_pct": -89.59,
+    "turnover_per_day": 0.403,
+    "cost_drag_month_pct": 0.858,
+    "liquidations": 2
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 168,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.55,
+    "median_month": -4.36,
+    "geo_month": -4.92,
+    "max_dd_pct": 93.25,
+    "net_pct": -90.65,
+    "turnover_per_day": 0.605,
+    "cost_drag_month_pct": 1.287,
+    "liquidations": 8
+   },
+   "gross": {
+    "mean_month": -3.33,
+    "median_month": -3.19,
+    "geo_month": -3.71,
+    "max_dd_pct": 88.96,
+    "net_pct": -83.07,
+    "turnover_per_day": 0.605,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 8
+   }
+  },
+  {
+   "kind": "resid",
+   "L": 168,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -3.56,
+    "median_month": -3.1,
+    "geo_month": -3.93,
+    "max_dd_pct": 89.49,
+    "net_pct": -84.84,
+    "turnover_per_day": 0.319,
+    "cost_drag_month_pct": 0.679,
+    "liquidations": 7
+   }
+  },
+  {
+   "kind": "z",
+   "L": 1,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -45.66,
+    "median_month": -51.53,
+    "geo_month": -47.11,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "turnover_per_day": 35.951,
+    "cost_drag_month_pct": 76.504,
+    "liquidations": 1
+   },
+   "gross": {
+    "mean_month": 13.37,
+    "median_month": 2.2,
+    "geo_month": 10.87,
+    "max_dd_pct": 40.43,
+    "net_pct": 12674.9,
+    "turnover_per_day": 35.951,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "z",
+   "L": 1,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -34.06,
+    "median_month": -38.81,
+    "geo_month": -35.39,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "turnover_per_day": 25.671,
+    "cost_drag_month_pct": 54.628,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "z",
+   "L": 1,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -14.65,
+    "median_month": -17.26,
+    "geo_month": -15.15,
+    "max_dd_pct": 99.97,
+    "net_pct": -99.96,
+    "turnover_per_day": 8.863,
+    "cost_drag_month_pct": 18.859,
+    "liquidations": 4
+   },
+   "gross": {
+    "mean_month": 2.65,
+    "median_month": 0.11,
+    "geo_month": 2.08,
+    "max_dd_pct": 42.36,
+    "net_pct": 162.83,
+    "turnover_per_day": 8.863,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "z",
+   "L": 1,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -10.62,
+    "median_month": -12.09,
+    "geo_month": -11.06,
+    "max_dd_pct": 99.7,
+    "net_pct": -99.6,
+    "turnover_per_day": 6.091,
+    "cost_drag_month_pct": 12.962,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "z",
+   "L": 1,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -8.95,
+    "median_month": -8.81,
+    "geo_month": -9.16,
+    "max_dd_pct": 99.06,
+    "net_pct": -98.91,
+    "turnover_per_day": 4.428,
+    "cost_drag_month_pct": 9.423,
+    "liquidations": 5
+   },
+   "gross": {
+    "mean_month": -0.15,
+    "median_month": 0.06,
+    "geo_month": -0.37,
+    "max_dd_pct": 56.2,
+    "net_pct": -15.94,
+    "turnover_per_day": 4.428,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 5
+   }
+  },
+  {
+   "kind": "z",
+   "L": 1,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -6.44,
+    "median_month": -7.51,
+    "geo_month": -6.67,
+    "max_dd_pct": 96.57,
+    "net_pct": -96.1,
+    "turnover_per_day": 3.041,
+    "cost_drag_month_pct": 6.47,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "z",
+   "L": 1,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -0.75,
+    "median_month": -0.21,
+    "geo_month": -0.95,
+    "max_dd_pct": 52.33,
+    "net_pct": -36.1,
+    "turnover_per_day": 1.497,
+    "cost_drag_month_pct": 3.185,
+    "liquidations": 5
+   },
+   "gross": {
+    "mean_month": 2.4,
+    "median_month": 2.96,
+    "geo_month": 2.19,
+    "max_dd_pct": 26.65,
+    "net_pct": 177.0,
+    "turnover_per_day": 1.497,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 5
+   },
+   "double": {
+    "mean_month": -3.8,
+    "median_month": -3.39,
+    "geo_month": -3.99,
+    "max_dd_pct": 86.11,
+    "net_pct": -85.28,
+    "turnover_per_day": 1.497,
+    "cost_drag_month_pct": 6.37,
+    "liquidations": 5
+   }
+  },
+  {
+   "kind": "z",
+   "L": 1,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": 1.05,
+    "median_month": 1.32,
+    "geo_month": 0.79,
+    "max_dd_pct": 32.28,
+    "net_pct": 44.74,
+    "turnover_per_day": 1.026,
+    "cost_drag_month_pct": 2.183,
+    "liquidations": 5
+   },
+   "double": {
+    "mean_month": -1.09,
+    "median_month": -0.59,
+    "geo_month": -1.34,
+    "max_dd_pct": 57.84,
+    "net_pct": -47.05,
+    "turnover_per_day": 1.026,
+    "cost_drag_month_pct": 4.366,
+    "liquidations": 5
+   }
+  },
+  {
+   "kind": "z",
+   "L": 4,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -27.97,
+    "median_month": -30.6,
+    "geo_month": -28.66,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "turnover_per_day": 18.498,
+    "cost_drag_month_pct": 39.363,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": 5.86,
+    "median_month": 2.72,
+    "geo_month": 4.92,
+    "max_dd_pct": 55.96,
+    "net_pct": 854.93,
+    "turnover_per_day": 18.498,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "z",
+   "L": 4,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -17.19,
+    "median_month": -18.63,
+    "geo_month": -17.67,
+    "max_dd_pct": 99.99,
+    "net_pct": -99.99,
+    "turnover_per_day": 10.229,
+    "cost_drag_month_pct": 21.767,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "z",
+   "L": 4,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -17.26,
+    "median_month": -17.15,
+    "geo_month": -17.57,
+    "max_dd_pct": 99.99,
+    "net_pct": -99.99,
+    "turnover_per_day": 8.966,
+    "cost_drag_month_pct": 19.079,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -0.26,
+    "median_month": -0.87,
+    "geo_month": -0.62,
+    "max_dd_pct": 55.13,
+    "net_pct": -25.21,
+    "turnover_per_day": 8.966,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "z",
+   "L": 4,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -12.52,
+    "median_month": -13.1,
+    "geo_month": -12.86,
+    "max_dd_pct": 99.87,
+    "net_pct": -99.84,
+    "turnover_per_day": 6.418,
+    "cost_drag_month_pct": 13.657,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "z",
+   "L": 4,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -9.66,
+    "median_month": -8.17,
+    "geo_month": -9.97,
+    "max_dd_pct": 99.3,
+    "net_pct": -99.28,
+    "turnover_per_day": 4.461,
+    "cost_drag_month_pct": 9.493,
+    "liquidations": 4
+   },
+   "gross": {
+    "mean_month": -0.86,
+    "median_month": 0.42,
+    "geo_month": -1.18,
+    "max_dd_pct": 62.18,
+    "net_pct": -42.87,
+    "turnover_per_day": 4.461,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "z",
+   "L": 4,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.81,
+    "median_month": -7.46,
+    "geo_month": -8.09,
+    "max_dd_pct": 98.19,
+    "net_pct": -98.1,
+    "turnover_per_day": 3.113,
+    "cost_drag_month_pct": 6.625,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "z",
+   "L": 4,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -2.7,
+    "median_month": -3.4,
+    "geo_month": -2.91,
+    "max_dd_pct": 76.57,
+    "net_pct": -75.06,
+    "turnover_per_day": 1.481,
+    "cost_drag_month_pct": 3.151,
+    "liquidations": 7
+   },
+   "gross": {
+    "mean_month": 0.36,
+    "median_month": -0.34,
+    "geo_month": 0.13,
+    "max_dd_pct": 32.48,
+    "net_pct": 6.54,
+    "turnover_per_day": 1.481,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 7
+   }
+  },
+  {
+   "kind": "z",
+   "L": 4,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -1.71,
+    "median_month": -1.93,
+    "geo_month": -1.96,
+    "max_dd_pct": 62.76,
+    "net_pct": -60.63,
+    "turnover_per_day": 1.012,
+    "cost_drag_month_pct": 2.153,
+    "liquidations": 6
+   }
+  },
+  {
+   "kind": "z",
+   "L": 12,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -20.36,
+    "median_month": -21.63,
+    "geo_month": -20.85,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "turnover_per_day": 11.101,
+    "cost_drag_month_pct": 23.622,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": 0.36,
+    "median_month": -0.83,
+    "geo_month": -0.23,
+    "max_dd_pct": 60.67,
+    "net_pct": -10.32,
+    "turnover_per_day": 11.101,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "z",
+   "L": 12,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -11.63,
+    "median_month": -11.12,
+    "geo_month": -12.05,
+    "max_dd_pct": 99.79,
+    "net_pct": -99.76,
+    "turnover_per_day": 4.322,
+    "cost_drag_month_pct": 9.197,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "z",
+   "L": 12,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -12.62,
+    "median_month": -12.47,
+    "geo_month": -13.11,
+    "max_dd_pct": 99.87,
+    "net_pct": -99.86,
+    "turnover_per_day": 5.249,
+    "cost_drag_month_pct": 11.171,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -2.52,
+    "median_month": -2.04,
+    "geo_month": -3.05,
+    "max_dd_pct": 82.52,
+    "net_pct": -76.67,
+    "turnover_per_day": 5.249,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "z",
+   "L": 12,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -10.53,
+    "median_month": -9.96,
+    "geo_month": -10.97,
+    "max_dd_pct": 99.61,
+    "net_pct": -99.58,
+    "turnover_per_day": 3.107,
+    "cost_drag_month_pct": 6.612,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "z",
+   "L": 12,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -11.25,
+    "median_month": -9.88,
+    "geo_month": -11.78,
+    "max_dd_pct": 99.74,
+    "net_pct": -99.72,
+    "turnover_per_day": 3.686,
+    "cost_drag_month_pct": 7.845,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -4.16,
+    "median_month": -2.55,
+    "geo_month": -4.72,
+    "max_dd_pct": 90.88,
+    "net_pct": -89.71,
+    "turnover_per_day": 3.686,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "z",
+   "L": 12,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -9.68,
+    "median_month": -9.54,
+    "geo_month": -10.12,
+    "max_dd_pct": 99.42,
+    "net_pct": -99.34,
+    "turnover_per_day": 2.402,
+    "cost_drag_month_pct": 5.111,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "z",
+   "L": 12,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.56,
+    "median_month": -4.49,
+    "geo_month": -4.89,
+    "max_dd_pct": 93.13,
+    "net_pct": -90.51,
+    "turnover_per_day": 1.478,
+    "cost_drag_month_pct": 3.145,
+    "liquidations": 9
+   },
+   "gross": {
+    "mean_month": -1.57,
+    "median_month": -1.42,
+    "geo_month": -1.91,
+    "max_dd_pct": 72.3,
+    "net_pct": -59.54,
+    "turnover_per_day": 1.478,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 9
+   }
+  },
+  {
+   "kind": "z",
+   "L": 12,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -3.59,
+    "median_month": -2.93,
+    "geo_month": -4.03,
+    "max_dd_pct": 89.88,
+    "net_pct": -85.57,
+    "turnover_per_day": 1.022,
+    "cost_drag_month_pct": 2.174,
+    "liquidations": 8
+   }
+  },
+  {
+   "kind": "z",
+   "L": 24,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -16.93,
+    "median_month": -17.68,
+    "geo_month": -17.23,
+    "max_dd_pct": 99.99,
+    "net_pct": -99.99,
+    "turnover_per_day": 8.08,
+    "cost_drag_month_pct": 17.195,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": -1.71,
+    "median_month": -2.28,
+    "geo_month": -2.04,
+    "max_dd_pct": 68.32,
+    "net_pct": -62.04,
+    "turnover_per_day": 8.08,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "z",
+   "L": 24,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -8.2,
+    "median_month": -7.42,
+    "geo_month": -8.47,
+    "max_dd_pct": 98.62,
+    "net_pct": -98.44,
+    "turnover_per_day": 2.482,
+    "cost_drag_month_pct": 5.283,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "z",
+   "L": 24,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -11.76,
+    "median_month": -11.24,
+    "geo_month": -12.07,
+    "max_dd_pct": 99.78,
+    "net_pct": -99.76,
+    "turnover_per_day": 3.784,
+    "cost_drag_month_pct": 8.051,
+    "liquidations": 2
+   },
+   "gross": {
+    "mean_month": -4.53,
+    "median_month": -3.75,
+    "geo_month": -4.84,
+    "max_dd_pct": 91.61,
+    "net_pct": -90.31,
+    "turnover_per_day": 3.784,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 2
+   }
+  },
+  {
+   "kind": "z",
+   "L": 24,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.66,
+    "median_month": -5.74,
+    "geo_month": -8.02,
+    "max_dd_pct": 98.26,
+    "net_pct": -98.03,
+    "turnover_per_day": 1.865,
+    "cost_drag_month_pct": 3.969,
+    "liquidations": 2
+   }
+  },
+  {
+   "kind": "z",
+   "L": 24,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -9.91,
+    "median_month": -9.45,
+    "geo_month": -10.23,
+    "max_dd_pct": 99.43,
+    "net_pct": -99.37,
+    "turnover_per_day": 2.621,
+    "cost_drag_month_pct": 5.578,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -4.85,
+    "median_month": -4.5,
+    "geo_month": -5.18,
+    "max_dd_pct": 92.84,
+    "net_pct": -91.78,
+    "turnover_per_day": 2.621,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "z",
+   "L": 24,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.09,
+    "median_month": -7.07,
+    "geo_month": -7.46,
+    "max_dd_pct": 97.69,
+    "net_pct": -97.39,
+    "turnover_per_day": 1.558,
+    "cost_drag_month_pct": 3.316,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "z",
+   "L": 24,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.72,
+    "median_month": -5.16,
+    "geo_month": -5.99,
+    "max_dd_pct": 95.06,
+    "net_pct": -94.51,
+    "turnover_per_day": 1.498,
+    "cost_drag_month_pct": 3.189,
+    "liquidations": 8
+   },
+   "gross": {
+    "mean_month": -2.72,
+    "median_month": -1.88,
+    "geo_month": -3.0,
+    "max_dd_pct": 78.82,
+    "net_pct": -76.1,
+    "turnover_per_day": 1.498,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 8
+   }
+  },
+  {
+   "kind": "z",
+   "L": 24,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.6,
+    "median_month": -4.27,
+    "geo_month": -4.84,
+    "max_dd_pct": 91.06,
+    "net_pct": -90.31,
+    "turnover_per_day": 1.062,
+    "cost_drag_month_pct": 2.26,
+    "liquidations": 8
+   }
+  },
+  {
+   "kind": "z",
+   "L": 72,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -13.02,
+    "median_month": -13.17,
+    "geo_month": -13.31,
+    "max_dd_pct": 99.89,
+    "net_pct": -99.88,
+    "turnover_per_day": 4.879,
+    "cost_drag_month_pct": 10.383,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": -3.71,
+    "median_month": -4.05,
+    "geo_month": -4.02,
+    "max_dd_pct": 87.86,
+    "net_pct": -85.46,
+    "turnover_per_day": 4.879,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "z",
+   "L": 72,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -6.29,
+    "median_month": -6.67,
+    "geo_month": -6.58,
+    "max_dd_pct": 96.61,
+    "net_pct": -95.93,
+    "turnover_per_day": 1.057,
+    "cost_drag_month_pct": 2.248,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "z",
+   "L": 72,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -9.49,
+    "median_month": -8.72,
+    "geo_month": -9.89,
+    "max_dd_pct": 99.33,
+    "net_pct": -99.25,
+    "turnover_per_day": 2.276,
+    "cost_drag_month_pct": 4.844,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -5.08,
+    "median_month": -4.36,
+    "geo_month": -5.5,
+    "max_dd_pct": 94.06,
+    "net_pct": -93.01,
+    "turnover_per_day": 2.276,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "z",
+   "L": 72,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -6.06,
+    "median_month": -6.58,
+    "geo_month": -6.44,
+    "max_dd_pct": 96.48,
+    "net_pct": -95.63,
+    "turnover_per_day": 0.821,
+    "cost_drag_month_pct": 1.747,
+    "liquidations": 2
+   }
+  },
+  {
+   "kind": "z",
+   "L": 72,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -8.48,
+    "median_month": -7.81,
+    "geo_month": -8.9,
+    "max_dd_pct": 98.93,
+    "net_pct": -98.75,
+    "turnover_per_day": 1.575,
+    "cost_drag_month_pct": 3.353,
+    "liquidations": 4
+   },
+   "gross": {
+    "mean_month": -5.42,
+    "median_month": -4.64,
+    "geo_month": -5.85,
+    "max_dd_pct": 95.17,
+    "net_pct": -94.13,
+    "turnover_per_day": 1.575,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "z",
+   "L": 72,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -6.06,
+    "median_month": -5.11,
+    "geo_month": -6.45,
+    "max_dd_pct": 96.33,
+    "net_pct": -95.64,
+    "turnover_per_day": 0.713,
+    "cost_drag_month_pct": 1.517,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "z",
+   "L": 72,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.15,
+    "median_month": -2.48,
+    "geo_month": -4.5,
+    "max_dd_pct": 90.85,
+    "net_pct": -88.51,
+    "turnover_per_day": 0.902,
+    "cost_drag_month_pct": 1.918,
+    "liquidations": 7
+   },
+   "gross": {
+    "mean_month": -2.33,
+    "median_month": -0.53,
+    "geo_month": -2.69,
+    "max_dd_pct": 81.02,
+    "net_pct": -72.18,
+    "turnover_per_day": 0.902,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 7
+   }
+  },
+  {
+   "kind": "z",
+   "L": 72,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.01,
+    "median_month": -2.96,
+    "geo_month": -4.36,
+    "max_dd_pct": 90.14,
+    "net_pct": -87.72,
+    "turnover_per_day": 0.545,
+    "cost_drag_month_pct": 1.16,
+    "liquidations": 9
+   }
+  },
+  {
+   "kind": "z",
+   "L": 168,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -10.88,
+    "median_month": -9.62,
+    "geo_month": -11.27,
+    "max_dd_pct": 99.65,
+    "net_pct": -99.64,
+    "turnover_per_day": 3.359,
+    "cost_drag_month_pct": 7.148,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": -4.4,
+    "median_month": -3.13,
+    "geo_month": -4.83,
+    "max_dd_pct": 91.26,
+    "net_pct": -90.22,
+    "turnover_per_day": 3.359,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "z",
+   "L": 168,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.58,
+    "median_month": -4.75,
+    "geo_month": -5.92,
+    "max_dd_pct": 94.99,
+    "net_pct": -94.32,
+    "turnover_per_day": 0.614,
+    "cost_drag_month_pct": 1.308,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "z",
+   "L": 168,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -8.57,
+    "median_month": -7.56,
+    "geo_month": -9.04,
+    "max_dd_pct": 98.91,
+    "net_pct": -98.84,
+    "turnover_per_day": 1.582,
+    "cost_drag_month_pct": 3.366,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -5.5,
+    "median_month": -4.52,
+    "geo_month": -5.99,
+    "max_dd_pct": 95.27,
+    "net_pct": -94.52,
+    "turnover_per_day": 1.582,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "z",
+   "L": 168,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.85,
+    "median_month": -4.12,
+    "geo_month": -5.23,
+    "max_dd_pct": 93.52,
+    "net_pct": -92.0,
+    "turnover_per_day": 0.456,
+    "cost_drag_month_pct": 0.97,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "z",
+   "L": 168,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.54,
+    "median_month": -5.85,
+    "geo_month": -8.0,
+    "max_dd_pct": 98.13,
+    "net_pct": -98.01,
+    "turnover_per_day": 1.083,
+    "cost_drag_month_pct": 2.304,
+    "liquidations": 5
+   },
+   "gross": {
+    "mean_month": -5.43,
+    "median_month": -3.84,
+    "geo_month": -5.89,
+    "max_dd_pct": 94.69,
+    "net_pct": -94.25,
+    "turnover_per_day": 1.083,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 5
+   }
+  },
+  {
+   "kind": "z",
+   "L": 168,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.28,
+    "median_month": -4.41,
+    "geo_month": -5.65,
+    "max_dd_pct": 94.53,
+    "net_pct": -93.5,
+    "turnover_per_day": 0.394,
+    "cost_drag_month_pct": 0.839,
+    "liquidations": 2
+   }
+  },
+  {
+   "kind": "z",
+   "L": 168,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.6,
+    "median_month": -4.14,
+    "geo_month": -5.98,
+    "max_dd_pct": 95.51,
+    "net_pct": -94.48,
+    "turnover_per_day": 0.619,
+    "cost_drag_month_pct": 1.318,
+    "liquidations": 8
+   },
+   "gross": {
+    "mean_month": -4.37,
+    "median_month": -2.84,
+    "geo_month": -4.75,
+    "max_dd_pct": 92.64,
+    "net_pct": -89.85,
+    "turnover_per_day": 0.619,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 8
+   }
+  },
+  {
+   "kind": "z",
+   "L": 168,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.34,
+    "median_month": -3.23,
+    "geo_month": -4.71,
+    "max_dd_pct": 92.75,
+    "net_pct": -89.65,
+    "turnover_per_day": 0.314,
+    "cost_drag_month_pct": 0.669,
+    "liquidations": 7
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 1,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -45.56,
+    "median_month": -50.47,
+    "geo_month": -47.11,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "turnover_per_day": 36.709,
+    "cost_drag_month_pct": 78.117,
+    "liquidations": 1
+   },
+   "gross": {
+    "mean_month": 12.99,
+    "median_month": 3.97,
+    "geo_month": 10.82,
+    "max_dd_pct": 40.26,
+    "net_pct": 12395.57,
+    "turnover_per_day": 36.709,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 1,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -34.53,
+    "median_month": -38.39,
+    "geo_month": -35.75,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "turnover_per_day": 25.761,
+    "cost_drag_month_pct": 54.819,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 1,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -15.52,
+    "median_month": -16.57,
+    "geo_month": -15.9,
+    "max_dd_pct": 99.98,
+    "net_pct": -99.97,
+    "turnover_per_day": 8.958,
+    "cost_drag_month_pct": 19.063,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": 1.8,
+    "median_month": 0.17,
+    "geo_month": 1.38,
+    "max_dd_pct": 47.87,
+    "net_pct": 90.74,
+    "turnover_per_day": 8.958,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 1,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -10.88,
+    "median_month": -11.62,
+    "geo_month": -11.22,
+    "max_dd_pct": 99.72,
+    "net_pct": -99.63,
+    "turnover_per_day": 6.096,
+    "cost_drag_month_pct": 12.973,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 1,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -9.48,
+    "median_month": -9.06,
+    "geo_month": -9.64,
+    "max_dd_pct": 99.24,
+    "net_pct": -99.15,
+    "turnover_per_day": 4.479,
+    "cost_drag_month_pct": 9.531,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -0.62,
+    "median_month": -0.09,
+    "geo_month": -0.79,
+    "max_dd_pct": 56.29,
+    "net_pct": -31.18,
+    "turnover_per_day": 4.479,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 1,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -6.64,
+    "median_month": -6.83,
+    "geo_month": -6.81,
+    "max_dd_pct": 96.77,
+    "net_pct": -96.36,
+    "turnover_per_day": 3.051,
+    "cost_drag_month_pct": 6.493,
+    "liquidations": 2
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 1,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -0.9,
+    "median_month": -0.06,
+    "geo_month": -1.1,
+    "max_dd_pct": 47.52,
+    "net_pct": -40.62,
+    "turnover_per_day": 1.509,
+    "cost_drag_month_pct": 3.212,
+    "liquidations": 6
+   },
+   "gross": {
+    "mean_month": 2.27,
+    "median_month": 3.05,
+    "geo_month": 2.06,
+    "max_dd_pct": 25.23,
+    "net_pct": 160.65,
+    "turnover_per_day": 1.509,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 6
+   },
+   "double": {
+    "mean_month": -3.97,
+    "median_month": -3.18,
+    "geo_month": -4.17,
+    "max_dd_pct": 87.27,
+    "net_pct": -86.49,
+    "turnover_per_day": 1.509,
+    "cost_drag_month_pct": 6.424,
+    "liquidations": 6
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 1,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": 0.78,
+    "median_month": 1.26,
+    "geo_month": 0.58,
+    "max_dd_pct": 29.8,
+    "net_pct": 30.99,
+    "turnover_per_day": 1.028,
+    "cost_drag_month_pct": 2.188,
+    "liquidations": 4
+   },
+   "double": {
+    "mean_month": -1.36,
+    "median_month": -0.53,
+    "geo_month": -1.56,
+    "max_dd_pct": 56.16,
+    "net_pct": -52.2,
+    "turnover_per_day": 1.028,
+    "cost_drag_month_pct": 4.376,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 4,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -28.53,
+    "median_month": -31.72,
+    "geo_month": -29.21,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "turnover_per_day": 18.976,
+    "cost_drag_month_pct": 40.381,
+    "liquidations": 2
+   },
+   "gross": {
+    "mean_month": 6.1,
+    "median_month": 2.2,
+    "geo_month": 5.16,
+    "max_dd_pct": 46.1,
+    "net_pct": 962.77,
+    "turnover_per_day": 18.976,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 2
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 4,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -17.22,
+    "median_month": -18.1,
+    "geo_month": -17.6,
+    "max_dd_pct": 99.99,
+    "net_pct": -99.99,
+    "turnover_per_day": 10.196,
+    "cost_drag_month_pct": 21.697,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 4,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -17.39,
+    "median_month": -18.11,
+    "geo_month": -17.67,
+    "max_dd_pct": 99.99,
+    "net_pct": -99.99,
+    "turnover_per_day": 9.142,
+    "cost_drag_month_pct": 19.455,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -0.06,
+    "median_month": -0.18,
+    "geo_month": -0.37,
+    "max_dd_pct": 53.5,
+    "net_pct": -16.04,
+    "turnover_per_day": 9.142,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 4,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -13.32,
+    "median_month": -13.85,
+    "geo_month": -13.66,
+    "max_dd_pct": 99.92,
+    "net_pct": -99.9,
+    "turnover_per_day": 6.405,
+    "cost_drag_month_pct": 13.63,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 4,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -10.01,
+    "median_month": -8.53,
+    "geo_month": -10.29,
+    "max_dd_pct": 99.43,
+    "net_pct": -99.39,
+    "turnover_per_day": 4.524,
+    "cost_drag_month_pct": 9.627,
+    "liquidations": 4
+   },
+   "gross": {
+    "mean_month": -1.11,
+    "median_month": 0.63,
+    "geo_month": -1.41,
+    "max_dd_pct": 68.86,
+    "net_pct": -48.68,
+    "turnover_per_day": 4.524,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 4,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -8.05,
+    "median_month": -6.45,
+    "geo_month": -8.37,
+    "max_dd_pct": 98.45,
+    "net_pct": -98.35,
+    "turnover_per_day": 3.118,
+    "cost_drag_month_pct": 6.635,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 4,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -3.12,
+    "median_month": -2.47,
+    "geo_month": -3.4,
+    "max_dd_pct": 82.24,
+    "net_pct": -80.35,
+    "turnover_per_day": 1.492,
+    "cost_drag_month_pct": 3.175,
+    "liquidations": 6
+   },
+   "gross": {
+    "mean_month": -0.05,
+    "median_month": 0.58,
+    "geo_month": -0.35,
+    "max_dd_pct": 46.87,
+    "net_pct": -15.11,
+    "turnover_per_day": 1.492,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 6
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 4,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -2.31,
+    "median_month": -2.6,
+    "geo_month": -2.59,
+    "max_dd_pct": 73.26,
+    "net_pct": -70.91,
+    "turnover_per_day": 1.008,
+    "cost_drag_month_pct": 2.146,
+    "liquidations": 5
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 12,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -20.63,
+    "median_month": -20.17,
+    "geo_month": -21.08,
+    "max_dd_pct": 100.0,
+    "net_pct": -100.0,
+    "turnover_per_day": 11.436,
+    "cost_drag_month_pct": 24.336,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": 0.72,
+    "median_month": 1.93,
+    "geo_month": 0.18,
+    "max_dd_pct": 58.61,
+    "net_pct": 8.64,
+    "turnover_per_day": 11.436,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 12,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -11.35,
+    "median_month": -10.19,
+    "geo_month": -11.73,
+    "max_dd_pct": 99.74,
+    "net_pct": -99.72,
+    "turnover_per_day": 4.306,
+    "cost_drag_month_pct": 9.162,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 12,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -13.31,
+    "median_month": -13.43,
+    "geo_month": -13.69,
+    "max_dd_pct": 99.91,
+    "net_pct": -99.9,
+    "turnover_per_day": 5.364,
+    "cost_drag_month_pct": 11.415,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -3.06,
+    "median_month": -3.15,
+    "geo_month": -3.47,
+    "max_dd_pct": 83.32,
+    "net_pct": -80.99,
+    "turnover_per_day": 5.364,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 12,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -10.58,
+    "median_month": -9.89,
+    "geo_month": -11.05,
+    "max_dd_pct": 99.62,
+    "net_pct": -99.59,
+    "turnover_per_day": 3.105,
+    "cost_drag_month_pct": 6.608,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 12,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -11.88,
+    "median_month": -10.42,
+    "geo_month": -12.35,
+    "max_dd_pct": 99.81,
+    "net_pct": -99.8,
+    "turnover_per_day": 3.758,
+    "cost_drag_month_pct": 7.997,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -4.7,
+    "median_month": -3.39,
+    "geo_month": -5.2,
+    "max_dd_pct": 92.74,
+    "net_pct": -91.88,
+    "turnover_per_day": 3.758,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 12,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -10.39,
+    "median_month": -9.17,
+    "geo_month": -10.82,
+    "max_dd_pct": 99.6,
+    "net_pct": -99.54,
+    "turnover_per_day": 2.394,
+    "cost_drag_month_pct": 5.095,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 12,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.09,
+    "median_month": -4.45,
+    "geo_month": -4.29,
+    "max_dd_pct": 89.56,
+    "net_pct": -87.25,
+    "turnover_per_day": 1.5,
+    "cost_drag_month_pct": 3.193,
+    "liquidations": 9
+   },
+   "gross": {
+    "mean_month": -1.03,
+    "median_month": -1.31,
+    "geo_month": -1.24,
+    "max_dd_pct": 57.35,
+    "net_pct": -44.43,
+    "turnover_per_day": 1.5,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 9
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 12,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -3.72,
+    "median_month": -4.15,
+    "geo_month": -3.98,
+    "max_dd_pct": 88.34,
+    "net_pct": -85.16,
+    "turnover_per_day": 1.015,
+    "cost_drag_month_pct": 2.16,
+    "liquidations": 9
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 24,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -17.33,
+    "median_month": -18.03,
+    "geo_month": -17.62,
+    "max_dd_pct": 99.99,
+    "net_pct": -99.99,
+    "turnover_per_day": 8.305,
+    "cost_drag_month_pct": 17.674,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": -1.72,
+    "median_month": -2.39,
+    "geo_month": -2.04,
+    "max_dd_pct": 67.2,
+    "net_pct": -61.98,
+    "turnover_per_day": 8.305,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 24,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -8.38,
+    "median_month": -6.32,
+    "geo_month": -8.61,
+    "max_dd_pct": 98.65,
+    "net_pct": -98.55,
+    "turnover_per_day": 2.444,
+    "cost_drag_month_pct": 5.201,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 24,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -11.7,
+    "median_month": -12.02,
+    "geo_month": -11.96,
+    "max_dd_pct": 99.77,
+    "net_pct": -99.75,
+    "turnover_per_day": 3.865,
+    "cost_drag_month_pct": 8.225,
+    "liquidations": 2
+   },
+   "gross": {
+    "mean_month": -4.3,
+    "median_month": -4.39,
+    "geo_month": -4.57,
+    "max_dd_pct": 90.41,
+    "net_pct": -88.92,
+    "turnover_per_day": 3.865,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 2
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 24,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.93,
+    "median_month": -7.23,
+    "geo_month": -8.15,
+    "max_dd_pct": 98.29,
+    "net_pct": -98.16,
+    "turnover_per_day": 1.842,
+    "cost_drag_month_pct": 3.919,
+    "liquidations": 2
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 24,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -9.91,
+    "median_month": -9.04,
+    "geo_month": -10.2,
+    "max_dd_pct": 99.42,
+    "net_pct": -99.36,
+    "turnover_per_day": 2.67,
+    "cost_drag_month_pct": 5.682,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -4.75,
+    "median_month": -3.7,
+    "geo_month": -5.06,
+    "max_dd_pct": 92.37,
+    "net_pct": -91.28,
+    "turnover_per_day": 2.67,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 24,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.63,
+    "median_month": -7.13,
+    "geo_month": -7.9,
+    "max_dd_pct": 98.09,
+    "net_pct": -97.91,
+    "turnover_per_day": 1.542,
+    "cost_drag_month_pct": 3.281,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 24,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.5,
+    "median_month": -5.1,
+    "geo_month": -5.75,
+    "max_dd_pct": 94.41,
+    "net_pct": -93.81,
+    "turnover_per_day": 1.517,
+    "cost_drag_month_pct": 3.228,
+    "liquidations": 7
+   },
+   "gross": {
+    "mean_month": -2.46,
+    "median_month": -2.24,
+    "geo_month": -2.71,
+    "max_dd_pct": 75.68,
+    "net_pct": -72.54,
+    "turnover_per_day": 1.517,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 7
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 24,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.31,
+    "median_month": -4.07,
+    "geo_month": -4.58,
+    "max_dd_pct": 89.55,
+    "net_pct": -88.95,
+    "turnover_per_day": 1.055,
+    "cost_drag_month_pct": 2.245,
+    "liquidations": 7
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 72,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -12.67,
+    "median_month": -11.54,
+    "geo_month": -12.96,
+    "max_dd_pct": 99.86,
+    "net_pct": -99.85,
+    "turnover_per_day": 5.002,
+    "cost_drag_month_pct": 10.643,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": -3.07,
+    "median_month": -2.26,
+    "geo_month": -3.39,
+    "max_dd_pct": 82.97,
+    "net_pct": -80.25,
+    "turnover_per_day": 5.002,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 72,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.46,
+    "median_month": -4.09,
+    "geo_month": -5.85,
+    "max_dd_pct": 95.11,
+    "net_pct": -94.11,
+    "turnover_per_day": 1.052,
+    "cost_drag_month_pct": 2.24,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 72,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -9.11,
+    "median_month": -8.18,
+    "geo_month": -9.52,
+    "max_dd_pct": 99.2,
+    "net_pct": -99.09,
+    "turnover_per_day": 2.332,
+    "cost_drag_month_pct": 4.963,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -4.58,
+    "median_month": -3.71,
+    "geo_month": -5.01,
+    "max_dd_pct": 92.73,
+    "net_pct": -91.09,
+    "turnover_per_day": 2.332,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 72,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.52,
+    "median_month": -5.26,
+    "geo_month": -5.92,
+    "max_dd_pct": 95.5,
+    "net_pct": -94.33,
+    "turnover_per_day": 0.813,
+    "cost_drag_month_pct": 1.73,
+    "liquidations": 2
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 72,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -8.18,
+    "median_month": -5.91,
+    "geo_month": -8.66,
+    "max_dd_pct": 98.76,
+    "net_pct": -98.58,
+    "turnover_per_day": 1.61,
+    "cost_drag_month_pct": 3.426,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -5.04,
+    "median_month": -2.61,
+    "geo_month": -5.54,
+    "max_dd_pct": 94.3,
+    "net_pct": -93.13,
+    "turnover_per_day": 1.61,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 72,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.6,
+    "median_month": -5.1,
+    "geo_month": -5.96,
+    "max_dd_pct": 95.38,
+    "net_pct": -94.45,
+    "turnover_per_day": 0.708,
+    "cost_drag_month_pct": 1.507,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 72,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -3.83,
+    "median_month": -3.49,
+    "geo_month": -4.2,
+    "max_dd_pct": 88.82,
+    "net_pct": -86.66,
+    "turnover_per_day": 0.911,
+    "cost_drag_month_pct": 1.939,
+    "liquidations": 6
+   },
+   "gross": {
+    "mean_month": -1.98,
+    "median_month": -1.5,
+    "geo_month": -2.36,
+    "max_dd_pct": 76.04,
+    "net_pct": -67.39,
+    "turnover_per_day": 0.911,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 6
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 72,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -3.05,
+    "median_month": -2.49,
+    "geo_month": -3.36,
+    "max_dd_pct": 83.73,
+    "net_pct": -79.95,
+    "turnover_per_day": 0.546,
+    "cost_drag_month_pct": 1.162,
+    "liquidations": 9
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 168,
+   "R": 1,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -11.06,
+    "median_month": -9.97,
+    "geo_month": -11.42,
+    "max_dd_pct": 99.69,
+    "net_pct": -99.67,
+    "turnover_per_day": 3.413,
+    "cost_drag_month_pct": 7.264,
+    "liquidations": 0
+   },
+   "gross": {
+    "mean_month": -4.5,
+    "median_month": -3.27,
+    "geo_month": -4.89,
+    "max_dd_pct": 91.54,
+    "net_pct": -90.52,
+    "turnover_per_day": 3.413,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 0
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 168,
+   "R": 1,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.55,
+    "median_month": -4.78,
+    "geo_month": -5.95,
+    "max_dd_pct": 95.03,
+    "net_pct": -94.39,
+    "turnover_per_day": 0.608,
+    "cost_drag_month_pct": 1.293,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 168,
+   "R": 4,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -8.54,
+    "median_month": -6.74,
+    "geo_month": -9.02,
+    "max_dd_pct": 98.91,
+    "net_pct": -98.82,
+    "turnover_per_day": 1.583,
+    "cost_drag_month_pct": 3.368,
+    "liquidations": 3
+   },
+   "gross": {
+    "mean_month": -5.47,
+    "median_month": -3.52,
+    "geo_month": -5.97,
+    "max_dd_pct": 95.33,
+    "net_pct": -94.45,
+    "turnover_per_day": 1.583,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 3
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 168,
+   "R": 4,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.28,
+    "median_month": -4.53,
+    "geo_month": -5.69,
+    "max_dd_pct": 94.46,
+    "net_pct": -93.61,
+    "turnover_per_day": 0.447,
+    "cost_drag_month_pct": 0.95,
+    "liquidations": 1
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 168,
+   "R": 8,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -7.3,
+    "median_month": -5.83,
+    "geo_month": -7.76,
+    "max_dd_pct": 97.89,
+    "net_pct": -97.75,
+    "turnover_per_day": 1.089,
+    "cost_drag_month_pct": 2.316,
+    "liquidations": 4
+   },
+   "gross": {
+    "mean_month": -5.17,
+    "median_month": -3.6,
+    "geo_month": -5.64,
+    "max_dd_pct": 94.58,
+    "net_pct": -93.45,
+    "turnover_per_day": 1.089,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 4
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 168,
+   "R": 8,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -5.11,
+    "median_month": -4.12,
+    "geo_month": -5.48,
+    "max_dd_pct": 94.25,
+    "net_pct": -92.93,
+    "turnover_per_day": 0.388,
+    "cost_drag_month_pct": 0.827,
+    "liquidations": 2
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 168,
+   "R": 24,
+   "band": 1.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.91,
+    "median_month": -3.5,
+    "geo_month": -5.3,
+    "max_dd_pct": 94.57,
+    "net_pct": -92.28,
+    "turnover_per_day": 0.625,
+    "cost_drag_month_pct": 1.33,
+    "liquidations": 8
+   },
+   "gross": {
+    "mean_month": -3.66,
+    "median_month": -2.12,
+    "geo_month": -4.06,
+    "max_dd_pct": 91.03,
+    "net_pct": -85.73,
+    "turnover_per_day": 0.625,
+    "cost_drag_month_pct": 0.0,
+    "liquidations": 8
+   }
+  },
+  {
+   "kind": "zv",
+   "L": 168,
+   "R": 24,
+   "band": 2.0,
+   "k": 10,
+   "univ": 40,
+   "base": {
+    "mean_month": -4.19,
+    "median_month": -4.08,
+    "geo_month": -4.54,
+    "max_dd_pct": 92.19,
+    "net_pct": -88.76,
+    "turnover_per_day": 0.31,
+    "cost_drag_month_pct": 0.66,
+    "liquidations": 7
+   }
+  }
+ ],
+ "selected": {
+  "kind": "z",
+  "L": 1,
+  "R": 24,
+  "band": 2.0,
+  "k": 10,
+  "univ": 40,
+  "base": {
+   "mean_month": 1.05,
+   "median_month": 1.32,
+   "geo_month": 0.79,
+   "max_dd_pct": 32.28,
+   "net_pct": 44.74,
+   "turnover_per_day": 1.026,
+   "cost_drag_month_pct": 2.183,
+   "liquidations": 5
+  },
+  "double": {
+   "mean_month": -1.09,
+   "median_month": -0.59,
+   "geo_month": -1.34,
+   "max_dd_pct": 57.84,
+   "net_pct": -47.05,
+   "turnover_per_day": 1.026,
+   "cost_drag_month_pct": 4.366,
+   "liquidations": 5
+  }
+ },
+ "n_qualifying": 0
+}

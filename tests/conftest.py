@@ -10,7 +10,19 @@ from typing import Any, Sequence
 import pytest
 
 os.environ.setdefault("DIVERGENCE_ENABLED", "false")
+os.environ.setdefault("NOWICK_ENABLED", "false")
+os.environ.setdefault("DONCHIAN_ENABLED", "false")
+os.environ.setdefault("MACD_ENABLED", "false")
+os.environ.setdefault("T3CCI_ENABLED", "false")
+os.environ.setdefault("CHI_ENABLED", "false")
+os.environ.setdefault("PUMPFUN_RECORDER_ENABLED", "false")   # no PumpPortal WebSocket inside tests
+os.environ.setdefault("MACD_CHOP_TEST_ENABLED", "false")      # no candle fetching inside tests
+os.environ.setdefault("WORKER2_PAPER_ENABLED", "false")      # no hourly-bar fetching inside tests
+os.environ.setdefault("V16_FORWARD_ENABLED", "false")   # V16/V17 default on in production; no worker processes in tests
+os.environ.setdefault("V17_FORWARD_ENABLED", "false")
 os.environ.setdefault("V12VOL_FORWARD_ENABLED", "false")   # no Bybit polling thread inside tests
+os.environ.setdefault("ENSEMBLE_PAPER_ENABLED", "false")   # no Binance data fetching inside tests
+os.environ.setdefault("PAPERLAB_LINEUP", "full")         # the older suites test every service; tests/test_lineup.py tests lean
 
 from app.config import Settings, load_settings
 from app.core.indicators import IndicatorCache, last as _last
@@ -322,3 +334,12 @@ async def engine(tmp_path, monkeypatch):
     yield e
     await e.stop()
     storage.close()
+
+
+@pytest.fixture
+def programs_running(monkeypatch):
+    """Since 2026-10-14 every bot program is retired. Tests of a RUNNING program's logic (start switches, the roster's
+    winners section, the V6 feed filter) use the retirement list as it was before: only V7, V8, V9 and V12 off."""
+    from app.core import programs
+    monkeypatch.setattr(programs, "RETIRED_PROGRAMS", frozenset({"v7", "v8", "v9", "v12"}))
+

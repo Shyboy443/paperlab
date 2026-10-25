@@ -1,0 +1,29 @@
+{
+  "checked_utc": "2026-10-11T07:07:30.635143+00:00",
+  "deployment_id": "d907790c-dfe3-4564-8b36-7236255cb471",
+  "status": "SUCCESS",
+  "url": "https://paperlab-production-919c.up.railway.app/public/competition/divergence",
+  "changes": [
+    "Single native Vela chart with RSI study pane; volume disabled on divergence chart",
+    "Matching numbered pivots, exact values and colored divergence connectors on price and RSI",
+    "Latest recorded setup selected automatically; timeframe mismatch explained"
+  ],
+  "checks": [
+    "Public desktop and mobile plus authenticated dashboard: one chart/two panes, volume false, two markers per pane, 40 historical rows, no JavaScript errors, no write requests",
+    "Browser fixtures: bullish annotations, viewport preservation, empty/error states and output escaping",
+    "Original dashboard charts regression: candles, volume, trade overlays, zoom, timeframe switch and equity charts remain functional"
+  ],
+  "example": {
+    "symbol": "ADAUSDT",
+    "timeframe": "1h",
+    "divergence": "bearish",
+    "price_pivots": [
+      0.2575,
+      0.2594
+    ],
+    "rsi_pivots": [
+      72.8819013525896,
+      69.57184985939953
+    ]
+  }
+}

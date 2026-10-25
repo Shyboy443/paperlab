@@ -19,6 +19,13 @@ per program, e.g. "v11,v12,v8:CONTROL" (every V11 and V12 bot, only V8's CONTROL
 several as "v8:CONTROL|JEV"); or the coarser TELEGRAM_PROGRAMS (e.g. "v11,v12,v8") and TELEGRAM_ROLES (e.g. "CONTROL").
 Default: every program, every role. Sending is
 paced (Telegram allows about one message a second to one chat) and a 429 is retried after the delay Telegram asks for.
+
+DESK APPROVALS (operator, 2026-10-11): the scope defaults to "desks" -- the chat then receives ONLY the two desks'
+trade decisions, never the bots' trades or system alerts (/scope all brings those back). In a desk's MANUAL mode each
+decision arrives with Approve / Reject buttons and a link to review it on the desk chart; nothing opens until the
+operator presses Approve (requests expire after an hour). In AUTOMATIC mode the desk trades by itself and sends nothing.
+/mode shows both desks; "/mode divergence auto|manual" and "/mode trading auto|manual" switch them. Buttons and commands
+are honoured only from the linked chat. Paper trades only -- no order ever reaches an exchange from here.
 """
 from __future__ import annotations
 
@@ -290,8 +297,10 @@ class TelegramNotifier:
                  stats: Callable[[str, str], tuple[int, int] | None] | None = None,
                  chart: Callable[[str, Mapping[str, Any], str | None], bytes | None] | None = None,
                  upload: Callable[[str, dict[str, Any], dict[str, tuple[str, bytes, str]], float], dict[str, Any]] | None = None,
-                 confidence: Callable[[str, Mapping[str, Any]], tuple[int, int, str] | None] | None = None):
+                 confidence: Callable[[str, Mapping[str, Any]], tuple[int, int, str] | None] | None = None,
+                 default_scope: str = "all"):
         self.providers = providers
+        self.default_scope = default_scope           # the app passes "desks" (operator 2026-10-11); /scope overrides
         self.confidence_fn = confidence          # (program, open event) -> (win chance %, trades, scope) | None
         self.chart_fn = chart                    # (program, open event, bot name) -> PNG of the opening chart, or None
         self.upload = upload or self._post_multipart
@@ -305,6 +314,9 @@ class TelegramNotifier:
         with self.db_lock, self.db:
             self.db.execute("CREATE TABLE IF NOT EXISTS threads(key TEXT PRIMARY KEY, chat_id TEXT, message_id INTEGER, ts INTEGER)")
             self.db.execute("CREATE TABLE IF NOT EXISTS kv(k TEXT PRIMARY KEY, v TEXT)")
+            self.db.execute("CREATE TABLE IF NOT EXISTS approvals(token TEXT PRIMARY KEY, desk TEXT, ref TEXT, chat_id TEXT,"
+                            " message_id INTEGER, status TEXT, created_ts INTEGER, decided_ts INTEGER, link TEXT)")
+        self.desks: dict[str, dict[str, Any]] = {}     # name -> {label, get, set}: the approval modes /mode controls
         progs = (self.env.get("TELEGRAM_PROGRAMS") or "").strip().lower()
         roles = (self.env.get("TELEGRAM_ROLES") or "").strip().upper()
         self.programs = {p.strip() for p in progs.split(",") if p.strip()} or None
@@ -351,8 +363,18 @@ class TelegramNotifier:
                 "queued": self.q.qsize()}
 
     # -- events --------------------------------------------------------------------------------------------------------
+    def scope(self) -> str:
+        """'desks': only desk decisions reach the chat. 'all': bot trades and system alerts too."""
+        try:
+            v = self._kv("scope")
+        except AttributeError:                       # a bare instance (tests) has no store
+            v = None
+        return "desks" if (v or getattr(self, "default_scope", "all")) == "desks" else "all"
+
     def on_event(self, program: str, data: Mapping[str, Any]) -> None:
         """Called from a forward service's pump thread for every published event: filter, queue, return at once."""
+        if self.scope() == "desks":
+            return
         kind = data.get("type")
         if kind not in ("open", "tp", "closed") or data.get("rederived") or data.get("counterfactual"):
             return
@@ -385,14 +407,30 @@ class TelegramNotifier:
     def alert(self, text: str) -> None:
         """A SYSTEM alert (live mirror, safe mode, outages, daily digest): never filtered by program, queued like a
         trade message. Text is HTML (callers escape their own values)."""
+        if self.scope() == "desks":
+            return
         try:
             self.q.put_nowait(("_alert", {"type": "alert", "text": str(text)[:3800]}))
         except queue.Full:
             self.stats["dropped"] += 1
 
+    def live_alert(self, text: str) -> None:
+        """A REAL-MONEY event from a desk trading a linked account (switched on/off, fills, stops, failures). Sent in
+        every scope: in 'desks' scope these are desk decisions too. Queued like any alert."""
+        try:
+            self.q.put_nowait(("_alert", {"type": "alert", "text": str(text)[:3800]}))
+        except queue.Full:
+            self.stats["dropped"] += 1
+
+    def ops_alert(self, text: str) -> None:
+        """An OPERATIONS alert (a worker down / recovered / restarted): delivered in every scope."""
+        self.live_alert(text)
+
     def wants(self, program: str, role: str) -> bool:
         """Would a trade event from this program / role be sent? (the watchdog uses it for bot-level alerts)."""
         role = (role or "CONTROL").upper()
+        if self.scope() == "desks":
+            return False
         if self.rules is not None:
             return program in self.rules and (not self.rules[program] or role in self.rules[program])
         return (not self.programs or program in self.programs) and (not self.roles or role in self.roles)
@@ -474,6 +512,128 @@ class TelegramNotifier:
                                     "ON CONFLICT(key) DO UPDATE SET chat_id=excluded.chat_id, message_id=excluded.message_id",
                                     (key, chat, int(mid), int(self.clock() * 1000)))
         return True
+
+    # -- desk approvals ----------------------------------------------------------------------------------------------------
+    def register_desk(self, name: str, label: str, get_mode: Callable[[], str], set_mode: Callable[[str], Any]) -> None:
+        self.desks[name] = {"label": label, "get": get_mode, "set": set_mode}
+
+    def request_approval(self, desk: str, ref: str, text_html: str, link: str | None = None,
+                         photo: bytes | None = None) -> str | None:
+        """Send one desk decision with Approve / Reject buttons (and a 'Review on the desk' link). Returns the approval
+        token, or None when no chat is linked or Telegram refused it -- the caller then does NOT trade."""
+        import secrets
+        chat = self.chat_id()
+        if not self._keys() or not chat:
+            return None
+        token = secrets.token_hex(6)
+        kb: list[list[dict[str, str]]] = [[{"text": "✅ Approve", "callback_data": f"ap|{token}"},
+                                            {"text": "❌ Reject", "callback_data": f"rj|{token}"}]]
+        if link:
+            kb.append([{"text": "📈 Review on the desk chart", "url": link}])
+        markup = {"inline_keyboard": kb}
+        res = None
+        if photo:
+            res = self._call("sendPhoto", {"chat_id": chat, "caption": text_html[:1024], "parse_mode": "HTML",
+                                           "reply_markup": markup}, files={"photo": ("decision.png", photo, "image/png")})
+        if not res:
+            res = self._call("sendMessage", {"chat_id": chat, "text": text_html[:3900], "parse_mode": "HTML",
+                                             "disable_web_page_preview": True, "reply_markup": markup})
+        mid = ((res or {}).get("result") or {}).get("message_id")
+        if not mid:
+            return None
+        with self.db_lock, self.db:
+            self.db.execute("INSERT INTO approvals VALUES(?,?,?,?,?,?,?,?,?)",
+                            (token, desk, ref, chat, int(mid), "pending", int(self.clock() * 1000), None, link))
+        self.stats["sent"] += 1
+        self.stats["last_sent_ts"] = int(self.clock() * 1000)
+        return token
+
+    def approval_status(self, token: str | None) -> str | None:
+        if not token:
+            return None
+        with self.db_lock:
+            row = self.db.execute("SELECT status FROM approvals WHERE token=?", (token,)).fetchone()
+        return row[0] if row else None
+
+    def _decide(self, token: str, status: str) -> tuple[bool, str]:
+        """Record the operator's button press once (pending -> approved / rejected)."""
+        now = int(self.clock() * 1000)
+        with self.db_lock, self.db:
+            row = self.db.execute("SELECT status FROM approvals WHERE token=?", (token,)).fetchone()
+            if row is None:
+                return False, "unknown request"
+            if row[0] != "pending":
+                return False, row[0]
+            self.db.execute("UPDATE approvals SET status=?, decided_ts=? WHERE token=?", (status, now, token))
+        return True, status
+
+    def finish_approval(self, token: str | None, note_html: str, status: str | None = None) -> None:
+        """Close a request: buttons replaced by its outcome (and the review link kept), plus a reply with the note."""
+        if not token:
+            return
+        with self.db_lock, self.db:
+            row = self.db.execute("SELECT chat_id, message_id, status, link FROM approvals WHERE token=?", (token,)).fetchone()
+            if row is None:
+                return
+            if status and row[2] == "pending":
+                self.db.execute("UPDATE approvals SET status=?, decided_ts=? WHERE token=?",
+                                (status, int(self.clock() * 1000), token))
+        chat, mid, _, link = row
+        label = {"approved": "✅ Approved", "rejected": "❌ Rejected", "expired": "⌛ Expired"}.get(
+            status or self.approval_status(token) or "", "Closed")
+        kb = [[{"text": label, "callback_data": f"x|{token}"}]] + ([[{"text": "📈 Review on the desk chart", "url": link}]]
+                                                                 if link else [])
+        self._call("editMessageReplyMarkup", {"chat_id": chat, "message_id": mid, "reply_markup": {"inline_keyboard": kb}},
+                   attempts=1)
+        self.reply_approval(token, note_html)
+
+    def reply_approval(self, token: str | None, text_html: str) -> None:
+        if not token:
+            return
+        with self.db_lock:
+            row = self.db.execute("SELECT chat_id, message_id FROM approvals WHERE token=?", (token,)).fetchone()
+        if row:
+            self._call("sendMessage", {"chat_id": row[0], "text": text_html[:3900], "parse_mode": "HTML",
+                                       "disable_web_page_preview": True,
+                                       "reply_parameters": {"message_id": int(row[1]), "allow_sending_without_reply": True}})
+
+    def _on_callback(self, cq: Mapping[str, Any]) -> None:
+        chat = str(((cq.get("message") or {}).get("chat") or {}).get("id") or "")
+        data = str(cq.get("data") or "")
+        answer = "Not allowed"
+        if chat and chat == (self.chat_id() or "") and "|" in data:
+            act, token = data.split("|", 1)
+            if act in ("ap", "rj"):
+                ok, st = self._decide(token, "approved" if act == "ap" else "rejected")
+                answer = (("✅ Approved: the desk opens the paper trade within a minute" if act == "ap" else
+                           "❌ Rejected: no trade") if ok else f"Already {st}")
+                if ok:
+                    with self.db_lock:
+                        row = self.db.execute("SELECT chat_id, message_id, link FROM approvals WHERE token=?",
+                                              (token,)).fetchone()
+                    if row:
+                        kb = [[{"text": "✅ Approved · opening…" if act == "ap" else "❌ Rejected",
+                                "callback_data": f"x|{token}"}]] + ([[{"text": "📈 Review on the desk chart", "url": row[2]}]]
+                                                                   if row[2] else [])
+                        self._call("editMessageReplyMarkup", {"chat_id": row[0], "message_id": row[1],
+                                                               "reply_markup": {"inline_keyboard": kb}}, attempts=1)
+            else:
+                answer = "Already decided"
+        self._call("answerCallbackQuery", {"callback_query_id": cq.get("id"), "text": answer[:190]}, attempts=1)
+
+    def modes_text(self) -> str:
+        lines = [] if self.desks else ["(no desk has started yet)"]
+        for name, d in self.desks.items():
+            try:
+                mode = d["get"]()
+            except Exception:
+                mode = "?"
+            lines.append(f"• <b>{html.escape(d['label'])}</b>: {html.escape(str(mode)).upper()} "
+                         f"(<code>/mode {name} {'auto' if mode == 'manual' else 'manual'}</code> to switch)")
+        return ("<b>Desk trade approval</b>\nMANUAL: each decision waits for your Approve here. AUTO: the desk trades by "
+                "itself and sends nothing.\n" + "\n".join(lines) +
+                f"\nThis chat receives: <b>{'desk decisions only' if self.scope() == 'desks' else 'everything'}</b> "
+                "(<code>/scope desks</code> or <code>/scope all</code>).")
 
     # -- Telegram API ----------------------------------------------------------------------------------------------------
     def _post(self, url: str, payload: dict[str, Any], timeout: float) -> dict[str, Any]:
@@ -563,6 +723,9 @@ class TelegramNotifier:
 
     def handle_update(self, upd: Mapping[str, Any]) -> None:
         """/start links the first private chat (unless a chat is configured); /settings and /help answer the linked one."""
+        if upd.get("callback_query"):
+            self._on_callback(upd["callback_query"])
+            return
         msg = upd.get("message") or {}
         chat = str((msg.get("chat") or {}).get("id") or "")
         text = str(msg.get("text") or "").strip().split()
@@ -581,15 +744,30 @@ class TelegramNotifier:
             log.info("telegram: a private chat is linked; trade updates go there now")
             cmd = "/start"
         if cmd == "/start":
-            self.send_text(chat, "✅ <b>Linked to PaperLab.</b>\nEvery paper trade the bots take is posted here: the "
-                                 "opening message carries the SL and TPs, and its TP hits and close REPLY to it.\n"
-                                 "Commands: /settings (default TP / SL rules) · /help")
-            self.send_text(chat, settings_text())
+            self.send_text(chat, "✅ <b>Linked to PaperLab.</b>\nThe Divergence Desk and the Trading Desk send their trade "
+                                 "decisions here. In MANUAL mode each one waits for your ✅ Approve / ❌ Reject and links "
+                                 "to its chart on the desk. Commands: /mode · /scope · /settings · /help")
+            self.send_text(chat, self.modes_text())
+        elif cmd == "/mode":
+            args = [a.lower() for a in text[1:]]
+            if len(args) == 2 and args[0] in self.desks and args[1] in ("auto", "manual", "automatic"):
+                try:
+                    self.desks[args[0]]["set"]("auto" if args[1].startswith("auto") else "manual")
+                except Exception as exc:
+                    self.send_text(chat, f"Could not switch: {html.escape(str(exc))[:200]}")
+            elif args:
+                self.send_text(chat, "Use <code>/mode divergence auto</code>, <code>/mode trading manual</code> …")
+            self.send_text(chat, self.modes_text())
+        elif cmd == "/scope":
+            if len(text) > 1 and text[1].lower() in ("desks", "all"):
+                self._kv("scope", text[1].lower())
+            self.send_text(chat, self.modes_text())
         elif cmd == "/settings":
             self.send_text(chat, settings_text())
         elif cmd == "/help":
-            self.send_text(chat, "PaperLab paper-trading updates.\n/settings — the default TP / SL of every bot program\n"
-                                 "Each trade: a new message when it opens; TP hits and the close reply to it.")
+            self.send_text(chat, "PaperLab desk decisions (paper only).\n/mode — manual approval or automatic, per desk\n"
+                                 "/scope desks|all — desk decisions only, or every bot trade and system alert too\n"
+                                 "/settings — the default TP / SL of every bot program")
 
     # -- threads ---------------------------------------------------------------------------------------------------------
     def start(self) -> None:
@@ -625,7 +803,7 @@ class TelegramNotifier:
             if not self._keys():
                 self.sleep(15.0)
                 continue
-            res = self._call("getUpdates", {"offset": offset, "timeout": 20, "allowed_updates": ["message"]},
+            res = self._call("getUpdates", {"offset": offset, "timeout": 20, "allowed_updates": ["message", "callback_query"]},
                              timeout=30.0, attempts=1)
             if not res:
                 self.stats["poll_failures"] += 1

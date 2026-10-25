@@ -11,7 +11,6 @@ Keys are never returned, logged or stored in the database. They come from, in th
          Binance mainnet   BINANCE_API_KEY / BINANCE_API_SECRET
          Alpaca paper      ALPACA_PAPER_API_KEY / ALPACA_PAPER_API_SECRET
          Alpaca live       ALPACA_API_KEY / ALPACA_API_SECRET
-         Reddit (data)     REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET   (the V10 scout's read-only app key)
          Anthropic (AI)    ANTHROPIC_API_KEY                         (the Trading Desk agents' Claude key)
 
 Keys typed into the dashboard are checked against the provider (a read-only account / balance call) before they are
@@ -40,9 +39,6 @@ PROVIDERS: dict[tuple[str, str], dict[str, Any]] = {
                             "env": ("ALPACA_PAPER_API_KEY", "ALPACA_PAPER_API_SECRET"), "label": "Alpaca paper"},
     ("alpaca", "mainnet"): {"mode": None, "exchange": "alpaca", "prefix": "ALPACA", "market": "stocks",
                             "env": ("ALPACA_API_KEY", "ALPACA_API_SECRET"), "label": "Alpaca (real money)"},
-    # a DATA source for the V10 scout (read-only; never a trading venue)
-    ("reddit", "data"): {"mode": None, "exchange": "reddit", "prefix": "REDDIT", "market": "data",
-                         "env": ("REDDIT_CLIENT_ID", "REDDIT_CLIENT_SECRET"), "label": "Reddit API (read-only data)"},
     # AI for the Trading Desk agents (app/desk/claude.py): the operator's own Claude API key; no secret
     ("anthropic", "data"): {"mode": None, "exchange": "anthropic", "prefix": "ANTHROPIC", "market": "data",
                             "env": ("ANTHROPIC_API_KEY", "ANTHROPIC_API_KEY_UNUSED"),
@@ -122,12 +118,6 @@ class Providers:
             if keys is None:
                 raise ValueError("Anthropic: the API key is not configured")
             return AnthropicCheck(keys[0])
-        if exchange == "reddit":
-            from app.scout.sources import RedditClient
-            keys = keys or self.keys(exchange, network)
-            if keys is None:
-                raise ValueError("Reddit: keys are not configured")
-            return RedditClient(*keys)
         if exchange == "alpaca":
             from app.exchange.alpaca_client import AlpacaClient
             keys = keys or self.keys(exchange, network)

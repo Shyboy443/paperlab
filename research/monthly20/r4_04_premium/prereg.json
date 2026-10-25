@@ -1,0 +1,185 @@
+{
+ "idea": "Cross-sectional perp premium fade: every 3 days, among the top-40 liquid USDT perps (delisted included), go long the 5 coins whose 7-day mean premium index is lowest relative to its own 60-day mean/std (z-score) and short the 5 with the highest z; 1x gross, dollar neutral.",
+ "selected": {
+  "tf": 24,
+  "kind": "xs",
+  "fam": "Z",
+  "w": 7,
+  "L": 60,
+  "k": 5,
+  "rb": 3,
+  "mode": "fade"
+ },
+ "neighbours": [
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 4,
+   "L": 60,
+   "k": 5,
+   "rb": 3,
+   "mode": "fade"
+  },
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 5,
+   "L": 60,
+   "k": 5,
+   "rb": 3,
+   "mode": "fade"
+  },
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 9,
+   "L": 60,
+   "k": 5,
+   "rb": 3,
+   "mode": "fade"
+  },
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 10,
+   "L": 60,
+   "k": 5,
+   "rb": 3,
+   "mode": "fade"
+  },
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 7,
+   "L": 30,
+   "k": 5,
+   "rb": 3,
+   "mode": "fade"
+  },
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 7,
+   "L": 45,
+   "k": 5,
+   "rb": 3,
+   "mode": "fade"
+  },
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 7,
+   "L": 75,
+   "k": 5,
+   "rb": 3,
+   "mode": "fade"
+  },
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 7,
+   "L": 90,
+   "k": 5,
+   "rb": 3,
+   "mode": "fade"
+  },
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 7,
+   "L": 60,
+   "k": 2,
+   "rb": 3,
+   "mode": "fade"
+  },
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 7,
+   "L": 60,
+   "k": 4,
+   "rb": 3,
+   "mode": "fade"
+  },
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 7,
+   "L": 60,
+   "k": 6,
+   "rb": 3,
+   "mode": "fade"
+  },
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 7,
+   "L": 60,
+   "k": 8,
+   "rb": 3,
+   "mode": "fade"
+  },
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 7,
+   "L": 60,
+   "k": 5,
+   "rb": 1,
+   "mode": "fade"
+  },
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 7,
+   "L": 60,
+   "k": 5,
+   "rb": 2,
+   "mode": "fade"
+  },
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 7,
+   "L": 60,
+   "k": 5,
+   "rb": 5,
+   "mode": "fade"
+  },
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 7,
+   "L": 60,
+   "k": 5,
+   "rb": 7,
+   "mode": "fade"
+  },
+  {
+   "tf": 24,
+   "kind": "xs",
+   "fam": "Z",
+   "w": 7,
+   "L": 60,
+   "k": 5,
+   "rb": 10,
+   "mode": "fade"
+  }
+ ]
+}

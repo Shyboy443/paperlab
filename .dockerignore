@@ -11,3 +11,4 @@ data/
 .git/
 snapshots/
 research/
+deploy/

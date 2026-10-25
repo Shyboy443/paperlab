@@ -73,14 +73,20 @@ ALPACA_PAPER_REST = "https://paper-api.alpaca.markets"
 ALPACA_LIVE_REST = "https://api.alpaca.markets"
 ALPACA_DATA_REST = "https://data.alpaca.markets"
 ALPACA_DATA_WS_IEX = "wss://stream.data.alpaca.markets/v2/iex"
-# Reddit's official API for the V10 scout (read-only, application-only OAuth with the operator's own free app key).
-REDDIT_TOKEN_URL = "https://www.reddit.com/api/v1/access_token"
-REDDIT_API = "https://oauth.reddit.com"
 # CoinGecko's public trending list (no key, no login): the coins crypto users search for most right now.
 COINGECKO_TRENDING = "https://api.coingecko.com/api/v3/search/trending"
-# Autonomous research uses public GET market data only, never an order/account client.
+# app/autoresearch/client.py (public GET market data only, never an order/account client) feeds the desks' candles;
+# the 24/7 research engine that first used it was removed 2026-10-21.
 AUTORESEARCH_SPOT_REST = "https://data-api.binance.vision"
 AUTORESEARCH_PERP_REST = _LIVE_FUTURES_REST
+# TradingView research desks (T3-CCI, CHI): public spot candles and order filters of the venues the research
+# snapshot used for the coins that are not on Binance (Gate: KAS ONDO AKT CRO GT; Bitget: BGB). GET only.
+GATE_SPOT_REST = "https://api.gateio.ws/api/v4"
+BITGET_SPOT_REST = "https://api.bitget.com"
+# pump.fun recorder (research, public data only, docs/PUMPFUN_PLAN.md)
+PUMPPORTAL_WS = "wss://pumpportal.fun/api/data"
+DEXSCREENER_REST = "https://api.dexscreener.com"
+GECKOTERMINAL_REST = "https://api.geckoterminal.com/api/v2"
 
 
 class ConfigError(RuntimeError):

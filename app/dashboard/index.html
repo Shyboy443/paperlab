@@ -9,7 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/static/styles.css?v=blue1">
+<link rel="stylesheet" href="/static/styles.css">
+<link rel="stylesheet" href="/static/divergence.css">
+<link rel="stylesheet" href="/static/nowick.css">
+<link rel="stylesheet" href="/static/ytcheck.css">
 </head>
 <body class="lab-theme">
 
@@ -38,6 +41,7 @@
 <div id="shell">
 <header id="top">
   <div id="stale" class="banner" role="alert" hidden>STALE</div>
+  <div id="dashboard-errors" class="banner" role="alert" hidden></div>
   <div class="top-row">
     <span id="mode-badge" class="badge mode other">&hellip;</span>
     <span id="dry-pill" class="pill dry" hidden>DRY RUN</span>
@@ -84,12 +88,7 @@
   <section data-panel="v4" class="panel" hidden>
     <div id="v4-grid" class="grid"><div class="card"><p class="sub">loading the V4 specialists&hellip;</p></div></div>
   </section>
-  <section data-panel="programs" class="panel" hidden>
-    <div id="programs-grid" class="grid"><div class="card"><p class="sub">loading the programs&hellip;</p></div></div>
-  </section>
-  <section data-panel="analyzer" class="panel" hidden>
-    <div id="analyzer-grid" class="grid"></div>
-  </section>
+  <section data-panel="ytcheck" class="panel" hidden><div id="ytcheck-root"></div></section>
   <section data-panel="system" class="panel" hidden>
     <div id="system-grid" class="grid"><div class="card"><p class="sub">loading the system status&hellip;</p></div></div>
   </section>
@@ -118,11 +117,31 @@
     <div class="card"><ul id="activity-feed" class="feed"></ul></div>
   </section>
 
+  <section data-panel="nowick" class="panel" hidden><div id="nowick-root"></div></section>
+  <section data-panel="donchian" class="panel" hidden><div id="donchian-root"></div></section>
+  <section data-panel="macd" class="panel" hidden><div id="macd-root"></div></section>
+  <section data-panel="t3cci" class="panel" hidden><div id="t3cci-root"></div></section>
+  <section data-panel="chi" class="panel" hidden><div id="chi-root"></div></section>
+  <section data-panel="deskrank" class="panel" hidden><div id="deskrank-root"></div></section>
+  <section data-panel="divergence" class="panel" hidden><div id="divergence-root">
+<div class="dk-head"><div><h2>Divergence Desk</h2><p class="sub">Four AI reviewers challenge confirmed RSI divergences at support or resistance · 4h → 1h / 1h → 15m · 1:2 risk / reward · paper only</p></div><div class="dk-head-r"><span id="dv-health-status" class="pill up">Connecting</span><span id="dv-health-detail" class="sub">Reading the worker…</span><span id="dv-ai-status" class="sub"></span></div></div>
+<div id="dv-page-error" class="notice" role="status" hidden></div>
+<div class="dk-grid"><aside class="dk-side card"><h3>The divergence desk</h3><div class="dk-agent"><span class="dk-av" style="background:#39cfa3">SA</span><span><b>Structure advocate</b><small>Checks the divergence, key level and trend flip</small></span></div><div class="dk-agent"><span class="dk-av" style="background:#5cbbf4">RR</span><span><b>Risk reviewer</b><small>Challenges stop, target, liquidity and costs</small></span></div><div class="dk-agent"><span class="dk-av" style="background:#ac86f0">NA</span><span><b>News analyst</b><small>Checks timestamped headlines and unknowns</small></span></div><div class="dk-agent"><span class="dk-av" style="background:#ff7477">SK</span><span><b>Skeptic</b><small>Challenges the other three reviews</small></span></div><p class="sub dk-note">Reviews begin after a fresh signal confirms. The Skeptic sees the other reviewers’ arguments. Any veto or unavailable review blocks the council book; the rule baseline is tracked separately.</p></aside><div class="dk-main"><div class="dk-tabs" aria-label="Divergence desk views"><button class="chip" data-dv-tab="chat" aria-pressed="false">Group chat</button><button class="chip" data-dv-tab="ledger" aria-pressed="false">Ledger</button><button class="chip" data-dv-tab="decisions" aria-pressed="false">Decisions</button><button class="chip" data-dv-tab="charts" aria-pressed="false">Charts</button><button class="chip" data-dv-tab="research" aria-pressed="false">Historical results</button></div><div data-dv-view="chat" class="card dk-chat"><div class="dk-log" id="dv-conversation"><p class="sub">Loading recorded reviews…</p></div><div class="dk-compose dk-login"><span class="sub">Live review log · refreshes every 10 seconds · reviews cannot change the trading rule.</span></div></div><div data-dv-view="decisions" id="dv-decisions" hidden></div><div data-dv-view="ledger" class="dv-detail" hidden><section class="evidence-section"><div class="section-head"><div><h2>Forward paper evidence</h2><p class="muted">Two independent books show whether the council improves the rule. Every fill is simulated.</p></div></div><div class="books"><article id="dv-baseline-book" class="book"></article><article id="dv-council-book" class="book"></article></div></section>
+</div><div data-dv-view="charts" class="dv-detail" hidden><section class="workspace">
+<aside class="market-panel"><div class="section-head"><h2>Market watch</h2><span id="dv-market-count">—</span></div><label class="search-label" for="dv-market-search">Find a perpetual</label><input id="dv-market-search" type="search" placeholder="BTC, ETH…" autocomplete="off"><div id="dv-market-list" class="market-list"><p class="empty">Waiting for the first scan.</p></div></aside>
+<section class="chart-panel" aria-label="Selected market">
+<div class="chart-head"><div><h2 id="dv-chart-title">BTC / USDT</h2><span id="dv-chart-caption">Binance USDT perpetuals</span></div><div class="timeframes" aria-label="Chart timeframe"><button data-tf="15m">15m</button><button data-tf="1h" aria-pressed="true">1h</button><button data-tf="4h">4h</button></div></div>
+<div id="dv-setup-summary" class="setup-summary"><span>No confirmed setup selected.</span></div>
+<div id="dv-chart-error" class="chart-error" role="status" hidden></div><div id="dv-price-chart" class="price-chart integrated-rsi"><p class="empty">Loading completed candles…</p></div><p id="dv-chart-updated" class="footnote">Levels are shown only when a recorded setup is available.</p>
+<div class="section-head signals-head"><h3>Setup history</h3><span>Historical scans and prospective signals</span></div><div id="dv-setup-list" class="setup-list"><p class="empty">The scanner will record qualifying divergences here.</p></div>
+</section>
+<aside class="review-panel"><div class="section-head"><h2>Agent review</h2><span id="dv-council-status">Waiting</span></div><p class="muted">The council challenges the setup, execution risk and available news before its separate paper book can follow it.</p><div id="dv-review-content"><p class="empty">Select a recorded setup to read its actual review. No review has been selected.</p></div></aside>
+</section>
+</div><div data-dv-view="research" class="dv-detail" hidden><section class="research-section"><div class="section-head"><div><h2>Historical validation</h2><p class="muted">Historical results do not replace prospective paper evidence.</p></div><span id="dv-research-status">Waiting</span></div><div id="dv-research-content"><p class="empty">The first completed study will appear here with its period, fees and funding.</p></div></section>
+<details class="rule-details"><summary>Exact rules and operating details</summary><pre id="dv-rules">Loading frozen rule definition…</pre></details>
+<span id="dv-rule-version" class="sub"></span></div></div></div></div></section>
   <section data-panel="desk" class="panel" hidden>
     <div id="desk-root"><div class="card"><p class="sub">loading the trading desk&hellip;</p></div></div>
-  </section>
-  <section data-panel="scout" class="panel" hidden>
-    <div id="scout-grid" class="grid"><div class="card"><p class="sub">loading the scout&hellip;</p></div></div>
   </section>
   <section data-panel="mirror" class="panel" hidden>
     <div id="mirror-grid" class="grid"><div class="card"><p class="sub">loading providers&hellip;</p></div></div>
@@ -279,6 +298,7 @@
           <div id="live-hold-hint" class="hold-hint">Press and hold for 3 seconds. Release early to cancel.</div>
         </div>
         <div id="live-msg" class="msg"></div>
+        <button id="live-disarm" class="btn danger" type="button" hidden>Disarm live strategy</button>
       </div>
       <div class="card">
         <h2>engine</h2>
@@ -355,7 +375,8 @@
 
 <div id="toasts"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.3/dist/lightweight-charts.standalone.production.js"></script>
+<script src="/static/vendor/vela-0.8.3/vela.global.min.js"></script>
+<script src="/static/dashboard-vela.js"></script>
 <script src="/static/charts.js"></script>
 <script src="/static/stream.js"></script>
 <script src="/static/competition.js"></script>
@@ -369,9 +390,17 @@
 <script src="/static/roster.js"></script>
 <script src="/static/breakout-competition.js"></script>
 <script src="/static/mirror.js"></script>
-<script src="/static/scout.js"></script>
 <script src="/static/desk.js"></script>
+<script src="/static/divergence.js"></script>
+<script src="/static/nowick.js"></script>
+<script src="/static/donchian.js"></script>
+<script src="/static/macd.js"></script>
+<script src="/static/tvdesk.js"></script>
+<script src="/static/macdlive.js"></script>
+<script src="/static/deskrank.js"></script>
 <script src="/static/lab.js"></script>
-<script src="/static/app.js?v=loginfix2"></script>
+<script src="/static/ibsbot.js"></script>
+<script src="/static/ytcheck.js"></script>
+<script src="/static/app.js"></script>
 </body>
 </html>

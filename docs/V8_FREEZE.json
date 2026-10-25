@@ -1,6 +1,6 @@
 {
  "protocol": "V8_SCALP_PAPER_V1",
- "baseline_fingerprint": "93f9c48b67163c69",
+ "baseline_fingerprint": "49a19f92106eee90",
  "code": {
   "app.strategies.v8.arena": "4a6a1edc4aaa",
   "app.strategies.v8.ladder": "5030afecfa9f",
@@ -132,7 +132,7 @@
    "lock_after_tp2_r": 0.75
   }
  },
- "frozen_at": "2026-10-04T15:10:55Z",
+ "frozen_at": "2026-10-12T08:35:36Z",
  "rules": {
   "ETHUSDT": {
    "symbol": "ETHUSDT",
@@ -225,7 +225,7 @@
   "V8.3-ENA-5M+LADDER"
  ],
  "note": "V8 is judged on LIVE forward paper data only; aggressive by design, no edge claimed",
- "fingerprint": "deea5ae2ad5fb2d2",
+ "fingerprint": "742f333bdf35062a",
  "execution_revision": {
   "supersedes": "2e737eb39426f4be",
   "baseline": "93f9c48b67163c69",
@@ -233,5 +233,7 @@
   "reason": "execution and loss-limit correction; historical study verdicts retained",
   "archive": "snapshots/2026-10-04-execution-audit/docs/V8_FREEZE.json",
   "rules": "existing instrument rules retained; no universe reselection"
- }
+ },
+ "refrozen_from": "deea5ae2ad5fb2d2",
+ "refreeze_note": "re-frozen 2026-10-12: V6 field trimmed to V6.2/V6.6 (operator removed the families retired from view)"
 }

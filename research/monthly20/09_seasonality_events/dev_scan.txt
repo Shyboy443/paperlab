@@ -1,0 +1,36 @@
+gap BTC thr0.005 hold6                   mean   0.82 med   0.87 worst   -9.69 dd  28.10 net    40.66 tr 136 liq 0
+gap BTC thr0.005 hold24                  mean   1.46 med   1.50 worst  -12.79 dd  47.51 net    76.17 tr 136 liq 0
+gap BTC thr0.005 hold48                  mean   0.67 med  -1.12 worst  -25.05 dd  59.74 net    14.27 tr 136 liq 0
+gap BTC thr0.01 hold6                    mean   0.70 med   0.21 worst   -9.69 dd  28.50 net    33.64 tr 104 liq 0
+gap BTC thr0.01 hold24                   mean   1.67 med   1.75 worst  -12.79 dd  38.20 net    95.66 tr 104 liq 0
+gap BTC thr0.01 hold48                   mean   1.17 med  -0.20 worst  -25.05 dd  49.63 net    45.20 tr 104 liq 0
+gap BTC thr0.02 hold6                    mean   0.34 med   0.00 worst  -10.56 dd  27.07 net    14.46 tr 61 liq 0
+gap BTC thr0.02 hold24                   mean   1.25 med   0.00 worst  -11.80 dd  29.91 net    66.77 tr 61 liq 0
+gap BTC thr0.02 hold48                   mean   1.44 med   0.00 worst  -12.66 dd  38.27 net    75.31 tr 61 liq 0
+fomc BTC pre4 post1                      mean   0.61 med   0.00 worst   -1.85 dd   5.51 net    31.31 tr 30 liq 0
+fomc BTC pre24 post1                     mean   0.60 med   0.00 worst   -5.00 dd   9.77 net    29.75 tr 30 liq 0
+fomc BTC pre4 post4                      mean   0.46 med   0.00 worst   -4.62 dd  14.02 net    22.11 tr 30 liq 0
+fomc BTC pre1 post1                      mean   0.48 med   0.00 worst   -2.30 dd   4.93 net    23.91 tr 30 liq 0
+cpi BTC pre4 post0                       mean   0.33 med   0.34 worst   -2.56 dd   4.48 net    15.99 tr 46 liq 0
+cpi BTC pre24 post0                      mean   0.56 med   0.29 worst   -6.55 dd  22.83 net    26.14 tr 46 liq 0
+cpi BTC pre4 post1                       mean   0.42 med   0.04 worst   -4.40 dd  17.29 net    19.89 tr 46 liq 0
+hours21-22 BTC                           mean  -2.26 med  -2.68 worst  -12.98 dd  72.67 net   -66.83 tr 1400 liq 0
+buyhold BTC                              mean   3.91 med   3.21 worst  -46.61 dd  85.35 net    96.84 tr 1 liq 0
+gap BASK thr0.005 hold6                  mean   0.87 med   0.97 worst  -15.08 dd  36.78 net    39.83 tr 1632 liq 0
+gap BASK thr0.005 hold24                 mean   0.31 med   0.65 worst  -19.89 dd  56.67 net     1.61 tr 1632 liq 0
+gap BASK thr0.005 hold48                 mean  -0.97 med  -0.49 worst  -32.35 dd  65.28 net   -49.71 tr 1632 liq 0
+gap BASK thr0.01 hold6                   mean   0.75 med   0.27 worst  -15.08 dd  38.07 net    32.96 tr 1248 liq 0
+gap BASK thr0.01 hold24                  mean   0.94 med   0.73 worst  -19.89 dd  49.49 net    36.66 tr 1248 liq 0
+gap BASK thr0.01 hold48                  mean   0.12 med   0.00 worst  -32.35 dd  58.52 net   -17.13 tr 1248 liq 0
+gap BASK thr0.02 hold6                   mean   0.47 med   0.00 worst  -14.43 dd  32.97 net    18.91 tr 732 liq 0
+gap BASK thr0.02 hold24                  mean   1.29 med   0.20 worst  -13.16 dd  36.55 net    67.64 tr 732 liq 0
+gap BASK thr0.02 hold48                  mean   1.29 med   0.00 worst  -15.37 dd  49.44 net    57.77 tr 732 liq 0
+fomc BASK pre4 post1                     mean   1.02 med   0.07 worst   -1.97 dd   3.92 net    58.45 tr 360 liq 0
+fomc BASK pre24 post1                    mean   1.12 med   0.11 worst   -6.42 dd  10.21 net    64.33 tr 360 liq 0
+fomc BASK pre4 post4                     mean   0.94 med   0.00 worst   -6.12 dd  13.25 net    51.12 tr 360 liq 0
+fomc BASK pre1 post1                     mean   0.99 med   0.00 worst   -2.00 dd   2.99 net    56.13 tr 360 liq 0
+cpi BASK pre4 post0                      mean   0.14 med  -0.02 worst   -4.37 dd   8.60 net     6.24 tr 552 liq 0
+cpi BASK pre24 post0                     mean   0.73 med   0.39 worst   -9.81 dd  33.77 net    34.51 tr 552 liq 0
+cpi BASK pre4 post1                      mean   0.24 med   0.44 worst  -13.28 dd  26.32 net     8.89 tr 552 liq 0
+hours21-22 BASK                          mean  -1.85 med  -2.24 worst  -15.00 dd  75.91 net   -62.31 tr 16800 liq 0
+buyhold BASK                             mean  12.48 med   3.05 worst  -42.32 dd  91.30 net  1211.19 tr 12 liq 0

@@ -1,0 +1,101 @@
+{
+  "checked_utc": "2026-10-10T17:00:14.122562+00:00",
+  "deployment_id": "dd51d77a-9873-4e3c-bf21-59b8c9e4d94b",
+  "status": "SUCCESS",
+  "url": "https://paperlab-production-919c.up.railway.app/public/divergence",
+  "health": {
+    "status": "RUNNING",
+    "enabled": true,
+    "heartbeat_ms": 1791651346141,
+    "last_scan_ms": 1791651286118,
+    "error": null,
+    "heartbeat_age_s": 24.631
+  },
+  "configured_ai": true,
+  "scans": [
+    {
+      "symbol": "BTCUSDT",
+      "status": "OK",
+      "error": null
+    },
+    {
+      "symbol": "ETHUSDT",
+      "status": "OK",
+      "error": null
+    },
+    {
+      "symbol": "SOLUSDT",
+      "status": "OK",
+      "error": null
+    },
+    {
+      "symbol": "BNBUSDT",
+      "status": "OK",
+      "error": null
+    },
+    {
+      "symbol": "XRPUSDT",
+      "status": "OK",
+      "error": null
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "status": "OK",
+      "error": null
+    },
+    {
+      "symbol": "ADAUSDT",
+      "status": "OK",
+      "error": null
+    },
+    {
+      "symbol": "AVAXUSDT",
+      "status": "OK",
+      "error": null
+    },
+    {
+      "symbol": "LINKUSDT",
+      "status": "OK",
+      "error": null
+    },
+    {
+      "symbol": "SUIUSDT",
+      "status": "OK",
+      "error": null
+    }
+  ],
+  "frozen_rule_version": "DIV-SR-1",
+  "execution": "PAPER_ONLY",
+  "paper_books": {
+    "baseline": {
+      "start_equity": 1000.0,
+      "equity": 1000.0,
+      "closed_trades": 0,
+      "open_positions": 0
+    },
+    "council": {
+      "start_equity": 1000.0,
+      "equity": 1000.0,
+      "closed_trades": 0,
+      "open_positions": 0
+    }
+  },
+  "historical_rows": 40,
+  "historical_signal_count": 180,
+  "tests": {
+    "targeted_pytest_passed": 102,
+    "desktop_mobile_native_vela": true,
+    "ui_errors": [],
+    "public_page_get_only": true,
+    "source_link_and_text_injection_checks": true,
+    "chart_viewport_preserved": true,
+    "visible_divergence_and_risk_overlays": true,
+    "aligned_native_indicator_points": true
+  },
+  "existing_research_history_and_rules_preserved": true,
+  "council_reviews_so_far": 0,
+  "notes": [
+    "First 120-day mechanical holdout does not establish an edge.",
+    "Council forward performance is untested until fresh signals and actual reviews accumulate."
+  ]
+}

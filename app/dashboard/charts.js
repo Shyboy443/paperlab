@@ -47,6 +47,18 @@ function fmtVal(v) {
   return String(v);
 }
 
+// Normalize modern CSS palette colors to sRGB for consistent chart rendering.
+const chartColorCache = new Map();
+function chartColor(value) {
+  if (chartColorCache.has(value)) return chartColorCache.get(value);
+  const canvas = document.createElement('canvas'); canvas.width = canvas.height = 1;
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  ctx.fillStyle = value; ctx.fillRect(0, 0, 1, 1);
+  const rgba = ctx.getImageData(0, 0, 1, 1).data;
+  const color = '#' + [...rgba].slice(0, 3).map(n => n.toString(16).padStart(2, '0')).join('');
+  chartColorCache.set(value, color); return color;
+}
+
 // ---- DOM builders --------------------------------------------------------------------------
 function h(tag, attrs, ...children) {
   const el = document.createElement(tag);
@@ -125,61 +137,27 @@ function renderTable(table, cols, rows, opts = {}) {
 const SERIES_COLORS = ['#58a6ff', '#f778ba', '#d2a8ff', '#ffa657', '#7ee787', '#79c0ff', '#ff7b72', '#e3b341', '#56d4dd',
   '#a5d6ff', '#f0883e', '#8ddb8c', '#ff9bce', '#bc8cff', '#ffdf5d', '#39c5cf', '#db6d28', '#9e9e9e', '#c9d1d9', '#3fb950'];
 const Charts = (() => {
-  let chart = null, el = null, live = false, curves = {}, sig = '';
-  const series = new Map();
+  let el = null, inst = null, curves = {}, rendering = false, again = false;
   const shown = new Set(JSON.parse(sessionStorage.getItem('paperlab.curves') || '[]'));
   const colorFor = (k) => SERIES_COLORS[(parseInt(k.replace(/\D/g, ''), 10) || 0) % SERIES_COLORS.length];
-
-  function init(container) {
-    el = container;
-    if (!window.LightweightCharts) { el.classList.add('chart-fallback'); el.textContent = 'chart library unavailable (offline)'; return; }
-    chart = LightweightCharts.createChart(el, {
-      autoSize: true,
-      layout: { background: { type: 'solid', color: 'transparent' }, textColor: '#8b949e', fontSize: 11,
-        fontFamily: getComputedStyle(document.body).fontFamily },
-      grid: { vertLines: { color: 'rgba(42,49,64,.55)' }, horzLines: { color: 'rgba(42,49,64,.55)' } },
-      rightPriceScale: { borderColor: '#2a3140' }, leftPriceScale: { visible: false, borderColor: '#2a3140' },
-      timeScale: { borderColor: '#2a3140', timeVisible: true, secondsVisible: false },
-      crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
-      handleScroll: { vertTouchDrag: false },
-      localization: { priceFormatter: (p) => NF.money.format(p) },
-    });
-    live = true;
+  function init(container) { el = container; if (Object.keys(curves).length) setCurves(curves); }
+  function toPoints(arr) {
+    return [...new Map((arr || []).filter(([ts,v]) => Number.isFinite(ts) && Number.isFinite(v))
+      .map(([time,value]) => [time,{time,value}])).values()].sort((a,b) => a.time - b.time);
   }
-  function toPoints(arr) { // lightweight-charts labels the axis in UTC, so shift to local time like every other timestamp
-    const out = [];
-    let last = -1;
-    for (const [ts, v] of arr || []) {
-      const t = Math.floor(ts / 1000) - new Date(ts).getTimezoneOffset() * 60;
-      if (t <= last) { if (t === last) out[out.length - 1].value = v; continue; }
-      out.push({ time: t, value: v });
-      last = t;
-    }
-    return out;
-  }
-  function setCurves(c) {
-    curves = c || {};
-    renderToggles();
-    if (!live) { fallback(); return; }
-    const keys = Object.keys(curves).filter((k) => k === 'TOTAL' || shown.has(k)).sort((a, b) => (a === 'TOTAL' ? -1 : b === 'TOTAL' ? 1 : a.localeCompare(b)));
-    for (const [k, s] of [...series]) if (!keys.includes(k)) { chart.removeSeries(s); series.delete(k); }
-    for (const k of keys) {
-      let s = series.get(k);
-      if (!s) {
-        s = chart.addLineSeries(k === 'TOTAL'
-          ? { color: '#e6edf3', lineWidth: 2, priceScaleId: 'right', title: 'TOTAL' }
-          : { color: colorFor(k), lineWidth: 1, priceScaleId: 'left', title: k, priceLineVisible: false, lastValueVisible: false });
-        series.set(k, s);
-      }
-      s.setData(toPoints(curves[k]));
-    }
-    chart.applyOptions({ leftPriceScale: { visible: keys.length > 1 } });
-    const s2 = keys.join(',') + ':' + (curves.TOTAL || []).length;
-    if (s2 !== sig) { sig = s2; chart.timeScale().fitContent(); }
-  }
-  function fallback() {
-    const t = curves.TOTAL || [], lastPt = t[t.length - 1];
-    el.textContent = 'chart library unavailable (offline) — TOTAL ' + (lastPt ? fmtMoney(lastPt[1]) : DASH) + ' over ' + t.length + ' points';
+  function setCurves(c) { curves = c || {}; if (!el) return; renderToggles(); render().catch(e => { el.textContent = 'Equity chart could not load: ' + e.message; }); }
+  async function render() {
+    if (rendering) { again = true; return; }
+    rendering = true;
+    try {
+      const keys = Object.keys(curves).filter(k => k === 'TOTAL' || shown.has(k)).sort((a,b) => a === 'TOTAL' ? -1 : b === 'TOTAL' ? 1 : a.localeCompare(b));
+      const models = keys.map(k => ({title:k, color:k === 'TOTAL' ? '#e6edf3' : colorFor(k), width:k === 'TOTAL' ? 2 : 1, points:toPoints(curves[k])}));
+      const base = models.find(m => m.points.length);
+      if (!base) return;
+      const bars = DashboardVela.pointsToBars(models.flatMap(m => m.points));
+      if (!inst || inst.destroyed) inst = await DashboardVela.create(el, {bars, models, line:true, theme:chartTheme()});
+      else { inst.models = models; await DashboardVela.update(inst,bars); }
+    } finally { rendering = false; if (again) { again = false; setCurves(curves); } }
   }
   function renderToggles() {
     const box = clear($('#curve-toggles'));

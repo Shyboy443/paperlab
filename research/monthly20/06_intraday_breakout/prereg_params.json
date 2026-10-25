@@ -1,0 +1,6 @@
+{"attempts": [
+ {"name": "A1_us_orb_L1", "leverage": 1, "params": {"kind": "orb", "slot": 54, "R": 4, "W": 8, "H": 96, "k": 5.0, "trend": 1}},
+ {"name": "A2_us_orb_L5", "leverage": 5, "params": {"kind": "orb", "slot": 54, "R": 4, "W": 8, "H": 96, "k": 5.0, "trend": 1}},
+ {"name": "A3_squeeze80_L1", "leverage": 1, "params": {"kind": "squeeze", "n": 80, "m": 8, "H": 16, "k": 5.0, "trend": 1}},
+ {"name": "A4_squeeze80_L5", "leverage": 5, "params": {"kind": "squeeze", "n": 80, "m": 8, "H": 16, "k": 5.0, "trend": 1}}
+]}

@@ -1,0 +1,9 @@
+{
+  "name": "@luxalgo/vela",
+  "version": "0.8.3",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/LuxAlgo/Vela",
+  "npm_integrity": "sha512-ohKlUFSnOO6P0kGR5w7cU2QbkIFhW/IYjEh/YXusle0qOwXmiSG3p1Sa4tmiXwLUGuCBsKGcQrKoudsGp/5Hpw==",
+  "bundle_sha256": "4e732bbb648aefc6f330d1e5b74aefa39bc4ab322d1a9ddd46a654856fd77fdf",
+  "source": "Published npm package, integrity verified before copying; no Pine scripting addon bundled."
+}

@@ -1,0 +1,38 @@
+{
+ "LEVEL_w1_LNone": {
+  "gross_fade_bp_per_hour": 3.273,
+  "turnover_per_hour": 1.272,
+  "cost_bp_per_hour": 8.904,
+  "net_bp_per_hour": -5.63
+ },
+ "LEVEL_w4_LNone": {
+  "gross_fade_bp_per_hour": 1.575,
+  "turnover_per_hour": 0.545,
+  "cost_bp_per_hour": 3.813,
+  "net_bp_per_hour": -2.239
+ },
+ "Z_w1_L168": {
+  "gross_fade_bp_per_hour": 3.248,
+  "turnover_per_hour": 1.475,
+  "cost_bp_per_hour": 10.328,
+  "net_bp_per_hour": -7.08
+ },
+ "Z_w4_L168": {
+  "gross_fade_bp_per_hour": 1.879,
+  "turnover_per_hour": 0.667,
+  "cost_bp_per_hour": 4.668,
+  "net_bp_per_hour": -2.789
+ },
+ "MOM_w1_LNone": {
+  "gross_fade_bp_per_hour": 2.939,
+  "turnover_per_hour": 1.88,
+  "cost_bp_per_hour": 13.157,
+  "net_bp_per_hour": -10.218
+ },
+ "MOM_w4_LNone": {
+  "gross_fade_bp_per_hour": 1.607,
+  "turnover_per_hour": 0.952,
+  "cost_bp_per_hour": 6.662,
+  "net_bp_per_hour": -5.055
+ }
+}

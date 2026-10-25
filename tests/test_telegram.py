@@ -155,7 +155,7 @@ def test_start_links_the_first_private_chat_only(tmp_path):
     assert n.chat_id() is None
     n.handle_update({"message": {"chat": {"id": 42, "type": "private"}, "text": "/start"}})
     assert n.chat_id() == "42" and any("Linked to PaperLab" in p["text"] for _, p in http.calls)
-    assert any("Default TP / SL settings" in p["text"] for _, p in http.calls)
+    assert any("Desk trade approval" in p["text"] for _, p in http.calls)
     n.handle_update({"message": {"chat": {"id": 99, "type": "private"}, "text": "/start"}})
     assert n.chat_id() == "42" and http.calls[-1][1] == {**http.calls[-1][1], "chat_id": "99"}
     assert "private PaperLab bot" in http.calls[-1][1]["text"]
@@ -315,3 +315,54 @@ def test_giving_up_after_rate_limits_is_counted_and_logged(tmp_path, caplog):
         assert not n.deliver("v11", OPEN)
     assert n.stats["errors"] == 1 and "gave up after 3 attempts" in n.stats["last_error"]
     assert any("gave up after 3 attempts" in r.getMessage() for r in caplog.records)
+
+
+def test_desk_scope_sends_only_desk_decisions(tmp_path, monkeypatch):
+    monkeypatch.setattr("app.core.programs.bot_retired", lambda p, k: False)
+    n = tg.TelegramNotifier(Keys(chat="777"), str(tmp_path), env={}, http=FakeHttp(), sleep=lambda s: None,
+                            default_scope="desks")
+    n.on_event("v11", OPEN)
+    n.alert("system alert")
+    assert n.q.qsize() == 0 and n.wants("v11", "CONTROL") is False
+    n.kv("scope", "all")
+    n.on_event("v11", OPEN)
+    assert n.q.qsize() == 1
+
+
+def test_approval_buttons_only_work_from_the_linked_chat(tmp_path):
+    http = FakeHttp()
+    n = tg.TelegramNotifier(Keys(chat="777"), str(tmp_path), env={}, http=http, sleep=lambda s: None, default_scope="desks")
+    token = n.request_approval("divergence", "setup-1", "<b>LONG BTC</b>", link="https://example.test/desk?setup=1")
+    sent = http.calls[-1][1]
+    kb = sent["reply_markup"]["inline_keyboard"]
+    assert kb[0][0]["callback_data"] == f"ap|{token}" and kb[1][0]["url"].startswith("https://example.test")
+    assert n.approval_status(token) == "pending"
+    n.handle_update({"callback_query": {"id": "c1", "data": f"ap|{token}", "message": {"chat": {"id": 99}}}})
+    assert n.approval_status(token) == "pending"                       # a stranger cannot approve
+    n.handle_update({"callback_query": {"id": "c2", "data": f"rj|{token}", "message": {"chat": {"id": 777}}}})
+    assert n.approval_status(token) == "rejected"
+    n.handle_update({"callback_query": {"id": "c3", "data": f"ap|{token}", "message": {"chat": {"id": 777}}}})
+    assert n.approval_status(token) == "rejected"                      # decided once
+    n.finish_approval(token, "no trade")
+    assert any(m.endswith("editMessageReplyMarkup") for m, _ in http.calls)
+
+
+def test_mode_command_switches_a_registered_desk(tmp_path):
+    http = FakeHttp()
+    n = tg.TelegramNotifier(Keys(chat="777"), str(tmp_path), env={}, http=http, sleep=lambda s: None)
+    mode = {"v": "manual"}
+    n.register_desk("trading", "Trading Desk", lambda: mode["v"], lambda m: mode.update(v=m))
+    n.handle_update({"message": {"chat": {"id": 777, "type": "private"}, "text": "/mode trading auto"}})
+    assert mode["v"] == "auto" and "AUTO" in http.calls[-1][1]["text"]
+    n.handle_update({"message": {"chat": {"id": 555, "type": "private"}, "text": "/mode trading manual"}})
+    assert mode["v"] == "auto"                                         # only the linked chat
+
+
+def test_operations_and_live_money_alerts_get_through_the_desk_scope(tmp_path):
+    n = tg.TelegramNotifier(Keys(chat="777"), str(tmp_path), env={}, http=FakeHttp(), sleep=lambda s: None,
+                            default_scope="desks")
+    n.alert("ordinary system alert")
+    assert n.q.qsize() == 0
+    n.ops_alert("🔴 V8 DOWN: worker silent for 75 s")
+    n.live_alert("🟢 MACD Desk LIVE ON")
+    assert n.q.qsize() == 2

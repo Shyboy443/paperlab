@@ -755,3 +755,48 @@ def test_the_new_bot_routes_are_read_only():
     from app.core import api_public
     rs = [r for r in api_public.router.routes if r.path.endswith(("/trades.csv", "/logic"))]
     assert len(rs) == 2 and all(set(r.methods) <= {"GET", "HEAD"} for r in rs)
+
+
+def test_manual_approval_holds_the_trade_until_the_operator_approves(tmp_path, monkeypatch):
+    from app.desk import news as N, sentiment as S
+    monkeypatch.setattr(N, "news", lambda universe, **k: {"items": [], "sources": {}})
+    monkeypatch.setattr(N, "read_articles", lambda items, **k: [dict(i, article="") for i in items])
+    monkeypatch.setattr(S, "sentiment", lambda coins, social=None, **k: {"coins": {x: {"positioning": {}} for x in coins},
+                                                                         "coingecko_trending": []})
+
+    class FakeTG:
+        def __init__(self):
+            self.status, self.requests, self.finished = {}, [], []
+
+        def request_approval(self, desk, ref, text, link=None, photo=None):
+            self.requests.append((desk, ref, link))
+            self.status["t1"] = "pending"
+            return "t1"
+
+        def approval_status(self, token):
+            return self.status.get(token)
+
+        def finish_approval(self, token, note, status=None):
+            self.finished.append((token, status))
+
+        def reply_approval(self, token, text):
+            pass
+
+        def register_desk(self, *a):
+            pass
+
+    fake = FakeTG()
+    desk = DeskService(str(tmp_path / "d.db"), env={"DESK_ENABLED": "false"}, market=FakeMarket(), llm=FakeLLM("BUY"),
+                       telegram=lambda: fake)
+    assert desk.settings["approval"] == "auto"                          # default since 2026-10-11: no prompts
+    desk.update_settings({"approval": "manual"})
+    row = desk.run_session("test")
+    assert "AWAITING APPROVAL" in row["decision"] and desk.ledger.trades(("open", "pending")) == []
+    assert fake.requests and fake.requests[0][0] == "trading" and fake.requests[0][2].endswith("/public/competition/desk")
+    desk._process_approvals(desk.now_ms(), fake)
+    assert desk.ledger.trades(("open", "pending")) == []                # still waiting
+    fake.status["t1"] = "approved"
+    desk._process_approvals(desk.now_ms(), fake)
+    assert len(desk.ledger.trades(("open", "pending"))) == 1 and fake.finished == [("t1", "approved")]
+    assert desk.ledger.kv("approvals") == []
+    desk.ledger.close()

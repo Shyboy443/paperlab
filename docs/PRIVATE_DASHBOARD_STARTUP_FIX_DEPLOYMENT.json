@@ -1,0 +1,9 @@
+{
+  "deployment_id": "b5550106-103d-4b53-abc6-c6e7d6b8989f",
+  "status": "SUCCESS",
+  "root_asset_url": "/static/app.js?v=34e66cbe1f29",
+  "backend_tests_passed": 85,
+  "verification": "Authenticated private dashboard, cached and fresh login, fresh state after reconnection, component failure isolation; all browser writes blocked",
+  "history_and_rules_preserved": true,
+  "original_fault": "Live.init referenced missing #live-disarm before Poll.start"
+}

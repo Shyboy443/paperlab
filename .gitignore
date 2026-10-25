@@ -30,3 +30,4 @@ node_modules/
 .claude/
 # generated research outputs (re-created by the research scripts)
 research/**/output/
+!app/ensemble/seed/*.npz

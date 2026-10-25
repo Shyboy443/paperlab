@@ -1,6 +1,6 @@
 {
  "protocol": "V13_SNAPBACK_PAPER_V1",
- "baseline_fingerprint": "93f9c48b67163c69",
+ "baseline_fingerprint": "49a19f92106eee90",
  "code": {
   "app.strategies.v13.snapback": "30ce0843d21d",
   "app.competition.v13_config": "3dee9017ace3",
@@ -111,7 +111,7 @@
    "twins": false
   }
  },
- "frozen_at": "2026-10-02T21:47:48Z",
+ "frozen_at": "2026-10-12T08:35:37Z",
  "rules": {
   "BTCUSDT": {
    "symbol": "BTCUSDT",
@@ -461,7 +461,7 @@
   "max_hold_min": 240.0
  },
  "note": "parameters = the study's DEV-selected variant; judged on its TEST verdict and LIVE forward paper data",
- "fingerprint": "6dc438c148c61e7d",
+ "fingerprint": "13c21b2ab00565e3",
  "execution_revision": {
   "supersedes": "6167bc184aeda80a",
   "baseline": "93f9c48b67163c69",
@@ -469,5 +469,7 @@
   "reason": "execution and loss-limit correction; historical study verdicts retained",
   "archive": "snapshots/2026-10-04-execution-audit/docs/V13_FREEZE.json",
   "rules": "existing instrument rules retained; no universe reselection"
- }
+ },
+ "refrozen_from": "6dc438c148c61e7d",
+ "refreeze_note": "re-frozen 2026-10-12: V6 field trimmed to V6.2/V6.6 (operator removed the families retired from view)"
 }

@@ -1,0 +1,1389 @@
+{
+ "generated_utc": "2026-10-20T09:28:53+00:00",
+ "pre_registration": "docs/SCRIBD_ROUND4_STUDY.md",
+ "costs": {
+  "etf": "0.05% of the traded amount per side on every switch or weight change"
+ },
+ "rules": [
+  {
+   "key": "gmr_diy",
+   "doc": "A Global Market Rotation Strategy With An Annual Performance Of 41.4% Since 2003, Grossmann (399509251)",
+   "assets": [
+    "MDY",
+    "IEV",
+    "EEM",
+    "ILF",
+    "EPP",
+    "EDV"
+   ],
+   "tf": "monthly",
+   "rule": "Global Market Rotation, do-it-yourself version (399509251): each month hold the one ETF of MDY, IEV, EEM, ILF,\n    EPP, EDV with the best 3-month return.",
+   "claim": "41.4% a year 2003-2013 (DIY version ~34%)",
+   "windows": {
+    "a": [
+     "2008-05-01",
+     "2013-09-01"
+    ],
+    "b": [
+     "2013-09-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 64,
+    "win_rate_pct": 57.8125,
+    "mean_ret_pct": 2.5491197345295884,
+    "total_ret_pct": 163.14366300989366,
+    "profit_factor": 2.2396213429077028,
+    "max_dd_pct_sum": 22.844100851809106,
+    "cagr_pct": 29.665012384164434,
+    "max_dd_curve_pct": 22.22443586642804
+   },
+   "b": {
+    "trades": 157,
+    "win_rate_pct": 50.318471337579616,
+    "mean_ret_pct": 0.40378468075647217,
+    "total_ret_pct": 63.39419487876613,
+    "profit_factor": 1.2089089079129052,
+    "max_dd_pct_sum": 51.89241194109172,
+    "mean_ci_low": -0.45124247356672387,
+    "by_asset_ret_pct": {
+     "strategy": 63.394194878766115
+    },
+    "cagr_pct": 2.9399888568559573,
+    "max_dd_curve_pct": 43.11706704974219
+   },
+   "curve": {
+    "a": {
+     "months": 64,
+     "total_pct": 299.6884802127732,
+     "cagr_pct": 29.665012384164434,
+     "max_dd_pct": 22.22443586642804
+    },
+    "b": {
+     "months": 157,
+     "total_pct": 46.09730210369993,
+     "cagr_pct": 2.9399888568559573,
+     "max_dd_pct": 43.11706704974219
+    }
+   },
+   "spy_same_months": {
+    "a": {
+     "total_pct": 33.7653898843477,
+     "cagr_pct": 5.597352125086252,
+     "max_dd_pct": 51.481459460456726
+    },
+    "b": {
+     "total_pct": 482.35091047841297,
+     "cagr_pct": 14.411426434736295,
+     "max_dd_pct": 33.717275321149764
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 64,
+     "win_rate_pct": 59.375,
+     "mean_ret_pct": 2.587400984529588,
+     "total_ret_pct": 165.59366300989365,
+     "profit_factor": 2.270140885572705,
+     "max_dd_pct_sum": 22.794100851809105
+    },
+    "b": {
+     "trades": 157,
+     "win_rate_pct": 50.955414012738856,
+     "mean_ret_pct": 0.4569693941322684,
+     "total_ret_pct": 71.74419487876614,
+     "profit_factor": 1.2399786271307116,
+     "max_dd_pct_sum": 51.09820834178178
+    }
+   },
+   "months_held_b": {
+    "IEV": 19,
+    "EPP": 8,
+    "MDY": 26,
+    "EDV": 39,
+    "ILF": 44,
+    "EEM": 21
+   },
+   "min_trades_b": 50,
+   "checks": {
+    "a_positive": true,
+    "b_positive": true,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": true
+   },
+   "verdict": "FAIL",
+   "recent_b_trades": [
+    {
+     "t": 1725321600000,
+     "exit_t": 1727740800000,
+     "asset": "EDV",
+     "weight": 1.0,
+     "ret_pct": 1.8804532116884987,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1727740800000,
+     "exit_t": 1730419200000,
+     "asset": "EPP",
+     "weight": 1.0,
+     "ret_pct": -4.849012976796269,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1730419200000,
+     "exit_t": 1733097600000,
+     "asset": "EPP",
+     "weight": 1.0,
+     "ret_pct": 2.1904126205931576,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1733097600000,
+     "exit_t": 1735776000000,
+     "asset": "MDY",
+     "weight": 1.0,
+     "ret_pct": -6.85409771013597,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1735776000000,
+     "exit_t": 1738540800000,
+     "asset": "MDY",
+     "weight": 1.0,
+     "ret_pct": 1.1005669342592395,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1738540800000,
+     "exit_t": 1740960000000,
+     "asset": "MDY",
+     "weight": 1.0,
+     "ret_pct": -1.9783557598990587,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1740960000000,
+     "exit_t": 1743465600000,
+     "asset": "IEV",
+     "weight": 1.0,
+     "ret_pct": -1.3837861539304885,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1743465600000,
+     "exit_t": 1746057600000,
+     "asset": "ILF",
+     "weight": 1.0,
+     "ret_pct": 5.967031494115272,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1746057600000,
+     "exit_t": 1748822400000,
+     "asset": "IEV",
+     "weight": 1.0,
+     "ret_pct": 4.584659069202924,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1748822400000,
+     "exit_t": 1751328000000,
+     "asset": "ILF",
+     "weight": 1.0,
+     "ret_pct": 5.514624861502549,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1751328000000,
+     "exit_t": 1754006400000,
+     "asset": "EPP",
+     "weight": 1.0,
+     "ret_pct": -0.22157906863300425,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1754006400000,
+     "exit_t": 1756771200000,
+     "asset": "EEM",
+     "weight": 1.0,
+     "ret_pct": 2.078980812115078,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1756771200000,
+     "exit_t": 1759276800000,
+     "asset": "EEM",
+     "weight": 1.0,
+     "ret_pct": 8.459823633144058,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1759276800000,
+     "exit_t": 1762128000000,
+     "asset": "EEM",
+     "weight": 1.0,
+     "ret_pct": 3.8686452118292083,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1762128000000,
+     "exit_t": 1764547200000,
+     "asset": "ILF",
+     "weight": 1.0,
+     "ret_pct": 4.782715926813025,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1764547200000,
+     "exit_t": 1767312000000,
+     "asset": "ILF",
+     "weight": 1.0,
+     "ret_pct": 2.017462793948166,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1767312000000,
+     "exit_t": 1769990400000,
+     "asset": "ILF",
+     "weight": 1.0,
+     "ret_pct": 14.110028500872595,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1769990400000,
+     "exit_t": 1772409600000,
+     "asset": "ILF",
+     "weight": 1.0,
+     "ret_pct": 1.53148710353459,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1772409600000,
+     "exit_t": 1775001600000,
+     "asset": "ILF",
+     "weight": 1.0,
+     "ret_pct": -0.11173718498591612,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1775001600000,
+     "exit_t": 1777593600000,
+     "asset": "ILF",
+     "weight": 1.0,
+     "ret_pct": 1.8795386232171418,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1777593600000,
+     "exit_t": 1780272000000,
+     "asset": "EEM",
+     "weight": 1.0,
+     "ret_pct": 8.627942110110325,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1780272000000,
+     "exit_t": 1782864000000,
+     "asset": "EEM",
+     "weight": 1.0,
+     "ret_pct": -3.058826169954021,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1782864000000,
+     "exit_t": 1785715200000,
+     "asset": "EEM",
+     "weight": 1.0,
+     "ret_pct": -4.7877100734455995,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1785715200000,
+     "exit_t": 1788220800000,
+     "asset": "IEV",
+     "weight": 1.0,
+     "ret_pct": 0.14174094465347908,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1788220800000,
+     "exit_t": 1790812800000,
+     "asset": "EPP",
+     "weight": 1.0,
+     "ret_pct": -5.0299766588087715,
+     "r": null,
+     "result": "month"
+    }
+   ]
+  },
+  {
+   "key": "bond_rotation_diy",
+   "doc": "The Sleep Well Bond Rotation Strategy, Grossmann (250728700)",
+   "assets": [
+    "AGG",
+    "BOND",
+    "CWB",
+    "JNK",
+    "TLH"
+   ],
+   "tf": "monthly",
+   "rule": "Sleep Well Bond Rotation, do-it-yourself version (250728700): each month hold the one ETF of AGG, BOND, CWB, JNK, TLH with the best 3-month return.",
+   "claim": "15.7-19% a year since 2008 (DIY top-1: 17%)",
+   "windows": {
+    "a": [
+     "2012-07-01",
+     "2019-07-01"
+    ],
+    "b": [
+     "2019-07-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 84,
+    "win_rate_pct": 65.47619047619048,
+    "mean_ret_pct": 0.5608717025305967,
+    "total_ret_pct": 47.113223012570124,
+    "profit_factor": 2.096001153360512,
+    "max_dd_pct_sum": 12.166289973757948,
+    "cagr_pct": 6.710110814911308,
+    "max_dd_curve_pct": 11.693493750410799
+   },
+   "b": {
+    "trades": 87,
+    "win_rate_pct": 55.172413793103445,
+    "mean_ret_pct": 0.5144400718403418,
+    "total_ret_pct": 44.75628625010974,
+    "profit_factor": 1.439086220877357,
+    "max_dd_pct_sum": 37.73002984942773,
+    "mean_ci_low": -0.245513638014717,
+    "by_asset_ret_pct": {
+     "strategy": 44.75628625010974
+    },
+    "cagr_pct": 5.462846158723944,
+    "max_dd_curve_pct": 32.33463293751744
+   },
+   "curve": {
+    "a": {
+     "months": 84,
+     "total_pct": 57.557469234836,
+     "cagr_pct": 6.710110814911308,
+     "max_dd_pct": 11.693493750410799
+    },
+    "b": {
+     "months": 87,
+     "total_pct": 47.05211833929659,
+     "cagr_pct": 5.462846158723944,
+     "max_dd_pct": 32.33463293751744
+    }
+   },
+   "spy_same_months": {
+    "a": {
+     "total_pct": 150.86896179295314,
+     "cagr_pct": 14.028568986014744,
+     "max_dd_pct": 19.348886757756112
+    },
+    "b": {
+     "total_pct": 188.05125497177642,
+     "cagr_pct": 15.679710585290184,
+     "max_dd_pct": 33.717275321149764
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 84,
+     "win_rate_pct": 66.66666666666666,
+     "mean_ret_pct": 0.593609797768692,
+     "total_ret_pct": 49.86322301257013,
+     "profit_factor": 2.1944762099432555,
+     "max_dd_pct_sum": 11.616289973757954
+    },
+    "b": {
+     "trades": 87,
+     "win_rate_pct": 56.32183908045977,
+     "mean_ret_pct": 0.5483481178173534,
+     "total_ret_pct": 47.70628625010975,
+     "profit_factor": 1.474665151292395,
+     "max_dd_pct_sum": 36.530029849427734
+    }
+   },
+   "months_held_b": {
+    "TLH": 25,
+    "CWB": 39,
+    "JNK": 19,
+    "AGG": 2,
+    "BOND": 2
+   },
+   "min_trades_b": 50,
+   "checks": {
+    "a_positive": true,
+    "b_positive": true,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": true
+   },
+   "verdict": "FAIL",
+   "recent_b_trades": [
+    {
+     "t": 1725321600000,
+     "exit_t": 1727740800000,
+     "asset": "TLH",
+     "weight": 1.0,
+     "ret_pct": 1.8025796745150036,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1727740800000,
+     "exit_t": 1730419200000,
+     "asset": "TLH",
+     "weight": 1.0,
+     "ret_pct": -5.6129089055255985,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1730419200000,
+     "exit_t": 1733097600000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": 6.048250192401356,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1733097600000,
+     "exit_t": 1735776000000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": -3.426299527978416,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1735776000000,
+     "exit_t": 1738540800000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": 1.101395615445111,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1738540800000,
+     "exit_t": 1740960000000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": 0.4890688945711375,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1740960000000,
+     "exit_t": 1743465600000,
+     "asset": "BOND",
+     "weight": 1.0,
+     "ret_pct": 0.3779277921320046,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1743465600000,
+     "exit_t": 1746057600000,
+     "asset": "TLH",
+     "weight": 1.0,
+     "ret_pct": -1.1408855496170822,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1746057600000,
+     "exit_t": 1748822400000,
+     "asset": "TLH",
+     "weight": 1.0,
+     "ret_pct": -3.2877121382704098,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1748822400000,
+     "exit_t": 1751328000000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": 3.943233342818936,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1751328000000,
+     "exit_t": 1754006400000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": 2.2595076361314526,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1754006400000,
+     "exit_t": 1756771200000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": 1.968142462302458,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1756771200000,
+     "exit_t": 1759276800000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": 5.616344062755907,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1759276800000,
+     "exit_t": 1762128000000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": 3.668254284399164,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1762128000000,
+     "exit_t": 1764547200000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": -3.852217235394373,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1764547200000,
+     "exit_t": 1767312000000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": 0.22576340980424164,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1767312000000,
+     "exit_t": 1769990400000,
+     "asset": "BOND",
+     "weight": 1.0,
+     "ret_pct": 0.27542870893929605,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1769990400000,
+     "exit_t": 1772409600000,
+     "asset": "JNK",
+     "weight": 1.0,
+     "ret_pct": -0.42574656193959937,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1772409600000,
+     "exit_t": 1775001600000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": -1.489789543306691,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1775001600000,
+     "exit_t": 1777593600000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": 10.079728510119246,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1777593600000,
+     "exit_t": 1780272000000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": 6.6794239340678185,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1780272000000,
+     "exit_t": 1782864000000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": -1.2142391150830711,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1782864000000,
+     "exit_t": 1785715200000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": -4.6950438307873155,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1785715200000,
+     "exit_t": 1788220800000,
+     "asset": "CWB",
+     "weight": 1.0,
+     "ret_pct": 0.1810239568200867,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1788220800000,
+     "exit_t": 1790812800000,
+     "asset": "JNK",
+     "weight": 1.0,
+     "ret_pct": -2.9012414489993867,
+     "r": null,
+     "result": "month"
+    }
+   ]
+  },
+  {
+   "key": "gem",
+   "doc": "Gary Antonacci's Momentum Trend Research: Global Equities Momentum (1071527952)",
+   "assets": [
+    "SPY",
+    "VEU",
+    "AGG",
+    "BIL"
+   ],
+   "tf": "monthly",
+   "rule": "Global Equities Momentum, Antonacci (1071527952): the stronger of SPY and VEU by 12-month return; hold it if it\n    beat T-bills (BIL) over 12 months, otherwise hold AGG.",
+   "claim": "higher return than equities with lower risk",
+   "windows": {
+    "a": [
+     "2008-06-01",
+     "2015-01-01"
+    ],
+    "b": [
+     "2015-01-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 79,
+    "win_rate_pct": 68.35443037974683,
+    "mean_ret_pct": 0.8866861909518807,
+    "total_ret_pct": 70.04820908519858,
+    "profit_factor": 1.8904142936478767,
+    "max_dd_pct_sum": 19.8420360300509,
+    "cagr_pct": 10.292040914492562,
+    "max_dd_curve_pct": 18.533487409918937
+   },
+   "b": {
+    "trades": 141,
+    "win_rate_pct": 62.4113475177305,
+    "mean_ret_pct": 0.6549719184942024,
+    "total_ret_pct": 92.35104050768254,
+    "profit_factor": 1.5749051192214534,
+    "max_dd_pct_sum": 24.23846097391051,
+    "mean_ci_low": -0.01237024158091191,
+    "by_asset_ret_pct": {
+     "strategy": 92.35104050768253
+    },
+    "cagr_pct": 7.185741392047906,
+    "max_dd_curve_pct": 22.903466274290164
+   },
+   "curve": {
+    "a": {
+     "months": 79,
+     "total_pct": 90.58226056149108,
+     "cagr_pct": 10.292040914492562,
+     "max_dd_pct": 18.533487409918937
+    },
+    "b": {
+     "months": 141,
+     "total_pct": 126.00078160209432,
+     "cagr_pct": 7.185741392047906,
+     "max_dd_pct": 22.903466274290164
+    }
+   },
+   "spy_same_months": {
+    "a": {
+     "total_pct": 70.31899859224815,
+     "cagr_pct": 8.42319005426475,
+     "max_dd_pct": 50.699111960604846
+    },
+    "b": {
+     "total_pct": 352.62495344919137,
+     "cagr_pct": 13.70445387910484,
+     "max_dd_pct": 33.717275321149764
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 79,
+     "win_rate_pct": 68.35443037974683,
+     "mean_ret_pct": 0.8974456846227665,
+     "total_ret_pct": 70.89820908519856,
+     "profit_factor": 1.9064037938286331,
+     "max_dd_pct_sum": 19.692036030050893
+    },
+    "b": {
+     "trades": 141,
+     "win_rate_pct": 62.4113475177305,
+     "mean_ret_pct": 0.6716385851608689,
+     "total_ret_pct": 94.70104050768252,
+     "profit_factor": 1.5932273433940007,
+     "max_dd_pct_sum": 24.18846097391051
+    }
+   },
+   "months_held_b": {
+    "SPY": 92,
+    "AGG": 19,
+    "VEU": 30
+   },
+   "min_trades_b": 50,
+   "checks": {
+    "a_positive": true,
+    "b_positive": true,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": true
+   },
+   "verdict": "FAIL",
+   "recent_b_trades": [
+    {
+     "t": 1725321600000,
+     "exit_t": 1727740800000,
+     "asset": "SPY",
+     "weight": 1.0,
+     "ret_pct": 2.6208178850939623,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1727740800000,
+     "exit_t": 1730419200000,
+     "asset": "SPY",
+     "weight": 1.0,
+     "ret_pct": -0.36276946778053265,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1730419200000,
+     "exit_t": 1733097600000,
+     "asset": "SPY",
+     "weight": 1.0,
+     "ret_pct": 5.539788868537987,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1733097600000,
+     "exit_t": 1735776000000,
+     "asset": "SPY",
+     "weight": 1.0,
+     "ret_pct": -1.9231789362215923,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1735776000000,
+     "exit_t": 1738540800000,
+     "asset": "SPY",
+     "weight": 1.0,
+     "ret_pct": 0.5564892378084219,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1738540800000,
+     "exit_t": 1740960000000,
+     "asset": "SPY",
+     "weight": 1.0,
+     "ret_pct": 0.5922429661764816,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1740960000000,
+     "exit_t": 1743465600000,
+     "asset": "SPY",
+     "weight": 1.0,
+     "ret_pct": -6.215077276259107,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1743465600000,
+     "exit_t": 1746057600000,
+     "asset": "SPY",
+     "weight": 1.0,
+     "ret_pct": 0.47380694378708627,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1746057600000,
+     "exit_t": 1748822400000,
+     "asset": "VEU",
+     "weight": 1.0,
+     "ret_pct": 4.6410040384569475,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1748822400000,
+     "exit_t": 1751328000000,
+     "asset": "VEU",
+     "weight": 1.0,
+     "ret_pct": 3.351492657477051,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1751328000000,
+     "exit_t": 1754006400000,
+     "asset": "VEU",
+     "weight": 1.0,
+     "ret_pct": -1.137909793552555,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1754006400000,
+     "exit_t": 1756771200000,
+     "asset": "SPY",
+     "weight": 1.0,
+     "ret_pct": 1.688284726312228,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1756771200000,
+     "exit_t": 1759276800000,
+     "asset": "VEU",
+     "weight": 1.0,
+     "ret_pct": 4.966193422954002,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1759276800000,
+     "exit_t": 1762128000000,
+     "asset": "SPY",
+     "weight": 1.0,
+     "ret_pct": 3.2927847005345683,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1762128000000,
+     "exit_t": 1764547200000,
+     "asset": "VEU",
+     "weight": 1.0,
+     "ret_pct": -0.2695367110540358,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1764547200000,
+     "exit_t": 1767312000000,
+     "asset": "VEU",
+     "weight": 1.0,
+     "ret_pct": 4.286228572579565,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1767312000000,
+     "exit_t": 1769990400000,
+     "asset": "VEU",
+     "weight": 1.0,
+     "ret_pct": 4.011264594238928,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1769990400000,
+     "exit_t": 1772409600000,
+     "asset": "VEU",
+     "weight": 1.0,
+     "ret_pct": 2.953704301971527,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1772409600000,
+     "exit_t": 1775001600000,
+     "asset": "VEU",
+     "weight": 1.0,
+     "ret_pct": -4.667611267944083,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1775001600000,
+     "exit_t": 1777593600000,
+     "asset": "VEU",
+     "weight": 1.0,
+     "ret_pct": 6.370084342171589,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1777593600000,
+     "exit_t": 1780272000000,
+     "asset": "VEU",
+     "weight": 1.0,
+     "ret_pct": 3.773830624051566,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1780272000000,
+     "exit_t": 1782864000000,
+     "asset": "VEU",
+     "weight": 1.0,
+     "ret_pct": -0.8134390991414664,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1782864000000,
+     "exit_t": 1785715200000,
+     "asset": "VEU",
+     "weight": 1.0,
+     "ret_pct": -0.02416187640239542,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1785715200000,
+     "exit_t": 1788220800000,
+     "asset": "VEU",
+     "weight": 1.0,
+     "ret_pct": 2.718047150399072,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1788220800000,
+     "exit_t": 1790812800000,
+     "asset": "VEU",
+     "weight": 1.0,
+     "ret_pct": -2.454016828306238,
+     "r": null,
+     "result": "month"
+    }
+   ]
+  },
+  {
+   "key": "alvarez_trend_mom",
+   "doc": "Trend-Following Plus Momentum in ETFs, Alvarez Quant Trading (439780519)",
+   "assets": [
+    "AGG",
+    "DBC",
+    "EEM",
+    "EFA",
+    "GLD",
+    "HYG",
+    "IWM",
+    "LQD",
+    "QQQ",
+    "SPY",
+    "TLT",
+    "VNQ"
+   ],
+   "tf": "monthly",
+   "rule": "Trend-Following Plus Momentum in ETFs, Alvarez Quant Trading (439780519): per ETF, trend = month-end close above\n    its 10-month average, momentum = 10-month return > 0; both -> 100 %, one -> 50 %, none -> 0 %. Each ETF holds 1/12\n    of the capital in the portfolio return.",
+   "claim": "beats buy and hold on most metrics for 5 of 12 ETFs",
+   "windows": {
+    "a": [
+     "2007-01-01",
+     "2019-11-01"
+    ],
+    "b": [
+     "2019-11-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 1275,
+    "win_rate_pct": 59.21568627450981,
+    "mean_ret_pct": 0.4538984454353669,
+    "total_ret_pct": 578.7205179300928,
+    "profit_factor": 1.4141835480301115,
+    "max_dd_pct_sum": 111.34574569830139,
+    "cagr_pct": 4.0393591755137015,
+    "max_dd_curve_pct": 8.82011181632124
+   },
+   "b": {
+    "trades": 770,
+    "win_rate_pct": 58.18181818181818,
+    "mean_ret_pct": 0.7107813972342147,
+    "total_ret_pct": 547.3016758703453,
+    "profit_factor": 1.6762667999671343,
+    "max_dd_pct_sum": 93.4368269161356,
+    "mean_ci_low": 0.4428381641564669,
+    "by_asset_ret_pct": {
+     "AGG": 4.882857368218121,
+     "DBC": 78.80339015383298,
+     "EEM": 72.45863867437099,
+     "EFA": 58.92973638162142,
+     "GLD": 84.25197926080453,
+     "HYG": 10.531156855400148,
+     "IWM": 38.56891950708567,
+     "LQD": 4.016908282545495,
+     "QQQ": 132.9563686103441,
+     "SPY": 82.50893877718153,
+     "TLT": -22.086501004366507,
+     "VNQ": 1.4792830033068007
+    },
+    "cagr_pct": 6.599563791842544,
+    "max_dd_curve_pct": 7.5224218528525455
+   },
+   "curve": {
+    "a": {
+     "months": 140,
+     "total_pct": 58.72285477690311,
+     "cagr_pct": 4.0393591755137015,
+     "max_dd_pct": 8.82011181632124
+    },
+    "b": {
+     "months": 83,
+     "total_pct": 55.58762108880333,
+     "cagr_pct": 6.599563791842544,
+     "max_dd_pct": 7.5224218528525455
+    }
+   },
+   "spy_same_months": {
+    "a": {
+     "total_pct": 194.45585899526782,
+     "cagr_pct": 9.694594806651157,
+     "max_dd_pct": 51.481459460456726
+    },
+    "b": {
+     "total_pct": 178.97870775835588,
+     "cagr_pct": 15.96475622619835,
+     "max_dd_pct": 33.717275321149764
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 1275,
+     "win_rate_pct": 59.29411764705882,
+     "mean_ret_pct": 0.46258471994517075,
+     "total_ret_pct": 589.7955179300927,
+     "profit_factor": 1.424233135936272,
+     "max_dd_pct_sum": 110.6707456983014
+    },
+    "b": {
+     "trades": 770,
+     "win_rate_pct": 58.83116883116883,
+     "mean_ret_pct": 0.720196981649799,
+     "total_ret_pct": 554.5516758703452,
+     "profit_factor": 1.6887894510775443,
+     "max_dd_pct_sum": 92.88483457544265
+    }
+   },
+   "months_held_b": {
+    "IWM": 59,
+    "AGG": 63,
+    "VNQ": 58,
+    "GLD": 71,
+    "EEM": 60,
+    "TLT": 50,
+    "EFA": 69,
+    "HYG": 69,
+    "QQQ": 73,
+    "DBC": 59,
+    "LQD": 65,
+    "SPY": 74
+   },
+   "min_trades_b": 50,
+   "checks": {
+    "a_positive": true,
+    "b_positive": true,
+    "b_ci_above_zero": true,
+    "b_half_the_assets": true
+   },
+   "verdict": "PASS",
+   "recent_b_trades": [
+    {
+     "t": 1782864000000,
+     "exit_t": 1785715200000,
+     "asset": "GLD",
+     "weight": 0.041666666666666664,
+     "ret_pct": -0.17450908880598248,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1782864000000,
+     "exit_t": 1785715200000,
+     "asset": "EEM",
+     "weight": 0.08333333333333333,
+     "ret_pct": -4.7377100734456,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1782864000000,
+     "exit_t": 1785715200000,
+     "asset": "EFA",
+     "weight": 0.08333333333333333,
+     "ret_pct": 2.571069694115824,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1782864000000,
+     "exit_t": 1785715200000,
+     "asset": "HYG",
+     "weight": 0.08333333333333333,
+     "ret_pct": 0.09395176018598406,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1782864000000,
+     "exit_t": 1785715200000,
+     "asset": "DBC",
+     "weight": 0.08333333333333333,
+     "ret_pct": 10.421371202838769,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1785715200000,
+     "exit_t": 1788220800000,
+     "asset": "IWM",
+     "weight": 0.08333333333333333,
+     "ret_pct": -0.31409745514663356,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1785715200000,
+     "exit_t": 1788220800000,
+     "asset": "AGG",
+     "weight": 0.041666666666666664,
+     "ret_pct": -0.021742506953695263,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1785715200000,
+     "exit_t": 1788220800000,
+     "asset": "QQQ",
+     "weight": 0.08333333333333333,
+     "ret_pct": 2.7734958828591116,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1785715200000,
+     "exit_t": 1788220800000,
+     "asset": "SPY",
+     "weight": 0.08333333333333333,
+     "ret_pct": 1.677251691883219,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1785715200000,
+     "exit_t": 1788220800000,
+     "asset": "VNQ",
+     "weight": 0.08333333333333333,
+     "ret_pct": -2.464398959789993,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1785715200000,
+     "exit_t": 1788220800000,
+     "asset": "GLD",
+     "weight": 0.041666666666666664,
+     "ret_pct": 3.808430421036202,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1785715200000,
+     "exit_t": 1788220800000,
+     "asset": "EEM",
+     "weight": 0.08333333333333333,
+     "ret_pct": 5.208653581269894,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1785715200000,
+     "exit_t": 1788220800000,
+     "asset": "EFA",
+     "weight": 0.08333333333333333,
+     "ret_pct": 1.2485808546942367,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1785715200000,
+     "exit_t": 1788220800000,
+     "asset": "HYG",
+     "weight": 0.08333333333333333,
+     "ret_pct": 0.5734014627845729,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1785715200000,
+     "exit_t": 1788220800000,
+     "asset": "DBC",
+     "weight": 0.08333333333333333,
+     "ret_pct": 7.563881718911669,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1788220800000,
+     "exit_t": 1790812800000,
+     "asset": "IWM",
+     "weight": 0.08333333333333333,
+     "ret_pct": -4.759100740681232,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1788220800000,
+     "exit_t": 1790812800000,
+     "asset": "AGG",
+     "weight": 0.041666666666666664,
+     "ret_pct": -1.3350887808264933,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1788220800000,
+     "exit_t": 1790812800000,
+     "asset": "QQQ",
+     "weight": 0.08333333333333333,
+     "ret_pct": 5.074107888881629,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1788220800000,
+     "exit_t": 1790812800000,
+     "asset": "SPY",
+     "weight": 0.08333333333333333,
+     "ret_pct": 0.5574770218566227,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1788220800000,
+     "exit_t": 1790812800000,
+     "asset": "VNQ",
+     "weight": 0.08333333333333333,
+     "ret_pct": -6.673974082482536,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1788220800000,
+     "exit_t": 1790812800000,
+     "asset": "GLD",
+     "weight": 0.041666666666666664,
+     "ret_pct": -2.0562912113529785,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1788220800000,
+     "exit_t": 1790812800000,
+     "asset": "EEM",
+     "weight": 0.08333333333333333,
+     "ret_pct": -0.5070032064846908,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1788220800000,
+     "exit_t": 1790812800000,
+     "asset": "EFA",
+     "weight": 0.08333333333333333,
+     "ret_pct": -3.419285903218305,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1788220800000,
+     "exit_t": 1790812800000,
+     "asset": "HYG",
+     "weight": 0.08333333333333333,
+     "ret_pct": -2.748229020206705,
+     "r": null,
+     "result": "month"
+    },
+    {
+     "t": 1788220800000,
+     "exit_t": 1790812800000,
+     "asset": "DBC",
+     "weight": 0.08333333333333333,
+     "ret_pct": 2.5340489223752094,
+     "r": null,
+     "result": "month"
+    }
+   ]
+  }
+ ],
+ "ibs_qqq_leverage_sensitivity": {
+  "QQQ": {
+   "trades": 292,
+   "mean_ret_pct": 0.7699753439582816,
+   "total_pct": 777.2888294549739,
+   "cagr_pct": 13.940207147356155,
+   "max_dd_pct": 11.874016264252562,
+   "worst_trade_pct": -8.841973792254887
+  },
+  "TQQQ": {
+   "trades": 292,
+   "mean_ret_pct": 2.054220238797397,
+   "total_pct": 20158.20880021193,
+   "cagr_pct": 37.59808115769159,
+   "max_dd_pct": 35.004575330652024,
+   "worst_trade_pct": -26.080973350117233
+  },
+  "buy_and_hold_QQQ_cagr_pct": 19.14488005039596
+ },
+ "headline": "The highest-return claims did not survive: the Global Market Rotation \u201c41% a year\u201d made +29.7% a year before its 2013 article and +2.9% a year after it. GEM and bond rotation lag SPY since publication. Alvarez trend + momentum passes as a low-risk overlay (6.6% a year, 7.5% max drawdown). The highest real return so far is round 3's IBS rule taken in TQQQ: 37.6% a year 2010\u20132026 with a 35% drawdown at trade closes (TQQQ buy and hold: 41.3% a year, 82% drawdown)."
+}

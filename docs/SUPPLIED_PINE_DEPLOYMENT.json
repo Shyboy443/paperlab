@@ -1,0 +1,61 @@
+{
+  "deployment_id": "8a2b5312-3a7e-4fb7-97bc-907094f694f5",
+  "deployment_status": "SUCCESS",
+  "verified_at": "2026-10-08T13:46:18.552736+00:00",
+  "hosted": {
+    "checks": 463584,
+    "wallets": 56,
+    "settings": 8,
+    "source_sha256": "79b5fb709ee7d1dcac5b3cdbaf3373fcf2a1fbd9a61a7127ca5bdf9039f8a56f",
+    "qqq_forward_start_preserved": 1791457943261,
+    "qqq_status": "OBSERVING",
+    "default_verdicts": {
+      "BTCUSDT-15m-previous-10bars": "FAIL",
+      "BTCUSDT-30m-previous-10bars": "FAIL",
+      "ETHUSDT-15m-previous-10bars": "FAIL",
+      "ETHUSDT-30m-previous-10bars": "FAIL",
+      "SOLUSDT-15m-previous-10bars": "FAIL",
+      "SOLUSDT-30m-previous-10bars": "FAIL",
+      "QQQ-15m-previous-10bars": "FAIL",
+      "QQQ-30m-previous-10bars": "FAIL"
+    }
+  },
+  "ui_viewports_verified": [
+    1280,
+    390
+  ],
+  "api_and_engine_tests_passed": 22,
+  "archive_hashes_preserved": true,
+  "forward_start_preserved": true,
+  "forward_books_preserved": 8,
+  "stock_rule_preserved": "TREND5-SMA200-MOM63-LOT1-v1",
+  "stock_status": "WAIT_NEXT_OPEN",
+  "stock_error": null,
+  "scanner_health": {
+    "last_study_ms": 1791465658796,
+    "last_result": {
+      "market": "spot:CTSIUSDT",
+      "state": "REJECTED"
+    },
+    "working_on": null,
+    "spot": {
+      "status": "OK",
+      "last_scan_ms": 1791467139549,
+      "markets": 506,
+      "liquid": 124,
+      "error": null
+    },
+    "perp": {
+      "status": "OK",
+      "last_scan_ms": 1791467142396,
+      "markets": 525,
+      "liquid": 332,
+      "error": null
+    },
+    "status": "RUNNING",
+    "heartbeat_ms": 1791467162580,
+    "enabled": true,
+    "restarts": 0,
+    "heartbeat_age_s": 0.1
+  }
+}

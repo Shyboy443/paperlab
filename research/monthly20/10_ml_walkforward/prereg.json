@@ -1,0 +1,5 @@
+{"attempts": [
+ {"name": "A_hgb_H6_k3_1x", "cfg": {"model": "hgb", "H": 6, "win": "all", "k": 3}, "L": 1},
+ {"name": "B_hgb_H6_k3_3x", "cfg": {"model": "hgb", "H": 6, "win": "all", "k": 3}, "L": 3},
+ {"name": "C_hgb_H6_k3_5x", "cfg": {"model": "hgb", "H": 6, "win": "all", "k": 3}, "L": 5}
+]}

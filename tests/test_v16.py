@@ -48,7 +48,7 @@ def test_field_freeze_and_identity():
     assert man["starting_balance"] == 1000.0 and set(man["rules"]) == {"BTCUSDT", "UNIUSDT"}
 
 
-def test_service_runs_by_default_and_has_an_off_switch(tmp_path):
+def test_service_runs_by_default_and_has_an_off_switch(tmp_path, programs_running):
     from app.core.programs import program_retired
     from app.live.v6_service import V6ForwardService
     assert not program_retired("v16")

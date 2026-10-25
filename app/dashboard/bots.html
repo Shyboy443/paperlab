@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PaperLab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Onest:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/static/bots.css">
+</head>
+<body data-mode="public">
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#/"><i></i>PaperLab</a>
+    <nav class="nav" id="nav"></nav>
+    <span class="mode" id="mode"></span>
+  </div>
+</header>
+<main id="page"><p class="loading">Loading…</p></main>
+
+<div class="modal" id="login" hidden>
+  <form class="panel stack" id="login-form">
+    <h2>Log in</h2>
+    <p class="muted" style="margin:0">The private dashboard holds the live switches and your exchange keys.</p>
+    <input type="password" id="login-pw" placeholder="Password" autocomplete="current-password">
+    <p class="msg down" id="login-err"></p>
+    <button class="btn go" type="submit">Log in</button>
+  </form>
+</div>
+
+<div class="modal" id="confirm" hidden>
+  <div class="panel stack">
+    <h2 id="confirm-title"></h2>
+    <p id="confirm-text" style="margin:0"></p>
+    <div class="row"><button class="btn stop" id="confirm-yes">Yes, do it</button><button class="btn" id="confirm-no">Cancel</button></div>
+  </div>
+</div>
+<script src="/static/bots.js"></script>
+</body>
+</html>

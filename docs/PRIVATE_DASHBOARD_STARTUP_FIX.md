@@ -1,0 +1,7 @@
+# Private dashboard startup repair — 2026-10-08
+
+The remaining failure affected the authenticated root page, not the public chart view. `Live.init()` bound a click handler to `#live-disarm`, but the corresponding HTML button was absent. This raised a TypeError before `Poll.start()` and before the login listeners were registered. Public roster cards still loaded, making the page look partially functional while the stream remained OFF and the top-level account/engine state stayed empty.
+
+Restore the already implemented, confirmation-protected disarm control. Bind session controls and start the authenticated stream before initializing navigation, execution controls and the equity chart. Catch auxiliary initialization failures and show a persistent diagnostic without stopping the core stream. Isolate equity rendering from state acceptance, and let a transient first REST failure recover through the authenticated stream. Replace fixed script/style version strings with the existing content-hash asset mechanism.
+
+The fix changes dashboard startup and HTML; it does not arm trading, change allocations, call order endpoints or reset bot history. Browser verification rejects every non-GET/non-HEAD fetch. It uses the existing dashboard credential only in subprocess memory, never prints or persists it, and tests cached authentication, fresh login, live header fields, reconnection, and a deliberately broken optional controls panel. Backend transport/authentication and public API checks: 85 passed.

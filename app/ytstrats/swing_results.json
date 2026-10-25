@@ -1,0 +1,5330 @@
+{
+ "generated_utc": "2026-10-20T08:05:47+00:00",
+ "pre_registration": "docs/SCRIBD_SWING_STUDY.md",
+ "costs": {
+  "mt5": "half the mean spread + 0.002% slippage + 0.0025% commission (not on indices) per side; swaps not modelled",
+  "stocks": "0.03% per side"
+ },
+ "rules": [
+  {
+   "key": "turtle_s1",
+   "doc": "Original Turtle Trading Rules (466279786), System 1",
+   "assets": [
+    "EURUSD",
+    "GBPUSD",
+    "USDJPY",
+    "AUDUSD",
+    "USDCAD",
+    "USDCHF",
+    "NZDUSD",
+    "AUDJPY",
+    "GBPJPY",
+    "XAUUSD",
+    "XAGUSD",
+    "US30",
+    "US500",
+    "NAS100",
+    "UK100",
+    "GER40"
+   ],
+   "missing_data": [],
+   "kind": "turtle",
+   "note": "diversified futures in the document -> every MT5 market with long daily history",
+   "rule": "Original Turtle Trading Rules (466279786). System 1: 20-day breakout entry (skipped when the last 20-day breakout\n    was a winner, then the 55-day failsafe), 10-day exit. System 2: 55-day breakout, 20-day exit. N = 20-day Wilder\n    ATR; stop 2 N; add a unit every 1/2 N up to 4, raising earlier units' stops by 1/2 N (new unit: 2 N from its fill).\n    Intraday levels, gap-through fills at the open. One trade = the whole position; return = sum over units of the\n    move, as a % of the first fill.",
+   "windows": {
+    "a": [
+     "2015-01-01",
+     "2021-01-01"
+    ],
+    "b": [
+     "2021-01-01",
+     "2026-10-21"
+    ]
+   },
+   "first_trade": "2015-03-08",
+   "a": {
+    "trades": 1015,
+    "win_rate_pct": 23.645320197044335,
+    "mean_ret_pct": -0.20811016035231827,
+    "total_ret_pct": -211.23181275760305,
+    "profit_factor": 0.9266911456027235,
+    "max_dd_pct_sum": 466.19975722161183,
+    "mean_r": -0.05748845602961357,
+    "r_per_100": -5.748845602961357
+   },
+   "b": {
+    "trades": 1003,
+    "win_rate_pct": 22.033898305084744,
+    "mean_ret_pct": -0.6005938724698433,
+    "total_ret_pct": -602.3956540872529,
+    "profit_factor": 0.8033880637097494,
+    "max_dd_pct_sum": 628.8984430188096,
+    "mean_r": -0.26428849457458,
+    "r_per_100": -26.428849457457996,
+    "mean_ci_low": -1.241103965369699,
+    "by_asset_ret_pct": {
+     "EURUSD": -29.379351991710358,
+     "GBPUSD": -47.794356234565036,
+     "USDJPY": 45.39802441994227,
+     "AUDUSD": -146.0936166176252,
+     "USDCAD": -42.57669400851241,
+     "USDCHF": 14.394990490751852,
+     "NZDUSD": -79.85938427139934,
+     "AUDJPY": -33.8508406958698,
+     "GBPJPY": -45.15461945394703,
+     "XAUUSD": 110.02681858602352,
+     "XAGUSD": 71.73267405309747,
+     "US30": -165.8332417805617,
+     "US500": 21.072208650200523,
+     "NAS100": -39.33438976113376,
+     "UK100": -133.90690004432642,
+     "GER40": -101.23697542761761
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 1015,
+     "win_rate_pct": 23.74384236453202,
+     "mean_ret_pct": -0.17130288574332705,
+     "total_ret_pct": -173.87242902947696,
+     "profit_factor": 0.9391353549042161,
+     "max_dd_pct_sum": 458.25724871467355,
+     "mean_r": -0.03919303686528127,
+     "r_per_100": -3.919303686528127
+    },
+    "b": {
+     "trades": 1003,
+     "win_rate_pct": 22.033898305084744,
+     "mean_ret_pct": -0.5621527339342852,
+     "total_ret_pct": -563.8391921360881,
+     "profit_factor": 0.8143276862643001,
+     "max_dd_pct_sum": 595.3487481175379,
+     "mean_r": -0.24620735185852807,
+     "r_per_100": -24.62073518585281
+    }
+   },
+   "min_trades_b": 100,
+   "checks": {
+    "a_positive": false,
+    "b_positive": false,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": false
+   },
+   "verdict": "FAIL",
+   "tf": "daily",
+   "recent_b_trades": [
+    {
+     "t": 1787691600000,
+     "exit_t": 1788382800000,
+     "dir": 1,
+     "entry": 114.338,
+     "units": 2,
+     "pnl_px": -2.8377536801692145,
+     "ret_pct": -2.4818990013549427,
+     "r": -1.7683590353919427,
+     "risk_pct": 1.4035040122973952,
+     "result": "exit",
+     "asset": "AUDJPY"
+    },
+    {
+     "t": 1787864400000,
+     "exit_t": 1788210000000,
+     "dir": 1,
+     "entry": 26579.56,
+     "units": 1,
+     "pnl_px": -566.9653391390493,
+     "ret_pct": -2.133087752916336,
+     "r": -1.0054683904693276,
+     "risk_pct": 2.1214866356173205,
+     "result": "exit",
+     "asset": "GER40"
+    },
+    {
+     "t": 1788210000000,
+     "exit_t": 1788296400000,
+     "dir": 1,
+     "entry": 160.204,
+     "units": 1,
+     "pnl_px": -1.9075667645747956,
+     "ret_pct": -1.190711071243412,
+     "r": -1.0088747703670002,
+     "risk_pct": 1.1802367411866832,
+     "result": "exit",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1788210000000,
+     "exit_t": 1791752400000,
+     "dir": -1,
+     "entry": 52756.75,
+     "units": 4,
+     "pnl_px": 2198.3898576268402,
+     "ret_pct": 4.167030489229985,
+     "r": 2.106323842022446,
+     "risk_pct": 1.9783427439291073,
+     "result": "exit",
+     "asset": "US30"
+    },
+    {
+     "t": 1788296400000,
+     "exit_t": 1792098000000,
+     "dir": 1,
+     "entry": 0.81471,
+     "units": 4,
+     "pnl_px": 0.015965841522038282,
+     "ret_pct": 1.9596962749982547,
+     "r": 1.5069236612149635,
+     "risk_pct": 1.3004615465512313,
+     "result": "exit",
+     "asset": "USDCHF"
+    },
+    {
+     "t": 1788296400000,
+     "exit_t": 1792098000000,
+     "dir": -1,
+     "entry": 25804.81,
+     "units": 4,
+     "pnl_px": 229.7435530510811,
+     "ret_pct": 0.8903129031024878,
+     "r": 0.39182615796164194,
+     "risk_pct": 2.2722140546564673,
+     "result": "exit",
+     "asset": "GER40"
+    },
+    {
+     "t": 1788382800000,
+     "exit_t": 1789678800000,
+     "dir": -1,
+     "entry": 156.667,
+     "units": 4,
+     "pnl_px": -3.412201087950592,
+     "ret_pct": -2.177996060402377,
+     "r": -1.7185256665900825,
+     "risk_pct": 1.2673631256983091,
+     "result": "exit",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1788382800000,
+     "exit_t": 1791320400000,
+     "dir": -1,
+     "entry": 211.455,
+     "units": 4,
+     "pnl_px": 1.3169323309621177,
+     "ret_pct": 0.622795550335588,
+     "r": 0.5384699331374367,
+     "risk_pct": 1.1566022762066241,
+     "result": "exit",
+     "asset": "GBPJPY"
+    },
+    {
+     "t": 1788728400000,
+     "exit_t": 1789678800000,
+     "dir": -1,
+     "entry": 111.321,
+     "units": 4,
+     "pnl_px": -4.26641435221579,
+     "ret_pct": -3.83253326166293,
+     "r": -2.5341936666520826,
+     "risk_pct": 1.5123284822687133,
+     "result": "exit",
+     "asset": "AUDJPY"
+    },
+    {
+     "t": 1788987600000,
+     "exit_t": 1792098000000,
+     "dir": -1,
+     "entry": 0.58022,
+     "units": 4,
+     "pnl_px": 0.0495225925102003,
+     "ret_pct": 8.535140551894163,
+     "r": 5.48755533290948,
+     "risk_pct": 1.555363004853541,
+     "result": "exit",
+     "asset": "NZDUSD"
+    },
+    {
+     "t": 1789333200000,
+     "exit_t": 1792098000000,
+     "dir": -1,
+     "entry": 1.34747,
+     "units": 4,
+     "pnl_px": 0.057422750319299,
+     "ret_pct": 4.2615234713425165,
+     "r": 4.874164402189389,
+     "risk_pct": 0.8743085213597462,
+     "result": "exit",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1789333200000,
+     "exit_t": 1789938000000,
+     "dir": -1,
+     "entry": 28872.84,
+     "units": 1,
+     "pnl_px": -863.5387091981611,
+     "ret_pct": -2.990833978223691,
+     "r": -0.9463415086314568,
+     "risk_pct": 3.1604171971161423,
+     "result": "exit",
+     "asset": "NAS100"
+    },
+    {
+     "t": 1790024400000,
+     "exit_t": 1790802000000,
+     "dir": 1,
+     "entry": 7782.97,
+     "units": 1,
+     "pnl_px": -155.31613251662202,
+     "ret_pct": -1.9955895052482793,
+     "r": -1.0044986308317676,
+     "risk_pct": 1.9866522900044636,
+     "result": "exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1790024400000,
+     "exit_t": 1791925200000,
+     "dir": 1,
+     "entry": 30582.07,
+     "units": 4,
+     "pnl_px": -2402.729026814788,
+     "ret_pct": -7.8566592346914,
+     "r": -2.5095178927398853,
+     "risk_pct": 3.130744457898054,
+     "result": "exit",
+     "asset": "NAS100"
+    },
+    {
+     "t": 1790542800000,
+     "exit_t": 1792011600000,
+     "dir": 1,
+     "entry": 1.41749,
+     "units": 4,
+     "pnl_px": -0.008411363844408548,
+     "ret_pct": -0.5933984609703453,
+     "r": -0.7563704622217816,
+     "risk_pct": 0.7845341543709703,
+     "result": "exit",
+     "asset": "USDCAD"
+    },
+    {
+     "t": 1790542800000,
+     "exit_t": 1792443600000,
+     "dir": -1,
+     "entry": 62.301,
+     "units": 4,
+     "pnl_px": 11.938512389947334,
+     "ret_pct": 19.1626336494556,
+     "r": 2.371773601422571,
+     "risk_pct": 8.079453130754978,
+     "result": "end",
+     "asset": "XAGUSD"
+    },
+    {
+     "t": 1790629200000,
+     "exit_t": 1792443600000,
+     "dir": -1,
+     "entry": 1.13532,
+     "units": 4,
+     "pnl_px": 0.03381004927502085,
+     "ret_pct": 2.978019349172114,
+     "r": 3.502820506814205,
+     "risk_pct": 0.850177547887147,
+     "result": "end",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1790715600000,
+     "exit_t": 1791320400000,
+     "dir": -1,
+     "entry": 109.236,
+     "units": 2,
+     "pnl_px": -3.081726747573967,
+     "ret_pct": -2.8211640371067843,
+     "r": -1.7662842242495667,
+     "risk_pct": 1.5972310675567516,
+     "result": "exit",
+     "asset": "AUDJPY"
+    },
+    {
+     "t": 1790802000000,
+     "exit_t": 1791925200000,
+     "dir": -1,
+     "entry": 0.69224,
+     "units": 1,
+     "pnl_px": -0.007372820793903445,
+     "ret_pct": -1.065067143462303,
+     "r": -0.8214118635109311,
+     "risk_pct": 1.2966298525442825,
+     "result": "exit",
+     "asset": "AUDUSD"
+    },
+    {
+     "t": 1790802000000,
+     "exit_t": 1791752400000,
+     "dir": -1,
+     "entry": 10426.63,
+     "units": 2,
+     "pnl_px": -407.1442195685959,
+     "ret_pct": -3.90484959731568,
+     "r": -1.761697353700313,
+     "risk_pct": 2.2165269131578342,
+     "result": "exit",
+     "asset": "UK100"
+    },
+    {
+     "t": 1791147600000,
+     "exit_t": 1792098000000,
+     "dir": 1,
+     "entry": 7785.02,
+     "units": 2,
+     "pnl_px": -266.7400847824956,
+     "ret_pct": -3.426324977745666,
+     "r": -1.7592131104753663,
+     "risk_pct": 1.9476463410506417,
+     "result": "exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1792011600000,
+     "exit_t": 1792357200000,
+     "dir": -1,
+     "entry": 0.6904,
+     "units": 1,
+     "pnl_px": -0.008966022133925056,
+     "ret_pct": -1.2986706451224008,
+     "r": -1.0081759895657085,
+     "risk_pct": 1.2881388354446217,
+     "result": "exit",
+     "asset": "AUDUSD"
+    },
+    {
+     "t": 1792011600000,
+     "exit_t": 1792357200000,
+     "dir": -1,
+     "entry": 108.708,
+     "units": 1,
+     "pnl_px": -1.6823335720885098,
+     "ret_pct": -1.5475710822464859,
+     "r": -1.0084974018620352,
+     "risk_pct": 1.5345315509877706,
+     "result": "exit",
+     "asset": "AUDJPY"
+    },
+    {
+     "t": 1792011600000,
+     "exit_t": 1792443600000,
+     "dir": 1,
+     "entry": 10838.2,
+     "units": 1,
+     "pnl_px": -121.49764004196368,
+     "ret_pct": -1.1210130837405072,
+     "r": -0.5218663755608937,
+     "risk_pct": 2.148084521704738,
+     "result": "end",
+     "asset": "UK100"
+    },
+    {
+     "t": 1792098000000,
+     "exit_t": 1792443600000,
+     "dir": -1,
+     "entry": 29359.61,
+     "units": 2,
+     "pnl_px": -413.9421342448295,
+     "ret_pct": -1.409903381703059,
+     "r": -0.4370558250930197,
+     "risk_pct": 3.2259114299711844,
+     "result": "end",
+     "asset": "NAS100"
+    }
+   ]
+  },
+  {
+   "key": "turtle_s2",
+   "doc": "Original Turtle Trading Rules (466279786), System 2",
+   "assets": [
+    "EURUSD",
+    "GBPUSD",
+    "USDJPY",
+    "AUDUSD",
+    "USDCAD",
+    "USDCHF",
+    "NZDUSD",
+    "AUDJPY",
+    "GBPJPY",
+    "XAUUSD",
+    "XAGUSD",
+    "US30",
+    "US500",
+    "NAS100",
+    "UK100",
+    "GER40"
+   ],
+   "missing_data": [],
+   "kind": "turtle",
+   "note": "",
+   "rule": "Original Turtle Trading Rules (466279786). System 1: 20-day breakout entry (skipped when the last 20-day breakout\n    was a winner, then the 55-day failsafe), 10-day exit. System 2: 55-day breakout, 20-day exit. N = 20-day Wilder\n    ATR; stop 2 N; add a unit every 1/2 N up to 4, raising earlier units' stops by 1/2 N (new unit: 2 N from its fill).\n    Intraday levels, gap-through fills at the open. One trade = the whole position; return = sum over units of the\n    move, as a % of the first fill.",
+   "windows": {
+    "a": [
+     "2015-01-01",
+     "2021-01-01"
+    ],
+    "b": [
+     "2021-01-01",
+     "2026-10-21"
+    ]
+   },
+   "first_trade": "2015-03-08",
+   "a": {
+    "trades": 620,
+    "win_rate_pct": 21.612903225806452,
+    "mean_ret_pct": -0.1746948840197863,
+    "total_ret_pct": -108.31082809226751,
+    "profit_factor": 0.9495509201768018,
+    "max_dd_pct_sum": 252.4813837508079,
+    "mean_r": 0.019328605242005248,
+    "r_per_100": 1.9328605242005248
+   },
+   "b": {
+    "trades": 644,
+    "win_rate_pct": 15.993788819875776,
+    "mean_ret_pct": -1.248836620563753,
+    "total_ret_pct": -804.2507836430569,
+    "profit_factor": 0.6775461964077714,
+    "max_dd_pct_sum": 804.250783643057,
+    "mean_r": -0.5074012134434072,
+    "r_per_100": -50.740121344340714,
+    "mean_ci_low": -2.1700374669157716,
+    "by_asset_ret_pct": {
+     "EURUSD": -40.8516577207852,
+     "GBPUSD": -69.01203339048418,
+     "USDJPY": 41.76473896536342,
+     "AUDUSD": -111.02367498901158,
+     "USDCAD": -72.0267998299946,
+     "USDCHF": -0.9556193978828139,
+     "NZDUSD": -131.96247497050388,
+     "AUDJPY": -31.02253667139432,
+     "GBPJPY": -35.30358835866108,
+     "XAUUSD": 175.17536427833417,
+     "XAGUSD": -118.11801820144042,
+     "US30": -145.41791990680292,
+     "US500": -66.4672783814762,
+     "NAS100": -13.494452880844847,
+     "UK100": -91.0947741932152,
+     "GER40": -94.4400579942572
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 620,
+     "win_rate_pct": 21.935483870967744,
+     "mean_ret_pct": -0.13578814202189005,
+     "total_ret_pct": -84.18864805357182,
+     "profit_factor": 0.9604657965375414,
+     "max_dd_pct_sum": 242.88050881970233,
+     "mean_r": 0.038385649472173926,
+     "r_per_100": 3.8385649472173924
+    },
+    "b": {
+     "trades": 644,
+     "win_rate_pct": 16.149068322981368,
+     "mean_ret_pct": -1.2096132735767111,
+     "total_ret_pct": -778.990948183402,
+     "profit_factor": 0.6851248481429925,
+     "max_dd_pct_sum": 778.9909481834012,
+     "mean_r": -0.48873630396989476,
+     "r_per_100": -48.873630396989476
+    }
+   },
+   "min_trades_b": 100,
+   "checks": {
+    "a_positive": false,
+    "b_positive": false,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": false
+   },
+   "verdict": "FAIL",
+   "tf": "daily",
+   "recent_b_trades": [
+    {
+     "t": 1786654800000,
+     "exit_t": 1788210000000,
+     "dir": 1,
+     "entry": 1.35581,
+     "units": 4,
+     "pnl_px": -0.03530154701521382,
+     "ret_pct": -2.6037237529752564,
+     "r": -2.539874182528348,
+     "risk_pct": 1.0251388714000582,
+     "result": "exit",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1787086800000,
+     "exit_t": 1787864400000,
+     "dir": 1,
+     "entry": 1.16454,
+     "units": 3,
+     "pnl_px": -0.02334277960813247,
+     "ret_pct": -2.0044635313628105,
+     "r": -2.2826602981442603,
+     "risk_pct": 0.8781260763997095,
+     "result": "exit",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1787086800000,
+     "exit_t": 1787518800000,
+     "dir": -1,
+     "entry": 1.38311,
+     "units": 4,
+     "pnl_px": -0.027256646297089127,
+     "ret_pct": -1.9706781309577057,
+     "r": -2.55196058110436,
+     "risk_pct": 0.7722212269066067,
+     "result": "exit",
+     "asset": "USDCAD"
+    },
+    {
+     "t": 1787086800000,
+     "exit_t": 1788210000000,
+     "dir": 1,
+     "entry": 0.59353,
+     "units": 3,
+     "pnl_px": -0.020323506334921637,
+     "ret_pct": -3.4241750770679897,
+     "r": -2.272692791246974,
+     "risk_pct": 1.506659892729815,
+     "result": "exit",
+     "asset": "NZDUSD"
+    },
+    {
+     "t": 1787086800000,
+     "exit_t": 1787864400000,
+     "dir": 1,
+     "entry": 4515.4,
+     "units": 4,
+     "pnl_px": -479.63874289101295,
+     "ret_pct": -10.622286904615605,
+     "r": -2.5097383450344544,
+     "risk_pct": 4.232428024073473,
+     "result": "exit",
+     "asset": "XAUUSD"
+    },
+    {
+     "t": 1787259600000,
+     "exit_t": 1789333200000,
+     "dir": 1,
+     "entry": 0.7144,
+     "units": 4,
+     "pnl_px": -0.022738391031873695,
+     "ret_pct": -3.1828654859845598,
+     "r": -2.5333419680606486,
+     "risk_pct": 1.2563899884472136,
+     "result": "exit",
+     "asset": "AUDUSD"
+    },
+    {
+     "t": 1787778000000,
+     "exit_t": 1788382800000,
+     "dir": 1,
+     "entry": 114.665,
+     "units": 1,
+     "pnl_px": -1.584637854292808,
+     "ret_pct": -1.3819717039138428,
+     "r": -1.009386803963308,
+     "risk_pct": 1.3691200424729135,
+     "result": "exit",
+     "asset": "AUDJPY"
+    },
+    {
+     "t": 1788728400000,
+     "exit_t": 1789506000000,
+     "dir": -1,
+     "entry": 155.226,
+     "units": 4,
+     "pnl_px": -5.782410508422714,
+     "ret_pct": -3.7251559071435936,
+     "r": -2.5285817734623333,
+     "risk_pct": 1.4732194727650896,
+     "result": "exit",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1788728400000,
+     "exit_t": 1789678800000,
+     "dir": -1,
+     "entry": 209.573,
+     "units": 4,
+     "pnl_px": -7.18174767237204,
+     "ret_pct": -3.426847767781174,
+     "r": -2.53746606180711,
+     "risk_pct": 1.3504999414024368,
+     "result": "exit",
+     "asset": "GBPJPY"
+    },
+    {
+     "t": 1789506000000,
+     "exit_t": 1792443600000,
+     "dir": 1,
+     "entry": 0.8207,
+     "units": 4,
+     "pnl_px": -0.0007703642010478129,
+     "ret_pct": -0.09386672365636808,
+     "r": -0.0750991764190199,
+     "risk_pct": 1.2499035027046586,
+     "result": "end",
+     "asset": "USDCHF"
+    },
+    {
+     "t": 1789506000000,
+     "exit_t": 1790024400000,
+     "dir": -1,
+     "entry": 51480.07,
+     "units": 2,
+     "pnl_px": -1864.3481584207766,
+     "ret_pct": -3.6214949948995345,
+     "r": -1.7579564399647258,
+     "risk_pct": 2.0600595740428025,
+     "result": "exit",
+     "asset": "US30"
+    },
+    {
+     "t": 1789938000000,
+     "exit_t": 1791925200000,
+     "dir": 1,
+     "entry": 30246.21,
+     "units": 4,
+     "pnl_px": -2276.2606320181694,
+     "ret_pct": -7.525771433902527,
+     "r": -2.509937208510591,
+     "risk_pct": 2.9983903216321326,
+     "result": "exit",
+     "asset": "NAS100"
+    },
+    {
+     "t": 1790110800000,
+     "exit_t": 1792098000000,
+     "dir": -1,
+     "entry": 1.32735,
+     "units": 4,
+     "pnl_px": -0.031025960841422284,
+     "ret_pct": -2.33743630854125,
+     "r": -2.544442632982902,
+     "risk_pct": 0.9186437447013791,
+     "result": "exit",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1790110800000,
+     "exit_t": 1792443600000,
+     "dir": -1,
+     "entry": 0.56727,
+     "units": 4,
+     "pnl_px": -0.019237639876506174,
+     "ret_pct": -3.391266923423797,
+     "r": -2.1126293749398672,
+     "risk_pct": 1.6052351461412033,
+     "result": "end",
+     "asset": "NZDUSD"
+    },
+    {
+     "t": 1790197200000,
+     "exit_t": 1791752400000,
+     "dir": -1,
+     "entry": 51191.77,
+     "units": 3,
+     "pnl_px": -2550.725726609511,
+     "ret_pct": -4.982687112810344,
+     "r": -2.261116212679647,
+     "risk_pct": 2.2036404342549756,
+     "result": "exit",
+     "asset": "US30"
+    },
+    {
+     "t": 1790542800000,
+     "exit_t": 1792098000000,
+     "dir": 1,
+     "entry": 1.41749,
+     "units": 4,
+     "pnl_px": -0.0283710553906662,
+     "ret_pct": -2.001499509038244,
+     "r": -2.5511948688110606,
+     "risk_pct": 0.7845341543709703,
+     "result": "exit",
+     "asset": "USDCAD"
+    },
+    {
+     "t": 1790629200000,
+     "exit_t": 1792443600000,
+     "dir": -1,
+     "entry": 1.13532,
+     "units": 4,
+     "pnl_px": 0.03381004927502085,
+     "ret_pct": 2.978019349172114,
+     "r": 3.502820506814205,
+     "risk_pct": 0.850177547887147,
+     "result": "end",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1790715600000,
+     "exit_t": 1791320400000,
+     "dir": -1,
+     "entry": 109.236,
+     "units": 2,
+     "pnl_px": -3.081726747573967,
+     "ret_pct": -2.8211640371067843,
+     "r": -1.7662842242495667,
+     "risk_pct": 1.5972310675567516,
+     "result": "exit",
+     "asset": "AUDJPY"
+    },
+    {
+     "t": 1790715600000,
+     "exit_t": 1790802000000,
+     "dir": -1,
+     "entry": 207.097,
+     "units": 1,
+     "pnl_px": -2.8896687979444664,
+     "ret_pct": -1.3953214184389278,
+     "r": -1.0092202551392755,
+     "risk_pct": 1.3825737358455703,
+     "result": "exit",
+     "asset": "GBPJPY"
+    },
+    {
+     "t": 1790802000000,
+     "exit_t": 1791925200000,
+     "dir": -1,
+     "entry": 0.69224,
+     "units": 1,
+     "pnl_px": -0.009048698965963164,
+     "ret_pct": -1.3071621064895362,
+     "r": -1.0081227915002782,
+     "risk_pct": 1.2966298525442825,
+     "result": "exit",
+     "asset": "AUDUSD"
+    },
+    {
+     "t": 1790802000000,
+     "exit_t": 1791752400000,
+     "dir": -1,
+     "entry": 10426.63,
+     "units": 2,
+     "pnl_px": -407.1442195685959,
+     "ret_pct": -3.90484959731568,
+     "r": -1.761697353700313,
+     "risk_pct": 2.2165269131578342,
+     "result": "exit",
+     "asset": "UK100"
+    },
+    {
+     "t": 1791234000000,
+     "exit_t": 1792098000000,
+     "dir": 1,
+     "entry": 7817.54,
+     "units": 1,
+     "pnl_px": -153.46720928997001,
+     "ret_pct": -1.9631138349144361,
+     "r": -1.0045741452922485,
+     "risk_pct": 1.9541751538342957,
+     "result": "exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1791925200000,
+     "exit_t": 1792443600000,
+     "dir": -1,
+     "entry": 56.56,
+     "units": 2,
+     "pnl_px": -2.8600105150896766,
+     "ret_pct": -5.056595677315553,
+     "r": -0.6358211967164934,
+     "risk_pct": 7.9528579786720135,
+     "result": "end",
+     "asset": "XAGUSD"
+    },
+    {
+     "t": 1792011600000,
+     "exit_t": 1792357200000,
+     "dir": -1,
+     "entry": 0.6904,
+     "units": 1,
+     "pnl_px": -0.008966022133925056,
+     "ret_pct": -1.2986706451224008,
+     "r": -1.0081759895657085,
+     "risk_pct": 1.2881388354446217,
+     "result": "exit",
+     "asset": "AUDUSD"
+    },
+    {
+     "t": 1792011600000,
+     "exit_t": 1792357200000,
+     "dir": -1,
+     "entry": 108.708,
+     "units": 1,
+     "pnl_px": -1.6823335720885098,
+     "ret_pct": -1.5475710822464859,
+     "r": -1.0084974018620352,
+     "risk_pct": 1.5345315509877706,
+     "result": "exit",
+     "asset": "AUDJPY"
+    }
+   ]
+  },
+  {
+   "key": "rsi2_sp500",
+   "doc": "S&P 500 Trading with 2-Period RSI (439781936)",
+   "assets": [
+    "US500"
+   ],
+   "missing_data": [],
+   "kind": "plan",
+   "note": "",
+   "rule": "S&P 500 2-period RSI (439781936): long only. Close > SMA200 and RSI(2) < 10 -> buy at the close. Exit when the\n    close is above SMA10. No stop.",
+   "windows": {
+    "a": [
+     "2015-01-01",
+     "2021-01-01"
+    ],
+    "b": [
+     "2021-01-01",
+     "2026-10-21"
+    ]
+   },
+   "first_trade": "2015-11-09",
+   "a": {
+    "trades": 41,
+    "win_rate_pct": 75.60975609756098,
+    "mean_ret_pct": -0.2542612557342875,
+    "total_ret_pct": -10.424711485105787,
+    "profit_factor": 0.737995491969568,
+    "max_dd_pct_sum": 28.9009409186969
+   },
+   "b": {
+    "trades": 53,
+    "win_rate_pct": 84.90566037735849,
+    "mean_ret_pct": 0.815313826098722,
+    "total_ret_pct": 43.21163278323227,
+    "profit_factor": 3.49252337519431,
+    "max_dd_pct_sum": 5.63498685256646,
+    "mean_ci_low": 0.37270529936220165,
+    "by_asset_ret_pct": {
+     "US500": 43.21163278323227
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 41,
+     "win_rate_pct": 75.60975609756098,
+     "mean_ret_pct": -0.24524544312317464,
+     "total_ret_pct": -10.055063168050161,
+     "profit_factor": 0.7467226600919639,
+     "max_dd_pct_sum": 28.739754201349115
+    },
+    "b": {
+     "trades": 53,
+     "win_rate_pct": 84.90566037735849,
+     "mean_ret_pct": 0.8243779155270103,
+     "total_ret_pct": 43.69202952293155,
+     "profit_factor": 3.530661208045567,
+     "max_dd_pct_sum": 5.626213906781931
+    }
+   },
+   "min_trades_b": 30,
+   "checks": {
+    "a_positive": false,
+    "b_positive": true,
+    "b_ci_above_zero": true,
+    "b_half_the_assets": true
+   },
+   "verdict": "FAIL",
+   "tf": "daily",
+   "recent_b_trades": [
+    {
+     "t": 1725570000000,
+     "exit_t": 1726088400000,
+     "dir": 1,
+     "entry": 5502.33,
+     "pnl_px": 49.32106258840031,
+     "ret_pct": 0.8963668589197723,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1729717200000,
+     "exit_t": 1730235600000,
+     "dir": 1,
+     "entry": 5807.68,
+     "pnl_px": 43.613755368814054,
+     "ret_pct": 0.7509669156843017,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1730408400000,
+     "exit_t": 1730844000000,
+     "dir": 1,
+     "entry": 5715.28,
+     "pnl_px": 78.51052146793336,
+     "ret_pct": 1.3736951027409567,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1731880800000,
+     "exit_t": 1732485600000,
+     "dir": 1,
+     "entry": 5875.72,
+     "pnl_px": 115.10438636838171,
+     "ret_pct": 1.9589835180774733,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1734559200000,
+     "exit_t": 1735164000000,
+     "dir": 1,
+     "entry": 5872.35,
+     "pnl_px": 157.01279899124893,
+     "ret_pct": 2.67376431907582,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1735768800000,
+     "exit_t": 1736200800000,
+     "dir": 1,
+     "entry": 5883.09,
+     "pnl_px": 86.89499432885987,
+     "ret_pct": 1.477029831752699,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1736719200000,
+     "exit_t": 1736978400000,
+     "dir": 1,
+     "entry": 5804.13,
+     "pnl_px": 133.3300263640176,
+     "ret_pct": 2.2971578232055037,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1740348000000,
+     "exit_t": 1742418000000,
+     "dir": 1,
+     "entry": 6018.79,
+     "pnl_px": -339.15802518358487,
+     "ret_pct": -5.634986852566461,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1748206800000,
+     "exit_t": 1748379600000,
+     "dir": 1,
+     "entry": 5802.13,
+     "pnl_px": 123.71064109465624,
+     "ret_pct": 2.1321590708008307,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1754254800000,
+     "exit_t": 1754600400000,
+     "dir": 1,
+     "entry": 6236.52,
+     "pnl_px": 113.48188914320963,
+     "ret_pct": 1.8196348146596117,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1755723600000,
+     "exit_t": 1756069200000,
+     "dir": 1,
+     "entry": 6397.99,
+     "pnl_px": 76.3089906320647,
+     "ret_pct": 1.1927025617743183,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1760302800000,
+     "exit_t": 1760907600000,
+     "dir": 1,
+     "entry": 6621.82,
+     "pnl_px": 65.40927682529673,
+     "ret_pct": 0.9877839751804901,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1763416800000,
+     "exit_t": 1764021600000,
+     "dir": 1,
+     "entry": 6679.17,
+     "pnl_px": 32.415588892810774,
+     "ret_pct": 0.48532360896355053,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1766008800000,
+     "exit_t": 1766354400000,
+     "dir": 1,
+     "entry": 6737.29,
+     "pnl_px": 114.82662249129862,
+     "ret_pct": 1.7043443653352999,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1767304800000,
+     "exit_t": 1767650400000,
+     "dir": 1,
+     "entry": 6853.17,
+     "pnl_px": 47.39920510267166,
+     "ret_pct": 0.6916391261660174,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1768860000000,
+     "exit_t": 1769464800000,
+     "dir": 1,
+     "entry": 6879.16,
+     "pnl_px": 67.02597302770937,
+     "ret_pct": 0.9743336835850507,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1770328800000,
+     "exit_t": 1770674400000,
+     "dir": 1,
+     "entry": 6767.41,
+     "pnl_px": 196.9601962542747,
+     "ret_pct": 2.9104221002462496,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1771192800000,
+     "exit_t": 1771797600000,
+     "dir": 1,
+     "entry": 6842.19,
+     "pnl_px": 62.309523300250476,
+     "ret_pct": 0.9106663699816941,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1773349200000,
+     "exit_t": 1775077200000,
+     "dir": 1,
+     "entry": 6684.35,
+     "pnl_px": -111.20839604462253,
+     "ret_pct": -1.663712942090443,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1780866000000,
+     "exit_t": 1781557200000,
+     "dir": 1,
+     "entry": 7369.4,
+     "pnl_px": 192.55605166429177,
+     "ret_pct": 2.6129135569285395,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1782248400000,
+     "exit_t": 1782853200000,
+     "dir": 1,
+     "entry": 7390.36,
+     "pnl_px": 98.15842031802822,
+     "ret_pct": 1.3281953831481583,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1785358800000,
+     "exit_t": 1785445200000,
+     "dir": 1,
+     "entry": 7306.36,
+     "pnl_px": 133.28441777817716,
+     "ret_pct": 1.8242246177053576,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1788296400000,
+     "exit_t": 1788469200000,
+     "dir": 1,
+     "entry": 7639.34,
+     "pnl_px": 102.51574749946576,
+     "ret_pct": 1.3419450829451989,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1789074000000,
+     "exit_t": 1789938000000,
+     "dir": 1,
+     "entry": 7597.93,
+     "pnl_px": 57.1915314738626,
+     "ret_pct": 0.7527251695377898,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1792011600000,
+     "exit_t": 1792443600000,
+     "dir": 1,
+     "entry": 7723.77,
+     "pnl_px": -29.7259053225589,
+     "ret_pct": -0.38486264249917984,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "US500"
+    }
+   ],
+   "buy_and_hold_pct": {
+    "a": 81.97966101694915,
+    "b": 104.68816918268269
+   },
+   "swap_sensitivity": {
+    "a": {
+     "mean_ret_pct": -0.3880160168435425,
+     "profit_factor": 0.626539314476553
+    },
+    "b": {
+     "mean_ret_pct": 0.6978777961168148,
+     "profit_factor": 2.878343121094953
+    },
+    "text": "With the broker's current long financing (6.14% a year, per night held): window A -0.388% per trade (PF 0.63), window B +0.698% (PF 2.88). Not part of the verdict."
+   },
+   "random_timing": {
+    "a": {
+     "rule_mean_pct": -0.2542612557342875,
+     "random_mean_pct": 0.17997906056267882,
+     "edge_pct": -0.4342403162969663,
+     "z": -0.7107692876990567
+    },
+    "b": {
+     "rule_mean_pct": 0.815313826098722,
+     "random_mean_pct": 0.2444449444802343,
+     "edge_pct": 0.5708688816184877,
+     "z": 2.6226491452629284
+    }
+   }
+  },
+  {
+   "key": "r2_improved",
+   "doc": "The Improved R2 Strategy, Larry Connors (100141147)",
+   "assets": [
+    "US500"
+   ],
+   "missing_data": [],
+   "kind": "plan",
+   "note": "",
+   "rule": "Connors' Improved R2 (100141147): long only. Close > SMA200; RSI(2) < 65 on day 1, lower on day 2, lower again\n    on day 3 -> buy at the close of day 3. Exit when RSI(2) closes above 75. No stop.",
+   "windows": {
+    "a": [
+     "2015-01-01",
+     "2021-01-01"
+    ],
+    "b": [
+     "2021-01-01",
+     "2026-10-21"
+    ]
+   },
+   "first_trade": "2016-04-11",
+   "a": {
+    "trades": 48,
+    "win_rate_pct": 72.91666666666666,
+    "mean_ret_pct": -0.20051058723440296,
+    "total_ret_pct": -9.624508187251342,
+    "profit_factor": 0.7541818272550445,
+    "max_dd_pct_sum": 28.2613085537117
+   },
+   "b": {
+    "trades": 53,
+    "win_rate_pct": 81.13207547169812,
+    "mean_ret_pct": 0.6792731812923727,
+    "total_ret_pct": 36.00147860849575,
+    "profit_factor": 3.1203516436305376,
+    "max_dd_pct_sum": 5.206660847292955,
+    "mean_ci_low": 0.23493574201239956,
+    "by_asset_ret_pct": {
+     "US500": 36.001478608495745
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 48,
+     "win_rate_pct": 72.91666666666666,
+     "mean_ret_pct": -0.1914923485091828,
+     "total_ret_pct": -9.191632728440775,
+     "profit_factor": 0.7645427187556637,
+     "max_dd_pct_sum": 28.127174832813797
+    },
+    "b": {
+     "trades": 53,
+     "win_rate_pct": 81.13207547169812,
+     "mean_ret_pct": 0.6883311303295376,
+     "total_ret_pct": 36.48154990746549,
+     "profit_factor": 3.160012754142463,
+     "max_dd_pct_sum": 5.197868568395112
+    }
+   },
+   "min_trades_b": 30,
+   "checks": {
+    "a_positive": false,
+    "b_positive": true,
+    "b_ci_above_zero": true,
+    "b_half_the_assets": true
+   },
+   "verdict": "FAIL",
+   "tf": "daily",
+   "recent_b_trades": [
+    {
+     "t": 1721595600000,
+     "exit_t": 1722459600000,
+     "dir": 1,
+     "entry": 5518.97,
+     "pnl_px": 20.280871218510583,
+     "ret_pct": 0.3674756561189965,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1722891600000,
+     "exit_t": 1723150800000,
+     "dir": 1,
+     "entry": 5223.22,
+     "pnl_px": 97.61407887980931,
+     "ret_pct": 1.8688486963943565,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1725570000000,
+     "exit_t": 1726088400000,
+     "dir": 1,
+     "entry": 5502.33,
+     "pnl_px": 49.32106258840031,
+     "ret_pct": 0.8963668589197723,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1735768800000,
+     "exit_t": 1736200800000,
+     "dir": 1,
+     "entry": 5883.09,
+     "pnl_px": 86.89499432885987,
+     "ret_pct": 1.477029831752699,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1736719200000,
+     "exit_t": 1736978400000,
+     "dir": 1,
+     "entry": 5804.13,
+     "pnl_px": 133.3300263640176,
+     "ret_pct": 2.2971578232055037,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1738620000000,
+     "exit_t": 1738792800000,
+     "dir": 1,
+     "entry": 6032.07,
+     "pnl_px": 24.334369237850296,
+     "ret_pct": 0.40341655912232943,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1740434400000,
+     "exit_t": 1742245200000,
+     "dir": 1,
+     "entry": 5990.34,
+     "pnl_px": -311.89668739972876,
+     "ret_pct": -5.206660847292954,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1748811600000,
+     "exit_t": 1748898000000,
+     "dir": 1,
+     "entry": 5891.63,
+     "pnl_px": 48.03597735626772,
+     "ret_pct": 0.8153257647928964,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1750366800000,
+     "exit_t": 1750712400000,
+     "dir": 1,
+     "entry": 5944.59,
+     "pnl_px": 81.28969554934883,
+     "ret_pct": 1.36745672198333,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1755723600000,
+     "exit_t": 1756069200000,
+     "dir": 1,
+     "entry": 6397.99,
+     "pnl_px": 76.3089906320647,
+     "ret_pct": 1.1927025617743183,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1758834000000,
+     "exit_t": 1759266000000,
+     "dir": 1,
+     "entry": 6609.47,
+     "pnl_px": 67.2803072438337,
+     "ret_pct": 1.0179380077953861,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1762725600000,
+     "exit_t": 1762812000000,
+     "dir": 1,
+     "entry": 6768.71,
+     "pnl_px": 70.34579382356605,
+     "ret_pct": 1.0392791805760042,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1763503200000,
+     "exit_t": 1764021600000,
+     "dir": 1,
+     "entry": 6615.4,
+     "pnl_px": 96.18846711401511,
+     "ret_pct": 1.454008330773878,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1765922400000,
+     "exit_t": 1766354400000,
+     "dir": 1,
+     "entry": 6797.01,
+     "pnl_px": 55.10392706444691,
+     "ret_pct": 0.8107083418215789,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1767304800000,
+     "exit_t": 1767650400000,
+     "dir": 1,
+     "entry": 6853.17,
+     "pnl_px": 47.39920510267166,
+     "ret_pct": 0.6916391261660174,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1768860000000,
+     "exit_t": 1769464800000,
+     "dir": 1,
+     "entry": 6879.16,
+     "pnl_px": 67.02597302770937,
+     "ret_pct": 0.9743336835850507,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1770328800000,
+     "exit_t": 1771452000000,
+     "dir": 1,
+     "entry": 6767.41,
+     "pnl_px": 108.95416853353072,
+     "ret_pct": 1.609983265880606,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1773003600000,
+     "exit_t": 1774990800000,
+     "dir": 1,
+     "entry": 6686.01,
+     "pnl_px": -167.27601520459484,
+     "ret_pct": -2.5018810202885553,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1781125200000,
+     "exit_t": 1781557200000,
+     "dir": 1,
+     "entry": 7259.79,
+     "pnl_px": 302.1709988467628,
+     "ret_pct": 4.162255366157462,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1782162000000,
+     "exit_t": 1782853200000,
+     "dir": 1,
+     "entry": 7482.37,
+     "pnl_px": 6.1442675011394385,
+     "ret_pct": 0.08211659542550608,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1784581200000,
+     "exit_t": 1785704400000,
+     "dir": 1,
+     "entry": 7446.04,
+     "pnl_px": 74.91444307398706,
+     "ret_pct": 1.006097779141491,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1787086800000,
+     "exit_t": 1787778000000,
+     "dir": 1,
+     "entry": 7697.42,
+     "pnl_px": 12.47456858872647,
+     "ret_pct": 0.1620616854572892,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1788901200000,
+     "exit_t": 1789938000000,
+     "dir": 1,
+     "entry": 7674.3,
+     "pnl_px": -19.18191544088313,
+     "ret_pct": -0.24995003376051406,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1790802000000,
+     "exit_t": 1791147600000,
+     "dir": 1,
+     "entry": 7666.75,
+     "pnl_px": 62.63507319140899,
+     "ret_pct": 0.8169703354277756,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1792011600000,
+     "exit_t": 1792443600000,
+     "dir": 1,
+     "entry": 7723.77,
+     "pnl_px": -29.7259053225589,
+     "ret_pct": -0.38486264249917984,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "US500"
+    }
+   ],
+   "buy_and_hold_pct": {
+    "a": 81.97966101694915,
+    "b": 104.68816918268269
+   },
+   "swap_sensitivity": {
+    "a": {
+     "mean_ret_pct": -0.3042457470517545,
+     "profit_factor": 0.6501868277766029
+    },
+    "b": {
+     "mean_ret_pct": 0.5710415969036419,
+     "profit_factor": 2.558440649172815
+    },
+    "text": "With the broker's current long financing (6.14% a year, per night held): window A -0.304% per trade (PF 0.65), window B +0.571% (PF 2.56). Not part of the verdict."
+   },
+   "random_timing": {
+    "a": {
+     "rule_mean_pct": -0.20051058723440296,
+     "random_mean_pct": 0.1357200948958979,
+     "edge_pct": -0.33623068213030083,
+     "z": -0.6367679268617216
+    },
+    "b": {
+     "rule_mean_pct": 0.6792731812923727,
+     "random_mean_pct": 0.23461183849134928,
+     "edge_pct": 0.44466134280102343,
+     "z": 2.0530008657535026
+    }
+   }
+  },
+  {
+   "key": "rsi2_15_85",
+   "doc": "RSI Trading Strategy 91% Win Rate, QuantifiedStrategies (896242411)",
+   "assets": [
+    "US500"
+   ],
+   "missing_data": [],
+   "kind": "plan",
+   "note": "",
+   "rule": "QuantifiedStrategies RSI (896242411), first rule: RSI(2) crosses below 15 -> buy at the close; exit when RSI(2)\n    is above 85. No stop.",
+   "windows": {
+    "a": [
+     "2015-01-01",
+     "2021-01-01"
+    ],
+    "b": [
+     "2021-01-01",
+     "2026-10-21"
+    ]
+   },
+   "first_trade": "2015-01-13",
+   "a": {
+    "trades": 72,
+    "win_rate_pct": 73.61111111111111,
+    "mean_ret_pct": 0.11364822466357971,
+    "total_ret_pct": 8.18267217577774,
+    "profit_factor": 1.1420011546347044,
+    "max_dd_pct_sum": 28.71691125664096
+   },
+   "b": {
+    "trades": 79,
+    "win_rate_pct": 77.21518987341773,
+    "mean_ret_pct": 1.0848910150238127,
+    "total_ret_pct": 85.70639018688121,
+    "profit_factor": 3.5734541839839595,
+    "max_dd_pct_sum": 7.047918975582149,
+    "mean_ci_low": 0.6452137754268142,
+    "by_asset_ret_pct": {
+     "US500": 85.70639018688118
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 72,
+     "win_rate_pct": 73.61111111111111,
+     "mean_ret_pct": 0.12268064340082746,
+     "total_ret_pct": 8.833006324859577,
+     "profit_factor": 1.1537376416866207,
+     "max_dd_pct_sum": 28.609879967210727
+    },
+    "b": {
+     "trades": 79,
+     "win_rate_pct": 77.21518987341773,
+     "mean_ret_pct": 1.0939672722081433,
+     "total_ret_pct": 86.42341450444331,
+     "profit_factor": 3.6075886357912217,
+     "max_dd_pct_sum": 7.030182515470727
+    }
+   },
+   "min_trades_b": 30,
+   "checks": {
+    "a_positive": true,
+    "b_positive": true,
+    "b_ci_above_zero": true,
+    "b_half_the_assets": true
+   },
+   "verdict": "PASS",
+   "tf": "daily",
+   "recent_b_trades": [
+    {
+     "t": 1735596000000,
+     "exit_t": 1736200800000,
+     "dir": 1,
+     "entry": 5889.36,
+     "pnl_px": 80.62471133612144,
+     "ret_pct": 1.3689893525972507,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1736719200000,
+     "exit_t": 1736978400000,
+     "dir": 1,
+     "entry": 5804.13,
+     "pnl_px": 133.3300263640176,
+     "ret_pct": 2.2971578232055037,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1738706400000,
+     "exit_t": 1738879200000,
+     "dir": 1,
+     "entry": 6008.29,
+     "pnl_px": 52.98522272950686,
+     "ret_pct": 0.8818685970468613,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1740348000000,
+     "exit_t": 1742850000000,
+     "dir": 1,
+     "entry": 6018.79,
+     "pnl_px": -253.83187650262698,
+     "ret_pct": -4.21732402198161,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1743368400000,
+     "exit_t": 1745528400000,
+     "dir": 1,
+     "entry": 5544.85,
+     "pnl_px": -43.90856776079818,
+     "ret_pct": -0.7918801727873284,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1747861200000,
+     "exit_t": 1748898000000,
+     "dir": 1,
+     "entry": 5841.98,
+     "pnl_px": 97.68821827963075,
+     "ret_pct": 1.672176527130027,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1750366800000,
+     "exit_t": 1750798800000,
+     "dir": 1,
+     "entry": 5944.59,
+     "pnl_px": 147.40671126228517,
+     "ret_pct": 2.4796783506059317,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1754254800000,
+     "exit_t": 1754859600000,
+     "dir": 1,
+     "entry": 6236.52,
+     "pnl_px": 165.12955795103153,
+     "ret_pct": 2.6477836670295534,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1755637200000,
+     "exit_t": 1756414800000,
+     "dir": 1,
+     "entry": 6418.74,
+     "pnl_px": 86.17667207752129,
+     "ret_pct": 1.3425792613117418,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1758834000000,
+     "exit_t": 1759352400000,
+     "dir": 1,
+     "entry": 6609.47,
+     "pnl_px": 99.88883541078576,
+     "ret_pct": 1.5112987185173055,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1760302800000,
+     "exit_t": 1760994000000,
+     "dir": 1,
+     "entry": 6621.82,
+     "pnl_px": 122.36670596941167,
+     "ret_pct": 1.8479316255864953,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1762293600000,
+     "exit_t": 1762898400000,
+     "dir": 1,
+     "entry": 6780.73,
+     "pnl_px": 74.01454314911825,
+     "ret_pct": 1.09154240250118,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1763071200000,
+     "exit_t": 1764108000000,
+     "dir": 1,
+     "entry": 6746.93,
+     "pnl_px": 20.86999312889475,
+     "ret_pct": 0.3093257693335302,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1765922400000,
+     "exit_t": 1766440800000,
+     "dir": 1,
+     "entry": 6797.01,
+     "pnl_px": 80.17279554483684,
+     "ret_pct": 1.17953034562016,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1767304800000,
+     "exit_t": 1767736800000,
+     "dir": 1,
+     "entry": 6853.17,
+     "pnl_px": 92.70716006264138,
+     "ret_pct": 1.3527631747445543,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1768428000000,
+     "exit_t": 1769464800000,
+     "dir": 1,
+     "entry": 6919.17,
+     "pnl_px": 27.0141672000409,
+     "ret_pct": 0.39042496715705644,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1770328800000,
+     "exit_t": 1772056800000,
+     "dir": 1,
+     "entry": 6767.41,
+     "pnl_px": 184.58075501824715,
+     "ret_pct": 2.727494787788048,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1772575200000,
+     "exit_t": 1775595600000,
+     "dir": 1,
+     "entry": 6804.29,
+     "pnl_px": -149.1175122923687,
+     "ret_pct": -2.191521999978965,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1779224400000,
+     "exit_t": 1779742800000,
+     "dir": 1,
+     "entry": 7361.0,
+     "pnl_px": 191.9268383570252,
+     "ret_pct": 2.6073473489610812,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1780866000000,
+     "exit_t": 1781557200000,
+     "dir": 1,
+     "entry": 7369.4,
+     "pnl_px": 192.55605166429177,
+     "ret_pct": 2.6129135569285395,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1782248400000,
+     "exit_t": 1782853200000,
+     "dir": 1,
+     "entry": 7390.36,
+     "pnl_px": 98.15842031802822,
+     "ret_pct": 1.3281953831481583,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1784494800000,
+     "exit_t": 1785790800000,
+     "dir": 1,
+     "entry": 7450.16,
+     "pnl_px": 151.53061296811575,
+     "ret_pct": 2.033924277708341,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1787086800000,
+     "exit_t": 1787864400000,
+     "dir": 1,
+     "entry": 7697.42,
+     "pnl_px": 23.27408113711863,
+     "ret_pct": 0.30236210492760723,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1788296400000,
+     "exit_t": 1790024400000,
+     "dir": 1,
+     "entry": 7639.34,
+     "pnl_px": 127.45462184732787,
+     "ret_pct": 1.6683983413138814,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1792011600000,
+     "exit_t": 1792443600000,
+     "dir": 1,
+     "entry": 7723.77,
+     "pnl_px": -29.7259053225589,
+     "ret_pct": -0.38486264249917984,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "US500"
+    }
+   ],
+   "buy_and_hold_pct": {
+    "a": 81.97966101694915,
+    "b": 104.68816918268269
+   },
+   "swap_sensitivity": {
+    "a": {
+     "mean_ret_pct": -0.07443016194220421,
+     "profit_factor": 0.9171297357566984
+    },
+    "b": {
+     "mean_ret_pct": 0.8943135917534814,
+     "profit_factor": 2.7865936553931294
+    },
+    "text": "With the broker's current long financing (6.14% a year, per night held): window A -0.074% per trade (PF 0.92), window B +0.894% (PF 2.79). Not part of the verdict."
+   },
+   "random_timing": {
+    "a": {
+     "rule_mean_pct": 0.11364822466357971,
+     "random_mean_pct": 0.35646885404756307,
+     "edge_pct": -0.24282062938398336,
+     "z": -0.6670428744698039
+    },
+    "b": {
+     "rule_mean_pct": 1.0848910150238127,
+     "random_mean_pct": 0.45775734254667955,
+     "edge_pct": 0.6271336724771331,
+     "z": 2.8031266178753853
+    }
+   }
+  },
+  {
+   "key": "rsi2_rsi30",
+   "doc": "RSI Trading Strategy 91% Win Rate, AFL rule (896242411)",
+   "assets": [
+    "US500"
+   ],
+   "missing_data": [],
+   "kind": "plan",
+   "note": "",
+   "rule": "QuantifiedStrategies RSI (896242411), AFL rule: RSI(30) > 50 and RSI(2) < 15 -> buy at the close; exit when\n    RSI(2) > 85. No stop.",
+   "windows": {
+    "a": [
+     "2015-01-01",
+     "2021-01-01"
+    ],
+    "b": [
+     "2021-01-01",
+     "2026-10-21"
+    ]
+   },
+   "first_trade": "2015-03-04",
+   "a": {
+    "trades": 46,
+    "win_rate_pct": 71.73913043478261,
+    "mean_ret_pct": -0.11007425665669902,
+    "total_ret_pct": -5.063415806208155,
+    "profit_factor": 0.879806756866843,
+    "max_dd_pct_sum": 25.03748319534946
+   },
+   "b": {
+    "trades": 58,
+    "win_rate_pct": 81.03448275862068,
+    "mean_ret_pct": 1.0468581902131608,
+    "total_ret_pct": 60.717775032363335,
+    "profit_factor": 3.9411340987239045,
+    "max_dd_pct_sum": 9.17308280869353,
+    "mean_ci_low": 0.5549176161782595,
+    "by_asset_ret_pct": {
+     "US500": 60.71777503236332
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 46,
+     "win_rate_pct": 71.73913043478261,
+     "mean_ret_pct": -0.10105193595699301,
+     "total_ret_pct": -4.648389054021679,
+     "profit_factor": 0.8893552570884438,
+     "max_dd_pct_sum": 24.89417667337429
+    },
+    "b": {
+     "trades": 58,
+     "win_rate_pct": 81.03448275862068,
+     "mean_ret_pct": 1.0559327307309747,
+     "total_ret_pct": 61.24409838239654,
+     "profit_factor": 3.9808322881254554,
+     "max_dd_pct_sum": 9.14641498186287
+    }
+   },
+   "min_trades_b": 30,
+   "checks": {
+    "a_positive": false,
+    "b_positive": true,
+    "b_ci_above_zero": true,
+    "b_half_the_assets": true
+   },
+   "verdict": "FAIL",
+   "tf": "daily",
+   "recent_b_trades": [
+    {
+     "t": 1719262800000,
+     "exit_t": 1719522000000,
+     "dir": 1,
+     "entry": 5452.83,
+     "pnl_px": 33.55624266441737,
+     "ret_pct": 0.6153913227519906,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1721336400000,
+     "exit_t": 1723582800000,
+     "dir": 1,
+     "entry": 5557.13,
+     "pnl_px": -124.1760533229226,
+     "ret_pct": -2.2345356923973814,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1725397200000,
+     "exit_t": 1726174800000,
+     "dir": 1,
+     "entry": 5527.56,
+     "pnl_px": 65.34806160160588,
+     "ret_pct": 1.1822225647773317,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1729717200000,
+     "exit_t": 1730930400000,
+     "dir": 1,
+     "entry": 5807.68,
+     "pnl_px": 128.71991397934198,
+     "ret_pct": 2.2163740767284352,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1731880800000,
+     "exit_t": 1732226400000,
+     "dir": 1,
+     "entry": 5875.72,
+     "pnl_px": 68.10650768556297,
+     "ret_pct": 1.1591176517186486,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1738706400000,
+     "exit_t": 1738879200000,
+     "dir": 1,
+     "entry": 6008.29,
+     "pnl_px": 52.98522272950686,
+     "ret_pct": 0.8818685970468613,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1740348000000,
+     "exit_t": 1742850000000,
+     "dir": 1,
+     "entry": 6018.79,
+     "pnl_px": -253.83187650262698,
+     "ret_pct": -4.21732402198161,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1747861200000,
+     "exit_t": 1748898000000,
+     "dir": 1,
+     "entry": 5841.98,
+     "pnl_px": 97.68821827963075,
+     "ret_pct": 1.672176527130027,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1750366800000,
+     "exit_t": 1750798800000,
+     "dir": 1,
+     "entry": 5944.59,
+     "pnl_px": 147.40671126228517,
+     "ret_pct": 2.4796783506059317,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1754254800000,
+     "exit_t": 1754859600000,
+     "dir": 1,
+     "entry": 6236.52,
+     "pnl_px": 165.12955795103153,
+     "ret_pct": 2.6477836670295534,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1755637200000,
+     "exit_t": 1756414800000,
+     "dir": 1,
+     "entry": 6418.74,
+     "pnl_px": 86.17667207752129,
+     "ret_pct": 1.3425792613117418,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1758834000000,
+     "exit_t": 1759352400000,
+     "dir": 1,
+     "entry": 6609.47,
+     "pnl_px": 99.88883541078576,
+     "ret_pct": 1.5112987185173055,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1760302800000,
+     "exit_t": 1760994000000,
+     "dir": 1,
+     "entry": 6621.82,
+     "pnl_px": 122.36670596941167,
+     "ret_pct": 1.8479316255864953,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1762293600000,
+     "exit_t": 1762898400000,
+     "dir": 1,
+     "entry": 6780.73,
+     "pnl_px": 74.01454314911825,
+     "ret_pct": 1.09154240250118,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1763071200000,
+     "exit_t": 1764108000000,
+     "dir": 1,
+     "entry": 6746.93,
+     "pnl_px": 20.86999312889475,
+     "ret_pct": 0.3093257693335302,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1765922400000,
+     "exit_t": 1766440800000,
+     "dir": 1,
+     "entry": 6797.01,
+     "pnl_px": 80.17279554483684,
+     "ret_pct": 1.17953034562016,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1767304800000,
+     "exit_t": 1767736800000,
+     "dir": 1,
+     "entry": 6853.17,
+     "pnl_px": 92.70716006264138,
+     "ret_pct": 1.3527631747445543,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1768428000000,
+     "exit_t": 1769464800000,
+     "dir": 1,
+     "entry": 6919.17,
+     "pnl_px": 27.0141672000409,
+     "ret_pct": 0.39042496715705644,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1779224400000,
+     "exit_t": 1779742800000,
+     "dir": 1,
+     "entry": 7361.0,
+     "pnl_px": 191.9268383570252,
+     "ret_pct": 2.6073473489610812,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1780866000000,
+     "exit_t": 1781557200000,
+     "dir": 1,
+     "entry": 7369.4,
+     "pnl_px": 192.55605166429177,
+     "ret_pct": 2.6129135569285395,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1782248400000,
+     "exit_t": 1782853200000,
+     "dir": 1,
+     "entry": 7390.36,
+     "pnl_px": 98.15842031802822,
+     "ret_pct": 1.3281953831481583,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1784494800000,
+     "exit_t": 1785790800000,
+     "dir": 1,
+     "entry": 7450.16,
+     "pnl_px": 151.53061296811575,
+     "ret_pct": 2.033924277708341,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1787086800000,
+     "exit_t": 1787864400000,
+     "dir": 1,
+     "entry": 7697.42,
+     "pnl_px": 23.27408113711863,
+     "ret_pct": 0.30236210492760723,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1788296400000,
+     "exit_t": 1790024400000,
+     "dir": 1,
+     "entry": 7639.34,
+     "pnl_px": 127.45462184732787,
+     "ret_pct": 1.6683983413138814,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "US500"
+    },
+    {
+     "t": 1792011600000,
+     "exit_t": 1792443600000,
+     "dir": 1,
+     "entry": 7723.77,
+     "pnl_px": -29.7259053225589,
+     "ret_pct": -0.38486264249917984,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "US500"
+    }
+   ],
+   "buy_and_hold_pct": {
+    "a": 81.97966101694915,
+    "b": 104.68816918268269
+   },
+   "swap_sensitivity": {
+    "a": {
+     "mean_ret_pct": -0.300235066662655,
+     "profit_factor": 0.7059043053167918
+    },
+    "b": {
+     "mean_ret_pct": 0.8777689129339923,
+     "profit_factor": 3.0969955812016283
+    },
+    "text": "With the broker's current long financing (6.14% a year, per night held): window A -0.300% per trade (PF 0.71), window B +0.878% (PF 3.10). Not part of the verdict."
+   },
+   "random_timing": {
+    "a": {
+     "rule_mean_pct": -0.11007425665669902,
+     "random_mean_pct": 0.3576670235655515,
+     "edge_pct": -0.46774128022225053,
+     "z": -0.9122881855906566
+    },
+    "b": {
+     "rule_mean_pct": 1.0468581902131608,
+     "random_mean_pct": 0.34701560103819484,
+     "edge_pct": 0.699842589174966,
+     "z": 3.023331535512287
+    }
+   }
+  },
+  {
+   "key": "holy_grail",
+   "doc": "Holy Grail Trade, LBR (596991201)",
+   "assets": [
+    "EURUSD",
+    "GBPUSD",
+    "USDJPY",
+    "AUDUSD",
+    "USDCAD",
+    "USDCHF",
+    "NZDUSD"
+   ],
+   "missing_data": [],
+   "kind": "plan",
+   "note": "timeframe not given -> daily (Raschke's original)",
+   "rule": "LBR Holy Grail (596991201). Setup: ADX(14) > 30 and below yesterday's ADX, trend = the larger DI, the bar\n    touches the 20 EMA. Long: buy stop 3 pips above the 2-event high (this bar and the one before), stop 3 pips below\n    the 2-event low, target the highest high of the 20 bars before (the previous trend high), closed in full there.\n    Re-armed every bar while the setup holds. Shorts mirror.",
+   "windows": {
+    "a": [
+     "2015-01-01",
+     "2021-01-01"
+    ],
+    "b": [
+     "2021-01-01",
+     "2026-10-21"
+    ]
+   },
+   "first_trade": "2015-03-23",
+   "a": {
+    "trades": 78,
+    "win_rate_pct": 43.58974358974359,
+    "mean_ret_pct": -0.2626486587125611,
+    "total_ret_pct": -20.486595379579768,
+    "profit_factor": 0.6618775165290616,
+    "max_dd_pct_sum": 22.075775125465483,
+    "mean_r": -0.1261315345367169,
+    "r_per_100": -12.613153453671691
+   },
+   "b": {
+    "trades": 77,
+    "win_rate_pct": 55.84415584415584,
+    "mean_ret_pct": 0.004634602141814474,
+    "total_ret_pct": 0.3568643649197145,
+    "profit_factor": 1.0081618107464838,
+    "max_dd_pct_sum": 11.319602079006444,
+    "mean_r": 0.07836922100389167,
+    "r_per_100": 7.836922100389167,
+    "mean_ci_low": -0.30376691044300186,
+    "by_asset_ret_pct": {
+     "EURUSD": -0.07631563772614236,
+     "GBPUSD": 2.1177254771759872,
+     "USDJPY": 8.158582655178073,
+     "AUDUSD": -6.64786442787356,
+     "USDCAD": 0.4504048271476698,
+     "USDCHF": 1.3795849605201207,
+     "NZDUSD": -5.025253489502432
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 78,
+     "win_rate_pct": 43.58974358974359,
+     "mean_ret_pct": -0.25207449342189525,
+     "total_ret_pct": -19.66181048690783,
+     "profit_factor": 0.6729715424938313,
+     "max_dd_pct_sum": 21.377343543375844,
+     "mean_r": -0.1164383344659307,
+     "r_per_100": -11.64383344659307
+    },
+    "b": {
+     "trades": 77,
+     "win_rate_pct": 55.84415584415584,
+     "mean_ret_pct": 0.015114645708099667,
+     "total_ret_pct": 1.1638277195236744,
+     "profit_factor": 1.0268356180371254,
+     "max_dd_pct_sum": 10.927208565816915,
+     "mean_r": 0.08824851984987825,
+     "r_per_100": 8.824851984987825
+    }
+   },
+   "min_trades_b": 100,
+   "checks": {
+    "a_positive": false,
+    "b_positive": false,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": true
+   },
+   "verdict": "FAIL",
+   "tf": "daily",
+   "recent_b_trades": [
+    {
+     "t": 1733868000000,
+     "exit_t": 1734645600000,
+     "dir": -1,
+     "entry": 1.2714100000000002,
+     "pnl_px": 0.022561314598214866,
+     "ret_pct": 1.7745113376656518,
+     "r": 2.5667024571348396,
+     "risk_pct": 0.6913584131004045,
+     "result": "target",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1733868000000,
+     "exit_t": 1734386400000,
+     "dir": 1,
+     "entry": 0.8835799999999999,
+     "pnl_px": 0.012096565152974303,
+     "ret_pct": 1.3690401721377017,
+     "r": 1.5139630979942917,
+     "risk_pct": 0.9042757871386793,
+     "result": "target",
+     "asset": "USDCHF"
+    },
+    {
+     "t": 1736287200000,
+     "exit_t": 1736460000000,
+     "dir": -1,
+     "entry": 1.02923,
+     "pnl_px": 0.006681822411183758,
+     "ret_pct": 0.6492059511657994,
+     "r": 0.4530049092328027,
+     "risk_pct": 1.4331101891705273,
+     "result": "target",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1736287200000,
+     "exit_t": 1736287200000,
+     "dir": -1,
+     "entry": 1.2407700000000002,
+     "pnl_px": 0.0054235685190979765,
+     "ret_pct": 0.4371131248416689,
+     "r": 0.3167972265828294,
+     "risk_pct": 1.3797883572297684,
+     "result": "target",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1736287200000,
+     "exit_t": 1736373600000,
+     "dir": -1,
+     "entry": 0.62017,
+     "pnl_px": 0.0021952211064135696,
+     "ret_pct": 0.3539708638620974,
+     "r": 0.21189392919050054,
+     "risk_pct": 1.6705096989535004,
+     "result": "target",
+     "asset": "AUDUSD"
+    },
+    {
+     "t": 1736287200000,
+     "exit_t": 1736373600000,
+     "dir": -1,
+     "entry": 0.5604100000000001,
+     "pnl_px": 0.0018861221613161172,
+     "ret_pct": 0.3365611179879226,
+     "r": 0.20568398705737598,
+     "risk_pct": 1.636301993183544,
+     "result": "target",
+     "asset": "NZDUSD"
+    },
+    {
+     "t": 1737064800000,
+     "exit_t": 1737324000000,
+     "dir": -1,
+     "entry": 0.61782,
+     "pnl_px": -0.007205024807259153,
+     "ret_pct": -1.1662012895761147,
+     "r": -1.0091071158626372,
+     "risk_pct": 1.1556764106050184,
+     "result": "stop",
+     "asset": "AUDUSD"
+    },
+    {
+     "t": 1737064800000,
+     "exit_t": 1737064800000,
+     "dir": 1,
+     "entry": 1.44062,
+     "pnl_px": 0.005985110189195231,
+     "ret_pct": 0.41545377609607187,
+     "r": 0.559356092448156,
+     "risk_pct": 0.742735766544955,
+     "result": "target",
+     "asset": "USDCAD"
+    },
+    {
+     "t": 1737410400000,
+     "exit_t": 1737669600000,
+     "dir": 1,
+     "entry": 0.56872,
+     "pnl_px": 0.0004950300031081323,
+     "ret_pct": 0.08704283357506898,
+     "r": 0.03900945650970316,
+     "risk_pct": 2.2313264875509877,
+     "result": "target",
+     "asset": "NZDUSD"
+    },
+    {
+     "t": 1738015200000,
+     "exit_t": 1738188000000,
+     "dir": 1,
+     "entry": 1.44046,
+     "pnl_px": 0.011034872835200105,
+     "ret_pct": 0.7660658980603491,
+     "r": 1.190385419115423,
+     "risk_pct": 0.6435444233092283,
+     "result": "target",
+     "asset": "USDCAD"
+    },
+    {
+     "t": 1739484000000,
+     "exit_t": 1740002400000,
+     "dir": -1,
+     "entry": 152.332,
+     "pnl_px": 1.3860233876673078,
+     "ret_pct": 0.9098701439404117,
+     "r": 0.555297831597477,
+     "risk_pct": 1.6385263765984883,
+     "result": "target",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1741039200000,
+     "exit_t": 1741039200000,
+     "dir": -1,
+     "entry": 149.069,
+     "pnl_px": 0.4903199903654354,
+     "ret_pct": 0.3289214996850019,
+     "r": 0.21647681693838067,
+     "risk_pct": 1.519430599252705,
+     "result": "target",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1746133200000,
+     "exit_t": 1753822800000,
+     "dir": 1,
+     "entry": 145.76500000000001,
+     "pnl_px": 3.4574584927621004,
+     "ret_pct": 2.371940104114225,
+     "r": 0.9469894529614052,
+     "risk_pct": 2.5047164957294346,
+     "result": "target",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1746133200000,
+     "exit_t": 1746738000000,
+     "dir": -1,
+     "entry": 0.82109,
+     "pnl_px": -0.012636189478279047,
+     "ret_pct": -1.5389530353894272,
+     "r": -1.0076706123029546,
+     "risk_pct": 1.5272381833903708,
+     "result": "stop",
+     "asset": "USDCHF"
+    },
+    {
+     "t": 1761858000000,
+     "exit_t": 1762207200000,
+     "dir": 1,
+     "entry": 1.40174,
+     "pnl_px": 0.006129005203382665,
+     "ret_pct": 0.43724265579798427,
+     "r": 0.4629158008597207,
+     "risk_pct": 0.9445403569848844,
+     "result": "target",
+     "asset": "USDCAD"
+    },
+    {
+     "t": 1770588000000,
+     "exit_t": 1771452000000,
+     "dir": 1,
+     "entry": 1.18291,
+     "pnl_px": -0.006742892646883991,
+     "ret_pct": -0.5700258385577932,
+     "r": -1.0170275485496347,
+     "risk_pct": 0.5604822006746003,
+     "result": "stop",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1770588000000,
+     "exit_t": 1772402400000,
+     "dir": 1,
+     "entry": 0.6030099999999999,
+     "pnl_px": -0.010538255606137081,
+     "ret_pct": -1.7476087637248277,
+     "r": -1.0065191600895143,
+     "risk_pct": 1.7362896137708943,
+     "result": "stop",
+     "asset": "NZDUSD"
+    },
+    {
+     "t": 1773003600000,
+     "exit_t": 1773090000000,
+     "dir": -1,
+     "entry": 0.69708,
+     "pnl_px": -0.012233581556626905,
+     "ret_pct": -1.7549752620397807,
+     "r": -1.0060511148541904,
+     "risk_pct": 1.7444195788144756,
+     "result": "stop",
+     "asset": "AUDUSD"
+    },
+    {
+     "t": 1774472400000,
+     "exit_t": 1775595600000,
+     "dir": -1,
+     "entry": 1.15523,
+     "pnl_px": -0.008240949843861367,
+     "ret_pct": -0.7133600965921391,
+     "r": -1.0136469672646244,
+     "risk_pct": 0.7037559620162194,
+     "result": "stop",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1783371600000,
+     "exit_t": 1783890000000,
+     "dir": 1,
+     "entry": 0.80762,
+     "pnl_px": 0.006245736962031234,
+     "ret_pct": 0.7733509524319896,
+     "r": 0.9104572830949351,
+     "risk_pct": 0.8494093756964881,
+     "result": "target",
+     "asset": "USDCHF"
+    },
+    {
+     "t": 1783890000000,
+     "exit_t": 1784062800000,
+     "dir": -1,
+     "entry": 1.14014,
+     "pnl_px": -0.006349415220882504,
+     "ret_pct": -0.5568978564810028,
+     "r": -1.0175344905260384,
+     "risk_pct": 0.5473012086235044,
+     "result": "stop",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1783890000000,
+     "exit_t": 1783976400000,
+     "dir": -1,
+     "entry": 0.6920000000000001,
+     "pnl_px": -0.005362690511978907,
+     "ret_pct": -0.7749552762975298,
+     "r": -1.0137411175763709,
+     "risk_pct": 0.7644508670520095,
+     "result": "stop",
+     "asset": "AUDUSD"
+    },
+    {
+     "t": 1784062800000,
+     "exit_t": 1786050000000,
+     "dir": -1,
+     "entry": 1.40447,
+     "pnl_px": 0.006309369514166052,
+     "ret_pct": 0.449234908126628,
+     "r": 0.4736763899524143,
+     "risk_pct": 0.948400464232043,
+     "result": "target",
+     "asset": "USDCAD"
+    },
+    {
+     "t": 1788382800000,
+     "exit_t": 1789333200000,
+     "dir": 1,
+     "entry": 1.16276,
+     "pnl_px": -0.0065409737700066195,
+     "ret_pct": -0.5625385952394836,
+     "r": -1.0172587511674471,
+     "risk_pct": 0.5529945990574096,
+     "result": "stop",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1792011600000,
+     "exit_t": 1792011600000,
+     "dir": -1,
+     "entry": 0.6947,
+     "pnl_px": 0.00422752871744414,
+     "ret_pct": 0.6085401925211084,
+     "r": 0.6100330039601941,
+     "risk_pct": 0.9975529005326028,
+     "result": "target",
+     "asset": "AUDUSD"
+    }
+   ]
+  },
+  {
+   "key": "ma_breakout",
+   "doc": "Moving Average Breakout (683919166)",
+   "assets": [
+    "AAPL",
+    "AMGN",
+    "AMZN",
+    "AXP",
+    "BA",
+    "CAT",
+    "CRM",
+    "CSCO",
+    "CVX",
+    "DIS",
+    "GS",
+    "HD",
+    "HON",
+    "IBM",
+    "JNJ",
+    "JPM",
+    "KO",
+    "MCD",
+    "MMM",
+    "MRK",
+    "MSFT",
+    "NKE",
+    "NVDA",
+    "PG",
+    "SHW",
+    "TRV",
+    "UNH",
+    "V",
+    "VZ",
+    "WMT"
+   ],
+   "missing_data": [],
+   "kind": "plan",
+   "note": "stocks; survivorship-biased list",
+   "rule": "Moving Average Breakout (683919166), pip = 0.10 USD for stocks. Long: after the close crosses above SMA20, the\n    first two bars with lows above SMA20 -> buy stop 0.10 USD above the higher high of those two bars, armed while the\n    close stays above SMA20. Short mirrors (two highs below, sell stop 0.10 below the lower low). No exit given: the\n    opposite signal closes and reverses.",
+   "windows": {
+    "a": [
+     "2015-01-01",
+     "2021-01-01"
+    ],
+    "b": [
+     "2021-01-01",
+     "2026-10-21"
+    ]
+   },
+   "first_trade": "2015-01-05",
+   "a": {
+    "trades": 1532,
+    "win_rate_pct": 36.29242819843342,
+    "mean_ret_pct": 0.06570711903382147,
+    "total_ret_pct": 100.6633063598145,
+    "profit_factor": 1.024944229507641,
+    "max_dd_pct_sum": 428.34432751920895
+   },
+   "b": {
+    "trades": 1614,
+    "win_rate_pct": 36.493184634448575,
+    "mean_ret_pct": -0.23186854678331487,
+    "total_ret_pct": -374.2358345082702,
+    "profit_factor": 0.9258273014492752,
+    "max_dd_pct_sum": 461.9260670154355,
+    "mean_ci_low": -0.65817990068925,
+    "by_asset_ret_pct": {
+     "AAPL": -23.195810142401065,
+     "AMGN": -5.691029853220315,
+     "AMZN": -4.7709453127552415,
+     "AXP": 0.29020295500211724,
+     "BA": -48.74313636707029,
+     "CAT": 80.30956499772384,
+     "CRM": -77.35559971512905,
+     "CSCO": 22.072676405927197,
+     "CVX": 36.17547429346428,
+     "DIS": 63.47508305196554,
+     "GS": -28.30591477089531,
+     "HD": -7.922302071240401,
+     "HON": -71.53553415881461,
+     "IBM": -18.082719263803156,
+     "JNJ": 45.559693040246465,
+     "JPM": -73.2366787340642,
+     "KO": -19.670266438193668,
+     "MCD": 6.889797267933553,
+     "MMM": 26.21319934607202,
+     "MRK": -110.26346287966409,
+     "MSFT": 37.28098335089198,
+     "NKE": -80.09958288731133,
+     "NVDA": 54.91378810269174,
+     "PG": 5.209070613833072,
+     "SHW": 15.835900110268415,
+     "TRV": -33.0081891740132,
+     "UNH": -74.92919882339652,
+     "V": -49.092928942196025,
+     "VZ": -66.15632280344005,
+     "WMT": 23.598354293318163
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 1532,
+     "win_rate_pct": 36.81462140992167,
+     "mean_ret_pct": 0.12623158580182553,
+     "total_ret_pct": 193.3867894483967,
+     "profit_factor": 1.0486252123865707,
+     "max_dd_pct_sum": 382.1261784400899
+    },
+    "b": {
+     "trades": 1614,
+     "win_rate_pct": 36.80297397769517,
+     "mean_ret_pct": -0.17142364644760408,
+     "total_ret_pct": -276.677765366433,
+     "profit_factor": 0.9444862158003428,
+     "max_dd_pct_sum": 398.21685661404473
+    }
+   },
+   "min_trades_b": 100,
+   "checks": {
+    "a_positive": false,
+    "b_positive": false,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": false
+   },
+   "verdict": "FAIL",
+   "tf": "daily",
+   "recent_b_trades": [
+    {
+     "t": 1790294400000,
+     "exit_t": 1791763200000,
+     "dir": 1,
+     "entry": 213.10999450683593,
+     "pnl_px": -5.786165556030255,
+     "ret_pct": -2.7151075525200916,
+     "r": null,
+     "risk_pct": null,
+     "result": "opposite signal",
+     "asset": "HON"
+    },
+    {
+     "t": 1790294400000,
+     "exit_t": 1792022400000,
+     "dir": -1,
+     "entry": 225.90999450683594,
+     "pnl_px": -0.5856871020507697,
+     "ret_pct": -0.2592568351521283,
+     "r": null,
+     "risk_pct": null,
+     "result": "opposite signal",
+     "asset": "IBM"
+    },
+    {
+     "t": 1790294400000,
+     "exit_t": 1791849600000,
+     "dir": -1,
+     "entry": 359.8500122070312,
+     "pnl_px": -14.130080565185551,
+     "ret_pct": -3.926658353718811,
+     "r": null,
+     "risk_pct": null,
+     "result": "opposite signal",
+     "asset": "TRV"
+    },
+    {
+     "t": 1790553600000,
+     "exit_t": 1792022400000,
+     "dir": -1,
+     "entry": 224.97000122070312,
+     "pnl_px": -13.66903977966308,
+     "ret_pct": -6.075938883181715,
+     "r": null,
+     "risk_pct": null,
+     "result": "opposite signal",
+     "asset": "CRM"
+    },
+    {
+     "t": 1790553600000,
+     "exit_t": 1792108800000,
+     "dir": 1,
+     "entry": 230.07999572753906,
+     "pnl_px": -13.653990166931123,
+     "ret_pct": -5.934453416410957,
+     "r": null,
+     "risk_pct": null,
+     "result": "opposite signal",
+     "asset": "NVDA"
+    },
+    {
+     "t": 1790640000000,
+     "exit_t": 1791849600000,
+     "dir": 1,
+     "entry": 827.9099975585938,
+     "pnl_px": -37.39567055786131,
+     "ret_pct": -4.516876311209746,
+     "r": null,
+     "risk_pct": null,
+     "result": "opposite signal",
+     "asset": "CAT"
+    },
+    {
+     "t": 1790640000000,
+     "exit_t": 1791158400000,
+     "dir": 1,
+     "entry": 170.82999572753906,
+     "pnl_px": -9.589650387268051,
+     "ret_pct": -5.613563558570135,
+     "r": null,
+     "risk_pct": null,
+     "result": "opposite signal",
+     "asset": "MMM"
+    },
+    {
+     "t": 1790726400000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 424.6700073242188,
+     "pnl_px": 0.015112114257817666,
+     "ret_pct": 0.0035585546417645085,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "AMGN"
+    },
+    {
+     "t": 1790899200000,
+     "exit_t": 1792368000000,
+     "dir": -1,
+     "entry": 258.2299865722656,
+     "pnl_px": 4.286387292175277,
+     "ret_pct": 1.6599107443223806,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "JNJ"
+    },
+    {
+     "t": 1791158400000,
+     "exit_t": 1792368000000,
+     "dir": -1,
+     "entry": 161.0199951171875,
+     "pnl_px": -1.0869083865356117,
+     "ret_pct": -0.6750145444636109,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "MMM"
+    },
+    {
+     "t": 1791158400000,
+     "exit_t": 1792368000000,
+     "dir": -1,
+     "entry": 142.62999572753907,
+     "pnl_px": -1.0858871554565326,
+     "ret_pct": -0.7613315487514026,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "MRK"
+    },
+    {
+     "t": 1791158400000,
+     "exit_t": 1791504000000,
+     "dir": -1,
+     "entry": 103.48999633789063,
+     "pnl_px": -6.57405066101073,
+     "ret_pct": -6.352353747841214,
+     "r": null,
+     "risk_pct": null,
+     "result": "opposite signal",
+     "asset": "WMT"
+    },
+    {
+     "t": 1791244800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 113.52999877929688,
+     "pnl_px": -7.096007778930655,
+     "ret_pct": -6.25033722824691,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "CSCO"
+    },
+    {
+     "t": 1791417600000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 149.77999267578124,
+     "pnl_px": 7.817768767089859,
+     "ret_pct": 5.219501368258484,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "PG"
+    },
+    {
+     "t": 1791417600000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 374.7199951171875,
+     "pnl_px": 27.96672630798338,
+     "ret_pct": 7.463366426239743,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "V"
+    },
+    {
+     "t": 1791504000000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 260.2400146484375,
+     "pnl_px": 2.053190550537124,
+     "ret_pct": 0.7889603577339221,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "AMZN"
+    },
+    {
+     "t": 1791504000000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 111.22999725341796,
+     "pnl_px": 7.401020696563734,
+     "ret_pct": 6.653799226212162,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "WMT"
+    },
+    {
+     "t": 1791763200000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 214.5399932861328,
+     "pnl_px": 9.698328834533697,
+     "ret_pct": 4.520522577624489,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "CVX"
+    },
+    {
+     "t": 1791849600000,
+     "exit_t": 1792368000000,
+     "dir": -1,
+     "entry": 791.0,
+     "pnl_px": 64.75498497924809,
+     "ret_pct": 8.186470920258925,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "CAT"
+    },
+    {
+     "t": 1791849600000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 109.5199966430664,
+     "pnl_px": 0.004266696929946079,
+     "ret_pct": 0.003895815431634419,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "DIS"
+    },
+    {
+     "t": 1791849600000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 90.55999755859375,
+     "pnl_px": 2.8048066116333104,
+     "ret_pct": 3.0971805292050236,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "KO"
+    },
+    {
+     "t": 1791849600000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 373.760009765625,
+     "pnl_px": 11.462239434814478,
+     "ret_pct": 3.0667377823545503,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "TRV"
+    },
+    {
+     "t": 1792022400000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 314.1,
+     "pnl_px": 2.1208506610107634,
+     "ret_pct": 0.6752151101594279,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "AXP"
+    },
+    {
+     "t": 1792022400000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 245.15999755859374,
+     "pnl_px": -2.856283608703592,
+     "ret_pct": -1.1650691944638865,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "CRM"
+    },
+    {
+     "t": 1792022400000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 233.6,
+     "pnl_px": 2.6490023898315656,
+     "ret_pct": 1.1339907490717318,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "IBM"
+    }
+   ]
+  },
+  {
+   "key": "triple_ma",
+   "doc": "The Triple Moving Average System (410843959)",
+   "assets": [
+    "AAPL",
+    "AMGN",
+    "AMZN",
+    "AXP",
+    "BA",
+    "CAT",
+    "CRM",
+    "CSCO",
+    "CVX",
+    "DIS",
+    "GS",
+    "HD",
+    "HON",
+    "IBM",
+    "JNJ",
+    "JPM",
+    "KO",
+    "MCD",
+    "MMM",
+    "MRK",
+    "MSFT",
+    "NKE",
+    "NVDA",
+    "PG",
+    "SHW",
+    "TRV",
+    "UNH",
+    "V",
+    "VZ",
+    "WMT"
+   ],
+   "missing_data": [],
+   "kind": "plan",
+   "note": "stocks; long only; survivorship-biased list",
+   "rule": "Triple Moving Average System (410843959), long only: buy on a bar where SMA5 > SMA10 > SMA20 and SMA50 is not\n    declining; exit when SMA5 < SMA10 < SMA20.",
+   "windows": {
+    "a": [
+     "2015-01-01",
+     "2021-01-01"
+    ],
+    "b": [
+     "2021-01-01",
+     "2026-10-21"
+    ]
+   },
+   "first_trade": "2015-01-05",
+   "a": {
+    "trades": 888,
+    "win_rate_pct": 47.072072072072075,
+    "mean_ret_pct": 1.4627913962985815,
+    "total_ret_pct": 1298.9587599131403,
+    "profit_factor": 1.7509004577789005,
+    "max_dd_pct_sum": 72.44889048189486
+   },
+   "b": {
+    "trades": 818,
+    "win_rate_pct": 43.03178484107579,
+    "mean_ret_pct": 1.0188705150900226,
+    "total_ret_pct": 833.4360813436385,
+    "profit_factor": 1.4012743191107622,
+    "max_dd_pct_sum": 78.59010911227449,
+    "mean_ci_low": 0.3996521614396951,
+    "by_asset_ret_pct": {
+     "AAPL": 34.64322665293324,
+     "AMGN": 22.925246039498248,
+     "AMZN": 23.142490181082074,
+     "AXP": 56.69820666706983,
+     "BA": -59.27277035933999,
+     "CAT": 105.92393002037237,
+     "CRM": -5.067173810713026,
+     "CSCO": 52.570559032279775,
+     "CVX": 60.04706469913024,
+     "DIS": -4.233881420233477,
+     "GS": 135.46073997350334,
+     "HD": 12.97258905770759,
+     "HON": -26.37232490111178,
+     "IBM": 4.184478394997861,
+     "JNJ": 36.85639843465604,
+     "JPM": 58.43493097772994,
+     "KO": 36.995976127222804,
+     "MCD": -9.721168439547803,
+     "MMM": -16.36993256034477,
+     "MRK": 16.09783586899219,
+     "MSFT": 69.66917914052736,
+     "NKE": -77.43469709569314,
+     "NVDA": 204.48217299956184,
+     "PG": 9.086640294367202,
+     "SHW": 18.174369299779258,
+     "TRV": 49.90150410679376,
+     "UNH": -0.36849881488068625,
+     "V": -10.16049430489933,
+     "VZ": -13.57198138408551,
+     "WMT": 47.741466466283086
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 888,
+     "win_rate_pct": 47.2972972972973,
+     "mean_ret_pct": 1.523248370809818,
+     "total_ret_pct": 1352.6445532791183,
+     "profit_factor": 1.7946072596046847,
+     "max_dd_pct_sum": 70.3700014823396
+    },
+    "b": {
+     "trades": 818,
+     "win_rate_pct": 43.39853300733496,
+     "mean_ret_pct": 1.0791942733720281,
+     "total_ret_pct": 882.780915618319,
+     "profit_factor": 1.4306873921173153,
+     "max_dd_pct_sum": 77.17326109060195
+    }
+   },
+   "min_trades_b": 100,
+   "checks": {
+    "a_positive": true,
+    "b_positive": true,
+    "b_ci_above_zero": true,
+    "b_half_the_assets": true
+   },
+   "verdict": "PASS (not counted: needs a survivorship-free re-test)",
+   "tf": "daily",
+   "recent_b_trades": [
+    {
+     "t": 1785974400000,
+     "exit_t": 1787529600000,
+     "dir": 1,
+     "entry": 350.9140306560572,
+     "pnl_px": -17.696402483906922,
+     "ret_pct": -5.042945262354519,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "HD"
+    },
+    {
+     "t": 1786060800000,
+     "exit_t": 1789084800000,
+     "dir": 1,
+     "entry": 104.41999816894531,
+     "pnl_px": 2.2566516960144014,
+     "ret_pct": 2.1611297984925013,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "DIS"
+    },
+    {
+     "t": 1786406400000,
+     "exit_t": 1788134400000,
+     "dir": 1,
+     "entry": 221.92167541427946,
+     "pnl_px": -3.428474740555856,
+     "ret_pct": -1.5449030538164603,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "NVDA"
+    },
+    {
+     "t": 1786579200000,
+     "exit_t": 1787529600000,
+     "dir": 1,
+     "entry": 275.42232020943675,
+     "pnl_px": -5.356792094122056,
+     "ret_pct": -1.9449375381227791,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "MCD"
+    },
+    {
+     "t": 1786579200000,
+     "exit_t": 1787616000000,
+     "dir": 1,
+     "entry": 115.89254862146954,
+     "pnl_px": -10.378988555550606,
+     "ret_pct": -8.955699636437073,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "WMT"
+    },
+    {
+     "t": 1787875200000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 316.8500061035156,
+     "pnl_px": 25.89205933532719,
+     "ret_pct": 8.171708643385097,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "AAPL"
+    },
+    {
+     "t": 1788912000000,
+     "exit_t": 1790035200000,
+     "dir": 1,
+     "entry": 225.0281992525124,
+     "pnl_px": 1.6862433893964237,
+     "ret_pct": 0.7493475906565062,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "NVDA"
+    },
+    {
+     "t": 1788998400000,
+     "exit_t": 1790726400000,
+     "dir": 1,
+     "entry": 369.55999755859375,
+     "pnl_px": -7.499550778198227,
+     "ret_pct": -2.029318873184908,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "TRV"
+    },
+    {
+     "t": 1789689600000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 146.44000244140625,
+     "pnl_px": 11.158760998535172,
+     "ret_pct": 7.6200224067874,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "PG"
+    },
+    {
+     "t": 1790640000000,
+     "exit_t": 1791331200000,
+     "dir": 1,
+     "entry": 148.1699981689453,
+     "pnl_px": -6.227059388732897,
+     "ret_pct": -4.202645249163549,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "MRK"
+    },
+    {
+     "t": 1790640000000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 508.30999755859375,
+     "pnl_px": 24.897472967529325,
+     "ret_pct": 4.898088388406988,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "MSFT"
+    },
+    {
+     "t": 1790640000000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 230.97000122070312,
+     "pnl_px": -14.014422882080055,
+     "ret_pct": -6.067637705334984,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "NVDA"
+    },
+    {
+     "t": 1790726400000,
+     "exit_t": 1791504000000,
+     "dir": 1,
+     "entry": 169.19000244140625,
+     "pnl_px": -6.0197361709594475,
+     "ret_pct": -3.5579739252289437,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "MMM"
+    },
+    {
+     "t": 1790812800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 421.7200012207031,
+     "pnl_px": 2.966003219604488,
+     "ret_pct": 0.7033110146588135,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "AMGN"
+    },
+    {
+     "t": 1790899200000,
+     "exit_t": 1791763200000,
+     "dir": 1,
+     "entry": 324.989990234375,
+     "pnl_px": -9.052321350097657,
+     "ret_pct": -2.785415434970578,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "SHW"
+    },
+    {
+     "t": 1791417600000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 116.66000366210938,
+     "pnl_px": -10.226951663207998,
+     "ret_pct": -8.766459233816795,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "CSCO"
+    },
+    {
+     "t": 1791504000000,
+     "exit_t": 1792022400000,
+     "dir": 1,
+     "entry": 796.219970703125,
+     "pnl_px": -70.92656169433587,
+     "ret_pct": -8.907910414718954,
+     "r": null,
+     "risk_pct": null,
+     "result": "rule exit",
+     "asset": "CAT"
+    },
+    {
+     "t": 1791763200000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 262.5,
+     "pnl_px": -0.20747279663083873,
+     "ret_pct": -0.07903725585936713,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "AMZN"
+    },
+    {
+     "t": 1791849600000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 217.0,
+     "pnl_px": 7.237584118652336,
+     "ret_pct": 3.335292220577114,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "CVX"
+    },
+    {
+     "t": 1791849600000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 394.7200012207031,
+     "pnl_px": 7.960720202636708,
+     "ret_pct": 2.0168018286424667,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "V"
+    },
+    {
+     "t": 1791936000000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 108.5,
+     "pnl_px": 1.0245693389892665,
+     "ret_pct": 0.9443035382389553,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "DIS"
+    },
+    {
+     "t": 1792022400000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 93.1500015258789,
+     "pnl_px": 0.21402564315796724,
+     "ret_pct": 0.22976450848313373,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "KO"
+    },
+    {
+     "t": 1792022400000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 382.69000244140625,
+     "pnl_px": 2.52956776123051,
+     "ret_pct": 0.6609965625161093,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "TRV"
+    },
+    {
+     "t": 1792022400000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 120.0,
+     "pnl_px": -1.371613050842285,
+     "ret_pct": -1.1430108757019042,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "WMT"
+    },
+    {
+     "t": 1792368000000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 230.67999267578125,
+     "pnl_px": 5.569885716247569,
+     "ret_pct": 2.414550846668352,
+     "r": null,
+     "risk_pct": null,
+     "result": "end",
+     "asset": "IBM"
+    }
+   ],
+   "random_timing": {
+    "a": {
+     "rule_mean_pct": 1.4627913962985815,
+     "random_mean_pct": 1.9665263546598555,
+     "edge_pct": -0.503734958361274,
+     "z": -1.747966793140587
+    },
+    "b": {
+     "rule_mean_pct": 1.0188705150900226,
+     "random_mean_pct": 1.5288791480835322,
+     "edge_pct": -0.5100086329935096,
+     "z": -1.5627150598560935
+    }
+   }
+  },
+  {
+   "key": "london_bo",
+   "doc": "London Breakout Strategy (427438395)",
+   "assets": [
+    "GBPUSD",
+    "GBPJPY",
+    "GBPAUD",
+    "GBPCAD",
+    "GBPNZD",
+    "GBPCHF",
+    "EURGBP"
+   ],
+   "missing_data": [],
+   "kind": "session",
+   "note": "",
+   "rule": "London Breakout (427438395), GBP pairs, 5m. Asian range 00:00-08:00 London; at 08:00 buy stop range high + 5\n    pips / sell stop range low - 5 pips, first fill cancels the other, live until 16:00 London. Stop 20 pips trailing\n    20 pips behind the best price, target 40 pips. Exit at the next open after two consecutive H1 candles against the\n    trade close. Skip days with an Asian range > 100 pips except GBPUSD/GBPJPY. Closed at 21:00 UTC if still open.",
+   "windows": {
+    "a": [
+     "2020-11-01",
+     "2023-11-01"
+    ],
+    "b": [
+     "2023-11-01",
+     "2026-10-21"
+    ]
+   },
+   "first_trade": "2020-11-13",
+   "a": {
+    "trades": 1951,
+    "win_rate_pct": 34.392619169656584,
+    "mean_ret_pct": -0.01198579522723913,
+    "total_ret_pct": -23.384286488343545,
+    "profit_factor": 0.8042861848104631,
+    "max_dd_pct_sum": 25.41109291088542,
+    "mean_r": -0.09124473481968082,
+    "r_per_100": -9.124473481968082
+   },
+   "b": {
+    "trades": 1945,
+    "win_rate_pct": 30.848329048843187,
+    "mean_ret_pct": -0.023102136707231668,
+    "total_ret_pct": -44.93365589556559,
+    "profit_factor": 0.6159845972205843,
+    "max_dd_pct_sum": 45.250677029294536,
+    "mean_r": -0.1640342334589159,
+    "r_per_100": -16.40342334589159,
+    "mean_ci_low": -0.028389854066779473,
+    "by_asset_ret_pct": {
+     "GBPUSD": -6.985243706018008,
+     "GBPJPY": -1.3958785743033242,
+     "GBPAUD": -4.676640651305893,
+     "GBPCAD": -9.362928065090333,
+     "GBPNZD": -3.7132692153778666,
+     "GBPCHF": -9.24350964272753,
+     "EURGBP": -9.556186040742643
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 1951,
+     "win_rate_pct": 37.621732444900054,
+     "mean_ret_pct": 0.002812240505455052,
+     "total_ret_pct": 5.486681226142807,
+     "profit_factor": 1.0543406097402028,
+     "max_dd_pct_sum": 4.545404389937802,
+     "mean_r": 0.018100973859580753,
+     "r_per_100": 1.8100973859580753
+    },
+    "b": {
+     "trades": 1945,
+     "win_rate_pct": 35.42416452442159,
+     "mean_ret_pct": -0.008332923146682528,
+     "total_ret_pct": -16.207535520297515,
+     "profit_factor": 0.8341407248885923,
+     "max_dd_pct_sum": 16.656590892342585,
+     "mean_r": -0.047426735218488295,
+     "r_per_100": -4.74267352184883
+    }
+   },
+   "min_trades_b": 100,
+   "checks": {
+    "a_positive": false,
+    "b_positive": false,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": false
+   },
+   "verdict": "FAIL",
+   "tf": "1m",
+   "recent_b_trades": [
+    {
+     "t": 1774341000000,
+     "exit_t": 1774347660000,
+     "dir": -1,
+     "entry": 1.05481,
+     "pnl_px": -0.0005349126173779251,
+     "ret_pct": -0.050711750682864695,
+     "r": -0.26745630868896253,
+     "risk_pct": 0.18960760705719512,
+     "result": "stop",
+     "asset": "GBPCHF"
+    },
+    {
+     "t": 1774343700000,
+     "exit_t": 1774344660000,
+     "dir": 1,
+     "entry": 1.9250299999999998,
+     "pnl_px": -0.0020949778057384183,
+     "ret_pct": -0.10882831985675125,
+     "r": -1.0474889028692091,
+     "risk_pct": 0.10389448476127647,
+     "result": "stop",
+     "asset": "GBPAUD"
+    },
+    {
+     "t": 1774344600000,
+     "exit_t": 1774346100000,
+     "dir": -1,
+     "entry": 1.33806,
+     "pnl_px": -0.0020567487603404544,
+     "ret_pct": -0.15371125064200816,
+     "r": -1.0283743801702272,
+     "risk_pct": 0.1494701283948403,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1774344600000,
+     "exit_t": 1774346100000,
+     "dir": -1,
+     "entry": 1.83982,
+     "pnl_px": -0.0017857310200104504,
+     "ret_pct": -0.09706009392279953,
+     "r": -0.8928655100052252,
+     "risk_pct": 0.1087062864845474,
+     "result": "stop",
+     "asset": "GBPCAD"
+    },
+    {
+     "t": 1774345020000,
+     "exit_t": 1774350000000,
+     "dir": 1,
+     "entry": 0.86581,
+     "pnl_px": -0.0012133493512181959,
+     "ret_pct": -0.1401403715847814,
+     "r": -0.6066746756090979,
+     "risk_pct": 0.23099756297571064,
+     "result": "rule exit",
+     "asset": "EURGBP"
+    },
+    {
+     "t": 1774425720000,
+     "exit_t": 1774441020000,
+     "dir": 1,
+     "entry": 1.05861,
+     "pnl_px": -0.0014354687293214319,
+     "ret_pct": -0.13559939253562991,
+     "r": -0.7177343646607159,
+     "risk_pct": 0.18892698916503717,
+     "result": "stop",
+     "asset": "GBPCHF"
+    },
+    {
+     "t": 1774425900000,
+     "exit_t": 1774426860000,
+     "dir": 1,
+     "entry": 2.30397,
+     "pnl_px": -0.0008688027605154858,
+     "ret_pct": -0.03770894414925045,
+     "r": -0.4344013802577429,
+     "risk_pct": 0.08680668585094424,
+     "result": "stop",
+     "asset": "GBPNZD"
+    },
+    {
+     "t": 1774426200000,
+     "exit_t": 1774427400000,
+     "dir": 1,
+     "entry": 1.92317,
+     "pnl_px": -0.002004699558054046,
+     "ret_pct": -0.10423933183514958,
+     "r": -1.002349779027023,
+     "risk_pct": 0.10399496664361445,
+     "result": "stop",
+     "asset": "GBPAUD"
+    },
+    {
+     "t": 1774426320000,
+     "exit_t": 1774430280000,
+     "dir": 1,
+     "entry": 1.84835,
+     "pnl_px": -0.0007869851324546762,
+     "ret_pct": -0.042577711605197945,
+     "r": -0.3934925662273381,
+     "risk_pct": 0.10820461492682663,
+     "result": "stop",
+     "asset": "GBPCAD"
+    },
+    {
+     "t": 1774439640000,
+     "exit_t": 1774447200000,
+     "dir": -1,
+     "entry": 0.8648,
+     "pnl_px": -0.0008033342861795134,
+     "ret_pct": -0.09289249377653948,
+     "r": -0.4016671430897567,
+     "risk_pct": 0.23126734505087881,
+     "result": "rule exit",
+     "asset": "EURGBP"
+    },
+    {
+     "t": 1774447200000,
+     "exit_t": 1774450020000,
+     "dir": -1,
+     "entry": 1.3365,
+     "pnl_px": -0.0015065613591251914,
+     "ret_pct": -0.11272438152825973,
+     "r": -0.7532806795625957,
+     "risk_pct": 0.14964459408903852,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1774512120000,
+     "exit_t": 1774515840000,
+     "dir": -1,
+     "entry": 1.33415,
+     "pnl_px": -0.0016463285118388793,
+     "ret_pct": -0.12339905646583063,
+     "r": -0.8231642559194396,
+     "risk_pct": 0.1499081812389911,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1774512120000,
+     "exit_t": 1774514400000,
+     "dir": -1,
+     "entry": 1.84508,
+     "pnl_px": -0.0018066064071076138,
+     "ret_pct": -0.09791480082747706,
+     "r": -0.9033032035538069,
+     "risk_pct": 0.1083963838966332,
+     "result": "stop",
+     "asset": "GBPCAD"
+    },
+    {
+     "t": 1774512240000,
+     "exit_t": 1774531260000,
+     "dir": -1,
+     "entry": 1.05707,
+     "pnl_px": -0.001805447482519762,
+     "ret_pct": -0.1707973438390799,
+     "r": -0.902723741259881,
+     "risk_pct": 0.1892022288022553,
+     "result": "stop",
+     "asset": "GBPCHF"
+    },
+    {
+     "t": 1774517940000,
+     "exit_t": 1774526820000,
+     "dir": 1,
+     "entry": 1.92621,
+     "pnl_px": 0.00037465196387098665,
+     "ret_pct": 0.019450213832914724,
+     "r": 0.18732598193549332,
+     "risk_pct": 0.10383083879743124,
+     "result": "stop",
+     "asset": "GBPAUD"
+    },
+    {
+     "t": 1774526040000,
+     "exit_t": 1774544400000,
+     "dir": -1,
+     "entry": 0.8645400000000001,
+     "pnl_px": -0.0004932799210397576,
+     "ret_pct": -0.05705692287687759,
+     "r": -0.2466399605198788,
+     "risk_pct": 0.2313368959215305,
+     "result": "rule exit",
+     "asset": "EURGBP"
+    },
+    {
+     "t": 1774534440000,
+     "exit_t": 1774536900000,
+     "dir": 1,
+     "entry": 213.174,
+     "pnl_px": -0.09198406459969988,
+     "ret_pct": -0.04314975775643365,
+     "r": -0.4599203229984994,
+     "risk_pct": 0.09382007186617505,
+     "result": "stop",
+     "asset": "GBPJPY"
+    },
+    {
+     "t": 1774535340000,
+     "exit_t": 1774537320000,
+     "dir": 1,
+     "entry": 2.3090300000000004,
+     "pnl_px": 0.0003001955241939136,
+     "ret_pct": 0.013000936505541875,
+     "r": 0.1500977620969568,
+     "risk_pct": 0.08661645799318327,
+     "result": "stop",
+     "asset": "GBPNZD"
+    },
+    {
+     "t": 1774600380000,
+     "exit_t": 1774601940000,
+     "dir": -1,
+     "entry": 2.30708,
+     "pnl_px": -0.001869524989254412,
+     "ret_pct": -0.08103425062218961,
+     "r": -0.934762494627206,
+     "risk_pct": 0.086689668325329,
+     "result": "stop",
+     "asset": "GBPNZD"
+    },
+    {
+     "t": 1774600560000,
+     "exit_t": 1774615560000,
+     "dir": -1,
+     "entry": 1.84335,
+     "pnl_px": 0.0009339085264790103,
+     "ret_pct": 0.05066365728044107,
+     "r": 0.4669542632395052,
+     "risk_pct": 0.10849811484525457,
+     "result": "stop",
+     "asset": "GBPCAD"
+    },
+    {
+     "t": 1774601340000,
+     "exit_t": 1774602480000,
+     "dir": -1,
+     "entry": 1.9300300000000001,
+     "pnl_px": -0.002146024109015432,
+     "ret_pct": -0.11119123065524535,
+     "r": -1.073012054507716,
+     "risk_pct": 0.10362533224872152,
+     "result": "stop",
+     "asset": "GBPAUD"
+    },
+    {
+     "t": 1774602300000,
+     "exit_t": 1774618680000,
+     "dir": -1,
+     "entry": 1.3307,
+     "pnl_px": 0.0013641775225052832,
+     "ret_pct": 0.10251578285904285,
+     "r": 0.6820887612526416,
+     "risk_pct": 0.1502968362515969,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1774611720000,
+     "exit_t": 1774617840000,
+     "dir": -1,
+     "entry": 212.542,
+     "pnl_px": 0.08609898607966215,
+     "ret_pct": 0.04050916340283904,
+     "r": 0.43049493039831077,
+     "risk_pct": 0.09409904865861807,
+     "result": "stop",
+     "asset": "GBPJPY"
+    },
+    {
+     "t": 1774612260000,
+     "exit_t": 1774623600000,
+     "dir": 1,
+     "entry": 0.8660599999999999,
+     "pnl_px": -7.345677149417362e-05,
+     "ret_pct": -0.008481718529221258,
+     "r": -0.03672838574708681,
+     "risk_pct": 0.23093088238690163,
+     "result": "rule exit",
+     "asset": "EURGBP"
+    },
+    {
+     "t": 1774614840000,
+     "exit_t": 1774621440000,
+     "dir": -1,
+     "entry": 1.0591300000000001,
+     "pnl_px": -0.0005957163007515032,
+     "ret_pct": -0.056245815032290945,
+     "r": -0.2978581503757516,
+     "risk_pct": 0.18883423186955328,
+     "result": "stop",
+     "asset": "GBPCHF"
+    }
+   ]
+  },
+  {
+   "key": "london_breakfast",
+   "doc": "London Free Breakfast Forex Strategy (423041768)",
+   "assets": [
+    "GBPUSD"
+   ],
+   "missing_data": [],
+   "kind": "session",
+   "note": "15m",
+   "rule": "London Free Breakfast (423041768), GBPUSD, 15m. Asian box 00:00-08:00 London; from 08:00 to 16:00 London the\n    FIRST 15m close beyond the box -> enter that way at the next open, stop at the breakout candle's other extreme,\n    target 40 pips (30 and 50 as sensitivity). One trade a day, closed at 21:00 UTC if still open.",
+   "windows": {
+    "a": [
+     "2020-11-01",
+     "2023-11-01"
+    ],
+    "b": [
+     "2023-11-01",
+     "2026-10-21"
+    ]
+   },
+   "first_trade": "2020-11-13",
+   "a": {
+    "trades": 298,
+    "win_rate_pct": 25.503355704697988,
+    "mean_ret_pct": -0.02197399296340406,
+    "total_ret_pct": -6.54824990309441,
+    "profit_factor": 0.7617885548611895,
+    "max_dd_pct_sum": 6.6803928514993425,
+    "mean_r": -0.29943518871237174,
+    "r_per_100": -29.943518871237174
+   },
+   "b": {
+    "trades": 311,
+    "win_rate_pct": 19.292604501607716,
+    "mean_ret_pct": -0.02596852295101723,
+    "total_ret_pct": -8.076210637766359,
+    "profit_factor": 0.663313078353254,
+    "max_dd_pct_sum": 8.38661630660861,
+    "mean_r": -0.40787185497567646,
+    "r_per_100": -40.78718549756765,
+    "mean_ci_low": -0.04214805237771357,
+    "by_asset_ret_pct": {
+     "GBPUSD": -8.07621063776636
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 298,
+     "win_rate_pct": 25.503355704697988,
+     "mean_ret_pct": -0.011761655739472725,
+     "total_ret_pct": -3.5049734103628722,
+     "profit_factor": 0.861035654840282,
+     "max_dd_pct_sum": 3.999724370626543,
+     "mean_r": -0.19249133346405936,
+     "r_per_100": -19.249133346405937
+    },
+    "b": {
+     "trades": 311,
+     "win_rate_pct": 19.292604501607716,
+     "mean_ret_pct": -0.015754987168315724,
+     "total_ret_pct": -4.89980100934619,
+     "profit_factor": 0.7712924075202386,
+     "max_dd_pct_sum": 5.261270674987697,
+     "mean_r": -0.2559252739391578,
+     "r_per_100": -25.59252739391578
+    }
+   },
+   "min_trades_b": 30,
+   "checks": {
+    "a_positive": false,
+    "b_positive": false,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": false
+   },
+   "verdict": "FAIL",
+   "tf": "15m",
+   "recent_b_trades": [
+    {
+     "t": 1771490700000,
+     "exit_t": 1771490700000,
+     "dir": 1,
+     "entry": 1.3513600000000001,
+     "pnl_px": -0.0006179844849749649,
+     "ret_pct": -0.04573055921256844,
+     "r": -1.2874676770310804,
+     "risk_pct": 0.035519772673457545,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1771580700000,
+     "exit_t": 1771581600000,
+     "dir": 1,
+     "entry": 1.34761,
+     "pnl_px": -0.0011175759809636254,
+     "ret_pct": -0.08293022320727995,
+     "r": -1.140383654044538,
+     "risk_pct": 0.07272133629165566,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1771840800000,
+     "exit_t": 1771857000000,
+     "dir": -1,
+     "entry": 1.3508200000000001,
+     "pnl_px": -0.0009779967400951328,
+     "ret_pct": -0.07240022653611382,
+     "r": -1.1642818334469611,
+     "risk_pct": 0.062184450926084135,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1771946100000,
+     "exit_t": 1771965900000,
+     "dir": 1,
+     "entry": 1.35032,
+     "pnl_px": -0.0006978741888916673,
+     "ret_pct": -0.05168213378248617,
+     "r": -0.5914188041455014,
+     "risk_pct": 0.08738669352449485,
+     "result": "day end",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1772032500000,
+     "exit_t": 1772052300000,
+     "dir": 1,
+     "entry": 1.35308,
+     "pnl_px": 0.0021616979031560124,
+     "ret_pct": 0.15976127820646321,
+     "r": 1.6628445408891395,
+     "risk_pct": 0.09607709817601907,
+     "result": "day end",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1772093700000,
+     "exit_t": 1772109900000,
+     "dir": -1,
+     "entry": 1.35323,
+     "pnl_px": -0.0016382765653430997,
+     "ret_pct": -0.12106416243676979,
+     "r": -1.0921843768953585,
+     "risk_pct": 0.11084590202700628,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1772199000000,
+     "exit_t": 1772202600000,
+     "dir": -1,
+     "entry": 1.34596,
+     "pnl_px": -0.0014475244073319793,
+     "ret_pct": -0.10754587115010693,
+     "r": -1.1049804636122635,
+     "risk_pct": 0.09732830098962245,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1772440200000,
+     "exit_t": 1772441100000,
+     "dir": -1,
+     "entry": 1.33277,
+     "pnl_px": -0.0027762452791464387,
+     "ret_pct": -0.20830640539226114,
+     "r": -1.0516080602827516,
+     "risk_pct": 0.19808369035917492,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1772525700000,
+     "exit_t": 1772535600000,
+     "dir": -1,
+     "entry": 1.3315299999999999,
+     "pnl_px": 0.003864220415426667,
+     "ret_pct": 0.2902090388820881,
+     "r": 1.748516025079904,
+     "risk_pct": 0.1659744804848592,
+     "result": "target",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1772619300000,
+     "exit_t": 1772628300000,
+     "dir": 1,
+     "entry": 1.33884,
+     "pnl_px": -0.0029165884225161864,
+     "ret_pct": -0.21784443417556887,
+     "r": -1.0491325260849573,
+     "risk_pct": 0.2076424367362795,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1772786700000,
+     "exit_t": 1772787600000,
+     "dir": 1,
+     "entry": 1.33738,
+     "pnl_px": -0.0012465245937642866,
+     "ret_pct": -0.09320646291736728,
+     "r": -1.1229951295174316,
+     "risk_pct": 0.08299810076417655,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1773054900000,
+     "exit_t": 1773055800000,
+     "dir": 1,
+     "entry": 1.3356,
+     "pnl_px": -0.0014863305543588723,
+     "ret_pct": -0.11128560604663615,
+     "r": -1.1009855958214176,
+     "risk_pct": 0.10107816711590015,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1773218700000,
+     "exit_t": 1773224100000,
+     "dir": -1,
+     "entry": 1.34139,
+     "pnl_px": -0.0018170765848095627,
+     "ret_pct": -0.13546221343603,
+     "r": -1.0815932052438493,
+     "risk_pct": 0.1252432178560973,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1773315900000,
+     "exit_t": 1773315900000,
+     "dir": 1,
+     "entry": 1.34066,
+     "pnl_px": -0.0011168662052436495,
+     "ret_pct": -0.08330719237119401,
+     "r": -1.139659393105787,
+     "risk_pct": 0.07309832470574053,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1773389700000,
+     "exit_t": 1773405900000,
+     "dir": -1,
+     "entry": 1.32672,
+     "pnl_px": -0.0014855615455573457,
+     "ret_pct": -0.11197249951439231,
+     "r": -1.1004159596721386,
+     "risk_pct": 0.10175470332850658,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1773657000000,
+     "exit_t": 1773668700000,
+     "dir": 1,
+     "entry": 1.32687,
+     "pnl_px": 0.0038642878185883855,
+     "ret_pct": 0.29123334000982654,
+     "r": 2.8413881019031666,
+     "risk_pct": 0.1024968534973304,
+     "result": "target",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1773737100000,
+     "exit_t": 1773771300000,
+     "dir": 1,
+     "entry": 1.33247,
+     "pnl_px": 0.0038637159129724097,
+     "ret_pct": 0.2899664467471995,
+     "r": 2.1229208313033414,
+     "risk_pct": 0.1365884410155692,
+     "result": "target",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1773822600000,
+     "exit_t": 1773828000000,
+     "dir": -1,
+     "entry": 1.33445,
+     "pnl_px": -0.0017363637453098324,
+     "ret_pct": -0.13011830681627878,
+     "r": -1.0852273408186142,
+     "risk_pct": 0.1198995840983211,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1773909900000,
+     "exit_t": 1773910800000,
+     "dir": -1,
+     "entry": 1.32478,
+     "pnl_px": -0.0014953639317418776,
+     "ret_pct": -0.11287639696718531,
+     "r": -1.0995323027513582,
+     "risk_pct": 0.10265855462794032,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1773994500000,
+     "exit_t": 1773996300000,
+     "dir": 1,
+     "entry": 1.34341,
+     "pnl_px": -0.000997153179311594,
+     "ret_pct": -0.0742255290128549,
+     "r": -1.1594804410601807,
+     "risk_pct": 0.06401619758672787,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1774259100000,
+     "exit_t": 1774263600000,
+     "dir": -1,
+     "entry": 1.32741,
+     "pnl_px": -0.0022856728629006007,
+     "ret_pct": -0.17219042066133303,
+     "r": -1.0631036571630226,
+     "risk_pct": 0.16196954972465902,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1774358100000,
+     "exit_t": 1774360800000,
+     "dir": -1,
+     "entry": 1.33759,
+     "pnl_px": -0.001936694633558833,
+     "ret_pct": -0.1447898559019455,
+     "r": -1.0759414630882265,
+     "risk_pct": 0.13457038404892557,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1774449900000,
+     "exit_t": 1774449900000,
+     "dir": -1,
+     "entry": 1.33698,
+     "pnl_px": -0.0007965741248754377,
+     "ret_pct": -0.0595801077709044,
+     "r": -1.2069304922357258,
+     "risk_pct": 0.04936498676119934,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1774512900000,
+     "exit_t": 1774512900000,
+     "dir": -1,
+     "entry": 1.33427,
+     "pnl_px": -0.0009063029803380029,
+     "ret_pct": -0.06792500620848875,
+     "r": -1.1770168575819178,
+     "risk_pct": 0.05770945910497406,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1774602900000,
+     "exit_t": 1774602900000,
+     "dir": -1,
+     "entry": 1.33114,
+     "pnl_px": -0.0006059680070487072,
+     "ret_pct": -0.045522485016505194,
+     "r": -1.289293632018607,
+     "risk_pct": 0.03530808179454982,
+     "result": "stop",
+     "asset": "GBPUSD"
+    }
+   ],
+   "sensitivity_tp": {
+    "30": {
+     "a": {
+      "trades": 298,
+      "win_rate_pct": 32.21476510067114,
+      "mean_ret_pct": -0.014240837040957565,
+      "total_ret_pct": -4.243769438205354,
+      "profit_factor": 0.8321459845500413,
+      "max_dd_pct_sum": 4.716718834053381,
+      "mean_r": -0.15453639992931342,
+      "r_per_100": -15.453639992931341
+     },
+     "b": {
+      "trades": 311,
+      "win_rate_pct": 22.829581993569132,
+      "mean_ret_pct": -0.024245804501518083,
+      "total_ret_pct": -7.540445199972124,
+      "profit_factor": 0.6690097023061187,
+      "max_dd_pct_sum": 7.687749544275696,
+      "mean_r": -0.35064998223392313,
+      "r_per_100": -35.064998223392315
+     }
+    },
+    "50": {
+     "a": {
+      "trades": 298,
+      "win_rate_pct": 23.48993288590604,
+      "mean_ret_pct": -0.017951487177457655,
+      "total_ret_pct": -5.3495431788823815,
+      "profit_factor": 0.8109794781267392,
+      "max_dd_pct_sum": 5.840213977352514,
+      "mean_r": -0.29354219025263734,
+      "r_per_100": -29.354219025263735
+     },
+     "b": {
+      "trades": 311,
+      "win_rate_pct": 17.363344051446948,
+      "mean_ret_pct": -0.02745296604219029,
+      "total_ret_pct": -8.53787243912118,
+      "profit_factor": 0.6546075360801032,
+      "max_dd_pct_sum": 8.762605878556773,
+      "mean_r": -0.4260462208854825,
+      "r_per_100": -42.60462208854825
+     }
+    }
+   }
+  },
+  {
+   "key": "big_ben_fade",
+   "doc": "Big Ben Breakout Strategy (450251566)",
+   "assets": [
+    "GBPUSD",
+    "GBPJPY",
+    "EURGBP",
+    "EURUSD",
+    "USDJPY",
+    "AUDUSD"
+   ],
+   "missing_data": [],
+   "kind": "session",
+   "note": "",
+   "rule": "Big Ben Breakout (450251566), 5m. Body range (candle opens/closes) 00:00-07:00 London. The first 5m close\n    beyond it between 07:00 and 08:00 London is the pre-open breakout. Between 08:00 and 09:00 London, the first 5m\n    close back inside the range -> enter against the breakout at the next open. Target: the range size projected from\n    the far side. Time stop: at 09:00 London exit unless price has traded back to the 07:00 London price. No price\n    stop; closed at 21:00 UTC if still open.",
+   "windows": {
+    "a": [
+     "2020-11-01",
+     "2023-11-01"
+    ],
+    "b": [
+     "2023-11-01",
+     "2026-10-21"
+    ]
+   },
+   "first_trade": "2020-11-13",
+   "a": {
+    "trades": 722,
+    "win_rate_pct": 48.75346260387812,
+    "mean_ret_pct": -0.015418106045884119,
+    "total_ret_pct": -11.131872565128333,
+    "profit_factor": 0.889741873072202,
+    "max_dd_pct_sum": 20.17232193172597
+   },
+   "b": {
+    "trades": 705,
+    "win_rate_pct": 49.787234042553195,
+    "mean_ret_pct": -0.011790767711697018,
+    "total_ret_pct": -8.312491236746398,
+    "profit_factor": 0.89328488988043,
+    "max_dd_pct_sum": 12.560729910595565,
+    "mean_ci_low": -0.03386177213203779,
+    "by_asset_ret_pct": {
+     "GBPUSD": 0.7617080145618953,
+     "GBPJPY": -3.899195368531692,
+     "EURGBP": 2.094415928103112,
+     "EURUSD": -0.3229423120638134,
+     "USDJPY": -4.375521806668253,
+     "AUDUSD": -2.5709556921476446
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 722,
+     "win_rate_pct": 50.27700831024931,
+     "mean_ret_pct": -0.004270156296268491,
+     "total_ret_pct": -3.0830528459058506,
+     "profit_factor": 0.9681986685003062,
+     "max_dd_pct_sum": 17.157338842230516
+    },
+    "b": {
+     "trades": 705,
+     "win_rate_pct": 53.04964539007092,
+     "mean_ret_pct": -0.0006285790307225955,
+     "total_ret_pct": -0.44314821665942983,
+     "profit_factor": 0.994016255187719,
+     "max_dd_pct_sum": 7.063319750733207
+    }
+   },
+   "min_trades_b": 100,
+   "checks": {
+    "a_positive": false,
+    "b_positive": false,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": false
+   },
+   "verdict": "FAIL",
+   "tf": "5m",
+   "recent_b_trades": [
+    {
+     "t": 1773734700000,
+     "exit_t": 1773780900000,
+     "dir": -1,
+     "entry": 0.86389,
+     "pnl_px": -0.0002031757757721131,
+     "ret_pct": -0.023518709068528758,
+     "r": null,
+     "risk_pct": null,
+     "result": "day end",
+     "asset": "EURGBP"
+    },
+    {
+     "t": 1773821100000,
+     "exit_t": 1773824400000,
+     "dir": 1,
+     "entry": 1.336,
+     "pnl_px": -0.0011163902980704243,
+     "ret_pct": -0.08356214805916348,
+     "r": null,
+     "risk_pct": null,
+     "result": "time stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1773821100000,
+     "exit_t": 1773867300000,
+     "dir": 1,
+     "entry": 212.148,
+     "pnl_px": -0.23784492939142865,
+     "ret_pct": -0.11211273704745209,
+     "r": null,
+     "risk_pct": null,
+     "result": "day end",
+     "asset": "GBPJPY"
+    },
+    {
+     "t": 1773822900000,
+     "exit_t": 1773836700000,
+     "dir": 1,
+     "entry": 0.8635,
+     "pnl_px": 0.0008068209492192446,
+     "ret_pct": 0.0934361261400399,
+     "r": null,
+     "risk_pct": null,
+     "result": "target",
+     "asset": "EURGBP"
+    },
+    {
+     "t": 1773824100000,
+     "exit_t": 1773824400000,
+     "dir": 1,
+     "entry": 1.15332,
+     "pnl_px": -0.00019037418079781432,
+     "ret_pct": -0.016506622689090134,
+     "r": null,
+     "risk_pct": null,
+     "result": "time stop",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1773907500000,
+     "exit_t": 1773921600000,
+     "dir": -1,
+     "entry": 0.86379,
+     "pnl_px": 0.0007869021694278944,
+     "ret_pct": 0.0910987820451608,
+     "r": null,
+     "risk_pct": null,
+     "result": "target",
+     "asset": "EURGBP"
+    },
+    {
+     "t": 1773908100000,
+     "exit_t": 1773946800000,
+     "dir": 1,
+     "entry": 0.70306,
+     "pnl_px": 0.005066159972406337,
+     "ret_pct": 0.7205871436870731,
+     "r": null,
+     "risk_pct": null,
+     "result": "target",
+     "asset": "AUDUSD"
+    },
+    {
+     "t": 1773908400000,
+     "exit_t": 1773910800000,
+     "dir": 1,
+     "entry": 1.32639,
+     "pnl_px": -0.0011654063140331683,
+     "ret_pct": -0.0878630202303371,
+     "r": null,
+     "risk_pct": null,
+     "result": "time stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1773993900000,
+     "exit_t": 1773997200000,
+     "dir": -1,
+     "entry": 0.70901,
+     "pnl_px": 0.0002758245880146726,
+     "ret_pct": 0.03890277824215068,
+     "r": null,
+     "risk_pct": null,
+     "result": "time stop",
+     "asset": "AUDUSD"
+    },
+    {
+     "t": 1773996300000,
+     "exit_t": 1773997200000,
+     "dir": 1,
+     "entry": 0.86213,
+     "pnl_px": -7.294194017148925e-05,
+     "ret_pct": -0.008460666044736786,
+     "r": null,
+     "risk_pct": null,
+     "result": "time stop",
+     "asset": "EURGBP"
+    },
+    {
+     "t": 1774253100000,
+     "exit_t": 1774299300000,
+     "dir": 1,
+     "entry": 212.259,
+     "pnl_px": 0.38510158141340867,
+     "ret_pct": 0.1814300366125388,
+     "r": null,
+     "risk_pct": null,
+     "result": "day end",
+     "asset": "GBPJPY"
+    },
+    {
+     "t": 1774253100000,
+     "exit_t": 1774263900000,
+     "dir": -1,
+     "entry": 0.86705,
+     "pnl_px": 0.0019365504335241424,
+     "ret_pct": 0.22334933781490598,
+     "r": null,
+     "risk_pct": null,
+     "result": "target",
+     "asset": "EURGBP"
+    },
+    {
+     "t": 1774253100000,
+     "exit_t": 1774299300000,
+     "dir": 1,
+     "entry": 0.69557,
+     "pnl_px": 0.005296931722762244,
+     "ret_pct": 0.7615238901565973,
+     "r": null,
+     "risk_pct": null,
+     "result": "day end",
+     "asset": "AUDUSD"
+    },
+    {
+     "t": 1774339500000,
+     "exit_t": 1774385700000,
+     "dir": -1,
+     "entry": 1.34236,
+     "pnl_px": 0.0010829724356717918,
+     "ret_pct": 0.08067675107063618,
+     "r": null,
+     "risk_pct": null,
+     "result": "day end",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1774339500000,
+     "exit_t": 1774385700000,
+     "dir": -1,
+     "entry": 212.711,
+     "pnl_px": -0.1379365889826829,
+     "ret_pct": -0.06484694678821636,
+     "r": null,
+     "risk_pct": null,
+     "result": "day end",
+     "asset": "GBPJPY"
+    },
+    {
+     "t": 1774339500000,
+     "exit_t": 1774385700000,
+     "dir": 1,
+     "entry": 0.86461,
+     "pnl_px": 0.0006066886388793602,
+     "ret_pct": 0.07016905181288213,
+     "r": null,
+     "risk_pct": null,
+     "result": "day end",
+     "asset": "EURGBP"
+    },
+    {
+     "t": 1774339500000,
+     "exit_t": 1774385700000,
+     "dir": -1,
+     "entry": 1.16062,
+     "pnl_px": -0.0001810800020931591,
+     "ret_pct": -0.015602006004821483,
+     "r": null,
+     "risk_pct": null,
+     "result": "day end",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1774339500000,
+     "exit_t": 1774371900000,
+     "dir": 1,
+     "entry": 158.46,
+     "pnl_px": 0.6082709229538068,
+     "ret_pct": 0.38386401801956754,
+     "r": null,
+     "risk_pct": null,
+     "result": "target",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1774425900000,
+     "exit_t": 1774472100000,
+     "dir": -1,
+     "entry": 0.86549,
+     "pnl_px": 0.0006166683338271195,
+     "ret_pct": 0.07125077514784914,
+     "r": null,
+     "risk_pct": null,
+     "result": "day end",
+     "asset": "EURGBP"
+    },
+    {
+     "t": 1774425900000,
+     "exit_t": 1774472100000,
+     "dir": 1,
+     "entry": 0.6968,
+     "pnl_px": -0.0022128040508447855,
+     "ret_pct": -0.31756659742318966,
+     "r": null,
+     "risk_pct": null,
+     "result": "day end",
+     "asset": "AUDUSD"
+    },
+    {
+     "t": 1774426200000,
+     "exit_t": 1774472100000,
+     "dir": -1,
+     "entry": 159.008,
+     "pnl_px": -0.4757780718080653,
+     "ret_pct": -0.29921643678812715,
+     "r": null,
+     "risk_pct": null,
+     "result": "day end",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1774513200000,
+     "exit_t": 1774515600000,
+     "dir": 1,
+     "entry": 1.33501,
+     "pnl_px": 0.0001536459566604531,
+     "ret_pct": 0.011508974214459301,
+     "r": null,
+     "risk_pct": null,
+     "result": "time stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1774513200000,
+     "exit_t": 1774515600000,
+     "dir": 1,
+     "entry": 1.15577,
+     "pnl_px": 9.937746581067941e-05,
+     "ret_pct": 0.008598377342436592,
+     "r": null,
+     "risk_pct": null,
+     "result": "time stop",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1774598700000,
+     "exit_t": 1774612800000,
+     "dir": -1,
+     "entry": 212.894,
+     "pnl_px": 0.5900863259151379,
+     "ret_pct": 0.2771737700053256,
+     "r": null,
+     "risk_pct": null,
+     "result": "target",
+     "asset": "GBPJPY"
+    },
+    {
+     "t": 1774598700000,
+     "exit_t": 1774644900000,
+     "dir": -1,
+     "entry": 0.86517,
+     "pnl_px": -0.0024234888665767285,
+     "ret_pct": -0.28011707139368314,
+     "r": null,
+     "risk_pct": null,
+     "result": "day end",
+     "asset": "EURGBP"
+    }
+   ]
+  },
+  {
+   "key": "pips20_daily",
+   "doc": "20 Pips Daily Forex Breakout Strategy (442430072)",
+   "assets": [
+    "EURUSD",
+    "GBPUSD",
+    "USDJPY",
+    "AUDUSD",
+    "USDCAD",
+    "USDCHF",
+    "NZDUSD"
+   ],
+   "missing_data": [],
+   "kind": "session",
+   "note": "",
+   "rule": "20 Pips Daily Forex Breakout (442430072, decoded), any pair. Broker day (New York close). Buy stop 3 pips above\n    the previous day's high, sell stop 3 pips below its low; stop 20 pips, target 20 pips. An order touched before\n    07:00 London (the Asian session) is not taken that day. Each order fills at most once a day, one position at a\n    time; a trade still open at the end of the broker day is closed at its last close.",
+   "windows": {
+    "a": [
+     "2020-11-01",
+     "2023-11-01"
+    ],
+    "b": [
+     "2023-11-01",
+     "2026-10-21"
+    ]
+   },
+   "first_trade": "2020-11-12",
+   "a": {
+    "trades": 2883,
+    "win_rate_pct": 49.84391259105099,
+    "mean_ret_pct": -0.007738124079420313,
+    "total_ret_pct": -22.309011720968762,
+    "profit_factor": 0.9181695168544207,
+    "max_dd_pct_sum": 30.28568240053582,
+    "mean_r": -0.046589908806456755,
+    "r_per_100": -4.658990880645676
+   },
+   "b": {
+    "trades": 2566,
+    "win_rate_pct": 50.66250974279034,
+    "mean_ret_pct": -0.0025365461464495922,
+    "total_ret_pct": -6.508777411789653,
+    "profit_factor": 0.9702517817709834,
+    "max_dd_pct_sum": 11.758247659001754,
+    "mean_r": -0.005594088903470655,
+    "r_per_100": -0.5594088903470654,
+    "mean_ci_low": -0.009842545190583061,
+    "by_asset_ret_pct": {
+     "EURUSD": 1.9807807624298637,
+     "GBPUSD": -2.2242051935159206,
+     "USDJPY": 0.5173718043932762,
+     "AUDUSD": -1.2091750757869903,
+     "USDCAD": 0.14015687016807993,
+     "USDCHF": 4.442638725444191,
+     "NZDUSD": -10.156345304922153
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 2883,
+     "win_rate_pct": 50.329517863336804,
+     "mean_ret_pct": 0.002792694226266716,
+     "total_ret_pct": 8.051337454326942,
+     "profit_factor": 1.031273406123464,
+     "max_dd_pct_sum": 8.617496075925771,
+     "mean_r": 0.008499826569548148,
+     "r_per_100": 0.8499826569548149
+    },
+    "b": {
+     "trades": 2566,
+     "win_rate_pct": 51.4419329696025,
+     "mean_ret_pct": 0.00795668235844661,
+     "total_ret_pct": 20.416846931774003,
+     "profit_factor": 1.0992964704181352,
+     "max_dd_pct_sum": 7.958200782799363,
+     "mean_r": 0.05037412314887309,
+     "r_per_100": 5.037412314887309
+    }
+   },
+   "min_trades_b": 100,
+   "checks": {
+    "a_positive": false,
+    "b_positive": false,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": true
+   },
+   "verdict": "FAIL",
+   "tf": "1m",
+   "recent_b_trades": [
+    {
+     "t": 1791458640000,
+     "exit_t": 1791469200000,
+     "dir": -1,
+     "entry": 0.55825,
+     "pnl_px": -0.002063856714871415,
+     "ret_pct": -0.3697011580602624,
+     "r": -1.0319283574357074,
+     "risk_pct": 0.35826242722794444,
+     "result": "stop",
+     "asset": "NZDUSD"
+    },
+    {
+     "t": 1791533100000,
+     "exit_t": 1791536100000,
+     "dir": 1,
+     "entry": 158.399,
+     "pnl_px": -0.21667918668114794,
+     "ret_pct": -0.13679327942799382,
+     "r": -1.0833959334057397,
+     "risk_pct": 0.1262634233801981,
+     "result": "stop",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1791549000000,
+     "exit_t": 1791576960000,
+     "dir": 1,
+     "entry": 1.4280899999999999,
+     "pnl_px": -0.002143224318394532,
+     "ret_pct": -0.150076277993301,
+     "r": -1.071612159197266,
+     "risk_pct": 0.14004719590502002,
+     "result": "stop",
+     "asset": "USDCAD"
+    },
+    {
+     "t": 1791786420000,
+     "exit_t": 1791797400000,
+     "dir": 1,
+     "entry": 1.32531,
+     "pnl_px": -0.0021352464868384935,
+     "ret_pct": -0.16111298389346593,
+     "r": -1.0676232434192467,
+     "risk_pct": 0.1509080894281338,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1791788760000,
+     "exit_t": 1791813720000,
+     "dir": 1,
+     "entry": 158.461,
+     "pnl_px": 0.18329320766804358,
+     "ret_pct": 0.11567086391480778,
+     "r": 0.9164660383402179,
+     "risk_pct": 0.12621402111560573,
+     "result": "target",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1791792660000,
+     "exit_t": 1791816900000,
+     "dir": 1,
+     "entry": 0.83221,
+     "pnl_px": 0.0019031303964455182,
+     "ret_pct": 0.22868391348884512,
+     "r": 0.9515651982227591,
+     "risk_pct": 0.240323956693623,
+     "result": "target",
+     "asset": "USDCHF"
+    },
+    {
+     "t": 1791798120000,
+     "exit_t": 1791819420000,
+     "dir": -1,
+     "entry": 1.11846,
+     "pnl_px": 0.0018930539573438487,
+     "ret_pct": 0.16925540093913494,
+     "r": 0.9465269786719244,
+     "risk_pct": 0.17881730236217658,
+     "result": "target",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1791819960000,
+     "exit_t": 1791838680000,
+     "dir": -1,
+     "entry": 1.3202800000000001,
+     "pnl_px": -0.0006548614718075996,
+     "ret_pct": -0.0496001963074196,
+     "r": -0.3274307359037998,
+     "risk_pct": 0.1514830187535977,
+     "result": "day end",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1791880380000,
+     "exit_t": 1791881100000,
+     "dir": -1,
+     "entry": 158.048,
+     "pnl_px": -0.21666327655418627,
+     "ret_pct": -0.1370870093605653,
+     "r": -1.0833163827709313,
+     "risk_pct": 0.1265438347843693,
+     "result": "stop",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1791897060000,
+     "exit_t": 1791902700000,
+     "dir": -1,
+     "entry": 1.4237300000000002,
+     "pnl_px": 0.0018572132559897536,
+     "ret_pct": 0.13044701284581722,
+     "r": 0.9286066279948768,
+     "risk_pct": 0.14047607341279594,
+     "result": "target",
+     "asset": "USDCAD"
+    },
+    {
+     "t": 1791981000000,
+     "exit_t": 1791981180000,
+     "dir": 1,
+     "entry": 0.83492,
+     "pnl_px": 0.0019028153298648043,
+     "ret_pct": 0.22790391053811196,
+     "r": 0.9514076649324021,
+     "risk_pct": 0.23954390839840944,
+     "result": "target",
+     "asset": "USDCHF"
+    },
+    {
+     "t": 1791981060000,
+     "exit_t": 1791984000000,
+     "dir": 1,
+     "entry": 158.711,
+     "pnl_px": 0.18326686639824175,
+     "ret_pct": 0.11547206330893367,
+     "r": 0.9163343319912087,
+     "risk_pct": 0.1260152100358513,
+     "result": "target",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1791981300000,
+     "exit_t": 1791982740000,
+     "dir": -1,
+     "entry": 1.11501,
+     "pnl_px": 0.001893384138152987,
+     "ret_pct": 0.1698087136575445,
+     "r": 0.9466920690764935,
+     "risk_pct": 0.1793705886045865,
+     "result": "target",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1791982800000,
+     "exit_t": 1791986100000,
+     "dir": -1,
+     "entry": 1.3200800000000001,
+     "pnl_px": 0.0018652876321563205,
+     "ret_pct": 0.141301105399394,
+     "r": 0.9326438160781603,
+     "risk_pct": 0.1515059693351918,
+     "result": "target",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1791985800000,
+     "exit_t": 1791996420000,
+     "dir": 1,
+     "entry": 1.42865,
+     "pnl_px": -0.00214328052060897,
+     "ret_pct": -0.15002138526643824,
+     "r": -1.071640260304485,
+     "risk_pct": 0.1399923004234767,
+     "result": "stop",
+     "asset": "USDCAD"
+    },
+    {
+     "t": 1791986100000,
+     "exit_t": 1792011540000,
+     "dir": -1,
+     "entry": 0.55767,
+     "pnl_px": -0.0016337659395680992,
+     "ret_pct": -0.2929628525056215,
+     "r": -0.8168829697840496,
+     "risk_pct": 0.3586350350565747,
+     "result": "day end",
+     "asset": "NZDUSD"
+    },
+    {
+     "t": 1792062420000,
+     "exit_t": 1792067400000,
+     "dir": -1,
+     "entry": 1.4194,
+     "pnl_px": -0.0021425529026533052,
+     "ret_pct": -0.15094778798459246,
+     "r": -1.0712764513266526,
+     "risk_pct": 0.1409046075806679,
+     "result": "stop",
+     "asset": "USDCAD"
+    },
+    {
+     "t": 1792087440000,
+     "exit_t": 1792097880000,
+     "dir": 1,
+     "entry": 1.3278299999999998,
+     "pnl_px": -0.0003055972896579551,
+     "ret_pct": -0.023014790271190973,
+     "r": -0.15279864482897754,
+     "risk_pct": 0.15062169102972522,
+     "result": "day end",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1792132260000,
+     "exit_t": 1792135620000,
+     "dir": -1,
+     "entry": 0.8261700000000001,
+     "pnl_px": 0.0019040651327215663,
+     "ret_pct": 0.23046892682154593,
+     "r": 0.9520325663607832,
+     "risk_pct": 0.24208092765411476,
+     "result": "target",
+     "asset": "USDCHF"
+    },
+    {
+     "t": 1792135500000,
+     "exit_t": 1792145640000,
+     "dir": 1,
+     "entry": 1.1244,
+     "pnl_px": 0.001892294062959321,
+     "ret_pct": 0.16829367333327294,
+     "r": 0.9461470314796605,
+     "risk_pct": 0.17787264318747778,
+     "result": "target",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1792135500000,
+     "exit_t": 1792151040000,
+     "dir": -1,
+     "entry": 1.41667,
+     "pnl_px": 0.0018579218053369484,
+     "ret_pct": 0.13114711297175405,
+     "r": 0.9289609026684742,
+     "risk_pct": 0.1411761384090861,
+     "result": "target",
+     "asset": "USDCAD"
+    },
+    {
+     "t": 1792413600000,
+     "exit_t": 1792443540000,
+     "dir": 1,
+     "entry": 158.37,
+     "pnl_px": 0.13830516660456738,
+     "ret_pct": 0.08733040765584857,
+     "r": 0.6915258330228369,
+     "risk_pct": 0.12628654416871882,
+     "result": "day end",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1792476000000,
+     "exit_t": 1792482300000,
+     "dir": 1,
+     "entry": 1.33451,
+     "pnl_px": 0.0001236985515520317,
+     "ret_pct": 0.00926921128744121,
+     "r": 0.061849275776015844,
+     "risk_pct": 0.1498677417179339,
+     "result": "day end",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1792478940000,
+     "exit_t": 1792483140000,
+     "dir": 1,
+     "entry": 0.69961,
+     "pnl_px": -5.321111645617549e-05,
+     "ret_pct": -0.007605825596571731,
+     "r": -0.026605558228087745,
+     "risk_pct": 0.28587355812524123,
+     "result": "day end",
+     "asset": "AUDUSD"
+    },
+    {
+     "t": 1792481160000,
+     "exit_t": 1792483260000,
+     "dir": -1,
+     "entry": 1.40676,
+     "pnl_px": 0.0005188491418763874,
+     "ret_pct": 0.036882562901730746,
+     "r": 0.2594245709381937,
+     "risk_pct": 0.14217066166225936,
+     "result": "day end",
+     "asset": "USDCAD"
+    }
+   ]
+  }
+ ],
+ "headline": "\u201cRSI Trading Strategy 91% Win Rate, QuantifiedStrategies\u201d passes the fixed test (PF 1.14 in 2015\u20132020, 3.57 in 2021\u20132026), but with your broker's overnight financing 2015\u20132020 turns negative (PF 0.92) and in 2015\u20132020 it did -0.24% per trade versus random entry days. Not a consistent winner: at most a forward paper-test candidate. Turtles, Holy Grail and every London-session breakout lose after costs."
+}

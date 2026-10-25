@@ -274,8 +274,9 @@ class TestPayloads:
         from app.live.v6_service import V6ForwardService
         svc = V6ForwardService(str(tmp_path / "x.db"), env={}, program="V8")
         svc.start()
-        assert svc.enabled is False and svc.health()["status"] == "DISABLED"
-        assert V6ForwardService(str(tmp_path / "x.db"), env={"V8_FORWARD_ENABLED": "true"}, program="V8").enabled  # back on 2026-10-09
+        assert svc.enabled is False and svc.health()["status"] == "RETIRED"           # V8 retired 2026-10-12
+        # retired 2026-10-12: the env switch can no longer turn it on
+        assert not V6ForwardService(str(tmp_path / "x.db"), env={"V8_FORWARD_ENABLED": "true"}, program="V8").enabled
         routes = [r for r in api_public.router.routes if r.path.endswith("/v8") or r.path.endswith("/candles")]
         assert len(routes) >= 2 and all(set(r.methods) <= {"GET", "HEAD"} for r in routes)   # + /video/candles
 

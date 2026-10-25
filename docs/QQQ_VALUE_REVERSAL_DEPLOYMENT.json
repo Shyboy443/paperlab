@@ -1,0 +1,33 @@
+{
+  "deployment_id": "81ef6f31-2d68-46fd-8774-887f83452dba",
+  "deployment_status": "SUCCESS",
+  "verified_at": "2026-10-08T10:46:49Z",
+  "url": "https://paperlab-production-919c.up.railway.app/public/value-reversal",
+  "rule": "QQQ-VA70-ROWS64-ENGULF5-v1",
+  "execution": "DELAYED_FEED_PAPER_SIMULATION",
+  "broker_orders_enabled": false,
+  "forward_start_ms": 1791456332329,
+  "heartbeat_advanced": true,
+  "saved_books_verified": 4,
+  "startup_fills": 0,
+  "historical_verdict": "FAIL",
+  "primary_2024_2025": {
+    "monthly_avg_net_pct": -0.03454823549998801,
+    "total_net_return_pct": -0.8279059999999894,
+    "max_drawdown_pct": 1.4877959287371028,
+    "completed_trades": 14
+  },
+  "checks": {
+    "targeted_regression": "141 passed; stock live controls, public API, guard, video breakout and QQQ",
+    "final_qqq_unit_checks": "19 passed including corrupted derived-report recovery",
+    "roster_regression": "8 passed",
+    "hosted_browser": "1280px and 390px; metrics, grid, book counts, 24 months, full ledger, period/variant controls; no JS errors or page overflow",
+    "persistence": "New books and report saved on /data; no startup fills; frozen rules retained",
+    "other_services": "Existing stock strategy WAIT_NEXT_OPEN with no error; continuous spot/perp research RUNNING, both sources OK"
+  },
+  "source_sha256": {
+    "model.py": "051eb98b8bd96776d863b79d3e62d5d08f52d18b73d2ea6e27d3ac45fd30fefc",
+    "data.py": "b3785a3f6d8f8a0d5eed05e6e3ad4561d83aa4df443affc5eead9696d7eb616f",
+    "research.py": "b3b17ccb61fe97b1206efba416f35d9b46dc6556a8ae34abfa4f582e673b149e"
+  }
+}

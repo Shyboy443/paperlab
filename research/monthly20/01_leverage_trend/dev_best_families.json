@@ -1,0 +1,2 @@
+[{"kind":"don120","filt":"adx25","interval":"4h","uni":null,"slots":10,"max_lev":50,"label":"big10_4h"},
+ {"kind":"ema5_100","filt":"adx25","interval":"1d","uni":null,"slots":10,"max_lev":50,"label":"big10_1d"}]

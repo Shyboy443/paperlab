@@ -1,5 +1,11 @@
 """Parent side of the V6 FORWARD ARENA: starts the worker process at every boot (no manual step), relays its events
-onto the realtime bus, keeps its latest status, and restarts it (with backoff) if it dies.
+onto the realtime bus, keeps its latest status, and restarts it (with backoff) if it dies -- or if it goes SILENT.
+
+Heartbeats: the worker sends a status every ~10 s. `health()` reports `heartbeat_age_s` (seconds since the last one),
+so a hung worker no longer looks healthy behind its last report (2026-10-08: V8/V11/V13/V14 hung 07:54 -> 21:32 UTC
+while still showing LIVE). A worker silent for STALL_RESTART_S (LIVE) or STALL_WARMUP_S (warming up) is terminated
+and restarted like a crashed one; the restart resumes the experiment, re-derives every book from its stored bars and
+recorded decisions and passes the continuity checks BEFORE it takes new entries.
 
 Environment:
     V6_FORWARD_ENABLED   true to run V6 live forward paper trading (default false: tests and local runs never touch
@@ -27,6 +33,9 @@ import time
 from typing import Any, Mapping
 
 log = logging.getLogger("paperlab.live.v6service")
+
+STALL_RESTART_S = 300.0          # a LIVE worker silent this long (30 missed heartbeats) is restarted
+STALL_WARMUP_S = 1200.0          # warming up (loading days of bars) may be quiet for longer
 
 
 def _flag(v: str | None, default: bool) -> bool:
@@ -98,6 +107,7 @@ class V6ForwardService:
                                  daemon=True)
         self._proc.start()
         self.started_at = time.time()
+        self.last_status_ts = self.started_at          # the spawn counts as the first sign of life
         self.status = {"status": "STARTING", "pid": self._proc.pid}
         log.info("V6 forward worker started (pid %s)", self._proc.pid)
 
@@ -124,6 +134,16 @@ class V6ForwardService:
             if item is not None:
                 self._handle(item)
                 continue
+            if self._stalled(time.time()):
+                silent = time.time() - self.last_status_ts
+                log.error("%s forward worker silent for %.0f s: terminating it for a restart", self.program, silent)
+                self._publish("v6", {"type": "system", "event": "WORKER_STALLED", "silent_s": round(silent)})
+                self.status = {**self.status, "status": "RESTARTING", "error": f"worker silent for {silent:.0f} s (hung)"}
+                self._proc.terminate()
+                self._proc.join(5.0)
+                if self._proc.is_alive():
+                    self._proc.kill()
+                    self._proc.join(5.0)
             if self._proc is not None and not self._proc.is_alive() and not self._stopping.is_set():
                 code = self._proc.exitcode
                 self.status = {**self.status, "status": "RESTARTING", "error": f"worker exited with code {code}"}
@@ -135,8 +155,21 @@ class V6ForwardService:
                 backoff = min(600.0, backoff * 2)
                 self._spawn()
 
+    def _stalled(self, now: float) -> bool:
+        """True when the worker process is alive but has sent nothing for too long (hung, not crashed)."""
+        if self._proc is None or self._stopping.is_set() or not self._proc.is_alive():
+            return False
+        limit = STALL_WARMUP_S if str((self.status or {}).get("status")) in ("STARTING", "WARMING_UP", "STARTING_BOTS") \
+            else STALL_RESTART_S
+        return now - (getattr(self, "last_status_ts", None) or now) > limit
+
+    def heartbeat_age_s(self) -> float | None:
+        ts = getattr(self, "last_status_ts", None)
+        return round(time.time() - ts, 1) if ts and self._proc is not None else None
+
     def _handle(self, item: tuple) -> None:
         if item[0] == "status":
+            self.last_status_ts = time.time()
             self.status = dict(item[1])
             self._publish_state()
             return
@@ -180,6 +213,7 @@ class V6ForwardService:
         bots = st.get("bots") or []
         m = st.get("market") or {}
         return {"status": st.get("status", "DISABLED"), "enabled": self.enabled, "restarts": self.restarts,
+                "heartbeat_age_s": self.heartbeat_age_s() if self.enabled else None,
                 "session_id": st.get("session_id"), "experiment_id": st.get("experiment_id"),
                 "forward_start_ms": st.get("forward_start_ms"), "live_from_ms": st.get("live_from_ms"),
                 "bots": len(bots), "live_bots": st.get("live_bots"),

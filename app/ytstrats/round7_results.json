@@ -1,0 +1,1780 @@
+{
+ "generated_utc": "2026-10-20T20:24:55+00:00",
+ "pre_registration": "docs/SCRIBD_ROUND7_STUDY.md",
+ "costs": {
+  "etf": "0.01% per side SPY/DIA/QQQ/IWM, 0.05% country ETFs and VIXY (no short borrow fee)"
+ },
+ "rules": [
+  {
+   "key": "grossmann_vxx_bb",
+   "doc": "Strategies for Trading Inverse Volatility, Grossmann Dec 2013 (250728698): Bollinger rule",
+   "assets": [
+    "VIXY"
+   ],
+   "tf": "daily",
+   "rule": "",
+   "windows": {
+    "a": [
+     "2011-01-01",
+     "2014-01-01"
+    ],
+    "b": [
+     "2014-01-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 14,
+    "win_rate_pct": 64.28571428571429,
+    "mean_ret_pct": 11.361656833290473,
+    "total_ret_pct": 159.06319566606663,
+    "profit_factor": 4.771222371360042,
+    "max_dd_pct_sum": 24.296102871455446
+   },
+   "b": {
+    "trades": 75,
+    "win_rate_pct": 45.33333333333333,
+    "mean_ret_pct": 3.5045041892385536,
+    "total_ret_pct": 262.8378141928915,
+    "profit_factor": 1.5185962329946818,
+    "max_dd_pct_sum": 82.83787748585908,
+    "mean_ci_low": -1.0752434187107147,
+    "by_asset_ret_pct": {
+     "VIXY": 262.8378141928915
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 14,
+     "win_rate_pct": 64.28571428571429,
+     "mean_ret_pct": 11.455928868856034,
+     "total_ret_pct": 160.38300416398448,
+     "profit_factor": 4.850055307035882,
+     "max_dd_pct_sum": 24.084060841034944
+    },
+    "b": {
+     "trades": 75,
+     "win_rate_pct": 45.33333333333333,
+     "mean_ret_pct": 3.602702837819633,
+     "total_ret_pct": 270.2027128364725,
+     "profit_factor": 1.5377443443393035,
+     "max_dd_pct_sum": 82.19677909631105
+    }
+   },
+   "checks": {
+    "a_positive": true,
+    "b_positive": true,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": true
+   },
+   "verdict": "FAIL",
+   "recent_b_trades": [
+    {
+     "t": 1656288000000,
+     "exit_t": 1661904000000,
+     "dir": -1,
+     "entry": 359.0,
+     "ret_pct": 18.739500308236057,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1662681600000,
+     "exit_t": 1663804800000,
+     "dir": -1,
+     "entry": 273.20001220703125,
+     "ret_pct": -11.086456317305924,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1666137600000,
+     "exit_t": 1677024000000,
+     "dir": -1,
+     "entry": 334.0,
+     "ret_pct": 39.02134913370281,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1677628800000,
+     "exit_t": 1678665600000,
+     "dir": -1,
+     "entry": 187.39999389648438,
+     "ret_pct": -25.406142318257956,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1679443200000,
+     "exit_t": 1691366400000,
+     "dir": -1,
+     "entry": 195.0,
+     "ret_pct": 48.08818367591272,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1691971200000,
+     "exit_t": 1692316800000,
+     "dir": -1,
+     "entry": 97.0,
+     "ret_pct": -12.477319587628847,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1692835200000,
+     "exit_t": 1695686400000,
+     "dir": -1,
+     "entry": 96.0,
+     "ret_pct": 2.3178746819496165,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1696982400000,
+     "exit_t": 1697414400000,
+     "dir": -1,
+     "entry": 88.95999908447266,
+     "ret_pct": -9.412206456769688,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1697500800000,
+     "exit_t": 1697673600000,
+     "dir": -1,
+     "entry": 95.08000183105469,
+     "ret_pct": -3.719809363837846,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1698796800000,
+     "exit_t": 1712534400000,
+     "dir": -1,
+     "entry": 93.0,
+     "ret_pct": 40.00606320288875,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1713916800000,
+     "exit_t": 1721606400000,
+     "dir": -1,
+     "entry": 54.279998779296875,
+     "ret_pct": 17.226267357294628,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1723593600000,
+     "exit_t": 1725840000000,
+     "dir": -1,
+     "entry": 48.880001068115234,
+     "ret_pct": -11.234857829560594,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1726790400000,
+     "exit_t": 1728000000000,
+     "dir": -1,
+     "entry": 47.560001373291016,
+     "ret_pct": -11.712195749628483,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1729468800000,
+     "exit_t": 1730419200000,
+     "dir": -1,
+     "entry": 50.91999816894531,
+     "ret_pct": -9.374079715488884,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1730851200000,
+     "exit_t": 1734566400000,
+     "dir": -1,
+     "entry": 45.720001220703125,
+     "ret_pct": -6.380476497560659,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1735171200000,
+     "exit_t": 1740441600000,
+     "dir": -1,
+     "entry": 42.220001220703125,
+     "ret_pct": -4.578788097277475,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1742428800000,
+     "exit_t": 1743724800000,
+     "dir": -1,
+     "entry": 49.09000015258789,
+     "ret_pct": -39.55747959634301,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1745539200000,
+     "exit_t": 1760313600000,
+     "dir": -1,
+     "entry": 64.41999816894531,
+     "ret_pct": 46.368424431685895,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1761004800000,
+     "exit_t": 1763424000000,
+     "dir": -1,
+     "entry": 33.369998931884766,
+     "ret_pct": -9.12459464696328,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1764028800000,
+     "exit_t": 1768953600000,
+     "dir": -1,
+     "entry": 33.66999816894531,
+     "ret_pct": 18.858086127643613,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1769126400000,
+     "exit_t": 1770336000000,
+     "dir": -1,
+     "entry": 25.530000686645508,
+     "ret_pct": -8.172970662916809,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1770681600000,
+     "exit_t": 1770940800000,
+     "dir": -1,
+     "entry": 25.860000610351562,
+     "ret_pct": -7.8378188428928794,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1772064000000,
+     "exit_t": 1772582400000,
+     "dir": -1,
+     "entry": 26.329999923706055,
+     "ret_pct": -11.119558020306837,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1775433600000,
+     "exit_t": 1785369600000,
+     "dir": -1,
+     "entry": 33.630001068115234,
+     "ret_pct": 35.63001738732833,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1785715200000,
+     "exit_t": 1792368000000,
+     "dir": -1,
+     "entry": 20.209999084472656,
+     "ret_pct": 15.098094180179809,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    }
+   ],
+   "curve": {
+    "a": {
+     "rule": {
+      "total_pct": 255.9926723317607,
+      "cagr_pct": 52.67634616611243,
+      "max_dd_pct": 22.935023933480846
+     }
+    },
+    "b": {
+     "rule": {
+      "total_pct": 200.9660367174963,
+      "cagr_pct": 8.987774104861646,
+      "max_dd_pct": 64.73568212118792
+     }
+    }
+   },
+   "note": "VIXY tracks the same index as VXX; short borrow fee not modelled"
+  },
+  {
+   "key": "grossmann_vxx_sma",
+   "doc": "Strategies for Trading Inverse Volatility, Grossmann Dec 2013 (250728698): 5/15 SMA variant",
+   "assets": [
+    "VIXY"
+   ],
+   "tf": "daily",
+   "rule": "",
+   "windows": {
+    "a": [
+     "2011-01-01",
+     "2014-01-01"
+    ],
+    "b": [
+     "2014-01-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 23,
+    "win_rate_pct": 69.56521739130434,
+    "mean_ret_pct": 7.924936788725511,
+    "total_ret_pct": 182.27354614068676,
+    "profit_factor": 6.557231048443112,
+    "max_dd_pct_sum": 13.647106153384982
+   },
+   "b": {
+    "trades": 116,
+    "win_rate_pct": 49.137931034482754,
+    "mean_ret_pct": 2.501381872246759,
+    "total_ret_pct": 290.16029718062407,
+    "profit_factor": 1.613809197562256,
+    "max_dd_pct_sum": 56.25711532500844,
+    "mean_ci_low": -0.12266051847061138,
+    "by_asset_ret_pct": {
+     "VIXY": 290.16029718062396
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 23,
+     "win_rate_pct": 69.56521739130434,
+     "mean_ret_pct": 8.020926325562716,
+     "total_ret_pct": 184.48130548794248,
+     "profit_factor": 6.75007178913084,
+     "max_dd_pct_sum": 13.440385960404825
+    },
+    "b": {
+     "trades": 116,
+     "win_rate_pct": 49.137931034482754,
+     "mean_ret_pct": 2.6000818313310834,
+     "total_ret_pct": 301.6094924344057,
+     "profit_factor": 1.6464158817443268,
+     "max_dd_pct_sum": 55.129550549733636
+    }
+   },
+   "checks": {
+    "a_positive": true,
+    "b_positive": true,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": true
+   },
+   "verdict": "FAIL",
+   "recent_b_trades": [
+    {
+     "t": 1710806400000,
+     "exit_t": 1712275200000,
+     "dir": -1,
+     "entry": 55.20000076293945,
+     "ret_pct": -2.202499694375016,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1714089600000,
+     "exit_t": 1717459200000,
+     "dir": -1,
+     "entry": 53.68000030517578,
+     "ret_pct": 13.841392510174552,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1717718400000,
+     "exit_t": 1719187200000,
+     "dir": -1,
+     "entry": 44.560001373291016,
+     "ret_pct": -0.9981097345232628,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1719532800000,
+     "exit_t": 1721347200000,
+     "dir": -1,
+     "entry": 42.880001068115234,
+     "ret_pct": -3.833205301966457,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1723680000000,
+     "exit_t": 1725408000000,
+     "dir": -1,
+     "entry": 46.0,
+     "ret_pct": -18.10899734497069,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1726531200000,
+     "exit_t": 1727827200000,
+     "dir": -1,
+     "entry": 48.599998474121094,
+     "ret_pct": -8.993332984306834,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1729209600000,
+     "exit_t": 1730246400000,
+     "dir": -1,
+     "entry": 51.400001525878906,
+     "ret_pct": -1.7350586142318363,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1731024000000,
+     "exit_t": 1732492800000,
+     "dir": -1,
+     "entry": 44.400001525878906,
+     "ret_pct": 1.3872293347804154,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1732838400000,
+     "exit_t": 1734480000000,
+     "dir": -1,
+     "entry": 42.400001525878906,
+     "ret_pct": -2.105715666871135,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1735516800000,
+     "exit_t": 1736812800000,
+     "dir": -1,
+     "entry": 46.130001068115234,
+     "ret_pct": -1.6182110277578048,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1737417600000,
+     "exit_t": 1738713600000,
+     "dir": -1,
+     "entry": 42.279998779296875,
+     "ret_pct": -1.993100937542162,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1739318400000,
+     "exit_t": 1740528000000,
+     "dir": -1,
+     "entry": 43.13999938964844,
+     "ret_pct": -1.3523665359966142,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1742515200000,
+     "exit_t": 1743638400000,
+     "dir": -1,
+     "entry": 48.279998779296875,
+     "ret_pct": -16.90624651162201,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1745539200000,
+     "exit_t": 1748476800000,
+     "dir": -1,
+     "entry": 64.41999816894531,
+     "ret_pct": 20.757981792370092,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1748908800000,
+     "exit_t": 1750204800000,
+     "dir": -1,
+     "entry": 51.810001373291016,
+     "ret_pct": -2.4173073053328107,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1750896000000,
+     "exit_t": 1754611200000,
+     "dir": -1,
+     "entry": 47.29999923706055,
+     "ret_pct": 14.283508131958861,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1754870400000,
+     "exit_t": 1760313600000,
+     "dir": -1,
+     "entry": 39.63999938964844,
+     "ret_pct": 12.873182312122314,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1761264000000,
+     "exit_t": 1762473600000,
+     "dir": -1,
+     "entry": 31.760000228881836,
+     "ret_pct": -10.023093814947666,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1763337600000,
+     "exit_t": 1763424000000,
+     "dir": -1,
+     "entry": 34.15999984741211,
+     "ret_pct": -6.6020820586500575,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1764547200000,
+     "exit_t": 1768867200000,
+     "dir": -1,
+     "entry": 31.81999969482422,
+     "ret_pct": 12.351222885018903,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1769558400000,
+     "exit_t": 1769731200000,
+     "dir": -1,
+     "entry": 25.950000762939453,
+     "ret_pct": -2.6060678197293092,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1775606400000,
+     "exit_t": 1781222400000,
+     "dir": -1,
+     "entry": 30.489999771118164,
+     "ret_pct": 21.032241989808178,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1781654400000,
+     "exit_t": 1784764800000,
+     "dir": -1,
+     "entry": 21.579999923706055,
+     "ret_pct": -1.815411681935895,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1785888000000,
+     "exit_t": 1789430400000,
+     "dir": -1,
+     "entry": 20.530000686645508,
+     "ret_pct": 15.104874501945599,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    },
+    {
+     "t": 1789689600000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 17.020000457763672,
+     "ret_pct": -1.9222941088927816,
+     "r": null,
+     "result": "cover",
+     "asset": "VIXY"
+    }
+   ],
+   "curve": {
+    "a": {
+     "rule": {
+      "total_pct": 404.02626057566835,
+      "cagr_pct": 71.43427078563892,
+      "max_dd_pct": 13.485535772705825
+     }
+    },
+    "b": {
+     "rule": {
+      "total_pct": 543.8403826286565,
+      "cagr_pct": 15.65781613524262,
+      "max_dd_pct": 45.305503599095175
+     }
+    }
+   },
+   "note": "VIXY tracks the same index as VXX; short borrow fee not modelled"
+  },
+  {
+   "key": "fosback_seasonal",
+   "doc": "The Amazing Story of Stock Market Seasonality, Minton (40367053): Fosback's Seasonality Indicator",
+   "assets": [
+    "SPY"
+   ],
+   "tf": "daily",
+   "rule": "",
+   "windows": {
+    "a": [
+     "1993-02-01",
+     "2010-01-01"
+    ],
+    "b": [
+     "2010-01-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 178,
+    "win_rate_pct": 57.30337078651685,
+    "mean_ret_pct": 0.29251445978186147,
+    "total_ret_pct": 52.06757384117134,
+    "profit_factor": 1.38037262878027,
+    "max_dd_pct_sum": 28.898147130511056
+   },
+   "b": {
+    "trades": 267,
+    "win_rate_pct": 64.04494382022472,
+    "mean_ret_pct": 0.32309605027634997,
+    "total_ret_pct": 86.26664542378543,
+    "profit_factor": 1.5551591630482389,
+    "max_dd_pct_sum": 15.41367574623851,
+    "mean_ci_low": 0.08380238487189517,
+    "by_asset_ret_pct": {
+     "SPY": 86.26664542378549
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 178,
+     "win_rate_pct": 57.30337078651685,
+     "mean_ret_pct": 0.3125457143532956,
+     "total_ret_pct": 55.63313715488661,
+     "profit_factor": 1.4109429015484762,
+     "max_dd_pct_sum": 28.500997230234134
+    },
+    "b": {
+     "trades": 267,
+     "win_rate_pct": 64.41947565543072,
+     "mean_ret_pct": 0.34313036331267877,
+     "total_ret_pct": 91.61580700448523,
+     "profit_factor": 1.5968671119787838,
+     "max_dd_pct_sum": 14.895165262764863
+    }
+   },
+   "checks": {
+    "a_positive": true,
+    "b_positive": true,
+    "b_ci_above_zero": true,
+    "b_half_the_assets": true
+   },
+   "verdict": "PASS",
+   "recent_b_trades": [
+    {
+     "t": 1743120000000,
+     "exit_t": 1743724800000,
+     "dir": 1,
+     "entry": 546.5934448242188,
+     "ret_pct": -9.085792513489356,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1744675200000,
+     "exit_t": 1744848000000,
+     "dir": 1,
+     "entry": 528.837890625,
+     "ret_pct": -2.1030903793418663,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1745884800000,
+     "exit_t": 1746489600000,
+     "dir": 1,
+     "entry": 545.2752685546875,
+     "ret_pct": 0.7880980177505856,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1747785600000,
+     "exit_t": 1747958400000,
+     "dir": 1,
+     "entry": 573.3494873046875,
+     "ret_pct": -0.6632990545423947,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1748476800000,
+     "exit_t": 1749081600000,
+     "dir": 1,
+     "entry": 580.4222412109375,
+     "ret_pct": 0.48837019348161037,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1750982400000,
+     "exit_t": 1751846400000,
+     "dir": 1,
+     "entry": 606.664794921875,
+     "ret_pct": 0.9182642222078324,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1753833600000,
+     "exit_t": 1754438400000,
+     "dir": 1,
+     "entry": 625.9526977539062,
+     "ret_pct": -0.2847652070198772,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1756252800000,
+     "exit_t": 1757030400000,
+     "dir": 1,
+     "entry": 637.95947265625,
+     "ret_pct": 0.0743236186235411,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1759104000000,
+     "exit_t": 1759708800000,
+     "dir": 1,
+     "entry": 656.5962524414062,
+     "ret_pct": 1.1747299959758994,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1761782400000,
+     "exit_t": 1762387200000,
+     "dir": 1,
+     "entry": 672.5737915039062,
+     "ret_pct": -1.420202215192439,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1763942400000,
+     "exit_t": 1764806400000,
+     "dir": 1,
+     "entry": 661.59228515625,
+     "ret_pct": 2.321528306398577,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1766361600000,
+     "exit_t": 1766534400000,
+     "dir": 1,
+     "entry": 679.5224609375,
+     "ret_pct": 0.7903438307936822,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1766966400000,
+     "exit_t": 1767744000000,
+     "dir": 1,
+     "entry": 682.51904296875,
+     "ret_pct": 0.2314863322623689,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1769644800000,
+     "exit_t": 1770249600000,
+     "dir": 1,
+     "entry": 688.6610717773438,
+     "ret_pct": -2.385627597320338,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1770768000000,
+     "exit_t": 1770940800000,
+     "dir": 1,
+     "entry": 686.5972290039062,
+     "ret_pct": -1.495369526870734,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1772064000000,
+     "exit_t": 1772668800000,
+     "dir": 1,
+     "entry": 683.9578247070312,
+     "ret_pct": -1.1790345909522346,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1774828800000,
+     "exit_t": 1775520000000,
+     "dir": 1,
+     "entry": 628.78466796875,
+     "ret_pct": 4.291475769578134,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1777420800000,
+     "exit_t": 1778025600000,
+     "dir": 1,
+     "entry": 707.993408203125,
+     "ret_pct": 3.1065354131342806,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1779235200000,
+     "exit_t": 1779408000000,
+     "dir": 1,
+     "entry": 737.5138549804688,
+     "ret_pct": 0.5721899772308083,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1779926400000,
+     "exit_t": 1780531200000,
+     "dir": 1,
+     "entry": 750.7965698242188,
+     "ret_pct": 0.3099469362414582,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1782691200000,
+     "exit_t": 1783382400000,
+     "dir": 1,
+     "entry": 739.1644897460938,
+     "ret_pct": 0.8854481324467123,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1785369600000,
+     "exit_t": 1785974400000,
+     "dir": 1,
+     "entry": 739.852783203125,
+     "ret_pct": 3.60244855444941,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1787875200000,
+     "exit_t": 1788480000000,
+     "dir": 1,
+     "entry": 767.4442749023438,
+     "ret_pct": 0.0891763783236127,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1790640000000,
+     "exit_t": 1791244800000,
+     "dir": 1,
+     "entry": 764.2000122070312,
+     "ret_pct": 1.9282498572558635,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 763.25,
+     "ret_pct": 0.4031454268854458,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "SPY"
+    }
+   ],
+   "curve": {
+    "a": {
+     "rule": {
+      "total_pct": 59.65376593001703,
+      "cagr_pct": 2.804510782073355,
+      "max_dd_pct": 26.05426061987599
+     },
+     "buy_and_hold": {
+      "cagr_pct": 0.7906933271564442,
+      "max_dd_pct": 55.18943347045909
+     },
+     "time_in_market_pct": 28.044813877846043
+    },
+    "b": {
+     "rule": {
+      "total_pct": 124.25168827947451,
+      "cagr_pct": 4.92389515274263,
+      "max_dd_pct": 14.940236413920937
+     },
+     "buy_and_hold": {
+      "cagr_pct": 14.046460627381286,
+      "max_dd_pct": 33.717275321149764
+     },
+     "time_in_market_pct": 27.935606060606062
+    }
+   },
+   "random_timing": {
+    "a": {
+     "rule_mean_pct": 0.29251445978186147,
+     "random_mean_pct": 0.09580754035967015,
+     "edge_pct": 0.19670691942219132,
+     "z": 1.0855764601970201
+    },
+    "b": {
+     "rule_mean_pct": 0.32309605027634997,
+     "random_mean_pct": 0.26786113259979866,
+     "edge_pct": 0.05523491767655131,
+     "z": 0.4514971001450669
+    }
+   },
+   "leverage_2010_2026": {
+    "etf": "UPRO",
+    "cagr_pct": 11.397537146070725,
+    "max_dd_pct": 43.77950978232068,
+    "worst_trade_pct": -25.93821246272435,
+    "buy_and_hold_cagr_pct": 29.791638785168416,
+    "buy_and_hold_max_dd_pct": 76.81682413529683
+   }
+  },
+  {
+   "key": "kaeppel_monthly10",
+   "doc": "The Amazing Story of Stock Market Seasonality, Minton (40367053): Kaeppel's Monthly 10",
+   "assets": [
+    "DIA"
+   ],
+   "tf": "daily",
+   "rule": "",
+   "windows": {
+    "a": [
+     "1998-02-01",
+     "2009-01-01"
+    ],
+    "b": [
+     "2009-01-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 263,
+    "win_rate_pct": 60.45627376425855,
+    "mean_ret_pct": 0.4106983431691353,
+    "total_ret_pct": 108.01366425348257,
+    "profit_factor": 1.5512738030550213,
+    "max_dd_pct_sum": 26.012071893204123
+   },
+   "b": {
+    "trades": 428,
+    "win_rate_pct": 63.084112149532714,
+    "mean_ret_pct": 0.3519461822721979,
+    "total_ret_pct": 150.6329660125007,
+    "profit_factor": 1.5663080620102117,
+    "max_dd_pct_sum": 23.437670862368652,
+    "mean_ci_low": 0.1387248750991042,
+    "by_asset_ret_pct": {
+     "DIA": 150.63296601250065
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 263,
+     "win_rate_pct": 60.836501901140686,
+     "mean_ret_pct": 0.4307414173108636,
+     "total_ret_pct": 113.28499275275712,
+     "profit_factor": 1.5842647947871429,
+     "max_dd_pct_sum": 25.614633356539883
+    },
+    "b": {
+     "trades": 428,
+     "win_rate_pct": 63.084112149532714,
+     "mean_ret_pct": 0.37198338061025654,
+     "total_ret_pct": 159.2088869011898,
+     "profit_factor": 1.605685172209793,
+     "max_dd_pct_sum": 23.360006863054966
+    }
+   },
+   "checks": {
+    "a_positive": true,
+    "b_positive": true,
+    "b_ci_above_zero": true,
+    "b_half_the_assets": true
+   },
+   "verdict": "PASS",
+   "recent_b_trades": [
+    {
+     "t": 1760054400000,
+     "exit_t": 1760572800000,
+     "dir": 1,
+     "entry": 448.1579895019531,
+     "ret_pct": 1.0109524964554526,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1761696000000,
+     "exit_t": 1762387200000,
+     "dir": 1,
+     "entry": 469.4990539550781,
+     "ret_pct": -1.5081889753645554,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1762905600000,
+     "exit_t": 1763424000000,
+     "dir": 1,
+     "entry": 475.79693603515625,
+     "ret_pct": -4.4648240443119525,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1764028800000,
+     "exit_t": 1764806400000,
+     "dir": 1,
+     "entry": 464.9685363769531,
+     "ret_pct": 1.6543633270979279,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1765324800000,
+     "exit_t": 1765843200000,
+     "dir": 1,
+     "entry": 475.0044860839844,
+     "ret_pct": 0.1108643254615664,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1766966400000,
+     "exit_t": 1767744000000,
+     "dir": 1,
+     "entry": 479.2430419921875,
+     "ret_pct": 1.088032444429506,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1768262400000,
+     "exit_t": 1768867200000,
+     "dir": 1,
+     "entry": 486.511962890625,
+     "ret_pct": -1.4193059476011274,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1769558400000,
+     "exit_t": 1770249600000,
+     "dir": 1,
+     "entry": 484.8974304199219,
+     "ret_pct": -0.26889388077464454,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1770768000000,
+     "exit_t": 1771372800000,
+     "dir": 1,
+     "entry": 495.9778137207031,
+     "ret_pct": -0.883599725354124,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1771977600000,
+     "exit_t": 1772668800000,
+     "dir": 1,
+     "entry": 490.1451416015625,
+     "ret_pct": -3.047059814049814,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1773187200000,
+     "exit_t": 1773705600000,
+     "dir": 1,
+     "entry": 470.32415771484375,
+     "ret_pct": -0.8434087110589933,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1774569600000,
+     "exit_t": 1775520000000,
+     "dir": 1,
+     "entry": 448.0915222167969,
+     "ret_pct": 3.1897449040435295,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1776038400000,
+     "exit_t": 1776384000000,
+     "dir": 1,
+     "entry": 478.6068115234375,
+     "ret_pct": 2.530878637412725,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1777334400000,
+     "exit_t": 1778025600000,
+     "dir": 1,
+     "entry": 488.0359802246094,
+     "ret_pct": 1.5324808949345337,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1778544000000,
+     "exit_t": 1779062400000,
+     "dir": 1,
+     "entry": 494.4614562988281,
+     "ret_pct": -0.14169734410952284,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1779840000000,
+     "exit_t": 1780531200000,
+     "dir": 1,
+     "entry": 503.6671142578125,
+     "ret_pct": 1.9171597713158954,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1781049600000,
+     "exit_t": 1781568000000,
+     "dir": 1,
+     "entry": 497.0790710449219,
+     "ret_pct": 4.21546076208013,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1782432000000,
+     "exit_t": 1783382400000,
+     "dir": 1,
+     "entry": 515.8720092773438,
+     "ret_pct": 2.0464406220173568,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1783900800000,
+     "exit_t": 1784246400000,
+     "dir": 1,
+     "entry": 522.567626953125,
+     "ret_pct": -0.6895743287468853,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1785283200000,
+     "exit_t": 1785974400000,
+     "dir": 1,
+     "entry": 513.686279296875,
+     "ret_pct": 4.399360411233718,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1786492800000,
+     "exit_t": 1787011200000,
+     "dir": 1,
+     "entry": 535.3536376953125,
+     "ret_pct": -0.8092626795727763,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1787788800000,
+     "exit_t": 1788480000000,
+     "dir": 1,
+     "entry": 533.8723754882812,
+     "ret_pct": -0.2329668633634561,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1789084800000,
+     "exit_t": 1789603200000,
+     "dir": 1,
+     "entry": 524.4661254882812,
+     "ret_pct": -1.4348716497302967,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1790553600000,
+     "exit_t": 1791244800000,
+     "dir": 1,
+     "entry": 513.9075927734375,
+     "ret_pct": 0.08503872272492018,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    },
+    {
+     "t": 1791763200000,
+     "exit_t": 1792454400000,
+     "dir": 1,
+     "entry": 517.7966918945312,
+     "ret_pct": 1.2609346901974485,
+     "r": null,
+     "result": "seasonal window",
+     "asset": "DIA"
+    }
+   ],
+   "curve": {
+    "a": {
+     "rule": {
+      "total_pct": 171.51460608698108,
+      "cagr_pct": 9.582169924090378,
+      "max_dd_pct": 23.908151149359124
+     },
+     "buy_and_hold": {
+      "cagr_pct": 2.685789273014505,
+      "max_dd_pct": 44.84595159718212
+     },
+     "time_in_market_pct": 47.688387331634516
+    },
+    "b": {
+     "rule": {
+      "total_pct": 307.3148447798347,
+      "cagr_pct": 8.208865861362536,
+      "max_dd_pct": 21.528975198342735
+     },
+     "buy_and_hold": {
+      "cagr_pct": 12.817696002909408,
+      "max_dd_pct": 36.69604267864991
+     },
+     "time_in_market_pct": 47.799865981684164
+    }
+   },
+   "random_timing": {
+    "a": {
+     "rule_mean_pct": 0.4106983431691353,
+     "random_mean_pct": 0.043817138905623186,
+     "edge_pct": 0.3668812042635121,
+     "z": 2.420357748623514
+    },
+    "b": {
+     "rule_mean_pct": 0.3519461822721979,
+     "random_mean_pct": 0.2505407269145209,
+     "edge_pct": 0.10140545535767703,
+     "z": 0.9766177804674452
+    }
+   },
+   "leverage_2010_2026": {
+    "etf": "UDOW",
+    "cagr_pct": 20.452761141174246,
+    "max_dd_pct": 44.718123481476134,
+    "worst_trade_pct": -36.62725090761829,
+    "buy_and_hold_cagr_pct": 24.988744883059777,
+    "buy_and_hold_max_dd_pct": 80.29308982213749
+   }
+  },
+  {
+   "key": "lunar_phase",
+   "doc": "Are Investors Moonstruck? Lunar Phases and Stock Returns, Yuan, Zheng & Zhu 2001 (372211422)",
+   "assets": [
+    "ECH",
+    "EEM",
+    "EFA",
+    "EPHE",
+    "EPI",
+    "EPP",
+    "EWA",
+    "EWC",
+    "EWD",
+    "EWG",
+    "EWH",
+    "EWI",
+    "EWJ",
+    "EWL",
+    "EWM",
+    "EWO",
+    "EWP",
+    "EWQ",
+    "EWS",
+    "EWT",
+    "EWU",
+    "EWY",
+    "EWZ",
+    "EZA",
+    "FXI",
+    "IDX",
+    "ILF",
+    "IWM",
+    "QQQ",
+    "SPY",
+    "THD"
+   ],
+   "tf": "daily",
+   "rule": "",
+   "windows": {
+    "a": [
+     "1995-01-01",
+     "2002-01-01"
+    ],
+    "b": [
+     "2002-01-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 2267,
+    "win_rate_pct": 51.036612262902516,
+    "mean_ret_pct": 0.31049615327432406,
+    "total_ret_pct": 703.8947794728927,
+    "profit_factor": 1.1681789788481838,
+    "max_dd_pct_sum": 109.07459434886027
+   },
+   "b": {
+    "trades": 18092,
+    "win_rate_pct": 49.90050851204953,
+    "mean_ret_pct": -0.05830443702284298,
+    "total_ret_pct": -1054.843874617275,
+    "profit_factor": 0.9664020815636521,
+    "max_dd_pct_sum": 1067.9535572142017,
+    "mean_ci_low": -0.12602820664900702,
+    "by_asset_ret_pct": {
+     "ECH": -209.49468070291667,
+     "EEM": -60.514841811362245,
+     "EFA": -17.273996750642,
+     "EPHE": -65.48476767009231,
+     "EPI": -32.24749362351336,
+     "EPP": -115.18278329702376,
+     "EWA": -116.9544898317776,
+     "EWC": -27.136304240241984,
+     "EWD": -1.09449373403416,
+     "EWG": -7.736071962396184,
+     "EWH": -139.72850069679296,
+     "EWI": 72.13898207740851,
+     "EWJ": -14.357040837350976,
+     "EWL": 36.902419207467496,
+     "EWM": 107.4954291251904,
+     "EWO": 20.153652953481057,
+     "EWP": 84.29644532965551,
+     "EWQ": 58.728229001924014,
+     "EWS": -99.82091834917725,
+     "EWT": -89.66246701251366,
+     "EWU": -24.82007015167417,
+     "EWY": -203.2577738447475,
+     "EWZ": 47.041383140133334,
+     "EZA": 26.457506173934352,
+     "FXI": -89.2080216322787,
+     "IDX": -12.103012801828196,
+     "ILF": 1.1916019634059611,
+     "IWM": -34.36075885748479,
+     "QQQ": 1.3326350372640043,
+     "SPY": -3.8237075237392957,
+     "THD": -146.31996329555204
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 2267,
+     "win_rate_pct": 51.036612262902516,
+     "mean_ret_pct": 0.4040616862389547,
+     "total_ret_pct": 916.0078427037104,
+     "profit_factor": 1.2244447660609796,
+     "max_dd_pct_sum": 98.81604705816608
+    },
+    "b": {
+     "trades": 18092,
+     "win_rate_pct": 50.630112757019674,
+     "mean_ret_pct": 0.033720625427912244,
+     "total_ret_pct": 610.0735552417883,
+     "profit_factor": 1.0199567206856603,
+     "max_dd_pct_sum": 286.35182035105834
+    }
+   },
+   "checks": {
+    "a_positive": true,
+    "b_positive": false,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": false
+   },
+   "verdict": "FAIL",
+   "recent_b_trades": [
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 28.729999542236328,
+     "ret_pct": -1.5103835483642576,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWA"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 60.58000183105469,
+     "ret_pct": -0.5376557961860946,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWC"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 51.209999084472656,
+     "ret_pct": 0.1539782354421467,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWD"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 41.56999969482422,
+     "ret_pct": 0.2249117673455096,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWG"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 22.09000015258789,
+     "ret_pct": -0.21322823977710706,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWH"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 56.45000076293945,
+     "ret_pct": 0.7152862317001841,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWI"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 94.87999725341797,
+     "ret_pct": -0.6641559648349757,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWJ"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 62.25,
+     "ret_pct": -1.3536365922674916,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWL"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 26.510000228881836,
+     "ret_pct": -0.30757376406363535,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWM"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 40.27000045776367,
+     "ret_pct": 0.34720711020914524,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWO"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 58.27000045776367,
+     "ret_pct": 0.2262289763668983,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWP"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 42.119998931884766,
+     "ret_pct": 0.45821015341658816,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWQ"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": -1,
+     "entry": 31.34000015258789,
+     "ret_pct": 0.2511665926002069,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWS"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 106.26000213623047,
+     "ret_pct": -1.0556812242873117,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWT"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 48.0099983215332,
+     "ret_pct": 0.4522430714694505,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWU"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 150.44000244140625,
+     "ret_pct": -2.4376474556446186,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWY"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 41.83000183105469,
+     "ret_pct": -2.6831651161043,
+     "r": null,
+     "result": "full moon",
+     "asset": "EWZ"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 65.27999877929688,
+     "ret_pct": -0.24560159787198263,
+     "r": null,
+     "result": "full moon",
+     "asset": "EZA"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 33.84000015258789,
+     "ret_pct": 0.7869658254305002,
+     "r": null,
+     "result": "full moon",
+     "asset": "FXI"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 8.970000267028809,
+     "ret_pct": -3.4461558739691194,
+     "r": null,
+     "result": "full moon",
+     "asset": "IDX"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": -1,
+     "entry": 37.54999923706055,
+     "ret_pct": 0.059860342457223575,
+     "r": null,
+     "result": "full moon",
+     "asset": "ILF"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": -1,
+     "entry": 270.44000244140625,
+     "ret_pct": -0.3306346435218633,
+     "r": null,
+     "result": "full moon",
+     "asset": "IWM"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": -1,
+     "entry": 709.7999877929688,
+     "ret_pct": -1.2260937877680778,
+     "r": null,
+     "result": "full moon",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": -1,
+     "entry": 763.25,
+     "ret_pct": -0.44323006443456725,
+     "r": null,
+     "result": "full moon",
+     "asset": "SPY"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792454400000,
+     "dir": -1,
+     "entry": 71.8499984741211,
+     "ret_pct": 1.3412158005879133,
+     "r": null,
+     "result": "full moon",
+     "asset": "THD"
+    }
+   ]
+  }
+ ],
+ "headline": "Both calendar rules pass the fixed test (Fosback seasonality on SPY, PF 1.56 after publication; Kaeppel's Monthly 10 on DIA, PF 1.57), but after publication they beat random entry days only weakly (z 0.5 and 1.0): most of their profit is simply being invested in a rising market, and they return less than buy and hold (4.9% and 8.2% a year vs 14% and 13%). Grossmann's VXX-short rules (claimed 96% a year) fell from 53\u201371% a year before publication to 9\u201316% after, with 45\u201365% drawdowns. The lunar effect vanished after 2001. Best winner stays round 3's IBS rule on QQQ."
+}

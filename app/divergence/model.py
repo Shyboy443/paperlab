@@ -1,0 +1,677 @@
+"""Frozen, causal RSI(14) divergence rules (DIV-SR-9); no broker access.
+
+Times are UTC milliseconds. ``t`` is a candle OPEN time; all evidence exposes
+its availability time separately. Feed completed 15-minute OHLCV dictionaries.
+
+Four types on two swings of CLOSING prices (docs/DIVERGENCE_RULES.md):
+
+    regular bullish   close lower low,   RSI higher low   -> long  (reversal)
+    regular bearish   close higher high, RSI lower high   -> short (reversal)
+    hidden bullish    close higher low,  RSI lower low    -> long  (continuation)
+    hidden bearish    close lower high,  RSI higher high  -> short (continuation)
+
+DIV-SR-4 (2026-10-11): swings on closes, not wicks; each swing is compared with every earlier same-side swing (the
+longest clean divergence wins), equal highs/lows are not recorded, and support/resistance comes from major 4h levels.
+DIV-SR-5 (2026-10-11): volume confirmation = buying vs selling volume on the lower timeframe since swing 2.
+DIV-SR-6 (2026-10-11): the stop goes beyond the previous swing extreme for the divergence type (stop_basis).
+DIV-SR-7 (2026-10-11): the lower timeframe must trend the trade's way at the break (close vs its EMA50), and the
+no-chase distance is 2 ATR from swing 2 (was 1.5); a swing in the way of the 2R target still skips the trade.
+DIV-SR-8 (2026-10-11): context at entry -- no opposing divergence still active at the latest top/bottom, and hidden
+divergences must agree with the next timeframe's trend; a major 4h level before the target is shown as a warning.
+DIV-SR-9 (2026-10-11, operator: "it should have lots of trades"): the lower-timeframe trend check and the opposing-
+divergence veto become warnings (2 years: 95 trades, +16.2R instead of 29 trades, +8.8R).
+"""
+from __future__ import annotations
+
+from bisect import bisect_right
+from datetime import datetime, timezone
+import math
+
+MINUTE = 60_000
+BASE = 15 * MINUTE
+HOUR = 60 * MINUTE
+RULE_VERSION = "DIV-SR-9"
+PIVOT_LEFT, PIVOT_RIGHT = 5, 3          # a swing is the extreme CLOSE of 5 bars before and 3 after; known 3 bars later
+MIN_RSI_GAP = 3.0                       # RSI points between the two swings
+SEPARATION = (5, 60)                    # divergence-timeframe bars between the two swings
+TREND_EMA, TREND_SLOPE = 50, 10         # hidden divergences must agree with the EMA50 trend
+VOLUME_MIN = 1.0                        # lower-TF volume with the trade >= against it, from swing 2 to the break
+SWING_GAP_ATR = 0.25                    # swing 2 must beat swing 1 by >= 0.25 ATR (ATR at swing 2); less = equal
+CHASE_MAX_ATR = 2.0                     # entry no further than 2 ATR from swing 2 (1.5 until DIV-SR-6)
+ROOM_BLOCKS = True                      # an opposite swing before the 2R target skips the trade (operator chose B)
+LTF_TREND_EMA = 50                      # the break candle must close on the trade side of the lower-TF EMA50
+REG_PRIOR_TREND = True                  # regular types need a trend to reverse at swing 1
+REG_NEEDS_LEVEL = True                  # regular types need a major 4h level at swing 2
+LTF_TREND_CHECK = False                 # lower-TF EMA50 side at the break: warning only since DIV-SR-9 (operator: more trades)
+OPPOSING_VETO = False                   # no long while a bearish divergence sits at the latest top (and mirrored)
+LEVEL_IN_WAY = False                    # a major 4h level between entry and the 2R target: warning only (blocking cost too many trades)
+HTF_TREND_HIDDEN = True                 # hidden divergences must agree with the next timeframe up (EMA50)
+OPPOSING_LOOKBACK = 60                  # divergence-timeframe bars searched for the opposing divergence
+ROOM_LOOKBACK = 60                      # divergence-timeframe bars searched for an opposite swing blocking the target
+LEVEL_TF, LEVEL_TOL_ATR, LEVEL_MIN_TOUCHES = "4h", 0.5, 2   # major S/R: clusters of >= 2 4h swing closes
+STOP_BUFFER_ATR, TRIGGER_MAX_AGE, EXPIRY_BARS = 0.1, 20, 6
+HISTORY_DAYS = 90                       # completed 15m history the scanner analyses and the chart shows
+TYPES = ("regular_bullish", "regular_bearish", "hidden_bullish", "hidden_bearish")
+RULES = {
+    "version": RULE_VERSION,
+    "pairs": [["4h", "1h"], ["1h", "15m"]],
+    "history_days": HISTORY_DAYS,
+    "rsi_period": 14, "atr_period": 14,
+    "swings": "closing prices: a close below (above) the closes of the 5 bars before and 3 after; known 3 bars later",
+    "pivot_left": PIVOT_LEFT, "pivot_right": PIVOT_RIGHT,
+    "divergence": "each new swing vs every earlier same-side swing 5-60 bars back; the earliest valid one per type; RSI at the swing candles",
+    "types": {"regular_bullish": "close LL, RSI HL -> long", "regular_bearish": "close HH, RSI LH -> short",
+              "hidden_bullish": "close HL, RSI LL -> long", "hidden_bearish": "close LH, RSI HH -> short"},
+    "min_rsi_gap": MIN_RSI_GAP, "swing_gap_atr": SWING_GAP_ATR,
+    "equal_swings": "closes less than 0.25 ATR apart are an equal high/low: not a divergence, not recorded",
+    "clean_lines": "no close and no RSI value between the swings crosses either connecting line",
+    "regular_rsi_zone": "bullish: a swing RSI <= 40; bearish: a swing RSI >= 60",
+    "pivot_min_separation": SEPARATION[0], "pivot_max_separation": SEPARATION[1],
+    "regular_prior_trend": "at swing 1: bullish close < EMA50 and EMA50 below its value 10 bars earlier; bearish mirrored",
+    "major_levels": "4h swing closes (highs and lows) of the stored history, clustered within 0.5 x 4h ATR; >= 2 swings = a level",
+    "regular_filter": "swing 2 close within 0.5 x 4h ATR of a major level whose swings were all known before swing 1 formed",
+    "hidden_filter": "trend: close beyond EMA50 and EMA50 sloping that way over 10 bars, at availability",
+    "confirmation": "first lower-timeframe close beyond the latest opposing lower-timeframe swing close (2/2), frozen at availability",
+    "volume_confirmation": "lower-timeframe volume of candles closing in the trade direction >= volume of candles closing against it, from the close of the swing-2 candle to the break (inclusive)",
+    "no_chase": "skip if entry > 2 ATR from swing 2, or a confirmed opposite swing of the last 60 bars lies between entry and the 2R target",
+    "lower_tf_trend": "warning only: the break candle closes above (long) / below (short) the lower-timeframe EMA50",
+    "opposing_divergence": "warning only: no long while the latest minor swing high (60 bars) has a higher close but lower RSI (>= 60) than an earlier one and no close has broken it; mirrored for shorts",
+    "level_in_the_way": "warning only: a major 4h level band (its own level excluded) between the entry and the 2R target",
+    "htf_trend_hidden": "hidden divergences: next timeframe up (4h for 1h, 1d for 4h) close beyond its EMA50 and EMA50 sloping that way over 10 bars",
+    "trigger_max_age_bars": TRIGGER_MAX_AGE, "expiry_divergence_bars": EXPIRY_BARS,
+    "stop": "0.1 ATR beyond the previous swing extreme (wick): regular = lowest low / highest high from swing 1 to swing 2; hidden = swing 2's own swing low / high", "stop_buffer_atr": STOP_BUFFER_ATR, "reward_risk": 2.0,
+    "entry": "next available contiguous 15m open after trigger close; no same-bar fill",
+    "risk_fraction": 0.005, "max_notional_equity": 1.0,
+    "fee_per_side": 0.0004, "slippage_per_side": 0.0002,
+    "gap_policy": "reset indicators/pivots across gaps; invalidate pending setups",
+    "news": "context only; does not change frozen execution rules",
+}
+LABELS = {"regular_bullish": ("lower low", "higher low"), "regular_bearish": ("higher high", "lower high"),
+          "hidden_bullish": ("higher low", "lower low"), "hidden_bearish": ("lower high", "higher high")}
+
+
+def clean_bars(bars, now_ms=None):
+    """Reject malformed candles; duplicate timestamps resolve to final input row."""
+    found = {}
+    for raw in bars:
+        try:
+            row = {k: float(raw[k]) for k in ("o", "h", "l", "c", "v")}
+            t = int(raw["t"])
+            if t % BASE or (now_ms is not None and t + BASE > now_ms):
+                continue
+            if not all(math.isfinite(x) for x in row.values()):
+                continue
+            if min(row[k] for k in ("o", "h", "l", "c")) <= 0 or row["v"] < 0:
+                continue
+            if row["h"] < max(row["o"], row["c"], row["l"]) or row["l"] > min(row["o"], row["c"]):
+                continue
+            found[t] = dict(t=t, **row)
+        except (KeyError, TypeError, ValueError, OverflowError):
+            continue
+    return [found[t] for t in sorted(found)]
+
+
+def aggregate(bars, duration):
+    """UTC-aligned bars, only complete buckets with every constituent present."""
+    duration = {"15m": BASE, "1h": HOUR, "4h": 4 * HOUR}.get(duration, duration)
+    if duration == BASE:
+        return list(bars)
+    buckets = {}
+    for bar in bars:
+        buckets.setdefault(bar["t"] // duration * duration, []).append(bar)
+    result = []
+    count = duration // BASE
+    for t, rows in sorted(buckets.items()):
+        if len(rows) != count or any(r["t"] != t + i * BASE for i, r in enumerate(rows)):
+            continue
+        result.append(dict(t=t, o=rows[0]["o"], h=max(r["h"] for r in rows),
+                           l=min(r["l"] for r in rows), c=rows[-1]["c"],
+                           v=sum(r["v"] for r in rows)))
+    return result
+
+
+def indicators(bars, duration):
+    """Wilder RSI(14) and ATR(14), independently seeded after each data gap."""
+    duration = {"15m": BASE, "1h": HOUR, "4h": 4 * HOUR}.get(duration, duration)
+    n = len(bars)
+    rsi, atr, segments = [None] * n, [None] * n, [0] * n
+    gains, losses, trs = [], [], []
+    avg_gain = avg_loss = avg_tr = None
+    segment = -1
+    for i, b in enumerate(bars):
+        reset = i == 0 or b["t"] != bars[i - 1]["t"] + duration
+        if reset:
+            gains, losses, trs = [], [], []
+            avg_gain = avg_loss = avg_tr = None
+            segment += 1
+        segments[i] = segment
+        prev = b["c"] if reset else bars[i - 1]["c"]
+        tr = max(b["h"] - b["l"], abs(b["h"] - prev), abs(b["l"] - prev))
+        trs.append(tr)
+        if avg_tr is None and len(trs) == 14:
+            avg_tr = sum(trs) / 14
+        elif avg_tr is not None:
+            avg_tr = (avg_tr * 13 + tr) / 14
+        atr[i] = avg_tr
+        if not reset:
+            delta = b["c"] - prev
+            gains.append(max(delta, 0)); losses.append(max(-delta, 0))
+            if avg_gain is None and len(gains) == 14:
+                avg_gain, avg_loss = sum(gains) / 14, sum(losses) / 14
+            elif avg_gain is not None:
+                avg_gain = (avg_gain * 13 + gains[-1]) / 14
+                avg_loss = (avg_loss * 13 + losses[-1]) / 14
+            if avg_gain is not None:
+                rsi[i] = 50.0 if avg_gain == avg_loss == 0 else (100.0 if avg_loss == 0 else 100 - 100 / (1 + avg_gain / avg_loss))
+    return rsi, atr, segments
+
+
+def rsi_series(bars, duration=BASE):
+    return indicators(bars, duration)[0]
+
+
+def atr_series(bars, duration=BASE):
+    return indicators(bars, duration)[1]
+
+
+def pivots(bars, duration, rsi=None, segments=None, left=PIVOT_LEFT, right=PIVOT_RIGHT):
+    """Swings on CLOSING prices: a swing low is a close below every close of the `left` bars before it and the `right`
+    bars after it (highs mirrored); equal closes are not swings. `price` is that close; `wick` is the candle's low (high)
+    and is used only for the stop. A swing is known only at the close of its last right-side bar. Its RSI is the RSI of
+    the same candle (RSI is computed on closes too)."""
+    if segments is None:
+        _, _, segments = indicators(bars, duration)
+    out = []
+    for i in range(left, len(bars) - right):
+        if segments[i - left] != segments[i + right]:
+            continue
+        c = bars[i]["c"]
+        before = [bars[j]["c"] for j in range(i - left, i)]
+        after = [bars[j]["c"] for j in range(i + 1, i + right + 1)]
+        for kind, ok, wick in (("low", c < min(before) and c < min(after), bars[i]["l"]),
+                               ("high", c > max(before) and c > max(after), bars[i]["h"])):
+            if ok:
+                r = rsi[i] if rsi else None
+                out.append(dict(kind=kind, index=i, t=bars[i]["t"], price=c, wick=wick,
+                                known_at=bars[i + right]["t"] + duration, segment=segments[i],
+                                rsi=r, rsi_index=i if r is not None else None, rsi_t=bars[i]["t"] if r is not None else None))
+    return sorted(out, key=lambda p: (p["known_at"], p["index"], p["kind"]))
+
+
+def _clean(values, i1, v1, i2, v2, above):
+    """No value strictly between i1 and i2 crosses the straight line from (i1, v1) to (i2, v2)."""
+    for j in range(i1 + 1, i2):
+        x = values[j]
+        if x is None:
+            return False
+        line = v1 + (v2 - v1) * (j - i1) / (i2 - i1)
+        if (x > line) if above else (x < line):
+            return False
+    return True
+
+
+def pair_reason(a, b, bars, rsi, atr2=None):
+    """(divergence type, None) for the swing pair a -> b, or (None, why not). Closes are compared, RSI at the swings."""
+    if a is None or a["rsi"] is None or b["rsi"] is None or a["segment"] != b["segment"]:
+        return None, "no RSI / data gap"
+    if not SEPARATION[0] <= b["index"] - a["index"] <= SEPARATION[1]:
+        return None, "swings too close or too far apart"
+    dp, dr = b["price"] - a["price"], b["rsi"] - a["rsi"]
+    high = b["kind"] == "high"
+    if high:
+        kind = "regular_bearish" if dp > 0 and dr < 0 else "hidden_bearish" if dp < 0 and dr > 0 else None
+    else:
+        kind = "regular_bullish" if dp < 0 and dr > 0 else "hidden_bullish" if dp > 0 and dr < 0 else None
+    if kind is None:
+        return None, "price and RSI agree"
+    if abs(dr) < MIN_RSI_GAP:
+        return None, f"RSI differs by only {abs(dr):.1f} points"
+    if atr2 and abs(dp) < SWING_GAP_ATR * atr2:
+        return None, f"Equal {'high' if high else 'low'}: swings {abs(dp) / atr2:.2f} ATR apart (minimum {SWING_GAP_ATR})"
+    if kind == "regular_bearish" and max(a["rsi"], b["rsi"]) < 60:
+        return None, "regular bearish needs a swing RSI >= 60"
+    if kind == "regular_bullish" and min(a["rsi"], b["rsi"]) > 40:
+        return None, "regular bullish needs a swing RSI <= 40"
+    closes = [x["c"] for x in bars]
+    if not _clean(closes, a["index"], a["price"], b["index"], b["price"], above=high):
+        return None, "a close between the swings crosses the price line"
+    if not _clean(rsi, a["rsi_index"], a["rsi"], b["rsi_index"], b["rsi"], above=high):
+        return None, "an RSI value between the swings crosses the RSI line"
+    return kind, None
+
+
+def classify(a, b, bars, rsi, atr2=None):
+    return pair_reason(a, b, bars, rsi, atr2)[0]
+
+
+def choose_pairs(earlier, b, bars, rsi, atr2):
+    """Compare swing b with every earlier same-side swing 5-60 bars back (not just the previous one). For each type
+    found, keep the EARLIEST valid swing 1 (the longest clean divergence). Returns {type: swing 1}."""
+    found = {}
+    for a in sorted(earlier, key=lambda p: p["index"]):
+        kind = classify(a, b, bars, rsi, atr2)
+        if kind and kind not in found:
+            found[kind] = a
+    return found
+
+
+def major_levels(points, tolerance, as_of=None):
+    """Major support/resistance from 4h swings (highs AND lows: a broken resistance is later support): swing closes
+    known by `as_of`, in price order; a swing joins the current cluster when it is within `tolerance` (0.5 x 4h ATR) of
+    the previous swing and the cluster stays at most 2 x `tolerance` (one ATR) wide. A cluster with >= 2 swings is a
+    level (price = mean close, band = lowest .. highest close)."""
+    pts = sorted((p for p in points if as_of is None or p["known_at"] <= as_of), key=lambda p: p["price"])
+    levels, cluster = [], []
+    for p in pts + [None]:
+        if (p is not None and cluster and p["price"] - cluster[-1]["price"] <= tolerance
+                and p["price"] - cluster[0]["price"] <= 2 * tolerance):
+            cluster.append(p)
+            continue
+        if len(cluster) >= LEVEL_MIN_TOUCHES:
+            levels.append(dict(price=sum(x["price"] for x in cluster) / len(cluster),
+                               low=min(x["price"] for x in cluster), high=max(x["price"] for x in cluster),
+                               touches=[dict(time=x["t"], price=x["price"], kind=x["kind"], known_at=x["known_at"],
+                                             timeframe=LEVEL_TF) for x in cluster]))
+        cluster = [p] if p is not None else []
+    return levels
+
+
+def ema_series(bars, n, duration):
+    out, e, k, seg_start = [None] * len(bars), None, 2 / (n + 1), 0
+    for i, b in enumerate(bars):
+        if i and b["t"] - bars[i - 1]["t"] != duration:
+            e, seg_start = None, i                       # restart after a gap, like the other indicators
+        if e is None:
+            if i - seg_start + 1 == n:
+                e = sum(x["c"] for x in bars[seg_start:i + 1]) / n
+        else:
+            e += k * (b["c"] - e)
+        out[i] = e
+    return out
+
+
+def stop_basis(kind, first, pivot, bars):
+    """Where the stop goes (DIV-SR-6, operator 2026-10-11: "the previous swing low or high, based on which divergence
+    happened"). Regular (reversal): beyond the extreme WICK of the whole pattern, swing 1 to swing 2 -- the low the
+    reversal must hold. Hidden (continuation): beyond the extreme wick of swing 2's own swing (its 5 bars before and 3
+    after, all closed when the divergence is known) -- the higher low / lower high the trend must hold."""
+    long = kind.endswith("bullish")
+    i1, i2 = first["index"], pivot["index"]
+    if kind.startswith("regular"):
+        seg, what = range(i1, i2 + 1), f"the {'lowest low' if long else 'highest high'} of swings 1-2"
+    else:
+        seg, what = range(max(0, i2 - PIVOT_LEFT), min(len(bars), i2 + PIVOT_RIGHT + 1)),             f"swing 2's {'low' if long else 'high'} (its wick)"
+    k = min(seg, key=lambda j: bars[j]["l"]) if long else max(seg, key=lambda j: bars[j]["h"])
+    return dict(price=bars[k]["l"] if long else bars[k]["h"], time=bars[k]["t"], what=what)
+
+
+def _check(checks, rule, passed, detail):
+    checks.append(dict(rule=rule, passed=passed, detail=detail))
+    return passed
+
+
+def _hhmm(ms):
+    return datetime.fromtimestamp(ms / 1000, timezone.utc).strftime("%m-%d %H:%M")
+
+
+def prefilter_checks(kind, first, pivot, higher, ema, atr2, levels, level_tol, timeframe):
+    """Filters on the divergence timeframe, all evaluated (for the label), in order. Returns (checks, reason of the first
+    failure or None, zone or None). levels: the major 4h levels known before swing 1 formed; level_tol: 0.5 x the 4h
+    ATR at that time."""
+    checks = []
+    long = kind.endswith("bullish")
+    low = pivot["kind"] == "low"
+    gap = abs(pivot["price"] - first["price"]) / atr2
+    reason = None
+    if not _check(checks, "Swing gap >= 0.25 ATR", gap >= SWING_GAP_ATR,
+                  f"{abs(pivot['price'] - first['price']):.6g} = {gap:.2f} ATR (ATR {atr2:.6g} at swing 2)"):
+        reason = f"Equal {'low' if low else 'high'}: swings {gap:.2f} ATR apart (minimum {SWING_GAP_ATR})"
+    zone = None
+    if kind.startswith("regular"):
+        i1 = first["index"]
+        e1 = ema[i1]
+        e0 = ema[i1 - TREND_SLOPE] if i1 - TREND_SLOPE >= 0 else None
+        c1 = higher[i1]["c"]
+        if e1 is None or e0 is None:
+            ok, detail = False, "EMA50 not warmed up at swing 1"
+        else:
+            ok = (c1 < e1 and e1 < e0) if long else (c1 > e1 and e1 > e0)
+            detail = f"swing 1 close {c1:.6g} vs EMA50 {e1:.6g}; EMA50 {e0:.6g} -> {e1:.6g} over {TREND_SLOPE} bars"
+        if not _check(checks, f"Prior {'down' if long else 'up'}trend at swing 1", ok, detail) and reason is None and REG_PRIOR_TREND:
+            reason = "No trend to reverse: " + detail
+        # Major support/resistance from 4h swings (highs and lows) known before swing 1 formed.
+        near = sorted((L for L in levels if level_tol and L["low"] - level_tol <= pivot["price"] <= L["high"] + level_tol),
+                      key=lambda L: abs(L["price"] - pivot["price"]))
+        if near:
+            L = near[0]
+            used = ", ".join(f"{t['price']:.6g} {t['kind']} @ {_hhmm(t['time'])}" for t in L["touches"])
+            detail = (f"swing 2 close {pivot['price']:.6g} is {abs(pivot['price'] - L['price']):.6g} from the {LEVEL_TF} level "
+                      f"{L['price']:.6g} ({len(L['touches'])} swings: {used})")
+            zone = dict(kind="support" if long else "resistance", timeframe=LEVEL_TF, tolerance=level_tol, price=L["price"],
+                        lower=L["low"], upper=L["high"], low=L["low"], high=L["high"], touches=L["touches"])
+        else:
+            detail = (f"no major {LEVEL_TF} level within {level_tol:.6g} of {pivot['price']:.6g} ({len(levels)} levels known)"
+                      if level_tol else f"{LEVEL_TF} ATR not available yet")
+        ok = _check(checks, f"At a major {LEVEL_TF} {'support' if long else 'resistance'} level", bool(near), detail)
+        if not ok and reason is None and REG_NEEDS_LEVEL:
+            reason = f"Away from {'support' if long else 'resistance'}: " + detail
+    else:
+        avail = pivot["index"] + PIVOT_RIGHT                     # the bar whose close makes swing 2 known
+        e_now = ema[avail] if avail < len(ema) else None
+        e_old = ema[avail - TREND_SLOPE] if avail - TREND_SLOPE >= 0 else None
+        close = higher[avail]["c"]
+        if e_now is None or e_old is None:
+            ok, detail = False, "EMA50 not warmed up"
+        else:
+            ok = (close > e_now and e_now > e_old) if long else (close < e_now and e_now < e_old)
+            detail = f"close {close:.6g} vs EMA50 {e_now:.6g}; EMA50 {e_old:.6g} -> {e_now:.6g} over {TREND_SLOPE} bars"
+        if not _check(checks, f"With the EMA50 {'up' if long else 'down'}trend", ok, detail) and reason is None:
+            reason = "Against the EMA50 trend: " + detail
+    return checks, reason, zone
+
+
+def opposing_divergence(long, bars, rsi, minor, upto_index, known_by):
+    """DIV-SR-8: is a divergence of the OTHER direction still active at entry? For a long: among the minor (2/2) swing
+    highs known by `known_by` in the last OPPOSING_LOOKBACK bars, the highest close H2 against any earlier swing high H1
+    with a lower close and a higher RSI (at least 60) -- momentum did not confirm the top. It stays active until a close
+    above H2. Mirrored for a short. Returns a description or None."""
+    kind = "high" if long else "low"
+    pts = [p for p in minor if p["kind"] == kind and p["known_at"] <= known_by and p["rsi"] is not None
+           and upto_index - p["index"] <= OPPOSING_LOOKBACK and p["index"] <= upto_index]
+    if len(pts) < 2:
+        return None
+    top = max(pts, key=lambda p: p["price"]) if long else min(pts, key=lambda p: p["price"])
+    for q in pts:
+        if q["index"] >= top["index"]:
+            continue
+        weaker = (q["price"] < top["price"] and q["rsi"] > top["rsi"] and q["rsi"] >= 60) if long else \
+                 (q["price"] > top["price"] and q["rsi"] < top["rsi"] and q["rsi"] <= 40)
+        if not weaker:
+            continue
+        broken = any((bars[j]["c"] > top["price"]) if long else (bars[j]["c"] < top["price"])
+                     for j in range(top["index"] + 1, upto_index + 1))
+        if not broken:
+            return (f"{'bearish' if long else 'bullish'} divergence at the latest {'top' if long else 'bottom'}: close "
+                    f"{q['price']:.6g} (RSI {q['rsi']:.1f}) -> {top['price']:.6g} (RSI {top['rsi']:.1f}) @ {_hhmm(top['t'])}, "
+                    f"not broken since")
+    return None
+
+
+def levels_in_way(long, entry, target, levels, own=None):
+    """DIV-SR-8: major 4h levels whose band lies between the entry and the 2R target (the setup's own level excluded)."""
+    lo, hi = (entry, target) if long else (target, entry)
+    out = []
+    for L in levels:
+        if own and abs(L["price"] - own.get("price", float("nan"))) < 1e-9:
+            continue
+        if L["high"] >= lo and L["low"] <= hi and not ((L["low"] <= entry <= L["high"]) and own):
+            out.append(L)
+    return out
+
+
+def chase_checks(long, entry, target, swing2, atr2, opposite):
+    """No chasing at entry: within CHASE_MAX_ATR of swing 2, and no opposite swing (for a long, a confirmed swing high)
+    strictly between the entry and the 2R target (ROOM_BLOCKS; False would only warn). Returns (checks, reason or None)."""
+    checks = []
+    reason = None
+    dist = abs(entry - swing2) / atr2
+    if not _check(checks, f"Entry within {CHASE_MAX_ATR:g} ATR of swing 2", dist <= CHASE_MAX_ATR,
+                  f"entry {entry:.6g} is {dist:.2f} ATR from swing 2 {swing2:.6g}"):
+        reason = f"Chasing: entry {dist:.2f} ATR from swing 2 (maximum {CHASE_MAX_ATR})"
+    lo, hi = (entry, target) if long else (target, entry)
+    blocking = [p for p in opposite if lo < p["price"] < hi]
+    nearest = min(blocking, key=lambda p: abs(p["price"] - entry)) if blocking else None
+    detail = (f"swing {'high' if long else 'low'} {nearest['price']:.6g} @ {_hhmm(nearest['t'])} sits between entry "
+              f"{entry:.6g} and target {target:.6g}") if nearest else f"clear between {entry:.6g} and {target:.6g}"
+    _check(checks, "No opposite swing before the 2R target", nearest is None, detail)
+    if nearest is not None and ROOM_BLOCKS and reason is None:
+        reason = "Chasing: " + detail
+    elif nearest is not None:
+        checks[-1]["warning"] = True                    # shown on the chart and in Telegram, never blocks the trade
+    return checks, reason
+
+
+def _study(bars, symbol):
+    setups, signals, views = [], [], {}
+    # Major support/resistance comes from the 4h swings of the whole history, for both divergence timeframes.
+    h4 = aggregate(bars, 4 * HOUR)
+    r4, a4, s4 = indicators(h4, 4 * HOUR)
+    level_points = pivots(h4, 4 * HOUR, r4, s4)
+    h4_close = [b["t"] + 4 * HOUR for b in h4]
+
+    def level_tolerance(ms):
+        k = bisect_right(h4_close, ms) - 1                   # the last 4h candle closed by 
+        return LEVEL_TOL_ATR * a4[k] if k >= 0 and a4[k] else None
+
+    for div_tf, trigger_tf, duration, lower_duration in (("4h", "1h", 4 * HOUR, HOUR), ("1h", "15m", HOUR, BASE)):
+        higher, lower = aggregate(bars, duration), aggregate(bars, lower_duration)
+        rsi, atr, segments = indicators(higher, duration)
+        ema = ema_series(higher, TREND_EMA, duration)
+        hp, lp = pivots(higher, duration, rsi, segments), pivots(lower, lower_duration, left=2, right=2)
+        minor = pivots(higher, duration, rsi, segments, left=2, right=2)
+        htf_d = {"1h": 4 * HOUR, "4h": 24 * HOUR}[div_tf]
+        htf = aggregate(bars, htf_d)
+        htf_ema = ema_series(htf, TREND_EMA, htf_d)
+        htf_close = [b["t"] + htf_d for b in htf]
+        lower_closes = [b["t"] + lower_duration for b in lower]
+        lower_ema = ema_series(lower, LTF_TREND_EMA, lower_duration)
+        lower_pivot_known = [p["known_at"] for p in lp]
+        hp_known = [p["known_at"] for p in hp]
+        last_close = bars[-1]["t"] + BASE if bars else 0
+        views[div_tf] = [dict(b, rsi=rsi[i], atr=atr[i], ema50=ema[i])
+                         for i, b in enumerate(higher[-240:], start=max(0, len(higher) - 240))]
+        earlier = {"low": [], "high": []}
+        for pivot in hp:
+            same = earlier[pivot["kind"]]
+            candidates = [q for q in same if q["segment"] == pivot["segment"]
+                          and SEPARATION[0] <= pivot["index"] - q["index"] <= SEPARATION[1]]
+            same.append(pivot)
+            atr2 = atr[pivot["index"]]
+            if not atr2 or atr2 <= 0:
+                continue
+            for kind, first in choose_pairs(candidates, pivot, higher, rsi, atr2).items():
+                _setup(setups, signals, symbol, kind, first, pivot, higher, rsi, atr2, ema, div_tf, trigger_tf, duration,
+                       lower, lower_closes, lp, lower_pivot_known, lower_duration, hp, hp_known, last_close,
+                       level_points, level_tolerance, lower_ema,
+                       dict(minor=minor, htf=htf, htf_ema=htf_ema, htf_close=htf_close, htf_tf="4h" if div_tf == "1h" else "1d"))
+    return sorted(setups, key=lambda s: s["divergence_at"]), sorted(signals, key=lambda s: (s["confirmed_at"], s["id"])), views
+
+
+def _setup(setups, signals, symbol, kind, first, pivot, higher, rsi, atr2, ema, div_tf, trigger_tf, duration, lower,
+           lower_closes, lp, lower_pivot_known, lower_duration, hp, hp_known, last_close, level_points, level_tolerance,
+           lower_ema=None, ctx=None):
+    long = kind.endswith("bullish")
+    side = "long" if long else "short"
+    known = pivot["known_at"]
+    basis = stop_basis(kind, first, pivot, higher)
+    stop = basis["price"] + (-STOP_BUFFER_ATR if long else STOP_BUFFER_ATR) * atr2
+    price_rel, rsi_rel = LABELS[kind]
+    tol = level_tolerance(first["t"])
+    levels = major_levels(level_points, tol, as_of=first["t"]) if tol else []
+    checks, filtered, zone = prefilter_checks(kind, first, pivot, higher, ema, atr2, levels, tol, div_tf)
+    checks.insert(0, dict(rule=f"Stop beyond {basis['what']}", passed=True,
+                          detail=f"{'low' if long else 'high'} {basis['price']:.6g} @ {_hhmm(basis['time'])}, "
+                                 f"stop {stop:.6g} ({STOP_BUFFER_ATR} ATR further)"))
+    setup = dict(id=f"{RULE_VERSION}:{symbol}:{div_tf}:{kind}:{pivot['t']}",
+                 symbol=symbol, side=side, divergence_type=kind, regular=kind.startswith("regular"),
+                 price_relation=price_rel, rsi_relation=rsi_rel,
+                 divergence_tf=div_tf, trigger_tf=trigger_tf,
+                 divergence_at=known, pivot_at=pivot["t"], first_pivot=first, second_pivot=pivot,
+                 zone=zone, stop=stop, stop_basis=basis, atr=atr2, swing_gap_atr=abs(pivot["price"] - first["price"]) / atr2,
+                 expires_at=known + EXPIRY_BARS * duration, checks=checks,
+                 status="WAITING", reason="Waiting for a closed lower-timeframe structure break")
+    setup.update(pivot1=dict(time=first["t"], price=first["price"], wick=first["wick"], rsi=first["rsi"],
+                             rsi_time=first["rsi_t"], known_at=first["known_at"]),
+                 pivot2=dict(time=pivot["t"], price=pivot["price"], wick=pivot["wick"], rsi=pivot["rsi"],
+                             rsi_time=pivot["rsi_t"], known_at=known))
+    setups.append(setup)
+    # The lower-timeframe stage is evaluated even for FILTERED setups so the label shows every rule; only an
+    # unfiltered setup can become a signal.
+    status, reason = _confirm(setup, long, stop, known, lower, lower_closes, lp, lower_pivot_known,
+                              lower_duration, checks, duration, lower_ema)
+    if status == "CONFIRMED":
+        cut = bisect_right(hp_known, setup["confirmed_at"])
+        opposite = [p for p in hp[:cut] if p["kind"] == ("high" if long else "low")
+                    and p["t"] >= setup["confirmed_at"] - ROOM_LOOKBACK * duration]
+        more, chase = chase_checks(long, setup["entry_reference"], setup["target"], pivot["price"], atr2, opposite)
+        checks.extend(more)
+        if ctx is not None and not chase:
+            chase = _context_checks(setup, long, kind, higher, rsi, ctx, checks, level_points, level_tolerance, zone)
+        if chase:
+            status, reason = "SKIPPED", chase
+    if filtered:
+        status, reason = "FILTERED", filtered
+    elif status == "WAITING" and last_close >= setup["expires_at"]:
+        status, reason = "EXPIRED", f"No structure break within {EXPIRY_BARS} divergence-timeframe bars"
+    if status != "CONFIRMED" and "confirmed_at" in setup:
+        # What the lower timeframe would have done; never a signal, so no confirmed_at / entry on the setup.
+        setup["hypothetical"] = {k: setup.pop(k) for k in ("confirmed_at", "entry_reference", "target")}
+    setup.update(status=status, reason=reason)
+    if status == "CONFIRMED":
+        signals.append(dict(setup))
+
+
+def _context_checks(setup, long, kind, higher, rsi, ctx, checks, level_points, level_tolerance, zone):
+    """DIV-SR-8 context at entry: no opposing divergence still active, no major 4h level between entry and target, and
+    (hidden types) the next timeframe up trends the same way. Returns the first blocking reason or None."""
+    reason = None
+    conf, entry, target = setup["confirmed_at"], setup["entry_reference"], setup["target"]
+    upto = bisect_right([b["t"] + (higher[1]["t"] - higher[0]["t"]) for b in higher], conf) - 1
+    od = opposing_divergence(long, higher, rsi, ctx["minor"], upto, conf)
+    if not _check(checks, f"No active {'bearish' if long else 'bullish'} divergence at the latest {'top' if long else 'bottom'}",
+                  od is None, od or "none active"):
+        if OPPOSING_VETO and reason is None:
+            reason = "Opposing divergence: " + od
+        elif not OPPOSING_VETO:
+            checks[-1]["warning"] = True
+    if True:                                         # always evaluated; blocks only when LEVEL_IN_WAY
+        tol = level_tolerance(conf)
+        lv = major_levels(level_points, tol, as_of=conf) if tol else []
+        way = levels_in_way(long, entry, target, lv, zone)
+        near = min(way, key=lambda L: abs(L["price"] - entry)) if way else None
+        if not _check(checks, f"No major {LEVEL_TF} level before the 2R target", near is None,
+                      (f"{'resistance' if long else 'support'} {near['price']:.6g} ({len(near['touches'])} swings) between entry "
+                       f"{entry:.6g} and target {target:.6g}") if near else "clear"):
+            if LEVEL_IN_WAY and reason is None:
+                reason = f"Level in the way: {LEVEL_TF} {'resistance' if long else 'support'} {near['price']:.6g}"
+            elif not LEVEL_IN_WAY:
+                checks[-1]["warning"] = True
+    if HTF_TREND_HIDDEN and kind.startswith("hidden"):
+        k = bisect_right(ctx["htf_close"], conf) - 1
+        e_now = ctx["htf_ema"][k] if k >= 0 else None
+        e_old = ctx["htf_ema"][k - 10] if k >= 10 else None
+        c = ctx["htf"][k]["c"] if k >= 0 else None
+        ok = None not in (e_now, e_old, c) and ((c > e_now and e_now > e_old) if long else (c < e_now and e_now < e_old))
+        tf = ctx["htf_tf"]
+        detail = (f"{tf} close {c:.6g} vs {tf} EMA50 {e_now:.6g} ({e_old:.6g} 10 bars earlier)" if None not in (e_now, e_old, c)
+                  else f"{tf} EMA50 not warmed up")
+        if not _check(checks, f"{tf} trend agrees (hidden = continuation)", ok, detail) and reason is None:
+            reason = f"{tf} trend against the continuation: " + detail
+    return reason
+
+
+def _confirm(setup, long, stop, known, lower, lower_closes, lp, lower_pivot_known, lower_duration, checks,
+             divergence_duration, lower_ema=None):
+    """The lower-timeframe structure break: the latest opposing lower-timeframe swing frozen when the divergence becomes
+    known; the FIRST later close beyond it must carry >= the 20-candle mean volume. Returns (status, reason) and records
+    trigger_level / trigger_candle / confirmed_at / entry_reference / target on the setup."""
+    cutoff = bisect_right(lower_pivot_known, known)
+    opposing = next((p for p in reversed(lp[:cutoff]) if p["kind"] == ("high" if long else "low")), None)
+    at_known = bisect_right(lower_closes, known) - 1
+    if opposing is None or at_known < 0 or known - opposing["t"] > TRIGGER_MAX_AGE * lower_duration:
+        _check(checks, "Lower-timeframe trigger swing", False, "no confirmed opposing swing in the last 20 candles")
+        return "INVALID", "No recent confirmed opposing lower-timeframe swing"
+    if lower_closes[at_known] != known:
+        _check(checks, "Lower-timeframe trigger swing", False, "missing lower-timeframe candle at availability")
+        return "INVALID", "Missing lower-timeframe candle at divergence availability"
+    if any(lower[j]["t"] != lower[j - 1]["t"] + lower_duration for j in range(opposing["index"] + 1, at_known + 1)):
+        _check(checks, "Lower-timeframe trigger swing", False, "data gap in the lower-timeframe structure")
+        return "INVALID", "Data gap in lower-timeframe structure"
+    level = opposing["price"]
+    setup.update(trigger_level=level, trigger_pivot=opposing)
+    close = lower[at_known]["c"]
+    if (long and close > level) or (not long and close < level):
+        _check(checks, "Trigger not already broken", False, f"close {close:.6g} already beyond {level:.6g}")
+        return "INVALID", "Structure already broke before divergence was available"
+    _check(checks, "Lower-timeframe trigger swing", True, f"{'high' if long else 'low'} {level:.6g} @ {_hhmm(opposing['t'])}")
+    prev_t = lower[at_known]["t"]
+    for j in range(at_known + 1, len(lower)):
+        bar, closed_at = lower[j], lower_closes[j]
+        if closed_at > setup["expires_at"]:
+            break
+        if bar["t"] != prev_t + lower_duration:
+            _check(checks, "Structure break", False, "data gap before confirmation")
+            return "INVALID", "Data gap before confirmation"
+        prev_t = bar["t"]
+        if (long and bar["l"] <= stop) or (not long and bar["h"] >= stop):
+            setup["invalidated_at"] = closed_at
+            _check(checks, "Structure break", False, f"stop {stop:.6g} hit first @ {_hhmm(bar['t'])}")
+            return "INVALID", "Divergence swing stop breached before confirmation"
+        if (long and bar["c"] > level) or (not long and bar["c"] < level):
+            # Volume confirms the reversal when, on the lower timeframe, the candles closing in the trade's direction
+            # carried at least as much volume as the opposite ones -- from the close of the swing-2 candle up to and
+            # including the break. (DIV-SR-4 compared the break candle with the 20-candle mean, which still held the
+            # climax candles of the swing itself, so a normal candle after a capitulation could never pass.)
+            start = setup["pivot2"]["time"] + divergence_duration
+            window = [w for w in lower[:j + 1] if w["t"] >= start]
+            contiguous = bool(window) and window[0]["t"] == start and all(
+                window[k]["t"] == window[0]["t"] + k * lower_duration for k in range(len(window)))
+            with_v = sum(w["v"] for w in window if (w["c"] > w["o"]) == long and w["c"] != w["o"])
+            against_v = sum(w["v"] for w in window if (w["c"] < w["o"]) == long and w["c"] != w["o"])
+            ratio = (with_v / against_v if against_v > 0 else (float("inf") if with_v > 0 else None)) if contiguous else None
+            setup["volume_ratio"] = None if ratio == float("inf") else ratio
+            setup["trigger_candle"] = dict(time=bar["t"], close=bar["c"], volume=bar["v"], timeframe=setup["trigger_tf"],
+                                           window_start=start, volume_with=with_v, volume_against=against_v,
+                                           ratio=setup["volume_ratio"])
+            _check(checks, "Structure break", True, f"close {bar['c']:.6g} beyond {level:.6g} @ {_hhmm(bar['t'])}")
+            side_word = ("buying", "selling") if long else ("selling", "buying")
+            detail = (f"{side_word[0]} {with_v:,.0f} vs {side_word[1]} {against_v:,.0f} on {setup['trigger_tf']} since swing 2 "
+                      f"({'all' if ratio == float('inf') else f'{ratio:.2f}x'})") if ratio is not None else \
+                "lower-timeframe candles since swing 2 are missing"
+            if not _check(checks, f"{side_word[0].capitalize()} volume >= {side_word[1]} volume since swing 2",
+                          ratio is not None and ratio >= VOLUME_MIN, detail):
+                setup["invalidated_at"] = closed_at
+                return "INVALID", "Structure break without volume confirmation: " + detail
+            # The lower timeframe itself must trend the trade's way at the break (operator 2026-10-11: "I don't see the 15m
+            # was a downtrend"): the break candle closes above (long) / below (short) the lower-timeframe EMA50.
+            e = lower_ema[j] if lower_ema is not None and j < len(lower_ema) else None
+            tf = setup["trigger_tf"]
+            ok = e is not None and ((bar["c"] > e) if long else (bar["c"] < e))
+            if not _check(checks, f"{tf} trend agrees ({'close above' if long else 'close below'} {tf} EMA50)", ok,
+                          f"close {bar['c']:.6g} vs {tf} EMA50 {e:.6g}" if e is not None else f"{tf} EMA50 not warmed up")                     and (LTF_TREND_CHECK or checks[-1].update(warning=True)):
+                setup["invalidated_at"] = closed_at
+                return "INVALID", f"{tf} trend against the trade: " + (f"close {bar['c']:.6g} {'below' if long else 'above'} the "
+                                                                    f"{tf} EMA50 {e:.6g}" if e is not None else "EMA50 not warmed up")
+            entry = bar["c"]
+            distance = abs(entry - stop)
+            if distance <= 0 or (long and stop >= entry) or (not long and stop <= entry):
+                return "INVALID", "Invalid stop distance"
+            setup.update(confirmed_at=closed_at, entry_reference=entry, target=entry + (2 if long else -2) * distance)
+            return "CONFIRMED", "Closed, volume-confirmed structure break after confirmed divergence"
+    _check(checks, "Structure break", None, "not yet / not within the expiry window")
+    return "WAITING", "Waiting for a closed lower-timeframe structure break"
+
+
+def generate_signals(bars, symbol):
+    """Return all historical causal confirmations; caller supplies completed bars."""
+    return _study(clean_bars(bars), symbol)[1]
+
+
+def analyze(bars, symbol, now_ms):
+    rows = clean_bars(bars, now_ms)
+    setups, signals, views = _study(rows, symbol)
+    return dict(version=RULE_VERSION, rules=RULES, symbol=symbol, as_of=now_ms,
+                last_bar=rows[-1]["t"] if rows else None, bars=len(rows),
+                setups=setups[-100:], signals=signals[-100:], indicators=views,
+                data_gaps=sum(b["t"] != rows[i-1]["t"] + BASE for i, b in enumerate(rows) if i))
+
+
+def current_levels(bars):
+    """The major 4h support/resistance levels known at the last completed candle (for the chart)."""
+    rows = clean_bars(bars)
+    h4 = aggregate(rows, 4 * HOUR)
+    if not h4:
+        return dict(timeframe=LEVEL_TF, tolerance=None, levels=[])
+    r4, a4, s4 = indicators(h4, 4 * HOUR)
+    tol = LEVEL_TOL_ATR * a4[-1] if a4[-1] else None
+    return dict(timeframe=LEVEL_TF, tolerance=tol, levels=major_levels(pivots(h4, 4 * HOUR, r4, s4), tol) if tol else [])

@@ -1,0 +1,312 @@
+BE  H= 8 X=24 k=1.0 mom trades=  494 mean=  0.83 med=  0.14 geo=  0.46 dd= 44.2 t= 0.63 21-22geo= -0.73 23-24geo=  1.78
+BE  H= 8 X=24 k=1.0 rev trades=  494 mean= -2.31 med= -1.28 geo= -2.66 dd= 75.5 t=-1.97 21-22geo= -2.21 23-24geo= -3.15
+BE  H= 8 X=24 k=1.5 mom trades=  238 mean=  1.12 med=  0.85 geo=  0.97 dd= 24.8 t= 1.34 21-22geo=  0.80 23-24geo=  1.15
+BE  H= 8 X=24 k=1.5 rev trades=  238 mean= -1.86 med= -1.60 geo= -2.01 dd= 66.9 t=-2.42 21-22geo= -2.22 23-24geo= -1.78
+BE  H= 8 X=24 k=2.0 mom trades=  123 mean=  0.04 med=  0.00 geo= -0.08 dd= 28.6 t= 0.05 21-22geo= -0.22 23-24geo=  0.08
+BE  H= 8 X=24 k=2.0 rev trades=  123 mean= -0.40 med=  0.00 geo= -0.52 dd= 36.2 t=-0.57 21-22geo= -0.64 23-24geo= -0.39
+BE  H= 8 X=24 k=2.5 mom trades=   71 mean= -0.05 med=  0.00 geo= -0.12 dd= 22.5 t=-0.08 21-22geo= -0.04 23-24geo= -0.22
+BE  H= 8 X=24 k=2.5 rev trades=   71 mean= -0.18 med=  0.00 geo= -0.26 dd= 26.7 t=-0.32 21-22geo= -0.53 23-24geo=  0.04
+BE  H= 8 X=24 k=3.0 mom trades=   44 mean= -0.12 med=  0.00 geo= -0.15 dd= 13.6 t=-0.33 21-22geo= -0.05 23-24geo= -0.25
+BE  H= 8 X=24 k=3.0 rev trades=   44 mean= -0.05 med=  0.00 geo= -0.07 dd= 16.6 t=-0.13 21-22geo= -0.27 23-24geo=  0.14
+BE  H= 8 X=26 k=1.0 mom trades=  494 mean= -0.30 med= -0.43 geo= -0.58 dd= 65.9 t=-0.26 21-22geo= -2.69 23-24geo=  1.76
+BE  H= 8 X=26 k=1.0 rev trades=  494 mean= -1.43 med= -1.08 geo= -1.69 dd= 67.1 t=-1.37 21-22geo= -0.32 23-24geo= -3.17
+BE  H= 8 X=26 k=1.5 mom trades=  238 mean=  0.73 med=  0.74 geo=  0.59 dd= 35.0 t= 0.91 21-22geo=  0.03 23-24geo=  1.21
+BE  H= 8 X=26 k=1.5 rev trades=  238 mean= -1.57 med= -1.42 geo= -1.72 dd= 65.0 t=-2.03 21-22geo= -1.59 23-24geo= -1.86
+BE  H= 8 X=26 k=2.0 mom trades=  123 mean=  0.02 med=  0.00 geo= -0.09 dd= 32.3 t= 0.03 21-22geo= -0.10 23-24geo= -0.08
+BE  H= 8 X=26 k=2.0 rev trades=  123 mean= -0.44 med= -0.12 geo= -0.56 dd= 38.7 t=-0.62 21-22geo= -0.85 23-24geo= -0.24
+BE  H= 8 X=26 k=2.5 mom trades=   71 mean= -0.15 med=  0.00 geo= -0.22 dd= 23.9 t=-0.26 21-22geo=  0.01 23-24geo= -0.47
+BE  H= 8 X=26 k=2.5 rev trades=   71 mean= -0.12 med=  0.00 geo= -0.19 dd= 26.7 t=-0.21 21-22geo= -0.63 23-24geo=  0.29
+BE  H= 8 X=26 k=3.0 mom trades=   44 mean= -0.07 med=  0.00 geo= -0.10 dd= 15.5 t=-0.19 21-22geo=  0.26 23-24geo= -0.50
+BE  H= 8 X=26 k=3.0 rev trades=   44 mean= -0.11 med=  0.00 geo= -0.15 dd= 19.1 t=-0.28 21-22geo= -0.63 23-24geo=  0.38
+BE  H=12 X=24 k=1.0 mom trades=  541 mean= -0.13 med= -0.06 geo= -0.40 dd= 56.8 t=-0.12 21-22geo= -1.72 23-24geo=  1.05
+BE  H=12 X=24 k=1.0 rev trades=  541 mean= -1.53 med= -1.55 geo= -1.79 dd= 65.0 t=-1.50 21-22geo= -1.10 23-24geo= -2.55
+BE  H=12 X=24 k=1.5 mom trades=  261 mean=  0.60 med=  0.19 geo=  0.47 dd= 22.2 t= 0.77 21-22geo=  0.77 23-24geo=  0.14
+BE  H=12 X=24 k=1.5 rev trades=  261 mean= -1.45 med= -0.69 geo= -1.57 dd= 56.1 t=-2.02 21-22geo= -2.22 23-24geo= -0.87
+BE  H=12 X=24 k=2.0 mom trades=  141 mean=  0.15 med=  0.00 geo=  0.04 dd= 32.1 t= 0.21 21-22geo=  0.08 23-24geo= -0.00
+BE  H=12 X=24 k=2.0 rev trades=  141 mean= -0.57 med= -0.06 geo= -0.67 dd= 42.9 t=-0.86 21-22geo= -0.92 23-24geo= -0.40
+BE  H=12 X=24 k=2.5 mom trades=   72 mean= -0.23 med=  0.00 geo= -0.29 dd= 29.4 t=-0.44 21-22geo= -0.38 23-24geo= -0.20
+BE  H=12 X=24 k=2.5 rev trades=   72 mean=  0.02 med=  0.00 geo= -0.04 dd= 28.7 t= 0.03 21-22geo= -0.08 23-24geo= -0.01
+BE  H=12 X=24 k=3.0 mom trades=   36 mean= -0.38 med=  0.00 geo= -0.41 dd= 18.3 t=-1.15 21-22geo= -0.53 23-24geo= -0.28
+BE  H=12 X=24 k=3.0 rev trades=   36 mean=  0.27 med=  0.00 geo=  0.25 dd= 11.0 t= 0.82 21-22geo=  0.30 23-24geo=  0.18
+BE  H=12 X=26 k=1.0 mom trades=  541 mean= -1.08 med= -0.98 geo= -1.39 dd= 73.5 t=-0.90 21-22geo= -3.58 23-24geo=  1.06
+BE  H=12 X=26 k=1.0 rev trades=  541 mean= -0.61 med= -1.17 geo= -0.90 dd= 62.5 t=-0.56 21-22geo=  0.69 23-24geo= -2.59
+BE  H=12 X=26 k=1.5 mom trades=  261 mean=  0.14 med=  0.56 geo=  0.00 dd= 34.1 t= 0.18 21-22geo= -0.20 23-24geo=  0.22
+BE  H=12 X=26 k=1.5 rev trades=  261 mean= -1.03 med= -1.30 geo= -1.17 dd= 50.9 t=-1.33 21-22geo= -1.34 23-24geo= -0.98
+BE  H=12 X=26 k=2.0 mom trades=  141 mean= -0.30 med=  0.00 geo= -0.43 dd= 43.4 t=-0.39 21-22geo= -0.84 23-24geo=  0.03
+BE  H=12 X=26 k=2.0 rev trades=  141 mean= -0.13 med= -0.21 geo= -0.26 dd= 42.5 t=-0.18 21-22geo= -0.07 23-24geo= -0.46
+BE  H=12 X=26 k=2.5 mom trades=   72 mean= -0.34 med=  0.00 geo= -0.41 dd= 32.1 t=-0.59 21-22geo= -0.34 23-24geo= -0.48
+BE  H=12 X=26 k=2.5 rev trades=   72 mean=  0.11 med=  0.00 geo=  0.04 dd= 30.7 t= 0.20 21-22geo= -0.16 23-24geo=  0.26
+BE  H=12 X=26 k=3.0 mom trades=   36 mean= -0.41 med=  0.00 geo= -0.45 dd= 21.7 t=-0.91 21-22geo= -0.37 23-24geo= -0.54
+BE  H=12 X=26 k=3.0 rev trades=   36 mean=  0.28 med=  0.00 geo=  0.24 dd= 16.5 t= 0.63 21-22geo=  0.07 23-24geo=  0.42
+BE  H=14 X=24 k=1.0 mom trades=  554 mean= -0.57 med= -0.48 geo= -0.76 dd= 54.4 t=-0.62 21-22geo= -2.02 23-24geo=  0.63
+BE  H=14 X=24 k=1.0 rev trades=  554 mean= -1.26 med= -1.74 geo= -1.42 dd= 59.6 t=-1.51 21-22geo= -0.63 23-24geo= -2.28
+BE  H=14 X=24 k=1.5 mom trades=  285 mean= -0.32 med= -0.22 geo= -0.42 dd= 37.9 t=-0.48 21-22geo= -0.62 23-24geo= -0.20
+BE  H=14 X=24 k=1.5 rev trades=  285 mean= -0.67 med= -0.42 geo= -0.76 dd= 44.6 t=-1.07 21-22geo= -0.93 23-24geo= -0.57
+BE  H=14 X=24 k=2.0 mom trades=  151 mean= -0.44 med= -0.31 geo= -0.52 dd= 40.4 t=-0.75 21-22geo= -0.60 23-24geo= -0.42
+BE  H=14 X=24 k=2.0 rev trades=  151 mean= -0.06 med=  0.00 geo= -0.13 dd= 34.6 t=-0.10 21-22geo= -0.22 23-24geo= -0.03
+BE  H=14 X=24 k=2.5 mom trades=   76 mean= -0.26 med=  0.00 geo= -0.30 dd= 29.5 t=-0.63 21-22geo= -0.31 23-24geo= -0.29
+BE  H=14 X=24 k=2.5 rev trades=   76 mean= -0.01 med=  0.00 geo= -0.04 dd= 24.2 t=-0.01 21-22geo= -0.16 23-24geo=  0.09
+BE  H=14 X=24 k=3.0 mom trades=   39 mean= -0.36 med=  0.00 geo= -0.38 dd= 25.3 t=-1.16 21-22geo= -0.59 23-24geo= -0.16
+BE  H=14 X=24 k=3.0 rev trades=   39 mean=  0.23 med=  0.00 geo=  0.20 dd= 12.4 t= 0.73 21-22geo=  0.34 23-24geo=  0.06
+BE  H=14 X=26 k=1.0 mom trades=  554 mean= -1.13 med= -0.94 geo= -1.35 dd= 67.7 t=-1.18 21-22geo= -3.53 23-24geo=  1.09
+BE  H=14 X=26 k=1.0 rev trades=  554 mean= -0.74 med= -1.47 geo= -0.93 dd= 61.0 t=-0.79 21-22geo=  0.77 23-24geo= -2.76
+BE  H=14 X=26 k=1.5 mom trades=  285 mean= -0.56 med=  0.05 geo= -0.69 dd= 50.6 t=-0.74 21-22geo= -1.33 23-24geo=  0.01
+BE  H=14 X=26 k=1.5 rev trades=  285 mean= -0.43 med= -0.51 geo= -0.56 dd= 49.4 t=-0.58 21-22geo= -0.33 23-24geo= -0.82
+BE  H=14 X=26 k=2.0 mom trades=  151 mean= -0.76 med= -0.09 geo= -0.86 dd= 47.0 t=-1.15 21-22geo= -1.26 23-24geo= -0.43
+BE  H=14 X=26 k=2.0 rev trades=  151 mean=  0.26 med= -0.20 geo=  0.16 dd= 33.9 t= 0.40 21-22geo=  0.35 23-24geo= -0.04
+BE  H=14 X=26 k=2.5 mom trades=   76 mean= -0.28 med=  0.00 geo= -0.32 dd= 25.2 t=-0.70 21-22geo= -0.10 23-24geo= -0.56
+BE  H=14 X=26 k=2.5 rev trades=   76 mean=  0.00 med=  0.00 geo= -0.04 dd= 24.5 t= 0.01 21-22geo= -0.39 23-24geo=  0.35
+BE  H=14 X=26 k=3.0 mom trades=   39 mean= -0.30 med=  0.00 geo= -0.34 dd= 22.4 t=-0.78 21-22geo= -0.26 23-24geo= -0.42
+BE  H=14 X=26 k=3.0 rev trades=   39 mean=  0.18 med=  0.00 geo=  0.14 dd= 17.8 t= 0.45 21-22geo= -0.01 23-24geo=  0.31
+BE  H=16 X=24 k=1.0 mom trades=  690 mean= -0.17 med=  0.11 geo= -0.35 dd= 37.5 t=-0.20 21-22geo= -0.60 23-24geo= -0.07
+BE  H=16 X=24 k=1.0 rev trades=  690 mean= -1.96 med= -2.17 geo= -2.12 dd= 71.7 t=-2.30 21-22geo= -2.15 23-24geo= -2.10
+BE  H=16 X=24 k=1.5 mom trades=  332 mean=  0.85 med=  1.09 geo=  0.73 dd= 28.2 t= 1.16 21-22geo=  0.98 23-24geo=  0.46
+BE  H=16 X=24 k=1.5 rev trades=  332 mean= -1.85 med= -1.54 geo= -1.96 dd= 67.0 t=-2.72 21-22geo= -2.31 23-24geo= -1.57
+BE  H=16 X=24 k=2.0 mom trades=  176 mean=  0.40 med=  0.53 geo=  0.33 dd= 24.6 t= 0.75 21-22geo=  0.38 23-24geo=  0.29
+BE  H=16 X=24 k=2.0 rev trades=  176 mean= -0.95 med= -0.95 geo= -1.01 dd= 47.3 t=-1.87 21-22geo= -1.15 23-24geo= -0.87
+BE  H=16 X=24 k=2.5 mom trades=   82 mean=  0.34 med=  0.06 geo=  0.30 dd= 19.3 t= 0.78 21-22geo=  0.30 23-24geo=  0.29
+BE  H=16 X=24 k=2.5 rev trades=   82 mean= -0.59 med= -0.22 geo= -0.63 dd= 36.0 t=-1.38 21-22geo= -0.73 23-24geo= -0.52
+BE  H=16 X=24 k=3.0 mom trades=   49 mean=  0.31 med=  0.00 geo=  0.29 dd= 12.3 t= 0.97 21-22geo=  0.29 23-24geo=  0.28
+BE  H=16 X=24 k=3.0 rev trades=   49 mean= -0.47 med=  0.00 geo= -0.50 dd= 26.8 t=-1.49 21-22geo= -0.55 23-24geo= -0.44
+BE  H=16 X=26 k=1.0 mom trades=  690 mean= -0.49 med= -0.61 geo= -0.69 dd= 55.7 t=-0.54 21-22geo= -2.24 23-24geo=  1.03
+BE  H=16 X=26 k=1.0 rev trades=  690 mean= -1.69 med= -1.40 geo= -1.87 dd= 70.4 t=-1.89 21-22geo= -0.58 23-24geo= -3.26
+BE  H=16 X=26 k=1.5 mom trades=  332 mean=  0.50 med=  0.75 geo=  0.39 dd= 34.6 t= 0.72 21-22geo= -0.06 23-24geo=  0.87
+BE  H=16 X=26 k=1.5 rev trades=  332 mean= -1.56 med= -1.76 geo= -1.66 dd= 63.4 t=-2.38 21-22geo= -1.34 23-24geo= -1.99
+BE  H=16 X=26 k=2.0 mom trades=  176 mean=  0.39 med=  0.29 geo=  0.33 dd= 23.9 t= 0.80 21-22geo=  0.27 23-24geo=  0.40
+BE  H=16 X=26 k=2.0 rev trades=  176 mean= -0.97 med= -0.83 geo= -1.02 dd= 46.5 t=-1.97 21-22geo= -1.06 23-24geo= -0.98
+BE  H=16 X=26 k=2.5 mom trades=   82 mean=  0.20 med=  0.00 geo=  0.16 dd= 18.7 t= 0.45 21-22geo=  0.27 23-24geo=  0.04
+BE  H=16 X=26 k=2.5 rev trades=   82 mean= -0.46 med=  0.00 geo= -0.51 dd= 33.1 t=-1.00 21-22geo= -0.72 23-24geo= -0.27
+BE  H=16 X=26 k=3.0 mom trades=   49 mean=  0.24 med=  0.00 geo=  0.22 dd=  9.4 t= 0.70 21-22geo=  0.37 23-24geo=  0.04
+BE  H=16 X=26 k=3.0 rev trades=   49 mean= -0.40 med=  0.00 geo= -0.43 dd= 25.8 t=-1.16 21-22geo= -0.65 23-24geo= -0.20
+BE  H=18 X=24 k=1.0 mom trades=  715 mean=  0.86 med=  1.54 geo=  0.71 dd= 19.9 t= 1.07 21-22geo=  0.60 23-24geo=  0.83
+BE  H=18 X=24 k=1.0 rev trades=  715 mean= -3.05 med= -3.27 geo= -3.18 dd= 79.6 t=-4.06 21-22geo= -3.24 23-24geo= -3.11
+BE  H=18 X=24 k=1.5 mom trades=  350 mean=  0.95 med=  0.85 geo=  0.86 dd= 20.2 t= 1.54 21-22geo=  1.00 23-24geo=  0.72
+BE  H=18 X=24 k=1.5 rev trades=  350 mean= -2.05 med= -1.90 geo= -2.13 dd= 68.5 t=-3.46 21-22geo= -2.37 23-24geo= -1.87
+BE  H=18 X=24 k=2.0 mom trades=  180 mean=  1.13 med=  0.70 geo=  1.07 dd= 16.7 t= 2.22 21-22geo=  1.35 23-24geo=  0.78
+BE  H=18 X=24 k=2.0 rev trades=  180 mean= -1.68 med= -1.35 geo= -1.74 dd= 61.2 t=-3.38 21-22geo= -2.09 23-24geo= -1.37
+BE  H=18 X=24 k=2.5 mom trades=   82 mean=  0.45 med=  0.00 geo=  0.41 dd= 16.3 t= 1.01 21-22geo=  0.48 23-24geo=  0.33
+BE  H=18 X=24 k=2.5 rev trades=   82 mean= -0.67 med= -0.02 geo= -0.72 dd= 37.8 t=-1.57 21-22geo= -0.84 23-24geo= -0.58
+BE  H=18 X=24 k=3.0 mom trades=   48 mean=  0.28 med=  0.00 geo=  0.25 dd= 15.4 t= 0.79 21-22geo=  0.30 23-24geo=  0.21
+BE  H=18 X=24 k=3.0 rev trades=   48 mean= -0.42 med=  0.00 geo= -0.45 dd= 29.2 t=-1.18 21-22geo= -0.57 23-24geo= -0.32
+BE  H=18 X=26 k=1.0 mom trades=  715 mean=  0.42 med=  0.83 geo=  0.27 dd= 41.9 t= 0.52 21-22geo= -1.25 23-24geo=  1.96
+BE  H=18 X=26 k=1.0 rev trades=  715 mean= -2.71 med= -2.84 geo= -2.85 dd= 76.3 t=-3.52 21-22geo= -1.54 23-24geo= -4.25
+BE  H=18 X=26 k=1.5 mom trades=  350 mean=  0.71 med=  0.72 geo=  0.61 dd= 27.9 t= 1.09 21-22geo= -0.20 23-24geo=  1.50
+BE  H=18 X=26 k=1.5 rev trades=  350 mean= -1.86 med= -1.74 geo= -1.95 dd= 67.3 t=-2.96 21-22geo= -1.27 23-24geo= -2.69
+BE  H=18 X=26 k=2.0 mom trades=  180 mean=  1.06 med=  0.51 geo=  0.99 dd= 24.0 t= 1.89 21-22geo=  0.77 23-24geo=  1.23
+BE  H=18 X=26 k=2.0 rev trades=  180 mean= -1.63 med= -1.21 geo= -1.71 dd= 62.5 t=-2.94 21-22geo= -1.57 23-24geo= -1.86
+BE  H=18 X=26 k=2.5 mom trades=   82 mean=  0.39 med=  0.00 geo=  0.35 dd= 16.1 t= 0.86 21-22geo=  0.30 23-24geo=  0.40
+BE  H=18 X=26 k=2.5 rev trades=   82 mean= -0.64 med=  0.00 geo= -0.69 dd= 37.0 t=-1.38 21-22geo= -0.70 23-24geo= -0.67
+BE  H=18 X=26 k=3.0 mom trades=   48 mean=  0.23 med=  0.00 geo=  0.19 dd= 13.4 t= 0.58 21-22geo=  0.33 23-24geo=  0.04
+BE  H=18 X=26 k=3.0 rev trades=   48 mean= -0.37 med=  0.00 geo= -0.40 dd= 27.5 t=-0.93 21-22geo= -0.63 23-24geo= -0.15
+BE  H=20 X=24 k=1.0 mom trades=  713 mean=  0.03 med= -0.21 geo= -0.04 dd= 21.8 t= 0.05 21-22geo=  0.50 23-24geo= -0.62
+BE  H=20 X=24 k=1.0 rev trades=  713 mean= -2.31 med= -2.21 geo= -2.37 dd= 70.6 t=-4.61 21-22geo= -2.87 23-24geo= -1.82
+BE  H=20 X=24 k=1.5 mom trades=  361 mean=  0.40 med=  0.32 geo=  0.34 dd= 24.1 t= 0.78 21-22geo=  0.41 23-24geo=  0.26
+BE  H=20 X=24 k=1.5 rev trades=  361 mean= -1.54 med= -1.53 geo= -1.60 dd= 60.4 t=-3.03 21-22geo= -1.66 23-24geo= -1.53
+BE  H=20 X=24 k=2.0 mom trades=  190 mean=  0.36 med=  0.72 geo=  0.31 dd= 19.4 t= 0.81 21-22geo=  0.21 23-24geo=  0.43
+BE  H=20 X=24 k=2.0 rev trades=  190 mean= -0.96 med= -1.29 geo= -1.01 dd= 46.7 t=-2.15 21-22geo= -0.91 23-24geo= -1.11
+BE  H=20 X=24 k=2.5 mom trades=   96 mean= -0.15 med=  0.00 geo= -0.18 dd= 18.1 t=-0.39 21-22geo= -0.41 23-24geo=  0.06
+BE  H=20 X=24 k=2.5 rev trades=   96 mean= -0.17 med=  0.00 geo= -0.20 dd= 25.4 t=-0.44 21-22geo= -0.01 23-24geo= -0.41
+BE  H=20 X=24 k=3.0 mom trades=   51 mean= -0.34 med=  0.00 geo= -0.36 dd= 18.5 t=-1.11 21-22geo= -0.62 23-24geo= -0.07
+BE  H=20 X=24 k=3.0 rev trades=   51 mean=  0.17 med=  0.00 geo=  0.15 dd=  9.7 t= 0.57 21-22geo=  0.37 23-24geo= -0.09
+BE  H=20 X=26 k=1.0 mom trades=  713 mean= -0.36 med= -0.50 geo= -0.43 dd= 35.8 t=-0.62 21-22geo= -1.08 23-24geo=  0.28
+BE  H=20 X=26 k=1.0 rev trades=  713 mean= -2.00 med= -2.19 geo= -2.08 dd= 64.6 t=-3.62 21-22geo= -1.40 23-24geo= -2.81
+BE  H=20 X=26 k=1.5 mom trades=  361 mean=  0.23 med=  0.09 geo=  0.16 dd= 31.0 t= 0.44 21-22geo= -0.66 23-24geo=  1.07
+BE  H=20 X=26 k=1.5 rev trades=  361 mean= -1.42 med= -1.55 geo= -1.48 dd= 60.6 t=-2.75 21-22geo= -0.65 23-24geo= -2.38
+BE  H=20 X=26 k=2.0 mom trades=  190 mean=  0.37 med=  0.49 geo=  0.33 dd= 24.1 t= 0.87 21-22geo= -0.35 23-24geo=  1.07
+BE  H=20 X=26 k=2.0 rev trades=  190 mean= -1.01 med= -1.14 geo= -1.06 dd= 50.0 t=-2.29 21-22geo= -0.37 23-24geo= -1.80
+BE  H=20 X=26 k=2.5 mom trades=   96 mean= -0.15 med=  0.00 geo= -0.18 dd= 19.1 t=-0.38 21-22geo= -0.35 23-24geo=  0.00
+BE  H=20 X=26 k=2.5 rev trades=   96 mean= -0.18 med=  0.00 geo= -0.21 dd= 27.1 t=-0.45 21-22geo= -0.08 23-24geo= -0.36
+BE  H=20 X=26 k=3.0 mom trades=   51 mean= -0.35 med=  0.00 geo= -0.38 dd= 19.2 t=-0.92 21-22geo= -0.49 23-24geo= -0.27
+BE  H=20 X=26 k=3.0 rev trades=   51 mean=  0.18 med=  0.00 geo=  0.15 dd= 13.1 t= 0.48 21-22geo=  0.20 23-24geo=  0.10
+BE  H=22 X=24 k=1.0 mom trades=  687 mean=  0.53 med=  0.21 geo=  0.48 dd= 16.2 t= 1.24 21-22geo=  1.20 23-24geo= -0.29
+BE  H=22 X=24 k=1.0 rev trades=  687 mean= -2.60 med= -2.25 geo= -2.64 dd= 71.7 t=-6.13 21-22geo= -3.35 23-24geo= -1.86
+BE  H=22 X=24 k=1.5 mom trades=  353 mean=  0.76 med=  0.64 geo=  0.74 dd=  7.6 t= 2.60 21-22geo=  1.19 23-24geo=  0.25
+BE  H=22 X=24 k=1.5 rev trades=  353 mean= -1.84 med= -1.71 geo= -1.86 dd= 58.8 t=-6.19 21-22geo= -2.23 23-24geo= -1.46
+BE  H=22 X=24 k=2.0 mom trades=  183 mean=  0.52 med=  0.28 geo=  0.50 dd=  5.5 t= 1.89 21-22geo=  0.70 23-24geo=  0.28
+BE  H=22 X=24 k=2.0 rev trades=  183 mean= -1.07 med= -0.79 geo= -1.09 dd= 40.9 t=-3.96 21-22geo= -1.23 23-24geo= -0.93
+BE  H=22 X=24 k=2.5 mom trades=   98 mean=  0.09 med=  0.00 geo=  0.08 dd=  5.2 t= 0.53 21-22geo=  0.07 23-24geo=  0.10
+BE  H=22 X=24 k=2.5 rev trades=   98 mean= -0.39 med= -0.11 geo= -0.40 dd= 19.4 t=-2.25 21-22geo= -0.34 23-24geo= -0.46
+BE  H=22 X=24 k=3.0 mom trades=   53 mean=  0.10 med=  0.00 geo=  0.09 dd=  5.5 t= 0.65 21-22geo=  0.17 23-24geo=  0.00
+BE  H=22 X=24 k=3.0 rev trades=   53 mean= -0.26 med=  0.00 geo= -0.26 dd= 11.6 t=-1.73 21-22geo= -0.36 23-24geo= -0.16
+BE  H=22 X=26 k=1.0 mom trades=  687 mean= -0.04 med= -0.55 geo= -0.11 dd= 29.8 t=-0.08 21-22geo= -1.05 23-24geo=  0.94
+BE  H=22 X=26 k=1.0 rev trades=  687 mean= -2.12 med= -1.80 geo= -2.19 dd= 65.2 t=-4.06 21-22geo= -1.29 23-24geo= -3.16
+BE  H=22 X=26 k=1.5 mom trades=  353 mean=  0.59 med=  0.43 geo=  0.55 dd= 13.0 t= 1.42 21-22geo= -0.06 23-24geo=  1.22
+BE  H=22 X=26 k=1.5 rev trades=  353 mean= -1.72 med= -1.57 geo= -1.76 dd= 56.9 t=-3.96 21-22geo= -1.08 23-24geo= -2.50
+BE  H=22 X=26 k=2.0 mom trades=  183 mean=  0.59 med=  0.18 geo=  0.55 dd=  7.0 t= 1.53 21-22geo=  0.35 23-24geo=  0.78
+BE  H=22 X=26 k=2.0 rev trades=  183 mean= -1.16 med= -0.71 geo= -1.19 dd= 43.9 t=-2.93 21-22geo= -0.95 23-24geo= -1.46
+BE  H=22 X=26 k=2.5 mom trades=   98 mean= -0.00 med=  0.00 geo= -0.03 dd=  9.5 t=-0.01 21-22geo= -0.19 23-24geo=  0.14
+BE  H=22 X=26 k=2.5 rev trades=   98 mean= -0.30 med=  0.00 geo= -0.33 dd= 20.7 t=-0.91 21-22geo= -0.15 23-24geo= -0.52
+BE  H=22 X=26 k=3.0 mom trades=   53 mean=  0.06 med=  0.00 geo=  0.04 dd=  7.2 t= 0.20 21-22geo= -0.02 23-24geo=  0.10
+BE  H=22 X=26 k=3.0 rev trades=   53 mean= -0.23 med=  0.00 geo= -0.25 dd= 14.4 t=-0.73 21-22geo= -0.22 23-24geo= -0.28
+ALT H= 8 X=24 k=1.0 mom trades=10573 mean=  0.87 med=  0.43 geo= -1.70 dd= 88.0 t= 0.25 21-22geo= -3.63 23-24geo=  0.45
+ALT H= 8 X=24 k=1.0 rev trades=10573 mean= -5.25 med= -8.44 geo= -7.89 dd= 97.8 t=-1.68 21-22geo= -7.39 23-24geo= -8.44
+ALT H= 8 X=24 k=1.5 mom trades= 4902 mean=  4.44 med=  3.78 geo=  2.86 dd= 60.0 t= 1.60 21-22geo=  2.44 23-24geo=  3.33
+ALT H= 8 X=24 k=1.5 rev trades= 4902 mean= -7.37 med= -8.78 geo= -9.09 dd= 98.8 t=-2.96 21-22geo=-10.11 23-24geo= -7.96
+ALT H= 8 X=24 k=2.0 mom trades= 2434 mean=  4.01 med=  1.57 geo=  2.91 dd= 45.4 t= 1.71 21-22geo=  4.72 23-24geo=  0.97
+ALT H= 8 X=24 k=2.0 rev trades= 2434 mean= -5.65 med= -4.69 geo= -6.92 dd= 96.5 t=-2.66 21-22geo= -9.79 23-24geo= -3.69
+ALT H= 8 X=24 k=2.5 mom trades= 1282 mean=  4.27 med=  0.13 geo=  3.46 dd= 38.8 t= 2.11 21-22geo=  4.76 23-24geo=  2.06
+ALT H= 8 X=24 k=2.5 rev trades= 1282 mean= -5.02 med= -2.11 geo= -6.00 dd= 94.2 t=-2.73 21-22geo= -8.34 23-24geo= -3.38
+ALT H= 8 X=24 k=3.0 mom trades=  753 mean=  3.97 med=  1.22 geo=  3.19 dd= 29.2 t= 1.96 21-22geo=  4.26 23-24geo=  2.03
+ALT H= 8 X=24 k=3.0 rev trades=  753 mean= -4.04 med= -1.82 geo= -4.96 dd= 90.4 t=-2.30 21-22geo= -6.89 23-24geo= -2.82
+ALT H= 8 X=26 k=1.0 mom trades=10573 mean=  1.43 med= -1.26 geo= -1.23 dd= 91.2 t= 0.39 21-22geo= -4.90 23-24geo=  2.94
+ALT H= 8 X=26 k=1.0 rev trades=10573 mean= -6.38 med= -7.80 geo= -9.10 dd= 98.8 t=-2.03 21-22geo= -7.06 23-24geo=-11.27
+ALT H= 8 X=26 k=1.5 mom trades= 4902 mean=  5.24 med=  4.23 geo=  3.68 dd= 59.5 t= 1.89 21-22geo=  1.80 23-24geo=  5.77
+ALT H= 8 X=26 k=1.5 rev trades= 4902 mean= -8.62 med=-10.07 geo=-10.38 dd= 99.4 t=-3.43 21-22geo=-10.17 23-24geo=-10.60
+ALT H= 8 X=26 k=2.0 mom trades= 2434 mean=  5.16 med=  3.72 geo=  4.02 dd= 40.5 t= 2.16 21-22geo=  5.59 23-24geo=  2.33
+ALT H= 8 X=26 k=2.0 rev trades= 2434 mean= -6.90 med= -6.57 geo= -8.25 dd= 98.2 t=-3.16 21-22geo=-10.87 23-24geo= -5.29
+ALT H= 8 X=26 k=2.5 mom trades= 1282 mean=  5.03 med=  2.14 geo=  4.14 dd= 29.8 t= 2.35 21-22geo=  6.06 23-24geo=  2.09
+ALT H= 8 X=26 k=2.5 rev trades= 1282 mean= -5.75 med= -2.77 geo= -6.84 dd= 96.2 t=-3.00 21-22geo= -9.71 23-24geo= -3.61
+ALT H= 8 X=26 k=3.0 mom trades=  753 mean=  4.25 med=  1.58 geo=  3.39 dd= 22.9 t= 1.99 21-22geo=  5.01 23-24geo=  1.66
+ALT H= 8 X=26 k=3.0 rev trades=  753 mean= -4.28 med= -1.77 geo= -5.30 dd= 91.8 t=-2.35 21-22geo= -7.69 23-24geo= -2.62
+ALT H=12 X=24 k=1.0 mom trades=10409 mean= -1.86 med= -4.97 geo= -2.98 dd= 89.0 t=-0.81 21-22geo= -5.41 23-24geo= -0.26
+ALT H=12 X=24 k=1.0 rev trades=10409 mean= -4.56 med= -3.70 geo= -5.63 dd= 93.5 t=-2.27 21-22geo= -4.02 23-24geo= -7.35
+ALT H=12 X=24 k=1.5 mom trades= 4641 mean=  1.40 med= -2.24 geo=  0.17 dd= 77.4 t= 0.58 21-22geo= -1.27 23-24geo=  1.77
+ALT H=12 X=24 k=1.5 rev trades= 4641 mean= -4.39 med= -3.22 geo= -5.57 dd= 93.1 t=-2.05 21-22geo= -5.00 23-24geo= -6.19
+ALT H=12 X=24 k=2.0 mom trades= 2317 mean=  4.30 med=  0.75 geo=  3.56 dd= 38.4 t= 2.24 21-22geo=  5.09 23-24geo=  1.91
+ALT H=12 X=24 k=2.0 rev trades= 2317 mean= -5.99 med= -3.69 geo= -6.80 dd= 96.3 t=-3.49 21-22geo= -8.94 23-24geo= -4.40
+ALT H=12 X=24 k=2.5 mom trades= 1300 mean=  4.14 med=  1.36 geo=  3.40 dd= 39.2 t= 2.15 21-22geo=  4.12 23-24geo=  2.63
+ALT H=12 X=24 k=2.5 rev trades= 1300 mean= -4.73 med= -2.35 geo= -5.53 dd= 93.1 t=-2.79 21-22geo= -6.95 23-24geo= -3.95
+ALT H=12 X=24 k=3.0 mom trades=  778 mean=  2.63 med=  0.41 geo=  2.13 dd= 36.4 t= 1.68 21-22geo=  2.74 23-24geo=  1.46
+ALT H=12 X=24 k=3.0 rev trades=  778 mean= -3.07 med= -1.00 geo= -3.65 dd= 83.6 t=-2.11 21-22geo= -4.97 23-24geo= -2.20
+ALT H=12 X=26 k=1.0 mom trades=10409 mean=  0.21 med= -2.36 geo= -1.60 dd= 91.4 t= 0.07 21-22geo= -4.80 23-24geo=  2.01
+ALT H=12 X=26 k=1.0 rev trades=10409 mean= -6.06 med= -5.45 geo= -7.76 dd= 97.9 t=-2.37 21-22geo= -5.66 23-24geo=-10.01
+ALT H=12 X=26 k=1.5 mom trades= 4641 mean=  3.87 med= -1.41 geo=  2.14 dd= 76.4 t= 1.31 21-22geo=  0.21 23-24geo=  4.29
+ALT H=12 X=26 k=1.5 rev trades= 4641 mean= -6.40 med= -5.59 geo= -8.00 dd= 97.9 t=-2.61 21-22geo= -7.11 23-24geo= -8.96
+ALT H=12 X=26 k=2.0 mom trades= 2317 mean=  5.69 med=  4.49 geo=  4.69 dd= 37.2 t= 2.51 21-22geo=  5.69 23-24geo=  3.61
+ALT H=12 X=26 k=2.0 rev trades= 2317 mean= -7.15 med= -6.79 geo= -8.19 dd= 98.1 t=-3.71 21-22geo= -9.87 23-24geo= -6.32
+ALT H=12 X=26 k=2.5 mom trades= 1300 mean=  4.83 med=  0.76 geo=  3.94 dd= 34.9 t= 2.29 21-22geo=  4.63 23-24geo=  3.20
+ALT H=12 X=26 k=2.5 rev trades= 1300 mean= -5.39 med= -2.26 geo= -6.32 dd= 95.4 t=-2.94 21-22geo= -7.75 23-24geo= -4.74
+ALT H=12 X=26 k=3.0 mom trades=  778 mean=  2.78 med=  0.67 geo=  2.18 dd= 36.5 t= 1.63 21-22geo=  3.09 23-24geo=  1.21
+ALT H=12 X=26 k=3.0 rev trades=  778 mean= -3.21 med= -1.46 geo= -3.87 dd= 86.1 t=-2.05 21-22geo= -5.49 23-24geo= -2.07
+ALT H=14 X=24 k=1.0 mom trades=10506 mean=  2.53 med=  2.67 geo=  1.60 dd= 63.9 t= 1.23 21-22geo=  1.03 23-24geo=  2.23
+ALT H=14 X=24 k=1.0 rev trades=10506 mean= -9.01 med=-10.40 geo= -9.84 dd= 99.3 t=-5.03 21-22geo=-10.13 23-24geo= -9.52
+ALT H=14 X=24 k=1.5 mom trades= 4714 mean=  4.76 med=  4.66 geo=  4.03 dd= 49.6 t= 2.62 21-22geo=  4.02 23-24geo=  4.04
+ALT H=14 X=24 k=1.5 rev trades= 4714 mean= -8.08 med= -8.18 geo= -8.78 dd= 98.6 t=-4.82 21-22geo= -9.36 23-24geo= -8.15
+ALT H=14 X=24 k=2.0 mom trades= 2366 mean=  5.11 med=  4.44 geo=  4.60 dd= 37.0 t= 3.30 21-22geo=  5.26 23-24geo=  3.88
+ALT H=14 X=24 k=2.0 rev trades= 2366 mean= -6.91 med= -6.90 geo= -7.47 dd= 97.3 t=-4.72 21-22geo= -8.85 23-24geo= -5.95
+ALT H=14 X=24 k=2.5 mom trades= 1215 mean=  3.54 med=  2.27 geo=  3.06 dd= 37.3 t= 2.35 21-22geo=  3.38 23-24geo=  2.72
+ALT H=14 X=24 k=2.5 rev trades= 1215 mean= -4.33 med= -3.29 geo= -4.89 dd= 90.1 t=-3.00 21-22geo= -5.88 23-24geo= -3.79
+ALT H=14 X=24 k=3.0 mom trades=  700 mean=  1.71 med=  0.32 geo=  1.45 dd= 38.7 t= 1.57 21-22geo=  1.89 23-24geo=  0.98
+ALT H=14 X=24 k=3.0 rev trades=  700 mean= -2.46 med= -1.01 geo= -2.81 dd= 73.8 t=-2.14 21-22geo= -3.87 23-24geo= -1.63
+ALT H=14 X=26 k=1.0 mom trades=10506 mean=  5.94 med=  5.00 geo=  4.49 dd= 63.6 t= 2.32 21-22geo=  3.90 23-24geo=  5.14
+ALT H=14 X=26 k=1.0 rev trades=10506 mean=-11.75 med=-12.01 geo=-13.09 dd= 99.9 t=-5.11 21-22geo=-13.61 23-24geo=-12.51
+ALT H=14 X=26 k=1.5 mom trades= 4714 mean=  8.98 med=  8.56 geo=  7.71 dd= 51.1 t= 3.71 21-22geo=  7.78 23-24geo=  7.64
+ALT H=14 X=26 k=1.5 rev trades= 4714 mean=-11.33 med=-13.35 geo=-12.53 dd= 99.8 t=-5.23 21-22geo=-13.27 23-24geo=-11.71
+ALT H=14 X=26 k=2.0 mom trades= 2366 mean=  7.45 med=  4.81 geo=  6.63 dd= 33.5 t= 3.81 21-22geo=  6.81 23-24geo=  6.44
+ALT H=14 X=26 k=2.0 rev trades= 2366 mean= -8.76 med= -9.03 geo= -9.61 dd= 99.1 t=-4.88 21-22geo=-10.60 23-24geo= -8.51
+ALT H=14 X=26 k=2.5 mom trades= 1215 mean=  4.39 med=  3.29 geo=  3.81 dd= 39.5 t= 2.65 21-22geo=  3.98 23-24geo=  3.62
+ALT H=14 X=26 k=2.5 rev trades= 1215 mean= -5.15 med= -4.78 geo= -5.79 dd= 93.6 t=-3.34 21-22geo= -6.70 23-24geo= -4.78
+ALT H=14 X=26 k=3.0 mom trades=  700 mean=  2.12 med=  0.96 geo=  1.77 dd= 31.9 t= 1.68 21-22geo=  2.41 23-24geo=  1.08
+ALT H=14 X=26 k=3.0 rev trades=  700 mean= -2.84 med= -1.32 geo= -3.26 dd= 79.8 t=-2.23 21-22geo= -4.57 23-24geo= -1.82
+ALT H=16 X=24 k=1.0 mom trades=11637 mean=  1.61 med= -0.82 geo=  1.04 dd= 49.3 t= 0.98 21-22geo=  1.24 23-24geo=  0.83
+ALT H=16 X=24 k=1.0 rev trades=11637 mean= -8.52 med= -8.01 geo= -9.02 dd= 98.9 t=-6.25 21-22geo= -9.51 23-24geo= -8.48
+ALT H=16 X=24 k=1.5 mom trades= 5128 mean=  5.56 med=  3.77 geo=  5.11 dd= 25.7 t= 3.87 21-22geo=  7.41 23-24geo=  2.65
+ALT H=16 X=24 k=1.5 rev trades= 5128 mean= -9.04 med= -7.56 geo= -9.46 dd= 99.0 t=-6.96 21-22geo=-11.66 23-24geo= -7.01
+ALT H=16 X=24 k=2.0 mom trades= 2412 mean=  5.98 med=  5.46 geo=  5.58 dd= 19.8 t= 4.39 21-22geo=  7.90 23-24geo=  3.10
+ALT H=16 X=24 k=2.0 rev trades= 2412 mean= -7.57 med= -7.61 geo= -7.98 dd= 97.9 t=-5.95 21-22geo=-10.26 23-24geo= -5.42
+ALT H=16 X=24 k=2.5 mom trades= 1260 mean=  3.90 med=  3.27 geo=  3.59 dd= 21.1 t= 3.29 21-22geo=  4.78 23-24geo=  2.31
+ALT H=16 X=24 k=2.5 rev trades= 1260 mean= -4.82 med= -4.54 geo= -5.14 dd= 91.3 t=-4.23 21-22geo= -6.52 23-24geo= -3.61
+ALT H=16 X=24 k=3.0 mom trades=  707 mean=  2.76 med=  2.10 geo=  2.58 dd= 14.8 t= 3.05 21-22geo=  3.58 23-24geo=  1.50
+ALT H=16 X=24 k=3.0 rev trades=  707 mean= -3.35 med= -2.73 geo= -3.55 dd= 82.3 t=-3.66 21-22geo= -4.73 23-24geo= -2.24
+ALT H=16 X=26 k=1.0 mom trades=11637 mean=  5.78 med=  2.81 geo=  4.67 dd= 52.8 t= 2.51 21-22geo=  4.25 23-24geo=  5.14
+ALT H=16 X=26 k=1.0 rev trades=11637 mean=-11.81 med=-12.01 geo=-12.80 dd= 99.8 t=-6.09 21-22geo=-12.83 23-24geo=-12.77
+ALT H=16 X=26 k=1.5 mom trades= 5128 mean=  9.43 med=  8.42 geo=  8.59 dd= 31.9 t= 4.79 21-22geo= 10.19 23-24geo=  6.95
+ALT H=16 X=26 k=1.5 rev trades= 5128 mean=-12.12 med=-11.79 geo=-12.93 dd= 99.8 t=-6.74 21-22geo=-14.49 23-24geo=-11.20
+ALT H=16 X=26 k=2.0 mom trades= 2412 mean=  9.48 med=  8.08 geo=  8.81 dd= 22.2 t= 5.25 21-22geo= 11.52 23-24geo=  5.95
+ALT H=16 X=26 k=2.0 rev trades= 2412 mean=-10.39 med= -9.49 geo=-11.07 dd= 99.6 t=-6.47 21-22geo=-13.57 23-24geo= -8.26
+ALT H=16 X=26 k=2.5 mom trades= 1260 mean=  5.91 med=  5.21 geo=  5.51 dd= 18.0 t= 4.30 21-22geo=  7.11 23-24geo=  3.81
+ALT H=16 X=26 k=2.5 rev trades= 1260 mean= -6.67 med= -6.39 geo= -7.08 dd= 96.6 t=-5.24 21-22geo= -8.79 23-24geo= -5.17
+ALT H=16 X=26 k=3.0 mom trades=  707 mean=  3.43 med=  3.21 geo=  3.22 dd= 20.9 t= 3.53 21-22geo=  4.32 23-24geo=  2.03
+ALT H=16 X=26 k=3.0 rev trades=  707 mean= -4.01 med= -3.79 geo= -4.24 dd= 88.1 t=-4.12 21-22geo= -5.50 23-24geo= -2.85
+ALT H=18 X=24 k=1.0 mom trades=11966 mean=  2.40 med=  0.26 geo=  1.77 dd= 46.2 t= 1.42 21-22geo=  4.96 23-24geo= -1.59
+ALT H=18 X=24 k=1.0 rev trades=11966 mean= -8.62 med= -8.11 geo= -9.21 dd= 99.0 t=-5.71 21-22geo=-12.09 23-24geo= -5.96
+ALT H=18 X=24 k=1.5 mom trades= 5341 mean=  5.08 med=  3.38 geo=  4.69 dd= 32.3 t= 3.77 21-22geo=  7.15 23-24geo=  2.04
+ALT H=18 X=24 k=1.5 rev trades= 5341 mean= -8.78 med= -8.74 geo= -9.15 dd= 99.0 t=-7.25 21-22geo=-11.42 23-24geo= -6.61
+ALT H=18 X=24 k=2.0 mom trades= 2476 mean=  3.78 med=  1.08 geo=  3.42 dd= 26.1 t= 2.95 21-22geo=  4.75 23-24geo=  1.99
+ALT H=18 X=24 k=2.0 rev trades= 2476 mean= -5.60 med= -4.40 geo= -5.95 dd= 94.4 t=-4.75 21-22geo= -7.29 23-24geo= -4.46
+ALT H=18 X=24 k=2.5 mom trades= 1310 mean=  2.23 med=  0.63 geo=  1.96 dd= 31.1 t= 2.02 21-22geo=  3.22 23-24geo=  0.61
+ALT H=18 X=24 k=2.5 rev trades= 1310 mean= -3.26 med= -1.81 geo= -3.54 dd= 81.4 t=-3.09 21-22geo= -4.96 23-24geo= -1.97
+ALT H=18 X=24 k=3.0 mom trades=  739 mean=  1.93 med=  1.35 geo=  1.75 dd= 15.3 t= 2.09 21-22geo=  2.94 23-24geo=  0.46
+ALT H=18 X=24 k=3.0 rev trades=  739 mean= -2.52 med= -1.98 geo= -2.73 dd= 72.7 t=-2.78 21-22geo= -4.04 23-24geo= -1.27
+ALT H=18 X=26 k=1.0 mom trades=11966 mean=  6.06 med=  5.01 geo=  5.08 dd= 37.3 t= 2.82 21-22geo=  7.43 23-24geo=  2.61
+ALT H=18 X=26 k=1.0 rev trades=11966 mean=-11.80 med=-13.16 geo=-12.68 dd= 99.8 t=-6.44 21-22geo=-14.81 23-24geo=-10.29
+ALT H=18 X=26 k=1.5 mom trades= 5341 mean=  9.18 med=  8.90 geo=  8.50 dd= 25.6 t= 5.09 21-22geo= 10.85 23-24geo=  5.93
+ALT H=18 X=26 k=1.5 rev trades= 5341 mean=-12.16 med=-13.02 geo=-12.81 dd= 99.8 t=-7.73 21-22geo=-14.94 23-24geo=-10.42
+ALT H=18 X=26 k=2.0 mom trades= 2476 mean=  7.26 med=  5.79 geo=  6.77 dd= 20.9 t= 4.75 21-22geo=  7.87 23-24geo=  5.66
+ALT H=18 X=26 k=2.0 rev trades= 2476 mean= -8.80 med= -8.09 geo= -9.27 dd= 98.9 t=-6.49 21-22geo=-10.37 23-24geo= -8.07
+ALT H=18 X=26 k=2.5 mom trades= 1310 mean=  3.85 med=  2.56 geo=  3.49 dd= 31.7 t= 3.03 21-22geo=  4.39 23-24geo=  2.52
+ALT H=18 X=26 k=2.5 rev trades= 1310 mean= -4.83 med= -4.85 geo= -5.19 dd= 91.6 t=-3.95 21-22geo= -6.29 23-24geo= -3.99
+ALT H=18 X=26 k=3.0 mom trades=  739 mean=  3.03 med=  1.79 geo=  2.75 dd= 19.0 t= 2.69 21-22geo=  3.95 23-24geo=  1.46
+ALT H=18 X=26 k=3.0 rev trades=  739 mean= -3.51 med= -2.18 geo= -3.80 dd= 84.0 t=-3.17 21-22geo= -5.12 23-24geo= -2.34
+ALT H=20 X=24 k=1.0 mom trades=11703 mean=  2.13 med=  1.96 geo=  1.54 dd= 73.5 t= 1.32 21-22geo=  7.04 23-24geo= -4.13
+ALT H=20 X=24 k=1.0 rev trades=11703 mean= -8.05 med= -9.73 geo= -8.58 dd= 98.4 t=-5.52 21-22geo=-13.28 23-24geo= -3.16
+ALT H=20 X=24 k=1.5 mom trades= 5259 mean=  2.60 med=  2.65 geo=  2.17 dd= 59.2 t= 1.88 21-22geo=  6.05 23-24geo= -1.90
+ALT H=20 X=24 k=1.5 rev trades= 5259 mean= -6.01 med= -6.97 geo= -6.40 dd= 95.3 t=-4.74 21-22geo= -9.75 23-24geo= -2.61
+ALT H=20 X=24 k=2.0 mom trades= 2552 mean=  2.10 med=  0.44 geo=  1.83 dd= 37.4 t= 1.88 21-22geo=  3.97 23-24geo= -0.46
+ALT H=20 X=24 k=2.0 rev trades= 2552 mean= -4.05 med= -3.53 geo= -4.31 dd= 87.2 t=-3.91 21-22geo= -6.30 23-24geo= -2.09
+ALT H=20 X=24 k=2.5 mom trades= 1371 mean=  1.08 med= -0.69 geo=  0.89 dd= 32.7 t= 1.18 21-22geo=  2.31 23-24geo= -0.63
+ALT H=20 X=24 k=2.5 rev trades= 1371 mean= -2.15 med= -1.00 geo= -2.34 dd= 69.1 t=-2.39 21-22geo= -3.75 23-24geo= -0.78
+ALT H=20 X=24 k=3.0 mom trades=  806 mean=  1.22 med= -0.26 geo=  1.06 dd= 30.4 t= 1.42 21-22geo=  2.90 23-24geo= -0.92
+ALT H=20 X=24 k=3.0 rev trades=  806 mean= -1.80 med= -0.33 geo= -1.97 dd= 65.2 t=-2.18 21-22geo= -3.82 23-24geo=  0.09
+ALT H=20 X=26 k=1.0 mom trades=11703 mean=  6.12 med=  4.53 geo=  5.21 dd= 37.5 t= 2.96 21-22geo= 10.05 23-24geo=  0.17
+ALT H=20 X=26 k=1.0 rev trades=11703 mean=-11.54 med=-11.96 geo=-12.34 dd= 99.8 t=-6.61 21-22geo=-16.31 23-24geo= -7.80
+ALT H=20 X=26 k=1.5 mom trades= 5259 mean=  6.15 med=  3.96 geo=  5.52 dd= 25.7 t= 3.55 21-22geo=  9.40 23-24geo=  1.45
+ALT H=20 X=26 k=1.5 rev trades= 5259 mean= -9.20 med= -7.05 geo= -9.78 dd= 99.1 t=-6.15 21-22geo=-12.92 23-24geo= -6.23
+ALT H=20 X=26 k=2.0 mom trades= 2552 mean=  5.53 med=  2.98 geo=  5.02 dd= 24.4 t= 3.54 21-22geo=  7.27 23-24geo=  2.66
+ALT H=20 X=26 k=2.0 rev trades= 2552 mean= -7.07 med= -4.88 geo= -7.54 dd= 97.3 t=-5.31 21-22geo= -9.56 23-24geo= -5.28
+ALT H=20 X=26 k=2.5 mom trades= 1371 mean=  3.15 med=  2.15 geo=  2.80 dd= 26.0 t= 2.49 21-22geo=  4.45 23-24geo=  1.03
+ALT H=20 X=26 k=2.5 rev trades= 1371 mean= -3.99 med= -3.60 geo= -4.33 dd= 87.1 t=-3.41 21-22geo= -5.98 23-24geo= -2.50
+ALT H=20 X=26 k=3.0 mom trades=  806 mean=  2.75 med=  0.53 geo=  2.43 dd= 26.7 t= 2.29 21-22geo=  4.37 23-24geo=  0.36
+ALT H=20 X=26 k=3.0 rev trades=  806 mean= -3.12 med= -1.07 geo= -3.43 dd= 81.8 t=-2.78 21-22geo= -5.38 23-24geo= -1.24
+ALT H=22 X=24 k=1.0 mom trades=11458 mean=  1.26 med=  0.09 geo=  1.09 dd= 51.3 t= 1.46 21-22geo=  3.98 23-24geo= -1.97
+ALT H=22 X=24 k=1.0 rev trades=11458 mean= -7.46 med= -6.48 geo= -7.62 dd= 97.5 t=-9.24 21-22geo=-10.05 23-24geo= -4.89
+ALT H=22 X=24 k=1.5 mom trades= 5146 mean=  2.06 med=  0.74 geo=  1.93 dd= 28.4 t= 2.61 21-22geo=  3.58 23-24geo=  0.15
+ALT H=22 X=24 k=1.5 rev trades= 5146 mean= -5.66 med= -4.60 geo= -5.79 dd= 93.6 t=-7.78 21-22geo= -7.18 23-24geo= -4.26
+ALT H=22 X=24 k=2.0 mom trades= 2494 mean=  1.41 med=  1.06 geo=  1.29 dd= 17.9 t= 1.93 21-22geo=  2.02 23-24geo=  0.50
+ALT H=22 X=24 k=2.0 rev trades= 2494 mean= -3.39 med= -3.31 geo= -3.50 dd= 80.9 t=-4.85 21-22geo= -4.16 23-24geo= -2.79
+ALT H=22 X=24 k=2.5 mom trades= 1354 mean=  0.67 med=  0.19 geo=  0.59 dd= 21.9 t= 1.11 21-22geo=  1.19 23-24geo= -0.06
+ALT H=22 X=24 k=2.5 rev trades= 1354 mean= -1.78 med= -1.35 geo= -1.86 dd= 58.9 t=-3.01 21-22geo= -2.40 23-24geo= -1.26
+ALT H=22 X=24 k=3.0 mom trades=  821 mean=  0.18 med= -0.02 geo=  0.11 dd= 26.3 t= 0.33 21-22geo=  0.59 23-24geo= -0.40
+ALT H=22 X=24 k=3.0 rev trades=  821 mean= -0.83 med= -0.55 geo= -0.90 dd= 37.1 t=-1.54 21-22geo= -1.39 23-24geo= -0.37
+ALT H=22 X=26 k=1.0 mom trades=11458 mean=  5.78 med=  5.87 geo=  5.08 dd= 35.7 t= 3.20 21-22geo=  6.99 23-24geo=  3.05
+ALT H=22 X=26 k=1.0 rev trades=11458 mean=-11.10 med=-11.66 geo=-11.73 dd= 99.7 t=-7.18 21-22geo=-13.26 23-24geo=-10.03
+ALT H=22 X=26 k=1.5 mom trades= 5146 mean=  6.01 med=  6.45 geo=  5.46 dd= 28.8 t= 3.75 21-22geo=  6.53 23-24geo=  4.31
+ALT H=22 X=26 k=1.5 rev trades= 5146 mean= -8.88 med=-10.65 geo= -9.40 dd= 99.0 t=-6.17 21-22geo=-10.20 23-24geo= -8.53
+ALT H=22 X=26 k=2.0 mom trades= 2494 mean=  4.44 med=  3.71 geo=  4.10 dd= 22.1 t= 3.53 21-22geo=  4.31 23-24geo=  3.87
+ALT H=22 X=26 k=2.0 rev trades= 2494 mean= -6.08 med= -5.33 geo= -6.41 dd= 95.3 t=-5.24 21-22geo= -6.60 23-24geo= -6.21
+ALT H=22 X=26 k=2.5 mom trades= 1354 mean=  2.60 med=  0.68 geo=  2.35 dd= 19.5 t= 2.41 21-22geo=  2.96 23-24geo=  1.69
+ALT H=22 X=26 k=2.5 rev trades= 1354 mean= -3.49 med= -1.70 geo= -3.74 dd= 83.0 t=-3.44 21-22geo= -4.32 23-24geo= -3.10
+ALT H=22 X=26 k=3.0 mom trades=  821 mean=  1.83 med= -0.33 geo=  1.58 dd= 21.8 t= 1.75 21-22geo=  2.52 23-24geo=  0.58
+ALT H=22 X=26 k=3.0 rev trades=  821 mean= -2.26 med= -0.29 geo= -2.51 dd= 70.7 t=-2.24 21-22geo= -3.45 23-24geo= -1.46
+
+=== top 30 by monthly t ===
+ALT H=16 X=26 k=2.0 mom trades= 2412 mean=  9.48 med=  8.08 geo=  8.81 dd= 22.2 t= 5.25 21-22geo= 11.52 23-24geo=  5.95
+ALT H=18 X=26 k=1.5 mom trades= 5341 mean=  9.18 med=  8.90 geo=  8.50 dd= 25.6 t= 5.09 21-22geo= 10.85 23-24geo=  5.93
+ALT H=16 X=26 k=1.5 mom trades= 5128 mean=  9.43 med=  8.42 geo=  8.59 dd= 31.9 t= 4.79 21-22geo= 10.19 23-24geo=  6.95
+ALT H=18 X=26 k=2.0 mom trades= 2476 mean=  7.26 med=  5.79 geo=  6.77 dd= 20.9 t= 4.75 21-22geo=  7.87 23-24geo=  5.66
+ALT H=16 X=24 k=2.0 mom trades= 2412 mean=  5.98 med=  5.46 geo=  5.58 dd= 19.8 t= 4.39 21-22geo=  7.90 23-24geo=  3.10
+ALT H=16 X=26 k=2.5 mom trades= 1260 mean=  5.91 med=  5.21 geo=  5.51 dd= 18.0 t= 4.30 21-22geo=  7.11 23-24geo=  3.81
+ALT H=16 X=24 k=1.5 mom trades= 5128 mean=  5.56 med=  3.77 geo=  5.11 dd= 25.7 t= 3.87 21-22geo=  7.41 23-24geo=  2.65
+ALT H=14 X=26 k=2.0 mom trades= 2366 mean=  7.45 med=  4.81 geo=  6.63 dd= 33.5 t= 3.81 21-22geo=  6.81 23-24geo=  6.44
+ALT H=18 X=24 k=1.5 mom trades= 5341 mean=  5.08 med=  3.38 geo=  4.69 dd= 32.3 t= 3.77 21-22geo=  7.15 23-24geo=  2.04
+ALT H=22 X=26 k=1.5 mom trades= 5146 mean=  6.01 med=  6.45 geo=  5.46 dd= 28.8 t= 3.75 21-22geo=  6.53 23-24geo=  4.31
+ALT H=14 X=26 k=1.5 mom trades= 4714 mean=  8.98 med=  8.56 geo=  7.71 dd= 51.1 t= 3.71 21-22geo=  7.78 23-24geo=  7.64
+ALT H=20 X=26 k=1.5 mom trades= 5259 mean=  6.15 med=  3.96 geo=  5.52 dd= 25.7 t= 3.55 21-22geo=  9.40 23-24geo=  1.45
+ALT H=20 X=26 k=2.0 mom trades= 2552 mean=  5.53 med=  2.98 geo=  5.02 dd= 24.4 t= 3.54 21-22geo=  7.27 23-24geo=  2.66
+ALT H=16 X=26 k=3.0 mom trades=  707 mean=  3.43 med=  3.21 geo=  3.22 dd= 20.9 t= 3.53 21-22geo=  4.32 23-24geo=  2.03
+ALT H=22 X=26 k=2.0 mom trades= 2494 mean=  4.44 med=  3.71 geo=  4.10 dd= 22.1 t= 3.53 21-22geo=  4.31 23-24geo=  3.87
+ALT H=14 X=24 k=2.0 mom trades= 2366 mean=  5.11 med=  4.44 geo=  4.60 dd= 37.0 t= 3.30 21-22geo=  5.26 23-24geo=  3.88
+ALT H=16 X=24 k=2.5 mom trades= 1260 mean=  3.90 med=  3.27 geo=  3.59 dd= 21.1 t= 3.29 21-22geo=  4.78 23-24geo=  2.31
+ALT H=22 X=26 k=1.0 mom trades=11458 mean=  5.78 med=  5.87 geo=  5.08 dd= 35.7 t= 3.20 21-22geo=  6.99 23-24geo=  3.05
+ALT H=16 X=24 k=3.0 mom trades=  707 mean=  2.76 med=  2.10 geo=  2.58 dd= 14.8 t= 3.05 21-22geo=  3.58 23-24geo=  1.50
+ALT H=18 X=26 k=2.5 mom trades= 1310 mean=  3.85 med=  2.56 geo=  3.49 dd= 31.7 t= 3.03 21-22geo=  4.39 23-24geo=  2.52
+ALT H=20 X=26 k=1.0 mom trades=11703 mean=  6.12 med=  4.53 geo=  5.21 dd= 37.5 t= 2.96 21-22geo= 10.05 23-24geo=  0.17
+ALT H=18 X=24 k=2.0 mom trades= 2476 mean=  3.78 med=  1.08 geo=  3.42 dd= 26.1 t= 2.95 21-22geo=  4.75 23-24geo=  1.99
+ALT H=18 X=26 k=1.0 mom trades=11966 mean=  6.06 med=  5.01 geo=  5.08 dd= 37.3 t= 2.82 21-22geo=  7.43 23-24geo=  2.61
+ALT H=18 X=26 k=3.0 mom trades=  739 mean=  3.03 med=  1.79 geo=  2.75 dd= 19.0 t= 2.69 21-22geo=  3.95 23-24geo=  1.46
+ALT H=14 X=26 k=2.5 mom trades= 1215 mean=  4.39 med=  3.29 geo=  3.81 dd= 39.5 t= 2.65 21-22geo=  3.98 23-24geo=  3.62
+ALT H=14 X=24 k=1.5 mom trades= 4714 mean=  4.76 med=  4.66 geo=  4.03 dd= 49.6 t= 2.62 21-22geo=  4.02 23-24geo=  4.04
+ALT H=22 X=24 k=1.5 mom trades= 5146 mean=  2.06 med=  0.74 geo=  1.93 dd= 28.4 t= 2.61 21-22geo=  3.58 23-24geo=  0.15
+BE  H=22 X=24 k=1.5 mom trades=  353 mean=  0.76 med=  0.64 geo=  0.74 dd=  7.6 t= 2.60 21-22geo=  1.19 23-24geo=  0.25
+ALT H=12 X=26 k=2.0 mom trades= 2317 mean=  5.69 med=  4.49 geo=  4.69 dd= 37.2 t= 2.51 21-22geo=  5.69 23-24geo=  3.61
+ALT H=16 X=26 k=1.0 mom trades=11637 mean=  5.78 med=  2.81 geo=  4.67 dd= 52.8 t= 2.51 21-22geo=  4.25 23-24geo=  5.14

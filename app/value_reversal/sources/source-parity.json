@@ -1,0 +1,40 @@
+{
+  "runtime": "0.11.0",
+  "scope": "Published Pine source on identical QQQ RTH candles; 2024-2025; one-cent tick and 5/10-bar input overrides; no drawing or signal changes",
+  "jobs": [
+    {
+      "minutes": 15,
+      "window": 5,
+      "bars": 12980,
+      "level_and_signal_checks": 103840,
+      "signals": 68,
+      "mismatches": []
+    },
+    {
+      "minutes": 15,
+      "window": 10,
+      "bars": 12980,
+      "level_and_signal_checks": 103840,
+      "signals": 81,
+      "mismatches": []
+    },
+    {
+      "minutes": 30,
+      "window": 5,
+      "bars": 6490,
+      "level_and_signal_checks": 51920,
+      "signals": 39,
+      "mismatches": []
+    },
+    {
+      "minutes": 30,
+      "window": 10,
+      "bars": 6490,
+      "level_and_signal_checks": 51920,
+      "signals": 48,
+      "mismatches": []
+    }
+  ],
+  "indicator_sha256": "5c7d64c5451b5bed05f8cbf12f43c1787abc98e90dfcad20368cb30b1c24b826",
+  "pine_source_sha256": "79b5fb709ee7d1dcac5b3cdbaf3373fcf2a1fbd9a61a7127ca5bdf9039f8a56f"
+}

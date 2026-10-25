@@ -1,0 +1,25 @@
+dev_1x {'mean_month': np.float64(9.52), 'median_month': np.float64(8.08), 'geo_month': np.float64(8.83), 'max_dd_pct': np.float64(22.37), 'worst_month': np.float64(-17.86), 'net_pct': np.float64(4811.74), 't_stat': 5.15, 'trades': 2414} 0
+dev_2x {'mean_month': np.float64(17.47), 'median_month': np.float64(9.01), 'geo_month': np.float64(15.15), 'max_dd_pct': np.float64(40.33), 'worst_month': np.float64(-33.32), 'net_pct': np.float64(65807.86), 't_stat': 4.82, 'trades': 2414} 0
+dev_3x {'mean_month': np.float64(22.12), 'median_month': np.float64(6.87), 'geo_month': np.float64(17.55), 'max_dd_pct': np.float64(53.12), 'worst_month': np.float64(-44.94), 'net_pct': np.float64(169974.44), 't_stat': 4.06, 'trades': 2414} 4
+dev_2xcost {'mean_month': np.float64(8.47), 'median_month': np.float64(7.14), 'geo_month': np.float64(7.8), 'max_dd_pct': np.float64(23.03), 'worst_month': np.float64(-18.66), 'net_pct': np.float64(3063.24), 't_stat': 4.66, 'trades': 2414} 
+dev_BE {'mean_month': np.float64(0.34), 'median_month': np.float64(0.06), 'geo_month': np.float64(0.29), 'max_dd_pct': np.float64(23.88), 'worst_month': np.float64(-9.27), 'net_pct': np.float64(14.13), 't_stat': 0.7, 'trades': 175} 
+dev_neighbours ('H=8', np.float64(-8.45), np.float64(0.37), np.float64(-0.19))
+dev_neighbours ('H=12', np.float64(74.8), np.float64(1.9), np.float64(1.22))
+dev_neighbours ('H=20', np.float64(876.99), np.float64(5.87), np.float64(5.08))
+dev_neighbours ('H=24', np.float64(16.18), np.float64(0.72), np.float64(0.33))
+dev_neighbours ('k=1.0', np.float64(761.46), np.float64(5.87), np.float64(4.79))
+dev_neighbours ('k=1.5', np.float64(4526.66), np.float64(9.53), np.float64(8.69))
+dev_neighbours ('k=2.5', np.float64(1079.7), np.float64(5.91), np.float64(5.51))
+dev_neighbours ('k=3.0', np.float64(329.47), np.float64(3.43), np.float64(3.22))
+dev_neighbours ('hold=5', np.float64(61.47), np.float64(1.33), np.float64(1.05))
+dev_neighbours ('hold=8', np.float64(1108.77), np.float64(5.97), np.float64(5.57))
+dev_neighbours ('hold=12', np.float64(4014.04), np.float64(9.31), np.float64(8.42))
+dev_neighbours ('hold=15', np.float64(5578.96), np.float64(10.25), np.float64(9.18))
+dev_neighbours ('K=3', np.float64(23103.35), np.float64(13.92), np.float64(12.57))
+dev_neighbours ('K=4', np.float64(9551.47), np.float64(11.41), np.float64(10.44))
+dev_neighbours ('K=6', np.float64(2807.12), np.float64(8.12), np.float64(7.6))
+dev_neighbours ('K=8', np.float64(1255.68), np.float64(6.17), np.float64(5.83))
+dev_neighbours ('W=240', np.float64(2809.5), np.float64(8.27), np.float64(7.6))
+dev_neighbours ('W=360', np.float64(3285.02), np.float64(8.62), np.float64(7.96))
+dev_neighbours ('W=600', np.float64(4300.6), np.float64(9.21), np.float64(8.57))
+dev_neighbours ('W=720', np.float64(4885.05), np.float64(9.48), np.float64(8.87))

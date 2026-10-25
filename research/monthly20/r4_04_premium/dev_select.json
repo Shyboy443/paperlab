@@ -1,0 +1,638 @@
+{
+ "candidates": [
+  {
+   "config": {
+    "tf": 24,
+    "kind": "xs",
+    "fam": "Z",
+    "w": 7,
+    "L": 60,
+    "k": 5,
+    "rb": 3,
+    "mode": "fade"
+   },
+   "name": "tf24_kindxs_famZ_w7_L60_k5_rb3_modefade",
+   "dev_t": 2.55,
+   "dev_mean": 4.63,
+   "dev_net": 503.27,
+   "nb_share_pos": 1.0,
+   "nb": [
+    [
+     "tf24_kindxs_famZ_w4_L60_k5_rb3_modefade",
+     718.07
+    ],
+    [
+     "tf24_kindxs_famZ_w5_L60_k5_rb3_modefade",
+     399.34
+    ],
+    [
+     "tf24_kindxs_famZ_w9_L60_k5_rb3_modefade",
+     604.89
+    ],
+    [
+     "tf24_kindxs_famZ_w10_L60_k5_rb3_modefade",
+     486.56
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L30_k5_rb3_modefade",
+     63.89
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L45_k5_rb3_modefade",
+     216.48
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L75_k5_rb3_modefade",
+     309.47
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L90_k5_rb3_modefade",
+     162.36
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k2_rb3_modefade",
+     1957.96
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k4_rb3_modefade",
+     281.61
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k6_rb3_modefade",
+     488.88
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k8_rb3_modefade",
+     136.3
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k5_rb1_modefade",
+     412.07
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k5_rb2_modefade",
+     423.0
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k5_rb5_modefade",
+     396.69
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k5_rb7_modefade",
+     157.47
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k5_rb10_modefade",
+     274.61
+    ]
+   ],
+   "net_no_funding": 219.15,
+   "mean_no_funding": 3.14,
+   "long_leg_net": 554.7,
+   "short_leg_net": -53.23
+  },
+  {
+   "config": {
+    "tf": 24,
+    "kind": "xs",
+    "fam": "Z",
+    "w": 7,
+    "L": 60,
+    "k": 5,
+    "rb": 1,
+    "mode": "fade"
+   },
+   "name": "tf24_kindxs_famZ_w7_L60_k5_rb1_modefade",
+   "dev_t": 2.12,
+   "dev_mean": 4.45,
+   "dev_net": 412.07,
+   "nb_share_pos": 1.0,
+   "nb": [
+    [
+     "tf24_kindxs_famZ_w4_L60_k5_rb1_modefade",
+     447.64
+    ],
+    [
+     "tf24_kindxs_famZ_w5_L60_k5_rb1_modefade",
+     486.95
+    ],
+    [
+     "tf24_kindxs_famZ_w9_L60_k5_rb1_modefade",
+     547.09
+    ],
+    [
+     "tf24_kindxs_famZ_w10_L60_k5_rb1_modefade",
+     475.64
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L30_k5_rb1_modefade",
+     37.66
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L45_k5_rb1_modefade",
+     188.62
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L75_k5_rb1_modefade",
+     250.32
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L90_k5_rb1_modefade",
+     233.8
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k2_rb1_modefade",
+     969.59
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k4_rb1_modefade",
+     383.8
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k6_rb1_modefade",
+     409.95
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k8_rb1_modefade",
+     172.3
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k5_rb2_modefade",
+     423.0
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k5_rb3_modefade",
+     503.27
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k5_rb5_modefade",
+     396.69
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k5_rb7_modefade",
+     157.47
+    ],
+    [
+     "tf24_kindxs_famZ_w7_L60_k5_rb10_modefade",
+     274.61
+    ]
+   ],
+   "net_no_funding": 154.05,
+   "mean_no_funding": 2.83,
+   "long_leg_net": 435.45,
+   "short_leg_net": -55.07
+  },
+  {
+   "config": {
+    "tf": 24,
+    "kind": "xs",
+    "fam": "LEVEL",
+    "w": 3,
+    "L": null,
+    "k": 10,
+    "rb": 7,
+    "mode": "fade"
+   },
+   "name": "tf24_kindxs_famLEVEL_w3_k10_rb7_modefade",
+   "dev_t": 2.1,
+   "dev_mean": 2.76,
+   "dev_net": 197.03,
+   "nb_share_pos": 1.0,
+   "nb": [
+    [
+     "tf24_kindxs_famLEVEL_w2_k10_rb7_modefade",
+     149.44
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w4_k10_rb7_modefade",
+     192.42
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w3_k5_rb7_modefade",
+     206.75
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w3_k8_rb7_modefade",
+     194.86
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w3_k12_rb7_modefade",
+     150.34
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w3_k15_rb7_modefade",
+     102.7
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w3_k10_rb1_modefade",
+     142.17
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w3_k10_rb2_modefade",
+     209.54
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w3_k10_rb3_modefade",
+     121.57
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w3_k10_rb5_modefade",
+     175.98
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w3_k10_rb10_modefade",
+     132.01
+    ]
+   ],
+   "net_no_funding": 56.7,
+   "mean_no_funding": 1.33,
+   "long_leg_net": 227.89,
+   "short_leg_net": -53.29
+  },
+  {
+   "config": {
+    "tf": 24,
+    "kind": "xs",
+    "fam": "LEVEL",
+    "w": 1,
+    "L": null,
+    "k": 10,
+    "rb": 7,
+    "mode": "fade"
+   },
+   "name": "tf24_kindxs_famLEVEL_w1_k10_rb7_modefade",
+   "dev_t": 2.06,
+   "dev_mean": 2.47,
+   "dev_net": 167.94,
+   "nb_share_pos": 1.0,
+   "nb": [
+    [
+     "tf24_kindxs_famLEVEL_w2_k10_rb7_modefade",
+     149.44
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k5_rb7_modefade",
+     110.85
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k8_rb7_modefade",
+     96.83
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k12_rb7_modefade",
+     134.6
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k15_rb7_modefade",
+     146.55
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k10_rb1_modefade",
+     19.68
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k10_rb2_modefade",
+     67.62
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k10_rb3_modefade",
+     166.77
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k10_rb5_modefade",
+     160.56
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k10_rb10_modefade",
+     59.4
+    ]
+   ],
+   "net_no_funding": 42.87,
+   "mean_no_funding": 1.05,
+   "long_leg_net": 175.97,
+   "short_leg_net": -50.58
+  },
+  {
+   "config": {
+    "tf": 24,
+    "kind": "xs",
+    "fam": "Z",
+    "w": 3,
+    "L": 60,
+    "k": 5,
+    "rb": 3,
+    "mode": "fade"
+   },
+   "name": "tf24_kindxs_famZ_w3_L60_k5_rb3_modefade",
+   "dev_t": 2.01,
+   "dev_mean": 4.95,
+   "dev_net": 469.07,
+   "nb_share_pos": 1.0,
+   "nb": [
+    [
+     "tf24_kindxs_famZ_w2_L60_k5_rb3_modefade",
+     262.79
+    ],
+    [
+     "tf24_kindxs_famZ_w4_L60_k5_rb3_modefade",
+     718.07
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L30_k5_rb3_modefade",
+     19.54
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L45_k5_rb3_modefade",
+     193.48
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L75_k5_rb3_modefade",
+     520.54
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L90_k5_rb3_modefade",
+     383.43
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k2_rb3_modefade",
+     601.73
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k4_rb3_modefade",
+     372.7
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k6_rb3_modefade",
+     490.29
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k8_rb3_modefade",
+     381.97
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k5_rb1_modefade",
+     328.32
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k5_rb2_modefade",
+     245.56
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k5_rb5_modefade",
+     778.16
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k5_rb7_modefade",
+     67.41
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k5_rb10_modefade",
+     610.68
+    ]
+   ],
+   "net_no_funding": 203.37,
+   "mean_no_funding": 3.45,
+   "long_leg_net": 472.99,
+   "short_leg_net": -48.44
+  },
+  {
+   "config": {
+    "tf": 24,
+    "kind": "xs",
+    "fam": "Z",
+    "w": 3,
+    "L": 60,
+    "k": 10,
+    "rb": 3,
+    "mode": "fade"
+   },
+   "name": "tf24_kindxs_famZ_w3_L60_k10_rb3_modefade",
+   "dev_t": 1.9,
+   "dev_mean": 2.69,
+   "dev_net": 184.56,
+   "nb_share_pos": 0.933,
+   "nb": [
+    [
+     "tf24_kindxs_famZ_w2_L60_k10_rb3_modefade",
+     228.87
+    ],
+    [
+     "tf24_kindxs_famZ_w4_L60_k10_rb3_modefade",
+     218.78
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L30_k10_rb3_modefade",
+     -10.14
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L45_k10_rb3_modefade",
+     84.98
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L75_k10_rb3_modefade",
+     167.12
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L90_k10_rb3_modefade",
+     107.97
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k5_rb3_modefade",
+     469.07
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k8_rb3_modefade",
+     381.97
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k12_rb3_modefade",
+     101.99
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k15_rb3_modefade",
+     49.08
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k10_rb1_modefade",
+     186.24
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k10_rb2_modefade",
+     101.41
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k10_rb5_modefade",
+     180.57
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k10_rb7_modefade",
+     98.06
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k10_rb10_modefade",
+     85.93
+    ]
+   ],
+   "net_no_funding": 97.29,
+   "mean_no_funding": 1.86,
+   "long_leg_net": 228.55,
+   "short_leg_net": -56.42
+  },
+  {
+   "config": {
+    "tf": 24,
+    "kind": "xs",
+    "fam": "Z",
+    "w": 3,
+    "L": 60,
+    "k": 10,
+    "rb": 1,
+    "mode": "fade"
+   },
+   "name": "tf24_kindxs_famZ_w3_L60_k10_rb1_modefade",
+   "dev_t": 1.83,
+   "dev_mean": 2.79,
+   "dev_net": 186.24,
+   "nb_share_pos": 1.0,
+   "nb": [
+    [
+     "tf24_kindxs_famZ_w2_L60_k10_rb1_modefade",
+     218.44
+    ],
+    [
+     "tf24_kindxs_famZ_w4_L60_k10_rb1_modefade",
+     203.34
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L30_k10_rb1_modefade",
+     36.74
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L45_k10_rb1_modefade",
+     62.19
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L75_k10_rb1_modefade",
+     188.64
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L90_k10_rb1_modefade",
+     181.72
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k5_rb1_modefade",
+     328.32
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k8_rb1_modefade",
+     449.92
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k12_rb1_modefade",
+     140.55
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k15_rb1_modefade",
+     92.16
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k10_rb2_modefade",
+     101.41
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k10_rb3_modefade",
+     184.56
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k10_rb5_modefade",
+     180.57
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k10_rb7_modefade",
+     98.06
+    ],
+    [
+     "tf24_kindxs_famZ_w3_L60_k10_rb10_modefade",
+     85.93
+    ]
+   ],
+   "net_no_funding": 85.14,
+   "mean_no_funding": 1.8,
+   "long_leg_net": 181.35,
+   "short_leg_net": -53.09
+  },
+  {
+   "config": {
+    "tf": 24,
+    "kind": "xs",
+    "fam": "LEVEL",
+    "w": 1,
+    "L": null,
+    "k": 10,
+    "rb": 3,
+    "mode": "fade"
+   },
+   "name": "tf24_kindxs_famLEVEL_w1_k10_rb3_modefade",
+   "dev_t": 1.79,
+   "dev_mean": 2.62,
+   "dev_net": 166.77,
+   "nb_share_pos": 1.0,
+   "nb": [
+    [
+     "tf24_kindxs_famLEVEL_w2_k10_rb3_modefade",
+     122.98
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k5_rb3_modefade",
+     317.28
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k8_rb3_modefade",
+     189.84
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k12_rb3_modefade",
+     153.38
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k15_rb3_modefade",
+     71.92
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k10_rb1_modefade",
+     19.68
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k10_rb2_modefade",
+     67.62
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k10_rb5_modefade",
+     160.56
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k10_rb7_modefade",
+     167.94
+    ],
+    [
+     "tf24_kindxs_famLEVEL_w1_k10_rb10_modefade",
+     59.4
+    ]
+   ],
+   "net_no_funding": 21.3,
+   "mean_no_funding": 0.83,
+   "long_leg_net": 196.29,
+   "short_leg_net": -56.18
+  }
+ ],
+ "selected": {
+  "tf": 24,
+  "kind": "xs",
+  "fam": "Z",
+  "w": 7,
+  "L": 60,
+  "k": 5,
+  "rb": 3,
+  "mode": "fade"
+ }
+}

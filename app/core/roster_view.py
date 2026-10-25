@@ -22,6 +22,7 @@ from typing import Any, Mapping
 
 from app.core.bot_names import assign, control_of, describe
 from app.core.programs import bot_retired, program_retired
+from app.core.storage_read_view import isolated_read
 
 log = logging.getLogger("paperlab.roster")
 
@@ -58,27 +59,13 @@ def _sources(state: Any) -> dict[str, tuple[Any, Any]]:
 
 
 def program_payloads(state: Any) -> dict[str, tuple[dict[str, Any], Any]]:
-    from app.core.arena_live_view import v8_enrich, v9_enrich, v11_enrich, v12_enrich, v13_enrich, v14_enrich
-    from app.core.v6_view import v6_payload
     out = {}
     for prog, (st, svc) in _sources(state).items():
         if st is None:
             continue
         try:
-            p = v6_payload(st, svc)
-            if prog == "v8":
-                p = v8_enrich(p, st)
-            elif prog == "v9":
-                p = v9_enrich(p, st, svc)
-            elif prog == "v11":
-                p = v11_enrich(p, st)
-            elif prog == "v12":
-                p = v12_enrich(p, st)
-            elif prog == "v13":
-                p = v13_enrich(p, st)
-            elif prog == "v14":
-                p = v14_enrich(p, st)
-        except Exception as exc:                     # one program failing never blanks the roster
+            p = _program_payload(st, svc, prog)
+        except Exception as exc:
             log.warning("roster: %s payload failed: %s", prog, str(exc)[:160])
             continue
         if p.get("experiment"):
@@ -86,11 +73,23 @@ def program_payloads(state: Any) -> dict[str, tuple[dict[str, Any], Any]]:
     return out
 
 
+@isolated_read
+def _program_payload(storage, service, program):
+    from app.core.arena_live_view import v8_enrich, v9_enrich, v11_enrich, v12_enrich, v13_enrich, v14_enrich
+    from app.core.v6_view import v6_payload
+    payload = v6_payload(storage, service)
+    enrich = {'v8': v8_enrich, 'v11': v11_enrich, 'v12': v12_enrich, 'v13': v13_enrich, 'v14': v14_enrich}
+    if program == 'v9': return v9_enrich(payload, storage, service)
+    if program in enrich: return enrich[program](payload, storage)
+    return payload
+
+
 def _ret(r: Mapping[str, Any]) -> float:
     start = float(r.get("start_equity") or 20.0)
     return float(r.get("net_now") or 0.0) / start if start else 0.0
 
 
+@isolated_read
 def _last_call(storage: Any, eid: str, key: str) -> dict[str, Any] | None:
     row = storage.conn.execute(
         "SELECT signal_ts, side, symbol, final_level, reason, p_skip, p_take, p_attack, latency_ms, source, role "
@@ -98,6 +97,7 @@ def _last_call(storage: Any, eid: str, key: str) -> dict[str, Any] | None:
     return dict(row) if row else None
 
 
+@isolated_read
 def _events(storage: Any, eid: str, keys: list[str], limit: int = 160) -> list[dict[str, Any]]:
     if not keys:
         return []
@@ -285,6 +285,7 @@ def build(state: Any, now_ms: int | None = None) -> dict[str, Any]:
         x.pop("_st", None)
     usd = lambda xs, f: round(sum(float(x.get(f) or 0.0) for x in xs), 4)  # noqa: E731
     return {"ok": True, "as_of_ms": now_ms, "roster": stage, "scanners": scanners, "ready": ready, "retired": retired,
+            "value_reversal": _value_reversal_card(state),
             "stream": stream[:40], "ideas": ideas,
             "names": {f"{x['program']}|{x['key']}": {"name": x["name"], "persona": x["persona"]} for x in rows},
             "kpis": {"bots_total": len(rows), "on_stage": len(stage), "scanners": len(scanners), "retired": len(retired),
@@ -300,6 +301,17 @@ def build(state: Any, now_ms: int | None = None) -> dict[str, Any]:
                              "(\"new\"). Everyone else is retired from view but keeps "
                              "paper trading, and comes back on stage if it climbs into profit."},
             "paper": "simulated fills on live market data; no real orders"}
+
+
+def _value_reversal_card(state):
+    service = getattr(state, 'value_reversal', None)
+    if service is None:
+        return None
+    s = service.summary(include_report=False, include_evidence=False)
+    primary = s['books'][0]
+    return {'status': s['status'], 'error': s['error'], 'equity': primary['equity'],
+            'net': primary['net'], 'trades': primary['trades'], 'forward_start_ms': s['forward_start_ms'],
+            'research_phase': s['research']['phase'], 'href': '/public/value-reversal'}
 
 
 def roster_payload(state: Any) -> dict[str, Any]:

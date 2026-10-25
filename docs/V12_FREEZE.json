@@ -1,6 +1,6 @@
 {
  "protocol": "V12_BIZZY_PAPER_V1",
- "baseline_fingerprint": "93f9c48b67163c69",
+ "baseline_fingerprint": "49a19f92106eee90",
  "code": {
   "app.strategies.v12.bizzy": "8ea2ae8a0d5b",
   "app.competition.v12_config": "844fca459521",
@@ -101,7 +101,7 @@
    "state_builder": "d224dec77a2d"
   }
  },
- "frozen_at": "2026-10-02T11:11:43Z",
+ "frozen_at": "2026-10-12T08:35:37Z",
  "rules": {
   "BTCUSDT": {
    "symbol": "BTCUSDT",
@@ -158,7 +158,7 @@
   "docs/V12_BIZZY_STUDY.json"
  ],
  "note": "Bizzy Bee ported from github.com/imikerussell/beebots; judged on LIVE forward paper data only. The pre-launch study found the rule LOST after Bybit costs (95 days 1m, ~2.5 years 1h): no edge claimed",
- "fingerprint": "695c8d4f572ae95a",
+ "fingerprint": "a918838ded47beb2",
  "execution_revision": {
   "supersedes": "6b2ed84b509ec5f4",
   "baseline": "93f9c48b67163c69",
@@ -166,5 +166,7 @@
   "reason": "execution and loss-limit correction; historical study verdicts retained",
   "archive": "snapshots/2026-10-04-execution-audit/docs/V12_FREEZE.json",
   "rules": "existing instrument rules retained; no universe reselection"
- }
+ },
+ "refrozen_from": "695c8d4f572ae95a",
+ "refreeze_note": "re-frozen 2026-10-12: V6 field trimmed to V6.2/V6.6 (operator removed the families retired from view)"
 }

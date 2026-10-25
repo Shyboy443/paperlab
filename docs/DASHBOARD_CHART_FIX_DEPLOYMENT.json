@@ -1,0 +1,48 @@
+{
+  "deployment_id": "0e4b8131-ff01-498f-ba4c-188ec8d8fb4a",
+  "status": "SUCCESS",
+  "python_tests": 142,
+  "hosted_concurrent_candle_requests": 24,
+  "browser_widths": [
+    1440,
+    390
+  ],
+  "trade_focus_verified": true,
+  "stream": "LIVE",
+  "frozen_rules_and_history_preserved": true,
+  "crypto_download_reduction_pct": 95.7,
+  "final_latencies": [
+    {
+      "path": "/api/health",
+      "seconds": [
+        0.338,
+        0.317
+      ],
+      "bytes": 178
+    },
+    {
+      "path": "/api/public/competition/roster",
+      "seconds": [
+        0.324,
+        0.336
+      ],
+      "bytes": 4365
+    },
+    {
+      "path": "/api/public/value-reversal?compact=true",
+      "seconds": [
+        0.377,
+        0.374
+      ],
+      "bytes": 27814
+    },
+    {
+      "path": "/api/public/value-reversal/crypto/view",
+      "seconds": [
+        0.66,
+        0.44
+      ],
+      "bytes": 129467
+    }
+  ]
+}

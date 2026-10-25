@@ -60,15 +60,15 @@ class TestFreeze:
     def test_the_field_is_one_bot_one_coin_with_matched_twins(self):
         specs = cfg.field_plan(["ARB", "ENA", "XRP", "DOGE"])
         controls = [s for s in specs if s.role == "CONTROL"]
-        assert len(controls) == 28 and len(specs) == 56
-        assert {s.horizon for s in controls} == {"HOURLY", "SWING"}
-        assert sum(1 for s in controls if s.horizon == "HOURLY") == 24     # hourly is the emphasis
+        # 2026-10-12: only the two families that made money over two years stay in the field (V6.2, V6.6; hourly)
+        assert len(controls) == 8 and len(specs) == 16
+        assert {s.strategy_id for s in controls} == {"V6.2", "V6.6"} and {s.horizon for s in controls} == {"HOURLY"}
         k = cfg.BotSpecV6("V6.1", "ENA", "HOURLY")
         j = dataclasses.replace(k, role="JEV")
         assert (k.key, j.key, k.symbol, k.timeframe) == ("V6.1-ENA-1H", "V6.1-ENA-1H+JEV", "ENAUSDT", "1h")
         assert k.pair_id == j.pair_id and j.control_key == k.key
         assert cfg.BotSpecV6("V6.1", "ENA", "SWING").key == "V6.1-ENA-4H"
-        assert len(cfg.field_plan(["ENA"], jev=False)) == 7
+        assert len(cfg.field_plan(["ENA"], jev=False)) == 2
 
     def test_engine_settings_are_pinned_and_paper(self):
         s = cfg.settings_v6()
@@ -606,7 +606,7 @@ class TestStorageAndService:
         assert {"latency_ms", "move_bps", "final_level", "state_json", "legal_min_risk_pct"} <= set(DECISION_COLS)
         st.close()
 
-    def test_the_service_is_off_unless_enabled(self, tmp_path):
+    def test_the_service_is_off_unless_enabled(self, tmp_path, programs_running):
         from app.live.v6_service import V6ForwardService
         svc = V6ForwardService(str(tmp_path / "x.db"), env={})
         svc.start()                                                              # no process, no network

@@ -215,7 +215,7 @@ class TestFieldAndWiring:
             assert m in code
         assert "app.strategies.v11.scan" not in code and "app.live.v11_worker" not in code   # V11-only edits don't restart V13
 
-    def test_service_names_roster_and_routes(self, tmp_path):
+    def test_service_names_roster_and_routes(self, tmp_path, programs_running):
         from app.core import bot_names, roster_view
         from app.core.api_public import router
         from app.live.v6_service import V6ForwardService

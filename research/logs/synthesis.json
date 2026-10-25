@@ -1,0 +1,44 @@
+{
+  "data_walls": [
+    {
+      "cap": "~300 hourly bars",
+      "endpoint": "products/<id>/candles",
+      "venue": "Coinbase"
+    },
+    {
+      "cap": "~302 payments (~100d)",
+      "endpoint": "funding-rate-history",
+      "venue": "OKX"
+    },
+    {
+      "cap": "24h rolling, NOT historical",
+      "endpoint": "history-mark-price-candles (mislabeled)",
+      "venue": "OKX"
+    },
+    {
+      "cap": "1000 most recent bars",
+      "endpoint": "mark-price-kline",
+      "venue": "Bybit"
+    },
+    {
+      "cap": "1000 most recent bars",
+      "endpoint": "fapi/v1/markPriceKlines",
+      "venue": "Binance"
+    }
+  ],
+  "generated_at": "2026-10-08T20:59:54+0530",
+  "options_for_user": [
+    "A. Acquire authenticated bulk history (Tardis / Databento / paid tier)",
+    "B. Move to TradFi (Polygon / CBOE / FRED) with longer free history and different cost schedule",
+    "C. Accept the conclusion from rounds 1-9: 0.5%/day net is not achievable on public retail data with retail costs"
+  ],
+  "rounds_in_repo": [
+    "round 9 \u2014 cross-venue perpetual basis"
+  ],
+  "structural_findings": [
+    "round 4.2 (prior workspace): cross-venue spot basis p99 < cost, no edge",
+    "round 9  (in-repo):       cross-venue mark basis p99 < cost, no edge (5 bps max vs 80 bps RT cost)"
+  ],
+  "title": "SYNTHESIS \u2014 in-repo loop hits the same data wall as the prior workspace",
+  "verdict": "Loop paused pending user decision. No false-positive hits produced."
+}

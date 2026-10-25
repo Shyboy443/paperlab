@@ -190,3 +190,66 @@ def test_the_public_deep_health_route_answers_200_or_503():
     v8.h.update(status="ERROR")
     tick(w, clock, 2)
     assert asyncio.run(route.endpoint()).status_code == 503
+
+
+# -- heartbeats (2026-10-12: V8/V11/V13/V14 hung for 13.6 h while their last status still said LIVE) --------------------
+def test_a_silent_worker_is_down_even_if_its_last_status_says_live():
+    h = {"status": "LIVE", "ws": True, "klines_age_s": 2.0, "heartbeat_age_s": 75.0}
+    assert "silent for 75 s" in wd.problem_of(h, 3600)
+    assert wd.problem_of({**h, "heartbeat_age_s": 20.0}, 3600) is None
+    assert wd.problem_of({**h, "status": "WARMING_UP", "heartbeat_age_s": 500.0}, 60) is None   # warm-up has its own grace
+
+
+def test_down_and_recovery_use_the_operations_channel():
+    class OpsNotifier(Notifier):
+        def __init__(self):
+            super().__init__()
+            self.ops = []
+
+        def ops_alert(self, text):
+            self.ops.append(text)
+    svc = Svc()
+    w, n, _, clock = make({"v8": svc})
+    n2 = OpsNotifier()
+    n2.store = n.store
+    w.notifier = n2
+    svc.h["heartbeat_age_s"] = 120.0
+    tick(w, clock, 2)
+    assert any("V8 DOWN" in t and "silent" in t for t in n2.ops) and not any("DOWN" in t for t in n2.sent)
+    svc.h["heartbeat_age_s"] = 1.0
+    tick(w, clock, 2)
+    assert any("V8 recovered" in t for t in n2.ops)
+
+
+def test_the_supervisor_restarts_a_hung_worker_but_not_a_quiet_live_one(monkeypatch):
+    from app.live import v6_service as vs
+
+    class Proc:
+        def __init__(self):
+            self.alive, self.terminated = True, False
+            self.exitcode = None
+
+        def is_alive(self):
+            return self.alive
+
+        def terminate(self):
+            self.terminated, self.alive, self.exitcode = True, False, -15
+
+        def join(self, t=None):
+            pass
+
+        def kill(self):
+            self.alive = False
+    svc = vs.V6ForwardService.__new__(vs.V6ForwardService)
+    import threading
+    svc._stopping = threading.Event()
+    svc._proc = Proc()
+    svc.status = {"status": "LIVE"}
+    svc.last_status_ts = 1000.0
+    assert not svc._stalled(1000.0 + vs.STALL_RESTART_S - 1)
+    assert svc._stalled(1000.0 + vs.STALL_RESTART_S + 1)
+    svc.status = {"status": "WARMING_UP"}
+    assert not svc._stalled(1000.0 + vs.STALL_RESTART_S + 1)            # loading bars may be quiet longer
+    assert svc._stalled(1000.0 + vs.STALL_WARMUP_S + 1)
+    svc._proc.alive = False
+    assert not svc._stalled(1000.0 + vs.STALL_WARMUP_S + 1)            # a dead process takes the normal restart path

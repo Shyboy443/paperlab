@@ -44,9 +44,9 @@ def candles(storage: Any, experiment: dict[str, Any] | None, symbol: str, tf: st
     limit = max(10, min(int(limit), 1000))
     now_ms = now_ms or int(time.time() * 1000)
     start = (now_ms // step - limit + 1) * step
-    out = _buckets(storage.fwd6_bars(symbol, start), step)
+    out = _buckets(storage.fwd6_bars(symbol, start, now_ms + 1), step)[-limit:]
     if len(out) < limit:            # a market that closes (stocks): the last `limit` buckets that exist, not a clock window
-        out = _buckets(storage.fwd6_bars(symbol, start - 14 * 86_400_000), step)[-limit:]
+        out = _buckets(storage.fwd6_bars(symbol, start - 14 * 86_400_000, now_ms + 1), step)[-limit:]
         if out:
             start = out[0][0]
     markers: list[dict[str, Any]] = []
@@ -58,8 +58,9 @@ def candles(storage: Any, experiment: dict[str, Any] | None, symbol: str, tf: st
                             "bot_key": t.get("bot_key")})
             markers.append({"ts": int(t["exit_ts"]), "kind": "exit", "side": t.get("side"), "price": t.get("exit_price"),
                             "bot_key": t.get("bot_key"), "net": t.get("net"), "exit_kind": t.get("exit_kind")})
+    markers = [m for m in markers if m["ts"] <= now_ms]
     markers.sort(key=lambda m: m["ts"])
-    boxes = closed_boxes(storage, experiment, symbol, start) if experiment else []
+    boxes = [b for b in closed_boxes(storage, experiment, symbol, start) if b["exit_ts"] <= now_ms] if experiment else []
     for b in boxes:
         fill_ladder(b, ladder_rungs(program, (b.get("bots") or [""])[0]))
     res = {"ok": True, "symbol": symbol, "tf": tf, "candles": out, "markers": markers[-300:], "positions": boxes[-150:],

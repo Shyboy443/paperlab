@@ -1,0 +1,2676 @@
+{
+ "generated_utc": "2026-10-20T08:30:23+00:00",
+ "pre_registration": "docs/SCRIBD_ROUND3_STUDY.md",
+ "costs": {
+  "etf": "0.01% per side (SPY, QQQ, DIA, IWM), EWS 0.05%, Nifty 0.03%",
+  "mt5": "half the mean spread + 0.002% slippage (+0.0025% commission on FX)",
+  "btc": "0.07% per side"
+ },
+ "rules": [
+  {
+   "key": "nr7_forex",
+   "doc": "NR7 Forex Trading Strategy (428753972)",
+   "assets": [
+    "EURUSD",
+    "GBPUSD",
+    "USDJPY",
+    "AUDUSD",
+    "USDCAD",
+    "USDCHF",
+    "NZDUSD"
+   ],
+   "tf": "daily",
+   "rule": "NR7 Forex Trading Strategy (428753972), daily, any pair. After an NR7 bar (narrowest range of the last 7 bars,\n    itself included): buy stop 2 pips above its high / sell stop 2 pips below its low on the next bar only (the first\n    reached fills). Stop 2 pips beyond the other side, target 3 R.",
+   "windows": {
+    "a": [
+     "2015-01-01",
+     "2021-01-01"
+    ],
+    "b": [
+     "2021-01-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 989,
+    "win_rate_pct": 26.79474216380182,
+    "mean_ret_pct": 0.02016569961716119,
+    "total_ret_pct": 19.943876921372414,
+    "profit_factor": 1.048242160015925,
+    "max_dd_pct_sum": 25.838891272750416
+   },
+   "b": {
+    "trades": 998,
+    "win_rate_pct": 24.649298597194388,
+    "mean_ret_pct": -0.045321270615272746,
+    "total_ret_pct": -45.2306280740422,
+    "profit_factor": 0.8886548373244317,
+    "max_dd_pct_sum": 51.17207603259136,
+    "mean_ci_low": -0.10235427529755813,
+    "by_asset_ret_pct": {
+     "EURUSD": -5.245904772501662,
+     "GBPUSD": -7.7210409267769915,
+     "USDJPY": 5.751590256029997,
+     "AUDUSD": -14.369445168761343,
+     "USDCAD": 7.374367166329983,
+     "USDCHF": -14.009995968293495,
+     "NZDUSD": -17.01019866006868
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 989,
+     "win_rate_pct": 26.79474216380182,
+     "mean_ret_pct": 0.030712134400107633,
+     "total_ret_pct": 30.37430092170645,
+     "profit_factor": 1.0748523568481132,
+     "max_dd_pct_sum": 24.699434573594427
+    },
+    "b": {
+     "trades": 998,
+     "win_rate_pct": 24.649298597194388,
+     "mean_ret_pct": -0.034780781412113576,
+     "total_ret_pct": -34.71121984928935,
+     "profit_factor": 0.9128470640983277,
+     "max_dd_pct_sum": 45.181735608260226
+    }
+   },
+   "min_trades_b": 100,
+   "checks": {
+    "a_positive": false,
+    "b_positive": false,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": false
+   },
+   "verdict": "FAIL",
+   "recent_b_trades": [
+    {
+     "t": 1788814800000,
+     "exit_t": 1789074000000,
+     "dir": -1,
+     "entry": 1.38029,
+     "ret_pct": -0.30564099976656484,
+     "r": null,
+     "result": "stop",
+     "asset": "USDCAD"
+    },
+    {
+     "t": 1788814800000,
+     "exit_t": 1788814800000,
+     "dir": -1,
+     "entry": 0.80827,
+     "ret_pct": -0.37414977456761556,
+     "r": null,
+     "result": "stop",
+     "asset": "USDCHF"
+    },
+    {
+     "t": 1788987600000,
+     "exit_t": 1789506000000,
+     "dir": -1,
+     "entry": 1.35285,
+     "ret_pct": 0.9101138020776423,
+     "r": null,
+     "result": "target",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1789506000000,
+     "exit_t": 1789506000000,
+     "dir": 1,
+     "entry": 1.1555,
+     "ret_pct": -0.2683205163669583,
+     "r": null,
+     "result": "stop",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1789506000000,
+     "exit_t": 1790197200000,
+     "dir": 1,
+     "entry": 155.26000000000002,
+     "ret_pct": 2.0549221080060183,
+     "r": null,
+     "result": "target",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1789506000000,
+     "exit_t": 1790110800000,
+     "dir": -1,
+     "entry": 0.71151,
+     "ret_pct": 1.1828349396743192,
+     "r": null,
+     "result": "target",
+     "asset": "AUDUSD"
+    },
+    {
+     "t": 1789506000000,
+     "exit_t": 1790024400000,
+     "dir": 1,
+     "entry": 1.3931499999999999,
+     "ret_pct": 0.7694531799511682,
+     "r": null,
+     "result": "target",
+     "asset": "USDCAD"
+    },
+    {
+     "t": 1789678800000,
+     "exit_t": 1790197200000,
+     "dir": -1,
+     "entry": 0.82208,
+     "ret_pct": -0.5420189117863584,
+     "r": null,
+     "result": "stop",
+     "asset": "USDCHF"
+    },
+    {
+     "t": 1790024400000,
+     "exit_t": 1790110800000,
+     "dir": -1,
+     "entry": 1.33631,
+     "ret_pct": 0.8698676581050628,
+     "r": null,
+     "result": "target",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1790024400000,
+     "exit_t": 1790024400000,
+     "dir": -1,
+     "entry": 0.57114,
+     "ret_pct": -0.5227056509557702,
+     "r": null,
+     "result": "stop",
+     "asset": "NZDUSD"
+    },
+    {
+     "t": 1790542800000,
+     "exit_t": 1790802000000,
+     "dir": 1,
+     "entry": 1.41566,
+     "ret_pct": 0.6044873937367796,
+     "r": null,
+     "result": "target",
+     "asset": "USDCAD"
+    },
+    {
+     "t": 1790542800000,
+     "exit_t": 1790888400000,
+     "dir": 1,
+     "entry": 0.83002,
+     "ret_pct": -0.3862940587439439,
+     "r": null,
+     "result": "stop",
+     "asset": "USDCHF"
+    },
+    {
+     "t": 1790715600000,
+     "exit_t": 1790802000000,
+     "dir": -1,
+     "entry": 156.95999999999998,
+     "ret_pct": -0.5049560298743826,
+     "r": null,
+     "result": "stop",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1791320400000,
+     "exit_t": 1791406800000,
+     "dir": 1,
+     "entry": 158.268,
+     "ret_pct": -0.33781221144400136,
+     "r": null,
+     "result": "stop",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1791320400000,
+     "exit_t": 1791752400000,
+     "dir": -1,
+     "entry": 0.69598,
+     "ret_pct": -0.47458248974412803,
+     "r": null,
+     "result": "stop",
+     "asset": "AUDUSD"
+    },
+    {
+     "t": 1791320400000,
+     "exit_t": 1791493200000,
+     "dir": 1,
+     "entry": 0.83285,
+     "ret_pct": -0.3994284671442693,
+     "r": null,
+     "result": "stop",
+     "asset": "USDCHF"
+    },
+    {
+     "t": 1791493200000,
+     "exit_t": 1791752400000,
+     "dir": 1,
+     "entry": 1.1228799999999999,
+     "ret_pct": -0.5340893872450783,
+     "r": null,
+     "result": "stop",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1791493200000,
+     "exit_t": 1791838800000,
+     "dir": 1,
+     "entry": 0.5615399999999999,
+     "ret_pct": -0.6453529486919118,
+     "r": null,
+     "result": "stop",
+     "asset": "NZDUSD"
+    },
+    {
+     "t": 1791752400000,
+     "exit_t": 1791752400000,
+     "dir": 1,
+     "entry": 1.32521,
+     "ret_pct": -0.3746645260708916,
+     "r": null,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1791752400000,
+     "exit_t": 1791752400000,
+     "dir": -1,
+     "entry": 0.82924,
+     "ret_pct": -0.3577462354206117,
+     "r": null,
+     "result": "stop",
+     "asset": "USDCHF"
+    },
+    {
+     "t": 1791838800000,
+     "exit_t": 1791925200000,
+     "dir": -1,
+     "entry": 1.4238300000000002,
+     "ret_pct": -0.37035001140809126,
+     "r": null,
+     "result": "stop",
+     "asset": "USDCAD"
+    },
+    {
+     "t": 1791925200000,
+     "exit_t": 1791925200000,
+     "dir": 1,
+     "entry": 1.12066,
+     "ret_pct": -0.5047906338321779,
+     "r": null,
+     "result": "stop",
+     "asset": "EURUSD"
+    },
+    {
+     "t": 1792357200000,
+     "exit_t": 1792443600000,
+     "dir": 1,
+     "entry": 158.36,
+     "ret_pct": -0.17407929349157605,
+     "r": null,
+     "result": "end",
+     "asset": "USDJPY"
+    },
+    {
+     "t": 1792443600000,
+     "exit_t": 1792443600000,
+     "dir": -1,
+     "entry": 1.32968,
+     "ret_pct": -0.36595545029411336,
+     "r": null,
+     "result": "stop",
+     "asset": "GBPUSD"
+    },
+    {
+     "t": 1792443600000,
+     "exit_t": 1792443600000,
+     "dir": 1,
+     "entry": 0.56768,
+     "ret_pct": 0.15063560461730974,
+     "r": null,
+     "result": "end",
+     "asset": "NZDUSD"
+    }
+   ]
+  },
+  {
+   "key": "nr7_etf",
+   "doc": "NR4 and NR7 Trading Strategies, StockCharts (418172887)",
+   "assets": [
+    "SPY",
+    "QQQ",
+    "DIA",
+    "IWM"
+   ],
+   "tf": "daily",
+   "rule": "StockCharts NR4/NR7 (418172887), daily ETFs. On the day after an NR7 day: buy above its high / sell below its\n    low (stop entries, that day only, the first reached). Stop: the other side of the NR7 day. Exit at the first\n    profitable close (the entry day included), Crabel's exit.",
+   "windows": {
+    "a": [
+     "2000-01-01",
+     "2013-01-01"
+    ],
+    "b": [
+     "2013-01-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 1746,
+    "win_rate_pct": 58.591065292096225,
+    "mean_ret_pct": 0.03292709194967582,
+    "total_ret_pct": 57.49070254413399,
+    "profit_factor": 1.0656957512564305,
+    "max_dd_pct_sum": 51.33244408103913
+   },
+   "b": {
+    "trades": 1916,
+    "win_rate_pct": 61.430062630480165,
+    "mean_ret_pct": -0.017424134266310978,
+    "total_ret_pct": -33.38464125425183,
+    "profit_factor": 0.9518227562672676,
+    "max_dd_pct_sum": 70.68744862352361,
+    "mean_ci_low": -0.05870717210768291,
+    "by_asset_ret_pct": {
+     "SPY": 2.9981202403236322,
+     "QQQ": 24.870143648432855,
+     "DIA": -30.29185921353991,
+     "IWM": -30.96104592946842
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 1746,
+     "win_rate_pct": 59.50744558991982,
+     "mean_ret_pct": 0.05292677299554651,
+     "total_ret_pct": 92.41014565022421,
+     "profit_factor": 1.1073563989698738,
+     "max_dd_pct_sum": 39.607754686277715
+    },
+    "b": {
+     "trades": 1916,
+     "win_rate_pct": 62.99582463465553,
+     "mean_ret_pct": 0.0025811696091551663,
+     "total_ret_pct": 4.945520971141299,
+     "profit_factor": 1.007288934494226,
+     "max_dd_pct_sum": 55.74816170117843
+    }
+   },
+   "min_trades_b": 100,
+   "checks": {
+    "a_positive": false,
+    "b_positive": false,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": true
+   },
+   "verdict": "FAIL",
+   "recent_b_trades": [
+    {
+     "t": 1786320000000,
+     "exit_t": 1786492800000,
+     "dir": -1,
+     "entry": 299.0190195767717,
+     "ret_pct": -1.0941588861680682,
+     "r": null,
+     "result": "stop",
+     "asset": "IWM"
+    },
+    {
+     "t": 1786406400000,
+     "exit_t": 1786406400000,
+     "dir": 1,
+     "entry": 538.2140846730742,
+     "ret_pct": -0.4162446890080146,
+     "r": null,
+     "result": "stop",
+     "asset": "DIA"
+    },
+    {
+     "t": 1786579200000,
+     "exit_t": 1786579200000,
+     "dir": 1,
+     "entry": 726.4930089361641,
+     "ret_pct": 0.642703275269942,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1786924800000,
+     "exit_t": 1786924800000,
+     "dir": -1,
+     "entry": 773.509212209858,
+     "ret_pct": 0.33596797076220886,
+     "r": null,
+     "result": "close exit",
+     "asset": "SPY"
+    },
+    {
+     "t": 1786924800000,
+     "exit_t": 1786924800000,
+     "dir": -1,
+     "entry": 532.7125253180097,
+     "ret_pct": 0.0380034720953584,
+     "r": null,
+     "result": "close exit",
+     "asset": "DIA"
+    },
+    {
+     "t": 1787011200000,
+     "exit_t": 1787011200000,
+     "dir": -1,
+     "entry": 301.6621553156088,
+     "ret_pct": 0.714079395343314,
+     "r": null,
+     "result": "close exit",
+     "asset": "IWM"
+    },
+    {
+     "t": 1787097600000,
+     "exit_t": 1787184000000,
+     "dir": 1,
+     "entry": 768.4517358705159,
+     "ret_pct": -0.5910931151317104,
+     "r": null,
+     "result": "stop",
+     "asset": "SPY"
+    },
+    {
+     "t": 1787788800000,
+     "exit_t": 1787788800000,
+     "dir": 1,
+     "entry": 716.1837333189847,
+     "ret_pct": 0.5629822603618916,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1788220800000,
+     "exit_t": 1788393600000,
+     "dir": -1,
+     "entry": 706.6536415906066,
+     "ret_pct": -1.460655722459847,
+     "r": null,
+     "result": "stop",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1788912000000,
+     "exit_t": 1788912000000,
+     "dir": -1,
+     "entry": 292.6955348842431,
+     "ret_pct": 0.941036899898173,
+     "r": null,
+     "result": "close exit",
+     "asset": "IWM"
+    },
+    {
+     "t": 1788998400000,
+     "exit_t": 1788998400000,
+     "dir": -1,
+     "entry": 520.9749434060251,
+     "ret_pct": 0.274880639096991,
+     "r": null,
+     "result": "close exit",
+     "asset": "DIA"
+    },
+    {
+     "t": 1789084800000,
+     "exit_t": 1789430400000,
+     "dir": 1,
+     "entry": 762.8257171109622,
+     "ret_pct": -1.0764858832076716,
+     "r": null,
+     "result": "stop",
+     "asset": "SPY"
+    },
+    {
+     "t": 1789344000000,
+     "exit_t": 1789603200000,
+     "dir": -1,
+     "entry": 702.597886401324,
+     "ret_pct": -2.0533883839953306,
+     "r": null,
+     "result": "stop",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1789948800000,
+     "exit_t": 1790121600000,
+     "dir": 1,
+     "entry": 519.9162661100997,
+     "ret_pct": -1.1505915510885443,
+     "r": null,
+     "result": "stop",
+     "asset": "DIA"
+    },
+    {
+     "t": 1790035200000,
+     "exit_t": 1790121600000,
+     "dir": 1,
+     "entry": 287.67999267578125,
+     "ret_pct": -0.9862544668345191,
+     "r": null,
+     "result": "stop",
+     "asset": "IWM"
+    },
+    {
+     "t": 1790121600000,
+     "exit_t": 1790121600000,
+     "dir": -1,
+     "entry": 772.5700073242188,
+     "ret_pct": 0.5961882705088948,
+     "r": null,
+     "result": "close exit",
+     "asset": "SPY"
+    },
+    {
+     "t": 1790726400000,
+     "exit_t": 1790812800000,
+     "dir": 1,
+     "entry": 740.5800170898438,
+     "ret_pct": 0.17577455134529096,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1790812800000,
+     "exit_t": 1790812800000,
+     "dir": -1,
+     "entry": 277.3599853515625,
+     "ret_pct": -1.1450136292637747,
+     "r": null,
+     "result": "stop",
+     "asset": "IWM"
+    },
+    {
+     "t": 1791331200000,
+     "exit_t": 1791417600000,
+     "dir": -1,
+     "entry": 775.77001953125,
+     "ret_pct": 0.2172108758812595,
+     "r": null,
+     "result": "close exit",
+     "asset": "SPY"
+    },
+    {
+     "t": 1791331200000,
+     "exit_t": 1791417600000,
+     "dir": -1,
+     "entry": 753.7899780273438,
+     "ret_pct": 0.803914102685029,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1791331200000,
+     "exit_t": 1791504000000,
+     "dir": -1,
+     "entry": 510.3583356421473,
+     "ret_pct": -1.1014646255565645,
+     "r": null,
+     "result": "stop",
+     "asset": "DIA"
+    },
+    {
+     "t": 1791417600000,
+     "exit_t": 1791504000000,
+     "dir": -1,
+     "entry": 276.32000732421875,
+     "ret_pct": -1.0044648048352784,
+     "r": null,
+     "result": "stop",
+     "asset": "IWM"
+    },
+    {
+     "t": 1791849600000,
+     "exit_t": 1791936000000,
+     "dir": -1,
+     "entry": 777.0499877929688,
+     "ret_pct": 0.938851724509278,
+     "r": null,
+     "result": "close exit",
+     "asset": "SPY"
+    },
+    {
+     "t": 1791849600000,
+     "exit_t": 1791849600000,
+     "dir": 1,
+     "entry": 522.6256468394303,
+     "ret_pct": -1.2288934887596996,
+     "r": null,
+     "result": "stop",
+     "asset": "DIA"
+    },
+    {
+     "t": 1791849600000,
+     "exit_t": 1791849600000,
+     "dir": -1,
+     "entry": 277.7900085449219,
+     "ret_pct": 0.37242064292896765,
+     "r": null,
+     "result": "close exit",
+     "asset": "IWM"
+    }
+   ]
+  },
+  {
+   "key": "nr7_nifty",
+   "doc": "Trading NR7 Setup, AW10 draft system (382606844)",
+   "assets": [
+    "NSEI"
+   ],
+   "tf": "daily",
+   "rule": "AW10's NR7 draft system (382606844), NIFTY daily. Day 1 after an NR7 day: buy above the Day 0 high / sell\n    below its low (stop entries, the first reached). Initial stop: the other side of Day 0. Trailing: on day k the\n    stop is the low (long) / high (short) of day k-2, moved only in the trade's favour. Gap through -> exit at the\n    open. No target.",
+   "windows": {
+    "a": [
+     "2000-01-01",
+     "2013-01-01"
+    ],
+    "b": [
+     "2013-01-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 134,
+    "win_rate_pct": 38.059701492537314,
+    "mean_ret_pct": 0.4094250412121862,
+    "total_ret_pct": 54.86295552243295,
+    "profit_factor": 1.5574812993903775,
+    "max_dd_pct_sum": 13.35294986554969
+   },
+   "b": {
+    "trades": 364,
+    "win_rate_pct": 34.065934065934066,
+    "mean_ret_pct": 0.062455968106961246,
+    "total_ret_pct": 22.733972390933893,
+    "profit_factor": 1.1241846274773586,
+    "max_dd_pct_sum": 21.24257895954265,
+    "mean_ci_low": -0.09075612207578249,
+    "by_asset_ret_pct": {
+     "NSEI": 22.733972390933882
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 134,
+     "win_rate_pct": 38.059701492537314,
+     "mean_ret_pct": 0.46946083528393084,
+     "total_ret_pct": 62.907751928046736,
+     "profit_factor": 1.6733228024461764,
+     "max_dd_pct_sum": 12.5117612426696
+    },
+    "b": {
+     "trades": 364,
+     "win_rate_pct": 36.26373626373626,
+     "mean_ret_pct": 0.12248667680111566,
+     "total_ret_pct": 44.5851503556061,
+     "profit_factor": 1.264073153178112,
+     "max_dd_pct_sum": 20.16450733980382
+    }
+   },
+   "min_trades_b": 30,
+   "checks": {
+    "a_positive": true,
+    "b_positive": false,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": true
+   },
+   "verdict": "FAIL",
+   "recent_b_trades": [
+    {
+     "t": 1766361600000,
+     "exit_t": 1766707200000,
+     "dir": 1,
+     "entry": 26055.849609375,
+     "ret_pct": 0.18248762742591326,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1767139200000,
+     "exit_t": 1767744000000,
+     "dir": 1,
+     "entry": 25976.75,
+     "ret_pct": 0.5801867227123818,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1768867200000,
+     "exit_t": 1769126400000,
+     "dir": -1,
+     "entry": 25494.349609375,
+     "ret_pct": 0.5275612725767228,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1769990400000,
+     "exit_t": 1770076800000,
+     "dir": -1,
+     "entry": 24796.5,
+     "ret_pct": -6.157651872177021,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1770681600000,
+     "exit_t": 1770854400000,
+     "dir": 1,
+     "entry": 25922.650390625,
+     "ret_pct": -0.26131240724640586,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1771891200000,
+     "exit_t": 1772755200000,
+     "dir": -1,
+     "entry": 25609.349609375,
+     "ret_pct": 3.6622151989626137,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1773187200000,
+     "exit_t": 1773705600000,
+     "dir": -1,
+     "entry": 24079.94921875,
+     "ret_pct": 2.3774055761836475,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1775692800000,
+     "exit_t": 1775779200000,
+     "dir": -1,
+     "entry": 23828.5,
+     "ret_pct": -0.8855214794980203,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1776297600000,
+     "exit_t": 1776297600000,
+     "dir": 1,
+     "entry": 24385.19921875,
+     "ret_pct": -1.0414421273406305,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1778198400000,
+     "exit_t": 1778716800000,
+     "dir": -1,
+     "entry": 24233.650390625,
+     "ret_pct": 1.9052113139424145,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1779235200000,
+     "exit_t": 1779321600000,
+     "dir": -1,
+     "entry": 23457.25,
+     "ret_pct": -1.649754218778303,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1779667200000,
+     "exit_t": 1779840000000,
+     "dir": 1,
+     "entry": 23940.25,
+     "ret_pct": -0.31013281192892256,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1780012800000,
+     "exit_t": 1780012800000,
+     "dir": 1,
+     "entry": 23983.19921875,
+     "ret_pct": -0.5808301563317635,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1780963200000,
+     "exit_t": 1781136000000,
+     "dir": 1,
+     "entry": 23267.30078125,
+     "ret_pct": -0.75991582624421,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1781654400000,
+     "exit_t": 1781827200000,
+     "dir": 1,
+     "entry": 24044.5,
+     "ret_pct": -0.3709997754813889,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1782172800000,
+     "exit_t": 1782345600000,
+     "dir": -1,
+     "entry": 24071.30078125,
+     "ret_pct": -0.3267844131034555,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1783036800000,
+     "exit_t": 1783468800000,
+     "dir": 1,
+     "entry": 24375.650390625,
+     "ret_pct": -0.5361504929395623,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1783900800000,
+     "exit_t": 1783900800000,
+     "dir": -1,
+     "entry": 24039.400390625,
+     "ret_pct": -0.8466483344034768,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1784678400000,
+     "exit_t": 1785110400000,
+     "dir": -1,
+     "entry": 24135.650390625,
+     "ret_pct": 0.5405384499540505,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1785196800000,
+     "exit_t": 1785888000000,
+     "dir": 1,
+     "entry": 24011.599609375,
+     "ret_pct": 2.036485549505351,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1786060800000,
+     "exit_t": 1787270400000,
+     "dir": -1,
+     "entry": 24538.900390625,
+     "ret_pct": 0.9788650681153203,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1787529600000,
+     "exit_t": 1787529600000,
+     "dir": 1,
+     "entry": 24285.05078125,
+     "ret_pct": -0.3821180211012547,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1788739200000,
+     "exit_t": 1789430400000,
+     "dir": -1,
+     "entry": 23883.150390625,
+     "ret_pct": 1.2258106865187575,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1789948800000,
+     "exit_t": 1790035200000,
+     "dir": 1,
+     "entry": 23389.150390625,
+     "ret_pct": -0.4983229587369546,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    },
+    {
+     "t": 1791417600000,
+     "exit_t": 1791763200000,
+     "dir": -1,
+     "entry": 22546.30078125,
+     "ret_pct": -0.29403318137173123,
+     "r": null,
+     "result": "stop",
+     "asset": "NSEI"
+    }
+   ]
+  },
+  {
+   "key": "intraday_momentum",
+   "doc": "Beat the Market: intraday momentum for SPY, Zarattini/Aziz/Barbon (861126103)",
+   "assets": [
+    "US500"
+   ],
+   "tf": "1m",
+   "rule": "Beat the Market (861126103), \"Current band + VWAP\" model, on 1-minute candles. US session 09:30-16:00 New York.\n    sigma(HH:MM) = mean over the previous 14 days of |close at HH:MM / 09:30 open - 1|. Upper band = max(open, previous\n    16:00 close) * (1 + sigma), lower = min(...) * (1 - sigma). At HH:00 / HH:30 from 10:00 to 15:30: long above the\n    upper band, short below the lower; a long exits below max(upper band, VWAP), a short above min(lower band, VWAP),\n    and the opposite side may then open at the same check. Everything closes at 16:00. Fills at the next minute's\n    open; VWAP from tick volume.",
+   "windows": {
+    "a": [
+     "2020-11-01",
+     "2023-11-01"
+    ],
+    "b": [
+     "2023-11-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 663,
+    "win_rate_pct": 42.53393665158371,
+    "mean_ret_pct": 0.0445369272698554,
+    "total_ret_pct": 29.52798277991413,
+    "profit_factor": 1.3302350340673061,
+    "max_dd_pct_sum": 6.967409112957933
+   },
+   "b": {
+    "trades": 724,
+    "win_rate_pct": 36.60220994475138,
+    "mean_ret_pct": -0.0032403647699150765,
+    "total_ret_pct": -2.3460240934185155,
+    "profit_factor": 0.9720128599530402,
+    "max_dd_pct_sum": 13.617823246829758,
+    "mean_ci_low": -0.030662262467419932,
+    "by_asset_ret_pct": {
+     "US500": -2.3460240934185146
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 663,
+     "win_rate_pct": 43.74057315233786,
+     "mean_ret_pct": 0.053564645340146176,
+     "total_ret_pct": 35.513359860516914,
+     "profit_factor": 1.4128649669826085,
+     "max_dd_pct_sum": 6.660405524385898
+    },
+    "b": {
+     "trades": 724,
+     "win_rate_pct": 37.84530386740331,
+     "mean_ret_pct": 0.0057864622827596525,
+     "total_ret_pct": 4.1893986927179885,
+     "profit_factor": 1.0525440765780056,
+     "max_dd_pct_sum": 10.480987264866611
+    }
+   },
+   "min_trades_b": 30,
+   "checks": {
+    "a_positive": true,
+    "b_positive": false,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": false
+   },
+   "verdict": "FAIL",
+   "recent_b_trades": [
+    {
+     "t": 1789048800000,
+     "exit_t": 1789050600000,
+     "dir": -1,
+     "entry": 7582.23,
+     "ret_pct": -0.26951609659350395,
+     "r": null,
+     "result": "trailing stop",
+     "asset": "US500"
+    },
+    {
+     "t": 1789135200000,
+     "exit_t": 1789137000000,
+     "dir": 1,
+     "entry": 7676.71,
+     "ret_pct": -0.08392537950618376,
+     "r": null,
+     "result": "trailing stop",
+     "asset": "US500"
+    },
+    {
+     "t": 1789482600000,
+     "exit_t": 1789502340000,
+     "dir": -1,
+     "entry": 7588.14,
+     "ret_pct": -0.005336746254694187,
+     "r": null,
+     "result": "16:00",
+     "asset": "US500"
+    },
+    {
+     "t": 1789585200000,
+     "exit_t": 1789588740000,
+     "dir": -1,
+     "entry": 7550.67,
+     "ret_pct": -0.05167402859796326,
+     "r": null,
+     "result": "16:00",
+     "asset": "US500"
+    },
+    {
+     "t": 1789740000000,
+     "exit_t": 1789743600000,
+     "dir": -1,
+     "entry": 7626.59,
+     "ret_pct": -0.03853025799585761,
+     "r": null,
+     "result": "trailing stop",
+     "asset": "US500"
+    },
+    {
+     "t": 1789747200000,
+     "exit_t": 1789750800000,
+     "dir": -1,
+     "entry": 7619.09,
+     "ret_pct": -0.06809171882184231,
+     "r": null,
+     "result": "trailing stop",
+     "asset": "US500"
+    },
+    {
+     "t": 1789999200000,
+     "exit_t": 1790020740000,
+     "dir": 1,
+     "entry": 7710.47,
+     "ret_pct": 0.7492584238313332,
+     "r": null,
+     "result": "16:00",
+     "asset": "US500"
+    },
+    {
+     "t": 1790172000000,
+     "exit_t": 1790175600000,
+     "dir": -1,
+     "entry": 7739.3,
+     "ret_pct": 0.045890124069275715,
+     "r": null,
+     "result": "trailing stop",
+     "asset": "US500"
+    },
+    {
+     "t": 1790175600000,
+     "exit_t": 1790193540000,
+     "dir": -1,
+     "entry": 7735.05,
+     "ret_pct": 0.2951865625425839,
+     "r": null,
+     "result": "16:00",
+     "asset": "US500"
+    },
+    {
+     "t": 1790353800000,
+     "exit_t": 1790355600000,
+     "dir": 1,
+     "entry": 7746.28,
+     "ret_pct": -0.1607057477419196,
+     "r": null,
+     "result": "trailing stop",
+     "asset": "US500"
+    },
+    {
+     "t": 1790357400000,
+     "exit_t": 1790362800000,
+     "dir": 1,
+     "entry": 7743.28,
+     "ret_pct": -0.08328146723588414,
+     "r": null,
+     "result": "trailing stop",
+     "asset": "US500"
+    },
+    {
+     "t": 1790607600000,
+     "exit_t": 1790613000000,
+     "dir": -1,
+     "entry": 7672.89,
+     "ret_pct": -0.6150840354421173,
+     "r": null,
+     "result": "trailing stop",
+     "asset": "US500"
+    },
+    {
+     "t": 1790695800000,
+     "exit_t": 1790706600000,
+     "dir": -1,
+     "entry": 7661.86,
+     "ret_pct": -0.1330232581761125,
+     "r": null,
+     "result": "trailing stop",
+     "asset": "US500"
+    },
+    {
+     "t": 1790776800000,
+     "exit_t": 1790778600000,
+     "dir": 1,
+     "entry": 7710.73,
+     "ret_pct": -0.023551439598131756,
+     "r": null,
+     "result": "trailing stop",
+     "asset": "US500"
+    },
+    {
+     "t": 1790780400000,
+     "exit_t": 1790785800000,
+     "dir": 1,
+     "entry": 7716.36,
+     "ret_pct": -0.0770610718895355,
+     "r": null,
+     "result": "trailing stop",
+     "asset": "US500"
+    },
+    {
+     "t": 1790865000000,
+     "exit_t": 1790870400000,
+     "dir": -1,
+     "entry": 7633.66,
+     "ret_pct": -0.0385029331122509,
+     "r": null,
+     "result": "trailing stop",
+     "asset": "US500"
+    },
+    {
+     "t": 1791210600000,
+     "exit_t": 1791230340000,
+     "dir": 1,
+     "entry": 7755.49,
+     "ret_pct": 0.2935837941144492,
+     "r": null,
+     "result": "16:00",
+     "asset": "US500"
+    },
+    {
+     "t": 1791295200000,
+     "exit_t": 1791297000000,
+     "dir": 1,
+     "entry": 7826.67,
+     "ret_pct": -0.1304012493018695,
+     "r": null,
+     "result": "trailing stop",
+     "asset": "US500"
+    },
+    {
+     "t": 1791298800000,
+     "exit_t": 1791304200000,
+     "dir": 1,
+     "entry": 7833.17,
+     "ret_pct": -0.028175352779332353,
+     "r": null,
+     "result": "trailing stop",
+     "asset": "US500"
+    },
+    {
+     "t": 1791480600000,
+     "exit_t": 1791484200000,
+     "dir": -1,
+     "entry": 7739.11,
+     "ret_pct": -0.2933101255188712,
+     "r": null,
+     "result": "trailing stop",
+     "asset": "US500"
+    },
+    {
+     "t": 1791572400000,
+     "exit_t": 1791575940000,
+     "dir": 1,
+     "entry": 7815.2,
+     "ret_pct": -0.06698823310242794,
+     "r": null,
+     "result": "16:00",
+     "asset": "US500"
+    },
+    {
+     "t": 1791986400000,
+     "exit_t": 1792007940000,
+     "dir": -1,
+     "entry": 7762.01,
+     "ret_pct": 0.4583989201556029,
+     "r": null,
+     "result": "16:00",
+     "asset": "US500"
+    },
+    {
+     "t": 1792092600000,
+     "exit_t": 1792094340000,
+     "dir": 1,
+     "entry": 7748.43,
+     "ret_pct": -0.048129812699824366,
+     "r": null,
+     "result": "16:00",
+     "asset": "US500"
+    },
+    {
+     "t": 1792164600000,
+     "exit_t": 1792180740000,
+     "dir": -1,
+     "entry": 7712.82,
+     "ret_pct": 0.6915267240928833,
+     "r": null,
+     "result": "16:00",
+     "asset": "US500"
+    },
+    {
+     "t": 1792423800000,
+     "exit_t": 1792425600000,
+     "dir": 1,
+     "entry": 7725.97,
+     "ret_pct": -0.06726936631885647,
+     "r": null,
+     "result": "trailing stop",
+     "asset": "US500"
+    }
+   ],
+   "buy_and_hold_pct": {
+    "a": 29.609907385883982,
+    "b": 81.5645041788382
+   }
+  },
+  {
+   "key": "btc_new_long",
+   "doc": "Backtesting of Trading Strategies for Bitcoin, ETH thesis: New Long (435132310)",
+   "assets": [
+    "BTCUSDT"
+   ],
+   "tf": "1h",
+   "rule": "Backtesting of Trading Strategies for Bitcoin (435132310, ETH Zurich thesis), 1-hour candles.\n    New Long: the close crosses DOWN through the upper Bollinger(20,2) band with SMA10(volume) > SMA50(volume) and\n    close > SMA20; if BBW < VLI top: in a low volatility level (SMA200(BBW) < SMA1000(BBW)) long if SMA50 > SMA200,\n    in a high level long unless SMA200 > SMA100 > SMA50; if BBW >= VLI top: long if SMA100 > SMA200, stop at the\n    signal candle's low and +1 % locked once the profit is over 3 %. Exit: the close crosses down through the lower\n    band with the volume condition; stop 5 % below the entry candle's low; stop-wins +15/20/25/30/35 % after\n    20/25/30/35/40 % profit.\n    New Short 2 (shorts=True): a close crossing UP through the lower band with BBW < VLI slow arms a short, fired when\n    SMA100 crosses below SMA50 and BBW < VLI top (an upper-band cross-down disarms it). Stop at the highest high of\n    the last 20 candles (10 once the profit is over 10 %, 5 over 15 %), stop-wins +20/25/30/35 % after 25/30/35/40 %.\n    One position; an opposite entry closes and reverses. Signals at a candle's close fill at the next open.",
+   "windows": {
+    "a": [
+     "2019-06-01",
+     "2023-01-01"
+    ],
+    "b": [
+     "2023-01-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 140,
+    "win_rate_pct": 30.0,
+    "mean_ret_pct": 0.06194441901450902,
+    "total_ret_pct": 8.672218662031263,
+    "profit_factor": 1.0328169322600251,
+    "max_dd_pct_sum": 95.62008781172744
+   },
+   "b": {
+    "trades": 136,
+    "win_rate_pct": 33.82352941176471,
+    "mean_ret_pct": 0.578734937081802,
+    "total_ret_pct": 78.70795144312507,
+    "profit_factor": 1.4789864325950162,
+    "max_dd_pct_sum": 21.87749264439501,
+    "mean_ci_low": -0.17045746194674083,
+    "by_asset_ret_pct": {
+     "BTCUSDT": 78.70795144312507
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 140,
+     "win_rate_pct": 30.0,
+     "mean_ret_pct": 0.20208587912989653,
+     "total_ret_pct": 28.292023078185515,
+     "profit_factor": 1.11284490760926,
+     "max_dd_pct_sum": 87.28118464097622
+    },
+    "b": {
+     "trades": 136,
+     "win_rate_pct": 35.294117647058826,
+     "mean_ret_pct": 0.7192384039645733,
+     "total_ret_pct": 97.81642293918196,
+     "profit_factor": 1.6439417471486355,
+     "max_dd_pct_sum": 19.79134658700599
+    }
+   },
+   "min_trades_b": 30,
+   "checks": {
+    "a_positive": false,
+    "b_positive": true,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": true
+   },
+   "verdict": "FAIL",
+   "recent_b_trades": [
+    {
+     "t": 1765501200000,
+     "exit_t": 1765810800000,
+     "dir": 1,
+     "entry": 91573.88,
+     "ret_pct": -5.266676853869257,
+     "r": null,
+     "result": "stop",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1766412000000,
+     "exit_t": 1766433600000,
+     "dir": 1,
+     "entry": 89912.38,
+     "ret_pct": -2.207188109134687,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1767114000000,
+     "exit_t": 1767196800000,
+     "dir": 1,
+     "entry": 88742.63,
+     "ret_pct": -1.0280826926134603,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1767355200000,
+     "exit_t": 1767718800000,
+     "dir": 1,
+     "entry": 89502.94,
+     "ret_pct": 3.420941611526966,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1768341600000,
+     "exit_t": 1768503600000,
+     "dir": 1,
+     "entry": 94087.23,
+     "ret_pct": 1.7163162652359978,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1768766400000,
+     "exit_t": 1768780800000,
+     "dir": 1,
+     "entry": 95380.99,
+     "ret_pct": -1.9293025696210626,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1769612400000,
+     "exit_t": 1769652000000,
+     "dir": 1,
+     "entry": 89617.27,
+     "ret_pct": -1.2703629345102874,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1772478000000,
+     "exit_t": 1772946000000,
+     "dir": 1,
+     "entry": 68877.67,
+     "ret_pct": -3.3903302971775795,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1773244800000,
+     "exit_t": 1773925200000,
+     "dir": 1,
+     "entry": 70227.92,
+     "ret_pct": -1.4742039063665835,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1775440800000,
+     "exit_t": 1775516400000,
+     "dir": 1,
+     "entry": 68810.17,
+     "ret_pct": -0.13878010474323005,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1775613600000,
+     "exit_t": 1775613600000,
+     "dir": 1,
+     "entry": 71476.98,
+     "ret_pct": -0.17397316170884927,
+     "r": null,
+     "result": "stop",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1775836800000,
+     "exit_t": 1775959200000,
+     "dir": 1,
+     "entry": 72460.52,
+     "ret_pct": -1.266486835865948,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1776096000000,
+     "exit_t": 1776621600000,
+     "dir": 1,
+     "entry": 71866.59,
+     "ret_pct": 3.926747460815949,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1776704400000,
+     "exit_t": 1776801600000,
+     "dir": 1,
+     "entry": 75338.75,
+     "ret_pct": -0.5582433024174246,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1776834000000,
+     "exit_t": 1777305600000,
+     "dir": 1,
+     "entry": 77523.01,
+     "ret_pct": -1.0808807307662351,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1777874400000,
+     "exit_t": 1778605200000,
+     "dir": 1,
+     "entry": 80027.26,
+     "ret_pct": -0.17402706152879474,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1781110800000,
+     "exit_t": 1781726400000,
+     "dir": 1,
+     "entry": 62219.33,
+     "ret_pct": 3.2047197775996543,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1783303200000,
+     "exit_t": 1783342800000,
+     "dir": 1,
+     "entry": 63576.0,
+     "ret_pct": -3.003839510192514,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1784124000000,
+     "exit_t": 1784527200000,
+     "dir": 1,
+     "entry": 65118.0,
+     "ret_pct": -1.659237395190265,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1784570400000,
+     "exit_t": 1784725200000,
+     "dir": 1,
+     "entry": 65587.99,
+     "ret_pct": -0.06683662664461067,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1785963600000,
+     "exit_t": 1786370400000,
+     "dir": 1,
+     "entry": 64822.88,
+     "ret_pct": -0.5421996091503307,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1787076000000,
+     "exit_t": 1787911200000,
+     "dir": 1,
+     "entry": 64670.02,
+     "ret_pct": 22.443786708276896,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1788112800000,
+     "exit_t": 1788285600000,
+     "dir": 1,
+     "entry": 79021.02,
+     "ret_pct": -2.359664260218369,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1789956000000,
+     "exit_t": 1790175600000,
+     "dir": 1,
+     "entry": 80996.98,
+     "ret_pct": 4.223797373679865,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1791165600000,
+     "exit_t": 1791216000000,
+     "dir": 1,
+     "entry": 86615.31,
+     "ret_pct": -1.6923562012304711,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    }
+   ],
+   "buy_and_hold_pct": {
+    "a": 93.36528345996496,
+    "b": 393.2923139422202
+   }
+  },
+  {
+   "key": "btc_nls2",
+   "doc": "Backtesting of Trading Strategies for Bitcoin, ETH thesis: final New Long-Short 2 (435132310)",
+   "assets": [
+    "BTCUSDT"
+   ],
+   "tf": "1h",
+   "rule": "Backtesting of Trading Strategies for Bitcoin (435132310, ETH Zurich thesis), 1-hour candles.\n    New Long: the close crosses DOWN through the upper Bollinger(20,2) band with SMA10(volume) > SMA50(volume) and\n    close > SMA20; if BBW < VLI top: in a low volatility level (SMA200(BBW) < SMA1000(BBW)) long if SMA50 > SMA200,\n    in a high level long unless SMA200 > SMA100 > SMA50; if BBW >= VLI top: long if SMA100 > SMA200, stop at the\n    signal candle's low and +1 % locked once the profit is over 3 %. Exit: the close crosses down through the lower\n    band with the volume condition; stop 5 % below the entry candle's low; stop-wins +15/20/25/30/35 % after\n    20/25/30/35/40 % profit.\n    New Short 2 (shorts=True): a close crossing UP through the lower band with BBW < VLI slow arms a short, fired when\n    SMA100 crosses below SMA50 and BBW < VLI top (an upper-band cross-down disarms it). Stop at the highest high of\n    the last 20 candles (10 once the profit is over 10 %, 5 over 15 %), stop-wins +20/25/30/35 % after 25/30/35/40 %.\n    One position; an opposite entry closes and reverses. Signals at a candle's close fill at the next open.",
+   "windows": {
+    "a": [
+     "2019-06-01",
+     "2023-01-01"
+    ],
+    "b": [
+     "2023-01-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 171,
+    "win_rate_pct": 29.82456140350877,
+    "mean_ret_pct": -0.04718421889000114,
+    "total_ret_pct": -8.068501430190196,
+    "profit_factor": 0.9721093377306647,
+    "max_dd_pct_sum": 103.38877887108703
+   },
+   "b": {
+    "trades": 191,
+    "win_rate_pct": 29.84293193717277,
+    "mean_ret_pct": 0.34281558195328304,
+    "total_ret_pct": 65.47777615307706,
+    "profit_factor": 1.3229214959472244,
+    "max_dd_pct_sum": 24.006286920288137,
+    "mean_ci_low": -0.2133358739447376,
+    "by_asset_ret_pct": {
+     "BTCUSDT": 65.47777615307712
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 171,
+     "win_rate_pct": 30.409356725146196,
+     "mean_ret_pct": 0.09299953639583683,
+     "total_ret_pct": 15.902920723688098,
+     "profit_factor": 1.0583223424909405,
+     "max_dd_pct_sum": 92.38548031094827
+    },
+    "b": {
+     "trades": 191,
+     "win_rate_pct": 31.413612565445025,
+     "mean_ret_pct": 0.4831289707457023,
+     "total_ret_pct": 92.27763341242914,
+     "profit_factor": 1.5007934569452326,
+     "max_dd_pct_sum": 19.295224084154952
+    }
+   },
+   "min_trades_b": 30,
+   "checks": {
+    "a_positive": false,
+    "b_positive": true,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": true
+   },
+   "verdict": "FAIL",
+   "recent_b_trades": [
+    {
+     "t": 1773244800000,
+     "exit_t": 1773925200000,
+     "dir": 1,
+     "entry": 70227.92,
+     "ret_pct": -1.4742039063665835,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1774389600000,
+     "exit_t": 1774425600000,
+     "dir": -1,
+     "entry": 70332.93,
+     "ret_pct": -1.5799776164593327,
+     "r": null,
+     "result": "stop",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1775419200000,
+     "exit_t": 1775426400000,
+     "dir": -1,
+     "entry": 67361.01,
+     "ret_pct": -0.8755836929998672,
+     "r": null,
+     "result": "stop",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1775440800000,
+     "exit_t": 1775516400000,
+     "dir": 1,
+     "entry": 68810.17,
+     "ret_pct": -0.13878010474323005,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1775613600000,
+     "exit_t": 1775613600000,
+     "dir": 1,
+     "entry": 71476.98,
+     "ret_pct": -0.17397316170884927,
+     "r": null,
+     "result": "stop",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1775836800000,
+     "exit_t": 1775959200000,
+     "dir": 1,
+     "entry": 72460.52,
+     "ret_pct": -1.266486835865948,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1776096000000,
+     "exit_t": 1776621600000,
+     "dir": 1,
+     "entry": 71866.59,
+     "ret_pct": 3.926747460815949,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1776704400000,
+     "exit_t": 1776801600000,
+     "dir": 1,
+     "entry": 75338.75,
+     "ret_pct": -0.5582433024174246,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1776834000000,
+     "exit_t": 1777305600000,
+     "dir": 1,
+     "entry": 77523.01,
+     "ret_pct": -1.0808807307662351,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1777874400000,
+     "exit_t": 1778605200000,
+     "dir": 1,
+     "entry": 80027.26,
+     "ret_pct": -0.17402706152879474,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1779372000000,
+     "exit_t": 1779559200000,
+     "dir": -1,
+     "entry": 77122.67,
+     "ret_pct": 1.3441688974201966,
+     "r": null,
+     "result": "stop",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1779717600000,
+     "exit_t": 1779717600000,
+     "dir": -1,
+     "entry": 77341.05,
+     "ret_pct": -0.6043992343005405,
+     "r": null,
+     "result": "stop",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1780254000000,
+     "exit_t": 1780578000000,
+     "dir": -1,
+     "entry": 73603.68,
+     "ret_pct": 12.831564205757104,
+     "r": null,
+     "result": "stop",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1781110800000,
+     "exit_t": 1781726400000,
+     "dir": 1,
+     "entry": 62219.33,
+     "ret_pct": 3.2047197775996543,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1782720000000,
+     "exit_t": 1782734400000,
+     "dir": -1,
+     "entry": 60026.01,
+     "ret_pct": -0.6739088538451706,
+     "r": null,
+     "result": "stop",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1783303200000,
+     "exit_t": 1783342800000,
+     "dir": 1,
+     "entry": 63576.0,
+     "ret_pct": -3.003839510192514,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1784124000000,
+     "exit_t": 1784527200000,
+     "dir": 1,
+     "entry": 65118.0,
+     "ret_pct": -1.659237395190265,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1784570400000,
+     "exit_t": 1784725200000,
+     "dir": 1,
+     "entry": 65587.99,
+     "ret_pct": -0.06683662664461067,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1785963600000,
+     "exit_t": 1786370400000,
+     "dir": 1,
+     "entry": 64822.88,
+     "ret_pct": -0.5421996091503307,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1787076000000,
+     "exit_t": 1787911200000,
+     "dir": 1,
+     "entry": 64670.02,
+     "ret_pct": 22.443786708276896,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1788112800000,
+     "exit_t": 1788285600000,
+     "dir": 1,
+     "entry": 79021.02,
+     "ret_pct": -2.359664260218369,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1788321600000,
+     "exit_t": 1788400800000,
+     "dir": -1,
+     "entry": 77563.5,
+     "ret_pct": -0.40124626016102066,
+     "r": null,
+     "result": "stop",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1789956000000,
+     "exit_t": 1790175600000,
+     "dir": 1,
+     "entry": 80996.98,
+     "ret_pct": 4.223797373679865,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1791165600000,
+     "exit_t": 1791216000000,
+     "dir": 1,
+     "entry": 86615.31,
+     "ret_pct": -1.6923562012304711,
+     "r": null,
+     "result": "rule exit",
+     "asset": "BTCUSDT"
+    },
+    {
+     "t": 1792414800000,
+     "exit_t": 1792483200000,
+     "dir": -1,
+     "entry": 82600.0,
+     "ret_pct": 1.0723734915254175,
+     "r": null,
+     "result": "end",
+     "asset": "BTCUSDT"
+    }
+   ],
+   "buy_and_hold_pct": {
+    "a": 93.36528345996496,
+    "b": 393.2923139422202
+   }
+  },
+  {
+   "key": "ibs_spy_ews",
+   "doc": "The Internal Bar Strength Indicator, Kinlay after Pagonidis (343659347)",
+   "assets": [
+    "SPY",
+    "EWS"
+   ],
+   "tf": "daily",
+   "rule": "IBS (343659347, Kinlay after Pagonidis), SPY and EWS: IBS < 0.2 -> buy at the close, IBS > 0.8 -> sell short at\n    the close; closed at the next close. Each signal day is its own one-day trade.",
+   "windows": {
+    "a": [
+     "2000-01-01",
+     "2013-01-01"
+    ],
+    "b": [
+     "2013-01-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 3081,
+    "win_rate_pct": 53.911067835118466,
+    "mean_ret_pct": 0.19501561407150936,
+    "total_ret_pct": 600.8431069543203,
+    "profit_factor": 1.4141095837471263,
+    "max_dd_pct_sum": 33.95857126753674
+   },
+   "b": {
+    "trades": 3363,
+    "win_rate_pct": 47.695509961344044,
+    "mean_ret_pct": -0.01710701750742926,
+    "total_ret_pct": -57.5308998774846,
+    "profit_factor": 0.955738956202841,
+    "max_dd_pct_sum": 103.73498527438713,
+    "mean_ci_low": -0.05517507982267494,
+    "by_asset_ret_pct": {
+     "SPY": 11.790154318690561,
+     "EWS": -69.32105419617523
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 3081,
+     "win_rate_pct": 54.81986368062317,
+     "mean_ret_pct": 0.2534681646079896,
+     "total_ret_pct": 780.935415157216,
+     "profit_factor": 1.568877530635835,
+     "max_dd_pct_sum": 25.368115996106326
+    },
+    "b": {
+     "trades": 3363,
+     "win_rate_pct": 50.31222123104371,
+     "mean_ret_pct": 0.042912898345332726,
+     "total_ret_pct": 144.31607713535396,
+     "profit_factor": 1.1203947105357805,
+     "max_dd_pct_sum": 40.2769745544509
+    }
+   },
+   "min_trades_b": 100,
+   "checks": {
+    "a_positive": true,
+    "b_positive": false,
+    "b_ci_above_zero": false,
+    "b_half_the_assets": true
+   },
+   "verdict": "FAIL",
+   "recent_b_trades": [
+    {
+     "t": 1787184000000,
+     "exit_t": 1787270400000,
+     "dir": 1,
+     "entry": 760.7109985351562,
+     "ret_pct": 0.38908208688594004,
+     "r": null,
+     "result": "next close",
+     "asset": "SPY"
+    },
+    {
+     "t": 1787616000000,
+     "exit_t": 1787702400000,
+     "dir": -1,
+     "entry": 34.2400016784668,
+     "ret_pct": 0.1045517168309479,
+     "r": null,
+     "result": "next close",
+     "asset": "EWS"
+    },
+    {
+     "t": 1787788800000,
+     "exit_t": 1787875200000,
+     "dir": -1,
+     "entry": 33.97999954223633,
+     "ret_pct": 0.0472167079251911,
+     "r": null,
+     "result": "next close",
+     "asset": "EWS"
+    },
+    {
+     "t": 1787875200000,
+     "exit_t": 1788134400000,
+     "dir": 1,
+     "entry": 767.4442749023438,
+     "ret_pct": -0.3189249079455383,
+     "r": null,
+     "result": "next close",
+     "asset": "SPY"
+    },
+    {
+     "t": 1788220800000,
+     "exit_t": 1788307200000,
+     "dir": 1,
+     "entry": 33.720001220703125,
+     "ret_pct": 1.3227743923409288,
+     "r": null,
+     "result": "next close",
+     "asset": "EWS"
+    },
+    {
+     "t": 1788307200000,
+     "exit_t": 1788393600000,
+     "dir": -1,
+     "entry": 34.20000076293945,
+     "ret_pct": -0.3632899141971819,
+     "r": null,
+     "result": "next close",
+     "asset": "EWS"
+    },
+    {
+     "t": 1788393600000,
+     "exit_t": 1788480000000,
+     "dir": -1,
+     "entry": 771.2548217773438,
+     "ret_pct": 0.3654617683315464,
+     "r": null,
+     "result": "next close",
+     "asset": "SPY"
+    },
+    {
+     "t": 1788393600000,
+     "exit_t": 1788480000000,
+     "dir": -1,
+     "entry": 34.290000915527344,
+     "ret_pct": -0.9169692948583895,
+     "r": null,
+     "result": "next close",
+     "asset": "EWS"
+    },
+    {
+     "t": 1788825600000,
+     "exit_t": 1788912000000,
+     "dir": 1,
+     "entry": 764.0626831054688,
+     "ret_pct": -0.4847252672725032,
+     "r": null,
+     "result": "next close",
+     "asset": "SPY"
+    },
+    {
+     "t": 1788825600000,
+     "exit_t": 1788912000000,
+     "dir": 1,
+     "entry": 34.27000045776367,
+     "ret_pct": -1.5582725221025966,
+     "r": null,
+     "result": "next close",
+     "asset": "EWS"
+    },
+    {
+     "t": 1789430400000,
+     "exit_t": 1789516800000,
+     "dir": 1,
+     "entry": 33.130001068115234,
+     "ret_pct": -1.3369297744538629,
+     "r": null,
+     "result": "next close",
+     "asset": "EWS"
+    },
+    {
+     "t": 1789689600000,
+     "exit_t": 1789948800000,
+     "dir": -1,
+     "entry": 761.6900024414062,
+     "ret_pct": -1.5706542714873317,
+     "r": null,
+     "result": "next close",
+     "asset": "SPY"
+    },
+    {
+     "t": 1789689600000,
+     "exit_t": 1789948800000,
+     "dir": -1,
+     "entry": 32.79999923706055,
+     "ret_pct": -1.1981116433983652,
+     "r": null,
+     "result": "next close",
+     "asset": "EWS"
+    },
+    {
+     "t": 1789948800000,
+     "exit_t": 1790035200000,
+     "dir": -1,
+     "entry": 773.5,
+     "ret_pct": -0.004485182068616625,
+     "r": null,
+     "result": "next close",
+     "asset": "SPY"
+    },
+    {
+     "t": 1789948800000,
+     "exit_t": 1790035200000,
+     "dir": -1,
+     "entry": 33.15999984741211,
+     "ret_pct": -1.3973923622075761,
+     "r": null,
+     "result": "next close",
+     "asset": "EWS"
+    },
+    {
+     "t": 1790294400000,
+     "exit_t": 1790553600000,
+     "dir": -1,
+     "entry": 771.3499755859375,
+     "ret_pct": 0.7242230394883745,
+     "r": null,
+     "result": "next close",
+     "asset": "SPY"
+    },
+    {
+     "t": 1790726400000,
+     "exit_t": 1790812800000,
+     "dir": 1,
+     "entry": 762.6300048828125,
+     "ret_pct": 0.15831049713762935,
+     "r": null,
+     "result": "next close",
+     "asset": "SPY"
+    },
+    {
+     "t": 1790726400000,
+     "exit_t": 1790812800000,
+     "dir": 1,
+     "entry": 33.2599983215332,
+     "ret_pct": -0.2802993470857198,
+     "r": null,
+     "result": "next close",
+     "asset": "EWS"
+    },
+    {
+     "t": 1790812800000,
+     "exit_t": 1790899200000,
+     "dir": -1,
+     "entry": 33.20000076293945,
+     "ret_pct": 0.623258053578359,
+     "r": null,
+     "result": "next close",
+     "asset": "EWS"
+    },
+    {
+     "t": 1791244800000,
+     "exit_t": 1791331200000,
+     "dir": 1,
+     "entry": 33.20000076293945,
+     "ret_pct": -2.267593986612464,
+     "r": null,
+     "result": "next close",
+     "asset": "EWS"
+    },
+    {
+     "t": 1791504000000,
+     "exit_t": 1791763200000,
+     "dir": -1,
+     "entry": 778.5700073242188,
+     "ret_pct": 0.04037719627432293,
+     "r": null,
+     "result": "next close",
+     "asset": "SPY"
+    },
+    {
+     "t": 1791504000000,
+     "exit_t": 1791763200000,
+     "dir": -1,
+     "entry": 31.600000381469727,
+     "ret_pct": 0.05831058347303932,
+     "r": null,
+     "result": "next close",
+     "asset": "EWS"
+    },
+    {
+     "t": 1792022400000,
+     "exit_t": 1792108800000,
+     "dir": -1,
+     "entry": 771.7899780273438,
+     "ret_pct": 1.0866264486844441,
+     "r": null,
+     "result": "next close",
+     "asset": "SPY"
+    },
+    {
+     "t": 1792022400000,
+     "exit_t": 1792108800000,
+     "dir": -1,
+     "entry": 31.450000762939453,
+     "ret_pct": 0.24993834018099967,
+     "r": null,
+     "result": "next close",
+     "asset": "EWS"
+    },
+    {
+     "t": 1792108800000,
+     "exit_t": 1792368000000,
+     "dir": 1,
+     "entry": 31.34000015258789,
+     "ret_pct": -0.450815601503128,
+     "r": null,
+     "result": "next close",
+     "asset": "EWS"
+    }
+   ]
+  },
+  {
+   "key": "ibs_qqq",
+   "doc": "The Internal Bar Strength Indicator, Llewelyn James' rule (343659347)",
+   "assets": [
+    "QQQ"
+   ],
+   "tf": "daily",
+   "rule": "IBS (343659347, Llewelyn James' rule), QQQ: IBS < 0.10 -> buy at the close; exit at the first close above the\n    previous day's high. Long only.",
+   "windows": {
+    "a": [
+     "2000-01-01",
+     "2013-01-01"
+    ],
+    "b": [
+     "2013-01-01",
+     "2026-10-21"
+    ]
+   },
+   "a": {
+    "trades": 259,
+    "win_rate_pct": 67.95366795366795,
+    "mean_ret_pct": 0.7145399171779964,
+    "total_ret_pct": 185.06583854910104,
+    "profit_factor": 1.7958721559500377,
+    "max_dd_pct_sum": 41.900696867780105
+   },
+   "b": {
+    "trades": 242,
+    "win_rate_pct": 79.33884297520662,
+    "mean_ret_pct": 0.8546774971440698,
+    "total_ret_pct": 206.8319543088649,
+    "profit_factor": 2.87711370431155,
+    "max_dd_pct_sum": 12.350998290841972,
+    "mean_ci_low": 0.5747526014810629,
+    "by_asset_ret_pct": {
+     "QQQ": 206.83195430886485
+    }
+   },
+   "gross": {
+    "a": {
+     "trades": 259,
+     "win_rate_pct": 67.95366795366795,
+     "mean_ret_pct": 0.7346133785158457,
+     "total_ret_pct": 190.26486503560406,
+     "profit_factor": 1.824031241675102,
+     "max_dd_pct_sum": 41.52484935271545
+    },
+    "b": {
+     "trades": 242,
+     "win_rate_pct": 79.33884297520662,
+     "mean_ret_pct": 0.8747649736414316,
+     "total_ret_pct": 211.69312362122645,
+     "profit_factor": 2.9386335305844415,
+     "max_dd_pct_sum": 12.232221512993249
+    }
+   },
+   "min_trades_b": 30,
+   "checks": {
+    "a_positive": true,
+    "b_positive": true,
+    "b_ci_above_zero": true,
+    "b_half_the_assets": true
+   },
+   "verdict": "PASS",
+   "recent_b_trades": [
+    {
+     "t": 1730073600000,
+     "exit_t": 1730160000000,
+     "dir": 1,
+     "entry": 490.4364318847656,
+     "ret_pct": 0.9407317533031185,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1730332800000,
+     "exit_t": 1730764800000,
+     "dir": 1,
+     "entry": 479.0021057128906,
+     "ret_pct": 1.7076369756996377,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1734480000000,
+     "exit_t": 1734998400000,
+     "dir": 1,
+     "entry": 511.2952575683594,
+     "ret_pct": 2.757157995676653,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1736985600000,
+     "exit_t": 1737072000000,
+     "dir": 1,
+     "entry": 508.7583312988281,
+     "ret_pct": 1.6676790836634745,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1738886400000,
+     "exit_t": 1739404800000,
+     "dir": 1,
+     "entry": 518.5153198242188,
+     "ret_pct": 2.4620023695301865,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1740096000000,
+     "exit_t": 1741910400000,
+     "dir": 1,
+     "entry": 521.6488647460938,
+     "ret_pct": -8.842879323527992,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1743120000000,
+     "exit_t": 1743465600000,
+     "dir": 1,
+     "entry": 465.6835632324219,
+     "ret_pct": 0.7817209775747274,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1743638400000,
+     "exit_t": 1744156800000,
+     "dir": 1,
+     "entry": 447.5304260253906,
+     "ret_pct": 3.3835736532076446,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1748390400000,
+     "exit_t": 1748822400000,
+     "dir": 1,
+     "entry": 515.3064575195312,
+     "ret_pct": 0.8086014241042133,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1752537600000,
+     "exit_t": 1752710400000,
+     "dir": 1,
+     "entry": 553.4747924804688,
+     "ret_pct": 0.8924121089560919,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1754352000000,
+     "exit_t": 1754438400000,
+     "dir": 1,
+     "entry": 557.004150390625,
+     "ret_pct": 1.2381971313471205,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1760054400000,
+     "exit_t": 1760918400000,
+     "dir": 1,
+     "entry": 586.7431640625,
+     "ret_pct": 3.718370768318565,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1761782400000,
+     "exit_t": 1762732800000,
+     "dir": 1,
+     "entry": 623.122314453125,
+     "ret_pct": -0.47040981714987284,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1763596800000,
+     "exit_t": 1763942400000,
+     "dir": 1,
+     "entry": 582.9310913085938,
+     "ret_pct": 3.3074816095459743,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1765929600000,
+     "exit_t": 1766102400000,
+     "dir": 1,
+     "entry": 597.60205078125,
+     "ret_pct": 2.7511751678461134,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1767052800000,
+     "exit_t": 1767657600000,
+     "dir": 1,
+     "entry": 617.3275146484375,
+     "ret_pct": 0.6240833626153244,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1770681600000,
+     "exit_t": 1771372800000,
+     "dir": 1,
+     "entry": 609.39453125,
+     "ret_pct": -0.9488036200762849,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1773273600000,
+     "exit_t": 1774915200000,
+     "dir": 1,
+     "entry": 595.2327880859375,
+     "ret_pct": -3.259846962160902,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1780617600000,
+     "exit_t": 1781136000000,
+     "dir": 1,
+     "entry": 703.5529174804688,
+     "ret_pct": 1.69031573753162,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1781568000000,
+     "exit_t": 1781740800000,
+     "dir": 1,
+     "entry": 728.2998657226562,
+     "ret_pct": 1.454116273544488,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1782864000000,
+     "exit_t": 1783555200000,
+     "dir": 1,
+     "entry": 724.4151000976562,
+     "ret_pct": -0.2805896341648842,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1784505600000,
+     "exit_t": 1784592000000,
+     "dir": 1,
+     "entry": 695.33544921875,
+     "ret_pct": 1.8345373704308863,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1785283200000,
+     "exit_t": 1785369600000,
+     "dir": 1,
+     "entry": 661.0411376953125,
+     "ret_pct": 3.277090191974566,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1785888000000,
+     "exit_t": 1786060800000,
+     "dir": 1,
+     "entry": 716.5533447265625,
+     "ret_pct": 0.7787524857304184,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    },
+    {
+     "t": 1790726400000,
+     "exit_t": 1790899200000,
+     "dir": 1,
+     "entry": 739.77001953125,
+     "ret_pct": 1.3059548643311176,
+     "r": null,
+     "result": "close exit",
+     "asset": "QQQ"
+    }
+   ],
+   "random_timing": {
+    "a": {
+     "rule_mean_pct": 0.7145399171779964,
+     "random_mean_pct": 0.042181917683619674,
+     "edge_pct": 0.6723579994943767,
+     "z": 3.051488137771852
+    },
+    "b": {
+     "rule_mean_pct": 0.8546774971440698,
+     "random_mean_pct": 0.30150446567111466,
+     "edge_pct": 0.5531730314729552,
+     "z": 3.9658538404808694
+    }
+   },
+   "robustness": {
+    "qqq_since_article_2016_02": {
+     "trades": 188,
+     "mean_ret_pct": 0.9462295619070239,
+     "profit_factor": 3.0254344382989595,
+     "win_rate_pct": 79.25531914893617
+    },
+    "SPY": {
+     "a": {
+      "trades": 256,
+      "mean_ret_pct": 0.5673266163380587,
+      "profit_factor": 1.8930934615678767,
+      "win_rate_pct": 68.359375
+     },
+     "b": {
+      "trades": 244,
+      "mean_ret_pct": 0.641546266817247,
+      "profit_factor": 2.7520378022710332,
+      "win_rate_pct": 77.45901639344262
+     }
+    },
+    "DIA": {
+     "a": {
+      "trades": 247,
+      "mean_ret_pct": 0.4746909697524176,
+      "profit_factor": 1.7338187171845978,
+      "win_rate_pct": 67.20647773279353
+     },
+     "b": {
+      "trades": 249,
+      "mean_ret_pct": 0.41623332585915895,
+      "profit_factor": 1.9611710963040558,
+      "win_rate_pct": 72.69076305220884
+     }
+    },
+    "IWM": {
+     "a": {
+      "trades": 272,
+      "mean_ret_pct": 0.3515205393737849,
+      "profit_factor": 1.3598431530035917,
+      "win_rate_pct": 67.27941176470588
+     },
+     "b": {
+      "trades": 246,
+      "mean_ret_pct": 0.631144011894292,
+      "profit_factor": 2.0146463097013867,
+      "win_rate_pct": 71.95121951219512
+     }
+    },
+    "NAS100_cfd_2015_2026": {
+     "no_swap": {
+      "trades": 195,
+      "mean_ret_pct": 0.7889739850408461,
+      "profit_factor": 2.371993216476441,
+      "win_rate_pct": 74.87179487179488
+     },
+     "with_swap": {
+      "trades": 195,
+      "mean_ret_pct": 0.6930459204114116,
+      "profit_factor": 2.119464417964403,
+      "win_rate_pct": 74.35897435897436
+     }
+    },
+    "US500_cfd_2015_2026": {
+     "no_swap": {
+      "trades": 182,
+      "mean_ret_pct": 0.3621075708897121,
+      "profit_factor": 1.7325711960343229,
+      "win_rate_pct": 67.58241758241759
+     },
+     "with_swap": {
+      "trades": 182,
+      "mean_ret_pct": 0.26385647951533303,
+      "profit_factor": 1.4835738615829301,
+      "win_rate_pct": 65.93406593406593
+     }
+    }
+   },
+   "buy_and_hold_pct": {
+    "a": -28.139115829725082,
+    "b": 1105.0457983987578
+   }
+  }
+ ],
+ "headline": "\u201cIBS < 0.10 on QQQ\u201d passes both windows (PF 1.80 in 2000\u20132012, 2.88 in 2013\u20132026) and beats random entry days in both (z 3.1 and 4.0). It held after the article (2016 \u2192: PF 3.03), works on SPY, DIA and IWM too, and on your broker's NAS100 CFD with swap (PF 2.12). Long only and without a stop: worst trade \u221222%. A forward paper-test candidate. NR7, the IBS one-day rule, the SPY intraday-momentum paper and the Bitcoin thesis fail."
+}

@@ -1,0 +1,51 @@
+# PaperLab on an Oracle Cloud Always Free VM (Ampere A1, Ubuntu 24.04, arm64). Lives in /opt/paperlab on the server:
+#   /opt/paperlab/app             the project (uploaded by push.ps1)
+#   /opt/paperlab/data            everything PaperLab stores (the old Railway /data volume)
+#   /opt/paperlab/paperlab.env    the settings and secrets (uploaded once, chmod 600, never in git or the image)
+#   /opt/paperlab/.env            SITE_ADDRESS for Caddy (the public HTTPS name)
+services:
+  paperlab:
+    build: ./app
+    container_name: paperlab
+    restart: unless-stopped
+    environment:                           # these win over the settings file
+      DATA_DIR: /data
+      BIND_HOST: 0.0.0.0
+      PORT: "8080"
+    volumes:
+      - ./data:/data
+      # the app reads /srv/paperlab/.env itself (app/config.py) -- not compose's env_file, which would rewrite any '$'
+      - ./paperlab.env:/srv/paperlab/.env:ro
+    expose:
+      - "8080"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/api/health', timeout=5)"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 180s
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+
+  caddy:                                   # HTTPS in front (free Let's Encrypt certificate, renewed automatically)
+    image: caddy:2
+    container_name: caddy
+    restart: unless-stopped
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - paperlab
+
+volumes:
+  caddy_data:
+  caddy_config:
