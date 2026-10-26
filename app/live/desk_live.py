@@ -137,12 +137,23 @@ class DeskLive:
         self.loop.run_until_complete(self._ticker())
 
     async def _ticker(self) -> None:
+        fails = 0
         while not self.stop_event.is_set():
             try:
                 async with self.op_lock:
                     await self.tick()
             except Exception as exc:
-                log.error("%s live tick: %s", self.NAME, self.providers.redact(f"{type(exc).__name__}: {exc}"))
+                fails += 1
+                err = self.providers.redact(f"{type(exc).__name__}: {exc}")
+                log.error("%s live tick: %s", self.NAME, err)
+                if fails in (4, 40) or fails % 240 == 0:           # ~1 min, ~10 min, then hourly (TICK_S = 15)
+                    self._alert(f"⚠️ {self.NAME} live: the last {fails} checks failed ({err[:140]}). It keeps retrying; "
+                                "positions are not being managed meanwhile.")
+            else:
+                if fails >= 4:
+                    self._alert(f"✅ {self.NAME} live: checks work again after {fails} failures.")
+                fails = 0
+                self.last_ok_ts = self.now()
             await asyncio.sleep(TICK_S)
 
     def stop(self) -> None:

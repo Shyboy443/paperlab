@@ -149,3 +149,79 @@ def test_worker2_minimum_is_200_and_worker1_stays_500(tmp_path):
     assert v["status"] == "ARMED"
     from app.ensemble.live import EnsembleLive
     assert EnsembleLive.MIN_AMOUNT == 500
+
+
+# -- reliability (system review 2026-10-25) ------------------------------------------------------------------------------
+from app.exchange.client import ExchangeClient  # noqa: E402
+
+A20 = {"AAAUSDT": {"units": 20.0, "price": 50.0, "w": 0.1}}
+
+
+class LossyEx(Ex):
+    """Fills the order, then the answer is lost (timeout); the order can be looked up by client id."""
+    lose = False
+    _result = staticmethod(ExchangeClient._result)
+
+    async def market_order(self, intent):
+        r = await super().market_order(intent)
+        self.done = {intent.client_id: r}
+        if self.lose:
+            raise TimeoutError("read timed out")
+        return r
+
+    async def get_order(self, symbol, cid):
+        r = self.done[cid]
+        return {"status": "FILLED", "executedQty": str(r.executed_qty), "avgPrice": str(self.mark), "orderId": "x"}
+
+
+def armed(tmp_path):
+    k = make(tmp_path, ev_open(A20), OPEN_T + 60_000)
+    asyncio.run(k.live.arm(k.acct, 1000, None, "GO LIVE WORKER 2"))
+    return k
+
+
+def test_a_lost_order_answer_is_looked_up_not_halted(tmp_path):
+    k = make(tmp_path, ev_open(A20), OPEN_T + 60_000)
+    k.ex.__class__ = LossyEx
+    k.ex.lose = True
+    asyncio.run(k.live.arm(k.acct, 1000, None, "GO LIVE WORKER 2"))
+    st = k.live.state()
+    assert st["positions"]["AAAUSDT"] == pytest.approx(1.9) and k.ex.pos["AAAUSDT"] == pytest.approx(1.9)
+    asyncio.run(k.live.tick())
+    assert k.live.state()["status"] == "ARMED"                        # recorded, so reconciliation agrees
+
+
+def test_the_close_runs_on_the_clock_when_the_book_is_late(tmp_path):
+    k = armed(tmp_path)
+    assert k.ex.pos["AAAUSDT"] > 0
+    k.live.clock = lambda: (OPEN_T + 10 * HOUR + 60_000) / 1000      # 02:01, the book still says "open"
+    asyncio.run(k.live.tick())
+    assert k.ex.pos["AAAUSDT"] > 0                                     # inside the grace: wait for the book
+    k.live.clock = lambda: (OPEN_T + 10 * HOUR + 6 * 60_000) / 1000    # 02:06
+    asyncio.run(k.live.tick())
+    assert not any(k.ex.pos.values()) and k.live.state()["last_day"] == OPEN_T + 10 * HOUR
+    n = len(k.ex.orders)
+    k.book.ev = {"kind": "close", "day": OPEN_T + 10 * HOUR, "date": "d 02:00", "equity": 10_000.0, "targets": {}, "trades": {}}
+    asyncio.run(k.live.tick())                                          # the book's late close: already done
+    assert len(k.ex.orders) == n
+
+
+def test_a_failed_close_is_retried_until_it_works(tmp_path):
+    k = armed(tmp_path)
+    k.ex.fail_close = True
+    k.book.ev = {"kind": "close", "day": OPEN_T + 10 * HOUR, "date": "d 02:00", "equity": 10_000.0, "targets": {}, "trades": {}}
+    k.live.clock = lambda: (OPEN_T + 10 * HOUR + 60_000) / 1000
+    asyncio.run(k.live.tick())
+    assert k.ex.pos["AAAUSDT"] > 0 and k.live.state()["last_day"] == OPEN_T
+    k.ex.fail_close = False
+    asyncio.run(k.live.tick())
+    assert not any(k.ex.pos.values()) and k.live.state()["last_day"] == OPEN_T + 10 * HOUR
+
+
+def test_switch_off_closes_what_the_account_holds_even_if_unrecorded(tmp_path):
+    k = armed(tmp_path)
+    k.ex.pos["ZZZUSDT"] = -3.0                                          # e.g. an order whose fill was never recorded
+    asyncio.run(k.live.tick())
+    assert k.live.state()["status"] == "HALTED"
+    v = asyncio.run(k.live.disarm("switched off by the operator"))
+    assert v["status"] == "OFF" and not any(k.ex.pos.values())

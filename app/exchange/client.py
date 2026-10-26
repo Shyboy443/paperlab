@@ -289,6 +289,13 @@ class ExchangeClient:
         import asyncio
         await asyncio.sleep(s)
 
+    async def sync_time(self) -> None:
+        """Refresh ccxt's server-time offset (signed calls use it; it is otherwise only set by load_markets). Best effort."""
+        try:
+            await self.ex.load_time_difference()
+        except Exception as exc:
+            log.warning("time sync failed: %s", str(exc)[:120])
+
     async def get_order(self, symbol: str, client_id: str) -> dict[str, Any]:
         params = {"symbol": symbol, "origClientOrderId": client_id}
         method = self.ex.fapiPrivateGetOrder if self.kind == "futures" else self.ex.privateGetOrder

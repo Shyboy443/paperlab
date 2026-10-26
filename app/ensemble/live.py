@@ -13,19 +13,23 @@ How it trades (the research book, scaled to the account):
   when the weekly weights change), just after 00:00 UTC, with market orders: reductions first, then additions;
 - an order below the exchange minimum is skipped (closing a position is always allowed: reduce-only is exempt);
 - allocation equity = amount + the account's equity change since switch-on (a dedicated account);
-- every TICK_S: reconciliation (a position nobody recorded, or a different size -> HALTED, nothing traded; a recorded
+- every TICK_S (15 s): reconciliation (a position nobody recorded, or a different size -> HALTED, nothing traded; a recorded
   position that vanished is booked as closed on the exchange, e.g. a 1x short liquidated), the loss limit
   (only if one was set: allocation equity <= amount - loss limit -> close everything, OFF), the day's trades;
-- switching off and the kill switch close every position (reduce-only market) and release the account.
+- switching off and the kill switch close every position the account holds (reduce-only market; the account is
+  dedicated, so exchange truth, not the bot's record) and release the account only once it is flat;
+- an order whose answer was lost (timeout) is looked up by its client id before it counts as failed (never re-sent);
+  a failed close keeps the day open and is retried every tick.
 Mainnet also needs LIVE_MIRROR_MAINNET_ENABLED=true and the testnet gate (app/live/desk_live.py mainnet_gate).
 """
 from __future__ import annotations
 
+import asyncio
 import logging
 import uuid
 from typing import Any
 
-from app.live.desk_live import LIVE_STATES, DeskLive, LiveError
+from app.live.desk_live import LIVE_STATES, TICK_S, DeskLive, LiveError
 
 log = logging.getLogger(__name__)
 
@@ -72,7 +76,7 @@ class EnsembleLive(DeskLive):
                 "skipped": st.get("skipped") or [], "trades": (st.get("trades") or [])[-80:],
                 "log": (st.get("log") or [])[-60:], "confirm_phrase": self.CONFIRM, "book_day": today.get("date"),
                 "book_positions": len(today.get("targets", {})),
-                "rules": {"leverage": 1, "scale": SCALE, "min_amount": self.MIN_AMOUNT, "tick_s": 60, "isolated": True},
+                "rules": {"leverage": 1, "scale": SCALE, "min_amount": self.MIN_AMOUNT, "tick_s": TICK_S, "isolated": True},
                 "mainnet": self.mainnet_gate(), "max_amount": self.providers.max_amount(),
                 "accounts": self.accounts.public(), "shared_keys": self.accounts.shared_keys()}
 
@@ -154,13 +158,22 @@ class EnsembleLive(DeskLive):
 
     async def _close_and_off(self, st: dict[str, Any], reason: str, c: Any | None = None) -> bool:
         c = c or self._client(st["account_id"])
-        left = await self._flatten(st, c, reason)
+        st.update(status="CLOSING", reason=reason)          # first: if anything below fails, the tick keeps closing
+        self._put(st)
+        try:
+            left = await self._flatten(st, c, reason)
+        except Exception as exc:
+            st = self.state()
+            self._log(st, "error", step="close all", error=self.providers.redact(f"{type(exc).__name__}: {exc}"))
+            self._put(st)
+            left = ["(exchange unreachable)"]
         st = self.state()
         if left:
-            st.update(status="CLOSING", reason=reason)
-            self._put(st)
-            self._alert(f"🚨 {self.LABEL} live: {len(left)} position(s) could not be closed ({', '.join(left[:5])}); retrying. "
-                        "Check the account on Binance.")
+            if self.now() - int(st.get("closing_alert_ts") or 0) >= 10 * 60_000:
+                st["closing_alert_ts"] = self.now()
+                self._put(st)
+                self._alert(f"🚨 {self.LABEL} live: {len(left)} position(s) could not be closed ({', '.join(left[:5])}); "
+                            "retrying every tick. Check the account on Binance.")
             return False
         self._off(st, reason)
         return True
@@ -169,23 +182,22 @@ class EnsembleLive(DeskLive):
         from app.core.types import OrderIntent
         failed = []
         held = await c.fetch_positions([], all_symbols=True)
-        for sym, q in list((st.get("positions") or {}).items()):
+        pos = st.setdefault("positions", {})
+        for sym in sorted(set(pos) | set(held)):           # the account is dedicated: close whatever it holds
             ex = float(getattr(held.get(sym), "qty", 0) or 0)
-            if not q or not ex:
-                st["positions"][sym] = 0.0
+            if not ex:
+                pos[sym] = 0.0
                 continue
-            qty = min(abs(ex), abs(q)) if ex * q > 0 else 0.0
-            if qty <= 0:
-                st["positions"][sym] = 0.0
-                continue
+            if abs(ex - float(pos.get(sym) or 0)) > QTY_TOL:
+                self._log(st, "unrecorded", symbol=sym, exchange=ex, bot=float(pos.get(sym) or 0))
             try:
                 px = float(getattr(held.get(sym), "mark", 0) or 0)
-                r = await c.market_order(OrderIntent(sym, "SELL" if q > 0 else "BUY", qty, True, "flatten",
+                r = await self._order(c, OrderIntent(sym, "SELL" if ex > 0 else "BUY", abs(ex), True, "flatten",
                                                      f"en{uuid.uuid4().hex[:12]}", px))
-                if str(r.status).upper() != "FILLED":
+                if str(r.status).upper() != "FILLED" or float(r.executed_qty or 0) <= 0:
                     raise RuntimeError(f"close answered {r.status}")
-                self._fill(st, sym, -q, float(r.avg_price or px), reason)
-                st["positions"][sym] = 0.0
+                self._fill(st, sym, -ex, float(r.avg_price or px), reason)
+                pos[sym] = 0.0
             except Exception as exc:
                 failed.append(sym)
                 self._log(st, "error", step=f"close {sym}", error=self.providers.redact(f"{type(exc).__name__}: {exc}"))
@@ -193,8 +205,16 @@ class EnsembleLive(DeskLive):
         return failed
 
     # -- the loop ----------------------------------------------------------------------------------------------------------
+    def _event(self, st: dict[str, Any]) -> dict[str, Any] | None:
+        return self.book.latest()
+
     async def tick(self) -> None:
         st = self.state()
+        if st.get("status") == "HALTED" and self.now() - int(st.get("halt_alert_ts") or 0) >= 3_600_000:
+            st["halt_alert_ts"] = self.now()               # HALTED trades nothing (not even the daily close): keep nagging
+            self._put(st)
+            self._alert(f"🚨 {self.LABEL} live is still HALTED ({(st.get('reason') or '')[:160]}). Switch it off to close "
+                        "every position on the account, then check Binance.")
         if st.get("status") not in ("ARMED", "CLOSING"):
             return
         c = self._client(st["account_id"])
@@ -206,17 +226,21 @@ class EnsembleLive(DeskLive):
         st = self.state()
         if await self._loss_hit_all(st, c):
             return
-        today = self.book.latest()
+        today = self._event(st)
         if today and today.get("day") and today["day"] != st.get("last_day"):
             await self._rebalance(self.state(), c, today, full=False)
 
     async def _equity(self, st: dict[str, Any], c: Any) -> float:
         bal = await c.fetch_balance()
-        return float(st["amount"]) + float(bal.get("wallet") or 0) + float(bal.get("upnl") or 0) - float(st["base_equity"])
+        held = await c.fetch_positions([], all_symbols=True)       # isolated: crossUnPnl misses these
+        upnl = sum(float(getattr(p, "upnl", 0) or 0) for p in held.values())
+        return float(st["amount"]) + float(bal.get("wallet") or 0) + upnl - float(st["base_equity"])
 
     async def _rebalance(self, st: dict[str, Any], c: Any, today: dict[str, Any], full: bool) -> None:
         """Move the account to the book's units for the coins the book trades today (all coins when `full`)."""
         from app.core.types import OrderIntent
+        if hasattr(c, "sync_time"):
+            await c.sync_time()                                                 # signed orders: no -1021 on the day
         eq = await self._equity(st, c)
         st["equity"] = eq
         ratio = SCALE * eq / float(today["equity"])
@@ -247,7 +271,7 @@ class EnsembleLive(DeskLive):
                 continue
             want = (1 if want > 0 else -1) * r.round_qty_down(abs(want)) if want else 0.0
             plan.append((s, have, want, r, float(t["price"]) if t else 0.0))
-        skipped = []
+        skipped, close_failed = [], []
         # reductions / closes first (frees margin), then increases and new positions
         order = sorted(plan, key=lambda x: 0 if abs(x[2]) < abs(x[1]) or x[1] * x[2] < 0 else 1)
         for s, have, want, r, ref in order:
@@ -278,7 +302,7 @@ class EnsembleLive(DeskLive):
                         continue
                 cid = f"en{uuid.uuid4().hex[:12]}"
                 try:
-                    res = await c.market_order(OrderIntent(s, "BUY" if q > 0 else "SELL", qty, reduce,
+                    res = await self._order(c, OrderIntent(s, "BUY" if q > 0 else "SELL", qty, reduce,
                                                            "flatten" if reduce else "net_delta", cid, px))
                     got = float(res.executed_qty or 0)
                     if got <= 0:
@@ -289,7 +313,19 @@ class EnsembleLive(DeskLive):
                 except Exception as exc:
                     skipped.append({"symbol": s, "qty": round(q, 8), "why": self.providers.redact(f"{type(exc).__name__}: {exc}")[:160]})
                     self._log(st, "error", step=f"order {s}", error=self.providers.redact(f"{type(exc).__name__}: {exc}"))
+                    if reduce:
+                        close_failed.append(s)
                 self._put(st)
+        if close_failed:                                    # the day stays open: the next tick tries the closes again
+            first = st.get("close_retry_day") != today["day"]
+            st["close_retry_day"] = today["day"]
+            st["skipped"] = skipped[-50:]
+            self._put(st)
+            if first:
+                self._alert(f"🚨 {self.LABEL} live {today['date']}: closing {', '.join(close_failed[:5])} failed; retrying "
+                            "every tick. Check the account on Binance.")
+            return
+        st.pop("close_retry_day", None)
         st["last_day"] = today["day"]
         st["skipped"] = skipped[-50:]
         self._log(st, "rebalance", day=today["date"], coins=len(coins), skipped=len(skipped), equity=round(eq, 2))
@@ -297,6 +333,25 @@ class EnsembleLive(DeskLive):
         n = sum(1 for q in pos.values() if q)
         self._alert(f"🔁 {self.LABEL} live {today['date']}: traded {len(coins) - len(skipped)} coin(s), {n} open, "
                     f"equity {eq:.2f} USDT" + (f" · {len(skipped)} skipped (below minimum / error)" if skipped else ""))
+
+    async def _order(self, c: Any, intent: Any) -> Any:
+        """A market order that survives a lost answer: when sending raised (timeout, network), Binance may still have
+        filled it, so the order is looked up by its client id before the error counts. It is never sent twice."""
+        try:
+            return await c.market_order(intent)
+        except Exception as exc:
+            if not hasattr(c, "get_order"):
+                raise
+            for _ in range(3):
+                await asyncio.sleep(1.0)
+                try:
+                    r = await c.get_order(intent.symbol, intent.client_id)
+                except Exception:
+                    continue
+                log.warning("%s live: order %s answer lost (%s); found it: %s", self.NAME, intent.client_id,
+                            type(exc).__name__, r.get("status"))
+                return c._result(intent.client_id, r)
+            raise
 
     def _fill(self, st: dict[str, Any], sym: str, signed: float, price: float, why: str, cid: str | None = None) -> None:
         st.setdefault("trades", []).append({"ts": self.now(), "symbol": sym, "qty": signed, "price": price,

@@ -121,6 +121,7 @@ class Worker2Service:
         self.stop_event = threading.Event()
         self.rest = rest or Rest(self.stop_event)
         self.clock, self.telegram = clock, telegram
+        self._err_alert_ts = 0
         self.thread: threading.Thread | None = None
         self.lock = threading.RLock()
         self.status: dict[str, Any] = {"phase": "starting"}
@@ -148,6 +149,15 @@ class Worker2Service:
             except Exception as exc:
                 log.exception("worker2 cycle")
                 self.status = {"phase": "error", "error": f"{type(exc).__name__}: {exc}"[:300], "ts": self.now()}
+                if self.now() - self._err_alert_ts >= 3_600_000:
+                    self._err_alert_ts = self.now()
+                    t = self.telegram()
+                    if t is not None and hasattr(t, "live_alert"):
+                        try:
+                            t.live_alert(f"⚠️ Worker 2 paper book: update failed ({type(exc).__name__}: {str(exc)[:120]}). "
+                                         "It retries every 30 s; the live 02:00 close runs on the clock regardless.")
+                        except Exception:
+                            pass
             self.stop_event.wait(TICK_S)
 
     # -- which event is current --------------------------------------------------------------------------------------------
@@ -209,26 +219,50 @@ class Worker2Service:
             self.store.set("universes", {str(k): v for k, v in saved.items()})
         return {d: saved[d] for d in days}
 
+    @staticmethod
+    def _tolerate(syms: list[str], failed: list[str], what: str) -> None:
+        """A delisted coin from an old universe must not block the day (its bars stay as stored); a general outage must."""
+        if failed:
+            log.warning("worker2 %s refresh failed for %d coin(s): %s", what, len(failed), ", ".join(failed[:8]))
+            if len(failed) > max(3, len(syms) // 4):
+                raise RuntimeError(f"{what} refresh failed for {len(failed)} of {len(syms)} coins")
+
     def refresh_h1(self, syms: list[str], start: int, now: int) -> None:
         end = now // HOUR * HOUR
+        failed = []
         for s in syms:
             last = self.store.last_h1(s)
             since = start if last is None or last < start else last + HOUR
             if since >= end:
                 continue
-            rows = self.rest.klines(s, "1h", since, end)
+            try:
+                rows = self.rest.klines(s, "1h", since, end)
+            except InterruptedError:
+                raise
+            except Exception:
+                failed.append(s)
+                continue
             if rows:
                 self.store.save_h1(s, rows, now)
+        self._tolerate(syms, failed, "1h bar")
 
     def refresh_funding(self, syms: list[str], start: int, now: int) -> None:
+        failed = []
         for s in syms:
             last = self.store.mark(f"fund:{s}")
             since = start if last is None else last + 1
             if since >= now:
                 continue
-            rows = self.rest.funding(s, since, now)
+            try:
+                rows = self.rest.funding(s, since, now)
+            except InterruptedError:
+                raise
+            except Exception:
+                failed.append(s)
+                continue
             self.store.save_funding(s, rows)
             self.store.set_mark(f"fund:{s}", max([t for t, _ in rows], default=now - 1))
+        self._tolerate(syms, failed, "funding")
 
     # -- the book --------------------------------------------------------------------------------------------------------------
     def compute(self, now: int, kind: str, ets: int, sday: int) -> dict[str, Any]:

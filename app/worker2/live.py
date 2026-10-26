@@ -6,16 +6,23 @@ unless one is set), with two differences:
 - the book has two events a day: 16:00 UTC opens the day's positions, 02:00 UTC closes them; every event moves the
   account to the book's targets (closes first);
 - an OPEN is only placed while it is fresh (MAX_LATE_MS after 16:00). After a restart or a late switch-on the bot waits
-  for the next 16:00 instead of buying a move hours late. Closing is always allowed.
+  for the next 16:00 instead of buying a move hours late. Closing is always allowed;
+- the 02:00 close does not wait for the paper book: CLOSE_GRACE_MS after 02:00 the positions are closed on the clock
+  even if the book's data refresh is failing (the book's own close event then finds the day already done).
 Ships OFF; the operator switches it on from the private dashboard.
 """
 from __future__ import annotations
 
+import logging
 from typing import Any
 
 from app.ensemble.live import EnsembleLive
 
+log = logging.getLogger(__name__)
+
 MAX_LATE_MS = 15 * 60_000
+CLOSE_GRACE_MS = 5 * 60_000          # the book normally posts the close ~1 min after 02:00
+HOLD_MS = 10 * 3_600_000             # 16:00 -> 02:00
 
 
 class Worker2Live(EnsembleLive):
@@ -29,6 +36,18 @@ class Worker2Live(EnsembleLive):
     def symbols(self) -> list[str]:
         t = self.book.latest() or {}
         return sorted(t.get("targets", {}))
+
+    def _event(self, st: dict[str, Any]) -> dict[str, Any] | None:
+        t = self.book.latest()
+        if not t or t.get("kind") != "open" or not any((st.get("positions") or {}).values()):
+            return t
+        due = int(t["day"]) + HOLD_MS
+        if self.now() < due + CLOSE_GRACE_MS:
+            return t
+        if st.get("last_day") != due:
+            log.warning("Worker 2 live: the paper book has not posted the %s close; closing on the clock", t.get("date"))
+        return {**t, "kind": "close", "day": due, "date": f"{t.get('signal_day') or t.get('date')} 02:00 close (on the clock)",
+                "targets": {}, "trades": {}}
 
     def _book_ready(self, today: dict[str, Any] | None) -> bool:
         return today is not None

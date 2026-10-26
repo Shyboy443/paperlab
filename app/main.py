@@ -36,8 +36,15 @@ DASHBOARD_DIR = Path(__file__).resolve().parent / "dashboard"
 log = logging.getLogger("paperlab")
 
 
+AUTH_MAX_FAILS, AUTH_WINDOW_S = 30, 600          # wrong passwords per address per 10 min before a 429
+# no framing (clickjacking), no MIME sniffing, HTTPS only, no referrer leaks; scripts are not restricted (CDN charts)
+SECURITY_HEADERS = [(b"x-frame-options", b"DENY"), (b"content-security-policy", b"frame-ancestors 'none'"),
+                    (b"x-content-type-options", b"nosniff"), (b"referrer-policy", b"no-referrer"),
+                    (b"strict-transport-security", b"max-age=31536000")]
+
+
 class BasicAuthMiddleware:
-    """Pure ASGI middleware: Basic auth + CSRF header on POST."""
+    """Pure ASGI middleware: Basic auth (with a brute-force brake) + CSRF header on POST + security headers."""
 
     def __init__(self, app: Any, password: str, allow_no_auth: bool,
                  exempt: tuple[str, ...] = ("/api/health", "/", "/favicon.ico", "/lab"),
@@ -53,12 +60,26 @@ class BasicAuthMiddleware:
         # behind this check.
         self.app = app
         self.password = password
+        self.fails: dict[str, list[float]] = {}          # client ip -> times of wrong passwords (brute-force brake)
         self.allow_no_auth = allow_no_auth
         self.exempt = exempt
         self.exempt_prefixes = exempt_prefixes
 
     def _authorized(self, headers: dict[bytes, bytes]) -> bool:
         return basic_ok(headers.get(b"authorization", b""), self.password, self.allow_no_auth)
+
+    @staticmethod
+    def _ip(scope: dict[str, Any], headers: dict[bytes, bytes]) -> str:
+        fwd = headers.get(b"x-forwarded-for", b"").decode("latin-1").split(",")[0].strip()   # Railway's edge proxy
+        return fwd or str((scope.get("client") or ("?",))[0])
+
+    def _locked(self, ip: str, now: float) -> bool:
+        recent = [t for t in self.fails.get(ip, []) if now - t < AUTH_WINDOW_S]
+        if recent:
+            self.fails[ip] = recent
+        else:
+            self.fails.pop(ip, None)
+        return len(recent) >= AUTH_MAX_FAILS
 
     async def __call__(self, scope: dict[str, Any], receive: Any, send: Any) -> None:
         if scope["type"] != "http":
@@ -67,19 +88,34 @@ class BasicAuthMiddleware:
         path = scope.get("path", "")
         headers = {k.lower(): v for k, v in scope.get("headers", [])}
         exempt = path in self.exempt or any(path.startswith(p) for p in self.exempt_prefixes)
-        if not exempt and not self._authorized(headers):
-            await self._respond(send, 401, b'{"ok":false,"error":"unauthorized"}',
-                               [(b"www-authenticate", b'Basic realm="paperlab"')])
-            return
+        if not exempt:
+            ip, now = self._ip(scope, headers), time.time()
+            if self._locked(ip, now):
+                await self._respond(send, 429, b'{"ok":false,"error":"too many wrong passwords; try again in 10 minutes"}')
+                return
+            if not self._authorized(headers):
+                if headers.get(b"authorization"):                 # a wrong password, not just a page asking for one
+                    self.fails.setdefault(ip, []).append(now)
+                    if len(self.fails[ip]) == AUTH_MAX_FAILS:
+                        log.warning("dashboard: %d wrong passwords in %d s from one address; locked for a while",
+                                    AUTH_MAX_FAILS, AUTH_WINDOW_S)
+                await self._respond(send, 401, b'{"ok":false,"error":"unauthorized"}',
+                                   [(b"www-authenticate", b'Basic realm="paperlab"')])
+                return
         if scope.get("method") == "POST" and path.startswith("/api/") and headers.get(b"x-paperlab") != b"1":
             await self._respond(send, 403, b'{"ok":false,"error":"missing X-PaperLab header"}')
             return
-        await self.app(scope, receive, send)
+
+        async def send_with_headers(message: dict[str, Any]) -> None:
+            if message.get("type") == "http.response.start":
+                message = {**message, "headers": [*message.get("headers", []), *SECURITY_HEADERS]}
+            await send(message)
+        await self.app(scope, receive, send_with_headers)
 
     @staticmethod
     async def _respond(send: Any, status: int, body: bytes, extra: list[tuple[bytes, bytes]] | None = None) -> None:
         headers = [(b"content-type", b"application/json"), (b"content-length", str(len(body)).encode())]
-        headers += extra or []
+        headers += (extra or []) + SECURITY_HEADERS
         await send({"type": "http.response.start", "status": status, "headers": headers})
         await send({"type": "http.response.body", "body": body})
 

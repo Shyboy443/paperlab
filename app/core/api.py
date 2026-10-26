@@ -2,6 +2,7 @@
 the `X-PaperLab: 1` header (CSRF guard, because browsers auto-send Basic credentials)."""
 from __future__ import annotations
 
+import asyncio
 import time
 from typing import Any
 
@@ -109,7 +110,10 @@ async def strategies_arm_all(request: Request, body: dict[str, Any] = Body(defau
 
 @router.post("/kill")
 async def kill(request: Request) -> dict[str, Any]:
-    out = await _engine(request).kill()
+    try:
+        out = await _engine(request).kill()
+    except Exception as exc:                    # never let one step stop the live switches below from closing
+        out = {"engine": f"FAILED: {type(exc).__name__}"}
     breakout = getattr(request.app.state, "video_breakout", None)
     if breakout is not None:
         try:
@@ -118,7 +122,10 @@ async def kill(request: Request) -> dict[str, Any]:
             out = {**out, "video_breakout": {"status": "BLOCKED", "error": str(exc)}}
     mirror = getattr(request.app.state, "mirror", None)
     if mirror is not None:                     # every live mirror stops and closes its exchange position
-        out = {**out, "live_mirrors_stopped": await mirror.disarm_all("kill switch")}
+        try:
+            out = {**out, "live_mirrors_stopped": await mirror.disarm_all("kill switch")}
+        except Exception as exc:
+            out = {**out, "live_mirrors_stopped": f"FAILED: {type(exc).__name__}"}
     for name in ("macd_live", "donchian_live", *getattr(request.app.state, "extra_live_names", ())):  # every desk live: close, off
         live = getattr(request.app.state, name, None)
         if live is not None and getattr(live, "loop", True) is None:     # never started (removed from the line-up): off, flat
@@ -127,7 +134,8 @@ async def kill(request: Request) -> dict[str, Any]:
             if hasattr(live, "request_abort"):
                 live.request_abort()
             try:
-                out = {**out, name: (await live.call(lambda live=live: live.disarm("kill switch")))["status"]}
+                out = {**out, name: (await asyncio.wait_for(live.call(lambda live=live: live.disarm("kill switch")),
+                                                            30))["status"]}
             except Exception as exc:
                 out = {**out, name: f"FAILED: {type(exc).__name__}"}
     return out
