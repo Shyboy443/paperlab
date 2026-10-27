@@ -1,0 +1,366 @@
+{
+ "base": {
+  "id": "0",
+  "spec": "base",
+  "dev": {
+   "median": 2.78,
+   "geo": 5.13,
+   "mean": 5.78,
+   "up": "27/46",
+   "max_dd": 26.27,
+   "net": 898.93,
+   "t": 3.22,
+   "trades_per_month": 68.5,
+   "worst": -13.48,
+   "best": 32.66,
+   "turnover_x_per_month": 14.77,
+   "active_days": 1.0
+  },
+  "dev_net_2x": 521.44,
+  "max_pos_share": 11.27,
+  "liq": 3
+ },
+ "stage1": [
+  {
+   "id": "0",
+   "spec": "base",
+   "dev": {
+    "median": 2.78,
+    "geo": 5.13,
+    "mean": 5.78,
+    "up": "27/46",
+    "max_dd": 26.27,
+    "net": 898.93,
+    "t": 3.22,
+    "trades_per_month": 68.5,
+    "worst": -13.48,
+    "best": 32.66,
+    "turnover_x_per_month": 14.77,
+    "active_days": 1.0
+   },
+   "dev_net_2x": 521.44,
+   "max_pos_share": 11.27,
+   "liq": 3
+  },
+  {
+   "id": "A1",
+   "spec": "ratio",
+   "dev": {
+    "median": 0.71,
+    "geo": 3.47,
+    "mean": 4.43,
+    "up": "23/46",
+    "max_dd": 54.66,
+    "net": 380.68,
+    "t": 2.04,
+    "trades_per_month": 66.8,
+    "worst": -14.89,
+    "best": 38.12,
+    "turnover_x_per_month": 14.4,
+    "active_days": 1.0
+   },
+   "dev_net_2x": 202.46,
+   "max_pos_share": 11.78,
+   "liq": 4
+  },
+  {
+   "id": "A2",
+   "spec": "avgratio",
+   "dev": {
+    "median": 2.05,
+    "geo": 4.66,
+    "mean": 5.48,
+    "up": "28/46",
+    "max_dd": 49.38,
+    "net": 713.15,
+    "t": 2.73,
+    "trades_per_month": 63.6,
+    "worst": -16.95,
+    "best": 36.11,
+    "turnover_x_per_month": 13.82,
+    "active_days": 1.0
+   },
+   "dev_net_2x": 421.38,
+   "max_pos_share": 17.9,
+   "liq": 4
+  },
+  {
+   "id": "A3",
+   "spec": "blitz",
+   "dev": {
+    "median": 0.97,
+    "geo": 3.76,
+    "mean": 4.4,
+    "up": "27/46",
+    "max_dd": 25.88,
+    "net": 447.44,
+    "t": 2.5,
+    "trades_per_month": 61.0,
+    "worst": -14.05,
+    "best": 38.03,
+    "turnover_x_per_month": 13.18,
+    "active_days": 0.959
+   },
+   "dev_net_2x": 258.29,
+   "max_pos_share": 21.42,
+   "liq": 2
+  },
+  {
+   "id": "B1",
+   "spec": "volsc",
+   "dev": {
+    "median": 3.93,
+    "geo": 5.21,
+    "mean": 5.88,
+    "up": "33/46",
+    "max_dd": 32.2,
+    "net": 935.4,
+    "t": 3.33,
+    "trades_per_month": 61.2,
+    "worst": -29.38,
+    "best": 35.22,
+    "turnover_x_per_month": 13.18,
+    "active_days": 1.0
+   },
+   "dev_net_2x": 578.01,
+   "max_pos_share": 7.67,
+   "liq": 3
+  },
+  {
+   "id": "B2a",
+   "spec": "jump=0.4",
+   "dev": {
+    "median": 5.52,
+    "geo": 4.83,
+    "mean": 5.5,
+    "up": "29/46",
+    "max_dd": 25.76,
+    "net": 775.24,
+    "t": 3.06,
+    "trades_per_month": 67.2,
+    "worst": -18.61,
+    "best": 34.16,
+    "turnover_x_per_month": 14.43,
+    "active_days": 0.961
+   },
+   "dev_net_2x": 450.3,
+   "max_pos_share": 12.47,
+   "liq": 2
+  },
+  {
+   "id": "B2b",
+   "spec": "jump=0.5",
+   "dev": {
+    "median": 3.19,
+    "geo": 5.31,
+    "mean": 6.01,
+    "up": "28/46",
+    "max_dd": 27.11,
+    "net": 978.95,
+    "t": 3.22,
+    "trades_per_month": 68.2,
+    "worst": -13.27,
+    "best": 37.08,
+    "turnover_x_per_month": 14.69,
+    "active_days": 0.999
+   },
+   "dev_net_2x": 572.87,
+   "max_pos_share": 11.94,
+   "liq": 2
+  },
+  {
+   "id": "B2c",
+   "spec": "jump=0.6",
+   "dev": {
+    "median": 2.79,
+    "geo": 4.99,
+    "mean": 5.67,
+    "up": "28/46",
+    "max_dd": 27.21,
+    "net": 839.49,
+    "t": 3.09,
+    "trades_per_month": 68.5,
+    "worst": -13.48,
+    "best": 34.73,
+    "turnover_x_per_month": 14.76,
+    "active_days": 1.0
+   },
+   "dev_net_2x": 484.7,
+   "max_pos_share": 12.41,
+   "liq": 3
+  },
+  {
+   "id": "B3",
+   "spec": "jumpup=0.5",
+   "dev": {
+    "median": 3.07,
+    "geo": 5.27,
+    "mean": 5.91,
+    "up": "27/46",
+    "max_dd": 27.51,
+    "net": 962.14,
+    "t": 3.3,
+    "trades_per_month": 68.0,
+    "worst": -13.48,
+    "best": 36.45,
+    "turnover_x_per_month": 14.66,
+    "active_days": 1.0
+   },
+   "dev_net_2x": 563.09,
+   "max_pos_share": 11.36,
+   "liq": 3
+  },
+  {
+   "id": "C1",
+   "spec": "s7neg",
+   "dev": {
+    "median": 3.04,
+    "geo": 5.75,
+    "mean": 6.61,
+    "up": "26/46",
+    "max_dd": 27.28,
+    "net": 1210.77,
+    "t": 3.14,
+    "trades_per_month": 77.6,
+    "worst": -11.19,
+    "best": 50.69,
+    "turnover_x_per_month": 16.41,
+    "active_days": 1.0
+   },
+   "dev_net_2x": 673.52,
+   "max_pos_share": 10.56,
+   "liq": 2
+  },
+  {
+   "id": "C2",
+   "spec": "schan=60",
+   "dev": {
+    "median": 3.9,
+    "geo": 4.43,
+    "mean": 5.06,
+    "up": "29/46",
+    "max_dd": 38.81,
+    "net": 633.07,
+    "t": 2.89,
+    "trades_per_month": 59.2,
+    "worst": -14.16,
+    "best": 30.21,
+    "turnover_x_per_month": 12.91,
+    "active_days": 1.0
+   },
+   "dev_net_2x": 384.1,
+   "max_pos_share": 11.95,
+   "liq": 3
+  },
+  {
+   "id": "C3",
+   "spec": "schan=90",
+   "dev": {
+    "median": 1.92,
+    "geo": 5.12,
+    "mean": 5.9,
+    "up": "27/46",
+    "max_dd": 29.14,
+    "net": 895.27,
+    "t": 2.9,
+    "trades_per_month": 55.5,
+    "worst": -9.35,
+    "best": 54.02,
+    "turnover_x_per_month": 12.14,
+    "active_days": 1.0
+   },
+   "dev_net_2x": 573.85,
+   "max_pos_share": 11.88,
+   "liq": 2
+  },
+  {
+   "id": "D1",
+   "spec": "age=60",
+   "dev": {
+    "median": 3.09,
+    "geo": 4.55,
+    "mean": 5.08,
+    "up": "29/46",
+    "max_dd": 26.02,
+    "net": 673.85,
+    "t": 3.14,
+    "trades_per_month": 65.8,
+    "worst": -12.68,
+    "best": 32.1,
+    "turnover_x_per_month": 14.17,
+    "active_days": 0.979
+   },
+   "dev_net_2x": 390.79,
+   "max_pos_share": 11.35,
+   "liq": 3
+  },
+  {
+   "id": "D2",
+   "spec": "age=90",
+   "dev": {
+    "median": 3.11,
+    "geo": 4.32,
+    "mean": 4.78,
+    "up": "29/46",
+    "max_dd": 26.3,
+    "net": 598.21,
+    "t": 3.16,
+    "trades_per_month": 62.6,
+    "worst": -12.58,
+    "best": 32.52,
+    "turnover_x_per_month": 13.49,
+    "active_days": 0.958
+   },
+   "dev_net_2x": 352.58,
+   "max_pos_share": 11.78,
+   "liq": 3
+  },
+  {
+   "id": "D3",
+   "spec": "age=180",
+   "dev": {
+    "median": 2.63,
+    "geo": 3.38,
+    "mean": 3.73,
+    "up": "30/46",
+    "max_dd": 27.94,
+    "net": 361.91,
+    "t": 2.86,
+    "trades_per_month": 56.8,
+    "worst": -14.56,
+    "best": 30.16,
+    "turnover_x_per_month": 12.22,
+    "active_days": 0.894
+   },
+   "dev_net_2x": 211.82,
+   "max_pos_share": 12.81,
+   "liq": 3
+  }
+ ],
+ "improving": [
+  "C1"
+ ],
+ "stage2": [],
+ "selected": {
+  "id": "C1",
+  "spec": "s7neg",
+  "dev": {
+   "median": 3.04,
+   "geo": 5.75,
+   "mean": 6.61,
+   "up": "26/46",
+   "max_dd": 27.28,
+   "net": 1210.77,
+   "t": 3.14,
+   "trades_per_month": 77.6,
+   "worst": -11.19,
+   "best": 50.69,
+   "turnover_x_per_month": 16.41,
+   "active_days": 1.0
+  },
+  "dev_net_2x": 673.52,
+  "max_pos_share": 10.56,
+  "liq": 2
+ },
+ "n_configs": 15
+}

@@ -13,7 +13,7 @@ router = APIRouter(prefix="/api/public")
 @router.get("/lineup")
 async def lineup(request: Request) -> dict[str, Any]:
     lu = getattr(request.app.state, "lineup", None)
-    return {"mode": lu.mode if lu is not None else "starting", "kept": ["ensemble", "worker2", "ibs_bot"]}
+    return {"mode": lu.mode if lu is not None else "starting", "kept": ["ensemble", "worker2", "worker3", "ibs_bot"]}
 
 
 @router.get("/worker2")
@@ -22,4 +22,13 @@ async def worker2(request: Request) -> dict[str, Any]:
     svc = getattr(request.app.state, "worker2", None)
     if svc is None:
         raise HTTPException(503, "the Worker 2 paper book is not running")
+    return {**await asyncio.to_thread(svc.public), "read_only": True}
+
+
+@router.get("/worker3")
+async def worker3(request: Request) -> dict[str, Any]:
+    """Worker 3's paper book (30-day-high long/short): curve, months, closed positions, today's book."""
+    svc = getattr(request.app.state, "worker3", None)
+    if svc is None:
+        raise HTTPException(503, "the Worker 3 paper book is not running")
     return {**await asyncio.to_thread(svc.public), "read_only": True}

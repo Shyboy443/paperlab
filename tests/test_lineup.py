@@ -73,9 +73,9 @@ def test_boot_runs_only_the_line_up_and_the_kill_switch_skips_removed_desks(tmp_
     with TestClient(app) as c:
         h = app.state.lineup.health()
         assert h["mode"] == "lean"
-        assert {"ensemble", "ensemble_live", "worker2", "worker2_live", "ibs_bot"} >= set(h["started"])
+        assert {"ensemble", "ensemble_live", "worker2", "worker2_live", "worker3", "worker3_live", "ibs_bot"} >= set(h["started"])
         assert {"desk", "divergence", "zec_emarsi_live", "macd_stx_live", "pumpfun", "stock_trend"} <= set(h["skipped"])
         assert app.state.zec_emarsi_live.loop is None
         out = c.post("/api/kill", headers=auth).json()
         assert "zec_emarsi_live" not in out and "macd_live" not in out
-        assert c.get("/api/public/lineup").json()["kept"] == ["ensemble", "worker2", "ibs_bot"]
+        assert c.get("/api/public/lineup").json()["kept"] == ["ensemble", "worker2", "worker3", "ibs_bot"]

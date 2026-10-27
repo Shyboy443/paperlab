@@ -1,0 +1,101 @@
+
+== BN_SPOT_DELIST: n=13  (events with perp at entry, DEV)
+   pre-24h mean -14.39% med -20.12%
+   r  1h  mean   -2.26%  med   -1.02%  t -2.05  up   23%   x  1h  mean   -2.50%  med   -1.59%  t -2.25  up   15%
+   r  4h  mean   -4.06%  med   -0.78%  t -2.02  up   23%   x  4h  mean   -4.83%  med   -2.78%  t -2.56  up   38%
+   r 12h  mean   -3.77%  med   -1.35%  t -0.98  up   23%   x 12h  mean   -4.44%  med   -2.56%  t -1.10  up   38%
+   r 24h  mean   -3.15%  med   +0.00%  t -0.68  up   31%   x 24h  mean   -3.93%  med   -1.61%  t -0.83  up   46%
+   r 48h  mean   -5.21%  med   +0.00%  t -1.53  up   31%   x 48h  mean   -7.57%  med   -2.45%  t -1.98  up   31%
+   r 72h  mean   -7.69%  med   -9.85%  t -2.38  up   23%   x 72h  mean   -9.51%  med   -8.82%  t -2.34  up   31%
+   r168h  mean   -7.11%  med   -7.50%  t -1.65  up   15%   x168h  mean  -11.88%  med  -11.14%  t -2.72  up   23%
+   r336h  mean   -8.39%  med   -7.96%  t -1.42  up   23%   x336h  mean  -14.61%  med  -14.44%  t -2.86  up   31%
+
+== BN_MON_ADD: n=12  (events with perp at entry, DEV)
+   pre-24h mean -8.37% med -7.83%
+   r  1h  mean   -0.82%  med   -0.50%  t -2.43  up   25%   x  1h  mean   -0.62%  med   -0.45%  t -2.14  up   33%
+   r  4h  mean   -2.02%  med   -1.21%  t -1.93  up   25%   x  4h  mean   -2.22%  med   -1.16%  t -2.13  up   25%
+   r 12h  mean   -2.21%  med   -0.86%  t -1.30  up   33%   x 12h  mean   -3.34%  med   -3.60%  t -2.17  up   25%
+   r 24h  mean   -4.01%  med   -3.81%  t -2.21  up   25%   x 24h  mean   -4.87%  med   -4.52%  t -2.84  up   25%
+   r 48h  mean   -6.53%  med   -7.71%  t -3.44  up   25%   x 48h  mean   -7.28%  med   -8.00%  t -3.52  up   17%
+   r 72h  mean   -6.76%  med   -5.52%  t -3.26  up   25%   x 72h  mean   -7.54%  med   -6.69%  t -3.20  up    8%
+   r168h  mean   -5.27%  med   -4.47%  t -1.83  up   25%   x168h  mean   -7.19%  med   -8.13%  t -2.40  up   17%
+   r336h  mean   -7.45%  med   -3.62%  t -1.45  up   33%   x336h  mean   -8.96%  med   -8.56%  t -1.90  up   42%
+
+== BN_MON_REMOVE: n=1  (events with perp at entry, DEV)
+
+== BN_FUT_DELIST: n=14  (events with perp at entry, DEV)
+   pre-24h mean -3.46% med -2.23%
+   r  1h  mean   -1.96%  med   -0.20%  t -1.42  up   29%   x  1h  mean   -1.79%  med   -0.12%  t -1.31  up   43%
+   r  4h  mean   -0.35%  med   -0.52%  t -0.28  up   43%   x  4h  mean   -0.24%  med   +0.72%  t -0.21  up   57%
+   r 12h  mean   -1.37%  med   +0.30%  t -0.90  up   64%   x 12h  mean   -0.93%  med   -0.12%  t -0.72  up   50%
+   r 24h  mean   +2.97%  med   -0.18%  t +0.74  up   43%   x 24h  mean   +3.85%  med   +0.31%  t +0.98  up   50%
+   r 48h  mean   +3.75%  med   +0.69%  t +0.94  up   50%   x 48h  mean   +3.41%  med   +1.05%  t +0.86  up   57%
+   r 72h  mean   +4.21%  med   -0.42%  t +1.06  up   43%   x 72h  mean   +5.58%  med   +2.20%  t +1.42  up   71%
+   r168h  mean   +2.43%  med   -6.82%  t +0.49  up   43%   x168h  mean   +3.14%  med   -2.06%  t +0.65  up   36%
+   r336h  mean   +5.31%  med   -2.76%  t +1.04  up   43%   x336h  mean   +0.41%  med   -9.02%  t +0.07  up   36%
+
+== BN_SPOT_LIST: n=7  (events with perp at entry, DEV)
+   pre-24h mean +25.29% med +6.19%
+   r  1h  mean   -0.04%  med   -0.27%  t -0.03  up   43%   x  1h  mean   -0.19%  med   -0.72%  t -0.11  up   43%
+   r  4h  mean   -0.81%  med   +1.23%  t -0.22  up   57%   x  4h  mean   -1.88%  med   -1.25%  t -0.45  up   43%
+   r 12h  mean   +0.14%  med   +0.69%  t +0.04  up   57%   x 12h  mean   +0.14%  med   -1.69%  t +0.05  up   29%
+   r 24h  mean   +2.28%  med   +3.68%  t +0.55  up   71%   x 24h  mean   +0.86%  med   -0.74%  t +0.21  up   43%
+   r 48h  mean   +0.21%  med   -2.89%  t +0.04  up   43%   x 48h  mean   -0.74%  med   -3.60%  t -0.15  up   43%
+   r 72h  mean   +1.18%  med   +1.15%  t +0.16  up   57%   x 72h  mean   +0.15%  med   +0.84%  t +0.02  up   57%
+   r168h  mean   +3.60%  med   +5.97%  t +0.37  up   71%   x168h  mean   -1.19%  med   -1.56%  t -0.13  up   43%
+   r336h  mean   +1.72%  med   +6.72%  t +0.14  up   57%   x336h  mean   -5.84%  med   -5.98%  t -0.47  up   43%
+
+== UP_KRW_LIST: n=38  (events with perp at entry, DEV)
+   pre-24h mean +21.82% med +15.06%
+   r  1h  mean   -0.10%  med   +0.22%  t -0.19  up   58%   x  1h  mean   +0.03%  med   +0.16%  t +0.06  up   63%
+   r  4h  mean   -0.74%  med   -0.57%  t -0.64  up   45%   x  4h  mean   -0.43%  med   -0.29%  t -0.37  up   47%
+   r 12h  mean   -2.22%  med   -3.31%  t -1.24  up   29%   x 12h  mean   -2.40%  med   -3.92%  t -1.47  up   29%
+   r 24h  mean   -4.63%  med   -5.86%  t -2.30  up   21%   x 24h  mean   -4.83%  med   -6.04%  t -2.71  up   13%
+   r 48h  mean   -4.81%  med   -6.97%  t -1.97  up   18%   x 48h  mean   -5.70%  med   -6.34%  t -2.49  up   18%
+   r 72h  mean   -4.57%  med   -5.07%  t -1.57  up   29%   x 72h  mean   -5.96%  med   -7.15%  t -2.23  up   21%
+   r168h  mean   -5.13%  med   -6.55%  t -1.62  up   21%   x168h  mean   -8.79%  med  -11.87%  t -3.07  up   16%
+   r336h  mean   +0.48%  med   -9.18%  t +0.10  up   39%   x336h  mean   -5.37%  med  -14.31%  t -1.33  up   24%
+
+== UP_OTHER_LIST: n=19  (events with perp at entry, DEV)
+   pre-24h mean +10.18% med +10.53%
+   r  1h  mean   -0.35%  med   -0.11%  t -1.30  up   42%   x  1h  mean   -0.26%  med   -0.24%  t -1.04  up   42%
+   r  4h  mean   -2.27%  med   -2.02%  t -2.53  up   21%   x  4h  mean   -2.14%  med   -1.30%  t -2.49  up   21%
+   r 12h  mean   -3.92%  med   -4.17%  t -2.93  up   26%   x 12h  mean   -3.91%  med   -2.38%  t -3.13  up   16%
+   r 24h  mean   -6.73%  med   -7.82%  t -4.30  up   16%   x 24h  mean   -5.88%  med   -7.08%  t -4.02  up   21%
+   r 48h  mean   -6.40%  med   -5.73%  t -4.66  up    5%   x 48h  mean   -6.00%  med   -5.06%  t -3.88  up   11%
+   r 72h  mean   -4.01%  med   -4.89%  t -1.20  up   21%   x 72h  mean   -3.59%  med   -6.71%  t -1.16  up   16%
+   r168h  mean  -11.84%  med  -10.52%  t -3.17  up   16%   x168h  mean   -7.35%  med   -6.09%  t -2.32  up   21%
+   r336h  mean  -15.96%  med  -14.70%  t -3.83  up   11%   x336h  mean   -9.92%  med   -7.92%  t -2.69  up   26%
+
+== UP_WARN: n=7  (events with perp at entry, DEV)
+   pre-24h mean -1.70% med -0.27%
+   r  1h  mean   +0.23%  med   +1.02%  t +0.37  up   57%   x  1h  mean   -0.32%  med   -0.25%  t -0.52  up   29%
+   r  4h  mean   -0.78%  med   -0.47%  t -0.61  up   29%   x  4h  mean   -0.98%  med   -0.69%  t -0.74  up   14%
+   r 12h  mean   -1.52%  med   -2.21%  t -1.64  up   14%   x 12h  mean   -1.60%  med   -1.17%  t -1.28  up   29%
+   r 24h  mean   -2.41%  med   -3.11%  t -2.10  up   29%   x 24h  mean   -2.85%  med   -2.24%  t -1.82  up   29%
+   r 48h  mean   -3.98%  med   -4.26%  t -2.27  up   14%   x 48h  mean   -3.99%  med   -2.19%  t -2.24  up   29%
+   r 72h  mean   -4.58%  med   -5.29%  t -1.92  up   14%   x 72h  mean   -5.33%  med   -8.16%  t -2.63  up   29%
+   r168h  mean   -9.81%  med   -8.64%  t -2.37  up    0%   x168h  mean   -9.71%  med   -9.53%  t -3.41  up    0%
+   r336h  mean  -15.53%  med   -9.03%  t -3.26  up    0%   x336h  mean  -15.91%  med  -12.57%  t -5.16  up    0%
+
+== UP_CAUTION: n=20  (events with perp at entry, DEV)
+   pre-24h mean -12.62% med -7.45%
+   r  1h  mean   +0.71%  med   +0.13%  t +1.17  up   50%   x  1h  mean   +0.28%  med   -0.18%  t +0.50  up   50%
+   r  4h  mean   +1.80%  med   +0.47%  t +1.61  up   60%   x  4h  mean   +1.06%  med   +0.43%  t +1.32  up   60%
+   r 12h  mean   +4.05%  med   +1.01%  t +2.01  up   55%   x 12h  mean   +2.62%  med   +0.68%  t +1.45  up   65%
+   r 24h  mean   +5.45%  med   -0.09%  t +1.04  up   40%   x 24h  mean   +4.09%  med   -0.30%  t +0.80  up   45%
+   r 48h  mean   +7.87%  med   -0.34%  t +1.19  up   45%   x 48h  mean   +6.20%  med   -0.46%  t +0.97  up   45%
+   r 72h  mean   +7.29%  med   -0.48%  t +1.10  up   45%   x 72h  mean   +5.11%  med   -1.27%  t +0.79  up   45%
+   r168h  mean   +3.78%  med   -0.48%  t +0.55  up   45%   x168h  mean   +3.13%  med   -1.73%  t +0.45  up   35%
+   r336h  mean   +4.55%  med   -1.43%  t +0.62  up   40%   x336h  mean   +1.78%  med   -3.90%  t +0.24  up   40%
+
+== UP_DELIST: n=5  (events with perp at entry, DEV)
+   pre-24h mean -3.21% med -4.72%
+   r  1h  mean   -0.25%  med   +0.00%  t -0.69  up   40%   x  1h  mean   -0.20%  med   -0.04%  t -0.59  up   40%
+   r  4h  mean   -0.34%  med   +0.00%  t -0.45  up   40%   x  4h  mean   -0.38%  med   -0.29%  t -0.45  up   20%
+   r 12h  mean   +0.21%  med   +0.00%  t +0.34  up   40%   x 12h  mean   +0.20%  med   +0.14%  t +0.30  up   60%
+   r 24h  mean   +0.39%  med   +0.00%  t +0.45  up   40%   x 24h  mean   -0.09%  med   -0.61%  t -0.10  up   40%
+   r 48h  mean   +0.28%  med   +0.00%  t +0.18  up   40%   x 48h  mean   -0.88%  med   -1.75%  t -0.84  up   40%
+   r 72h  mean   -0.76%  med   +0.00%  t -0.37  up   40%   x 72h  mean   -1.33%  med   -1.68%  t -1.32  up   20%
+   r168h  mean   -5.28%  med   +0.00%  t -0.80  up   40%   x168h  mean   +0.29%  med   +0.01%  t +0.24  up   60%
+   r336h  mean  -12.30%  med  -19.00%  t -2.48  up    0%   x336h  mean   -5.63%  med   -5.85%  t -0.77  up   40%

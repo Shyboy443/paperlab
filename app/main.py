@@ -493,6 +493,20 @@ def create_app(settings: Settings | None = None, strict: bool | None = None) -> 
         app.state.worker2_live = worker2_live
         lineup.retire_desk_live("worker2_live", worker2_live)
         app.state.extra_live_names = (*app.state.extra_live_names, "worker2_live")
+        # WORKER 3: the 30-day-high long/short book (research/worker3/round5/high52_plus, top 20, 5 long / 5 short, daily)
+        # as a paper book on Worker 1's daily data, plus its own live switch (operator, 2026-10-27). Off until the
+        # operator turns it on from the private dashboard.
+        from app.worker3.live import Worker3Live
+        from app.worker3.service import Worker3Service
+        worker3 = Worker3Service(settings.db_path.with_name("worker3.db"), ensemble,
+                                 telegram=lambda: getattr(app.state, "telegram", None))
+        app.state.worker3 = worker3
+        lineup.start("worker3", worker3)
+        worker3_live = Worker3Live(worker3, accounts, mirror.providers, lambda: storage.provider_checks("binance"),
+                                   storage.provider_check_save, telegram=lambda: getattr(app.state, "telegram", None))
+        app.state.worker3_live = worker3_live
+        lineup.retire_desk_live("worker3_live", worker3_live)
+        app.state.extra_live_names = (*app.state.extra_live_names, "worker3_live")
         # Forward paper test of a choppy-market filter for those bots (docs/MACD_CHOP_TEST.md); paper only.
         from app.macdtrio.chop_test import ChopPaperTest
         macd_chop = ChopPaperTest(trio_market)

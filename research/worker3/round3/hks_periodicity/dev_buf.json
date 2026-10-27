@@ -1,0 +1,167 @@
+[
+ {
+  "B": 12,
+  "K": 5,
+  "k": 3,
+  "buf": 1.0,
+  "gross_geo": 6.19,
+  "net_geo": -1.12,
+  "net_median": -0.82,
+  "net_up": 22,
+  "trades_mo": 607
+ },
+ {
+  "B": 12,
+  "K": 5,
+  "k": 3,
+  "buf": 2.0,
+  "gross_geo": 5.32,
+  "net_geo": -0.72,
+  "net_median": -1.84,
+  "net_up": 22,
+  "trades_mo": 564
+ },
+ {
+  "B": 12,
+  "K": 5,
+  "k": 3,
+  "buf": 3.0,
+  "gross_geo": 3.6,
+  "net_geo": -1.44,
+  "net_median": -1.39,
+  "net_up": 22,
+  "trades_mo": 533
+ },
+ {
+  "B": 12,
+  "K": 40,
+  "k": 3,
+  "buf": 1.0,
+  "gross_geo": 6.67,
+  "net_geo": -0.68,
+  "net_median": -1.38,
+  "net_up": 19,
+  "trades_mo": 587
+ },
+ {
+  "B": 12,
+  "K": 40,
+  "k": 3,
+  "buf": 2.0,
+  "gross_geo": 5.74,
+  "net_geo": -0.11,
+  "net_median": 0.0,
+  "net_up": 23,
+  "trades_mo": 540
+ },
+ {
+  "B": 12,
+  "K": 40,
+  "k": 3,
+  "buf": 3.0,
+  "gross_geo": 4.58,
+  "net_geo": 0.12,
+  "net_median": 0.0,
+  "net_up": 23,
+  "trades_mo": 498
+ },
+ {
+  "B": 8,
+  "K": 20,
+  "k": 10,
+  "buf": 1.0,
+  "gross_geo": 3.73,
+  "net_geo": -4.94,
+  "net_median": -4.22,
+  "net_up": 12,
+  "trades_mo": 2431
+ },
+ {
+  "B": 8,
+  "K": 20,
+  "k": 10,
+  "buf": 2.0,
+  "gross_geo": 1.91,
+  "net_geo": -2.69,
+  "net_median": -3.8,
+  "net_up": 18,
+  "trades_mo": 2099
+ },
+ {
+  "B": 8,
+  "K": 20,
+  "k": 10,
+  "buf": 3.0,
+  "gross_geo": 0.17,
+  "net_geo": -0.68,
+  "net_median": -1.88,
+  "net_up": 19,
+  "trades_mo": 1839
+ },
+ {
+  "B": 6,
+  "K": 40,
+  "k": 5,
+  "buf": 1.0,
+  "gross_geo": 6.66,
+  "net_geo": -6.45,
+  "net_median": -7.57,
+  "net_up": 10,
+  "trades_mo": 1835
+ },
+ {
+  "B": 6,
+  "K": 40,
+  "k": 5,
+  "buf": 2.0,
+  "gross_geo": 5.41,
+  "net_geo": -5.25,
+  "net_median": -6.01,
+  "net_up": 10,
+  "trades_mo": 1692
+ },
+ {
+  "B": 6,
+  "K": 40,
+  "k": 5,
+  "buf": 3.0,
+  "gross_geo": 4.11,
+  "net_geo": -3.9,
+  "net_median": -4.37,
+  "net_up": 11,
+  "trades_mo": 1555
+ },
+ {
+  "B": 4,
+  "K": 40,
+  "k": 3,
+  "buf": 1.0,
+  "gross_geo": 10.43,
+  "net_geo": -10.37,
+  "net_median": -10.72,
+  "net_up": 9,
+  "trades_mo": 1770
+ },
+ {
+  "B": 4,
+  "K": 40,
+  "k": 3,
+  "buf": 2.0,
+  "gross_geo": 9.04,
+  "net_geo": -9.29,
+  "net_median": -9.38,
+  "net_up": 6,
+  "trades_mo": 1678
+ },
+ {
+  "B": 4,
+  "K": 40,
+  "k": 3,
+  "buf": 3.0,
+  "gross_geo": 7.46,
+  "net_geo": -8.7,
+  "net_median": -9.28,
+  "net_up": 7,
+  "trades_mo": 1603
+ }
+]

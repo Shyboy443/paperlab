@@ -117,6 +117,16 @@ const FACTS = {
     ['Trades', 'about 50 a month, held 10 hours'], ['Luck checks passed', '8 of 8'],
     ['Weak spot', 'getting weaker: about +10% a month in 2021, +2–3% in 2025–26'],
   ],
+  worker3: [
+    ['Chosen on', 'Jan 2021 – Oct 2024 only, then tested on two periods it never saw'],
+    ['Compounded month, Nov 2024 – Oct 2026', '+10.3% (typical month +10.2%)'],
+    ['Compounded month, 2018 – 2020 (unseen)', '+5.2%'],
+    ['Months up', '16 of 24 (2024–26) · 24 of 36 (2018–20)'],
+    ['Worst drop from a peak', '−40% (2024–26) · −29% (2018–20)'],
+    ['Luck checks passed', '7 of 8 (2024–26) · 8 of 8 (2018–20)'],
+    ['Weak spot', 'in 2025–26 most profit came from a few new meme coins; shorts on coins that double in a day are wiped out (9 times in 2 years)'],
+    ['Best use', 'next to Workers 1 and 2: the three together had smaller drops than any one alone'],
+  ],
   ibs: [
     ['Tested on', 'QQQ 2010 – 2026'], ['Trades', 'about 18 a year, held about 6 days'],
     ['Average trade (QQQ)', '+0.85%'], ['Winning trades 2022–2026', '74%'],
@@ -125,8 +135,8 @@ const FACTS = {
 };
 
 // ---- pages -------------------------------------------------------------------------------------------------------
-const PAGES = { '': home, worker1: ensemble, ensemble, worker2, ibs, research, settings };
-const NAV = [['', 'Home'], ['worker1', 'Worker 1'], ['worker2', 'Worker 2'], ['ibs', 'IBS stocks'], ['research', 'Research'], ...(PRIVATE ? [['settings', 'Settings']] : [])];
+const PAGES = { '': home, worker1: ensemble, ensemble, worker2, worker3, ibs, research, settings };
+const NAV = [['', 'Home'], ['worker1', 'Worker 1'], ['worker2', 'Worker 2'], ['worker3', 'Worker 3'], ['ibs', 'IBS stocks'], ['research', 'Research'], ...(PRIVATE ? [['settings', 'Settings']] : [])];
 let seq = 0;
 
 function route() {
@@ -147,6 +157,9 @@ async function home() {
     pub('/api/public/ensemble').catch(() => null), pub('/api/public/ibs-bot').catch(() => null),
     PRIVATE ? api('/api/ensemble/live').catch(() => null) : null, PRIVATE ? api('/api/ibs-bot').catch(() => null) : null,
     pub('/api/public/worker2').catch(() => null), PRIVATE ? api('/api/worker2/live').catch(() => null) : null]);
+  const [w3, w3Live] = await Promise.all([pub('/api/public/worker3').catch(() => null), PRIVATE ? api('/api/worker3/live').catch(() => null) : null]);
+  const b3 = (w3 && w3.book) || {}, curve3 = b3.curve || [], month3 = (b3.months || []).slice(-1)[0];
+  const w3Status = (w3Live && w3Live.status) || 'OFF';
   const b2 = (w2 && w2.book) || {}, curve2 = b2.curve || [], month2 = (b2.months || []).slice(-1)[0];
   const w2Status = (w2Live && w2Live.status) || 'OFF';
   const b = (ens && ens.book) || {};
@@ -157,7 +170,7 @@ async function home() {
   const qqq = ibsd && ibsd.shadow && ibsd.shadow.books ? ibsd.shadow.books['IBS-QQQ'] : null;
   return h('div', {},
     h('h1', { text: 'Your bots' }),
-    h('p', { class: 'lead', text: 'After testing more than 165 strategies, these three are the ones that held up after real trading costs and our luck checks. Worker 1 and Worker 2 trade crypto in very different ways, so they rarely lose at the same time.' }),
+    h('p', { class: 'lead', text: 'After testing more than 165 strategies, these are the ones that held up after real trading costs and our luck checks. Workers 1, 2 and 3 trade crypto in different ways, so they rarely lose at the same time. Worker 3 is new (paper only until you switch it on).' }),
     h('div', { class: 'grid2' },
       h('a', { class: 'panel bot', href: '#/worker1' },
         h('div', { class: 'bot-head' }, h('div', {}, h('div', { class: 'bot-title', text: 'Worker 1' }), h('div', { class: 'bot-what', text: 'Ensemble · crypto, about 55 coins, long and short · Binance' })), statusPill(ensStatus)),
@@ -171,6 +184,12 @@ async function home() {
         h('div', { class: 'bot-sub', text: curve2.length ? 'paper book since ' + curve2[0][0] : 'paper book loading' }),
         curve2.length > 1 ? lineChart(curve2, { bare: true, h: 46, cls: 'spark' }) : null,
         h('div', { class: 'bot-foot' }, h('span', { text: month2 ? 'This month ' + pct(month2[1]) : '' }), h('span', { text: 'Expect about +2–3% in a typical month' }))),
+      h('a', { class: 'panel bot', href: '#/worker3' },
+        h('div', { class: 'bot-head' }, h('div', {}, h('div', { class: 'bot-title', text: 'Worker 3' }), h('div', { class: 'bot-what', text: '30-day highs · crypto, top 20 coins, 5 long + 5 short · Binance' })), statusPill(w3Status)),
+        h('div', { class: 'bot-big num ' + tone(b3.net_pct), text: b3.net_pct != null ? pct(b3.net_pct) : '—' }),
+        h('div', { class: 'bot-sub', text: curve3.length ? 'paper book since ' + curve3[0][0] : 'paper book loading' }),
+        curve3.length > 1 ? lineChart(curve3, { bare: true, h: 46, cls: 'spark' }) : null,
+        h('div', { class: 'bot-foot' }, h('span', { text: month3 ? 'This month ' + pct(month3[1]) : '' }), h('span', { text: 'Big swings: drops of 30–40% happen' }))),
       h('a', { class: 'panel bot', href: '#/ibs' },
         h('div', { class: 'bot-head' }, h('div', {}, h('div', { class: 'bot-title', text: 'IBS stocks' }), h('div', { class: 'bot-what', text: 'US stocks · QQQ and TQQQ · Alpaca' })), statusPill(ibsStatus)),
         h('div', { class: 'bot-big num ' + tone(qqq && qqq.realized_pct), text: qqq ? pct(qqq.realized_pct) : '—' }),
@@ -212,6 +231,9 @@ async function ensemble() {
 const LIVE_CFG = {
   worker1: { path: 'ensemble', name: 'Worker 1',
     blurb: 'Copies the paper book onto a Binance account: it opens all of today\'s positions at once (market orders, 1x), then trades whatever the book trades each day. Use a dedicated account with no other positions.',
+    onText: (v) => 'Real orders: it opens the ' + (v.book_positions || '') + ' book positions at market (1x), then follows the book every day until you switch it off.' },
+  worker3: { path: 'worker3', name: 'Worker 3',
+    blurb: 'Copies the paper book onto a Binance account: it opens the book\'s 10 positions at once (5 long, 5 short, market orders, 1x), then follows the daily re-sizing just after 00:00 UTC. Use a dedicated account with no other positions (not Worker 1\'s or Worker 2\'s).',
     onText: (v) => 'Real orders: it opens the ' + (v.book_positions || '') + ' book positions at market (1x), then follows the book every day until you switch it off.' },
   worker2: { path: 'worker2', name: 'Worker 2',
     blurb: 'Copies the paper book onto a Binance account: every day at 16:00 UTC it opens that day\'s positions (market orders, 1x) and at 02:00 UTC it closes them. Switched on during the day, it waits for the next 16:00. Use a dedicated account with no other positions (not Worker 1\'s).',
@@ -302,6 +324,38 @@ async function worker2() {
         h('tbody', {}, ...[...b.trades].reverse().slice(0, 25).map((t) => h('tr', {}, h('td', { text: t.day }), h('td', { text: t.symbol.replace('USDT', '') }),
           h('td', { text: t.side > 0 ? 'long' : 'short' }), h('td', { class: 'num ' + tone(t.ret_pct), text: pct(t.ret_pct) })))))) : h('p', { class: 'muted', text: 'No trades yet.' }))),
     PRIVATE ? await liveBox(LIVE_CFG.worker2) : h('p', { class: 'note', text: 'The live switch is on the private dashboard.' }));
+}
+
+async function worker3() {
+  const d = await pub('/api/public/worker3');
+  const b = d.book || {}, curve = b.curve || [];
+  const pos = d.positions || [];
+  const longs = pos.filter((p) => p[1] > 0), shorts = pos.filter((p) => p[1] < 0).sort((a, c) => a[1] - c[1]);
+  const last = (b.months || []).slice(-1)[0];
+  return h('div', { class: 'stack' },
+    h('a', { class: 'back', href: '#/', text: '← All bots' }),
+    h('div', {}, h('h1', { text: 'Worker 3' }), h('p', { class: 'muted', style: 'margin:-6px 0 8px', text: '30-day highs (new, paper test)' }),
+      h('p', { class: 'lead', text: 'Every day at 00:00 UTC it looks at the 20 most-traded Binance futures. Coins closing near their 30-day high tend to keep rising, coins near their 30-day low tend to keep falling: it buys the 5 nearest their high and shorts the 5 nearest their low, a tenth of the money each, 1x.' })),
+    !curve.length ? h('p', { class: 'note', text: 'The paper book is being computed (' + ((d.status && d.status.phase) || 'starting') + '). It runs just after 00:00 UTC, after Worker 1 has fetched the day\'s data.' }) : null,
+    curve.length ? h('div', { class: 'kpis' },
+      h('div', { class: 'kpi' }, h('b', { class: tone(b.net_pct), text: pct(b.net_pct) }), h('span', { text: 'paper book since ' + curve[0][0] })),
+      h('div', { class: 'kpi' }, h('b', { class: tone(last && last[1]), text: last ? pct(last[1]) : '—' }), h('span', { text: 'this month' })),
+      h('div', { class: 'kpi' }, h('b', { text: (b.longs || 0) + ' / ' + (b.shorts || 0) }), h('span', { text: 'coins long / short' })),
+      h('div', { class: 'kpi' }, h('b', { text: day(b.computed_ts) }), h('span', { text: 'last rebalance' }))) : null,
+    pos.length ? h('div', { class: 'panel' }, h('h2', { text: 'Today\'s book (% of the money)' }),
+      h('h3', { text: 'Long (' + longs.length + ')' }), h('div', { class: 'chips' }, ...longs.map(([c, v]) => h('span', { class: 'up', text: c + ' ' + v.toFixed(1) }))),
+      h('h3', { style: 'margin-top:14px', text: 'Short (' + shorts.length + ')' }), h('div', { class: 'chips' }, ...shorts.map(([c, v]) => h('span', { class: 'down', text: c + ' ' + v.toFixed(1) })))) : null,
+    curve.length ? h('div', { class: 'panel' }, h('h2', { text: 'Paper book (10,000 USDT start)' }), lineChart(curve, { fmt: (v) => (v / 1000).toFixed(1) + 'k' }),
+      h('p', { class: 'muted', style: 'font-size:13px;margin:10px 0 0', text: 'Replayed from 1 July on the server\'s own Binance data; every day from ' + b.first_forward_day + ' on is forward (not replay).' + ((b.liquidations || []).length ? ' Shorts wiped out by a coin doubling: ' + b.liquidations.map((x) => x[0].replace('USDT', '') + ' ' + x[1]).join(', ') + '.' : '') })) : null,
+    (b.months || []).length ? h('div', { class: 'panel' }, h('h2', { text: 'Month by month' }),
+      h('div', { class: 'months' }, ...b.months.map(([m, v]) => h('div', { class: 'month' }, h('span', { text: m }), h('b', { class: tone(v), text: pct(v) }))))) : null,
+    h('div', { class: 'grid2' },
+      h('div', { class: 'panel' }, h('h2', { text: 'What the research says' }), facts(FACTS.worker3)),
+      h('div', { class: 'panel' }, h('h2', { text: 'Recent closed positions' }), (b.trades || []).length ? h('div', { class: 'scroll' }, h('table', {},
+        h('thead', {}, h('tr', {}, ...['Closed', 'Coin', 'Side', 'Days', 'Result (USDT)'].map((c) => h('th', { text: c })))),
+        h('tbody', {}, ...[...b.trades].reverse().slice(0, 25).map((t) => h('tr', {}, h('td', { text: t.closed }), h('td', { text: t.symbol.replace('USDT', '') }),
+          h('td', { text: t.side > 0 ? 'long' : 'short' }), h('td', { text: String(t.days) }), h('td', { class: 'num ' + tone(t.pnl), text: (t.pnl > 0 ? '+' : '') + money(t.pnl) })))))) : h('p', { class: 'muted', text: 'No closed positions yet.' }))),
+    PRIVATE ? await liveBox(LIVE_CFG.worker3) : h('p', { class: 'note', text: 'The live switch is on the private dashboard.' }));
 }
 
 async function ibs() {

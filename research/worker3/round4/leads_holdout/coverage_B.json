@@ -1,0 +1,188 @@
+{
+ "first_tradable_month": "2018-02",
+ "months": {
+  "2018-01": {
+   "top40_size": 5.6,
+   "eligible_mean": 3.8,
+   "days_tradable_pct": 0.0
+  },
+  "2018-02": {
+   "top40_size": 6.0,
+   "eligible_mean": 5.2,
+   "days_tradable_pct": 53.6
+  },
+  "2018-03": {
+   "top40_size": 6.0,
+   "eligible_mean": 6.0,
+   "days_tradable_pct": 100.0
+  },
+  "2018-04": {
+   "top40_size": 6.4,
+   "eligible_mean": 6.0,
+   "days_tradable_pct": 100.0
+  },
+  "2018-05": {
+   "top40_size": 7.5,
+   "eligible_mean": 6.4,
+   "days_tradable_pct": 100.0
+  },
+  "2018-06": {
+   "top40_size": 9.1,
+   "eligible_mean": 7.4,
+   "days_tradable_pct": 100.0
+  },
+  "2018-07": {
+   "top40_size": 15.0,
+   "eligible_mean": 9.0,
+   "days_tradable_pct": 100.0
+  },
+  "2018-08": {
+   "top40_size": 16.6,
+   "eligible_mean": 14.6,
+   "days_tradable_pct": 100.0
+  },
+  "2018-09": {
+   "top40_size": 18.0,
+   "eligible_mean": 16.5,
+   "days_tradable_pct": 100.0
+  },
+  "2018-10": {
+   "top40_size": 18.0,
+   "eligible_mean": 18.0,
+   "days_tradable_pct": 100.0
+  },
+  "2018-11": {
+   "top40_size": 17.8,
+   "eligible_mean": 17.5,
+   "days_tradable_pct": 100.0
+  },
+  "2018-12": {
+   "top40_size": 18.0,
+   "eligible_mean": 17.0,
+   "days_tradable_pct": 100.0
+  },
+  "2019-01": {
+   "top40_size": 19.0,
+   "eligible_mean": 18.0,
+   "days_tradable_pct": 100.0
+  },
+  "2019-02": {
+   "top40_size": 19.9,
+   "eligible_mean": 19.0,
+   "days_tradable_pct": 100.0
+  },
+  "2019-03": {
+   "top40_size": 23.3,
+   "eligible_mean": 19.8,
+   "days_tradable_pct": 100.0
+  },
+  "2019-04": {
+   "top40_size": 29.5,
+   "eligible_mean": 22.7,
+   "days_tradable_pct": 100.0
+  },
+  "2019-05": {
+   "top40_size": 35.7,
+   "eligible_mean": 27.3,
+   "days_tradable_pct": 96.8
+  },
+  "2019-06": {
+   "top40_size": 39.3,
+   "eligible_mean": 35.3,
+   "days_tradable_pct": 100.0
+  },
+  "2019-07": {
+   "top40_size": 40.0,
+   "eligible_mean": 37.2,
+   "days_tradable_pct": 100.0
+  },
+  "2019-08": {
+   "top40_size": 40.0,
+   "eligible_mean": 36.5,
+   "days_tradable_pct": 100.0
+  },
+  "2019-09": {
+   "top40_size": 40.0,
+   "eligible_mean": 35.4,
+   "days_tradable_pct": 100.0
+  },
+  "2019-10": {
+   "top40_size": 40.0,
+   "eligible_mean": 33.6,
+   "days_tradable_pct": 100.0
+  },
+  "2019-11": {
+   "top40_size": 40.0,
+   "eligible_mean": 33.6,
+   "days_tradable_pct": 100.0
+  },
+  "2019-12": {
+   "top40_size": 40.0,
+   "eligible_mean": 33.1,
+   "days_tradable_pct": 100.0
+  },
+  "2020-01": {
+   "top40_size": 40.0,
+   "eligible_mean": 34.0,
+   "days_tradable_pct": 100.0
+  },
+  "2020-02": {
+   "top40_size": 40.0,
+   "eligible_mean": 33.1,
+   "days_tradable_pct": 96.6
+  },
+  "2020-03": {
+   "top40_size": 40.0,
+   "eligible_mean": 35.5,
+   "days_tradable_pct": 100.0
+  },
+  "2020-04": {
+   "top40_size": 40.0,
+   "eligible_mean": 36.0,
+   "days_tradable_pct": 100.0
+  },
+  "2020-05": {
+   "top40_size": 40.0,
+   "eligible_mean": 34.9,
+   "days_tradable_pct": 100.0
+  },
+  "2020-06": {
+   "top40_size": 40.0,
+   "eligible_mean": 34.4,
+   "days_tradable_pct": 100.0
+  },
+  "2020-07": {
+   "top40_size": 40.0,
+   "eligible_mean": 31.2,
+   "days_tradable_pct": 100.0
+  },
+  "2020-08": {
+   "top40_size": 40.0,
+   "eligible_mean": 31.8,
+   "days_tradable_pct": 100.0
+  },
+  "2020-09": {
+   "top40_size": 40.0,
+   "eligible_mean": 32.0,
+   "days_tradable_pct": 100.0
+  },
+  "2020-10": {
+   "top40_size": 40.0,
+   "eligible_mean": 30.8,
+   "days_tradable_pct": 100.0
+  },
+  "2020-11": {
+   "top40_size": 40.0,
+   "eligible_mean": 32.6,
+   "days_tradable_pct": 100.0
+  },
+  "2020-12": {
+   "top40_size": 40.0,
+   "eligible_mean": 32.8,
+   "days_tradable_pct": 100.0
+  }
+ },
+ "missing_1h_files": [],
+ "top40_coin_hours_missing_pct": 0.354,
+ "symbols_ever_top40": 145
+}

@@ -1,0 +1,794 @@
+{
+ "universe": [
+  "BTCUSDT",
+  "ETHUSDT",
+  "XRPUSDT",
+  "LTCUSDT",
+  "LINKUSDT",
+  "BCHUSDT",
+  "XLMUSDT",
+  "ADAUSDT",
+  "EOSUSDT",
+  "BNBUSDT",
+  "ZILUSDT",
+  "THETAUSDT",
+  "TRXUSDT",
+  "ETCUSDT",
+  "WAVESUSDT",
+  "VETUSDT",
+  "XMRUSDT",
+  "BANDUSDT",
+  "XTZUSDT",
+  "ZECUSDT"
+ ],
+ "rules": [
+  "TSMOM60_LS",
+  "EMA20_100",
+  "DON55_20",
+  "HIGH52",
+  "RSI2_CONNORS",
+  "BOLL20_MR"
+ ],
+ "selection": {
+  "BTCUSDT": [
+   "DON55_20",
+   0.559
+  ],
+  "ETHUSDT": [
+   "DON55_20",
+   0.64
+  ],
+  "XRPUSDT": [
+   "RSI2_CONNORS",
+   0.79
+  ],
+  "LTCUSDT": [
+   "SKIP",
+   0.476
+  ],
+  "LINKUSDT": [
+   "SKIP",
+   0.283
+  ],
+  "BCHUSDT": [
+   "EMA20_100",
+   0.563
+  ],
+  "XLMUSDT": [
+   "RSI2_CONNORS",
+   0.552
+  ],
+  "ADAUSDT": [
+   "EMA20_100",
+   1.05
+  ],
+  "EOSUSDT": [
+   "SKIP",
+   0.343
+  ],
+  "BNBUSDT": [
+   "DON55_20",
+   1.309
+  ],
+  "ZILUSDT": [
+   "TSMOM60_LS",
+   0.53
+  ],
+  "THETAUSDT": [
+   "HIGH52",
+   1.034
+  ],
+  "TRXUSDT": [
+   "EMA20_100",
+   0.918
+  ],
+  "ETCUSDT": [
+   "HIGH52",
+   0.892
+  ],
+  "WAVESUSDT": [
+   "HIGH52",
+   0.626
+  ],
+  "VETUSDT": [
+   "HIGH52",
+   0.96
+  ],
+  "XMRUSDT": [
+   "BOLL20_MR",
+   0.506
+  ],
+  "BANDUSDT": [
+   "SKIP",
+   0.133
+  ],
+  "XTZUSDT": [
+   "SKIP",
+   0.428
+  ],
+  "ZECUSDT": [
+   "SKIP",
+   0.182
+  ]
+ },
+ "K": 14,
+ "best_rule_dev": "HIGH52",
+ "rule_all_coin_dev_sharpe": {
+  "TSMOM60_LS": 0.067,
+  "EMA20_100": 0.527,
+  "DON55_20": 0.395,
+  "HIGH52": 0.714,
+  "RSI2_CONNORS": 0.242,
+  "BOLL20_MR": 0.275
+ },
+ "dev_split_preview": {
+  "choice_2021_22": {
+   "BTCUSDT": [
+    "TSMOM60_LS",
+    0.544
+   ],
+   "ETHUSDT": [
+    "DON55_20",
+    0.745
+   ],
+   "XRPUSDT": [
+    "HIGH52",
+    1.122
+   ],
+   "LTCUSDT": [
+    "HIGH52",
+    0.779
+   ],
+   "LINKUSDT": [
+    "SKIP",
+    0.397
+   ],
+   "BCHUSDT": [
+    "SKIP",
+    0.388
+   ],
+   "XLMUSDT": [
+    "RSI2_CONNORS",
+    1.062
+   ],
+   "ADAUSDT": [
+    "EMA20_100",
+    1.484
+   ],
+   "EOSUSDT": [
+    "SKIP",
+    0.485
+   ],
+   "BNBUSDT": [
+    "DON55_20",
+    1.625
+   ],
+   "ZILUSDT": [
+    "TSMOM60_LS",
+    0.815
+   ],
+   "THETAUSDT": [
+    "RSI2_CONNORS",
+    1.289
+   ],
+   "TRXUSDT": [
+    "HIGH52",
+    1.062
+   ],
+   "ETCUSDT": [
+    "HIGH52",
+    1.575
+   ],
+   "WAVESUSDT": [
+    "EMA20_100",
+    0.917
+   ],
+   "VETUSDT": [
+    "HIGH52",
+    1.569
+   ],
+   "XMRUSDT": [
+    "SKIP",
+    0.401
+   ],
+   "BANDUSDT": [
+    "SKIP",
+    0.034
+   ],
+   "XTZUSDT": [
+    "TSMOM60_LS",
+    0.603
+   ],
+   "ZECUSDT": [
+    "SKIP",
+    0.364
+   ]
+  },
+  "K": 14,
+  "eval_2023_24_selected": {
+   "n": 22,
+   "median": -0.54,
+   "geo": -0.11,
+   "mean": 0.08,
+   "up": "9/22",
+   "t": 0.06,
+   "net": -2.43,
+   "max_dd": 22.73,
+   "sharpe_ann": 0.06,
+   "trades_per_month": 6.9
+  },
+  "eval_all_pairs": {
+   "n": 22,
+   "median": -0.11,
+   "geo": -0.06,
+   "mean": 0.05,
+   "up": "11/22",
+   "t": 0.05,
+   "net": -1.29,
+   "max_dd": 18.26,
+   "sharpe_ann": 0.06,
+   "trades_per_month": 60.4
+  },
+  "random_pctl": 48.6,
+  "random_median": -2.05,
+  "perm_pctl": 57.0,
+  "perm_median": -3.85,
+  "personality_persistence": {
+   "n_coins": 20,
+   "ac1": {
+    "rho": -0.281,
+    "p": 0.23
+   },
+   "vr10": {
+    "rho": 0.478,
+    "p": 0.033
+   },
+   "hurst": {
+    "rho": 0.36,
+    "p": 0.119
+   },
+   "trend_minus_mr": {
+    "rho": 0.362,
+    "p": 0.116
+   },
+   "pair_sharpe_rho": 0.189,
+   "interaction_rho": {
+    "rho": 0.087,
+    "p": 0.347
+   },
+   "later_rank_of_earlier_best_rule": {
+    "mean": 3.85,
+    "chance": 3.5,
+    "ranks": [
+     6,
+     3,
+     5,
+     6,
+     4,
+     4,
+     4,
+     2,
+     2,
+     2,
+     1,
+     4,
+     2,
+     5,
+     5,
+     5,
+     1,
+     6,
+     5,
+     5
+    ]
+   }
+  }
+ },
+ "dev_books": {
+  "CHOSEN": {
+   "n": 46,
+   "median": 1.1,
+   "geo": 3.37,
+   "mean": 3.82,
+   "up": "27/46",
+   "t": 2.52,
+   "net": 358.99,
+   "max_dd": 19.26,
+   "sharpe_ann": 1.48,
+   "trades_per_month": 4.9
+  },
+  "ALL_PAIRS": {
+   "n": 46,
+   "median": -0.01,
+   "geo": 0.65,
+   "mean": 0.89,
+   "up": "23/46",
+   "t": 0.84,
+   "net": 34.65,
+   "max_dd": 46.98,
+   "sharpe_ann": 0.41,
+   "trades_per_month": 55.6
+  },
+  "BEST_RULE_HIGH52_ALL_COINS": {
+   "n": 46,
+   "median": 0.0,
+   "geo": 0.95,
+   "mean": 1.08,
+   "up": "14/46",
+   "t": 1.33,
+   "net": 54.36,
+   "max_dd": 23.42,
+   "sharpe_ann": 0.71,
+   "trades_per_month": 8.0
+  },
+  "BEST_RULE_HIGH52_CHOSEN_COINS": {
+   "n": 46,
+   "median": 0.0,
+   "geo": 1.64,
+   "mean": 1.91,
+   "up": "15/46",
+   "t": 1.58,
+   "net": 110.91,
+   "max_dd": 21.87,
+   "sharpe_ann": 1.1,
+   "trades_per_month": 6.2
+  },
+  "RULE_TSMOM60_LS_ALL_COINS": {
+   "n": 46,
+   "median": -2.43,
+   "geo": -1.24,
+   "mean": 0.04,
+   "up": "18/46",
+   "t": 0.02,
+   "net": -43.68,
+   "max_dd": 87.04,
+   "sharpe_ann": 0.07,
+   "trades_per_month": 19.2
+  },
+  "RULE_EMA20_100_ALL_COINS": {
+   "n": 46,
+   "median": -0.56,
+   "geo": 1.13,
+   "mean": 1.97,
+   "up": "17/46",
+   "t": 0.97,
+   "net": 67.69,
+   "max_dd": 68.02,
+   "sharpe_ann": 0.53,
+   "trades_per_month": 3.5
+  },
+  "RULE_DON55_20_ALL_COINS": {
+   "n": 46,
+   "median": -0.16,
+   "geo": 0.64,
+   "mean": 1.01,
+   "up": "18/46",
+   "t": 0.76,
+   "net": 34.01,
+   "max_dd": 54.79,
+   "sharpe_ann": 0.4,
+   "trades_per_month": 5.0
+  },
+  "RULE_HIGH52_ALL_COINS": {
+   "n": 46,
+   "median": 0.0,
+   "geo": 0.95,
+   "mean": 1.08,
+   "up": "14/46",
+   "t": 1.33,
+   "net": 54.36,
+   "max_dd": 23.42,
+   "sharpe_ann": 0.71,
+   "trades_per_month": 8.0
+  },
+  "RULE_RSI2_CONNORS_ALL_COINS": {
+   "n": 46,
+   "median": 0.06,
+   "geo": 0.25,
+   "mean": 0.31,
+   "up": "24/46",
+   "t": 0.57,
+   "net": 12.1,
+   "max_dd": 30.14,
+   "sharpe_ann": 0.24,
+   "trades_per_month": 10.1
+  },
+  "RULE_BOLL20_MR_ALL_COINS": {
+   "n": 46,
+   "median": 0.7,
+   "geo": 0.27,
+   "mean": 0.45,
+   "up": "27/46",
+   "t": 0.51,
+   "net": 13.22,
+   "max_dd": 41.27,
+   "sharpe_ann": 0.27,
+   "trades_per_month": 9.8
+  }
+ },
+ "dev_wf_2022_2024": {
+  "n": 34,
+  "median": -0.06,
+  "geo": -2.77,
+  "mean": -2.39,
+  "up": "16/34",
+  "t": -1.64,
+  "net": -61.49,
+  "max_dd": 63.33,
+  "sharpe_ann": -1.18
+ },
+ "dev_wf_all_pairs_2022_2024": {
+  "n": 34,
+  "median": -0.36,
+  "geo": -0.52,
+  "mean": -0.42,
+  "up": "15/34",
+  "t": -0.54,
+  "net": -16.25,
+  "max_dd": 29.78,
+  "sharpe_ann": -0.29,
+  "trades_per_month": 52.2
+ },
+ "dev_mix": {
+  "0.0": {
+   "sharpe_m": 0.849,
+   "n": 46,
+   "median": 5.16,
+   "geo": 4.88,
+   "mean": 5.05,
+   "up": "33/46",
+   "t": 5.76,
+   "net": 795.47,
+   "max_dd_monthly": 7.24
+  },
+  "0.1": {
+   "sharpe_m": 0.819,
+   "n": 46,
+   "median": 5.52,
+   "geo": 4.76,
+   "mean": 4.92,
+   "up": "32/46",
+   "t": 5.55,
+   "net": 747.44,
+   "max_dd_monthly": 7.59
+  },
+  "0.2": {
+   "sharpe_m": 0.775,
+   "n": 46,
+   "median": 5.28,
+   "geo": 4.62,
+   "mean": 4.8,
+   "up": "32/46",
+   "t": 5.25,
+   "net": 699.89,
+   "max_dd_monthly": 7.94
+  },
+  "0.3": {
+   "sharpe_m": 0.722,
+   "n": 46,
+   "median": 4.85,
+   "geo": 4.49,
+   "mean": 4.68,
+   "up": "31/46",
+   "t": 4.9,
+   "net": 653.03,
+   "max_dd_monthly": 8.31
+  },
+  "0.4": {
+   "sharpe_m": 0.665,
+   "n": 46,
+   "median": 3.54,
+   "geo": 4.34,
+   "mean": 4.55,
+   "up": "31/46",
+   "t": 4.51,
+   "net": 607.07,
+   "max_dd_monthly": 8.68
+  },
+  "0.5": {
+   "sharpe_m": 0.607,
+   "n": 46,
+   "median": 2.78,
+   "geo": 4.2,
+   "mean": 4.43,
+   "up": "34/46",
+   "t": 4.12,
+   "net": 562.21,
+   "max_dd_monthly": 9.06
+  },
+  "0.6": {
+   "sharpe_m": 0.551,
+   "n": 46,
+   "median": 2.23,
+   "geo": 4.04,
+   "mean": 4.31,
+   "up": "34/46",
+   "t": 3.74,
+   "net": 518.59,
+   "max_dd_monthly": 9.45
+  }
+ },
+ "dev_personality": {
+  "BTCUSDT": {
+   "ac1": -0.0387,
+   "vr10": 0.985,
+   "hurst": 0.502,
+   "trend_minus_mr": 0.145,
+   "sharpes": [
+    0.5,
+    0.47,
+    0.56,
+    0.51,
+    0.37,
+    0.36
+   ]
+  },
+  "ETHUSDT": {
+   "ac1": -0.0535,
+   "vr10": 0.93,
+   "hurst": 0.489,
+   "trend_minus_mr": 0.28,
+   "sharpes": [
+    0.55,
+    0.53,
+    0.64,
+    0.38,
+    0.03,
+    0.46
+   ]
+  },
+  "XRPUSDT": {
+   "ac1": -0.053,
+   "vr10": 0.876,
+   "hurst": 0.485,
+   "trend_minus_mr": -0.609,
+   "sharpes": [
+    -0.81,
+    0.21,
+    -0.0,
+    0.47,
+    0.79,
+    0.36
+   ]
+  },
+  "LTCUSDT": {
+   "ac1": -0.059,
+   "vr10": 0.855,
+   "hurst": 0.446,
+   "trend_minus_mr": -0.482,
+   "sharpes": [
+    -0.65,
+    -0.12,
+    -0.65,
+    -0.08,
+    -0.26,
+    0.48
+   ]
+  },
+  "LINKUSDT": {
+   "ac1": -0.083,
+   "vr10": 0.82,
+   "hurst": 0.456,
+   "trend_minus_mr": -0.159,
+   "sharpes": [
+    -0.28,
+    0.25,
+    -0.17,
+    -0.19,
+    -0.16,
+    0.28
+   ]
+  },
+  "BCHUSDT": {
+   "ac1": -0.08,
+   "vr10": 1.002,
+   "hurst": 0.497,
+   "trend_minus_mr": 0.281,
+   "sharpes": [
+    0.07,
+    0.56,
+    0.28,
+    0.4,
+    -0.05,
+    0.14
+   ]
+  },
+  "XLMUSDT": {
+   "ac1": -0.0689,
+   "vr10": 0.75,
+   "hurst": 0.434,
+   "trend_minus_mr": -0.655,
+   "sharpes": [
+    -0.47,
+    0.36,
+    -0.83,
+    0.18,
+    0.55,
+    0.37
+   ]
+  },
+  "ADAUSDT": {
+   "ac1": -0.0567,
+   "vr10": 0.945,
+   "hurst": 0.517,
+   "trend_minus_mr": 0.723,
+   "sharpes": [
+    0.66,
+    1.05,
+    0.89,
+    0.62,
+    0.33,
+    -0.16
+   ]
+  },
+  "EOSUSDT": {
+   "ac1": -0.1143,
+   "vr10": 0.848,
+   "hurst": 0.453,
+   "trend_minus_mr": 0.087,
+   "sharpes": [
+    0.34,
+    0.05,
+    -0.36,
+    -0.6,
+    -0.15,
+    -0.3
+   ]
+  },
+  "BNBUSDT": {
+   "ac1": -0.0816,
+   "vr10": 1.116,
+   "hurst": 0.564,
+   "trend_minus_mr": 0.799,
+   "sharpes": [
+    0.97,
+    1.04,
+    1.31,
+    1.17,
+    0.31,
+    0.34
+   ]
+  },
+  "ZILUSDT": {
+   "ac1": -0.0823,
+   "vr10": 0.956,
+   "hurst": 0.49,
+   "trend_minus_mr": -0.239,
+   "sharpes": [
+    0.53,
+    0.1,
+    0.2,
+    -1.12,
+    0.24,
+    0.1
+   ]
+  },
+  "THETAUSDT": {
+   "ac1": -0.0791,
+   "vr10": 0.957,
+   "hurst": 0.522,
+   "trend_minus_mr": -0.049,
+   "sharpes": [
+    -0.0,
+    0.53,
+    0.65,
+    1.03,
+    0.89,
+    0.32
+   ]
+  },
+  "TRXUSDT": {
+   "ac1": -0.138,
+   "vr10": 0.844,
+   "hurst": 0.486,
+   "trend_minus_mr": 0.55,
+   "sharpes": [
+    0.14,
+    0.92,
+    0.8,
+    0.9,
+    0.18,
+    0.1
+   ]
+  },
+  "ETCUSDT": {
+   "ac1": 0.0256,
+   "vr10": 1.186,
+   "hurst": 0.532,
+   "trend_minus_mr": 0.231,
+   "sharpes": [
+    0.43,
+    0.53,
+    0.77,
+    0.89,
+    0.43,
+    0.42
+   ]
+  },
+  "WAVESUSDT": {
+   "ac1": -0.0287,
+   "vr10": 1.086,
+   "hurst": 0.525,
+   "trend_minus_mr": 0.405,
+   "sharpes": [
+    0.1,
+    0.49,
+    0.53,
+    0.63,
+    0.38,
+    -0.31
+   ]
+  },
+  "VETUSDT": {
+   "ac1": -0.0944,
+   "vr10": 0.994,
+   "hurst": 0.52,
+   "trend_minus_mr": 0.586,
+   "sharpes": [
+    0.61,
+    0.87,
+    0.88,
+    0.96,
+    0.38,
+    0.11
+   ]
+  },
+  "XMRUSDT": {
+   "ac1": -0.1856,
+   "vr10": 0.745,
+   "hurst": 0.44,
+   "trend_minus_mr": -0.762,
+   "sharpes": [
+    -0.99,
+    -0.21,
+    -0.11,
+    -0.74,
+    -0.01,
+    0.51
+   ]
+  },
+  "BANDUSDT": {
+   "ac1": -0.0654,
+   "vr10": 0.782,
+   "hurst": 0.442,
+   "trend_minus_mr": -0.217,
+   "sharpes": [
+    -0.21,
+    -0.13,
+    -0.42,
+    -0.52,
+    -0.33,
+    0.13
+   ]
+  },
+  "XTZUSDT": {
+   "ac1": -0.0733,
+   "vr10": 0.781,
+   "hurst": 0.438,
+   "trend_minus_mr": 0.048,
+   "sharpes": [
+    0.31,
+    0.43,
+    0.29,
+    -0.12,
+    -0.06,
+    0.41
+   ]
+  },
+  "ZECUSDT": {
+   "ac1": -0.0713,
+   "vr10": 1.006,
+   "hurst": 0.483,
+   "trend_minus_mr": -0.133,
+   "sharpes": [
+    -0.81,
+    -0.01,
+    -0.13,
+    0.18,
+    -0.14,
+    0.02
+   ]
+  }
+ },
+ "prereg_mix_wx": 0.0
+}

@@ -1,6 +1,6 @@
 """Which strategies the server runs (operator, 2026-10-24: "only keep the things we are going to make live").
 
-LEAN (the default): Worker 1 = the Ensemble and Worker 2 = session momentum (crypto, Binance), and the IBS bot (US stocks, Alpaca), plus the shared parts they
+LEAN (the default): Worker 1 = the Ensemble, Worker 2 = session momentum and Worker 3 = the 30-day-high book (crypto, Binance), and the IBS bot (US stocks, Alpaca), plus the shared parts they
 need (keys, linked accounts, Telegram alerts, the kill switch). Every other bot, desk and paper test is still built
 (its routes and history stay readable) but never started: no threads, no market data, no orders.
 PAPERLAB_LINEUP=full starts everything again, exactly as before.
@@ -17,7 +17,7 @@ from typing import Any
 
 log = logging.getLogger(__name__)
 
-KEPT = frozenset({"ensemble", "ensemble_live", "worker2", "worker2_live", "ibs_bot"})
+KEPT = frozenset({"ensemble", "ensemble_live", "worker2", "worker2_live", "worker3", "worker3_live", "ibs_bot"})
 LIVE_STATES = ("ARMED", "CLOSING", "HALTED")
 
 

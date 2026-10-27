@@ -1,0 +1,92 @@
+[
+ {
+  "cfg": "sharpe L14 k10 LS rb7",
+  "t": 2.908,
+  "corr_w1": 0.52,
+  "corr_mom14": 0.884
+ },
+ {
+  "cfg": "resid L14 k10 LS rb7",
+  "t": 2.473,
+  "corr_w1": 0.462,
+  "corr_mom14": 0.824
+ },
+ {
+  "cfg": "sharpe L14 k5 LS rb7",
+  "t": 2.459,
+  "corr_w1": 0.446,
+  "corr_mom14": 0.785
+ },
+ {
+  "cfg": "r2s L30 k10 LS rb7",
+  "t": 2.442,
+  "corr_w1": 0.365,
+  "corr_mom14": 0.669
+ },
+ {
+  "cfg": "resid L30 k10 LS rb7",
+  "t": 2.266,
+  "corr_w1": 0.396,
+  "corr_mom14": 0.693
+ },
+ {
+  "cfg": "resid L30 k5 LS rb7",
+  "t": 2.157,
+  "corr_w1": 0.361,
+  "corr_mom14": 0.606
+ },
+ {
+  "cfg": "resid L14 k5 LS rb7",
+  "t": 2.118,
+  "corr_w1": 0.446,
+  "corr_mom14": 0.739
+ },
+ {
+  "cfg": "resid L14 k5 LS rb1",
+  "t": 2.091,
+  "corr_w1": 0.358,
+  "corr_mom14": 0.59
+ },
+ {
+  "cfg": "sharpe L30 k10 LS rb7",
+  "t": 2.067,
+  "corr_w1": 0.405,
+  "corr_mom14": 0.716
+ },
+ {
+  "cfg": "sharpe L30 k5 LO rb1",
+  "t": 2.052,
+  "corr_w1": 0.037,
+  "corr_mom14": 0.311
+ },
+ {
+  "cfg": "resid L14 k5 LO rb7",
+  "t": 2.047,
+  "corr_w1": 0.083,
+  "corr_mom14": 0.33
+ },
+ {
+  "cfg": "sharpe L14 k10 LS rb1",
+  "t": 2.039,
+  "corr_w1": 0.427,
+  "corr_mom14": 0.719
+ },
+ {
+  "cfg": "sharpe L14 k10 LO rb7",
+  "t": 2.029,
+  "corr_w1": 0.046,
+  "corr_mom14": 0.294
+ },
+ {
+  "cfg": "sharpe L14 k5 LO rb7",
+  "t": 2.012,
+  "corr_w1": 0.074,
+  "corr_mom14": 0.353
+ },
+ {
+  "cfg": "resid L30 k5 LO rb1",
+  "t": 1.988,
+  "corr_w1": 0.045,
+  "corr_mom14": 0.302
+ }
+]

@@ -1,0 +1,23 @@
+SELECTED H48 S4              med  +0.00 geo  +1.92 mean  +2.03 up 23/47 DD  16.2 t 2.87 tr/mo 1.79 net +144.5
+SELECTED 2x cost             med  +0.00 geo  +1.86 mean  +1.97 up 23/47 DD  16.4 t 2.81 tr/mo 1.79 net +137.8
+H24                          med  +0.00 geo  +1.67 mean  +1.79 up 20/47 DD  17.8 t 2.4 tr/mo 1.79 net +117.5
+H36                          med  +0.00 geo  +1.68 mean  +1.77 up 22/47 DD  14.5 t 2.8 tr/mo 1.79 net +119.1
+H60                          med  +0.22 geo  +1.84 mean  +1.98 up 24/47 DD  19.3 t 2.57 tr/mo 1.79 net +135.9
+H72                          med  +0.00 geo  +1.77 mean  +1.95 up 21/47 DD  20.2 t 2.17 tr/mo 1.79 net +128.2
+S2                           med  +0.25 geo  +3.59 mean  +3.92 up 24/47 DD  34.6 t 3.21 tr/mo 1.72 net +424.3
+S3                           med  +0.00 geo  +2.48 mean  +2.67 up 23/47 DD  21.8 t 2.85 tr/mo 1.79 net +216.2
+S5                           med  +0.00 geo  +1.58 mean  +1.65 up 23/47 DD  12.9 t 2.92 tr/mo 1.79 net +109.0
+S6                           med  +0.00 geo  +1.33 mean  +1.38 up 23/47 DD  10.7 t 2.93 tr/mo 1.79 net +85.9
+delay+1h                     med  +0.00 geo  +1.66 mean  +1.77 up 22/47 DD  26.4 t 2.53 tr/mo 1.79 net +116.8
+delay+3h                     med  +0.00 geo  +1.52 mean  +1.63 up 22/47 DD  31.9 t 2.34 tr/mo 1.79 net +103.0
+drop BN_MON_ADD              med  +0.00 geo  +1.56 mean  +1.65 up 21/47 DD  18.5 t 2.49 tr/mo 1.55 net +106.5
+drop BN_SPOT_DELIST          med  +0.00 geo  +1.74 mean  +1.84 up 23/47 DD  14.1 t 2.83 tr/mo 1.57 net +125.5
+drop UP_KRW_LIST             med  +0.00 geo  +1.27 mean  +1.31 up 17/47 DD  11.5 t 2.97 tr/mo 0.98 net +80.8
+drop UP_OTHER_LIST           med  +0.00 geo  +1.30 mean  +1.39 up 19/47 DD  19.0 t 2.19 tr/mo 1.38 net +83.3
+drop UP_WARN                 med  +0.00 geo  +1.80 mean  +1.91 up 21/47 DD  16.2 t 2.75 tr/mo 1.66 net +131.7
+-- not in rule (for info): other event types alone, short H48 S4
+only BN_FUT_DELIST           med  +0.00 geo  -0.38 mean  -0.34 up 1/47 DD  21.1 t -0.85 tr/mo 0.3 net -16.5
+only BN_SPOT_LIST            med  +0.00 geo  -0.02 mean  -0.01 up 4/47 DD  12.6 t -0.06 tr/mo 0.15 net -1.0
+only UP_CAUTION              med  +0.00 geo  -1.10 mean  -0.93 up 6/47 DD  44.2 t -1.22 tr/mo 0.43 net -40.6
+only UP_DELIST               med  +0.00 geo  -0.02 mean  -0.02 up 2/47 DD   2.1 t -0.43 tr/mo 0.09 net -0.9
+only BN_MON_REMOVE           med  +0.00 geo  -0.05 mean  -0.05 up 0/47 DD   3.4 t -1.0 tr/mo 0.02 net -2.4

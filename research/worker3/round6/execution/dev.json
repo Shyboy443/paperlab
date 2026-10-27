@@ -1,0 +1,757 @@
+{
+ "rows": [
+  {
+   "n": 1,
+   "name": "base",
+   "opts": {},
+   "equity0": 10000.0,
+   "selectable": true,
+   "dev": {
+    "median": 2.78,
+    "geo": 5.13,
+    "mean": 5.78,
+    "up": "27/46",
+    "max_dd": 26.27,
+    "net": 898.93,
+    "t": 3.22,
+    "trades_per_month": 68.5,
+    "worst": -13.48,
+    "best": 32.66,
+    "turnover_x_per_month": 14.77,
+    "active_days": 1.0
+   },
+   "net2x": 521.44,
+   "max_pos": 11.27,
+   "orders_pm": 370.6,
+   "xstat": {
+    "orders": 17049,
+    "small5": 9690,
+    "skipped_entries": 0,
+    "skipped_resizes": 0,
+    "forced": 0
+   },
+   "liq": 3,
+   "cost_pct_of_eq0": 249.9
+  },
+  {
+   "n": 2,
+   "name": "band .10",
+   "opts": {
+    "band": 0.1
+   },
+   "equity0": 10000.0,
+   "selectable": true,
+   "dev": {
+    "median": 2.87,
+    "geo": 5.14,
+    "mean": 5.79,
+    "up": "28/46",
+    "max_dd": 26.05,
+    "net": 903.48,
+    "t": 3.23,
+    "trades_per_month": 68.5,
+    "worst": -13.43,
+    "best": 33.64,
+    "turnover_x_per_month": 14.27,
+    "active_days": 1.0
+   },
+   "net2x": 527.65,
+   "max_pos": 11.35,
+   "orders_pm": 201.2,
+   "xstat": {
+    "orders": 9253,
+    "small5": 1471,
+    "skipped_entries": 0,
+    "skipped_resizes": 9267,
+    "forced": 1471
+   },
+   "liq": 3,
+   "cost_pct_of_eq0": 242.6
+  },
+  {
+   "n": 3,
+   "name": "band .25",
+   "opts": {
+    "band": 0.25
+   },
+   "equity0": 10000.0,
+   "selectable": true,
+   "dev": {
+    "median": 3.67,
+    "geo": 5.31,
+    "mean": 5.96,
+    "up": "29/46",
+    "max_dd": 25.13,
+    "net": 978.63,
+    "t": 3.31,
+    "trades_per_month": 68.5,
+    "worst": -12.02,
+    "best": 33.71,
+    "turnover_x_per_month": 13.89,
+    "active_days": 1.0
+   },
+   "net2x": 590.55,
+   "max_pos": 11.55,
+   "orders_pm": 162.6,
+   "xstat": {
+    "orders": 7481,
+    "small5": 672,
+    "skipped_entries": 0,
+    "skipped_resizes": 10567,
+    "forced": 999
+   },
+   "liq": 3,
+   "cost_pct_of_eq0": 254.5
+  },
+  {
+   "n": 4,
+   "name": "band .50",
+   "opts": {
+    "band": 0.5
+   },
+   "equity0": 10000.0,
+   "selectable": true,
+   "dev": {
+    "median": 3.58,
+    "geo": 5.52,
+    "mean": 6.25,
+    "up": "29/46",
+    "max_dd": 26.92,
+    "net": 1084.25,
+    "t": 3.27,
+    "trades_per_month": 68.5,
+    "worst": -12.99,
+    "best": 36.34,
+    "turnover_x_per_month": 13.7,
+    "active_days": 1.0
+   },
+   "net2x": 661.01,
+   "max_pos": 12.83,
+   "orders_pm": 153.5,
+   "xstat": {
+    "orders": 7062,
+    "small5": 509,
+    "skipped_entries": 0,
+    "skipped_resizes": 10792,
+    "forced": 805
+   },
+   "liq": 3,
+   "cost_pct_of_eq0": 268.2
+  },
+  {
+   "n": 5,
+   "name": "buf 6",
+   "opts": {
+    "buf": 6
+   },
+   "equity0": 10000.0,
+   "selectable": true,
+   "dev": {
+    "median": 0.72,
+    "geo": 4.38,
+    "mean": 4.99,
+    "up": "27/46",
+    "max_dd": 26.78,
+    "net": 619.21,
+    "t": 2.87,
+    "trades_per_month": 50.2,
+    "worst": -10.89,
+    "best": 34.17,
+    "turnover_x_per_month": 11.19,
+    "active_days": 1.0
+   },
+   "net2x": 401.98,
+   "max_pos": 12.75,
+   "orders_pm": 352.5,
+   "xstat": {
+    "orders": 16216,
+    "small5": 10462,
+    "skipped_entries": 0,
+    "skipped_resizes": 0,
+    "forced": 0
+   },
+   "liq": 4,
+   "cost_pct_of_eq0": 141.5
+  },
+  {
+   "n": 6,
+   "name": "buf 7",
+   "opts": {
+    "buf": 7
+   },
+   "equity0": 10000.0,
+   "selectable": true,
+   "dev": {
+    "median": 1.34,
+    "geo": 3.15,
+    "mean": 3.68,
+    "up": "29/46",
+    "max_dd": 31.81,
+    "net": 316.82,
+    "t": 2.27,
+    "trades_per_month": 40.0,
+    "worst": -13.4,
+    "best": 32.18,
+    "turnover_x_per_month": 9.19,
+    "active_days": 1.0
+   },
+   "net2x": 210.16,
+   "max_pos": 16.66,
+   "orders_pm": 342.5,
+   "xstat": {
+    "orders": 15756,
+    "small5": 10908,
+    "skipped_entries": 0,
+    "skipped_resizes": 0,
+    "forced": 0
+   },
+   "liq": 4,
+   "cost_pct_of_eq0": 79.8
+  },
+  {
+   "n": 7,
+   "name": "buf 8",
+   "opts": {
+    "buf": 8
+   },
+   "equity0": 10000.0,
+   "selectable": true,
+   "dev": {
+    "median": 1.19,
+    "geo": 2.33,
+    "mean": 2.8,
+    "up": "29/46",
+    "max_dd": 39.61,
+    "net": 188.83,
+    "t": 1.86,
+    "trades_per_month": 32.4,
+    "worst": -10.62,
+    "best": 28.13,
+    "turnover_x_per_month": 7.69,
+    "active_days": 1.0
+   },
+   "net2x": 125.57,
+   "max_pos": 17.67,
+   "orders_pm": 334.8,
+   "xstat": {
+    "orders": 15402,
+    "small5": 11265,
+    "skipped_entries": 0,
+    "skipped_resizes": 0,
+    "forced": 0
+   },
+   "liq": 4,
+   "cost_pct_of_eq0": 41.9
+  },
+  {
+   "n": 8,
+   "name": "every 2",
+   "opts": {
+    "every": 2
+   },
+   "equity0": 10000.0,
+   "selectable": true,
+   "dev": {
+    "median": 1.72,
+    "geo": 3.52,
+    "mean": 4.12,
+    "up": "25/46",
+    "max_dd": 32.92,
+    "net": 390.38,
+    "t": 2.42,
+    "trades_per_month": 46.1,
+    "worst": -17.22,
+    "best": 33.88,
+    "turnover_x_per_month": 9.86,
+    "active_days": 1.0
+   },
+   "net2x": 257.12,
+   "max_pos": 14.29,
+   "orders_pm": 196.0,
+   "xstat": {
+    "orders": 9016,
+    "small5": 3887,
+    "skipped_entries": 0,
+    "skipped_resizes": 0,
+    "forced": 0
+   },
+   "liq": 4,
+   "cost_pct_of_eq0": 106.6
+  },
+  {
+   "n": 9,
+   "name": "band .25+buf 7",
+   "opts": {
+    "band": 0.25,
+    "buf": 7
+   },
+   "equity0": 10000.0,
+   "selectable": true,
+   "dev": {
+    "median": 1.99,
+    "geo": 3.35,
+    "mean": 3.88,
+    "up": "28/46",
+    "max_dd": 30.41,
+    "net": 355.71,
+    "t": 2.4,
+    "trades_per_month": 40.0,
+    "worst": -13.13,
+    "best": 33.93,
+    "turnover_x_per_month": 8.24,
+    "active_days": 1.0
+   },
+   "net2x": 252.74,
+   "max_pos": 16.42,
+   "orders_pm": 108.2,
+   "xstat": {
+    "orders": 4979,
+    "small5": 702,
+    "skipped_entries": 0,
+    "skipped_resizes": 11833,
+    "forced": 1056
+   },
+   "liq": 4,
+   "cost_pct_of_eq0": 77.8
+  },
+  {
+   "n": 10,
+   "name": "band .10+buf 7",
+   "opts": {
+    "band": 0.1,
+    "buf": 7
+   },
+   "equity0": 10000.0,
+   "selectable": true,
+   "dev": {
+    "median": 1.33,
+    "geo": 3.25,
+    "mean": 3.77,
+    "up": "29/46",
+    "max_dd": 30.52,
+    "net": 335.8,
+    "t": 2.36,
+    "trades_per_month": 40.0,
+    "worst": -13.01,
+    "best": 32.68,
+    "turnover_x_per_month": 8.66,
+    "active_days": 1.0
+   },
+   "net2x": 227.18,
+   "max_pos": 15.88,
+   "orders_pm": 149.9,
+   "xstat": {
+    "orders": 6895,
+    "small5": 1531,
+    "skipped_entries": 0,
+    "skipped_resizes": 10392,
+    "forced": 1531
+   },
+   "liq": 4,
+   "cost_pct_of_eq0": 76.6
+  },
+  {
+   "n": 11,
+   "name": "minn 5 @500",
+   "opts": {
+    "minn": 5
+   },
+   "equity0": 500,
+   "selectable": false,
+   "dev": {
+    "median": 2.8,
+    "geo": 5.13,
+    "mean": 5.78,
+    "up": "27/46",
+    "max_dd": 26.27,
+    "net": 898.31,
+    "t": 3.22,
+    "trades_per_month": 68.5,
+    "worst": -13.47,
+    "best": 32.66,
+    "turnover_x_per_month": 14.69,
+    "active_days": 1.0
+   },
+   "net2x": 524.4,
+   "max_pos": 11.27,
+   "orders_pm": 306.3,
+   "xstat": {
+    "orders": 14090,
+    "small5": 6696,
+    "skipped_entries": 0,
+    "skipped_resizes": 4073,
+    "forced": 1114
+   },
+   "liq": 3,
+   "cost_pct_of_eq0": 248.9
+  },
+  {
+   "n": 12,
+   "name": "minn 10 @500",
+   "opts": {
+    "minn": 10
+   },
+   "equity0": 500,
+   "selectable": false,
+   "dev": {
+    "median": 2.83,
+    "geo": 5.11,
+    "mean": 5.76,
+    "up": "27/46",
+    "max_dd": 26.35,
+    "net": 891.56,
+    "t": 3.23,
+    "trades_per_month": 68.5,
+    "worst": -13.52,
+    "best": 32.63,
+    "turnover_x_per_month": 14.55,
+    "active_days": 1.0
+   },
+   "net2x": 533.07,
+   "max_pos": 11.28,
+   "orders_pm": 262.8,
+   "xstat": {
+    "orders": 12088,
+    "small5": 4662,
+    "skipped_entries": 0,
+    "skipped_resizes": 6511,
+    "forced": 1550
+   },
+   "liq": 3,
+   "cost_pct_of_eq0": 245.6
+  },
+  {
+   "n": 13,
+   "name": "minn 10 @2000",
+   "opts": {
+    "minn": 10
+   },
+   "equity0": 2000,
+   "selectable": false,
+   "dev": {
+    "median": 2.79,
+    "geo": 5.12,
+    "mean": 5.78,
+    "up": "27/46",
+    "max_dd": 26.27,
+    "net": 896.29,
+    "t": 3.22,
+    "trades_per_month": 68.5,
+    "worst": -13.48,
+    "best": 32.68,
+    "turnover_x_per_month": 14.75,
+    "active_days": 1.0
+   },
+   "net2x": 521.63,
+   "max_pos": 11.28,
+   "orders_pm": 335.9,
+   "xstat": {
+    "orders": 15451,
+    "small5": 8090,
+    "skipped_entries": 0,
+    "skipped_resizes": 2280,
+    "forced": 682
+   },
+   "liq": 3,
+   "cost_pct_of_eq0": 249.0
+  },
+  {
+   "n": 14,
+   "name": "binance @500",
+   "opts": {
+    "binance": true
+   },
+   "equity0": 500,
+   "selectable": false,
+   "dev": {
+    "median": 2.8,
+    "geo": 5.06,
+    "mean": 5.7,
+    "up": "27/46",
+    "max_dd": 26.16,
+    "net": 866.48,
+    "t": 3.2,
+    "trades_per_month": 68.2,
+    "worst": -13.49,
+    "best": 32.65,
+    "turnover_x_per_month": 14.57,
+    "active_days": 1.0
+   },
+   "net2x": 513.81,
+   "max_pos": 11.32,
+   "orders_pm": 291.3,
+   "xstat": {
+    "orders": 13399,
+    "small5": 6046,
+    "skipped_entries": 74,
+    "skipped_resizes": 4557,
+    "forced": 999
+   },
+   "liq": 3,
+   "cost_pct_of_eq0": 239.5
+  },
+  {
+   "n": 15,
+   "name": "binance @2000",
+   "opts": {
+    "binance": true
+   },
+   "equity0": 2000,
+   "selectable": false,
+   "dev": {
+    "median": 2.78,
+    "geo": 5.12,
+    "mean": 5.77,
+    "up": "27/46",
+    "max_dd": 26.23,
+    "net": 895.02,
+    "t": 3.21,
+    "trades_per_month": 68.5,
+    "worst": -13.48,
+    "best": 32.65,
+    "turnover_x_per_month": 14.74,
+    "active_days": 1.0
+   },
+   "net2x": 519.31,
+   "max_pos": 11.28,
+   "orders_pm": 342.0,
+   "xstat": {
+    "orders": 15730,
+    "small5": 8373,
+    "skipped_entries": 0,
+    "skipped_resizes": 1836,
+    "forced": 517
+   },
+   "liq": 3,
+   "cost_pct_of_eq0": 248.5
+  },
+  {
+   "n": 16,
+   "name": "binance @10k",
+   "opts": {
+    "binance": true
+   },
+   "equity0": 10000.0,
+   "selectable": false,
+   "dev": {
+    "median": 2.78,
+    "geo": 5.13,
+    "mean": 5.78,
+    "up": "27/46",
+    "max_dd": 26.27,
+    "net": 899.11,
+    "t": 3.22,
+    "trades_per_month": 68.5,
+    "worst": -13.48,
+    "best": 32.67,
+    "turnover_x_per_month": 14.77,
+    "active_days": 1.0
+   },
+   "net2x": 521.82,
+   "max_pos": 11.27,
+   "orders_pm": 363.3,
+   "xstat": {
+    "orders": 16714,
+    "small5": 9353,
+    "skipped_entries": 0,
+    "skipped_resizes": 580,
+    "forced": 245
+   },
+   "liq": 3,
+   "cost_pct_of_eq0": 249.8
+  },
+  {
+   "n": 17,
+   "name": "binance+band .25 @500",
+   "opts": {
+    "binance": true,
+    "band": 0.25
+   },
+   "equity0": 500,
+   "selectable": false,
+   "dev": {
+    "median": 3.67,
+    "geo": 5.21,
+    "mean": 5.86,
+    "up": "29/46",
+    "max_dd": 25.13,
+    "net": 936.4,
+    "t": 3.27,
+    "trades_per_month": 68.2,
+    "worst": -12.02,
+    "best": 33.71,
+    "turnover_x_per_month": 13.82,
+    "active_days": 1.0
+   },
+   "net2x": 563.73,
+   "max_pos": 11.6,
+   "orders_pm": 161.1,
+   "xstat": {
+    "orders": 7412,
+    "small5": 639,
+    "skipped_entries": 71,
+    "skipped_resizes": 10507,
+    "forced": 957
+   },
+   "liq": 3,
+   "cost_pct_of_eq0": 244.2
+  },
+  {
+   "n": 18,
+   "name": "binance+buf 7 @500",
+   "opts": {
+    "binance": true,
+    "buf": 7
+   },
+   "equity0": 500,
+   "selectable": false,
+   "dev": {
+    "median": 1.04,
+    "geo": 3.25,
+    "mean": 3.77,
+    "up": "28/46",
+    "max_dd": 31.43,
+    "net": 335.49,
+    "t": 2.35,
+    "trades_per_month": 39.7,
+    "worst": -13.42,
+    "best": 32.07,
+    "turnover_x_per_month": 8.9,
+    "active_days": 1.0
+   },
+   "net2x": 227.28,
+   "max_pos": 16.38,
+   "orders_pm": 213.9,
+   "xstat": {
+    "orders": 9838,
+    "small5": 4928,
+    "skipped_entries": 107,
+    "skipped_resizes": 7017,
+    "forced": 1216
+   },
+   "liq": 4,
+   "cost_pct_of_eq0": 81.3
+  },
+  {
+   "n": 19,
+   "name": "binance+band .25+buf 7 @500",
+   "opts": {
+    "binance": true,
+    "band": 0.25,
+    "buf": 7
+   },
+   "equity0": 500,
+   "selectable": false,
+   "dev": {
+    "median": 1.92,
+    "geo": 3.44,
+    "mean": 3.95,
+    "up": "28/46",
+    "max_dd": 30.41,
+    "net": 373.32,
+    "t": 2.48,
+    "trades_per_month": 39.8,
+    "worst": -13.13,
+    "best": 33.93,
+    "turnover_x_per_month": 8.19,
+    "active_days": 1.0
+   },
+   "net2x": 274.79,
+   "max_pos": 16.25,
+   "orders_pm": 106.1,
+   "xstat": {
+    "orders": 4881,
+    "small5": 637,
+    "skipped_entries": 106,
+    "skipped_resizes": 11735,
+    "forced": 975
+   },
+   "liq": 4,
+   "cost_pct_of_eq0": 80.5
+  },
+  {
+   "n": 20,
+   "name": "binance+band .25 @2000",
+   "opts": {
+    "binance": true,
+    "band": 0.25
+   },
+   "equity0": 2000,
+   "selectable": false,
+   "dev": {
+    "median": 3.67,
+    "geo": 5.31,
+    "mean": 5.96,
+    "up": "29/46",
+    "max_dd": 25.13,
+    "net": 978.63,
+    "t": 3.31,
+    "trades_per_month": 68.5,
+    "worst": -12.02,
+    "best": 33.71,
+    "turnover_x_per_month": 13.89,
+    "active_days": 1.0
+   },
+   "net2x": 590.55,
+   "max_pos": 11.55,
+   "orders_pm": 162.6,
+   "xstat": {
+    "orders": 7481,
+    "small5": 672,
+    "skipped_entries": 0,
+    "skipped_resizes": 10567,
+    "forced": 999
+   },
+   "liq": 3,
+   "cost_pct_of_eq0": 254.5
+  },
+  {
+   "n": 21,
+   "name": "binance+band .25+buf 7 @2000",
+   "opts": {
+    "binance": true,
+    "band": 0.25,
+    "buf": 7
+   },
+   "equity0": 2000,
+   "selectable": false,
+   "dev": {
+    "median": 1.99,
+    "geo": 3.35,
+    "mean": 3.88,
+    "up": "28/46",
+    "max_dd": 30.41,
+    "net": 355.49,
+    "t": 2.4,
+    "trades_per_month": 40.0,
+    "worst": -13.13,
+    "best": 33.93,
+    "turnover_x_per_month": 8.24,
+    "active_days": 1.0
+   },
+   "net2x": 252.56,
+   "max_pos": 16.42,
+   "orders_pm": 108.2,
+   "xstat": {
+    "orders": 4979,
+    "small5": 702,
+    "skipped_entries": 0,
+    "skipped_resizes": 11833,
+    "forced": 1056
+   },
+   "liq": 4,
+   "cost_pct_of_eq0": 77.7
+  }
+ ],
+ "selected": {
+  "name": "band .50",
+  "cfg": {
+   "book": "LS",
+   "exit": "D",
+   "chan": "30",
+   "univ": 20,
+   "k": 5,
+   "band": 0.5
+  }
+ }
+}

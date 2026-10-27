@@ -1,0 +1,703 @@
+{
+ "diagnostics_ORIG": {
+  "DEV": {
+   "book": {
+    "median": 2.16,
+    "geo": 3.41,
+    "mean": 3.9,
+    "up": "26/47",
+    "max_dd": 31.27,
+    "net": 383.26,
+    "t": 2.55,
+    "trades_per_month": 129.4,
+    "worst": -16.74,
+    "best": 39.16,
+    "turnover_x_per_month": 14.01,
+    "active_days": 1.0
+   },
+   "gross_zero_cost": {
+    "median": 3.17,
+    "geo": 4.43,
+    "mean": 4.93,
+    "up": "29/47",
+    "max_dd": 27.3,
+    "net": 665.73,
+    "t": 3.18,
+    "trades_per_month": 129.4,
+    "worst": -15.82,
+    "best": 40.69,
+    "turnover_x_per_month": 14.0,
+    "active_days": 1.0
+   },
+   "long_leg_half_gross": {
+    "median": 1.04,
+    "geo": 3.4,
+    "mean": 4.65,
+    "up": "24/47",
+    "max_dd": 62.24,
+    "net": 381.3,
+    "t": 1.9,
+    "trades_per_month": 69.0,
+    "worst": -23.57,
+    "best": 48.41,
+    "turnover_x_per_month": 7.27,
+    "active_days": 1.0
+   },
+   "short_leg_half_gross": {
+    "median": 1.26,
+    "geo": -1.77,
+    "mean": -1.03,
+    "up": "24/47",
+    "max_dd": 63.64,
+    "net": -56.71,
+    "t": -0.59,
+    "trades_per_month": 60.4,
+    "worst": -33.35,
+    "best": 23.3,
+    "turnover_x_per_month": 6.77,
+    "active_days": 1.0
+   },
+   "cost_share_of_gross_log_return": 0.226,
+   "btc_regime": {
+    "BTC>SMA100": {
+     "days": 701,
+     "mean_day_pct": 0.177,
+     "approx_month_pct": 5.37,
+     "t": 2.96
+    },
+    "BTC<=SMA100": {
+     "days": 699,
+     "mean_day_pct": 0.075,
+     "approx_month_pct": 2.28,
+     "t": 1.17
+    }
+   },
+   "btc_vol_tercile": {
+    "low": {
+     "days": 467,
+     "mean_day_pct": 0.175,
+     "approx_month_pct": 5.32,
+     "t": 2.66
+    },
+    "mid": {
+     "days": 466,
+     "mean_day_pct": -0.01,
+     "approx_month_pct": -0.31,
+     "t": -0.14
+    },
+    "high": {
+     "days": 467,
+     "mean_day_pct": 0.212,
+     "approx_month_pct": 6.46,
+     "t": 2.48
+    }
+   },
+   "by_side_positions": {
+    "long": {
+     "n": 3243,
+     "profit_share_pct": 97.2,
+     "win_rate": 40.6,
+     "mean_ret_pct_of_equity": 0.0631
+    },
+    "short": {
+     "n": 2840,
+     "profit_share_pct": 3.6,
+     "win_rate": 43.8,
+     "mean_ret_pct_of_equity": -0.0097
+    }
+   },
+   "by_age_days": {
+    "<60": {
+     "n": 394,
+     "profit_share_pct": 16.4,
+     "win_rate": 44.2,
+     "mean_ret_pct_of_equity": 0.1309
+    },
+    "60-180": {
+     "n": 1017,
+     "profit_share_pct": 21.7,
+     "win_rate": 42.0,
+     "mean_ret_pct_of_equity": 0.0605
+    },
+    "180-365": {
+     "n": 1203,
+     "profit_share_pct": 3.3,
+     "win_rate": 42.4,
+     "mean_ret_pct_of_equity": 0.0054
+    },
+    ">=365": {
+     "n": 3469,
+     "profit_share_pct": 59.5,
+     "win_rate": 41.8,
+     "mean_ret_pct_of_equity": 0.0166
+    }
+   },
+   "by_age_note": "age = days since first archived bar (perp data floor 2020-01-01; spot floor 2017-08-17)",
+   "by_liquidity_rank": {
+    "1-13": {
+     "n": 1812,
+     "profit_share_pct": 49.8,
+     "win_rate": 43.0,
+     "mean_ret_pct_of_equity": 0.0343
+    },
+    "14-26": {
+     "n": 1883,
+     "profit_share_pct": 14.2,
+     "win_rate": 41.7,
+     "mean_ret_pct_of_equity": 0.0216
+    },
+    "27-40": {
+     "n": 2388,
+     "profit_share_pct": 36.8,
+     "win_rate": 41.8,
+     "mean_ret_pct_of_equity": 0.0311
+    }
+   },
+   "holding_days": {
+    "winners_median": 3.0,
+    "winners_mean": 6.2,
+    "losers_median": 2.0,
+    "losers_mean": 3.4,
+    "top5pct_winners_median": 11.0,
+    "profit_share_held_le3d": -370.7,
+    "profit_share_held_gt10d": 344.5
+   },
+   "top5_positions": [
+    [
+     "LUNAUSDT",
+     "S",
+     11.8
+    ],
+    [
+     "REEFUSDT",
+     "L",
+     8.97
+    ],
+    [
+     "BLZUSDT",
+     "L",
+     7.29
+    ],
+    [
+     "HIGHUSDT",
+     "S",
+     6.79
+    ],
+    [
+     "AXSUSDT",
+     "L",
+     6.77
+    ]
+   ],
+   "top5_coins": {
+    "LUNAUSDT": 24.74,
+    "REEFUSDT": 17.54,
+    "SOLUSDT": 17.12,
+    "AVAXUSDT": 13.72,
+    "TRBUSDT": 12.58
+   }
+  },
+  "TEST": {
+   "book": {
+    "median": 3.91,
+    "geo": 5.23,
+    "mean": 5.97,
+    "up": "15/24",
+    "max_dd": 36.31,
+    "net": 240.04,
+    "t": 2.27,
+    "trades_per_month": 119.7,
+    "worst": -17.75,
+    "best": 33.69,
+    "turnover_x_per_month": 13.23,
+    "active_days": 1.0
+   },
+   "gross_zero_cost": {
+    "median": 4.84,
+    "geo": 6.21,
+    "mean": 6.95,
+    "up": "15/24",
+    "max_dd": 35.73,
+    "net": 324.52,
+    "t": 2.62,
+    "trades_per_month": 119.7,
+    "worst": -16.91,
+    "best": 34.91,
+    "turnover_x_per_month": 13.23,
+    "active_days": 1.0
+   },
+   "long_leg_half_gross": {
+    "median": 0.47,
+    "geo": 2.19,
+    "mean": 2.94,
+    "up": "12/24",
+    "max_dd": 41.52,
+    "net": 68.24,
+    "t": 1.09,
+    "trades_per_month": 60.5,
+    "worst": -13.23,
+    "best": 43.83,
+    "turnover_x_per_month": 6.43,
+    "active_days": 1.0
+   },
+   "short_leg_half_gross": {
+    "median": 0.55,
+    "geo": 0.29,
+    "mean": 0.99,
+    "up": "12/24",
+    "max_dd": 45.71,
+    "net": 7.31,
+    "t": 0.41,
+    "trades_per_month": 58.8,
+    "worst": -26.21,
+    "best": 18.64,
+    "turnover_x_per_month": 6.82,
+    "active_days": 1.0
+   },
+   "cost_share_of_gross_log_return": 0.153,
+   "btc_regime": {
+    "BTC>SMA100": {
+     "days": 366,
+     "mean_day_pct": 0.348,
+     "approx_month_pct": 10.58,
+     "t": 3.2
+    },
+    "BTC<=SMA100": {
+     "days": 354,
+     "mean_day_pct": 0.045,
+     "approx_month_pct": 1.38,
+     "t": 0.31
+    }
+   },
+   "btc_vol_tercile": {
+    "low": {
+     "days": 240,
+     "mean_day_pct": 0.56,
+     "approx_month_pct": 17.03,
+     "t": 3.58
+    },
+    "mid": {
+     "days": 240,
+     "mean_day_pct": -0.262,
+     "approx_month_pct": -7.97,
+     "t": -1.62
+    },
+    "high": {
+     "days": 240,
+     "mean_day_pct": 0.3,
+     "approx_month_pct": 9.11,
+     "t": 2.06
+    }
+   },
+   "by_side_positions": {
+    "long": {
+     "n": 1453,
+     "profit_share_pct": 43.8,
+     "win_rate": 38.2,
+     "mean_ret_pct_of_equity": 0.0536
+    },
+    "short": {
+     "n": 1419,
+     "profit_share_pct": 57.3,
+     "win_rate": 46.7,
+     "mean_ret_pct_of_equity": 0.0541
+    }
+   },
+   "by_age_days": {
+    "<60": {
+     "n": 227,
+     "profit_share_pct": 61.3,
+     "win_rate": 51.1,
+     "mean_ret_pct_of_equity": 0.2758
+    },
+    "60-180": {
+     "n": 271,
+     "profit_share_pct": 89.1,
+     "win_rate": 46.5,
+     "mean_ret_pct_of_equity": 0.3634
+    },
+    "180-365": {
+     "n": 409,
+     "profit_share_pct": -7.8,
+     "win_rate": 42.8,
+     "mean_ret_pct_of_equity": 0.006
+    },
+    ">=365": {
+     "n": 1965,
+     "profit_share_pct": -41.5,
+     "win_rate": 40.7,
+     "mean_ret_pct_of_equity": -0.0045
+    }
+   },
+   "by_age_note": "age = days since first archived bar (perp data floor 2020-01-01; spot floor 2017-08-17)",
+   "by_liquidity_rank": {
+    "1-13": {
+     "n": 814,
+     "profit_share_pct": 64.3,
+     "win_rate": 44.2,
+     "mean_ret_pct_of_equity": 0.0883
+    },
+    "14-26": {
+     "n": 866,
+     "profit_share_pct": -1.5,
+     "win_rate": 41.5,
+     "mean_ret_pct_of_equity": 0.0388
+    },
+    "27-40": {
+     "n": 1192,
+     "profit_share_pct": 38.3,
+     "win_rate": 41.8,
+     "mean_ret_pct_of_equity": 0.0413
+    }
+   },
+   "holding_days": {
+    "winners_median": 3.0,
+    "winners_mean": 6.9,
+    "losers_median": 2.0,
+    "losers_mean": 3.6,
+    "top5pct_winners_median": 13.0,
+    "profit_share_held_le3d": -335.4,
+    "profit_share_held_gt10d": 362.6
+   },
+   "top5_positions": [
+    [
+     "PIPPINUSDT",
+     "L",
+     21.71
+    ],
+    [
+     "BEATUSDT",
+     "S",
+     18.46
+    ],
+    [
+     "RAVEUSDT",
+     "L",
+     17.46
+    ],
+    [
+     "BEATUSDT",
+     "L",
+     14.74
+    ],
+    [
+     "MYXUSDT",
+     "L",
+     14.13
+    ]
+   ],
+   "top5_coins": {
+    "BEATUSDT": 46.13,
+    "PIPPINUSDT": 24.88,
+    "MYXUSDT": 22.87,
+    "ZECUSDT": 17.97,
+    "POWERUSDT": 16.54
+   }
+  }
+ },
+ "dev_grid": {
+  "ORIG": {
+   "dev": {
+    "median": 2.16,
+    "geo": 3.41,
+    "mean": 3.9,
+    "up": "26/47",
+    "max_dd": 31.27,
+    "net": 383.26,
+    "t": 2.55,
+    "trades_per_month": 129.4,
+    "worst": -16.74,
+    "best": 39.16,
+    "turnover_x_per_month": 14.01,
+    "active_days": 1.0
+   },
+   "dev_net_2x": 204.89,
+   "dev_max_pos_share": 11.8,
+   "test_context": {
+    "median": 3.91,
+    "geo": 5.23,
+    "mean": 5.97,
+    "up": "15/24",
+    "max_dd": 36.31,
+    "net": 240.04,
+    "t": 2.27,
+    "trades_per_month": 119.7,
+    "worst": -17.75,
+    "best": 33.69,
+    "turnover_x_per_month": 13.23,
+    "active_days": 1.0
+   },
+   "test_max_pos_share_context": 21.71
+  },
+  "A60": {
+   "dev": {
+    "median": 0.88,
+    "geo": 2.5,
+    "mean": 2.9,
+    "up": "25/47",
+    "max_dd": 33.52,
+    "net": 219.0,
+    "t": 2.11,
+    "trades_per_month": 125.1,
+    "worst": -12.3,
+    "best": 33.36,
+    "turnover_x_per_month": 13.53,
+    "active_days": 0.979
+   },
+   "dev_net_2x": 104.43,
+   "dev_max_pos_share": 13.31,
+   "test_context": {
+    "median": 2.05,
+    "geo": 4.31,
+    "mean": 5.15,
+    "up": "15/24",
+    "max_dd": 38.59,
+    "net": 175.58,
+    "t": 1.82,
+    "trades_per_month": 115.4,
+    "worst": -21.59,
+    "best": 38.37,
+    "turnover_x_per_month": 12.76,
+    "active_days": 1.0
+   },
+   "test_max_pos_share_context": 27.16
+  },
+  "A90": {
+   "dev": {
+    "median": 0.0,
+    "geo": 2.04,
+    "mean": 2.36,
+    "up": "22/47",
+    "max_dd": 35.07,
+    "net": 158.85,
+    "t": 1.95,
+    "trades_per_month": 120.0,
+    "worst": -11.91,
+    "best": 22.77,
+    "turnover_x_per_month": 12.99,
+    "active_days": 0.958
+   },
+   "dev_net_2x": 68.88,
+   "dev_max_pos_share": 13.49,
+   "test_context": {
+    "median": 1.17,
+    "geo": 2.23,
+    "mean": 2.89,
+    "up": "14/24",
+    "max_dd": 36.38,
+    "net": 69.95,
+    "t": 1.16,
+    "trades_per_month": 113.1,
+    "worst": -17.83,
+    "best": 40.23,
+    "turnover_x_per_month": 12.48,
+    "active_days": 1.0
+   },
+   "test_max_pos_share_context": 48.32
+  },
+  "IV": {
+   "dev": {
+    "median": 0.74,
+    "geo": 2.96,
+    "mean": 3.37,
+    "up": "25/47",
+    "max_dd": 27.01,
+    "net": 294.14,
+    "t": 2.4,
+    "trades_per_month": 129.4,
+    "worst": -12.86,
+    "best": 41.38,
+    "turnover_x_per_month": 14.89,
+    "active_days": 1.0
+   },
+   "dev_net_2x": 141.52,
+   "dev_max_pos_share": 7.39,
+   "test_context": {
+    "median": 2.31,
+    "geo": 3.76,
+    "mean": 4.15,
+    "up": "14/24",
+    "max_dd": 24.68,
+    "net": 142.51,
+    "t": 2.16,
+    "trades_per_month": 119.7,
+    "worst": -9.84,
+    "best": 25.99,
+    "turnover_x_per_month": 14.62,
+    "active_days": 1.0
+   },
+   "test_max_pos_share_context": 17.16
+  },
+  "BL": {
+   "dev": {
+    "median": 0.5,
+    "geo": 2.14,
+    "mean": 2.58,
+    "up": "25/47",
+    "max_dd": 34.29,
+    "net": 170.88,
+    "t": 1.8,
+    "trades_per_month": 121.6,
+    "worst": -14.07,
+    "best": 37.08,
+    "turnover_x_per_month": 13.21,
+    "active_days": 0.984
+   },
+   "dev_net_2x": 75.43,
+   "dev_max_pos_share": 15.17,
+   "test_context": {
+    "median": 5.07,
+    "geo": 4.42,
+    "mean": 5.25,
+    "up": "15/24",
+    "max_dd": 39.22,
+    "net": 182.64,
+    "t": 1.88,
+    "trades_per_month": 115.6,
+    "worst": -18.34,
+    "best": 41.87,
+    "turnover_x_per_month": 12.78,
+    "active_days": 1.0
+   },
+   "test_max_pos_share_context": 24.32
+  },
+  "W7": {
+   "dev": {
+    "median": 1.37,
+    "geo": 3.43,
+    "mean": 3.96,
+    "up": "31/47",
+    "max_dd": 40.19,
+    "net": 388.5,
+    "t": 2.5,
+    "trades_per_month": 43.2,
+    "worst": -16.99,
+    "best": 41.02,
+    "turnover_x_per_month": 4.53,
+    "active_days": 1.0
+   },
+   "dev_net_2x": 321.29,
+   "dev_max_pos_share": 11.55,
+   "test_context": {
+    "median": 6.77,
+    "geo": 7.01,
+    "mean": 7.58,
+    "up": "19/24",
+    "max_dd": 22.38,
+    "net": 408.88,
+    "t": 3.27,
+    "trades_per_month": 42.7,
+    "worst": -18.96,
+    "best": 38.0,
+    "turnover_x_per_month": 4.4,
+    "active_days": 1.0
+   },
+   "test_max_pos_share_context": 19.45
+  },
+  "A90+IV": {
+   "dev": {
+    "median": 0.02,
+    "geo": 1.75,
+    "mean": 1.98,
+    "up": "24/47",
+    "max_dd": 27.64,
+    "net": 125.65,
+    "t": 1.93,
+    "trades_per_month": 120.0,
+    "worst": -10.13,
+    "best": 21.8,
+    "turnover_x_per_month": 13.84,
+    "active_days": 0.958
+   },
+   "dev_net_2x": 43.13,
+   "dev_max_pos_share": 9.35,
+   "test_context": {
+    "median": 2.02,
+    "geo": 1.94,
+    "mean": 2.35,
+    "up": "14/24",
+    "max_dd": 28.1,
+    "net": 58.59,
+    "t": 1.18,
+    "trades_per_month": 113.1,
+    "worst": -9.35,
+    "best": 33.55,
+    "turnover_x_per_month": 13.73,
+    "active_days": 1.0
+   },
+   "test_max_pos_share_context": 27.69
+  },
+  "A90+BL": {
+   "dev": {
+    "median": 0.0,
+    "geo": 1.62,
+    "mean": 1.97,
+    "up": "23/47",
+    "max_dd": 36.91,
+    "net": 113.03,
+    "t": 1.56,
+    "trades_per_month": 114.9,
+    "worst": -11.99,
+    "best": 25.45,
+    "turnover_x_per_month": 12.5,
+    "active_days": 0.958
+   },
+   "dev_net_2x": 41.21,
+   "dev_max_pos_share": 15.81,
+   "test_context": {
+    "median": 3.03,
+    "geo": 2.19,
+    "mean": 2.87,
+    "up": "13/24",
+    "max_dd": 39.21,
+    "net": 68.08,
+    "t": 1.15,
+    "trades_per_month": 111.4,
+    "worst": -18.85,
+    "best": 34.84,
+    "turnover_x_per_month": 12.31,
+    "active_days": 1.0
+   },
+   "test_max_pos_share_context": 46.83
+  },
+  "BL+IV": {
+   "dev": {
+    "median": 0.16,
+    "geo": 1.97,
+    "mean": 2.32,
+    "up": "25/47",
+    "max_dd": 30.97,
+    "net": 149.87,
+    "t": 1.77,
+    "trades_per_month": 121.6,
+    "worst": -9.71,
+    "best": 41.59,
+    "turnover_x_per_month": 13.95,
+    "active_days": 0.984
+   },
+   "dev_net_2x": 57.92,
+   "dev_max_pos_share": 10.67,
+   "test_context": {
+    "median": 3.89,
+    "geo": 3.43,
+    "mean": 3.86,
+    "up": "14/24",
+    "max_dd": 29.93,
+    "net": 124.91,
+    "t": 1.96,
+    "trades_per_month": 115.6,
+    "worst": -11.72,
+    "best": 22.9,
+    "turnover_x_per_month": 14.19,
+    "active_days": 1.0
+   },
+   "test_max_pos_share_context": 19.21
+  }
+ },
+ "eligible": [
+  "IV"
+ ],
+ "selected": [
+  "IV"
+ ]
+}

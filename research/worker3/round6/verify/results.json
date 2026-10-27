@@ -1,0 +1,175 @@
+{
+ "perp_2021_2026/10k": {
+  "net_pct": 10413.79,
+  "liquidations": 12,
+  "orders_pm": 367.2,
+  "skipped": 0,
+  "months": 71,
+  "median": 3.39,
+  "geo": 6.78,
+  "up": "42/71",
+  "worst_month": -13.5,
+  "max_dd_daily": 40.0,
+  "years": {
+   "2020": 0.0,
+   "2021": 315.7,
+   "2022": 14.4,
+   "2023": 80.8,
+   "2024": 71.1,
+   "2025": 308.3,
+   "2026": 75.0
+  },
+  "rolling12_positive": "56/60",
+  "worst_12m": -15.0,
+  "rolling6_positive": "56/66",
+  "worst_6m": -16.7,
+  "longest_underwater_days": 469,
+  "luck": {
+   "days": 2120,
+   "sharpe_annual": 1.7,
+   "skew": 0.34,
+   "kurt": 16.0,
+   "boot_p_loss": 0.0,
+   "boot_p5_cagr": 64.3,
+   "deflated_sharpe_prob": {
+    "100": 0.9406,
+    "500": 0.85,
+    "1000": 0.7977
+   }
+  }
+ },
+ "perp_2021_2026/200usdt_binance_min": {
+  "net_pct": 10104.79,
+  "liquidations": 12,
+  "orders_pm": 259.9,
+  "skipped": 444,
+  "months": 71,
+  "median": 2.35,
+  "geo": 6.73,
+  "up": "44/71",
+  "worst_month": -13.5,
+  "max_dd_daily": 39.9,
+  "years": {
+   "2020": 0.0,
+   "2021": 303.9,
+   "2022": 16.7,
+   "2023": 75.6,
+   "2024": 71.6,
+   "2025": 308.1,
+   "2026": 76.2
+  },
+  "rolling12_positive": "55/60",
+  "worst_12m": -15.4,
+  "rolling6_positive": "56/66",
+  "worst_6m": -15.6,
+  "longest_underwater_days": 470
+ },
+ "perp_2021_2026/200usdt_2x_costs": {
+  "net_pct": 5109.5,
+  "liquidations": 12,
+  "orders_pm": 243.8,
+  "skipped": 502,
+  "months": 71,
+  "median": 1.43,
+  "geo": 5.73,
+  "up": "40/71",
+  "worst_month": -14.4,
+  "max_dd_daily": 40.6,
+  "years": {
+   "2020": 0.0,
+   "2021": 262.3,
+   "2022": 5.8,
+   "2023": 54.2,
+   "2024": 52.2,
+   "2025": 262.0,
+   "2026": 60.0
+  },
+  "rolling12_positive": "53/60",
+  "worst_12m": -23.6,
+  "rolling6_positive": "53/66",
+  "worst_6m": -19.5,
+  "longest_underwater_days": 538
+ },
+ "spot_2018_2020/10k": {
+  "net_pct": 516.81,
+  "liquidations": 1,
+  "orders_pm": 307.3,
+  "skipped": 0,
+  "months": 37,
+  "median": 3.24,
+  "geo": 5.04,
+  "up": "24/37",
+  "worst_month": -18.4,
+  "max_dd_daily": 28.5,
+  "years": {
+   "2017": 0.0,
+   "2018": 48.2,
+   "2019": 38.7,
+   "2020": 200.1
+  },
+  "rolling12_positive": "26/26",
+  "worst_12m": 1.7,
+  "rolling6_positive": "29/32",
+  "worst_6m": -2.1,
+  "longest_underwater_days": 193,
+  "luck": {
+   "days": 1096,
+   "sharpe_annual": 2.07,
+   "skew": -0.17,
+   "kurt": 9.8,
+   "boot_p_loss": 0.002,
+   "boot_p5_cagr": 29.8,
+   "deflated_sharpe_prob": {
+    "100": 0.8461,
+    "500": 0.6942,
+    "1000": 0.6214
+   }
+  }
+ },
+ "spot_2018_2020/200usdt_binance_min": {
+  "net_pct": 387.43,
+  "liquidations": 1,
+  "orders_pm": 128.3,
+  "skipped": 531,
+  "months": 37,
+  "median": 3.52,
+  "geo": 4.37,
+  "up": "21/37",
+  "worst_month": -21.4,
+  "max_dd_daily": 32.1,
+  "years": {
+   "2017": 0.0,
+   "2018": 46.1,
+   "2019": 29.0,
+   "2020": 158.6
+  },
+  "rolling12_positive": "25/26",
+  "worst_12m": -7.5,
+  "rolling6_positive": "27/32",
+  "worst_6m": -8.2,
+  "longest_underwater_days": 192
+ },
+ "spot_2018_2020/200usdt_2x_costs": {
+  "net_pct": 282.99,
+  "liquidations": 1,
+  "orders_pm": 125.2,
+  "skipped": 531,
+  "months": 37,
+  "median": 2.37,
+  "geo": 3.7,
+  "up": "20/37",
+  "worst_month": -20.3,
+  "max_dd_daily": 31.0,
+  "years": {
+   "2017": 0.0,
+   "2018": 37.9,
+   "2019": 17.0,
+   "2020": 137.4
+  },
+  "rolling12_positive": "23/26",
+  "worst_12m": -15.5,
+  "rolling6_positive": "24/32",
+  "worst_6m": -11.2,
+  "longest_underwater_days": 231
+ }
+}

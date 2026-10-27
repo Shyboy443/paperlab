@@ -1,0 +1,527 @@
+{
+ "agent": "w3r2_tvl_value",
+ "config": {
+  "kind": "vchg",
+  "L": 30,
+  "k": 5,
+  "legs": "LS",
+  "rebal": 28,
+  "ntr": 4,
+  "univ": 100,
+  "min_tvl": 20000000.0
+ },
+ "checks": {
+  "1": {
+   "numbers": {
+    "dev_net": 551.49,
+    "test_net": 6.99,
+    "dev_net_2x": 516.8,
+    "test_net_2x": 3.69
+   },
+   "pass": true
+  },
+  "2": {
+   "numbers": {
+    "years": {
+     "2021": 215.39,
+     "2022": 10.54,
+     "2023": 29.43,
+     "2024": 17.37,
+     "2025": 3.76,
+     "2026": 21.18
+    },
+    "net_ex2021": 111.16
+   },
+   "pass": true
+  },
+  "3": {
+   "numbers": {
+    "t": 2.81,
+    "boot_p5": 0.908
+   },
+   "pass": true
+  },
+  "4": {
+   "numbers": {
+    "best3": {
+     "2021-02": 44.88,
+     "2021-04": 26.57,
+     "2023-01": 24.06
+    },
+    "net_without": 192.75
+   },
+   "pass": true
+  },
+  "5": {
+   "numbers": {
+    "frac": 0.35,
+    "n": 20,
+    "grid": [
+     {
+      "param": "L",
+      "value": 15,
+      "dev_net": 360.23,
+      "dev_geo": 3.3,
+      "test_net": -14.79,
+      "test_geo": -0.66,
+      "test_median": -1.93,
+      "both": false
+     },
+     {
+      "param": "L",
+      "value": 22,
+      "dev_net": 378.65,
+      "dev_geo": 3.39,
+      "test_net": -16.86,
+      "test_geo": -0.77,
+      "test_median": -0.11,
+      "both": false
+     },
+     {
+      "param": "L",
+      "value": 38,
+      "dev_net": 394.09,
+      "dev_geo": 3.46,
+      "test_net": 23.09,
+      "test_geo": 0.87,
+      "test_median": 0.14,
+      "both": true
+     },
+     {
+      "param": "L",
+      "value": 45,
+      "dev_net": 393.2,
+      "dev_geo": 3.45,
+      "test_net": 33.94,
+      "test_geo": 1.23,
+      "test_median": 0.38,
+      "both": true
+     },
+     {
+      "param": "k",
+      "value": 3,
+      "dev_net": 887.97,
+      "dev_geo": 4.99,
+      "test_net": -24.77,
+      "test_geo": -1.18,
+      "test_median": -1.61,
+      "both": false
+     },
+     {
+      "param": "k",
+      "value": 4,
+      "dev_net": 650.29,
+      "dev_geo": 4.38,
+      "test_net": -7.54,
+      "test_geo": -0.33,
+      "test_median": -2.31,
+      "both": false
+     },
+     {
+      "param": "k",
+      "value": 6,
+      "dev_net": 465.21,
+      "dev_geo": 3.75,
+      "test_net": 6.15,
+      "test_geo": 0.25,
+      "test_median": -0.61,
+      "both": true
+     },
+     {
+      "param": "k",
+      "value": 8,
+      "dev_net": 134.35,
+      "dev_geo": 1.83,
+      "test_net": 12.86,
+      "test_geo": 0.51,
+      "test_median": 0.08,
+      "both": true
+     },
+     {
+      "param": "univ",
+      "value": 50,
+      "dev_net": 301.95,
+      "dev_geo": 3.0,
+      "test_net": -13.42,
+      "test_geo": -0.6,
+      "test_median": -0.78,
+      "both": false
+     },
+     {
+      "param": "univ",
+      "value": 75,
+      "dev_net": 378.96,
+      "dev_geo": 3.39,
+      "test_net": -24.04,
+      "test_geo": -1.14,
+      "test_median": -0.39,
+      "both": false
+     },
+     {
+      "param": "univ",
+      "value": 125,
+      "dev_net": 492.35,
+      "dev_geo": 3.86,
+      "test_net": -2.63,
+      "test_geo": -0.11,
+      "test_median": -0.84,
+      "both": false
+     },
+     {
+      "param": "univ",
+      "value": 150,
+      "dev_net": 601.93,
+      "dev_geo": 4.23,
+      "test_net": -22.42,
+      "test_geo": -1.05,
+      "test_median": 0.34,
+      "both": false
+     },
+     {
+      "param": "min_tvl",
+      "value": 10000000.0,
+      "dev_net": 463.44,
+      "dev_geo": 3.75,
+      "test_net": -11.0,
+      "test_geo": -0.48,
+      "test_median": -1.14,
+      "both": false
+     },
+     {
+      "param": "min_tvl",
+      "value": 15000000.0,
+      "dev_net": 478.76,
+      "dev_geo": 3.81,
+      "test_net": 3.35,
+      "test_geo": 0.14,
+      "test_median": -0.92,
+      "both": true
+     },
+     {
+      "param": "min_tvl",
+      "value": 25000000.0,
+      "dev_net": 488.72,
+      "dev_geo": 3.84,
+      "test_net": -0.98,
+      "test_geo": -0.04,
+      "test_median": -0.81,
+      "both": false
+     },
+     {
+      "param": "min_tvl",
+      "value": 30000000.0,
+      "dev_net": 414.19,
+      "dev_geo": 3.55,
+      "test_net": -1.07,
+      "test_geo": -0.04,
+      "test_median": -0.62,
+      "both": false
+     },
+     {
+      "param": "sched",
+      "value": [
+       14,
+       2
+      ],
+      "dev_net": 170.36,
+      "dev_geo": 2.14,
+      "test_net": -35.57,
+      "test_geo": -1.81,
+      "test_median": -2.07,
+      "both": false
+     },
+     {
+      "param": "sched",
+      "value": [
+       56,
+       8
+      ],
+      "dev_net": 174.35,
+      "dev_geo": 2.17,
+      "test_net": 20.28,
+      "test_geo": 0.77,
+      "test_median": -0.03,
+      "both": true
+     },
+     {
+      "param": "sched",
+      "value": [
+       7,
+       1
+      ],
+      "dev_net": 136.94,
+      "dev_geo": 1.85,
+      "test_net": -42.73,
+      "test_geo": -2.3,
+      "test_median": -0.76,
+      "both": false
+     },
+     {
+      "param": "sched",
+      "value": [
+       28,
+       1
+      ],
+      "dev_net": 1214.54,
+      "dev_geo": 5.63,
+      "test_net": 3.79,
+      "test_geo": 0.16,
+      "test_median": -0.32,
+      "both": true
+     }
+    ]
+   },
+   "pass": false
+  },
+  "6": {
+   "numbers": {
+    "n": 200,
+    "beats_pct": 100.0,
+    "rand_median": 12.11,
+    "rand_p95": 98.23,
+    "strat": 566.03
+   },
+   "pass": true
+  },
+  "7": {
+   "numbers": {
+    "top5": {
+     "APTUSDT": 21.88,
+     "INJUSDT": 12.06,
+     "SOLUSDT": 11.6,
+     "OPUSDT": 10.79,
+     "1000FLOKIUSDT": 9.24
+    },
+    "net_without_top5": 263.75,
+    "largest_position_share_pct": 11.61,
+    "largest_position": "BTWUSDT",
+    "note": "shares are of the summed position P&L (start-equity units, non-compounded)"
+   },
+   "pass": false
+  },
+  "8": {
+   "numbers": {
+    "geo": 2.75,
+    "mean": 3.13
+   },
+   "pass": true
+  }
+ },
+ "dev_1x": {
+  "median": 1.43,
+  "geo": 4.07,
+  "mean": 4.5,
+  "up": "36/47",
+  "max_dd": 28.7,
+  "net": 551.49,
+  "t": 3.07,
+  "trades_per_month": 34.5,
+  "worst": -10.47,
+  "best": 44.88
+ },
+ "test_1x": {
+  "median": -0.79,
+  "geo": 0.28,
+  "mean": 0.52,
+  "up": "10/24",
+  "max_dd": 32.28,
+  "net": 6.99,
+  "t": 0.36,
+  "trades_per_month": 39.3,
+  "worst": -13.46,
+  "best": 18.56
+ },
+ "full_1x": {
+  "median": 1.15,
+  "geo": 2.75,
+  "mean": 3.13,
+  "up": "47/70",
+  "max_dd": 42.73,
+  "net": 566.03,
+  "t": 2.81,
+  "trades_per_month": 36.2,
+  "worst": -13.24,
+  "best": 44.88
+ },
+ "dev_2x": {
+  "median": 1.28,
+  "geo": 3.95,
+  "mean": 4.38,
+  "up": "35/47",
+  "max_dd": 29.13,
+  "net": 516.8,
+  "t": 2.99,
+  "trades_per_month": 34.5,
+  "worst": -10.6,
+  "best": 44.75
+ },
+ "test_2x": {
+  "median": -0.92,
+  "geo": 0.15,
+  "mean": 0.39,
+  "up": "10/24",
+  "max_dd": 32.83,
+  "net": 3.69,
+  "t": 0.27,
+  "trades_per_month": 39.3,
+  "worst": -13.56,
+  "best": 18.41
+ },
+ "full_2x": {
+  "median": 1.03,
+  "geo": 2.62,
+  "mean": 3.01,
+  "up": "46/70",
+  "max_dd": 43.34,
+  "net": 510.63,
+  "t": 2.7,
+  "trades_per_month": 36.2,
+  "worst": -13.34,
+  "best": 44.75
+ },
+ "net_2025_01_2026_10_2xcost": -8.79,
+ "monthly_1x": {
+  "2021-01": 8.5,
+  "2021-02": 44.88,
+  "2021-03": 0.88,
+  "2021-04": 26.57,
+  "2021-05": 21.54,
+  "2021-06": -5.21,
+  "2021-07": 5.42,
+  "2021-08": 12.61,
+  "2021-09": 17.4,
+  "2021-10": 10.12,
+  "2021-11": -8.41,
+  "2021-12": -2.97,
+  "2022-01": 0.66,
+  "2022-02": -2.02,
+  "2022-03": -9.73,
+  "2022-04": 5.09,
+  "2022-05": 0.73,
+  "2022-06": 8.78,
+  "2022-07": 1.43,
+  "2022-08": 1.18,
+  "2022-09": 6.65,
+  "2022-10": 0.02,
+  "2022-11": 4.47,
+  "2022-12": -5.72,
+  "2023-01": 24.06,
+  "2023-02": -1.22,
+  "2023-03": 5.28,
+  "2023-04": 0.43,
+  "2023-05": 0.22,
+  "2023-06": -4.89,
+  "2023-07": 7.64,
+  "2023-08": 0.69,
+  "2023-09": 1.12,
+  "2023-10": -1.89,
+  "2023-11": -10.47,
+  "2023-12": 8.86,
+  "2024-01": 5.61,
+  "2024-02": 6.88,
+  "2024-03": 10.94,
+  "2024-04": 5.83,
+  "2024-05": 6.32,
+  "2024-06": 0.49,
+  "2024-07": 2.74,
+  "2024-08": 0.2,
+  "2024-09": 9.32,
+  "2024-10": -9.91,
+  "2024-11": -8.78,
+  "2024-12": -10.37,
+  "2025-01": -1.4,
+  "2025-02": 0.66,
+  "2025-03": -6.31,
+  "2025-04": -13.24,
+  "2025-05": 10.0,
+  "2025-06": 1.51,
+  "2025-07": 13.04,
+  "2025-08": -3.34,
+  "2025-09": 2.29,
+  "2025-10": -2.35,
+  "2025-11": 6.67,
+  "2025-12": -1.06,
+  "2026-01": 11.59,
+  "2026-02": -0.26,
+  "2026-03": -5.45,
+  "2026-04": -3.5,
+  "2026-05": 3.9,
+  "2026-06": -4.21,
+  "2026-07": 3.6,
+  "2026-08": 8.61,
+  "2026-09": 6.39,
+  "2026-10": 0.16
+ },
+ "test_months": {
+  "2024-11": -6.14,
+  "2024-12": -6.08,
+  "2025-01": -3.92,
+  "2025-02": 2.12,
+  "2025-03": -6.28,
+  "2025-04": -13.46,
+  "2025-05": 9.17,
+  "2025-06": 4.19,
+  "2025-07": 14.27,
+  "2025-08": -1.39,
+  "2025-09": 5.8,
+  "2025-10": -0.52,
+  "2025-11": 4.91,
+  "2025-12": -5.24,
+  "2026-01": 9.17,
+  "2026-02": -2.59,
+  "2026-03": -2.81,
+  "2026-04": -4.11,
+  "2026-05": 3.24,
+  "2026-06": -4.97,
+  "2026-07": -0.97,
+  "2026-08": 18.56,
+  "2026-09": -0.6,
+  "2026-10": 0.22
+ },
+ "ytd_2026": 13.73,
+ "oct_2026": 0.22,
+ "n_pass": 6,
+ "corr": {
+  "monthly_w1_full": -0.042,
+  "monthly_w1_test": 0.098,
+  "monthly_w2_full": 0.212,
+  "monthly_w2_test": 0.011
+ },
+ "portfolio_test_monthly": {
+  "W1": {
+   "median": 3.84,
+   "geo": 5.33,
+   "mean": 5.86,
+   "up": "17/24",
+   "max_dd_monthly": 12.4
+  },
+  "W1W2_5050": {
+   "median": 3.54,
+   "geo": 4.48,
+   "mean": 4.67,
+   "up": "20/24",
+   "max_dd_monthly": 5.89
+  },
+  "W1W2X_thirds": {
+   "median": 0.9,
+   "geo": 3.16,
+   "mean": 3.29,
+   "up": "15/24",
+   "max_dd_monthly": 3.5
+  },
+  "X": {
+   "median": -0.78,
+   "geo": 0.28,
+   "mean": 0.52,
+   "up": "10/24",
+   "max_dd_monthly": 29.85
+  }
+ },
+ "usdt500": {
+  "per_position_usdt": 12.5,
+  "n_test_positions": 944,
+  "share_btc": 1.91,
+  "share_eth": 0.53,
+  "note": "4 tranches x 10 legs: 500 USDT -> 12.5 USDT per leg (> 5 USDT alt min notional). BTC (100 USDT min) and ETH (20 USDT min) legs cannot be sized exactly at 500 USDT; overlapping legs across tranches can be netted."
+ }
+}

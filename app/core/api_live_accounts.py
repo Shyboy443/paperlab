@@ -88,7 +88,7 @@ async def accounts_verify(request: Request, account_id: str) -> dict[str, Any]:
 
 DESKS = {"macd": "macd_live", "donchian": "donchian_live",
          "macd-stx": "macd_stx_live", "macd-dash": "macd_dash_live", "macd-xlm": "macd_xlm_live",
-         "ensemble": "ensemble_live", "worker2": "worker2_live",
+         "ensemble": "ensemble_live", "worker2": "worker2_live", "worker3": "worker3_live",
          **{f"zec-{k}": f"zec_{k}_live" for k in ('emarsi', 'momentum', 'emacross', 'macross', 'scalpslayer', 'wilder')}}
 
 

@@ -1,0 +1,41 @@
+D:\Projects\BinanceBOt\paperlab\research\worker3\round1\token_unlocks\lib.py:110: RuntimeWarning: invalid value encountered in scalar power
+  geo = (eq[-1] ** (1 / len(v)) - 1) * 100
+dev {'n': 46, 'median': 1.717, 'geo': 4.353, 'mean': 4.898, 'up': 28, 'total': 609.84, 'maxdd': 20.5, 't': 2.92, 'worst': -20.5}
+test {'n': 24, 'median': 5.727, 'geo': -0.387, 'mean': 1.836, 'up': 15, 'total': -8.89, 'maxdd': 69.17, 't': 0.43, 'worst': -46.3}
+full {'n': 70, 'median': 2.146, 'geo': 2.703, 'mean': 3.848, 'up': 43, 'total': 546.73, 'maxdd': 69.17, 't': 2.13, 'worst': -46.3}
+dev_2x {'n': 46, 'median': 1.624, 'geo': 4.277, 'mean': 4.819, 'up': 28, 'total': 586.55, 'maxdd': 20.61, 't': 2.88, 'worst': -20.61}
+test_2x {'n': 24, 'median': 5.551, 'geo': -0.568, 'mean': 1.651, 'up': 14, 'total': -12.78, 'maxdd': 69.83, 't': 0.39, 'worst': -46.43}
+strict1x_test {'n': 24, 'median': 3.435, 'geo': 0.573, 'mean': 1.096, 'up': 15, 'total': 14.7, 'maxdd': 37.4, 't': 0.52, 'worst': -22.93}
+ytd_2026 {'n': 10, 'median': -0.843, 'geo': -7.165, 'mean': -4.487, 'up': 5, 'total': -52.45, 'maxdd': 63.47, 't': -0.63, 'worst': -46.3}
+oct_2026 8.517535049839541
+trades {'dev': 51, 'test': 112}
+trades_per_month_test 4.67
+test_daily_maxdd 74.95972263299132
+corr {'w1_test': -0.263, 'w1_full': -0.235, 'w2_test': -0.047, 'w2_full': -0.042}
+portfolio_test {'w1w2': {'n': 24, 'median': 3.538, 'geo': 4.475, 'mean': 4.667, 'up': 20, 'total': 185.96, 'maxdd': 5.89, 't': 3.48, 'worst': -5.89}, 'w1w2x': {'n': 24, 'median': 3.936, 'geo': 3.48, 'mean': 3.723, 'up': 18, 'total': 127.29, 'maxdd': 17.73, 't': 2.54, 'worst': -13.79}}
+usdt500 {'min_slot_notional': 165.0, 'note': 'weights >= 1/n_active; max concurrent events reported', 'max_active': 11, 'min_order_at_max_active': 45.5}
+n_pass 6
+1 False {'dev': 609.84, 'test': -8.89, 'dev_2x': 586.55, 'test_2x': -12.78}
+2 True {'years': {2021: 22.53, 2022: 9.98, 2023: 76.29, 2024: 150.64, 2025: 128.43, 2026: -52.45}, 'from_2022': 427.8}
+3 True {'t': 2.13, 'boot_p5': 0.859, 'months': 70}
+4 True {'total_without_best3': 114.3}
+5 False {'share': 0.562}
+6 True {'beats_share': 0.987, 'strat_total': 546.73, 'random_median': -28.09, 'random_p95': 269.9}
+7 True {'top5': ['STRKUSDT', 'GUNUSDT', 'ALTUSDT', 'GMTUSDT', 'MAVUSDT'], 'total_without_top5': 1.0, 'max_trade_share': np.float64(0.055), 'n_trades': 163}
+8 True {'geo': 2.703, 'mean': 3.848}
+{'param': 'mn', 'value': 0.025, 'dev_total': 459.85, 'test_total': 22.24, 'test_geo': 0.84, 'test_median': 2.464, 'ok': True}
+{'param': 'mn', 'value': 0.0375, 'dev_total': 535.83, 'test_total': 3.42, 'test_geo': 0.14, 'test_median': 5.384, 'ok': True}
+{'param': 'mn', 'value': 0.0625, 'dev_total': 362.59, 'test_total': 59.29, 'test_geo': 1.959, 'test_median': 1.985, 'ok': True}
+{'param': 'mn', 'value': 0.075, 'dev_total': 277.48, 'test_total': 35.11, 'test_geo': 1.262, 'test_median': 3.542, 'ok': True}
+{'param': 'X', 'value': 15, 'dev_total': 51.65, 'test_total': 10.89, 'test_geo': 0.432, 'test_median': 7.204, 'ok': True}
+{'param': 'X', 'value': 22, 'dev_total': 36.15, 'test_total': 0.92, 'test_geo': 0.038, 'test_median': 8.446, 'ok': True}
+{'param': 'X', 'value': 38, 'dev_total': 718.89, 'test_total': -14.4, 'test_geo': -0.646, 'test_median': 2.753, 'ok': False}
+{'param': 'X', 'value': 45, 'dev_total': 540.9, 'test_total': -56.18, 'test_geo': -3.379, 'test_median': 1.998, 'ok': False}
+{'param': 'Y', 'value': 1, 'dev_total': 497.4, 'test_total': -62.71, 'test_geo': -4.027, 'test_median': -0.799, 'ok': False}
+{'param': 'Y', 'value': 3, 'dev_total': 461.12, 'test_total': 14.03, 'test_geo': 0.548, 'test_median': 2.481, 'ok': True}
+{'param': 'Y', 'value': 7, 'dev_total': 428.96, 'test_total': 3.42, 'test_geo': 0.14, 'test_median': 2.857, 'ok': True}
+{'param': 'cap', 'value': 0.165, 'dev_total': 199.97, 'test_total': -24.89, 'test_geo': -1.185, 'test_median': -0.868, 'ok': False}
+{'param': 'cap', 'value': 0.25, 'dev_total': 398.56, 'test_total': -12.66, 'test_geo': -0.562, 'test_median': 4.314, 'ok': False}
+{'param': 'cap', 'value': 0.41, 'dev_total': 873.49, 'test_total': -2.47, 'test_geo': -0.104, 'test_median': 5.727, 'ok': False}
+{'param': 'cap', 'value': 0.5, 'dev_total': 1268.19, 'test_total': 5.4, 'test_geo': 0.22, 'test_median': 5.727, 'ok': True}
+{'param': 'hedge', 'value': False, 'dev_total': 270.0, 'test_total': -44.1, 'test_geo': -2.394, 'test_median': 1.35, 'ok': False}

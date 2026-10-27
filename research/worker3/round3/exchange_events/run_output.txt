@@ -1,0 +1,40 @@
+dev cost x1.0                med  +0.00 geo  +1.92 mean  +2.03 up 23/47 DD  16.2 t 2.87 tr/mo 1.79 net +144.5
+dev cost x2.0                med  +0.00 geo  +1.86 mean  +1.97 up 23/47 DD  16.4 t 2.81 tr/mo 1.79 net +137.8
+test cost x1.0               med  +9.43 geo  +1.55 mean  +5.19 up 15/24 DD  78.2 t 1.07 tr/mo 11.71 net +44.7
+test cost x2.0               med  +9.26 geo  +1.19 mean  +4.82 up 15/24 DD  78.4 t 0.99 tr/mo 11.71 net +32.7
+full cost x1.0               med  +1.50 geo  +1.82 mean  +3.14 up 38/70 DD  78.2 t 1.82 tr/mo 5.21 net +253.8
+full cost x2.0               med  +1.45 geo  +1.65 mean  +2.98 up 38/70 DD  78.4 t 1.73 tr/mo 5.21 net +215.5
+nb H24 {'dev_net': np.float64(117.45), 'test_net': np.float64(132.03), 'test_geo': np.float64(3.57), 'test_med': np.float64(8.82), 'test_up': np.int64(15), 'test_dd': np.float64(41.35)}
+nb H36 {'dev_net': np.float64(119.1), 'test_net': np.float64(67.65), 'test_geo': np.float64(2.18), 'test_med': np.float64(8.61), 'test_up': np.int64(16), 'test_dd': np.float64(62.68)}
+nb H60 {'dev_net': np.float64(135.93), 'test_net': np.float64(-48.21), 'test_geo': np.float64(-2.7), 'test_med': np.float64(8.42), 'test_up': np.int64(15), 'test_dd': np.float64(92.59)}
+nb H72 {'dev_net': np.float64(128.17), 'test_net': np.float64(-12.62), 'test_geo': np.float64(-0.56), 'test_med': np.float64(7.69), 'test_up': np.int64(17), 'test_dd': np.float64(103.56)}
+nb S2 {'dev_net': np.float64(424.31), 'test_net': np.float64(-166.84), 'test_geo': -100.0, 'test_med': np.float64(0.0), 'test_up': np.int64(5), 'test_dd': np.float64(117.78)}
+nb S3 {'dev_net': np.float64(216.15), 'test_net': np.float64(-5.47), 'test_geo': np.float64(-0.23), 'test_med': np.float64(12.02), 'test_up': np.int64(15), 'test_dd': np.float64(91.79)}
+nb S5 {'dev_net': np.float64(109.05), 'test_net': np.float64(86.58), 'test_geo': np.float64(2.63), 'test_med': np.float64(7.88), 'test_up': np.int64(15), 'test_dd': np.float64(68.42)}
+nb S6 {'dev_net': np.float64(85.91), 'test_net': np.float64(102.07), 'test_geo': np.float64(2.97), 'test_med': np.float64(6.6), 'test_up': np.int64(15), 'test_dd': np.float64(59.09)}
+nb delay+1h {'dev_net': np.float64(116.76), 'test_net': np.float64(-66.28), 'test_geo': np.float64(-4.43), 'test_med': np.float64(6.61), 'test_up': np.int64(15), 'test_dd': np.float64(90.55)}
+nb delay+3h {'dev_net': np.float64(102.96), 'test_net': np.float64(-97.86), 'test_geo': np.float64(-14.8), 'test_med': np.float64(5.79), 'test_up': np.int64(14), 'test_dd': np.float64(99.31)}
+nb drop BN_MON_ADD {'dev_net': np.float64(106.53), 'test_net': np.float64(22.51), 'test_geo': np.float64(0.85), 'test_med': np.float64(7.79), 'test_up': np.int64(15), 'test_dd': np.float64(82.5)}
+nb drop BN_SPOT_DELIST {'dev_net': np.float64(125.46), 'test_net': np.float64(44.41), 'test_geo': np.float64(1.54), 'test_med': np.float64(6.02), 'test_up': np.int64(15), 'test_dd': np.float64(62.62)}
+nb drop UP_KRW_LIST {'dev_net': np.float64(80.81), 'test_net': np.float64(171.09), 'test_geo': np.float64(4.24), 'test_med': np.float64(9.23), 'test_up': np.int64(18), 'test_dd': np.float64(72.11)}
+nb drop UP_OTHER_LIST {'dev_net': np.float64(83.27), 'test_net': np.float64(-7.0), 'test_geo': np.float64(-0.3), 'test_med': np.float64(4.75), 'test_up': np.int64(14), 'test_dd': np.float64(79.78)}
+nb drop UP_WARN {'dev_net': np.float64(131.67), 'test_net': np.float64(32.36), 'test_geo': np.float64(1.18), 'test_med': np.float64(9.25), 'test_up': np.int64(15), 'test_dd': np.float64(76.25)}
+random 0 -63.8
+random 50 -47.9
+random 100 -46.2
+random 150 -72.3
+check 1 True {'dev': np.float64(144.46), 'test': np.float64(44.73), 'dev_2x': np.float64(137.77), 'test_2x': np.float64(32.69)}
+check 2 True {'years': {'2021': np.float64(30.29), '2022': np.float64(15.91), '2023': np.float64(20.54), '2024': np.float64(62.3), '2025': np.float64(-13.15), '2026': np.float64(37.86)}, 'from_2022': np.float64(171.49)}
+check 3 False {'t': 1.82, 'boot_p5_mean_month_pct': 0.45, 'n_months': 70}
+check 4 True {'net_without_3_best_pct': 28.35}
+check 5 False {'share_positive_both': 0.533}
+check 6 True {'beat_share': 1.0, 'real_net_pct': np.float64(253.8), 'random_median_net_pct': -40.9, 'random_p95_net_pct': 10.3}
+check 7 False {'top5': ['LINA', 'HIFI', 'EPIC', 'OPG', 'PIEVERSE'], 'net_without_top5': np.float64(87.07), 'max_single_trade_share': np.float64(0.235), 'n_trades': 365}
+check 8 True {'geo': np.float64(1.82), 'mean': np.float64(3.14)}
+corr {'w1_test': (0.051, 24), 'w2_test': (-0.189, 24), 'w1_full': (0.067, 70), 'w2_full': (-0.094, 70)}
+portfolio_test_monthly {'W1+W2 50/50': {'median': 3.54, 'geo': 4.48, 'up': 20, 'n': 24, 'monthly_dd': 5.9}, 'W1+W2+X thirds': {'median': 5.31, 'geo': 4.47, 'up': 20, 'n': 24, 'monthly_dd': 21.9}, 'X alone': {'median': 9.43, 'geo': 1.55, 'up': 15, 'n': 24, 'monthly_dd': 73.9}}
+ytd_2026_pct 37.86
+oct_2026_pct 41.01
+usdt500 {'weight_min': 0.1111, 'weight_median': 0.25, 'orders_below_5usdt_at_500': 0, 'orders_below_20usdt_at_500': 0, 'n_orders': 281}
+test_types {'UP_OTHER_LIST': {'n': 35, 'mean_trade_ret_pct': np.float64(7.22)}, 'UP_KRW_LIST': {'n': 89, 'mean_trade_ret_pct': np.float64(-1.07)}, 'BN_SPOT_DELIST': {'n': 55, 'mean_trade_ret_pct': np.float64(4.35)}, 'BN_MON_ADD': {'n': 76, 'mean_trade_ret_pct': np.float64(1.46)}, 'UP_WARN': {'n': 26, 'mean_trade_ret_pct': np.float64(2.96)}}
+test months {'2024-11': np.float64(9.46), '2024-12': np.float64(10.43), '2025-01': np.float64(9.4), '2025-02': np.float64(24.42), '2025-03': np.float64(33.03), '2025-04': np.float64(-69.21), '2025-05': np.float64(-10.84), '2025-06': np.float64(22.19), '2025-07': np.float64(-22.21), '2025-08': np.float64(5.06), '2025-09': np.float64(18.62), '2025-10': np.float64(46.92), '2025-11': np.float64(-9.84), '2025-12': np.float64(11.35), '2026-01': np.float64(-11.95), '2026-02': np.float64(-3.18), '2026-03': np.float64(12.43), '2026-04': np.float64(-19.79), '2026-05': np.float64(18.94), '2026-06': np.float64(14.62), '2026-07': np.float64(-7.23), '2026-08': np.float64(-6.01), '2026-09': np.float64(6.98), '2026-10': np.float64(41.01)}
