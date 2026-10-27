@@ -125,6 +125,9 @@ const FACTS = {
     ['Worst drop from a peak', '−40% (2024–26) · −29% (2018–20)'],
     ['Luck checks passed', '7 of 8 (2024–26) · 8 of 8 (2018–20)'],
     ['Weak spot', 'in 2025–26 most profit came from a few new meme coins; shorts on coins that double in a day are wiped out (9 times in 2 years)'],
+    ['Every year 2018 – 2026', 'positive (2022, the weakest, +14%)'],
+    ['Any 12 months in a row', 'positive 56 of 60 times since 2021 (worst −15%)'],
+    ['From 200 USDT', 'works: about the same results (BTC and ETH skipped below their Binance minimums)'],
     ['Best use', 'next to Workers 1 and 2: the three together had smaller drops than any one alone'],
   ],
   ibs: [
@@ -152,50 +155,192 @@ function route() {
 }
 window.addEventListener('hashchange', route);
 
+// ---- home helpers ------------------------------------------------------------------------------------------------
+const BOTS = [
+  { key: 'w1', path: 'worker1', name: 'Worker 1', what: 'Ensemble · about 55 coins, long and short', venue: 'Binance futures',
+    how: 'Buys the strongest coins and shorts the weakest, using three simple methods mixed together. Re-balances once a day.',
+    often: 'Every day at 00:00 UTC', typical: '+2.7%', worst: '−23%', luck: '8 of 8', risk: 'Medium' },
+  { key: 'w2', path: 'worker2', name: 'Worker 2', what: 'Afternoon momentum · up to 5 coins', venue: 'Binance futures',
+    how: 'At 16:00 UTC it picks coins that made an unusually big move since midnight and rides that move in the same direction until 02:00 UTC.',
+    often: 'Opens 16:00, closes 02:00 UTC', typical: '+2.2%', worst: '−20%', luck: '8 of 8', risk: 'Medium' },
+  { key: 'w3', path: 'worker3', name: 'Worker 3', what: '30-day highs · top 20 coins, 5 long + 5 short', venue: 'Binance futures',
+    how: 'Buys the 5 big coins closest to their 30-day high and shorts the 5 closest to their 30-day low. Coins near their high tend to keep rising.',
+    often: 'Every day at 00:00 UTC', typical: '+3.4%', worst: '−40%', luck: '8 of 8 (2018–20)', risk: 'High' },
+  { key: 'ibs', path: 'ibs', name: 'IBS stocks', what: 'US stocks · QQQ and TQQQ', venue: 'Alpaca',
+    how: 'Buys the Nasdaq-100 fund on days it closes near its daily low, and sells when it closes above the previous day\'s high. About 18 trades a year.',
+    often: 'Near the US market close', typical: '+0.85% a trade', worst: '−16% (QQQ)', luck: 'passed', risk: 'Medium' },
+];
+const RISK_TONE = { Low: 'good', Medium: '', High: 'bad' };
+
+function maxDD(curve) {
+  let pk = -Infinity, dd = 0;
+  for (const [, v] of curve) { pk = Math.max(pk, v); dd = Math.max(dd, 1 - v / pk); }
+  return dd * 100;
+}
+
+function nextUtc(hh, mm = 0) {                       // the next time the UTC clock shows hh:mm
+  const n = new Date(), t = new Date(Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate(), hh, mm));
+  if (t <= n) t.setUTCDate(t.getUTCDate() + 1);
+  return t;
+}
+function untilText(t) {
+  const m = Math.max(0, Math.round((t - new Date()) / 60000)), hrs = Math.floor(m / 60);
+  return 'in ' + (hrs ? hrs + ' h ' : '') + (m % 60) + ' min';
+}
+const localTime = (t) => t.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+function multiChart(series) {                        // series: [{name, cls, points: [[label, pct], ...]}]
+  const W = 720, H = 240, [L, R, T, B] = [46, 12, 12, 26];
+  const el = svg('svg', { viewBox: `0 0 ${W} ${H}`, class: 'chart multi', preserveAspectRatio: 'none', role: 'img' });
+  const all = series.flatMap((s) => s.points.map((p) => p[1]));
+  if (!all.length) return el;
+  let lo = Math.min(0, ...all), hi = Math.max(0, ...all);
+  const pad = (hi - lo) * 0.08 || 1; lo -= pad; hi += pad;
+  const n = Math.max(...series.map((s) => s.points.length));
+  const x = (i) => L + (i / Math.max(n - 1, 1)) * (W - L - R), y = (v) => T + (1 - (v - lo) / (hi - lo)) * (H - T - B);
+  for (let k = 0; k <= 3; k++) {
+    const v = lo + (hi - lo) * k / 3, yy = y(v);
+    el.append(svg('line', { x1: L, x2: W - R, y1: yy, y2: yy, class: 'grid' }));
+    const t = svg('text', { x: L - 8, y: yy + 4, 'text-anchor': 'end', class: 'ax' }); t.textContent = (v > 0 ? '+' : '') + v.toFixed(0) + '%'; el.append(t);
+  }
+  el.append(svg('line', { x1: L, x2: W - R, y1: y(0), y2: y(0), class: 'zero' }));
+  const longest = series.reduce((a, s) => (s.points.length > a.points.length ? s : a), series[0]);
+  for (const i of [0, n - 1]) {
+    const t = svg('text', { x: x(i), y: H - 6, 'text-anchor': i === 0 ? 'start' : 'end', class: 'ax' });
+    t.textContent = longest.points[i] ? longest.points[i][0] : ''; el.append(t);
+  }
+  for (const s of series) {
+    if (s.points.length < 2) continue;
+    const off = n - s.points.length;                   // align the ends (today) of shorter books
+    const d = s.points.map((p, i) => (i ? 'L' : 'M') + x(i + off).toFixed(1) + ' ' + y(p[1]).toFixed(1)).join(' ');
+    el.append(svg('path', { d, class: 'ln ' + s.cls, 'vector-effect': 'non-scaling-stroke' }));
+  }
+  return el;
+}
+
 async function home() {
-  const [ens, ibsd, ensLive, ibsLive, w2, w2Live] = await Promise.all([
+  const [ens, ibsd, ensLive, ibsLive, w2, w2Live, w3, w3Live] = await Promise.all([
     pub('/api/public/ensemble').catch(() => null), pub('/api/public/ibs-bot').catch(() => null),
     PRIVATE ? api('/api/ensemble/live').catch(() => null) : null, PRIVATE ? api('/api/ibs-bot').catch(() => null) : null,
-    pub('/api/public/worker2').catch(() => null), PRIVATE ? api('/api/worker2/live').catch(() => null) : null]);
-  const [w3, w3Live] = await Promise.all([pub('/api/public/worker3').catch(() => null), PRIVATE ? api('/api/worker3/live').catch(() => null) : null]);
-  const b3 = (w3 && w3.book) || {}, curve3 = b3.curve || [], month3 = (b3.months || []).slice(-1)[0];
-  const w3Status = (w3Live && w3Live.status) || 'OFF';
-  const b2 = (w2 && w2.book) || {}, curve2 = b2.curve || [], month2 = (b2.months || []).slice(-1)[0];
-  const w2Status = (w2Live && w2Live.status) || 'OFF';
-  const b = (ens && ens.book) || {};
-  const ensStatus = (ensLive && ensLive.status) || 'OFF';
-  const ibsStatus = (ibsLive && ibsLive.live && ibsLive.live.status) || (ibsd && ibsd.live && ibsd.live.status) || 'OFF';
-  const thisMonth = (b.months || []).slice(-1)[0];
-  const curve = (b.curve || []).map(([d, v]) => [d, v]);
+    pub('/api/public/worker2').catch(() => null), PRIVATE ? api('/api/worker2/live').catch(() => null) : null,
+    pub('/api/public/worker3').catch(() => null), PRIVATE ? api('/api/worker3/live').catch(() => null) : null]);
   const qqq = ibsd && ibsd.shadow && ibsd.shadow.books ? ibsd.shadow.books['IBS-QQQ'] : null;
-  return h('div', {},
-    h('h1', { text: 'Your bots' }),
-    h('p', { class: 'lead', text: 'After testing more than 165 strategies, these are the ones that held up after real trading costs and our luck checks. Workers 1, 2 and 3 trade crypto in different ways, so they rarely lose at the same time. Worker 3 is new (paper only until you switch it on).' }),
-    h('div', { class: 'grid2' },
-      h('a', { class: 'panel bot', href: '#/worker1' },
-        h('div', { class: 'bot-head' }, h('div', {}, h('div', { class: 'bot-title', text: 'Worker 1' }), h('div', { class: 'bot-what', text: 'Ensemble · crypto, about 55 coins, long and short · Binance' })), statusPill(ensStatus)),
-        h('div', { class: 'bot-big num ' + tone(b.net_pct), text: b.net_pct != null ? pct(b.net_pct) : '—' }),
-        h('div', { class: 'bot-sub', text: curve.length ? 'paper book since ' + curve[0][0] : 'paper book loading' }),
-        curve.length > 1 ? lineChart(curve, { bare: true, h: 46, cls: 'spark' }) : null,
-        h('div', { class: 'bot-foot' }, h('span', { text: thisMonth ? 'This month ' + pct(thisMonth[1]) : '' }), h('span', { text: 'Expect about +2.7% in a typical month' }))),
-      h('a', { class: 'panel bot', href: '#/worker2' },
-        h('div', { class: 'bot-head' }, h('div', {}, h('div', { class: 'bot-title', text: 'Worker 2' }), h('div', { class: 'bot-what', text: 'Afternoon momentum · crypto, up to 5 alts, 16:00–02:00 UTC · Binance' })), statusPill(w2Status)),
-        h('div', { class: 'bot-big num ' + tone(b2.net_pct), text: b2.net_pct != null ? pct(b2.net_pct) : '—' }),
-        h('div', { class: 'bot-sub', text: curve2.length ? 'paper book since ' + curve2[0][0] : 'paper book loading' }),
-        curve2.length > 1 ? lineChart(curve2, { bare: true, h: 46, cls: 'spark' }) : null,
-        h('div', { class: 'bot-foot' }, h('span', { text: month2 ? 'This month ' + pct(month2[1]) : '' }), h('span', { text: 'Expect about +2–3% in a typical month' }))),
-      h('a', { class: 'panel bot', href: '#/worker3' },
-        h('div', { class: 'bot-head' }, h('div', {}, h('div', { class: 'bot-title', text: 'Worker 3' }), h('div', { class: 'bot-what', text: '30-day highs · crypto, top 20 coins, 5 long + 5 short · Binance' })), statusPill(w3Status)),
-        h('div', { class: 'bot-big num ' + tone(b3.net_pct), text: b3.net_pct != null ? pct(b3.net_pct) : '—' }),
-        h('div', { class: 'bot-sub', text: curve3.length ? 'paper book since ' + curve3[0][0] : 'paper book loading' }),
-        curve3.length > 1 ? lineChart(curve3, { bare: true, h: 46, cls: 'spark' }) : null,
-        h('div', { class: 'bot-foot' }, h('span', { text: month3 ? 'This month ' + pct(month3[1]) : '' }), h('span', { text: 'Big swings: drops of 30–40% happen' }))),
-      h('a', { class: 'panel bot', href: '#/ibs' },
-        h('div', { class: 'bot-head' }, h('div', {}, h('div', { class: 'bot-title', text: 'IBS stocks' }), h('div', { class: 'bot-what', text: 'US stocks · QQQ and TQQQ · Alpaca' })), statusPill(ibsStatus)),
-        h('div', { class: 'bot-big num ' + tone(qqq && qqq.realized_pct), text: qqq ? pct(qqq.realized_pct) : '—' }),
-        h('div', { class: 'bot-sub', text: qqq && qqq.holding ? 'holding QQQ since ' + qqq.entry_day : 'waiting for a buy day (about 18 trades a year)' }),
-        h('div', { class: 'bot-foot' }, h('span', { text: 'Buys QQQ after a weak close' }), h('span', { text: 'Average trade +0.85%' })))),
-    h('p', { class: 'muted', style: 'margin-top:22px;font-size:13px', text: 'Past results do not promise future ones. The bots trade at 1x (no borrowed money) and only switch on when you turn them on.' }));
+  const ibsLiveView = (ibsLive && ibsLive.live) || (ibsd && ibsd.live) || {};
+  const data = {
+    w1: { d: ens, book: (ens && ens.book) || {}, live: ensLive || {} },
+    w2: { d: w2, book: (w2 && w2.book) || {}, live: w2Live || {} },
+    w3: { d: w3, book: (w3 && w3.book) || {}, live: w3Live || {} },
+    ibs: { d: ibsd, book: {}, live: ibsLiveView },
+  };
+  const liveBots = BOTS.filter((b) => LIVE.includes(data[b.key].live.status));
+  const putIn = liveBots.reduce((a, b) => a + (Number(data[b.key].live.amount) || 0), 0);
+  const worth = liveBots.reduce((a, b) => a + (Number(data[b.key].live.equity ?? data[b.key].live.amount) || 0), 0);
+
+  // 1. the summary strip
+  const summary = PRIVATE
+    ? h('div', { class: 'kpis' },
+        h('div', { class: 'kpi' }, h('b', { text: liveBots.length + ' of ' + BOTS.length }), h('span', { text: 'bots trading real money' })),
+        h('div', { class: 'kpi' }, h('b', { text: money(putIn, 0) }), h('span', { text: 'USDT put in' })),
+        h('div', { class: 'kpi' }, h('b', { text: money(worth) }), h('span', { text: 'worth now (USDT)' })),
+        h('div', { class: 'kpi' }, h('b', { class: tone(worth - putIn), text: (worth - putIn > 0 ? '+' : '') + money(worth - putIn) }), h('span', { text: 'real profit / loss (USDT)' })))
+    : h('div', { class: 'kpis' }, ...BOTS.slice(0, 3).map((b) => {
+        const bk = data[b.key].book;
+        return h('div', { class: 'kpi' }, h('b', { class: tone(bk.net_pct), text: pct(bk.net_pct) }), h('span', { text: b.name + ' paper result' }));
+      }), h('div', { class: 'kpi' }, h('b', { class: tone(qqq && qqq.realized_pct), text: qqq ? pct(qqq.realized_pct) : '—' }), h('span', { text: 'IBS paper result' })));
+
+  // 2. what happens next
+  const events = [
+    { t: nextUtc(0, 2), what: 'Workers 1 and 3 re-balance', note: 'they compare all coins and adjust every position' },
+    { t: nextUtc(16, 0), what: 'Worker 2 opens its positions', note: 'rides the coins that moved unusually far since midnight' },
+    { t: nextUtc(2, 0), what: 'Worker 2 closes everything', note: 'it never holds overnight past 02:00 UTC' },
+  ].sort((a, c) => a.t - c.t);
+  const next = h('div', { class: 'panel' }, h('h2', { text: 'Up next' }),
+    h('ul', { class: 'timeline' }, ...events.map((e) => h('li', {},
+      h('div', { class: 'tl-when' }, h('b', { class: 'num', text: e.t.toISOString().slice(11, 16) + ' UTC' }), h('span', { text: localTime(e.t) + ' your time · ' + untilText(e.t) })),
+      h('div', {}, h('div', { text: e.what }), h('div', { class: 'muted', style: 'font-size:13px', text: e.note }))))),
+    h('p', { class: 'muted', style: 'font-size:13px;margin:10px 0 0', text: 'IBS stocks checks the market shortly before the US close on trading days.' }));
+
+  // 3. the bot cards
+  const card = (b) => {
+    const { d, book: bk, live } = data[b.key];
+    const curve = bk.curve || [], months = bk.months || [];
+    const isLive = LIVE.includes(live.status);
+    const status = isLive
+      ? h('div', { class: 'note good', style: 'margin:0 0 14px' }, 'Trading real money: ' + money(live.amount, 0) + ' USDT put in',
+          live.equity != null && live.amount != null ? h('b', { class: 'num ' + tone(live.equity - live.amount), text: ' · ' + (live.equity - live.amount > 0 ? '+' : '') + money(live.equity - live.amount) + ' USDT' }) : null)
+      : h('div', { class: 'note', style: 'margin:0 0 14px', text: PRIVATE ? 'Paper only: it is not trading real money. Open it to switch on.' : 'Results below are a paper book (no real money).' });
+    let held = '—';
+    if (b.key === 'ibs') held = qqq && qqq.holding ? 'QQQ since ' + qqq.entry_day : 'nothing (waiting for a buy day)';
+    else if (d && d.positions) {
+      const L_ = d.positions.filter((p) => p[1] > 0).length, S_ = d.positions.filter((p) => p[1] < 0).length;
+      held = L_ + S_ ? L_ + ' long · ' + S_ + ' short' : 'nothing right now';
+    }
+    const up = months.filter((m) => m[1] > 0).length;
+    const lastM = months.slice(-1)[0];
+    const big = b.key === 'ibs' ? (qqq ? qqq.realized_pct : null) : bk.net_pct;
+    return h('a', { class: 'panel bot', href: '#/' + b.path },
+      h('div', { class: 'bot-head' },
+        h('div', {}, h('div', { class: 'bot-title', text: b.name }), h('div', { class: 'bot-what', text: b.what + ' · ' + b.venue })),
+        statusPill(live.status || 'OFF')),
+      status,
+      h('p', { class: 'bot-how', text: b.how }),
+      h('div', { class: 'bot-row' },
+        h('div', {}, h('div', { class: 'bot-big num ' + tone(big), text: big != null ? pct(big) : '—' }),
+          h('div', { class: 'bot-sub', text: b.key === 'ibs' ? 'paper trades so far' : curve.length ? 'paper result since ' + curve[0][0] : 'paper book loading' })),
+        h('span', { class: 'risk ' + RISK_TONE[b.risk], text: b.risk + ' risk' })),
+      curve.length > 1 ? lineChart(curve, { bare: true, h: 46, cls: 'spark' }) : null,
+      h('dl', { class: 'mini' },
+        h('div', {}, h('dt', { text: 'This month' }), h('dd', { class: 'num ' + tone(lastM && lastM[1]), text: lastM ? pct(lastM[1]) : '—' })),
+        h('div', {}, h('dt', { text: 'Months up' }), h('dd', { class: 'num', text: months.length ? up + ' of ' + months.length : '—' })),
+        h('div', {}, h('dt', { text: 'Worst drop so far' }), h('dd', { class: 'num', text: curve.length > 1 ? '−' + maxDD(curve).toFixed(1) + '%' : '—' })),
+        h('div', {}, h('dt', { text: 'Holding now' }), h('dd', { text: held }))),
+      h('div', { class: 'bot-foot' }, h('span', { text: 'Tests: typical month ' + b.typical + ', worst drop ' + b.worst }), h('span', { class: 'go-arrow', text: 'Details →' })));
+  };
+
+  // 4. growth since 1 July, all three crypto workers on one chart
+  const norm = (curve) => curve.map(([dd, v]) => [dd, (v / 10000 - 1) * 100]);   // every paper book starts at 10,000 USDT
+  const series = [
+    { name: 'Worker 1', cls: 's1', points: norm(data.w1.book.curve || []) },
+    { name: 'Worker 2', cls: 's2', points: norm(data.w2.book.curve || []) },
+    { name: 'Worker 3', cls: 's3', points: norm(data.w3.book.curve || []) },
+  ];
+  const growth = h('div', { class: 'panel' }, h('h2', { text: 'Paper growth since 1 July' }),
+    h('div', { class: 'legend' }, ...series.map((s) => h('span', { class: s.cls }, h('i'), s.name + ' ',
+      h('b', { class: 'num ' + tone(s.points.slice(-1)[0]?.[1]), text: s.points.length ? pct(s.points.slice(-1)[0][1]) : '—' })))),
+    multiChart(series),
+    h('p', { class: 'muted', style: 'font-size:13px;margin:10px 0 0', text: 'Each line starts at 0% on 1 July and shows what 10,000 USDT on paper would have done. Days before each bot went on the server are replayed with the server\'s own Binance data; every day after is real forward paper trading.' }));
+
+  // 5. side by side
+  const table = h('div', { class: 'panel' }, h('h2', { text: 'Side by side' }),
+    h('div', { class: 'scroll' }, h('table', { class: 'compare' },
+      h('thead', {}, h('tr', {}, ...['', 'Trades', 'How often', 'Typical month*', 'Worst drop*', 'Luck checks', 'Risk'].map((c) => h('th', { text: c })))),
+      h('tbody', {}, ...BOTS.map((b) => h('tr', {},
+        h('td', {}, h('a', { href: '#/' + b.path, text: b.name })), h('td', { text: b.what.split(' · ')[1] || b.what }),
+        h('td', { text: b.often }), h('td', { class: 'num', text: b.typical }), h('td', { class: 'num', text: b.worst }),
+        h('td', { text: b.luck }), h('td', {}, h('span', { class: 'risk ' + RISK_TONE[b.risk], text: b.risk })))))),
+    h('p', { class: 'muted', style: 'font-size:13px;margin:10px 0 0', text: '* From the research tests at 1x after all trading costs (crypto: Jan 2021 – Oct 2026; Worker 3 also 2018–2020). A "typical month" is the middle month: half the months were better, half worse.' })));
+
+  // 6. how to read this page
+  const words = [
+    ['Paper book', 'The bot\'s trades on pretend money, using real prices and real costs. It shows how the bot is doing without risking anything.'],
+    ['Live', 'The bot copies its paper book onto your Binance (or Alpaca) account with real money. Only you can switch it on or off.'],
+    ['Long / short', 'Long = bet a coin goes up. Short = bet it goes down. Mixing both means the bots can earn when the market falls.'],
+    ['1x', 'No borrowed money: a position is never bigger than the cash behind it.'],
+    ['Worst drop', 'The biggest fall from a high point to a low point. A bot with a −40% worst drop can lose 40% before it recovers.'],
+    ['Luck checks', '8 tests we run on every strategy to make sure its results are not a fluke, e.g. it must beat random coin picks and keep working with small changes.'],
+  ];
+  const glossary = h('div', { class: 'panel' }, h('h2', { text: 'How to read this page' }),
+    h('div', { class: 'gloss' }, ...words.map(([a, c]) => h('div', {}, h('b', { text: a }), h('p', { text: c })))));
+
+  return h('div', { class: 'stack' },
+    h('div', {}, h('h1', { text: 'Your bots' }),
+      h('p', { class: 'lead', style: 'margin-bottom:0', text: 'Four trading bots that passed our tests out of more than 165 strategies we tried. Workers 1, 2 and 3 trade crypto in different ways, so they rarely lose at the same time; IBS trades US stocks. Every bot runs on paper all the time, and trades real money only when you switch it on.' })),
+    summary,
+    h('div', { class: 'grid-bots' }, ...BOTS.map(card)),
+    h('div', { class: 'grid-home' }, growth, next),
+    table,
+    glossary,
+    h('p', { class: 'muted', style: 'margin-top:6px;font-size:13px', text: 'Past results do not promise future ones. Crypto bots can lose 20–40% in a bad stretch, and a losing period can last months. Only put in money you can leave alone through a drop.' }));
 }
 
 async function ensemble() {
